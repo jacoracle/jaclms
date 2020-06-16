@@ -1,0 +1,23 @@
+<!-- Bloque de contenido: Indicación con video -->
+<div class="col-cb-text-img" *ngIf="contentBlock && contentBlock.bloqueComponentes.componentes">
+
+    <div *ngFor="let component of orderTextVideo(contentBlock.bloqueComponentes.componentes); let index = index;">
+        <div *ngIf="component.tipoComponente.nombre === 'text'" class="b-paragraph-text">
+            <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes">
+                <jhi-visor-text
+                    [component]="component"
+                    [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
+                    (updateComponent)="onUpdateComponent($event, index)">
+                </jhi-visor-text>
+            </div>
+        </div>
+        <div *ngIf="component.tipoComponente.nombre === 'video'"  class="cc-image">
+            <jhi-constructor-video 
+                [component]="component"
+                (updateComponent)="onUpdateComponent($event, index)">
+            </jhi-constructor-video>
+        </div>
+    </div>
+
+</div>
+    
