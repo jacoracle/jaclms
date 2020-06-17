@@ -20,9 +20,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * A PhoneNumber.
  */
 @Entity
-@Table(name = "phone_number")
+@Table(name = "telefono")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class PhoneNumber implements Serializable {
+public class Telefono implements Serializable {
 	
 	/**
 	 * Serializable
@@ -48,14 +48,14 @@ public class PhoneNumber implements Serializable {
 	 * Country country
 	 */
 	@ManyToOne
-    @JoinColumn(name = "country_id")
-    private Country country;
+    @JoinColumn(name = "pais_id")
+    private Pais pais;
 	
 	/**
 	 * Long phoneNumbe
 	 */
-	@Column(name = "phone_number")
-    private Long phoneNumber;
+	@Column(name = "telefono")
+    private Long telefono;
 	
 
 	/**
@@ -87,7 +87,7 @@ public class PhoneNumber implements Serializable {
 	 * @param user
 	 * @return the this 
 	 */
-	public PhoneNumber user(User user) {
+	public Telefono user(User user) {
         this.user = user;
         return this;
     }
@@ -105,8 +105,8 @@ public class PhoneNumber implements Serializable {
 	 * Get
 	 * @return the country
 	 */
-	public Country getCountry() {
-		return country;
+	public Pais getPais() {
+		return pais;
 	}
 	
 	/**
@@ -114,8 +114,8 @@ public class PhoneNumber implements Serializable {
 	 * @param country
 	 * @return the this
 	 */
-	public PhoneNumber country(Country country) {
-        this.country = country;
+	public Telefono country(Pais pais) {
+        this.pais = pais;
         return this;
     }
 
@@ -123,24 +123,24 @@ public class PhoneNumber implements Serializable {
 	 * Set
 	 * @param country
 	 */
-	public void setCountry(Country country) {
-		this.country = country;
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 
 	/**
 	 * Get
 	 * @return the phoneNumber
 	 */
-	public Long getPhoneNumber() {
-		return phoneNumber;
+	public Long getTelefono() {
+		return telefono;
 	}
 
 	/**
 	 * Set
 	 * @param phoneNumber
 	 */
-	public void setPhoneNumber(Long phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setTelefono(Long telefono) {
+		this.telefono = telefono;
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class PhoneNumber implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "PhoneNumber [id=" + id + ", country=" + country + ", phoneNumber=" + phoneNumber + "]";
+		return "PhoneNumber [id=" + id + ", pais=" + pais + ", telefono=" + telefono + "]";
 	}
 
 

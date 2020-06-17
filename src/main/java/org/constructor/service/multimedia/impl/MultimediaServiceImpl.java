@@ -83,7 +83,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 	 *
 	 */
 	enum extVideo { MP4, VGA};
-	enum extImage { JPG, PNG};
+	enum extImage { JPG, PNG, JPEG};
 	enum extDocs { PDF, CSV};
 	enum extAudio{ MP3, WAV};
 
@@ -138,7 +138,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				 * if para Image
 				 */
 				if ((extension.toUpperCase()).equals(extImage.PNG.toString())
-						|| extension.toUpperCase().equals(extImage.JPG.toString()) && ((( multimedia.getSize()/1024))/ 1024  ) <=  image ) {
+						|| extension.toUpperCase().equals(extImage.JPG.toString()) || extension.toUpperCase().equals(extImage.JPEG.toString()) && ((( multimedia.getSize()/1024))/ 1024  ) <=  image ) {
 					buildFile(builder, file);
 					builder.append("image");
 					PathValidation.createPath(builder.toString());

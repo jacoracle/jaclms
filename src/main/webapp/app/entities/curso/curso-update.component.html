@@ -49,7 +49,6 @@
         <div class="form-group col-md-4">
             <label class="form-control-label" jhiTranslate="constructorApp.curso.version" for="field_version">Version</label>
             <select class="form-control" id="field_version" name="version" formControlName="version">
-                <option [ngValue]="null"></option>
                 <option [ngValue]="versionOption.id === editForm.get('version')!.value?.id ? editForm.get('version')!.value : versionOption" *ngFor="let versionOption of versions; trackBy: trackById">{{versionOption.id}}</option>
             </select>
         </div>
@@ -84,7 +83,6 @@
                   <label jhiTranslate="constructorApp.curso.asignatura" for="field_asignatura">Asignatura</label>
                     <div class="selectWrap">
                       <select id="field_asignatura" name="asignatura" formControlName="asignatura">
-                        <option [ngValue]="null"></option>
                         <option [ngValue]="asignaturaOption.id === editForm.get('asignatura')!.value?.id ? editForm.get('asignatura')!.value : asignaturaOption" *ngFor="let asignaturaOption of asignaturas; trackBy: trackById">{{asignaturaOption.descripcion}}</option>
                       </select>
                   </div>
@@ -119,7 +117,6 @@
                   <label jhiTranslate="constructorApp.curso.gradoAcademico" for="field_gradoAcademico">Grado Academico</label>
                   <div class="selectWrap">
                     <select id="field_gradoAcademico" name="gradoAcademico" (change)="changeGracoAcademico($event)">
-                        <option [ngValue]="null"></option>
                         <option [ngValue]="gradoAcademicoOption.id === editForm.get('gradoAcademico')!.value?.id ? editForm.get('gradoAcademico')!.value : gradoAcademicoOption" *ngFor="let gradoAcademicoOption of gradoAcademicos; trackBy: trackById">{{gradoAcademicoOption.descripcion}}</option>
                     </select>
                   </div>
@@ -131,7 +128,6 @@
                   <label jhiTranslate="constructorApp.curso.numeroGrado" for="field_numeroGrado">Numero Grado</label>
                   <div class="selectWrap">
                     <select id="field_numeroGrado" name="numeroGrado" formControlName="numeroGrado">
-                        <option [ngValue]="null"></option>
                         <option [ngValue]="numeroGradoOption.id === editForm.get('numeroGrado')!.value?.id ? editForm.get('numeroGrado')!.value : numeroGradoOption" *ngFor="let numeroGradoOption of numerogrados; trackBy: trackById">{{numeroGradoOption.descripcion}}</option>
                     </select>
                   </div>
@@ -269,7 +265,6 @@
               <label class="form-control-label" jhiTranslate="constructorApp.curso.modalidad" for="field_modalidad">Modalidad</label>
               <div class="selectWrap">
                 <select class="form-control" id="field_modalidad" name="modalidad" formControlName="modalidad">
-                    <option [ngValue]="null"></option>
                     <option [ngValue]="modalidadOption.id === editForm.get('modalidad')!.value?.id ? editForm.get('modalidad')!.value : modalidadOption" *ngFor="let modalidadOption of modalidads; trackBy: trackById">{{modalidadOption.descripcion}}</option>
                 </select>
               </div>
@@ -283,7 +278,6 @@
               <label class="form-control-label" jhiTranslate="constructorApp.curso.categoria" for="field_categoria">Categoria</label>
               <div class="selectWrap">
                 <select class="form-control" id="field_categoria" name="categoria" formControlName="categoria">
-                    <option [ngValue]="null"></option>
                     <option [ngValue]="categoriaOption.id === editForm.get('categoria')!.value?.id ? editForm.get('categoria')!.value : categoriaOption" *ngFor="let categoriaOption of categorias; trackBy: trackById">{{categoriaOption.descripcion}}</option>
                 </select>
               </div>

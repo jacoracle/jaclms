@@ -13,11 +13,11 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * A Country.
+ * A Pais.
  */
 @Entity
-@Table(name = "country")
-public class Country implements Serializable {
+@Table(name = "pais")
+public class Pais implements Serializable {
 	
 	/**
 	 * Serializable
@@ -54,8 +54,8 @@ public class Country implements Serializable {
 	/**
 	 * String phoneCode
 	 */
-	@Column(name = "phone_code")
-    private String phoneCode;
+	@Column(name = "codigo_Telefonico")
+    private String codigoTelefonico;
 
 	/**
 	 * Get
@@ -121,20 +121,20 @@ public class Country implements Serializable {
 		this.iso3 = iso3;
 	}
 
+	
+
 	/**
-	 * Get
-	 * @return the phoneCode
+	 * @return the codigoTelefonico
 	 */
-	public String getPhoneCode() {
-		return phoneCode;
+	public String getCodigoTelefonico() {
+		return codigoTelefonico;
 	}
 
 	/**
-	 * Set
-	 * @param phoneCode
+	 * @param codigoTelefonico the codigoTelefonico to set
 	 */
-	public void setPhoneCode(String phoneCode) {
-		this.phoneCode = phoneCode;
+	public void setCodigoTelefonico(String codigoTelefonico) {
+		this.codigoTelefonico = codigoTelefonico;
 	}
 
 	/**
@@ -142,8 +142,8 @@ public class Country implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Country [id=" + id + ", nombre=" + nombre + ", name=" + name + ", iso2="  + ", phoneCode="
-				+ phoneCode + "]";
+		return "Pais [id=" + id + ", nombre=" + nombre + ", name=" + name + ", iso2="  + ", codigoTelefonico="
+				+ codigoTelefonico + "]";
 	}
 	
 	

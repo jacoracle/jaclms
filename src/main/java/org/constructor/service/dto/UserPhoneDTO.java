@@ -2,7 +2,7 @@ package org.constructor.service.dto;
 
 import java.util.Set;
 
-import org.constructor.domain.PhoneNumber;
+import org.constructor.domain.Telefono;
 import org.constructor.domain.User;
 
 public class UserPhoneDTO {
@@ -15,7 +15,7 @@ public class UserPhoneDTO {
 	/**
 	 * phoneNumbers
 	 */
-	private Set<PhoneNumber>phoneNumbers;
+	private Set<Telefono>telefonos;
 	
 	/**
 	 * Get
@@ -34,27 +34,25 @@ public class UserPhoneDTO {
 	}
 	
 	/**
-	 * Get 
-	 * @return the phoneNumbers
+	 * @return the telefonos
 	 */
-	public Set<PhoneNumber> getPhoneNumbers() {
-		return phoneNumbers;
+	public Set<Telefono> getTelefonos() {
+		return telefonos;
 	}
-	
+
 	/**
-	 * Set
-	 * @param phoneNumbers
+	 * @param telefonos the telefonos to set
 	 */
-	public void setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
-		this.phoneNumbers = phoneNumbers;
+	public void setTelefonos(Set<Telefono> telefonos) {
+		this.telefonos = telefonos;
 	}
-	
+
 	/**
 	 * toString
 	 */
 	@Override
 	public String toString() { 
-		return "UserPhoneDTO [user=" + user + ", phoneNumbers=" + phoneNumbers + "]";
+		return "UserPhoneDTO [user=" + user + ", telefonos=" + telefonos + "]";
 	}
 	
 	

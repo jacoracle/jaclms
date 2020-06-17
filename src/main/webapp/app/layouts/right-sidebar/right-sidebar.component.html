@@ -1,7 +1,7 @@
 <div id="right-sidebar-grid">
   <!-- Galería de plantillas de bloques de contenido -->
 
-  <div *ngIf="openTemplateGallery">
+  <div [hidden]="!openTemplateGallery">
   <!-- <div> -->
     <jhi-template-gallery></jhi-template-gallery>
   </div>

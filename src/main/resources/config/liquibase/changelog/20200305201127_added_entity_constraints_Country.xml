@@ -8,16 +8,16 @@
     -->
     <changeSet id="20200305201127-2" author="jhipster">
          <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="phone_number"
-                                 constraintName="fk_phone_number_user_id"
+                                 baseTableName="telefono"
+                                 constraintName="fk_telefono_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
                                 
-      <addForeignKeyConstraint baseColumnNames="country_id"
-                                 baseTableName="phone_number"
-                                 constraintName="fk_phone_number_country_id"
+      <addForeignKeyConstraint baseColumnNames="pais_id"
+                                 baseTableName="telefono"
+                                 constraintName="fk_telefono_pais_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="country"/>
+                                 referencedTableName="pais"/>
     </changeSet>
     
 </databaseChangeLog>

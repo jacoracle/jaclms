@@ -3,7 +3,7 @@ package org.constructor.service.dto;
 import org.constructor.config.Constants;
 
 import org.constructor.domain.Authority;
-import org.constructor.domain.PhoneNumber;
+import org.constructor.domain.Telefono;
 import org.constructor.domain.User;
 
 import javax.validation.constraints.*;
@@ -52,7 +52,7 @@ public class UserDTO {
     /**
      * phone
      */
-    private Set<PhoneNumber> phone;
+    private Set<Telefono> telefono;
 
     /**
      * String email
@@ -120,7 +120,7 @@ public class UserDTO {
         this.firstName = user.getFirstName();
         this.lastName1 = user.getLastName1();
         this.lastName2 = user.getLastName2();
-        this.phone = user.getPhone();
+        this.telefono = user.getTelefono();
         this.email = user.getEmail();
         this.activated = user.getActivated();
         this.imageUrl = user.getImageUrl();
@@ -214,23 +214,23 @@ public class UserDTO {
         this.lastName2 = lastName2;
     }
     
-    /**
-     * Get 
-     * @return the phone
-     */
-    public Set<PhoneNumber> getPhone() {
-        return phone;
-    }
+   
 
     /**
-     * Set
-     * @param phone
-     */
-    public void setPhone(Set<PhoneNumber> phone) {
-        this.phone = phone;
-    }
+	 * @return the telefono
+	 */
+	public Set<Telefono> getTelefono() {
+		return telefono;
+	}
 
-    /**
+	/**
+	 * @param telefono the telefono to set
+	 */
+	public void setTelefono(Set<Telefono> telefono) {
+		this.telefono = telefono;
+	}
+
+	/**
      * Get 
      * @return the email 
      */
@@ -384,7 +384,7 @@ public class UserDTO {
             ", firstName='" + firstName + '\'' +
             ", lastName1='" + lastName1 + '\'' +
             ", lastName2='" + lastName2 + '\'' +
-            ", phone='" + phone + '\'' +
+            ", telefono='" + telefono + '\'' +
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated=" + activated +
