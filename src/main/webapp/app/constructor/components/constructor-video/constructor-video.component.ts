@@ -46,7 +46,7 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
   }
 
   public getVideo(path: string): void {
-    this.fileUploadService.getVideoFile(path).subscribe(data => {
+    this.fileUploadService.getVideoPreviewFile(path).subscribe(data => {
       const videoPath = URL.createObjectURL(data.body);
       const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
       this.videoSrc = objectUrl;

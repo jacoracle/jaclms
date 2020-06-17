@@ -204,9 +204,17 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
 
   createContentBlock(selectedTemplate: ITipoBloqueComponentes): IBloqueComponentes {
     const componentes = new Array<IComponente>();
-    selectedTemplate.tiposComponentes = this.orderTextImage(selectedTemplate.tiposComponentes!);
-    for (let i = 0; i < selectedTemplate.tiposComponentes.length; i++) {
-      componentes.push(this.createComponent(selectedTemplate.tiposComponentes[i], i + 1));
+    if (selectedTemplate.nombre === 'imagen_texto') {
+      selectedTemplate.tiposComponentes = this.orderTextImage(selectedTemplate.tiposComponentes!);
+    }
+    if (selectedTemplate.nombre === 'indicacion_video') {
+      selectedTemplate.tiposComponentes = this.orderTextVideo(selectedTemplate.tiposComponentes!);
+    }
+    if (selectedTemplate.nombre === 'video_envolvente') {
+      selectedTemplate.tiposComponentes = this.orderVideoText(selectedTemplate.tiposComponentes!);
+    }
+    for (let i = 0; i < selectedTemplate.tiposComponentes!.length; i++) {
+      componentes.push(this.createComponent(selectedTemplate.tiposComponentes![i], i + 1));
     }
     return {
       ...new BloqueComponentes(),
@@ -243,6 +251,36 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     }
     let tempArray = [];
     if (componentTypes[0].nombre === 'image') {
+      tempArray.push(componentTypes[1]);
+      tempArray.push(componentTypes[0]);
+    } else {
+      tempArray = componentTypes;
+    }
+    return tempArray;
+  }
+
+  // Función temporal para poner texto antes que video. Pendiente relación y orden en base de datos.
+  orderTextVideo(componentTypes: ITipoComponente[]): ITipoBloqueComponentes[] {
+    if (componentTypes.length < 2) {
+      return componentTypes;
+    }
+    let tempArray = [];
+    if (componentTypes[0].nombre === 'video') {
+      tempArray.push(componentTypes[1]);
+      tempArray.push(componentTypes[0]);
+    } else {
+      tempArray = componentTypes;
+    }
+    return tempArray;
+  }
+
+  // Función temporal para poner video antes que texto. Pendiente relación y orden en base de datos.
+  orderVideoText(componentTypes: ITipoComponente[]): ITipoBloqueComponentes[] {
+    if (componentTypes.length < 2) {
+      return componentTypes;
+    }
+    let tempArray = [];
+    if (componentTypes[0].nombre === 'text') {
       tempArray.push(componentTypes[1]);
       tempArray.push(componentTypes[0]);
     } else {
