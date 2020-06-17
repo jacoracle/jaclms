@@ -39,7 +39,6 @@
         <label class="form-control-label" jhiTranslate="constructorApp.ficha.editorial" for="field_editorial">Editorial</label>
         <div class="selectWrap">
           <select class="form-control" id="field_editorial" name="editorial" formControlName="editorial">
-              <option [ngValue]="null"></option>
               <option [ngValue]="editorialOption.id === editForm.get('editorial')!.value?.id ? editForm.get('editorial')!.value : editorialOption" *ngFor="let editorialOption of editorials; trackBy: trackById">{{editorialOption.nombre}}</option>
           </select>
         </div>
