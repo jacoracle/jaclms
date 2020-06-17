@@ -1,14 +1,14 @@
 package org.constructor.service;
 
 import java.util.Optional;
-import org.constructor.domain.PhoneNumber;
+import org.constructor.domain.Telefono;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Service Interface for managing {@link PhoneNumber}.
+ * Service Interface for managing {@link Telefono}.
  */
-public interface PhoneNumberService {
+public interface TelefonoService {
 	
 	 /**
      * Save a PhoneNumber.
@@ -16,7 +16,7 @@ public interface PhoneNumberService {
      * @param country the entity to save.
      * @return the persisted entity.
      */
-	PhoneNumber save(PhoneNumber phoneNumber);
+	Telefono save(Telefono telefono);
 
     /**
      * Get all the PhoneNumber.
@@ -24,7 +24,7 @@ public interface PhoneNumberService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<PhoneNumber> findAll(Pageable pageable);
+    Page<Telefono> findAll(Pageable pageable);
 
 
     /**
@@ -33,7 +33,7 @@ public interface PhoneNumberService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<PhoneNumber> findOne(Long id);
+    Optional<Telefono> findOne(Long id);
 
     /**
      * Delete the "id" PhoneNumber.

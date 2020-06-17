@@ -9,10 +9,10 @@
         <property name="autoIncrement" value="true"/>
 
     <!--
-        Added the entity country.
+        Added the entity pais.
     -->
     <changeSet id="20200305201127-1" author="jhipster">
-        <createTable tableName="country">
+        <createTable tableName="pais">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -25,7 +25,7 @@
             <column name="iso3" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="phone_code" type="varchar(255)">
+            <column name="codigo_Telefonico" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -35,17 +35,17 @@
 
     <changeSet id="20200305201127-1-relations" author="jhipster">
     
-		 <createTable tableName="phone_number">
+		 <createTable tableName="telefono">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>		 	
             <column name="user_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="country_id" type="bigint">
+            <column name="pais_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="phone_number" type="bigint">
+            <column name="telefono" type="bigint">
                 <constraints nullable="true" />
             </column>
         </createTable>
