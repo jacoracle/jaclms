@@ -18,16 +18,16 @@
 
       <!-- Subir archivo -->
         <div class="cover-upload-c">
-          <h6>Subir imagen</h6>
+          <h6>Subir archivo</h6>
 
             <div class="row-up-image-area">
               <div *ngIf="fileFormat === 'image'">
-                Imagen
+                <!-- Imagen -->
                 <img [src]="defaultImageUrl" alt="" class="cover-upload-img" *ngIf="imgSrc === ''">
                 <img [src]="imgSrc" alt="" class="cover-upload-img" *ngIf="imgSrc !== ''">
               </div>
               <div *ngIf="fileFormat === 'video'">
-                Video
+                <!-- Video -->
                 <img [src]="defaultVideoUrl" alt="" *ngIf="videoSrc === ''">
                 <video [src]="videoSrc" height="200" controls *ngIf="videoSrc !== ''"></video>
               </div>

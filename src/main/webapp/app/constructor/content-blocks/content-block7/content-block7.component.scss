@@ -1,0 +1,43 @@
+@import '../../../../content/scss/variables.scss';
+.col-cb-video-text-color {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  div:nth-child(1) {
+    position: relative;
+    width: 65%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .cc-video {
+      position: relative;
+      width: 100%;
+      height: auto;
+      max-width: 854px;
+      max-height: 480px;
+    }
+  }
+  div:nth-child(2) {
+    position: relative;
+    width: 32%;
+    height: auto;
+
+    .b-paragraph-text {
+      position: relative;
+      width: 100%;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      div {
+        width: 90%;
+      }
+    }
+  }
+}

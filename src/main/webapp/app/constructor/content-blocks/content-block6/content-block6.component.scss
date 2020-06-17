@@ -1,0 +1,36 @@
+@import '../../../../content/scss/variables.scss';
+.col-cb-video-ins {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.b-instruction-video {
+  position: relative;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  border: 1px dashed $blue-nimbus-light;
+  transition: 0.3s;
+  margin-bottom: 30px;
+  padding-left: 50px;
+  &:hover {
+    border: 1px solid $blue-nimbus-light;
+  }
+}
+
+.icon-instruction-video {
+  position: absolute;
+  left: 6px;
+  top: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background-color: $blue-nimbus-light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .icon {
+    color: white;
+  }
+}
