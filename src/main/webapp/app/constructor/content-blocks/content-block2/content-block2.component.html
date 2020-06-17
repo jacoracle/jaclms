@@ -1,5 +1,5 @@
 <!-- Bloque de contenido: Texto-->
-  <div class="col-cb-text" *ngIf="contentBlock && contentBlock.bloqueComponentes.componentes">
+  <div class="col-cb-text" *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
       <div class="b-paragraph-text" *ngFor="let component of contentBlock.bloqueComponentes.componentes!; let index = index;">
         <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes">
           <jhi-visor-text

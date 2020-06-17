@@ -1,2 +1,2 @@
-<img class="block-img" [src]="imgSrc" (click)="selectImage()" *ngIf="!imgSrc == ''">
+<img class="block-img" [src]="imgSrc" (click)="selectImage()" *ngIf="imgSrc != ''">
 <img class="block-img" [src]="defaultImageUrl" (click)="selectImage()" *ngIf="imgSrc == ''">

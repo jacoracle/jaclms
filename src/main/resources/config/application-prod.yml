@@ -149,3 +149,10 @@ jhipster:
 # ===================================================================
 
 # application:
+
+#Quivalent numbers to MB
+multimedia:
+  video: 5
+  image: 2
+  audio: 5
+  docs: 5

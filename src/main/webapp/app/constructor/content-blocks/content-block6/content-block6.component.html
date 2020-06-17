@@ -1,5 +1,5 @@
 <!-- Bloque de contenido: Indicación con video -->
-<div class="col-cb-text-img" *ngIf="contentBlock && contentBlock.bloqueComponentes.componentes">
+<div class="col-cb-text-img" *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
 
     <div *ngFor="let component of orderTextVideo(contentBlock.bloqueComponentes.componentes); let index = index;">
         <div *ngIf="component.tipoComponente.nombre === 'text'" class="b-paragraph-text">
