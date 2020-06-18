@@ -52,6 +52,10 @@ public class RestConstants {
 	 */
 	public static final String PATH_VIDEO_PREVIEW =  "videoPreview";
 	
+	
+	/**
+	 * Path para peticiones videoFrame
+	 */
 	public static final String PATH_VIDEO_FRAME = "videoFrame";
 	
 	

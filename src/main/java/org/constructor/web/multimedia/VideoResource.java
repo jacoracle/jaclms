@@ -86,11 +86,9 @@ public class VideoResource {
 	@GetMapping(path = RestConstants.PATH_VIDEO_FRAME, produces = "image/png")
 	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
 	public ResponseEntity<byte[]> frameVideo(@RequestParam("file") String nameVideo) throws IOException, JCodecException{
-		
 		StringBuilder builder = new StringBuilder();
 		builder.append(PATH);
 		File file = new File(builder.append(nameVideo).toString());
-		
 		int frameNumber = 10;
 		Picture frame = FrameGrab.getFrameFromFile(file, frameNumber);
 		BufferedImage bi = AWTUtil.toBufferedImage(frame);
