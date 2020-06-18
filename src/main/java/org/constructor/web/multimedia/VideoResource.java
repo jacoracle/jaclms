@@ -1,12 +1,17 @@
 package org.constructor.web.multimedia;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.constructor.security.AuthoritiesConstants;
 import org.constructor.utils.RestConstants;
+import org.jcodec.api.FrameGrab;
+import org.jcodec.api.JCodecException;
+import org.jcodec.common.model.Picture;
+import org.jcodec.scale.AWTUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 /**
  * The Class VideoResource.
@@ -59,13 +67,40 @@ public class VideoResource {
 	 * @return the response entity
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	@GetMapping(path = RestConstants.PATH_PREVIEW_VIDEO, produces = "video/mp4")
+	@GetMapping(path = RestConstants.PATH_VIDEO_PREVIEW, produces = "video/mp4")
 	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
 	public ResponseEntity<byte[]> preViewVideo(@RequestParam("file") String nameVideo) throws IOException {
 		boolean  banner = true;
 		return videoBanner(banner,nameVideo);
 		
 	}
+	
+	/**
+	 * Frame video.
+	 *
+	 * @param nameVideo the name video
+	 * @return the response entity
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JCodecException the j codec exception
+	 */
+	@GetMapping(path = RestConstants.PATH_VIDEO_FRAME, produces = "image/png")
+	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+	public ResponseEntity<byte[]> frameVideo(@RequestParam("file") String nameVideo) throws IOException, JCodecException{
+		StringBuilder builder = new StringBuilder();
+		builder.append(PATH);
+		File file = new File(builder.append(nameVideo).toString());
+		int frameNumber = 10;
+		Picture frame = FrameGrab.getFrameFromFile(file, frameNumber);
+		BufferedImage bi = AWTUtil.toBufferedImage(frame);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(bi, "png",baos);
+		
+		byte[] imageBytes = baos.toByteArray();
+		
+		return new  ResponseEntity<byte[]>(imageBytes,HttpStatus.OK);
+	}
+	
+	
 	
 
 	/**
@@ -93,7 +128,8 @@ public class VideoResource {
 		
 		if (banner) {
 			
-			fileArray = new byte[88888];
+			fileArray = new byte[288888];
+			log.debug("******** Longitud: {} *****", (int) file.length());
 			
 		} else if (!banner) {
 

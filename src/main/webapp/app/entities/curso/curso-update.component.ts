@@ -325,8 +325,8 @@ export class CursoUpdateComponent implements OnInit {
     return item.id;
   }
 
-  changeGracoAcademico(e: any): void {
-    this.gradoAcademicoService.find(e.target.selectedIndex).subscribe(res => {
+  changeGradoAcademico(e: any): void {
+    this.gradoAcademicoService.find(e.target.selectedIndex + 1).subscribe(res => {
       if (res.body && res.body.numeroGrados) this.numerogrados = res.body.numeroGrados;
     });
   }

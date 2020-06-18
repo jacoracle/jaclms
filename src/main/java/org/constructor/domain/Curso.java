@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
@@ -72,7 +73,7 @@ public class Curso implements Serializable {
      * LocalDate fechaCreacionSys
      */
     @Column(name = "fecha_creacion_sys")
-    private LocalDate fechaCreacionSys;
+    private LocalDateTime fechaCreacionSys;
 
     /**
      * LocalDate fechaPublicacio
@@ -84,7 +85,7 @@ public class Curso implements Serializable {
      *  LocalDate fechaPublicacionSys
      */
     @Column(name = "fecha_publicacion_sys")
-    private LocalDate fechaPublicacionSys;
+    private LocalDateTime fechaPublicacionSys;
 
     /**
      * String numeroEdicion
@@ -345,7 +346,7 @@ public class Curso implements Serializable {
      * Get
      * @return the fechaCreacionSys
      */
-    public LocalDate getFechaCreacionSys() {
+    public LocalDateTime getFechaCreacionSys() {
         return fechaCreacionSys;
     }
 
@@ -354,8 +355,8 @@ public class Curso implements Serializable {
      * @param fechaCreacionSys
      * @return
      */
-    public Curso fechaCreacionSys(LocalDate fechaCreacionSys) {
-        this.fechaCreacionSys = fechaCreacionSys;
+    public Curso fechaCreacionSys(LocalDateTime fechaCreacionSys) {
+        this.fechaCreacionSys = LocalDateTime.now();;
         return this;
     }
 
@@ -363,8 +364,8 @@ public class Curso implements Serializable {
      * Set
      * @param fechaCreacionSys
      */
-    public void setFechaCreacionSys(LocalDate fechaCreacionSys) {
-        this.fechaCreacionSys = fechaCreacionSys;
+    public void setFechaCreacionSys(LocalDateTime fechaCreacionSys) {
+        this.fechaCreacionSys = LocalDateTime.now();;
     }
 
     /**
@@ -402,7 +403,7 @@ public class Curso implements Serializable {
      * Get
      * @return the fechaPublicacionSys
      */
-    public LocalDate getFechaPublicacionSys() {
+    public LocalDateTime getFechaPublicacionSys() {
         return fechaPublicacionSys;
     }
 
@@ -411,8 +412,8 @@ public class Curso implements Serializable {
      * @param fechaPublicacionSys
      * @return
      */
-    public Curso fechaPublicacionSys(LocalDate fechaPublicacionSys) {
-        this.fechaPublicacionSys = fechaPublicacionSys;
+    public Curso fechaPublicacionSys(LocalDateTime fechaPublicacionSys) {
+        this.fechaPublicacionSys = LocalDateTime.now();;
         return this;
     }
 
@@ -420,8 +421,8 @@ public class Curso implements Serializable {
      * Set
      * @param fechaPublicacionSys
      */
-    public void setFechaPublicacionSys(LocalDate fechaPublicacionSys) {
-        this.fechaPublicacionSys = fechaPublicacionSys;
+    public void setFechaPublicacionSys(LocalDateTime fechaPublicacionSys) {
+        this.fechaPublicacionSys = LocalDateTime.now();
     }
 
     /**
