@@ -18,7 +18,9 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   defaultImageUrl = './../../../content/images/cover_upload.png';
   videoSrc: SafeUrl = '';
   defaultVideoUrl = './../../../content/images/cover_upload.png';
-  maxImageSize = 30000000;
+  thumbSrc: SafeUrl = '';
+  videoPathUrl = '';
+  maxImageSize = 5000000;
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4'];
   selectedFiles = [];
   id = 0; // Id de curso o módulo a guardar.
@@ -33,6 +35,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
     public fileUploadService: FileUploadService,
     public currentCourseService: CurrentCourseService
   ) {
+    // Recibe el src de la imagen a mostrar
     this.subscription = this.imageService.getImgSrc().subscribe(imgSrc => {
       this.imgSrc = imgSrc;
       this.fileFormat = 'image';
@@ -40,6 +43,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
         this.fileInput.nativeElement.value = '';
       }
     });
+    // Recibe el src del video (completo) a mostrar
     this.subscription = this.videoService.getVideoSrc().subscribe(videoSrc => {
       this.videoSrc = videoSrc;
       this.fileFormat = 'video';
@@ -47,6 +51,20 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
         this.fileInput.nativeElement.value = '';
       }
     });
+    // Recibe el src del thumbnail (imagen) del video a mostrar como preview
+    this.subscription = this.videoService.getThumbSrc().subscribe(thumbSrc => {
+      this.thumbSrc = thumbSrc;
+      this.fileFormat = 'video';
+      if (this.thumbSrc === '') {
+        this.fileInput.nativeElement.value = '';
+      }
+    });
+    // Recibe el pathUrl del componente seleccionado
+    this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
+      this.videoPathUrl = pathUrl;
+      this.fileFormat = 'video';
+    });
+
     if (this.type === 'course') {
       this.subscription = this.currentCourseService.getCurrentCourse().subscribe(currentCourse => {
         if (currentCourse.id) {
@@ -56,6 +74,10 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
     }
   }
 
+  /*
+   * Recibe archivo seleccionado, valida tamaño y tipo, y sube el archivo a servidor. Obtiene src necesario para mostrar en componente y en propiedades.
+   * @param event  Evento con archivo seleccionado.
+   */
   selectFile(event: any): void {
     if (event.target.files.length) {
       // Validar tamaño máximo
@@ -82,7 +104,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
               break;
             }
             case 'video': {
-              this.fileUploadService.getVideo(data.path);
+              this.fileUploadService.getVideoThumbnail(data.path);
               this.videoService.setPathUrl(data.path);
               break;
             }
@@ -102,5 +124,9 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  loadVideo(): void {
+    this.fileUploadService.getVideo(this.videoPathUrl);
   }
 }

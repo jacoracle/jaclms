@@ -14,6 +14,8 @@ import { FileUploadService } from 'app/services/file-upload.service';
 export class ConstructorVideoComponent implements OnInit, OnDestroy {
   defaultVideoUrl: SafeUrl = './../../../../content/images/video.png';
   videoSrc: SafeUrl = '';
+  thumbSrc: SafeUrl = '';
+  pathUrl = '';
   editing = false;
   subscription: Subscription;
   @Input() component?: Componente;
@@ -26,9 +28,16 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer
   ) {
     this.subscription = this.videoService.getEditing().subscribe(editing => (this.editing = editing));
+    /*
     this.subscription = this.videoService.getVideoSrc().subscribe(videoSrc => {
       if (this.editing) {
         this.videoSrc = videoSrc;
+      }
+    });
+    */
+    this.subscription = this.videoService.getThumbSrc().subscribe(thumbSrc => {
+      if (this.editing) {
+        this.thumbSrc = thumbSrc;
       }
     });
     this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
@@ -41,15 +50,16 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
   selectVideo(): void {
     this.videoService.setEditing(false);
     this.videoService.setVideoSrc(this.videoSrc);
+    this.videoService.setPathUrl(this.pathUrl);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }
 
   public getVideo(path: string): void {
-    this.fileUploadService.getVideoPreviewFile(path).subscribe(data => {
+    this.fileUploadService.getVideoThumbnailFile(path).subscribe(data => {
       const videoPath = URL.createObjectURL(data.body);
       const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
-      this.videoSrc = objectUrl;
+      this.thumbSrc = objectUrl;
     });
   }
 

@@ -9,6 +9,7 @@ export class VideoService {
   private videoSrc = new Subject<SafeUrl>();
   private editing = new Subject<boolean>();
   private pathUrl = new Subject<string>();
+  private thumbSrc = new Subject<SafeUrl>();
 
   constructor() {}
 
@@ -34,5 +35,13 @@ export class VideoService {
 
   getPathUrl(): Observable<string> {
     return this.pathUrl.asObservable();
+  }
+
+  setThumbSrc(thumbSrc: SafeUrl): void {
+    this.thumbSrc.next(thumbSrc);
+  }
+
+  getThumbSrc(): Observable<SafeUrl> {
+    return this.thumbSrc.asObservable();
   }
 }

@@ -17,13 +17,24 @@ export class FileUploadService {
     private videoService: VideoService
   ) {}
 
+  /*
+   * Sube archivo a servidor.
+   * @param file  Archivo seleccionado para guardar en file system.
+   * @param id    Id del curso al que se va a ligar la imagen.
+   * @returns     Objeto con el path donde se guardó el archivo.
+   */
   pushFileStorage(file: File, id: number): Observable<any> {
     const data: FormData = new FormData();
     data.append('file', file);
-    data.append('id', id.toString());
+    data.append('id', 'Curso-' + id.toString());
     return this.http.post(SERVER_API_URL + '/api/fileUpload', data);
   }
 
+  /*
+   * Obtiene imagen del servidor.
+   * @param filePath  Dirección donde está almacenada la imagen.
+   * @returns         Imagen en formato blob.
+   */
   getImageFile(filePath: string): Observable<HttpResponse<Blob>> {
     return this.http.get(SERVER_API_URL + '/api/loadImage?file=' + filePath, {
       observe: 'response',
@@ -31,6 +42,11 @@ export class FileUploadService {
     });
   }
 
+  /*
+   * Obtiene video del servidor.
+   * @param filePath  Dirección donde está almacenado el video.
+   * @returns         Video en formato blob.
+   */
   getVideoFile(filePath: string): Observable<HttpResponse<Blob>> {
     return this.http.get(SERVER_API_URL + '/api/loadVideo?file=' + filePath, {
       observe: 'response',
@@ -38,19 +54,33 @@ export class FileUploadService {
     });
   }
 
-  getVideoPreviewFile(filePath: string): Observable<HttpResponse<Blob>> {
-    return this.http.get(SERVER_API_URL + '/api/videoPreview?file=' + filePath, {
+  /*
+   * Obtiene thumbnail (imagen) de video del servidor.
+   * @param filePath  Dirección donde está almacenado el video.
+   * @returns         Imagen en formato blob.
+   */
+  getVideoThumbnailFile(filePath: string): Observable<HttpResponse<Blob>> {
+    return this.http.get(SERVER_API_URL + '/api/videoFrame?file=' + filePath, {
       observe: 'response',
       responseType: 'blob'
     });
   }
 
+  /*
+   * Elimina archivo indicado del servidor.
+   * @param filePath  Dirección donde está almacenado el archivo.
+   * @returns         Response.
+   */
   deleteFile(filePath: string): Observable<any> {
     const data: FormData = new FormData();
     data.append('file', filePath);
     return this.http.delete(SERVER_API_URL + '/api/deleteFile?file=' + filePath, { responseType: 'text' });
   }
 
+  /*
+   * Solicita imagen del servidor, crea un objectUrl con ella y asigna el src a imageService.
+   * @param filePath  Dirección donde está almacenada la imagen.
+   */
   public getImage(path: string): void {
     this.getImageFile(path).subscribe(data => {
       const imagePath = URL.createObjectURL(data.body);
@@ -59,11 +89,27 @@ export class FileUploadService {
     });
   }
 
+  /*
+   * Solicita thumbnail de video (imagen) del servidor, crea un objectUrl con ella y asigna el src a videoervice.
+   * @param filePath  Dirección donde está almacenada la imagen.
+   */
   public getVideo(path: string): void {
-    this.getVideoPreviewFile(path).subscribe(data => {
+    this.getVideoFile(path).subscribe(data => {
       const videoPath = URL.createObjectURL(data.body);
       const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
       this.videoService.setVideoSrc(objectUrl);
+    });
+  }
+
+  /*
+   * Solicita thumbnail de video (imagen) del servidor, crea un objectUrl con ella y asigna el src a videoervice.
+   * @param filePath  Dirección donde está almacenada la imagen.
+   */
+  public getVideoThumbnail(path: string): void {
+    this.getVideoThumbnailFile(path).subscribe(data => {
+      const videoPath = URL.createObjectURL(data.body);
+      const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
+      this.videoService.setThumbSrc(objectUrl);
     });
   }
 }

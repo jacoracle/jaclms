@@ -1,3 +1,5 @@
-
+<!--
 <video class="block-video-file" [src]="videoSrc" (click)="selectVideo()" *ngIf="videoSrc != ''"></video>
-<img class="img-video" [src]="defaultVideoUrl" (click)="selectVideo()" *ngIf="videoSrc == ''">
+-->
+<img class="img-video" [src]="defaultVideoUrl" (click)="selectVideo()" *ngIf="thumbSrc === ''">
+<img class="img-video" [src]="thumbSrc" (click)="selectVideo()" *ngIf="thumbSrc !== ''">

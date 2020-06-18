@@ -26,10 +26,16 @@
                 <img [src]="defaultImageUrl" alt="" class="cover-upload-img" *ngIf="imgSrc === ''">
                 <img [src]="imgSrc" alt="" class="cover-upload-img" *ngIf="imgSrc !== ''">
               </div>
-              <div *ngIf="fileFormat === 'video'">
+              <div *ngIf="fileFormat === 'video' && videoSrc === ''">
+                Thumbnail
+                <!-- Video thumbnail -->
+                <img [src]="defaultVideoUrl" alt="" class="cover-upload-img" *ngIf="thumbSrc === ''">
+                <img [src]="thumbSrc" alt="" class="cover-upload-img" *ngIf="thumbSrc !== ''" (click)="loadVideo()">
+              </div>
+              <div *ngIf="fileFormat === 'video' && videoSrc !== ''">
+                Videio
                 <!-- Video -->
-                <img [src]="defaultVideoUrl" alt="" *ngIf="videoSrc === ''">
-                <video [src]="videoSrc" height="200" controls *ngIf="videoSrc !== ''"></video>
+                <video [src]="videoSrc" height="200" controls></video>
               </div>
             </div>
 
