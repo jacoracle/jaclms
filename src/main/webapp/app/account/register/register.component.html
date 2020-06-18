@@ -164,12 +164,11 @@
                   <!-- Código telefónico de país -->
                   <div class="selectWrap select-code">
                     <select id="field_country" name="country" formControlName="country">
-                      <option [ngValue]="null"></option>
                       <option
                         [ngValue]="countryOption"
                         *ngFor="let countryOption of countrys;">
                           {{countryOption.nombre}}
-                          {{countryOption.phoneCode}}
+                          {{countryOption.codigoTelefonico}}
                       </option>
                     </select>
                     <small class="form-text text-danger"

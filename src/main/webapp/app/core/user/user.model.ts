@@ -1,4 +1,4 @@
-import { IPhoneNumber } from 'app/shared/model/phone-number.model';
+import { ITelefono } from 'app/shared/model/telefono.model';
 
 export interface IUser {
   id?: any;
@@ -6,7 +6,7 @@ export interface IUser {
   firstName?: string;
   lastName1?: string;
   lastName2?: string;
-  phoneNumbers?: IPhoneNumber[];
+  telefonos?: ITelefono[];
   email?: string;
   activated?: boolean;
   langKey?: string;
@@ -25,7 +25,7 @@ export class User implements IUser {
     public firstName?: string,
     public lastName1?: string,
     public lastName2?: string,
-    public phoneNumbers?: IPhoneNumber[],
+    public telefonos?: ITelefono[],
     public email?: string,
     public phone?: string,
     public activated?: boolean,

@@ -79,4 +79,8 @@ export class TopBarComponent {
   changeVisorSize(size: string): void {
     this.navigationControlsService.setVisorSize(size);
   }
+
+  redirectHome(): void {
+    this.router.navigate(['/']);
+  }
 }

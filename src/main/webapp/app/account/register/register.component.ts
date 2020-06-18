@@ -8,7 +8,7 @@ import { LoginModalService } from 'app/core/login/login-modal.service';
 import { RegisterService } from './register.service';
 import { JhiEventManager, JhiAlertService, JhiAlert, JhiEventWithContent } from 'ng-jhipster';
 import { CountryService } from 'app/entities/country/country.service';
-import { ICountry } from 'app/shared/model/country.model';
+import { IPais } from 'app/shared/model/pais.model';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -25,7 +25,7 @@ export class RegisterComponent implements AfterViewInit {
   errorUserExists = false;
   success = false;
   alerts: JhiAlert[] = [];
-  countrys: ICountry[] = [];
+  countrys: IPais[] = [];
 
   registerForm = this.fb.group({
     login: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50), Validators.pattern('^[_.@A-Za-z0-9-]*$')]],
@@ -57,11 +57,11 @@ export class RegisterComponent implements AfterViewInit {
     this.countryService
       .query()
       .pipe(
-        map((res: HttpResponse<ICountry[]>) => {
+        map((res: HttpResponse<IPais[]>) => {
           return res.body ? res.body : [];
         })
       )
-      .subscribe((resBody: ICountry[]) => (this.countrys = resBody));
+      .subscribe((resBody: IPais[]) => (this.countrys = resBody));
   }
 
   register(): void {
@@ -94,12 +94,12 @@ export class RegisterComponent implements AfterViewInit {
           password,
           langKey: this.languageService.getCurrentLanguage()
         },
-        phoneNumbers:
+        telefonos:
           this.registerForm.get(['phoneNumber'])!.value && this.registerForm.get(['country'])!.value
             ? [
                 {
-                  phoneNumber: this.registerForm.get(['phoneNumber'])!.value,
-                  country: this.registerForm.get(['country'])!.value
+                  telefono: this.registerForm.get(['phoneNumber'])!.value,
+                  pais: this.registerForm.get(['country'])!.value
                 }
               ]
             : []
