@@ -116,7 +116,7 @@
               <div class="form-nimbus">
                   <label jhiTranslate="constructorApp.curso.gradoAcademico" for="field_gradoAcademico">Grado Academico</label>
                   <div class="selectWrap">
-                    <select id="field_gradoAcademico" name="gradoAcademico" formControlName="gradoAcademico" (change)="changeGracoAcademico($event)">
+                    <select id="field_gradoAcademico" name="gradoAcademico" formControlName="gradoAcademico" (change)="changeGradoAcademico($event)">
                         <option [ngValue]="gradoAcademicoOption.id === editForm.get('gradoAcademico')!.value?.id ? editForm.get('gradoAcademico')!.value : gradoAcademicoOption" *ngFor="let gradoAcademicoOption of gradoAcademicos; trackBy: trackById">{{gradoAcademicoOption.descripcion}}</option>
                     </select>
                   </div>
