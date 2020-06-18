@@ -12,7 +12,7 @@ import { FileUploadService } from 'app/services/file-upload.service';
   styleUrls: ['./constructor-video.component.scss']
 })
 export class ConstructorVideoComponent implements OnInit, OnDestroy {
-  defaultVideoUrl: SafeUrl = './../../../../content/images/cover_upload.png';
+  defaultVideoUrl: SafeUrl = './../../../../content/images/video.png';
   videoSrc: SafeUrl = '';
   editing = false;
   subscription: Subscription;

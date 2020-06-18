@@ -1,7 +1,7 @@
 package org.constructor.web.rest;
 
 
-import org.constructor.domain.PhoneNumber;
+import org.constructor.domain.Telefono;
 import org.constructor.domain.User;
 import org.constructor.repository.UserRepository;
 import org.constructor.security.SecurityUtils;
@@ -76,7 +76,7 @@ public class AccountResource {
     public void registerAccountUser(@Valid @RequestBody UserPhoneDTO userPhoneDTO) {
     	log.debug("userPhoneDTO: {}", userPhoneDTO);
     	User newUser = userPhoneDTO.getUser();
-    	Set<PhoneNumber> listPhone =  userPhoneDTO.getPhoneNumbers();
+    	Set<Telefono> listPhone =  userPhoneDTO.getTelefonos();
         log.debug("Creacion de cuenta:");
         User user = userService.registerUser(newUser, newUser.getPassword(), listPhone);
         mailService.sendActivationEmail(user);
@@ -139,7 +139,7 @@ public class AccountResource {
         if (!user.isPresent()) {
             throw new AccountResourceException("User could not be found");
         }
-        userService.updateUser(userDTO.getFirstName(), userDTO.getLastName1(),userDTO.getLastName2(), userDTO.getPhone(), userDTO.getEmail(),
+        userService.updateUser(userDTO.getFirstName(), userDTO.getLastName1(),userDTO.getLastName2(), userDTO.getTelefono(), userDTO.getEmail(),
             userDTO.getLangKey(), userDTO.getImageUrl());
     }
 

@@ -2,7 +2,7 @@ package org.constructor.service;
 
 import org.constructor.config.Constants;
 import org.constructor.domain.Authority;
-import org.constructor.domain.PhoneNumber;
+import org.constructor.domain.Telefono;
 import org.constructor.domain.User;
 import org.constructor.repository.AuthorityRepository;
 import org.constructor.repository.UserRepository;
@@ -42,11 +42,11 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
     
-    private final PhoneNumberService phoneNumberService;
+    private final TelefonoService phoneNumberService;
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository,PhoneNumberService phoneNumberService, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository,TelefonoService phoneNumberService, CacheManager cacheManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
@@ -91,7 +91,7 @@ public class UserService {
             });
     }
     
-        public User registerUser(User userDTO, String password, Set<PhoneNumber> phoneNumber) {
+        public User registerUser(User userDTO, String password, Set<Telefono> phoneNumber) {
         userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser, userDTO);
             if (!removed) {
@@ -128,7 +128,7 @@ public class UserService {
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser.getId());
-        for(PhoneNumber phone : phoneNumber) {
+        for(Telefono phone : phoneNumber) {
         	phone.setUser(newUser);
         	phoneNumberService.save(phone);
         }
@@ -190,7 +190,7 @@ public class UserService {
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
      */
-    public void updateUser(String firstName, String lastName1, String lastName2, Set<PhoneNumber> phone, String email, String langKey, String imageUrl) {
+    public void updateUser(String firstName, String lastName1, String lastName2, Set<Telefono> phone, String email, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {

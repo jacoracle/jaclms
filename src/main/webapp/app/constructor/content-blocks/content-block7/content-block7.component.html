@@ -1,9 +1,17 @@
 <!-- Bloque de contenido: Video con envolvente -->
-<div class="col-cb-text-img" *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
+<div class="col-cb-video-text-color" *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
 
     <div *ngFor="let component of orderVideoText(contentBlock.bloqueComponentes.componentes); let index = index;">
+
+      <div *ngIf="component.tipoComponente.nombre === 'video'"  class="cc-video">
+          <jhi-constructor-video
+              [component]="component"
+              (updateComponent)="onUpdateComponent($event, index)">
+          </jhi-constructor-video>
+      </div>
+
         <div *ngIf="component.tipoComponente.nombre === 'text'" class="b-paragraph-text">
-            <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes">
+            <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes" class="">
                 <jhi-visor-text
                     [component]="component"
                     [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
@@ -11,13 +19,7 @@
                 </jhi-visor-text>
             </div>
         </div>
-        <div *ngIf="component.tipoComponente.nombre === 'video'"  class="cc-image">
-            <jhi-constructor-video 
-                [component]="component"
-                (updateComponent)="onUpdateComponent($event, index)">
-            </jhi-constructor-video>
-        </div>
+
     </div>
 
 </div>
-        

@@ -85,4 +85,11 @@ public class RestConstants {
 	* Path para peticiones autor por id
 	*/
 	public static final String PATH_AUTHOR_ID = "autor/{id}";
+	
+	// ---------------Pais--------------------
+	
+	/**
+	* Path para peticiones pais
+	*/
+	public static final String PATH_PAIS = "pais";
 }

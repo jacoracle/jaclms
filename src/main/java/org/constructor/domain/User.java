@@ -87,7 +87,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     
     
     @OneToMany(cascade = CascadeType.ALL,mappedBy="user", fetch = FetchType.EAGER)
-    private Set<PhoneNumber> phoneNumber = new HashSet<>();
+    private Set<Telefono> telefono = new HashSet<>();
     
     // ManyToMany to curso relationship (JAM)
     @JsonIgnore
@@ -266,20 +266,20 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.email = email;
     }
 
-    /**
-     * Get
-     * @return the phoneNumber
-     */
-    public Set<PhoneNumber> getPhone() {
-		return phoneNumber;
+   
+
+	/**
+	 * @return the telefono
+	 */
+	public Set<Telefono> getTelefono() {
+		return telefono;
 	}
 
-    /**
-     * Set 
-     * @param phone
-     */
-	public void setPhone(Set<PhoneNumber> phone) {
-		this.phoneNumber = phoneNumber;
+	/**
+	 * @param telefono the telefono to set
+	 */
+	public void setTelefono(Set<Telefono> telefono) {
+		this.telefono = telefono;
 	}
 
 	/**
@@ -426,7 +426,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", firstName='" + firstName + '\'' +
             ", lastName1='" + lastName1 + '\'' +
             ", lastName2='" + lastName2 + '\'' +
-            ", phone=  '" + phoneNumber + '\'' +
+            ", telefono=  '" + telefono + '\'' +
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated='" + activated + '\'' +
