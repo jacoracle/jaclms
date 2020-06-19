@@ -89,7 +89,7 @@ public class VideoResource {
 		StringBuilder builder = new StringBuilder();
 		builder.append(PATH);
 		File file = new File(builder.append(nameVideo).toString());
-		int frameNumber = 10;
+		int frameNumber = 255;
 		Picture frame = FrameGrab.getFrameFromFile(file, frameNumber);
 		BufferedImage bi = AWTUtil.toBufferedImage(frame);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
