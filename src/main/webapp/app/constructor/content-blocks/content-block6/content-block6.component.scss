@@ -22,9 +22,10 @@
 .icon-instruction-video {
   position: absolute;
   left: 6px;
-  top: 12px;
   width: 28px;
   height: 28px;
+  top: 50%;
+  margin-top: -14px;
   border-radius: 6px;
   background-color: $blue-nimbus-light;
   display: flex;
