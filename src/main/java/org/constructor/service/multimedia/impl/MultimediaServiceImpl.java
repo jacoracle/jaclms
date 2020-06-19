@@ -105,8 +105,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				String  extension =   FilenameUtils.getExtension( multimedia.getOriginalFilename());
 				String replace = null; 
 				
-				videoResponse.setName( multimedia.getOriginalFilename().replace(multimedia.getOriginalFilename(), FilenameUtils.getBaseName(multimedia.getOriginalFilename()).concat(time)
-						 + "." + FilenameUtils.getExtension(multimedia.getOriginalFilename())).toLowerCase() );
+				videoResponse.setName( multimedia.getOriginalFilename());
 				//Create Path
 				StringBuilder builder = new StringBuilder();
 				PathValidation.createPath(UPLOAD_FOLDER.toString());
