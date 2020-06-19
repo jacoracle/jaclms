@@ -15,6 +15,7 @@ import { EventEmitterService } from 'app/services/event-emitter.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { IContenido, Contenido } from 'app/shared/model/contenido.model';
 import { IBloquesCurso, BloquesCurso } from 'app/shared/model/bloques-curso.model';
+import { ImageService } from 'app/services/image.service';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -76,7 +77,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     private eventManager: JhiEventManager,
     private textEditorBehaviosService: TextEditorBehaviorService,
     private eventEmitterService: EventEmitterService,
-    private navigationControlsService: NavigationControlsService
+    private navigationControlsService: NavigationControlsService,
+    private imageService: ImageService
   ) {
     this.contentBlocks = [];
     this.subscription = this.contentBlocksService.getTempaltes().subscribe(templates => {
@@ -333,6 +335,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.eventEmitterService.getInvokeSave().subscribe(() => {
       this.save();
+      this.imageService.setImgSrc(false);
     });
   }
 
