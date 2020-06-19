@@ -41,6 +41,7 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
       }
     });
     this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
+      this.pathUrl = pathUrl;
       if (this.editing) {
         this.updateComponent.emit({ newValue: pathUrl, type: 'image' });
       }
@@ -49,7 +50,7 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
 
   selectVideo(): void {
     this.videoService.setEditing(false);
-    this.videoService.setVideoSrc(this.videoSrc);
+    this.videoService.setThumbSrc(this.thumbSrc);
     this.videoService.setPathUrl(this.pathUrl);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
@@ -65,6 +66,7 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.component && this.component.contenido && this.component.contenido.contenido !== '') {
+      this.pathUrl = this.component.contenido.contenido!;
       this.getVideo(this.component.contenido.contenido!);
     }
   }

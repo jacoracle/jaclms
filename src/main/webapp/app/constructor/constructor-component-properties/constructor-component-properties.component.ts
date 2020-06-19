@@ -58,6 +58,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       if (this.thumbSrc === '') {
         this.fileInput.nativeElement.value = '';
       }
+      this.videoSrc = '';
     });
     // Recibe el pathUrl del componente seleccionado
     this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
