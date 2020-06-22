@@ -41,9 +41,9 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
       }
     });
     this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
-      this.pathUrl = pathUrl;
       if (this.editing) {
-        this.updateComponent.emit({ newValue: pathUrl, type: 'image' });
+        this.pathUrl = pathUrl;
+        this.updateComponent.emit({ newValue: pathUrl, type: 'video' });
       }
     });
   }

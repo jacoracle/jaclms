@@ -129,6 +129,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
             this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']].contenido!.contenido = $event['newValue'];
             break;
           }
+          // Actualizar componente con path del video seleccionado
+          case 'video': {
+            this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']].contenido!.contenido = $event['newValue'];
+            break;
+          }
         }
       }
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ImageService } from 'app/services/image.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
@@ -27,6 +27,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   type = 'course'; // course, module
   @ViewChild('fileInput', { static: false }) fileInput: any;
   fileFormat = '';
+  @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
 
   constructor(
     public imageService: ImageService,
@@ -49,6 +50,8 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       this.fileFormat = 'video';
       if (this.videoSrc === '') {
         this.fileInput.nativeElement.value = '';
+      } else {
+        setTimeout(() => this.videoplayer!.nativeElement.play(), 1000);
       }
     });
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview

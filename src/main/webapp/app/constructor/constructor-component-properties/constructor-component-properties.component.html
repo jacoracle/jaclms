@@ -33,12 +33,12 @@
               </div>
               <div *ngIf="fileFormat === 'video' && videoSrc !== ''">
                 <!-- Video -->
-                <video [src]="videoSrc" height="200" controls></video>
+                <video [src]="videoSrc" height="200" controls #vPlayer></video>
               </div>
             </div>
 
             <div class="row-sidebar-up-image-btn">
-              <button (click)="deleteImage()" class="secondary-btn text-transform-none" *ngIf="this.imgSrc !== ''">Eliminar imagen</button>
+              <button (click)="deleteImage()" class="secondary-btn text-transform-none" *ngIf="this.imgSrc !== ''">Eliminar</button>
               <button type="button" class="main-btn" (click)="fileInput.click()">
                   <span>Subir</span>
                   <input #fileInput type="file" (change)="selectFile($event)" style="display:none;" />
