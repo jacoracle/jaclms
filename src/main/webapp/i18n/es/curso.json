@@ -20,7 +20,7 @@
       },
       "validations": {
         "formError": "Por favor revisa la información y vuelve a intentarlo.",
-        "fileSize": "La imagen debe pesar menos de 5MB.",
+        "fileSize": "El archivo debe pesar menos de 5MB.",
         "fileType": "Tipo de archivo no permitido.",
         "dates": "La fecha de creación no puede ser posterior a la fecha de publicación.",
         "requiredField": "Este campo es requerido."
@@ -47,7 +47,7 @@
       "gradoAcademico": "Grado académico",
       "numeroGrado": "Grado",
       "nivelJerarquico": {
-        "created": "Se ha guardado la información satisfactoriamente.",
+        "created": "Se ha guardado el proyecto satisfactoriamente.",
         "updated": "Se ha actualizado la información satisfactoriamente.",
         "error": "No se pudo guardar la información, por favor vuelve a intentar más tarde."
       }
