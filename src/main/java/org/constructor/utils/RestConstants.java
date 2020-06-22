@@ -98,4 +98,18 @@ public class RestConstants {
 	* Path para peticiones pais
 	*/
 	public static final String PATH_PAIS = "pais";
+	
+	// ---------------CONTENIDO--------------------
+	
+	/**
+	* Path para peticiones contenido
+	*/
+	public static final String PATH_CONTENIDO = "contenido";
+	
+	// ---------------tipos-bloques-componentes--------------------
+	
+	/**
+	 *  Path para peticiones tipos-bloques-componentes
+	 */
+	public static final String PATH_TIPOS_BLOQUES_CPMPONENTES = "tipos-bloques-componentes";
 }
