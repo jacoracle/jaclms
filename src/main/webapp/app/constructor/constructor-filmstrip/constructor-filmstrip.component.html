@@ -13,7 +13,11 @@
     <div class="row-c-component-c">
 
       <div class="row-artboard-filmstrip" *ngFor="let contentBlock of contentBlocks; let index = index">
-        <div class="row-drag-ud"><div class="icon ni-drag"></div></div>
+        <!-- <div class="row-drag-ud"><div class="icon ni-drag"></div></div> -->
+        <div class="row-drag-ud" *ngIf="validateFimstripsSize()">
+          <div class="icon ni-drag" (click)="reorderFilmstrip(index, contentBlock.orden, 'up')" *ngIf="!isFirstFilm(index)" >.</div>
+          <div class="icon ni-drag" (click)="reorderFilmstrip(index, contentBlock.orden, 'down')" *ngIf="!isLastFilm(index)" ></div>
+        </div>
         <div
           class="artboard-mini"
           [ngClass]="{'ab-mini-select': selectedContentBlockIndex == index}"
@@ -25,7 +29,7 @@
           <p>{{contentBlock.bloqueComponentes.name}}</p>
           <div class="delete-ab" (click)="deleteContentBlock(index)">
             <i class="icon ni-delete"></i>
-            <p>Eliminar</p>
+            <p>{{index}} Eliminar {{contentBlock.orden}}</p>
           </div>
         </div>
       </div>

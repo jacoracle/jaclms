@@ -12,6 +12,8 @@ export class ContentBlocksService {
   indexBlockToDelete = new Subject<number>();
   templates = new Subject<ITipoBloqueComponentes[]>();
   selectedBlockIndex = new Subject<number>();
+  indexBlockToReorder = new Subject<number>();
+  newOrderBlock = new Subject<number>();
 
   constructor() {}
 
@@ -53,5 +55,24 @@ export class ContentBlocksService {
 
   setSelectedBlockIndex(index: number): void {
     this.selectedBlockIndex.next(index);
+  }
+
+  /**
+   * actualizar el orden de los bloques de la mesa de trabajo
+   */
+  getIndexBlockToReorder(): Observable<number> {
+    return this.indexBlockToReorder.asObservable();
+  }
+
+  setIndexBlockToReorder(index: number): void {
+    this.indexBlockToReorder.next(index);
+  }
+
+  setNewOrderBlock(newOrder: number): void {
+    this.newOrderBlock.next(newOrder);
+  }
+
+  getNewOrderBlock(): Observable<number> {
+    return this.newOrderBlock;
   }
 }

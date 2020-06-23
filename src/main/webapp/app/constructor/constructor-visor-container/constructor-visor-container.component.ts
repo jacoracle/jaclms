@@ -27,6 +27,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   templates: ITipoBloqueComponentes[] = [];
   selectedTemplateType = '';
   selectedBlock = -1;
+  newOrderBlock = -1;
   contentBlocks = Array<IBloquesCurso>();
   nivel: NivelJerarquico = {
     nivelId: undefined,
@@ -106,6 +107,28 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.subscription = this.contentBlocksService.getSelectedBlockIndex().subscribe(selectedBlockIndex => {
       this.selectedBlock = selectedBlockIndex;
     });
+    this.subscription = this.contentBlocksService.getNewOrderBlock().subscribe(newOrderBlock => {
+      this.newOrderBlock = newOrderBlock;
+      console.error('valor nuevo orden: ', newOrderBlock);
+    });
+    this.subscription = this.contentBlocksService.getIndexBlockToReorder().subscribe(indexBlockToReorder => {
+      console.error('index nuevo orden: ', indexBlockToReorder);
+      this.contentBlocks[indexBlockToReorder].orden = this.newOrderBlock;
+      // this.updateBlocksOrder();
+      this.updateBlocksIndexOrder(indexBlockToReorder, this.newOrderBlock - 1);
+    });
+  }
+
+  /**
+   * actualiza el indice de los bloques de la mesa de trabajo cuando se
+   * reordena la tira de pelicula desde los botones y se actualiza el orden
+   * en cada objeto de bloque.
+   * @param oldIndex
+   * @param newIndex
+   */
+  updateBlocksIndexOrder(oldIndex: number, newIndex: number): void {
+    this.contentBlocks.splice(newIndex, 0, this.contentBlocks.splice(oldIndex, 1)[0]);
+    this.updateBlocksOrder();
   }
 
   updateBlocksOrder(): void {

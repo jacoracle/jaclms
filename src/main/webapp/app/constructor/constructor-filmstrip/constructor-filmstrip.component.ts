@@ -104,6 +104,32 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
     this.contentBlocksService.setIndexBlockToDelete(index);
   }
 
+  /**
+   * Reordena el filstrip y los bloques de contenido de la mesa de trabajo
+   */
+  reorderFilmstrip(index: number, ordenOrigin: number, direccion: string): void {
+    console.error('indice recibido: ', index);
+    console.error('orden original: ', ordenOrigin);
+    console.error('dirección: ', direccion);
+
+    this.contentBlocksService.setNewOrderBlock(
+      direccion.toUpperCase() === 'UP' ? ordenOrigin - 1 : direccion.toUpperCase() === 'DOWN' ? ordenOrigin + 1 : ordenOrigin
+    );
+    this.contentBlocksService.setIndexBlockToReorder(index);
+  }
+
+  validateFimstripsSize(): boolean {
+    return this.contentBlocks.length > 1;
+  }
+
+  isFirstFilm(index: number): boolean {
+    return index === 0;
+  }
+
+  isLastFilm(index: number): boolean {
+    return this.contentBlocks.length - 1 === index;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
