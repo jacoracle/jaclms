@@ -27,7 +27,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   templates: ITipoBloqueComponentes[] = [];
   selectedTemplateType = '';
   selectedBlock = -1;
-  newOrderBlock = -1;
+  newIndexOrderBlock = -1;
   contentBlocks = Array<IBloquesCurso>();
   nivel: NivelJerarquico = {
     nivelId: undefined,
@@ -107,15 +107,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.subscription = this.contentBlocksService.getSelectedBlockIndex().subscribe(selectedBlockIndex => {
       this.selectedBlock = selectedBlockIndex;
     });
-    this.subscription = this.contentBlocksService.getNewOrderBlock().subscribe(newOrderBlock => {
-      this.newOrderBlock = newOrderBlock;
-      console.error('valor nuevo orden: ', newOrderBlock);
+    this.subscription = this.contentBlocksService.getNewIndexOrderBlock().subscribe(newOrderBlock => {
+      this.newIndexOrderBlock = newOrderBlock;
     });
     this.subscription = this.contentBlocksService.getIndexBlockToReorder().subscribe(indexBlockToReorder => {
-      console.error('index nuevo orden: ', indexBlockToReorder);
-      this.contentBlocks[indexBlockToReorder].orden = this.newOrderBlock;
-      // this.updateBlocksOrder();
-      this.updateBlocksIndexOrder(indexBlockToReorder, this.newOrderBlock - 1);
+      this.updateBlocksIndexOrder(indexBlockToReorder, this.newIndexOrderBlock); // - 1);
     });
   }
 
@@ -131,6 +127,9 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.updateBlocksOrder();
   }
 
+  /**
+   * asigna el orden correspondiente a los bloques de la mesa de trabajo
+   */
   updateBlocksOrder(): void {
     for (let i = 0; i < this.contentBlocks.length; i++) {
       this.contentBlocks[i].orden = i + 1;

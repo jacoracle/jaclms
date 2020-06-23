@@ -107,14 +107,8 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
   /**
    * Reordena el filstrip y los bloques de contenido de la mesa de trabajo
    */
-  reorderFilmstrip(index: number, ordenOrigin: number, direccion: string): void {
-    console.error('indice recibido: ', index);
-    console.error('orden original: ', ordenOrigin);
-    console.error('dirección: ', direccion);
-
-    this.contentBlocksService.setNewOrderBlock(
-      direccion.toUpperCase() === 'UP' ? ordenOrigin - 1 : direccion.toUpperCase() === 'DOWN' ? ordenOrigin + 1 : ordenOrigin
-    );
+  reorderFilmstrip(index: number, newIndex: number): void {
+    this.contentBlocksService.setNewIndexOrderBlock(newIndex);
     this.contentBlocksService.setIndexBlockToReorder(index);
   }
 
