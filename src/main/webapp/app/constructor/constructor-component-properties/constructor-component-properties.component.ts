@@ -20,7 +20,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   defaultVideoUrl = './../../../content/images/cover_upload.png';
   thumbSrc: SafeUrl = '';
   videoPathUrl = '';
-  maxImageSize = 5000000;
+  maxImageSize = 5120000;
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4'];
   selectedFiles = [];
   id = 0; // Id de curso o módulo a guardar.
