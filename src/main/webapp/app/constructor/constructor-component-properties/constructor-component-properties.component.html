@@ -26,10 +26,11 @@
                 <img [src]="defaultImageUrl" alt="" class="cover-upload-img" *ngIf="imgSrc === ''">
                 <img [src]="imgSrc" alt="" class="cover-upload-img" *ngIf="imgSrc !== ''">
               </div>
-              <div *ngIf="fileFormat === 'video' && videoSrc === ''">
+              <div *ngIf="fileFormat === 'video' && videoSrc === ''" [ngClass]="{'test-video': thumbSrc !== ''}">
                 <!-- Video thumbnail -->
-                <img [src]="defaultVideoUrl" alt="" class="cover-upload-img" *ngIf="thumbSrc === ''">
-                <img [src]="thumbSrc" alt="" class="cover-upload-img" *ngIf="thumbSrc !== ''" (click)="loadVideo()">
+                <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
+                <span class="play-icon-test" (click)="loadVideo()"><i class="icon ni-view"></i></span>
+                <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="thumbSrc !== ''">
               </div>
               <div *ngIf="fileFormat === 'video' && videoSrc !== ''">
                 <!-- Video -->

@@ -17,7 +17,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   imgSrc: SafeUrl = '';
   defaultImageUrl = './../../../content/images/cover_upload.png';
   videoSrc: SafeUrl = '';
-  defaultVideoUrl = './../../../content/images/cover_upload.png';
+  defaultVideoUrl = './../../../content/images/video.png';
   thumbSrc: SafeUrl = '';
   videoPathUrl = '';
   maxImageSize = 5000000;
