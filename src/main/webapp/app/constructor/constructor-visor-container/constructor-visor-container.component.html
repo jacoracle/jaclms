@@ -43,7 +43,9 @@
           <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'video_envolvente'">
             <jhi-content-block7 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block7>
           </div>
-
+          <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'subtitulo'">
+            <jhi-content-block8 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block8>
+          </div>
         </div>
         <!-- Add content -->
         <div *ngIf="selectedBlock === index" class="row-add-content">

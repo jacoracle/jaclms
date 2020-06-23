@@ -6,6 +6,7 @@ import { FileUploadService } from 'app/services/file-upload.service';
 import { CurrentCourseService } from 'app/services/current-course.service';
 import { SafeUrl } from '@angular/platform-browser';
 import { VideoService } from 'app/services/video.service';
+import { PdfService } from 'app/services/pdf.service';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -18,10 +19,14 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   defaultImageUrl = './../../../content/images/cover_upload.png';
   videoSrc: SafeUrl = '';
   defaultVideoUrl = './../../../content/images/video.png';
+  pdfSrc: SafeUrl = '';
+  defaultPdfUrl = './../../../content/images/pdf_upload.png';
   thumbSrc: SafeUrl = '';
   videoPathUrl = '';
+  pdfPathUrl = '';
   maxImageSize = 5120000;
-  allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4'];
+  allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf'];
+  imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
   selectedFiles = [];
   id = 0; // Id de curso o módulo a guardar.
   type = 'course'; // course, module
@@ -32,6 +37,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   constructor(
     public imageService: ImageService,
     public videoService: VideoService,
+    public pdfService: PdfService,
     public eventManager: JhiEventManager,
     public fileUploadService: FileUploadService,
     public currentCourseService: CurrentCourseService
@@ -52,6 +58,13 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
         this.fileInput.nativeElement.value = '';
       } else {
         setTimeout(() => this.videoplayer!.nativeElement.play(), 1000);
+      }
+    });
+    this.subscription = this.pdfService.getPdfSrc().subscribe(pdfSrc => {
+      this.pdfSrc = pdfSrc;
+      this.fileFormat = 'pdf';
+      if (this.pdfSrc === '') {
+        this.fileInput.nativeElement.value = '';
       }
     });
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
@@ -101,17 +114,21 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       } else {
         this.selectedFiles = event.target.files;
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
-          switch (this.fileFormat) {
-            case 'image': {
-              this.fileUploadService.getImage(data.path);
-              this.imageService.setPathUrl(data.path);
-              break;
-            }
-            case 'video': {
-              this.fileUploadService.getVideoThumbnail(data.path);
-              this.videoService.setPathUrl(data.path);
-              break;
-            }
+          if (this.fileFormat === 'image' && this.imageFileTypes.includes(event.target.files[0].type)) {
+            this.fileUploadService.getImage(data.path);
+            this.imageService.setPathUrl(data.path);
+          } else if (this.fileFormat === 'video' && event.target.files[0].type === 'video/mp4') {
+            this.fileUploadService.getVideoThumbnail(data.path);
+            this.videoService.setPathUrl(data.path);
+          } else if (this.fileFormat === 'pdf' && event.target.files[0].type === 'application/pdf') {
+            this.fileUploadService.getPdf(data.path);
+            this.pdfService.setPathUrl(data.path);
+          } else {
+            this.eventManager.broadcast(
+              new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.fileType' })
+            );
+            event.target.files = [];
+            return;
           }
         });
       }
