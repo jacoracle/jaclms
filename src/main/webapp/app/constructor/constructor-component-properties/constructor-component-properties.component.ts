@@ -18,7 +18,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   imgSrc: SafeUrl = '';
   defaultImageUrl = './../../../content/images/cover_upload.png';
   videoSrc: SafeUrl = '';
-  defaultVideoUrl = './../../../content/images/video.png';
+  defaultVideoUrl = './../../../content/images/video_thumb.png';
   pdfSrc: SafeUrl = '';
   defaultPdfUrl = './../../../content/images/pdf_upload.png';
   thumbSrc: SafeUrl = '';
