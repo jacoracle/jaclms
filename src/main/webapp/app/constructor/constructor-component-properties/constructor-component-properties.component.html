@@ -36,6 +36,9 @@
                 <!-- Video -->
                 <video [src]="videoSrc" height="200" controls #vPlayer></video>
               </div>
+              <div [hidden]="!showLoader" class="loader-cp">
+                Doing something
+              </div>
             </div>
 
             <div class="row-sidebar-up-image-btn">
