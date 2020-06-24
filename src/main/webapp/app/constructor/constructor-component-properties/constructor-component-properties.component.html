@@ -29,12 +29,12 @@
               <div *ngIf="fileFormat === 'video' && videoSrc === ''" [ngClass]="{'test-video': thumbSrc !== ''}">
                 <!-- Video thumbnail -->
                 <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
-                <span class="play-icon-test" (click)="loadVideo()"><i class="icon ni-view"></i></span>
+                <span class="play-icon-test" (click)="loadVideo()"><i class="icon ni-play"></i></span>
                 <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="thumbSrc !== ''">
               </div>
               <div *ngIf="fileFormat === 'video' && videoSrc !== ''">
                 <!-- Video -->
-                <video [src]="videoSrc" height="200" controls #vPlayer></video>
+                <video [src]="videoSrc" width="100%" controls #vPlayer></video>
               </div>
             </div>
 
