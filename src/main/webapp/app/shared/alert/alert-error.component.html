@@ -4,10 +4,9 @@
 
         <div *ngIf="alert && alert.type && alert.msg" [ngClass]="alert.type" (close)="alert.close(alerts)" class="alert-nimbus">
             <i class="icon alert-icon"></i>
-            <p>{{alert.msg}}</p>
+                <p [innerHTML]="alert.msg"></p>
             <button (click)="alert.close(alerts)"><i class="icon ni-close"></i></button>
         </div>
-
         <!--
         <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
             <pre [innerHTML]="alert.msg"></pre>
@@ -18,12 +17,13 @@
 </div>
 
 
-
-<!-- <div class="alerts alert-test" role="alert"> -->
-<!-- <div role="alert">
+<!--
+<div class="alerts alert-test" role="alert">
+<div role="alert">
     <div *ngFor="let alert of alerts" [ngClass]="setClasses(alert)" class="alert-nimbus">
         <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
             <pre [innerHTML]="alert.msg"></pre>
         </ngb-alert>
     </div>
-</div> -->
+</div>
+-->
