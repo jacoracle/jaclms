@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +52,7 @@ public class VideoResource {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@RequestMapping(path = RestConstants.PATH_LOAD_VIDEO, method = RequestMethod.GET, produces = "video/mp4")
-	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> loadVideo(@RequestParam("file") String nameVideo) throws IOException {
 		boolean  banner = false;
 		
@@ -68,7 +69,7 @@ public class VideoResource {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@GetMapping(path = RestConstants.PATH_VIDEO_PREVIEW, produces = "video/mp4")
-	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> preViewVideo(@RequestParam("file") String nameVideo) throws IOException {
 		boolean  banner = true;
 		return videoBanner(banner,nameVideo);
@@ -84,7 +85,7 @@ public class VideoResource {
 	 * @throws JCodecException the j codec exception
 	 */
 	@GetMapping(path = RestConstants.PATH_VIDEO_FRAME, produces = "image/png")
-	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> frameVideo(@RequestParam("file") String nameVideo) throws IOException, JCodecException{
 		StringBuilder builder = new StringBuilder();
 		builder.append(PATH);

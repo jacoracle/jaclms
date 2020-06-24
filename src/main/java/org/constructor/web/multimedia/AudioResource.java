@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +49,7 @@ public class AudioResource {
 	 * @throws IOException 
 	 */
 	@RequestMapping(path = RestConstants.PATH_LOAD_AUDIO, method = RequestMethod.GET, produces = "audio/mpeg")
-	@PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> loadAudio(@RequestParam("file") String nameAudio) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		builder.append(PATH);
