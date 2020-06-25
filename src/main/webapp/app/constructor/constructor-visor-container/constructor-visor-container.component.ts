@@ -8,7 +8,7 @@ import { NivelJerarquico, INivelJerarquico } from 'app/shared/model/nivel-jerarq
 import { NivelJerarquicoService } from 'app/entities/nivel-jerarquico/nivel-jerarquico.service';
 import { HttpResponse } from '@angular/common/http';
 import { TipoNivelJerarquico } from 'app/shared/model/enumerations/tipo-nivel-jerarquico.model';
-import { TipoComponente, ITipoComponente } from 'app/shared/model/tipo-componente.model';
+import { ITipoComponente } from 'app/shared/model/tipo-componente.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.service';
 import { EventEmitterService } from 'app/services/event-emitter.service';
@@ -37,16 +37,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     orden: 1,
     bloquesCurso: undefined
   };
-  tiposComponente: TipoComponente[] = [
-    {
-      id: 1,
-      nombre: 'text'
-    },
-    {
-      id: 2,
-      nombre: 'image'
-    }
-  ];
   error = false;
   success = false;
   _curso: any;
@@ -88,7 +78,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       if (selectedBlock !== undefined) {
         this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
         this.updateBlocksOrder();
-        if (this.contentBlocks.length <= 1) {
+        if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
           this.selectedBlock = 0;
         } else {
           this.selectedBlock = this.selectedBlock + 1;
