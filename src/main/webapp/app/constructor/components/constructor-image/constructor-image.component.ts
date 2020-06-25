@@ -41,6 +41,7 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
   selectImage(): void {
     this.imageService.setEditing(false);
     this.imageService.setImgSrc(this.imgSrc);
+    this.imageService.setPathUrl(this.component!.contenido!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }
