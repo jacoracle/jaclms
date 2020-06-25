@@ -15,7 +15,7 @@ import { VideoService } from 'app/services/video.service';
 export class ConstructorComponentPropertiesComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   imgSrc: SafeUrl = '';
-  defaultImageUrl = './../../../content/images/cover_upload.png';
+  defaultImageUrl = './../../../content/images/image_thumb.png';
   videoSrc: SafeUrl = '';
   defaultVideoUrl = './../../../content/images/video_thumb.png';
   thumbSrc: SafeUrl = '';
