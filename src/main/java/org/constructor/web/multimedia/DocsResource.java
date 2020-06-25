@@ -47,7 +47,7 @@ public class DocsResource {
 	 * @return
 	 */
 	@RequestMapping(path = RestConstants.PATH_LOAD_DOCS, method = RequestMethod.GET )
-	@Secured({ AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER })
+	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> loadImage(@RequestParam("file") String nameDocs) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		builder.append(PATH);

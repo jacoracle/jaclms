@@ -156,3 +156,15 @@
     }
   }
 }
+
+// Loader
+.loader-cp {
+  position: absolute !important;
+  width: 100% !important;
+  // height: 100% !important;
+  background-color: rgba(26, 61, 130, 0.6) !important;
+  z-index: 3 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  cursor: default !important;
+}

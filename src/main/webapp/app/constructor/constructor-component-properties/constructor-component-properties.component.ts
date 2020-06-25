@@ -33,6 +33,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   @ViewChild('fileInput', { static: false }) fileInput: any;
   fileFormat = '';
   @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
+  showLoader = false;
 
   constructor(
     public imageService: ImageService,
@@ -49,6 +50,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       if (this.imgSrc === '') {
         this.fileInput.nativeElement.value = '';
       }
+      this.showLoader = false;
     });
     // Recibe el src del video (completo) a mostrar
     this.subscription = this.videoService.getVideoSrc().subscribe(videoSrc => {
@@ -59,6 +61,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       } else {
         setTimeout(() => this.videoplayer!.nativeElement.play(), 1000);
       }
+      this.showLoader = false;
     });
     this.subscription = this.pdfService.getPdfSrc().subscribe(pdfSrc => {
       this.pdfSrc = pdfSrc;
@@ -75,6 +78,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
         this.fileInput.nativeElement.value = '';
       }
       this.videoSrc = '';
+      this.showLoader = false;
     });
     // Recibe el pathUrl del componente seleccionado
     this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
@@ -113,6 +117,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
         return;
       } else {
         this.selectedFiles = event.target.files;
+        this.showLoader = true;
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
           if (this.fileFormat === 'image' && this.imageFileTypes.includes(event.target.files[0].type)) {
             this.fileUploadService.getImage(data.path);
@@ -130,6 +135,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
             event.target.files = [];
             return;
           }
+          this.showLoader = false;
         });
       }
     }
@@ -148,6 +154,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   }
 
   loadVideo(): void {
+    this.showLoader = true;
     this.fileUploadService.getVideo(this.videoPathUrl);
   }
 }
