@@ -3,3 +3,4 @@
 -->
 <img class="img-video" [src]="defaultVideoUrl" (click)="selectVideo()" *ngIf="thumbSrc === ''">
 <img class="img-video" [src]="thumbSrc" (click)="selectVideo()" *ngIf="thumbSrc !== ''">
+<div [hidden]="!showLoader">Cargando</div>

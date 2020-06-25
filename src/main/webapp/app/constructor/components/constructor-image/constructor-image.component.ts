@@ -18,6 +18,7 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @Input() component?: Componente;
   @Output() updateComponent = new EventEmitter();
+  showLoader = false;
 
   constructor(
     public imageService: ImageService,
@@ -47,7 +48,9 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
   }
 
   public getImage(path: string): void {
+    this.showLoader = true;
     this.fileUploadService.getImageFile(path).subscribe(data => {
+      this.showLoader = false;
       const imagePath = URL.createObjectURL(data.body);
       const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
       this.imgSrc = objectUrl;
