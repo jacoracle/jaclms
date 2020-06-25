@@ -12,7 +12,7 @@ import { FileUploadService } from 'app/services/file-upload.service';
   styleUrls: ['./constructor-image.component.scss']
 })
 export class ConstructorImageComponent implements OnInit, OnDestroy {
-  defaultImageUrl: SafeUrl = './../../../../content/images/cover_upload.png';
+  defaultImageUrl: SafeUrl = './../../../../content/images/img_layout3.png';
   imgSrc: SafeUrl = '';
   editing = false;
   subscription: Subscription;
