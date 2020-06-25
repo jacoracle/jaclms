@@ -157,6 +157,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
         this.imageService.setPathUrl('');
       }
       if (this.fileFormat === 'video') {
+        this.videoService.setThumbSrc('');
         this.videoService.setVideoSrc('');
         this.videoService.setPathUrl('');
       }
