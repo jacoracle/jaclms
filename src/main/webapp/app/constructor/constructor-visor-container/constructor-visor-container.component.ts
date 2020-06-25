@@ -76,13 +76,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.contentBlocksService.getSelectedBlock().subscribe(selectedBlock => {
       if (selectedBlock !== undefined) {
-        this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
-        this.updateBlocksOrder();
         if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
           this.selectedBlock = 0;
-        } else {
-          this.selectedBlock = this.selectedBlock + 1;
         }
+        this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
+        this.updateBlocksOrder();
         this.contentBlocksService.setContentBlocks(this.contentBlocks);
         this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
       }
