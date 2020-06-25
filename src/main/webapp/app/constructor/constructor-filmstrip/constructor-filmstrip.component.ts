@@ -102,6 +102,7 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
    */
   deleteContentBlock(index: number): void {
     this.contentBlocksService.setIndexBlockToDelete(index);
+    this.navigationControlsService.setOpenProperties(false);
   }
 
   ngOnDestroy(): void {
