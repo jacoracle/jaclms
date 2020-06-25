@@ -24,7 +24,6 @@ import { ConstructorHierarchicalStructureComponent } from '../constructor/constr
 import { ConstructorBookInformationComponent } from '../constructor/constructor-book-information/constructor-book-information.component';
 import { ConstructorComponentPropertiesComponent } from '../constructor/constructor-component-properties/constructor-component-properties.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { FichaUpdateComponent } from 'app/entities/ficha/ficha-update.component';
 import { ContentBlock8Component } from 'app/constructor/content-blocks/content-block8/content-block8.component';
 import { ConstructorPdfComponent } from 'app/constructor/components/constructor-pdf/constructor-pdf.component';
 

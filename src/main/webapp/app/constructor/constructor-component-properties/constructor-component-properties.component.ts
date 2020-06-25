@@ -7,6 +7,7 @@ import { CurrentCourseService } from 'app/services/current-course.service';
 import { SafeUrl } from '@angular/platform-browser';
 import { VideoService } from 'app/services/video.service';
 import { PdfService } from 'app/services/pdf.service';
+import { PdfModalService } from 'app/services/pdf-modal.service';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -41,7 +42,8 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
     public pdfService: PdfService,
     public eventManager: JhiEventManager,
     public fileUploadService: FileUploadService,
-    public currentCourseService: CurrentCourseService
+    public currentCourseService: CurrentCourseService,
+    private pdfModalService: PdfModalService
   ) {
     // Recibe el src de la imagen a mostrar
     this.subscription = this.imageService.getImgSrc().subscribe(imgSrc => {
@@ -64,10 +66,14 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       this.showLoader = false;
     });
     this.subscription = this.pdfService.getPdfSrc().subscribe(pdfSrc => {
+      // eslint-disable-next-line no-debugger
+      debugger;
       this.pdfSrc = pdfSrc;
       this.fileFormat = 'pdf';
       if (this.pdfSrc === '') {
         this.fileInput.nativeElement.value = '';
+      } else {
+        this.pdfPreview(this.pdfSrc);
       }
     });
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
@@ -156,5 +162,9 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   loadVideo(): void {
     this.showLoader = true;
     this.fileUploadService.getVideo(this.videoPathUrl);
+  }
+
+  pdfPreview(pdfSrc: SafeUrl): void {
+    this.pdfModalService.open(pdfSrc);
   }
 }

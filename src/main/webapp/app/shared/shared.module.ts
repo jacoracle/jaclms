@@ -5,17 +5,26 @@ import { AlertComponent } from './alert/alert.component';
 import { AlertErrorComponent } from './alert/alert-error.component';
 import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
+import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 
 @NgModule({
   imports: [ConstructorSharedLibsModule],
-  declarations: [FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
-  entryComponents: [LoginModalComponent],
+  declarations: [
+    FindLanguageFromKeyPipe,
+    AlertComponent,
+    AlertErrorComponent,
+    LoginModalComponent,
+    PdfModalComponent,
+    HasAnyAuthorityDirective
+  ],
+  entryComponents: [LoginModalComponent, PdfModalComponent],
   exports: [
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
     AlertComponent,
     AlertErrorComponent,
     LoginModalComponent,
+    PdfModalComponent,
     HasAnyAuthorityDirective
   ]
 })
