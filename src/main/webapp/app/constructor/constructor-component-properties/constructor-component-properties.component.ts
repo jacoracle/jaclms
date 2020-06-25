@@ -19,7 +19,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   videoSrc: SafeUrl = '';
   defaultVideoUrl = './../../../content/images/video_thumb.png';
   thumbSrc: SafeUrl = '';
-  videoPathUrl = '';
+  pathUrl = '';
   maxImageSize = 5120000;
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4'];
   selectedFiles = [];
@@ -53,7 +53,11 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       if (this.videoSrc === '') {
         this.fileInput.nativeElement.value = '';
       } else {
-        setTimeout(() => this.videoplayer!.nativeElement.play(), 1000);
+        setTimeout(() => {
+          if (this.videoplayer) {
+            this.videoplayer.nativeElement.play();
+          }
+        }, 1000);
       }
       this.showLoader = false;
     });
@@ -67,9 +71,14 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       this.videoSrc = '';
       this.showLoader = false;
     });
-    // Recibe el pathUrl del componente seleccionado
+    // Recibe el pathUrl de la imagen seleccionada.
+    this.imageService.getPathUrl().subscribe(pathUrl => {
+      this.pathUrl = pathUrl;
+      this.fileFormat = 'image';
+    });
+    // Recibe el pathUrl del video seleccionado.
     this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
-      this.videoPathUrl = pathUrl;
+      this.pathUrl = pathUrl;
       this.fileFormat = 'video';
     });
 
@@ -138,6 +147,20 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
 
   loadVideo(): void {
     this.showLoader = true;
-    this.fileUploadService.getVideo(this.videoPathUrl);
+    this.fileUploadService.getVideo(this.pathUrl);
+  }
+
+  deleteFile(): void {
+    this.fileUploadService.deleteFile(this.pathUrl).subscribe(() => {
+      if (this.fileFormat === 'image') {
+        this.imageService.setImgSrc('');
+        this.imageService.setPathUrl('');
+      }
+      if (this.fileFormat === 'video') {
+        this.videoService.setVideoSrc('');
+        this.videoService.setPathUrl('');
+      }
+      this.fileInput.nativeElement.value = '';
+    });
   }
 }

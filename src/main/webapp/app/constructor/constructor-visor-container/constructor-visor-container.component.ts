@@ -340,7 +340,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.eventEmitterService.getInvokeSave().subscribe(() => {
       this.save();
-      this.imageService.setImgSrc(false);
     });
   }
 
