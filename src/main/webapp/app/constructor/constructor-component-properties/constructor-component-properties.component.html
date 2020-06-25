@@ -37,9 +37,10 @@
                 <video [src]="videoSrc" width="100%" controls #vPlayer></video>
               </div>
               <div [hidden]="!showLoader" class="loader-cp">
-                Doing something
+                <!-- Doing something -->
+                <span class="loader"></span>
+                </div>
               </div>
-            </div>
 
             <div class="row-sidebar-up-image-btn">
               <button (click)="deleteFile()" class="secondary-btn text-transform-none" *ngIf="this.pathUrl !== ''">Eliminar</button>
