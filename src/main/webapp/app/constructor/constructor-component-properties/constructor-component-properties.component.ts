@@ -66,8 +66,6 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       this.showLoader = false;
     });
     this.subscription = this.pdfService.getPdfSrc().subscribe(pdfSrc => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       this.pdfSrc = pdfSrc;
       this.fileFormat = 'pdf';
       if (this.pdfSrc === '') {

@@ -103,7 +103,7 @@ export class FileUploadService {
   public getPdf(path: string): void {
     this.getPdfPreviewFile(path).subscribe(data => {
       const pdfPath = URL.createObjectURL(data.body);
-      const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(pdfPath);
+      const objectUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(pdfPath);
       this.pdfService.setPdfSrc(objectUrl);
     });
   }

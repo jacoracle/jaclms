@@ -12,10 +12,5 @@ export class PdfModalComponent implements AfterViewInit {
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  ngAfterViewInit(): void {
-    // eslint-disable-next-line no-console
-    console.log('test');
-    // eslint-disable-next-line no-console
-    console.log(this.pdfSrc.toString());
-  }
+  ngAfterViewInit(): void {}
 }
