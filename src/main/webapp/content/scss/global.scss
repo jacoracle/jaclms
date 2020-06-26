@@ -3480,6 +3480,11 @@ input[type='file'] {
       jhi-right-sidebar {
         #right-sidebar-grid {
           // Inician componentes
+          // Start properties empty
+          .properties-empty {
+            background-image: url('../images/properties_negative.png');
+          }
+          // End properties empty
           // Start Template Gallery
           .tg-element {
             jhi-template-gallery {
