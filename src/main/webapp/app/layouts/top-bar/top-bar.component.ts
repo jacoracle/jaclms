@@ -4,6 +4,7 @@ import { LoginService } from 'app/core/login/login.service';
 import { Router } from '@angular/router';
 import { EventEmitterService } from 'app/services/event-emitter.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
+import { ColorModeService } from 'app/services/color-mode.service';
 
 @Component({
   selector: 'jhi-top-bar',
@@ -55,7 +56,8 @@ export class TopBarComponent {
     private loginModalService: LoginModalService,
     private router: Router,
     private eventEmitterService: EventEmitterService,
-    private navigationControlsService: NavigationControlsService
+    private navigationControlsService: NavigationControlsService,
+    private colorModeService: ColorModeService
   ) {}
 
   collapseNavbar(): void {
@@ -82,5 +84,10 @@ export class TopBarComponent {
 
   redirectHome(): void {
     this.router.navigate(['/']);
+  }
+
+  selectColorMode(colorMode: any): void {
+    this.selectedColorMode = colorMode;
+    this.colorModeService.setColorMode(colorMode.class);
   }
 }
