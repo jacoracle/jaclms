@@ -3313,3 +3313,110 @@ input[type='file'] {
     transform: rotate(360deg) scale(1);
   }
 }
+
+// Darkmode
+.grid-darkmode {
+  #item-grid-1 {
+    background-color: $background-darkmode !important;
+    border-right: 1px solid $dropdown-darkmode !important;
+    .left-sidebar {
+      jhi-left-sidebar {
+        #left-sidebar-grid {
+          // components left sidebar
+          // Book Information
+          jhi-constructor-book-information {
+            .information-c-component {
+              .c-component-title {
+                background-color: $sidebar-header-darkmode !important;
+                .cct-link {
+                  i {
+                    color: white !important;
+                  }
+                  p {
+                    color: white !important;
+                  }
+                }
+                i {
+                  color: white !important;
+                }
+              }
+            }
+          }
+          // End Book information
+          // Start Hierachical information
+          jhi-constructor-hierarchical-structure {
+            .hierarchical-c-component {
+              .c-component-title {
+                background-color: $sidebar-header-darkmode !important;
+                .cct-link {
+                  i {
+                    color: white !important;
+                  }
+                  p {
+                    color: white !important;
+                  }
+                }
+                i {
+                  color: white !important;
+                }
+              }
+            }
+          }
+          // End Hierachical information
+          // Start Filmstrip
+          jhi-constructor-filmstrip {
+            .filmstrip-c-component {
+              .c-component-title {
+                background-color: $sidebar-header-darkmode !important;
+                .cct-link {
+                  i {
+                    color: white !important;
+                  }
+                  p {
+                    color: white !important;
+                  }
+                }
+                i {
+                  color: white !important;
+                }
+              }
+              .c-component-content {
+                .row-c-component-c {
+                  .row-artboard-filmstrip {
+                    .ab-mini-desc {
+                      .delete-ab {
+                        i {
+                          color: white !important;
+                        }
+                        p {
+                          color: white !important;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // End Filmstrip
+        }
+      }
+    }
+  }
+  #item-grid-2 {
+    .grid-visor-container {
+      jhi-constructor-visor-container {
+        #visor-container-grid {
+          background-color: $workspace-darkmode;
+          .visor-component-artboard {
+            background-color: rgba(255, 255, 255, 0.3) !important;
+          }
+        }
+      }
+    }
+  }
+  #item-grid-3 {
+    background-color: $background-darkmode !important;
+    border-left: 1px solid $dropdown-darkmode !important;
+  }
+}
