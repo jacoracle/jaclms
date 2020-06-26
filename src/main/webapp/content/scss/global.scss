@@ -3577,3 +3577,26 @@ input[type='file'] {
     }
   }
 }
+
+.v-smartphone {
+  .row-visor-container {
+    div {
+      .row-content-block {
+        div {
+          .col-cb-video-text-color {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+          }
+          .col-cb-video-text-color > div:nth-child(1) {
+            width: 100%;
+          }
+          .col-cb-video-text-color > div:nth-child(2) {
+            width: 100%;
+            margin-top: 20px;
+          }
+        }
+      }
+    }
+  }
+}
