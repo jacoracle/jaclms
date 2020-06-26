@@ -93,14 +93,15 @@ public class MultimediaServiceImpl implements MultimediaService {
 	@Override
 	public VideoResponse<?> saveFile(MultimediaDTO file) {
 	    VideoResponse<?> videoResponse = new VideoResponse<>();
-	
+	    log.info("*** FileUploadServiceImplement ****");
+	    log.info("*** Path Multimedia File : {} ****", UPLOAD_FOLDER);
 		Timestamp stamp = new Timestamp(System.currentTimeMillis());
 		Date date = new Date(stamp.getTime());
 	    DateFormat hourdateFormat = new SimpleDateFormat("-dd-MM-yyyy-HH.mm.ss");
 	    String time = hourdateFormat.format(date);
 		try {
 			
-			log.debug("*** FileUploadServiceImplement ****");
+			
 				MultipartFile  multimedia =   file.getFile();
 				String  extension =   FilenameUtils.getExtension( multimedia.getOriginalFilename());
 				String replace = null; 
@@ -126,7 +127,6 @@ public class MultimediaServiceImpl implements MultimediaService {
 				 */
 				if ((  extension.toUpperCase()).equals(extVideo.MP4.toString())
 						|| extension.toUpperCase().equals( extVideo.VGA.toString() ) && ((( multimedia.getSize()/1024))/ 1024  ) <=  video ) {
-					
 					buildFile(builder, file);
 					builder.append( "video" );
 					PathValidation.createPath(builder.toString() );
@@ -254,6 +254,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 	@Override
 	public String deleteFile(String pathfile) {
 		log.debug("deleteFile: {} ", pathfile);
+		StringBuilder sb = new StringBuilder();
 		String status = "";
 		boolean found = false;
 		
@@ -263,8 +264,8 @@ public class MultimediaServiceImpl implements MultimediaService {
 			status = "dependent";
 			return status;
 		}
-		
-		File file = new File(UPLOAD_FOLDER.append(pathfile).toString());
+		sb.append(UPLOAD_FOLDER);
+		File file = new File(sb.append(pathfile).toString());
 		if (file.exists()) {
 
 			if (file.delete()) {

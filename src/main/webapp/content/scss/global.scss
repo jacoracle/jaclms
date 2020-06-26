@@ -3319,6 +3319,13 @@ input[type='file'] {
   #item-grid-1 {
     background-color: $background-darkmode !important;
     border-right: 1px solid $dropdown-darkmode !important;
+    .btn-contract-left {
+      background-color: $sidebar-header-darkmode;
+      border-top: 1px solid $border-darkmode;
+      i {
+        color: white;
+      }
+    }
     .left-sidebar {
       jhi-left-sidebar {
         #left-sidebar-grid {
@@ -3326,6 +3333,7 @@ input[type='file'] {
           // Book Information
           jhi-constructor-book-information {
             .information-c-component {
+              border-bottom: 1px solid $sidebar-header-darkmode;
               .c-component-title {
                 background-color: $sidebar-header-darkmode !important;
                 .cct-link {
@@ -3338,6 +3346,15 @@ input[type='file'] {
                 }
                 i {
                   color: white !important;
+                }
+              }
+              .c-component-content {
+                .row-c-component-c {
+                  .ic-row-text {
+                    p {
+                      color: white;
+                    }
+                  }
                 }
               }
             }
@@ -3346,6 +3363,7 @@ input[type='file'] {
           // Start Hierachical information
           jhi-constructor-hierarchical-structure {
             .hierarchical-c-component {
+              border-bottom: 1px solid $sidebar-header-darkmode;
               .c-component-title {
                 background-color: $sidebar-header-darkmode !important;
                 .cct-link {
@@ -3360,12 +3378,33 @@ input[type='file'] {
                   color: white !important;
                 }
               }
+              .c-component-content {
+                .row-c-component-c {
+                  .hierarchical-element {
+                    .hier-header {
+                      i {
+                        color: white;
+                      }
+                      p {
+                        color: #e6e4e2;
+                      }
+                      i.hier-active-icon {
+                        color: $blue-nimbus-light !important;
+                      }
+                    }
+                    .hier-active {
+                      background-color: $border-darkmode !important;
+                    }
+                  }
+                }
+              }
             }
           }
           // End Hierachical information
           // Start Filmstrip
           jhi-constructor-filmstrip {
             .filmstrip-c-component {
+              border-bottom: 1px solid $sidebar-header-darkmode;
               .c-component-title {
                 background-color: $sidebar-header-darkmode !important;
                 .cct-link {
@@ -3383,6 +3422,18 @@ input[type='file'] {
               .c-component-content {
                 .row-c-component-c {
                   .row-artboard-filmstrip {
+                    border: 1px solid $border-darkmode;
+                    .row-drag-ud {
+                      .icon {
+                        color: white;
+                      }
+                    }
+                    .artboard-mini {
+                      border: 2px solid $border-darkmode;
+                    }
+                    .ab-mini-select {
+                      border: 2px solid $blue-nimbus-light !important;
+                    }
                     .ab-mini-desc {
                       .delete-ab {
                         i {
@@ -3409,7 +3460,7 @@ input[type='file'] {
         #visor-container-grid {
           background-color: $workspace-darkmode;
           .visor-component-artboard {
-            background-color: rgba(255, 255, 255, 0.3) !important;
+            // background-color: #2e3a52 !important;
           }
         }
       }
@@ -3418,5 +3469,134 @@ input[type='file'] {
   #item-grid-3 {
     background-color: $background-darkmode !important;
     border-left: 1px solid $dropdown-darkmode !important;
+    .btn-contract-right {
+      background-color: $sidebar-header-darkmode;
+      border-top: 1px solid $border-darkmode;
+      i {
+        color: white;
+      }
+    }
+    .right-sidebar {
+      jhi-right-sidebar {
+        #right-sidebar-grid {
+          // Inician componentes
+          // Start properties empty
+          .properties-empty {
+            background-image: url('../images/properties_negative.png');
+          }
+          // End properties empty
+          // Start Template Gallery
+          .tg-element {
+            jhi-template-gallery {
+              .template-c-component {
+                border-bottom: 1px solid $sidebar-header-darkmode;
+                .c-component-title {
+                  background-color: $sidebar-header-darkmode !important;
+                  .cct-link {
+                    i {
+                      color: white !important;
+                    }
+                    p {
+                      color: white !important;
+                    }
+                  }
+                  i {
+                    color: white !important;
+                  }
+                }
+                .menu-template {
+                  background-color: #101821;
+                  border-bottom: 1px solid $border-darkmode;
+                  .item-mt {
+                    background-color: $sidebar-header-darkmode;
+                    border: 1px solid $border-darkmode;
+                    span {
+                      color: white;
+                    }
+                  }
+                }
+                .c-component-content {
+                  .row-c-component-c {
+                    .row-mini-gallery {
+                      .template-preview {
+                        .template-mini {
+                          background-color: #c1d0e4;
+                          border: 1px solid $border-darkmode;
+                        }
+                        .name-template {
+                          p {
+                            color: #e6e4e2;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // End Template Gallery
+          // Start Propierties
+          .ccp-element {
+            jhi-constructor-component-properties {
+              .properties-c-component {
+                border-bottom: 1px solid $sidebar-header-darkmode;
+                .c-component-title {
+                  background-color: $sidebar-header-darkmode !important;
+                  .cct-link {
+                    i {
+                      color: white !important;
+                    }
+                    p {
+                      color: white !important;
+                    }
+                  }
+                  i {
+                    color: white !important;
+                  }
+                }
+                .c-component-content {
+                  .row-c-component-c {
+                    .cover-upload-c {
+                      h6 {
+                        color: white;
+                      }
+                      .row-up-image-area {
+                        border-bottom: 1px solid $border-darkmode;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          // End Propierties
+        }
+      }
+    }
+  }
+}
+
+.v-smartphone {
+  .row-visor-container {
+    div {
+      .row-content-block {
+        div {
+          .col-cb-video-text-color {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+          }
+          .col-cb-video-text-color > div:nth-child(1) {
+            width: 100%;
+          }
+          .col-cb-video-text-color > div:nth-child(2) {
+            width: 100%;
+            margin-top: 20px;
+          }
+        }
+      }
+    }
   }
 }
