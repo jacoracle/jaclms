@@ -17,9 +17,9 @@ import { PdfModalService } from 'app/services/pdf-modal.service';
 export class ConstructorComponentPropertiesComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   imgSrc: SafeUrl = '';
-  defaultImageUrl = './../../../content/images/image_thumb.png';
+  defaultImageUrl = './../../../content/images/cover_upload.png';
   videoSrc: SafeUrl = '';
-  defaultVideoUrl = './../../../content/images/video_thumb.png';
+  defaultVideoUrl = './../../../content/images/video.png';
   pdfSrc: SafeUrl = '';
   defaultPdfUrl = './../../../content/images/pdf_upload.png';
   thumbSrc: SafeUrl = '';
@@ -34,7 +34,7 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   @ViewChild('fileInput', { static: false }) fileInput: any;
   fileFormat = '';
   @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
-  showLoader = false;
+  typePdf = 'application/pdf';
 
   constructor(
     public imageService: ImageService,
@@ -52,7 +52,6 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       if (this.imgSrc === '') {
         this.fileInput.nativeElement.value = '';
       }
-      this.showLoader = false;
     });
     // Recibe el src del video (completo) a mostrar
     this.subscription = this.videoService.getVideoSrc().subscribe(videoSrc => {
@@ -63,7 +62,6 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
       } else {
         setTimeout(() => this.videoplayer!.nativeElement.play(), 1000);
       }
-      this.showLoader = false;
     });
     this.subscription = this.pdfService.getPdfSrc().subscribe(pdfSrc => {
       this.pdfSrc = pdfSrc;
@@ -82,7 +80,6 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
         this.fileInput.nativeElement.value = '';
       }
       this.videoSrc = '';
-      this.showLoader = false;
     });
     // Recibe el pathUrl del componente seleccionado
     this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
@@ -121,7 +118,6 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
         return;
       } else {
         this.selectedFiles = event.target.files;
-        this.showLoader = true;
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
           if (this.fileFormat === 'image' && this.imageFileTypes.includes(event.target.files[0].type)) {
             this.fileUploadService.getImage(data.path);
@@ -139,7 +135,6 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
             event.target.files = [];
             return;
           }
-          this.showLoader = false;
         });
       }
     }
@@ -151,6 +146,12 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
     this.fileInput.nativeElement.value = '';
   }
 
+  deletePdf(): void {
+    this.pdfService.setPdfSrc('');
+    this.pdfService.setPathUrl('');
+    this.fileInput.nativeElement.value = '';
+  }
+
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
@@ -158,7 +159,6 @@ export class ConstructorComponentPropertiesComponent implements OnInit, OnDestro
   }
 
   loadVideo(): void {
-    this.showLoader = true;
     this.fileUploadService.getVideo(this.videoPathUrl);
   }
 
