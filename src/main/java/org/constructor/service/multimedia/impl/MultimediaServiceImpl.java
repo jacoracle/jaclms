@@ -93,14 +93,15 @@ public class MultimediaServiceImpl implements MultimediaService {
 	@Override
 	public VideoResponse<?> saveFile(MultimediaDTO file) {
 	    VideoResponse<?> videoResponse = new VideoResponse<>();
-	
+	    log.info("*** FileUploadServiceImplement ****");
+	    log.info("*** Path Multimedia File : {} ****", UPLOAD_FOLDER);
 		Timestamp stamp = new Timestamp(System.currentTimeMillis());
 		Date date = new Date(stamp.getTime());
 	    DateFormat hourdateFormat = new SimpleDateFormat("-dd-MM-yyyy-HH.mm.ss");
 	    String time = hourdateFormat.format(date);
 		try {
 			
-			log.debug("*** FileUploadServiceImplement ****");
+			
 				MultipartFile  multimedia =   file.getFile();
 				String  extension =   FilenameUtils.getExtension( multimedia.getOriginalFilename());
 				String replace = null; 
