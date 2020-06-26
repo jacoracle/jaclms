@@ -4,6 +4,7 @@ import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.ser
 import { ActivatedRoute } from '@angular/router';
 import { CursoService } from 'app/entities/curso/curso.service';
 import { CurrentCourseService } from 'app/services/current-course.service';
+import { ColorModeService } from 'app/services/color-mode.service';
 
 @Component({
   selector: 'jhi-constructor-layout',
@@ -16,12 +17,14 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
   showTextEditor = false;
   subscription: Subscription;
   curso: any;
+  colorMode = '';
 
   constructor(
     private textEditorBehaviosService: TextEditorBehaviorService,
     private route: ActivatedRoute,
     private cursoService: CursoService,
-    private currentCourseService: CurrentCourseService
+    private currentCourseService: CurrentCourseService,
+    private colorModeService: ColorModeService
   ) {
     const cursoId = this.route.snapshot.paramMap.get('cursoId') as any;
     this.cursoService.find(cursoId).subscribe(response => {
@@ -30,6 +33,9 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.textEditorBehaviosService.getShowTextEditor().subscribe(showTextEditor => {
       this.showTextEditor = showTextEditor;
+    });
+    this.colorModeService.getColorMode().subscribe(colorMode => {
+      this.colorMode = colorMode;
     });
   }
 

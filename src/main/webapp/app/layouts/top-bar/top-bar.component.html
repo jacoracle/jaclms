@@ -56,7 +56,7 @@
                   <p>Dark mode</p>
                 </a>
                 -->
-                <a *ngFor="let colorMode of colorModes" class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); selectedColorMode=colorMode">
+                <a *ngFor="let colorMode of colorModes" class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); selectColorMode(colorMode);">
                   <i class="icon" [ngClass]="colorMode.class"></i>
                   <p>{{colorMode.text}}</p>
                 </a>
