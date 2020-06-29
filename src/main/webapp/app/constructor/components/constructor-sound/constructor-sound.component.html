@@ -1,0 +1,3 @@
+<!--<img class="block-pdf" [src]="pdfSrc" (click)="selectPdf()" *ngIf="!pdfSrc == ''">-->
+<img class="block-pdf" [src]="defaultSoundUrl" (click)="selectSound()" *ngIf="soundSrc != ''" [width]="600" [height]="300"></img>
+<img class="block-pdf" [src]="defaultSoundUrl" (click)="selectSound()" *ngIf="soundSrc == ''">

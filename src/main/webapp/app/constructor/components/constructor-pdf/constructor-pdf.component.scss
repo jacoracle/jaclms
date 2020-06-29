@@ -1,0 +1,13 @@
+@import '../../../../content/scss/variables.scss';
+img.block-pdf {
+  position: relative;
+  height: auto;
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  border: 1px solid $blue-nimbus-light;
+  transition: 0.3s;
+  &:hover {
+    border: 1px solid $blue-nimbus-dark;
+  }
+}
