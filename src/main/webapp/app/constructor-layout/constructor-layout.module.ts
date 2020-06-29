@@ -24,9 +24,10 @@ import { ConstructorHierarchicalStructureComponent } from '../constructor/constr
 import { ConstructorBookInformationComponent } from '../constructor/constructor-book-information/constructor-book-information.component';
 import { ConstructorComponentPropertiesComponent } from '../constructor/constructor-component-properties/constructor-component-properties.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  imports: [ConstructorSharedModule, AngularEditorModule],
+  imports: [ConstructorSharedModule, AngularEditorModule, DragDropModule],
   declarations: [
     ConstructorLayoutComponent,
     ConstructorFilmstripComponent,

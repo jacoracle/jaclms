@@ -4,6 +4,7 @@ import { NavigationControlsService } from '../../services/navigation-controls.se
 import { Subscription } from 'rxjs';
 import { IBloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'jhi-constructor-filmstrip',
@@ -122,6 +123,11 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
 
   isLastFilm(index: number): boolean {
     return this.contentBlocks.length - 1 === index;
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.contentBlocks, event.previousIndex, event.currentIndex);
+    // this.reorderFilmstrip(event.previousIndex, event.currentIndex);
   }
 
   ngOnDestroy(): void {
