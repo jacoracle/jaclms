@@ -13,6 +13,7 @@ import { PdfService } from 'app/services/pdf.service';
 })
 export class ConstructorPdfComponent implements OnInit, OnDestroy {
   defaultPdfUrl: SafeUrl = './../../../../content/images/pdf_upload.png';
+  loadedPdfUrl: SafeUrl = './../../../../content/images/pdf_uploaded.png';
   pdfSrc: SafeUrl = '';
   editing = false;
   subscription: Subscription;

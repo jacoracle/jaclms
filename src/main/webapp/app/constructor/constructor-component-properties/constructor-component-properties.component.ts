@@ -24,6 +24,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   thumbSrc: SafeUrl = '';
   pdfSrc: SafeUrl = '';
   defaultPdfUrl = './../../../content/images/pdf_upload.png';
+  loadedPdfUrl = './../../../content/images/pdf_uploaded.png';
   soundSrc: SafeUrl = '';
   defaultSoundUrl = './../../../content/images/sound_upload.png';
   pathUrl = '';

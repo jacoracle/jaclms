@@ -38,7 +38,8 @@
               </div>
                 <div *ngIf="fileFormat === 'pdf' && pdfSrc !== ''">
                     <!-- Pdf -->
-                    <embed [src]="pdfSrc" frameBorder="0" height="100%" width="100%" [type]="typePdf">
+                    <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc === ''">
+                    <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''">
                 </div>
                 <div *ngIf="fileFormat === 'sound' && soundSrc !== ''">
                     <!-- Sound -->
