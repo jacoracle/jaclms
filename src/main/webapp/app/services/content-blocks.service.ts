@@ -85,7 +85,6 @@ export class ContentBlocksService {
    * devuelve el nuevo indice que tomara el bloque
    * y el filmstrip al reordenar.
    */
-
   getNewIndexOrderBlock(): Observable<number> {
     return this.newIndexOrderBlock;
   }

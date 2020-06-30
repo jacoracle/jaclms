@@ -127,7 +127,16 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
 
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.contentBlocks, event.previousIndex, event.currentIndex);
-    // this.reorderFilmstrip(event.previousIndex, event.currentIndex);
+    this.updateBlocksOrder();
+  }
+
+  /**
+   * asigna el orden correspondiente a los bloques de la mesa de trabajo
+   */
+  updateBlocksOrder(): void {
+    for (let i = 0; i < this.contentBlocks.length; i++) {
+      this.contentBlocks[i].orden = i + 1;
+    }
   }
 
   ngOnDestroy(): void {
