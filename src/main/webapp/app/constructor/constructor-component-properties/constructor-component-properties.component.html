@@ -39,11 +39,11 @@
                 <div *ngIf="fileFormat === 'pdf' && pdfSrc !== ''">
                     <!-- Pdf -->
                     <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc === ''">
-                    <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''">
+                    <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''" (click)="pdfPreview()">
                 </div>
                 <div *ngIf="fileFormat === 'sound' && soundSrc !== ''">
                     <!-- Sound -->
-                    <audio  [src]="soundSrc" controls="controls"></audio>
+                    <audio  [src]="soundSrc" controls="controls" autoplay></audio>
                 </div>
               <div [hidden]="!showLoader" class="loader-cp">
                 <!-- Doing something -->
@@ -52,13 +52,8 @@
               </div>
 
             <div class="row-sidebar-up-image-btn">
-
-              <button (click)="delete()" class="secondary-btn text-transform-none"
-                      *ngIf="(fileFormat === 'image' && this.imgSrc !== '') ||
-                      (fileFormat === 'pdf' && this.pdfSrc !== '') ||
-                      (fileFormat === 'sound' && this.soundSrc !== '')">Eliminar</button>
-
-                <button type="button" class="main-btn" (click)="fileInput.click()">
+              <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="this.pathUrl !== ''">Eliminar</button>
+              <button type="button" class="main-btn" (click)="fileInput.click()">
                   <span>Subir</span>
                   <input #fileInput type="file" (change)="selectFile($event)" style="display:none;" />
               </button>

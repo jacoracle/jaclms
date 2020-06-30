@@ -16,7 +16,7 @@ export class SoundService {
     this.soundSrc.next(soundSrc);
   }
 
-  getPSoundSrc(): Observable<SafeUrl> {
+  getSoundSrc(): Observable<SafeUrl> {
     return this.soundSrc.asObservable();
   }
 

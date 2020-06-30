@@ -15,10 +15,12 @@ export class ConstructorPdfComponent implements OnInit, OnDestroy {
   defaultPdfUrl: SafeUrl = './../../../../content/images/pdf_upload.png';
   loadedPdfUrl: SafeUrl = './../../../../content/images/pdf_uploaded.png';
   pdfSrc: SafeUrl = '';
+  pathUrl = '';
   editing = false;
   subscription: Subscription;
   @Input() component?: Componente;
   @Output() updateComponent = new EventEmitter();
+  showLoader = false;
 
   constructor(
     public pdfService: PdfService,
@@ -34,6 +36,7 @@ export class ConstructorPdfComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.pdfService.getPathUrl().subscribe(pathUrl => {
       if (this.editing) {
+        this.pathUrl = pathUrl;
         this.updateComponent.emit({ newValue: pathUrl, type: 'image' });
       }
     });
@@ -42,12 +45,15 @@ export class ConstructorPdfComponent implements OnInit, OnDestroy {
   selectPdf(): void {
     this.pdfService.setEditing(false);
     this.pdfService.setPdfSrc(this.pdfSrc);
+    this.pdfService.setPathUrl(this.pathUrl);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }
 
   public getPdf(path: string): void {
+    this.showLoader = true;
     this.fileUploadService.getPdfPreviewFile(path).subscribe(data => {
+      this.showLoader = false;
       const pdfPath = URL.createObjectURL(data.body);
       this.pdfSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(pdfPath);
     });
@@ -55,6 +61,7 @@ export class ConstructorPdfComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.component && this.component.contenido && this.component.contenido.contenido !== '') {
+      this.pathUrl = this.component.contenido.contenido!;
       this.getPdf(this.component.contenido.contenido!);
     }
   }

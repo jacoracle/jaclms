@@ -29,9 +29,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   defaultSoundUrl = './../../../content/images/sound_upload.png';
   pathUrl = '';
   maxImageSize = 5120000;
-  allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg', 'audio/x-wav'];
+  allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
-  soundFileTypes: any = ['audio/mpeg', 'audio/x-wav'];
   selectedFiles = [];
   id = 0; // Id de curso o módulo a guardar.
   type = 'course'; // course, module
@@ -80,16 +79,16 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileFormat = 'pdf';
       if (this.pdfSrc === '') {
         this.fileInput.nativeElement.value = '';
-      } else {
-        this.pdfPreview(this.pdfSrc);
       }
+      this.showLoader = false;
     });
-    this.subscription = this.soundService.getPSoundSrc().subscribe(soundSrc => {
+    this.subscription = this.soundService.getSoundSrc().subscribe(soundSrc => {
       this.soundSrc = soundSrc;
       this.fileFormat = 'sound';
       if (this.soundSrc === '') {
         this.fileInput.nativeElement.value = '';
       }
+      this.showLoader = false;
     });
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
     this.subscription = this.videoService.getThumbSrc().subscribe(thumbSrc => {
@@ -107,9 +106,19 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileFormat = 'image';
     });
     // Recibe el pathUrl del video seleccionado.
-    this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
+    this.videoService.getPathUrl().subscribe(pathUrl => {
       this.pathUrl = pathUrl;
       this.fileFormat = 'video';
+    });
+
+    this.pdfService.getPathUrl().subscribe(pathUrl => {
+      this.pathUrl = pathUrl;
+      this.fileFormat = 'pdf';
+    });
+
+    this.soundService.getPathUrl().subscribe(pathUrl => {
+      this.pathUrl = pathUrl;
+      this.fileFormat = 'sound';
     });
 
     if (this.type === 'course') {
@@ -121,10 +130,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     }
   }
 
-  /*
-   * Recibe archivo seleccionado, valida tamaño y tipo, y sube el archivo a servidor. Obtiene src necesario para mostrar en componente y en propiedades.
-   * @param event  Evento con archivo seleccionado.
-   */
   /*
    * Recibe archivo seleccionado, valida tamaño y tipo, y sube el archivo a servidor. Obtiene src necesario para mostrar en componente y en propiedades.
    * @param event  Evento con archivo seleccionado.
@@ -149,7 +154,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
             this.getVideoSetUrl(data.path);
           } else if (this.fileFormat === 'pdf' && event.target.files[0].type === 'application/pdf') {
             this.getPdfSetUrl(data.path);
-          } else if (this.fileFormat === 'sound' && this.soundFileTypes.includes(event.target.files[0].type)) {
+          } else if (this.fileFormat === 'sound' && event.target.files[0].type === 'audio/mpeg') {
             this.getSoundSetUrl(data.path);
           } else {
             this.showErrorFileType(event);
@@ -182,30 +187,40 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   delete(): void {
-    if (this.fileFormat === 'image' && this.imgSrc !== '') {
-      this.setImageSetUrl('');
-    } else if (this.fileFormat === 'pdf' && this.pdfSrc !== '') {
-      this.setPdfSetUrl('');
-    } else if (this.fileFormat === 'sound' && this.soundSrc !== '') {
-      this.setSoundSetUrl('');
-    } else {
-      this.showErrorFileType('');
-      return;
-    }
-    this.fileInput.nativeElement.value = '';
+    this.fileUploadService.deleteFile(this.pathUrl).subscribe(() => {
+      if (this.fileFormat === 'image') {
+        this.setImageUrl('');
+      } else if (this.fileFormat === 'video') {
+        this.setVideoUrl('');
+      } else if (this.fileFormat === 'pdf') {
+        this.setPdfUrl('');
+      } else if (this.fileFormat === 'sound') {
+        this.setSoundUrl('');
+      } else {
+        this.showErrorFileType('');
+        return;
+      }
+      this.fileInput.nativeElement.value = '';
+    });
   }
 
-  setSoundSetUrl(soundPath: string): void {
+  setSoundUrl(soundPath: string): void {
     this.soundService.setSoundSrc(soundPath);
     this.soundService.setPathUrl(soundPath);
   }
 
-  setPdfSetUrl(pdfPath: string): void {
+  setPdfUrl(pdfPath: string): void {
     this.pdfService.setPdfSrc(pdfPath);
     this.pdfService.setPathUrl(pdfPath);
   }
 
-  setImageSetUrl(imagePath: string): void {
+  setVideoUrl(imagePath: string): void {
+    this.videoService.setThumbSrc(imagePath);
+    this.videoService.setVideoSrc(imagePath);
+    this.videoService.setPathUrl(imagePath);
+  }
+
+  setImageUrl(imagePath: string): void {
     this.imageService.setImgSrc('');
     this.imageService.setPathUrl(imagePath);
   }
@@ -224,8 +239,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     event.target.files = [];
   }
 
-  pdfPreview(pdfSrc: SafeUrl): void {
-    this.pdfModalService.open(pdfSrc);
+  pdfPreview(): void {
+    this.showLoader = true;
+    this.pdfModalService.open(this.pdfSrc);
+    this.showLoader = false;
   }
 
   deleteImage(): void {
@@ -241,20 +258,5 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   loadVideo(): void {
     this.showLoader = true;
     this.fileUploadService.getVideo(this.pathUrl);
-  }
-
-  deleteFile(): void {
-    this.fileUploadService.deleteFile(this.pathUrl).subscribe(() => {
-      if (this.fileFormat === 'image') {
-        this.imageService.setImgSrc('');
-        this.imageService.setPathUrl('');
-      }
-      if (this.fileFormat === 'video') {
-        this.videoService.setThumbSrc('');
-        this.videoService.setVideoSrc('');
-        this.videoService.setPathUrl('');
-      }
-      this.fileInput.nativeElement.value = '';
-    });
   }
 }

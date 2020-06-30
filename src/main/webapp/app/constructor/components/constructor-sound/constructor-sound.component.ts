@@ -12,12 +12,15 @@ import { SoundService } from 'app/services/sound.service';
   styleUrls: ['./constructor-sound.component.scss']
 })
 export class ConstructorSoundComponent implements OnInit, OnDestroy {
-  defaultSoundUrl: SafeUrl = './../../../../content/images/sound-upload.png';
+  defaultSoundUrl: SafeUrl = './../../../../content/images/sound_upload.png';
+  loadedSoundUrl: SafeUrl = './../../../../content/images/sound_uploaded.png';
   soundSrc: SafeUrl = '';
+  pathUrl = '';
   editing = false;
   subscription: Subscription;
   @Input() component?: Componente;
   @Output() updateComponent = new EventEmitter();
+  showLoader = false;
 
   constructor(
     public soundService: SoundService,
@@ -26,13 +29,14 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer
   ) {
     this.subscription = this.soundService.getEditing().subscribe(editing => (this.editing = editing));
-    this.subscription = this.soundService.getPSoundSrc().subscribe(pdfSrc => {
+    this.subscription = this.soundService.getSoundSrc().subscribe(pdfSrc => {
       if (this.editing) {
         this.soundSrc = pdfSrc;
       }
     });
     this.subscription = this.soundService.getPathUrl().subscribe(pathUrl => {
       if (this.editing) {
+        this.pathUrl = pathUrl;
         this.updateComponent.emit({ newValue: pathUrl, type: 'image' });
       }
     });
@@ -41,12 +45,15 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
   selectSound(): void {
     this.soundService.setEditing(false);
     this.soundService.setSoundSrc(this.soundSrc);
+    this.soundService.setPathUrl(this.pathUrl);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }
 
   public getSound(path: string): void {
+    this.showLoader = true;
     this.fileUploadService.getPdfPreviewFile(path).subscribe(data => {
+      this.showLoader = false;
       const pdfPath = URL.createObjectURL(data.body);
       this.soundSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(pdfPath);
     });
@@ -54,6 +61,7 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.component && this.component.contenido && this.component.contenido.contenido !== '') {
+      this.pathUrl = './../../../content/images/sound_uploaded.png';
       this.getSound(this.component.contenido.contenido!);
     }
   }
