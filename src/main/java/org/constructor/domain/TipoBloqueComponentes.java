@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -46,12 +45,10 @@ public class TipoBloqueComponentes implements Serializable {
     private String tags;
 	
 	/** The tipos componentes. */
-	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tipos_bloques_componentes", 
-            joinColumns = @JoinColumn(name = "tipo_bloque_componentes_id", referencedColumnName = "id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="tipo_componente_id", referencedColumnName = "id", nullable = false))
-	private Set<TipoComponente> tiposComponentes;
+	
+	
+	@OneToMany(mappedBy="tipoBloqueComponentes", fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+	private Set<TiposBloquesComponentes> tiposBloquesComponentes  = new HashSet<>();
 	
 	/** The bloque componentes. */
 	@JsonIgnore
@@ -104,6 +101,21 @@ public class TipoBloqueComponentes implements Serializable {
 		return iconPath;
 	}
 	
+	
+	/**
+	 * @return the tiposBloquesComponentes
+	 */
+	public Set<TiposBloquesComponentes> getTiposBloquesComponentes() {
+		return tiposBloquesComponentes;
+	}
+
+	/**
+	 * @param tiposBloquesComponentes the tiposBloquesComponentes to set
+	 */
+	public void setTiposBloquesComponentes(Set<TiposBloquesComponentes> tiposBloquesComponentes) {
+		this.tiposBloquesComponentes = tiposBloquesComponentes;
+	}
+
 	/**
 	 * Sets the icon path.
 	 *
@@ -132,23 +144,6 @@ public class TipoBloqueComponentes implements Serializable {
 	}
 	
 
-	/**
-	 * Gets the tipos componentes.
-	 *
-	 * @return the tipos componentes
-	 */
-	public Set<TipoComponente> getTiposComponentes() {
-		return tiposComponentes;
-	}
-
-	/**
-	 * Sets the tipos componentes.
-	 *
-	 * @param tiposComponentes the new tipos componentes
-	 */
-	public void setTiposComponentes(Set<TipoComponente> tiposComponentes) {
-		this.tiposComponentes = tiposComponentes;
-	}
 
 	/**
 	 * Gets the bloque componentes.
@@ -158,20 +153,12 @@ public class TipoBloqueComponentes implements Serializable {
 	public Set<BloqueComponentes> getBloqueComponentes() {
 		return bloqueComponentes;
 	}
-
-	/**
-	 * Sets the bloque componentes.
-	 *
-	 * @param bloqueComponentes the new bloque componentes
-	 */
-	public void setBloqueComponentes(Set<BloqueComponentes> bloqueComponentes) {
-		this.bloqueComponentes = bloqueComponentes;
-	}
+	
 
 	@Override
 	public String toString() {
 		return "TipoBloqueComponentes [id=" + id + ", nombre=" + nombre + ", iconPath=" + iconPath + ", tags=" + tags
-				+ ", tiposComponentes=" + tiposComponentes + "]";
+				+ ", tiposBloquesComponentes=" + tiposBloquesComponentes + "]";
 	}
 	
 }
