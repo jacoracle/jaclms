@@ -168,131 +168,6 @@ strong {
 .icon-negative {
   color: white;
 }
-// Icons
-.ni-user:before {
-  content: '\e800';
-}
-.ni-lock:before {
-  content: '\e801';
-}
-.ni-facebook:before {
-  content: '\e802';
-}
-.ni-twitter:before {
-  content: '\e803';
-}
-.ni-instagram:before {
-  content: '\e804';
-}
-.ni-alert:before {
-  content: '\e805';
-}
-.ni-succes:before {
-  content: '\e806';
-}
-.ni-settings:before {
-  content: '\e807';
-}
-.ni-close:before {
-  content: '\e808';
-}
-.ni-arrow:before {
-  content: '\e809';
-}
-.ni-info:before {
-  content: '\e80a';
-}
-.ni-add:before {
-  content: '\e80b';
-}
-.ni-help:before {
-  content: '\e80c';
-}
-.ni-support:before {
-  content: '\e80d';
-}
-.ni-book:before {
-  content: '\e80e';
-}
-.ni-calendar:before {
-  content: '\e80f';
-}
-.ni-template:before {
-  content: '\e810';
-}
-.ni-delete:before {
-  content: '\e811';
-}
-.ni-view:before {
-  content: '\e812';
-}
-.ni-edit:before {
-  content: '\e813';
-}
-.ni-nimbus:before {
-  content: '\e814';
-}
-.ni-drag:before {
-  content: '\e815';
-}
-.ni-arrow-right:before {
-  content: '\e816';
-}
-.ni-arrow-left:before {
-  content: '\e817';
-}
-.ni-desktop:before {
-  content: '\e818';
-}
-.ni-smartphone:before {
-  content: '\e819';
-}
-.ni-upload:before {
-  content: '\e81a';
-}
-
-.ni-dark:before {
-  content: '\e81b';
-}
-.ni-light:before {
-  content: '\e81c';
-}
-.ni-admin:before {
-  content: '\e81d';
-}
-.ni-tablet:before {
-  content: '\e81e';
-}
-.ni-folder:before {
-  content: '\e81f';
-}
-.ni-folderopen:before {
-  content: '\e820';
-}
-.ni-picture:before {
-  content: '\e821';
-}
-.ni-doc:before {
-  content: '\e822';
-}
-.ni-file:before {
-  content: '\e823';
-}
-.ni-menudots:before {
-  content: '\e824';
-}
-.ni-save:before {
-  content: '\e825';
-}
-.ni-arrowright:before {
-  content: '\e826';
-}
-.ni-arrowleft:before {
-  content: '\e827';
-}
-.ni-arrowup:before {
-  content: '\e828';
-}
 
 // Text editor component
 .angular-editor {
@@ -3371,6 +3246,354 @@ input[type='file'] {
         div {
           p {
             // color: #1f2a2f;
+          }
+        }
+      }
+    }
+  }
+}
+// Loader
+.loader2 {
+  height: 50px;
+  width: 50px;
+  position: relative;
+}
+.loader2::after,
+.loader2::before,
+.loader2::after,
+.loader2::before {
+  content: '';
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  border: solid 8px transparent;
+  border-radius: 50%;
+  -webkit-animation: wiggle 1.4s ease infinite;
+  animation: wiggle 1.4s ease infinite;
+}
+.loader2::before,
+.loader2::before {
+  border-top-color: $blue-nimbus-light;
+  border-bottom-color: $blue-nimbus-light;
+}
+.loader2::after,
+.loader2::after {
+  border-left-color: $blue-nimbus-dark;
+  border-right-color: $blue-nimbus-dark;
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
+}
+
+@-webkit-keyframes wiggle {
+  0% {
+    -webkit-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    -webkit-transform: rotate(180deg) scale(0.5);
+    transform: rotate(180deg) scale(0.5);
+  }
+  100% {
+    -webkit-transform: rotate(360deg) scale(1);
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    -webkit-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    -webkit-transform: rotate(180deg) scale(0.5);
+    transform: rotate(180deg) scale(0.5);
+  }
+  100% {
+    -webkit-transform: rotate(360deg) scale(1);
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+// Darkmode
+.grid-darkmode {
+  #item-grid-1 {
+    background-color: $background-darkmode !important;
+    border-right: 1px solid $dropdown-darkmode !important;
+    .btn-contract-left {
+      background-color: $sidebar-header-darkmode;
+      border-top: 1px solid $border-darkmode;
+      i {
+        color: white;
+      }
+    }
+    .left-sidebar {
+      jhi-left-sidebar {
+        #left-sidebar-grid {
+          // components left sidebar
+          // Book Information
+          jhi-constructor-book-information {
+            .information-c-component {
+              border-bottom: 1px solid $sidebar-header-darkmode;
+              .c-component-title {
+                background-color: $sidebar-header-darkmode !important;
+                .cct-link {
+                  i {
+                    color: white !important;
+                  }
+                  p {
+                    color: white !important;
+                  }
+                }
+                i {
+                  color: white !important;
+                }
+              }
+              .c-component-content {
+                .row-c-component-c {
+                  .ic-row-text {
+                    p {
+                      color: white;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // End Book information
+          // Start Hierachical information
+          jhi-constructor-hierarchical-structure {
+            .hierarchical-c-component {
+              border-bottom: 1px solid $sidebar-header-darkmode;
+              .c-component-title {
+                background-color: $sidebar-header-darkmode !important;
+                .cct-link {
+                  i {
+                    color: white !important;
+                  }
+                  p {
+                    color: white !important;
+                  }
+                }
+                i {
+                  color: white !important;
+                }
+              }
+              .c-component-content {
+                .row-c-component-c {
+                  .hierarchical-element {
+                    .hier-header {
+                      i {
+                        color: white;
+                      }
+                      p {
+                        color: #e6e4e2;
+                      }
+                      i.hier-active-icon {
+                        color: $blue-nimbus-light !important;
+                      }
+                    }
+                    .hier-active {
+                      background-color: $border-darkmode !important;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // End Hierachical information
+          // Start Filmstrip
+          jhi-constructor-filmstrip {
+            .filmstrip-c-component {
+              border-bottom: 1px solid $sidebar-header-darkmode;
+              .c-component-title {
+                background-color: $sidebar-header-darkmode !important;
+                .cct-link {
+                  i {
+                    color: white !important;
+                  }
+                  p {
+                    color: white !important;
+                  }
+                }
+                i {
+                  color: white !important;
+                }
+              }
+              .c-component-content {
+                .row-c-component-c {
+                  .row-artboard-filmstrip {
+                    border: 1px solid $border-darkmode;
+                    .row-drag-ud {
+                      .icon {
+                        color: white;
+                      }
+                    }
+                    .artboard-mini {
+                      border: 2px solid $border-darkmode;
+                    }
+                    .ab-mini-select {
+                      border: 2px solid $blue-nimbus-light !important;
+                    }
+                    .ab-mini-desc {
+                      .delete-ab {
+                        i {
+                          color: white !important;
+                        }
+                        p {
+                          color: white !important;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // End Filmstrip
+        }
+      }
+    }
+  }
+  #item-grid-2 {
+    .grid-visor-container {
+      jhi-constructor-visor-container {
+        #visor-container-grid {
+          background-color: $workspace-darkmode;
+          .visor-component-artboard {
+            // background-color: #2e3a52 !important;
+          }
+        }
+      }
+    }
+  }
+  #item-grid-3 {
+    background-color: $background-darkmode !important;
+    border-left: 1px solid $dropdown-darkmode !important;
+    .btn-contract-right {
+      background-color: $sidebar-header-darkmode;
+      border-top: 1px solid $border-darkmode;
+      i {
+        color: white;
+      }
+    }
+    .right-sidebar {
+      jhi-right-sidebar {
+        #right-sidebar-grid {
+          // Inician componentes
+          // Start properties empty
+          .properties-empty {
+            background-image: url('../images/properties_negative.png');
+          }
+          // End properties empty
+          // Start Template Gallery
+          .tg-element {
+            jhi-template-gallery {
+              .template-c-component {
+                border-bottom: 1px solid $sidebar-header-darkmode;
+                .c-component-title {
+                  background-color: $sidebar-header-darkmode !important;
+                  .cct-link {
+                    i {
+                      color: white !important;
+                    }
+                    p {
+                      color: white !important;
+                    }
+                  }
+                  i {
+                    color: white !important;
+                  }
+                }
+                .menu-template {
+                  background-color: #101821;
+                  border-bottom: 1px solid $border-darkmode;
+                  .item-mt {
+                    background-color: $sidebar-header-darkmode;
+                    border: 1px solid $border-darkmode;
+                    span {
+                      color: white;
+                    }
+                  }
+                }
+                .c-component-content {
+                  .row-c-component-c {
+                    .row-mini-gallery {
+                      .template-preview {
+                        .template-mini {
+                          background-color: #c1d0e4;
+                          border: 1px solid $border-darkmode;
+                        }
+                        .name-template {
+                          p {
+                            color: #e6e4e2;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // End Template Gallery
+          // Start Propierties
+          .ccp-element {
+            jhi-constructor-component-properties {
+              .properties-c-component {
+                border-bottom: 1px solid $sidebar-header-darkmode;
+                .c-component-title {
+                  background-color: $sidebar-header-darkmode !important;
+                  .cct-link {
+                    i {
+                      color: white !important;
+                    }
+                    p {
+                      color: white !important;
+                    }
+                  }
+                  i {
+                    color: white !important;
+                  }
+                }
+                .c-component-content {
+                  .row-c-component-c {
+                    .cover-upload-c {
+                      h6 {
+                        color: white;
+                      }
+                      .row-up-image-area {
+                        border-bottom: 1px solid $border-darkmode;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          // End Propierties
+        }
+      }
+    }
+  }
+}
+
+.v-smartphone {
+  .row-visor-container {
+    div {
+      .row-content-block {
+        div {
+          .col-cb-video-text-color {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+          }
+          .col-cb-video-text-color > div:nth-child(1) {
+            width: 100%;
+          }
+          .col-cb-video-text-color > div:nth-child(2) {
+            width: 100%;
+            margin-top: 20px;
           }
         }
       }

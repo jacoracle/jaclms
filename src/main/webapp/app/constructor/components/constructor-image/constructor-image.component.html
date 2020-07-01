@@ -1,2 +1,6 @@
 <img class="block-img" [src]="imgSrc" (click)="selectImage()" *ngIf="imgSrc != ''">
 <img class="block-img" [src]="defaultImageUrl" (click)="selectImage()" *ngIf="imgSrc == ''">
+<!-- <div [hidden]="!showLoader">Cargando</div> -->
+<div [hidden]="!showLoader" class="loader-img">
+  <div class="loader2"></div>
+</div>

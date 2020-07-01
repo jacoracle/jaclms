@@ -20,6 +20,7 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @Input() component?: Componente;
   @Output() updateComponent = new EventEmitter();
+  showLoader = false;
 
   constructor(
     public videoService: VideoService,
@@ -57,7 +58,9 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
   }
 
   public getVideo(path: string): void {
+    this.showLoader = true;
     this.fileUploadService.getVideoThumbnailFile(path).subscribe(data => {
+      this.showLoader = false;
       const videoPath = URL.createObjectURL(data.body);
       const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
       this.thumbSrc = objectUrl;

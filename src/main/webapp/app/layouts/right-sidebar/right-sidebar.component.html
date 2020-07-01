@@ -1,16 +1,15 @@
 <div id="right-sidebar-grid">
   <!-- Galería de plantillas de bloques de contenido -->
 
-  <div [hidden]="!openTemplateGallery">
+  <div [hidden]="!openTemplateGallery" class="tg-element">
   <!-- <div> -->
     <jhi-template-gallery></jhi-template-gallery>
   </div>
 
-  <div [hidden]="!openProperties">
+  <div [hidden]="!openProperties" class="ccp-element">
       <jhi-constructor-component-properties></jhi-constructor-component-properties>
   </div>
 
   <!-- Elemento a mostrar cuando la barra de herramientas está vacía -->
-  <!-- <div *ngIf="!openTemplateGallery" class="test-i">
-  </div> -->
+  <div *ngIf="!openTemplateGallery && !openProperties" class="properties-empty"></div>
 </div>

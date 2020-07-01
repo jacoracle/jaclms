@@ -305,3 +305,76 @@ ul.dropdown-menu {
     }
   }
 }
+
+// Dark mode
+.navbar-darkmode {
+  background-color: $background-darkmode;
+  border-bottom: 1px solid $background-darkmode;
+  .row-nb-nimbus {
+    .nb-logo {
+      .nb-imagotipo {
+        svg {
+          .nbl-1 {
+            fill: white;
+          }
+        }
+      }
+      .nb-logotipo {
+        background-image: url('../../../content/images/logotype-negative.svg');
+      }
+    }
+    .navbar-lg {
+      background-color: $background-darkmode;
+      .navbar-nav {
+        .nav-item {
+          .nav-link {
+            background-color: $background-darkmode;
+            &:hover .circle-menu {
+              background-color: $dropdown-darkmode !important;
+            }
+            .circle-menu {
+              i {
+                color: $blue-nimbus-light;
+                text-shadow: 2px 1px 6px rgba(24, 197, 188, 0.4);
+              }
+            }
+            .circle-menu-account {
+              background-color: $blue-nimbus-light;
+              i {
+                color: white;
+                text-shadow: 2px 1px 6px rgba(255, 255, 188, 0.4);
+              }
+            }
+            p {
+              color: white;
+            }
+            .arrow-menu {
+              background-image: url('../../../content/images/arrow_user_icn_negative.svg');
+            }
+          }
+          .dropdown-menu {
+            background-color: $dropdown-darkmode;
+            border: 0;
+            li {
+              .dropdown-item {
+                p {
+                  color: white;
+                }
+                &:hover {
+                  background-color: $color-darkmode-hover !important;
+                }
+              }
+            }
+          }
+        }
+        .show {
+          .nav-link {
+            .circle-menu {
+              background-color: #4b6079 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
