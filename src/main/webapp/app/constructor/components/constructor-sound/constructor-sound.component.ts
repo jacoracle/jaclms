@@ -61,7 +61,7 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.component && this.component.contenido && this.component.contenido.contenido !== '') {
-      this.pathUrl = './../../../content/images/sound_uploaded.png';
+      this.pathUrl = this.component.contenido.contenido!;
       this.getSound(this.component.contenido.contenido!);
     }
   }

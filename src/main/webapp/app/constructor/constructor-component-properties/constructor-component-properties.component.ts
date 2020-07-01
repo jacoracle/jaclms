@@ -27,6 +27,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   loadedPdfUrl = './../../../content/images/pdf_uploaded.png';
   soundSrc: SafeUrl = '';
   defaultSoundUrl = './../../../content/images/sound_upload.png';
+  loadedSoundUrl = './../../../content/images/sound_uploaded.png';
   pathUrl = '';
   maxImageSize = 5120000;
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
@@ -39,6 +40,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
   showLoader = false;
   typePdf = 'application/pdf';
+  listenAudio = false;
 
   constructor(
     public imageService: ImageService,
@@ -104,16 +106,19 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.imageService.getPathUrl().subscribe(pathUrl => {
       this.pathUrl = pathUrl;
       this.fileFormat = 'image';
+      this.listenAudio = false;
     });
     // Recibe el pathUrl del video seleccionado.
     this.videoService.getPathUrl().subscribe(pathUrl => {
       this.pathUrl = pathUrl;
       this.fileFormat = 'video';
+      this.listenAudio = false;
     });
 
     this.pdfService.getPathUrl().subscribe(pathUrl => {
       this.pathUrl = pathUrl;
       this.fileFormat = 'pdf';
+      this.listenAudio = false;
     });
 
     this.soundService.getPathUrl().subscribe(pathUrl => {
@@ -149,13 +154,13 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.showLoader = true;
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
           if (this.fileFormat === 'image' && this.imageFileTypes.includes(event.target.files[0].type)) {
-            this.getImageSetUrl(data.path);
+            this.getImageUrl(data.path);
           } else if (this.fileFormat === 'video' && event.target.files[0].type === 'video/mp4') {
-            this.getVideoSetUrl(data.path);
+            this.getVideoUrl(data.path);
           } else if (this.fileFormat === 'pdf' && event.target.files[0].type === 'application/pdf') {
-            this.getPdfSetUrl(data.path);
+            this.getPdfUrl(data.path);
           } else if (this.fileFormat === 'sound' && event.target.files[0].type === 'audio/mpeg') {
-            this.getSoundSetUrl(data.path);
+            this.getSoundUrl(data.path);
           } else {
             this.showErrorFileType(event);
             return;
@@ -166,22 +171,22 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     }
   }
 
-  getSoundSetUrl(soundPath: string): void {
+  getSoundUrl(soundPath: string): void {
     this.fileUploadService.getSound(soundPath);
     this.soundService.setPathUrl(soundPath);
   }
 
-  getPdfSetUrl(pdfPath: string): void {
+  getPdfUrl(pdfPath: string): void {
     this.fileUploadService.getPdf(pdfPath);
     this.pdfService.setPathUrl(pdfPath);
   }
 
-  getVideoSetUrl(videoPath: string): void {
+  getVideoUrl(videoPath: string): void {
     this.fileUploadService.getVideoThumbnail(videoPath);
     this.videoService.setPathUrl(videoPath);
   }
 
-  getImageSetUrl(imagePath: string): void {
+  getImageUrl(imagePath: string): void {
     this.fileUploadService.getImage(imagePath);
     this.imageService.setPathUrl(imagePath);
   }
@@ -242,6 +247,13 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   pdfPreview(): void {
     this.showLoader = true;
     this.pdfModalService.open(this.pdfSrc);
+    this.showLoader = false;
+  }
+
+  loadSound(): void {
+    this.showLoader = true;
+    this.listenAudio = true;
+    this.fileUploadService.getSound(this.pathUrl);
     this.showLoader = false;
   }
 

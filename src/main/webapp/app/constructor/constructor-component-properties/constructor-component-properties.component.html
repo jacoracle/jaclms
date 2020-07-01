@@ -1,4 +1,3 @@
-
 <div class="properties-c-component">
 
   <!-- Header -->
@@ -17,49 +16,51 @@
     <div class="row-c-component-c">
 
       <!-- Subir archivo -->
-        <div class="cover-upload-c">
-          <h6>Subir archivo</h6>
+      <div class="cover-upload-c">
+        <h6>Subir archivo</h6>
 
-            <div class="row-up-image-area">
-              <div *ngIf="fileFormat === 'image'">
-                <!-- Imagen -->
-                <img [src]="defaultImageUrl" alt="" class="cover-upload-img" *ngIf="imgSrc === ''">
-                <img [src]="imgSrc" alt="" class="cover-upload-img" *ngIf="imgSrc !== ''">
-              </div>
-              <div *ngIf="fileFormat === 'video' && videoSrc === ''" [ngClass]="{'test-video': thumbSrc !== ''}">
-                <!-- Video thumbnail -->
-                <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
-                <span class="play-icon-test" (click)="loadVideo()"><i class="icon ni-play"></i></span>
-                <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="thumbSrc !== ''">
-              </div>
-              <div *ngIf="fileFormat === 'video' && videoSrc !== ''">
-                <!-- Video -->
-                <video [src]="videoSrc" width="100%" controls #vPlayer></video>
-              </div>
-                <div *ngIf="fileFormat === 'pdf' && pdfSrc !== ''">
-                    <!-- Pdf -->
-                    <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc === ''">
-                    <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''" (click)="pdfPreview()">
-                </div>
-                <div *ngIf="fileFormat === 'sound' && soundSrc !== ''">
-                    <!-- Sound -->
-                    <audio  [src]="soundSrc" controls="controls" autoplay></audio>
-                </div>
-              <div [hidden]="!showLoader" class="loader-cp">
-                <!-- Doing something -->
-                <span class="loader"></span>
-                </div>
-              </div>
-
-            <div class="row-sidebar-up-image-btn">
-              <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="this.pathUrl !== ''">Eliminar</button>
-              <button type="button" class="main-btn" (click)="fileInput.click()">
-                  <span>Subir</span>
-                  <input #fileInput type="file" (change)="selectFile($event)" style="display:none;" />
-              </button>
-            </div>
-
+        <div class="row-up-image-area">
+          <div *ngIf="fileFormat === 'image'">
+            <!-- Imagen -->
+            <img [src]="defaultImageUrl" alt="" class="cover-upload-img" *ngIf="imgSrc === ''">
+            <img [src]="imgSrc" alt="" class="cover-upload-img" *ngIf="imgSrc !== ''">
+          </div>
+          <div *ngIf="fileFormat === 'video' && videoSrc === ''" [ngClass]="{'test-video': thumbSrc !== ''}">
+            <!-- Video thumbnail -->
+            <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
+            <span class="play-icon-test" (click)="loadVideo()"><i class="icon ni-play"></i></span>
+            <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="thumbSrc !== ''">
+          </div>
+          <div *ngIf="fileFormat === 'video' && videoSrc !== ''">
+            <!-- Video -->
+            <video [src]="videoSrc" width="100%" controls #vPlayer></video>
+          </div>
+          <div *ngIf="fileFormat === 'pdf'">
+            <!-- Pdf -->
+            <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc === ''">
+            <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''" (click)="pdfPreview()">
+          </div>
+          <div *ngIf="fileFormat === 'sound'">
+            <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc === ''">
+            <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc !== '' && !listenAudio" (click)="loadSound()">
+            <audio [src]="soundSrc" controls #vPlayer *ngIf="soundSrc !== '' && listenAudio"></audio>
+          </div>
+          <div [hidden]="!showLoader" class="loader-cp">
+            <!-- Doing something -->
+            <span class="loader"></span>
+          </div>
         </div>
+
+        <div class="row-sidebar-up-image-btn">
+          <button (click)="delete()" class="secondary-btn text-transform-none"
+            *ngIf="this.pathUrl !== ''">Eliminar</button>
+          <button type="button" class="main-btn" (click)="fileInput.click()">
+            <span>Subir</span>
+            <input #fileInput type="file" (change)="selectFile($event)" style="display:none;" />
+          </button>
+        </div>
+
+      </div>
       <!-- Subir archivo -->
 
     </div>
