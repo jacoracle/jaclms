@@ -7,18 +7,12 @@ package org.constructor.utils;
  * @author Norman Erick Estrada
  *
  */
-import java.sql.SQLException;
 
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
 
 import org.constructor.web.rest.errors.ErrorConstants;
-import org.hibernate.JDBCException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,11 +37,7 @@ public class EntityResponse extends ResponseEntityExceptionHandler {
 	 * Log
 	 */
 	private static final Logger LOG = LoggerFactory.getLogger(EntityResponse.class);
-	/**
-	 * Instance of environment
-	 */
-	@Autowired
-	private Environment env;
+	
 	
 	/**
      * Handle MissingServletRequestParameterException. Triggered when a 'required' request parameter is missing.
@@ -104,29 +94,7 @@ public class EntityResponse extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(response, httpStatus);
 	}
 	
-	/**
-	 *  ResponseEntity
-	 * @param exc
-	 * @return response, httpStatus
-	 */
-	@ExceptionHandler(PersistenceException.class)
-	public ResponseEntity<ParamOutputTO<Void>> createResponseEntity(final PersistenceException exc) {
-		LOG.info("Ingresando al handler para PersistenceException");
-		String message = ErrorConstants.STATUS_MENSSAGE_201;
-		if (exc.getCause() instanceof SQLException) {
-			final SQLException sqlex = (SQLException) exc.getCause();
-			message = env.getProperty(String.valueOf(sqlex.getErrorCode()));
-		}
-		if (exc.getCause() instanceof JDBCException) {
-			final JDBCException sqlex = (JDBCException) exc.getCause();
-			message = env.getProperty(String.valueOf(sqlex.getErrorCode()));
-		}
-		final HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-		final ParamOutputTO<Void> response = new ParamOutputTO<>();
-		response.setSuccess(Boolean.FALSE);
-		response.setMessage(message);
-		return new ResponseEntity<>(response, httpStatus);
-	}
+	
 	
 	/**
 	 * 
@@ -144,30 +112,7 @@ public class EntityResponse extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(response, httpStatus);
 	}
 	
-	/**
-	 * DataAccessException exception for 500
-	 * @param exc
-	 * @return
-	 */
-	@ExceptionHandler(DataAccessException.class)
-	public ResponseEntity<ParamOutputTO<Void>> sqlResponseEntity(final DataAccessException exc) {
-		LOG.info("Ingresando al handler para DataAccessException");
-		LOG.error(exc.getMessage(), exc);
-		String message = ErrorConstants.STATUS_MENSSAGE_201;
-		if (exc.getCause() instanceof SQLException) {
-			final SQLException sqlex = (SQLException) exc.getCause();
-			message = env.getProperty(String.valueOf(sqlex.getErrorCode()));
-		}
-		if (exc.getCause() instanceof JDBCException) {
-			final JDBCException sqlex = (JDBCException) exc.getCause();
-			message = env.getProperty(String.valueOf(sqlex.getErrorCode()));
-		}
-		final HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-		final ParamOutputTO<Void> response = new ParamOutputTO<>();
-		response.setSuccess(Boolean.FALSE);
-		response.setMessage(message);
-		return new ResponseEntity<>(response, httpStatus);
-	}
+	
 	
 }
 	

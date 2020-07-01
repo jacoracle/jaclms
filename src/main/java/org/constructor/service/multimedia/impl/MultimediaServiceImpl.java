@@ -84,8 +84,8 @@ public class MultimediaServiceImpl implements MultimediaService {
 	 */
 	enum extVideo { MP4, VGA};
 	enum extImage { JPG, PNG, JPEG};
-	enum extDocs { PDF, CSV};
-	enum extAudio{ MP3, WAV};
+	enum extDocs { PDF, DOCX,TXT};
+	enum extAudio{ MP3};
 
 	/**     
 	 * saveFile
@@ -105,7 +105,8 @@ public class MultimediaServiceImpl implements MultimediaService {
 				MultipartFile  multimedia =   file.getFile();
 				String  extension =   FilenameUtils.getExtension( multimedia.getOriginalFilename());
 				String replace = null; 
-				
+				videoResponse.setExtension(extension);
+				videoResponse.setPeso(multimedia.getSize() /  1024 );
 				videoResponse.setName( multimedia.getOriginalFilename());
 				//Create Path
 				StringBuilder builder = new StringBuilder();
@@ -115,7 +116,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				 * if para Audio
 				 */
 				if (extension.toUpperCase().equals(extAudio.MP3.toString())
-						|| extension.toUpperCase().equals(extAudio.WAV.toString()) && ((( multimedia.getSize()/1024))/ 1024  ) <=  audio ) {
+						 && ((( multimedia.getSize()/1024))/ 1024  ) <=  audio ) {
 					buildFile(builder, file);
 					builder.append("audio");
 					PathValidation.createPath(builder.toString());
@@ -149,7 +150,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				 * if para Docs
 				 */
 				if (extension.toUpperCase().equals(extDocs.PDF.toString())
-						|| extension.toUpperCase().equals(extDocs.CSV.toString()) && ((( multimedia.getSize()/1024))/ 1024  ) <=  docs ) {
+						|| extension.toUpperCase().equals(extDocs.DOCX.toString()) ||extension.toUpperCase().equals(extDocs.TXT.toString()) && ((( multimedia.getSize()/1024))/ 1024  ) <=  docs ) {
 					buildFile(builder, file  );
 					builder.append("docs");
 					PathValidation.createPath(builder.toString());
@@ -276,6 +277,8 @@ public class MultimediaServiceImpl implements MultimediaService {
 		}
 		return status;
 	}
+	
+	
 	
 	/**
 	 * otherCourseCoverExists

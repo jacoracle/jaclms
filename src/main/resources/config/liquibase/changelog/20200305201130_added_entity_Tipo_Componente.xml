@@ -37,6 +37,9 @@
             <column name="tipo_componente_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
+             <column name="orden" type="bigint">
+                <constraints  nullable="true"/>
+            </column>	
            </createTable>
            
            <addPrimaryKey columnNames="tipo_bloque_componentes_id, tipo_componente_id" tableName="tipos_bloques_componentes"/>
