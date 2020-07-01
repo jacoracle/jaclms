@@ -106,14 +106,6 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
     this.navigationControlsService.setOpenProperties(false);
   }
 
-  /**
-   * Reordena el filstrip y los bloques de contenido de la mesa de trabajo
-   */
-  reorderFilmstrip(index: number, newIndex: number): void {
-    this.contentBlocksService.setNewIndexOrderBlock(newIndex);
-    this.contentBlocksService.setIndexBlockToReorder(index);
-  }
-
   validateFimstripsSize(): boolean {
     return this.contentBlocks.length > 1;
   }

@@ -43,6 +43,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   _curso: any;
   @Input()
   set curso(val: any) {
+    this.showLoader = false;
     this._curso = val;
     if (this._curso !== undefined) {
       this.nivel.cursoId = this._curso.id;
@@ -97,12 +98,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.contentBlocksService.getSelectedBlockIndex().subscribe(selectedBlockIndex => {
       this.selectedBlock = selectedBlockIndex;
-    });
-    this.subscription = this.contentBlocksService.getNewIndexOrderBlock().subscribe(newOrderBlock => {
-      this.newIndexOrderBlock = newOrderBlock;
-    });
-    this.subscription = this.contentBlocksService.getIndexBlockToReorder().subscribe(indexBlockToReorder => {
-      this.updateBlocksIndexOrder(indexBlockToReorder, this.newIndexOrderBlock); // - 1);
     });
   }
 

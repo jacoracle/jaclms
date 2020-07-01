@@ -12,8 +12,6 @@ export class ContentBlocksService {
   indexBlockToDelete = new Subject<number>();
   templates = new Subject<ITipoBloqueComponentes[]>();
   selectedBlockIndex = new Subject<number>();
-  indexBlockToReorder = new Subject<number>();
-  newIndexOrderBlock = new Subject<number>();
 
   constructor() {}
 
@@ -55,37 +53,5 @@ export class ContentBlocksService {
 
   setSelectedBlockIndex(index: number): void {
     this.selectedBlockIndex.next(index);
-  }
-
-  /**
-   * devuelve el indice del bloque que se esta reordenando en el filmstrip y la mesa de trabajo.
-   */
-  getIndexBlockToReorder(): Observable<number> {
-    return this.indexBlockToReorder.asObservable();
-  }
-
-  /**
-   * asigna el indice del bloque que se esta reordenando.
-   * @param index
-   */
-
-  setIndexBlockToReorder(index: number): void {
-    this.indexBlockToReorder.next(index);
-  }
-
-  /**
-   * asigna el nuevo indice que correspondera al bloque y al filmstrip.
-   * @param newIndexOrder
-   */
-  setNewIndexOrderBlock(newIndexOrder: number): void {
-    this.newIndexOrderBlock.next(newIndexOrder);
-  }
-
-  /**
-   * devuelve el nuevo indice que tomara el bloque
-   * y el filmstrip al reordenar.
-   */
-  getNewIndexOrderBlock(): Observable<number> {
-    return this.newIndexOrderBlock;
   }
 }
