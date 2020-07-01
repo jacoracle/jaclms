@@ -16,22 +16,24 @@ import { SoundService } from 'app/services/sound.service';
   styleUrls: ['./constructor-component-properties.component.scss']
 })
 export class ConstructorComponentPropertiesComponent implements OnDestroy {
-  subscription: Subscription;
-  imgSrc: SafeUrl = '';
   defaultImageUrl = './../../../content/images/image_thumb.png';
-  videoSrc: SafeUrl = '';
   defaultVideoUrl = './../../../content/images/video_thumb.png';
-  thumbSrc: SafeUrl = '';
-  pdfSrc: SafeUrl = '';
   defaultPdfUrl = './../../../content/images/pdf_upload.png';
   loadedPdfUrl = './../../../content/images/pdf_uploaded.png';
-  soundSrc: SafeUrl = '';
   defaultSoundUrl = './../../../content/images/sound_upload.png';
   loadedSoundUrl = './../../../content/images/sound_uploaded.png';
-  pathUrl = '';
-  maxImageSize = 5120000;
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
+  typePdf = 'application/pdf';
+
+  subscription: Subscription;
+  imgSrc: SafeUrl = '';
+  videoSrc: SafeUrl = '';
+  thumbSrc: SafeUrl = '';
+  pdfSrc: SafeUrl = '';
+  soundSrc: SafeUrl = '';
+  pathUrl = '';
+  maxImageSize = 5120000;
   selectedFiles = [];
   id = 0; // Id de curso o módulo a guardar.
   type = 'course'; // course, module
@@ -39,7 +41,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   fileFormat = '';
   @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
   showLoader = false;
-  typePdf = 'application/pdf';
   listenAudio = false;
 
   constructor(
@@ -53,55 +54,20 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     private pdfModalService: PdfModalService
   ) {
     // Recibe el src de la imagen a mostrar
-    this.subscription = this.imageService.getImgSrc().subscribe(imgSrc => {
-      this.imgSrc = imgSrc;
-      this.fileFormat = 'image';
-      if (this.imgSrc === '') {
-        this.fileInput.nativeElement.value = '';
-      }
-      this.showLoader = false;
-    });
+    this.subscription = this.subscriptionImage();
+
     // Recibe el src del video (completo) a mostrar
-    this.subscription = this.videoService.getVideoSrc().subscribe(videoSrc => {
-      this.videoSrc = videoSrc;
-      this.fileFormat = 'video';
-      if (this.videoSrc === '') {
-        this.fileInput.nativeElement.value = '';
-      } else {
-        setTimeout(() => {
-          if (this.videoplayer) {
-            this.videoplayer.nativeElement.play();
-          }
-        }, 1000);
-      }
-      this.showLoader = false;
-    });
-    this.subscription = this.pdfService.getPdfSrc().subscribe(pdfSrc => {
-      this.pdfSrc = pdfSrc;
-      this.fileFormat = 'pdf';
-      if (this.pdfSrc === '') {
-        this.fileInput.nativeElement.value = '';
-      }
-      this.showLoader = false;
-    });
-    this.subscription = this.soundService.getSoundSrc().subscribe(soundSrc => {
-      this.soundSrc = soundSrc;
-      this.fileFormat = 'sound';
-      if (this.soundSrc === '') {
-        this.fileInput.nativeElement.value = '';
-      }
-      this.showLoader = false;
-    });
+    this.subscription = this.subscriptionVideo();
+
+    // Recibe el src del pdf (completo) a mostrar
+    this.subscription = this.subscriptioPdf();
+
+    // Recibe el src del sonido (completo) a mostrar
+    this.subscription = this.subscriptionSound();
+
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
-    this.subscription = this.videoService.getThumbSrc().subscribe(thumbSrc => {
-      this.thumbSrc = thumbSrc;
-      this.fileFormat = 'video';
-      if (this.thumbSrc === '') {
-        this.fileInput.nativeElement.value = '';
-      }
-      this.videoSrc = '';
-      this.showLoader = false;
-    });
+    this.subscription = this.subscriptionVideoThumb();
+
     // Recibe el pathUrl de la imagen seleccionada.
     this.imageService.getPathUrl().subscribe(pathUrl => {
       this.pathUrl = pathUrl;
@@ -133,6 +99,68 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         }
       });
     }
+  }
+
+  subscriptionVideoThumb(): Subscription {
+    return this.videoService.getThumbSrc().subscribe(thumbSrc => {
+      this.thumbSrc = thumbSrc;
+      this.fileFormat = 'video';
+      if (this.thumbSrc === '') {
+        this.fileInput.nativeElement.value = '';
+      }
+      this.videoSrc = '';
+      this.showLoader = false;
+    });
+  }
+
+  subscriptionSound(): Subscription {
+    return this.soundService.getSoundSrc().subscribe(soundSrc => {
+      this.soundSrc = soundSrc;
+      this.fileFormat = 'sound';
+      if (this.soundSrc === '') {
+        this.fileInput.nativeElement.value = '';
+      }
+      this.showLoader = false;
+    });
+  }
+
+  subscriptioPdf(): Subscription {
+    return this.pdfService.getPdfSrc().subscribe(pdfSrc => {
+      this.pdfSrc = pdfSrc;
+      this.fileFormat = 'pdf';
+      if (this.pdfSrc === '') {
+        this.fileInput.nativeElement.value = '';
+      }
+      this.showLoader = false;
+    });
+  }
+
+  subscriptionVideo(): Subscription {
+    return this.videoService.getVideoSrc().subscribe(videoSrc => {
+      this.videoSrc = videoSrc;
+      this.fileFormat = 'video';
+      if (this.videoSrc === '') {
+        this.fileInput.nativeElement.value = '';
+      } else {
+        setTimeout(() => {
+          if (this.videoplayer) {
+            this.videoplayer.nativeElement.play();
+          }
+        }, 1000);
+      }
+      this.showLoader = false;
+    });
+  }
+
+  subscriptionImage(): Subscription {
+    return this.imageService.getImgSrc().subscribe(imgSrc => {
+      this.imgSrc = imgSrc;
+      this.fileFormat = 'image';
+      if (this.imgSrc === '') {
+        this.fileInput.nativeElement.value = '';
+      }
+      this.showLoader = false;
+    });
   }
 
   /*
