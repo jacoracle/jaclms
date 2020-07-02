@@ -22,7 +22,7 @@
             <column name="icon_path" type="varchar(100)">
                 <constraints nullable="true" />
             </column>
-             <column name="tags" type="varchar(10)">
+             <column name="tags" type="varchar(30)">
                 <constraints nullable="true" />
             </column>
                         
