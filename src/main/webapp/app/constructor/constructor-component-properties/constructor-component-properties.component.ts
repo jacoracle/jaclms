@@ -20,8 +20,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   defaultVideoUrl = './../../../content/images/video_thumb.png';
   defaultPdfUrl = './../../../content/images/pdf_thumb.png';
   loadedPdfUrl = './../../../content/images/pdf_up_thumb.png';
-  defaultSoundUrl = './../../../content/images/sound_upload.png';
-  loadedSoundUrl = './../../../content/images/sound_uploaded.png';
+  defaultSoundUrl = './../../../content/images/audio_thumb.png';
+  loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
 

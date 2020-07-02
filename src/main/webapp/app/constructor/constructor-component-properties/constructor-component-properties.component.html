@@ -42,10 +42,11 @@
             <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''">
             <!-- <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''" (click)="pdfPreview()"> -->
           </div>
-          <div *ngIf="fileFormat === 'sound'">
+          <div *ngIf="fileFormat === 'sound'" class="test-audio">
             <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc === ''">
-            <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc !== '' && !listenAudio" (click)="loadSound()">
-            <audio [src]="soundSrc" controls #sPlayer *ngIf="soundSrc !== '' && listenAudio" ></audio>
+            <span class="play-icon-test" (click)="loadSound()" *ngIf="soundSrc !== '' && !listenAudio"><i class="icon ni-play"></i></span>
+            <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc !== '' && !listenAudio">
+            <audio [src]="soundSrc" controls controlsList="nodownload" #sPlayer *ngIf="soundSrc !== '' && listenAudio" class="audioPlayer" ></audio>
           </div>
           <div [hidden]="!showLoader" class="loader-cp">
             <!-- Doing something -->
