@@ -25,15 +25,11 @@
             <img [src]="defaultImageUrl" alt="" class="cover-upload-img" *ngIf="imgSrc === ''">
             <img [src]="imgSrc" alt="" class="cover-upload-img" *ngIf="imgSrc !== ''">
           </div>
-          <div *ngIf="fileFormat === 'video' && videoSrc === ''" [ngClass]="{'test-video': thumbSrc !== ''}">
-            <!-- Video thumbnail -->
-            <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
-            <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''"><i class="icon ni-play"></i></span>
-            <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="thumbSrc !== ''">
-          </div>
-          <div *ngIf="fileFormat === 'video' && videoSrc !== ''">
-            <!-- Video -->
-            <video [src]="videoSrc" width="100%" controls #vPlayer></video>
+          <div *ngIf="fileFormat === 'video' && videoSrc !== ''" [ngClass]="{'test-video': thumbSrc !== ''}">
+              <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
+              <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''"><i class="icon ni-play"></i></span>
+              <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="videoSrc !== ''">
+           <!-- <video [src]="videoSrc" width="100%" controls #vPlayer></video>-->
           </div>
           <div *ngIf="fileFormat === 'pdf'" class="test-pdf">
             <!-- Pdf -->

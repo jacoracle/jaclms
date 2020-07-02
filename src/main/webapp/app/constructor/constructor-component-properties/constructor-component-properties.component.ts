@@ -9,6 +9,7 @@ import { VideoService } from 'app/services/video.service';
 import { PdfService } from 'app/services/pdf.service';
 import { PdfModalService } from 'app/services/pdf-modal.service';
 import { SoundService } from 'app/services/sound.service';
+import { VideoModalService } from 'app/services/video-modal.service';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -38,7 +39,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   type = 'course'; // course, module
   @ViewChild('fileInput', { static: false }) fileInput: any;
   fileFormat = '';
-  @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
   @ViewChild('sPlayer', { static: false }) soundplayer: ElementRef | undefined;
   showLoader = false;
   listenAudio = false;
@@ -51,7 +51,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     public eventManager: JhiEventManager,
     public fileUploadService: FileUploadService,
     public currentCourseService: CurrentCourseService,
-    private pdfModalService: PdfModalService
+    private pdfModalService: PdfModalService,
+    private videoModalService: VideoModalService
   ) {
     // Recibe el src de la imagen a mostrar
     this.subscription = this.subscriptionImage();
@@ -109,7 +110,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       if (this.thumbSrc === '') {
         this.fileInput.nativeElement.value = '';
       }
-      this.videoSrc = '';
       this.showLoader = false;
     });
   }
@@ -147,12 +147,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileFormat = 'video';
       if (this.videoSrc === '') {
         this.fileInput.nativeElement.value = '';
-      } else {
-        setTimeout(() => {
-          if (this.videoplayer) {
-            this.videoplayer.nativeElement.play();
-          }
-        }, 1000);
       }
       this.showLoader = false;
     });
@@ -217,6 +211,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   getVideoUrl(videoPath: string): void {
     this.fileUploadService.getVideoThumbnail(videoPath);
+    this.fileUploadService.getVideo(videoPath);
     this.videoService.setPathUrl(videoPath);
   }
 
@@ -297,6 +292,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   loadVideo(): void {
     this.showLoader = true;
-    this.fileUploadService.getVideo(this.pathUrl);
+    this.videoModalService.open(this.videoSrc);
+    this.showLoader = false;
   }
 }
