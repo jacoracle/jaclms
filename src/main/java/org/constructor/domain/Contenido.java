@@ -31,29 +31,54 @@ public class Contenido  implements Serializable {
 	/** The id. */
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
     private Long id;
 	
 	/** The contenido. */
 	@Column(name = "contenido")
 	private String contenido;
 	
+	/** The nombre. */
+	@Column(name = "nombre")
+	private String nombre;
+	
+	/** The extension. */
+	@Column(name = "extension")
+	private String extension;
+	
+	/** The peso. */
+	@Column(name = "peso")
+	private Long peso;
+	
 	/** The componente. */
-	@OneToOne
-    @JoinColumn(name = "componente_id")
+	@OneToOne 
+	@JoinColumn(name = "componente_id")
     @JsonIgnore
 	private Componente componente;
 
+	
+
 	/**
 	 * Instantiates a new contenido.
-	 *
-	 * @param id the id
-	 * @param contenido the contenido
+	 * 
+	 * @param id
+	 * @param contenido
+	 * @param nombre
+	 * @param extension
+	 * @param peso
+	 * @param componente
 	 */
-	public Contenido(Long id, String contenido) {
+	public Contenido(Long id, String contenido, String nombre, String extension, Long peso, Componente componente) {
 		super();
 		this.id = id;
 		this.contenido = contenido;
+		this.nombre = nombre;
+		this.extension = extension;
+		this.peso = peso;
+		this.componente = componente;
 	}
+
+
 
 	/**
 	 * Instantiates a new contenido.
@@ -99,6 +124,68 @@ public class Contenido  implements Serializable {
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
+	
+	
+
+	/**
+	 * Get
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+
+
+	/**
+	 * Set
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+
+	/**
+	 * Get
+	 * @return the extension
+	 */
+	public String getExtension() {
+		return extension;
+	}
+
+
+
+	/**
+	 * Set
+	 * @param extension the extension to set
+	 */
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
+
+
+	/**
+	 * Get
+	 * @return the peso
+	 */
+	public Long getPeso() {
+		return peso;
+	}
+
+
+
+	/**
+	 * Set
+	 * @param peso the peso to set
+	 */
+	public void setPeso(Long peso) {
+		this.peso = peso;
+	}
+
+
 
 	/**
 	 * Gets the componente.
@@ -125,7 +212,7 @@ public class Contenido  implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Contenido [id=" + id + ", contenido=" + contenido + "]";
+		return "Contenido [id=" + id + ", contenido=" + contenido + ", nombre= " + nombre + ", extension=" + extension +", peso=" + peso + "]";
 	}
 
 }

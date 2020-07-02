@@ -18,6 +18,46 @@ public class VideoResponse<T> extends ParamOutputTO<T> {
 	 * String path
 	 */
 	private String path;
+	
+	/**
+	 * Extension
+	 */
+	private String extension;
+	
+	/**
+	 * Peso
+	 */
+	private Long peso ; 
+	
+	
+
+	/**
+	 * @return the extension
+	 */
+	public String getExtension() {
+		return extension;
+	}
+
+	/**
+	 * @param extension the extension to set
+	 */
+	public void setExtension(final String extension) {
+		this.extension = extension;
+	}
+
+	/**
+	 * @return the peso
+	 */
+	public Long getPeso() {
+		return peso;
+	}
+
+	/**
+	 * @param peso the peso to set
+	 */
+	public void setPeso(final Long peso) {
+		this.peso = peso;
+	}
 
 	/**
 	 * Get 
@@ -31,7 +71,7 @@ public class VideoResponse<T> extends ParamOutputTO<T> {
 	 * Set
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -47,7 +87,7 @@ public class VideoResponse<T> extends ParamOutputTO<T> {
 	 * Set
 	 * @param path
 	 */
-	public void setPath(String path) {
+	public void setPath(final String path) {
 		this.path = path;
 	}
 	
