@@ -1,0 +1,196 @@
+@import '../../content/scss/variables.scss';
+
+// height: calc(100vh - 60px);
+
+.window-br {
+  position: relative;
+  width: 92%;
+  max-width: 1150px;
+  height: 700px;
+  margin-top: 70px;
+  border-radius: 6px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  // Window Header
+  .window-br-header {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background-color: $window-header-color;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid $window-divider-color;
+
+    .r1 {
+      position: relative;
+      width: 30%;
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .logo-create {
+        position: relative;
+        width: 152px;
+        height: 54px;
+        background-image: url('../../content/images/logo_create.svg');
+        background-position: center;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        margin-left: 12%;
+      }
+    }
+    .r2 {
+      position: relative;
+      width: 70%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      .c1 {
+        position: relative;
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin-bottom: 20px;
+
+        .button-hc {
+          position: relative;
+          width: 100px;
+          height: auto;
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 600;
+          color: $a-color-nd;
+          cursor: default;
+          opacity: 0.8;
+          margin-right: 8px;
+          .icon {
+            float: left;
+            margin-right: 6px;
+            cursor: default;
+          }
+        }
+      }
+    }
+  }
+
+  .window-br-body-topbar {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background-color: $window-body-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .row-wbr-bt {
+      position: relative;
+      width: 92%;
+      height: auto;
+
+      p {
+        position: relative;
+        font-size: 14px;
+        color: #292c36;
+        // margin-left: 4%;
+        // top: 15px;
+        cursor: default;
+      }
+    }
+  }
+
+  // Window body
+  .window-br-body {
+    position: relative;
+    width: 100%;
+    height: 475px;
+    background-color: $window-body-color;
+    overflow-y: auto;
+    padding-bottom: 30px;
+  }
+  .window-br-footer {
+    position: relative;
+    width: 100%;
+    height: 75px;
+    background-color: $window-footer-color;
+    border-top: 1px solid $window-divider-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 6px 6px;
+  }
+}
+
+.row-new-home {
+  position: relative;
+  width: 70%;
+  height: auto;
+  z-index: 1;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  // flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+// Home element
+.home-element {
+  position: relative;
+  width: 200px;
+  height: 160px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 20px 30px rgba(0, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
+  &:hover {
+    box-shadow: 0 20px 20px rgba(0, 18, 51, 0.2), 0 6px 22px rgba(16, 18, 51, 0.15);
+  }
+
+  .icon {
+    font-size: 80px;
+    color: white;
+  }
+
+  h4 {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    bottom: -35px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: $blue-nimbus-dark;
+  }
+}
+.e-rutas {
+  background-image: url('../../content/images/e-ruta.png');
+}
+.e-modulo {
+  background-image: url('../../content/images/e-modulo.png');
+}
+.e-libro {
+  background-image: url('../../content/images/e-libro.png');
+}
+
+@media (min-height: 800px) {
+  .window-br {
+    height: 700px;
+    top: 50%;
+    margin-top: -350px;
+  }
+}

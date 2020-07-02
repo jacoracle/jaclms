@@ -1,5 +1,49 @@
-<p>constructor-home works!</p>
-<br><br><br><br>
-<button>Rutas de aprendizaje</button>
-<button>Módulos</button>
-<button (click)="redirectHome();">Cursos/Libros</button>
+<div class="main-container-br">
+
+  <div class="window-br">
+
+    <div class="window-br-header">
+      <div class="r1">
+        <div class="logo-create"></div>
+      </div>
+      <div class="r2">
+        <div class="c1">
+          <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
+          <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="window-br-body-topbar">
+      <div class="row-wbr-bt">
+        <p>Selecciona una opción</p>
+      </div>
+    </div>
+
+    <div class="window-br-body">
+      <div class="row-new-home">
+        <div class="home-element e-rutas">
+          <div class="icon ni-template"></div>
+          <h4>Rutas de aprendizaje</h4>
+        </div>
+        <div class="home-element e-modulo">
+          <div class="icon ni-file"></div>
+          <h4>Módulos</h4>
+        </div>
+        <div class="home-element e-libro" (click)="redirectHome();">
+          <div class="icon ni-book"></div>
+          <h4>Libros</h4>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="window-br-footer">
+      <!-- <button routerLink="course-configuration" class="main-btn">Crear nuevo</button> -->
+    </div>
+
+  </div>
+
+</div>
