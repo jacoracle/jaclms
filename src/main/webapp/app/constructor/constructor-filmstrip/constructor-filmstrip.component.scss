@@ -105,8 +105,8 @@
     border: 2px solid $border-component;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 40%;
     transition: 0.3s;
+    background-size: 50px;
     cursor: pointer;
     &:hover {
       border: 2px solid $border-component-hover;

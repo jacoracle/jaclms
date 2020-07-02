@@ -3,9 +3,9 @@ img.block-pdf {
   position: relative;
   height: auto;
   width: 100%;
-  max-width: 900px;
+  // max-width: 1000px;
   height: auto;
-  border: 1px solid $blue-nimbus-light;
+  border: 1px dashed $blue-nimbus-light;
   transition: 0.3s;
   &:hover {
     border: 1px solid $blue-nimbus-dark;

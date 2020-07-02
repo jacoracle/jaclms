@@ -2,14 +2,12 @@
 
 .modal-pdf-container {
   position: relative;
-  width: 70%;
-  height: 300%;
+  width: 90%;
+  height: 90vh;
   margin: 0 auto;
   background-color: $bg-white;
-  border-radius: 8px;
-  top: 20%;
-  // margin-top: -263px;
-  // padding-top: 25px;
+  border-radius: 4px;
+  top: 5%;
   box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
   @include smartphone {
     width: 360px;
@@ -19,8 +17,8 @@
 
   .btn-close-modal-pdf {
     position: absolute;
-    top: 12px;
-    right: 15px;
+    top: 7px;
+    right: 13px;
     width: 35px;
     height: 35px;
     border-radius: 100%;
@@ -67,12 +65,17 @@
 
       .col-form-pdf {
         position: relative;
-        width: 90%;
-        height: 90%;
+        width: 100%;
+        height: calc(100% - 50px);
+        margin-top: 50px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 20px;
+
+        embed {
+          border-radius: 0 0 6px 6px;
+        }
+
         @include smartphone {
           width: 100%;
         }

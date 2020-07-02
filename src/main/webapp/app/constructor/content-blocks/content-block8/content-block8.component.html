@@ -1,6 +1,6 @@
 <!-- Bloque de contenido: Subtitulo-->
-<div class="col-cb-title" *ngIf="contentBlock && contentBlock.bloqueComponentes">
-    <div class="b-title-text" *ngFor="let component of contentBlock.bloqueComponentes.componentes!; let index = index;">
+<div class="col-cb-pdf" *ngIf="contentBlock && contentBlock.bloqueComponentes">
+    <div class="b-pdf" *ngFor="let component of contentBlock.bloqueComponentes.componentes!; let index = index;">
         <div *ngIf="contentBlock.bloqueComponentes.tipoBloqueComponentes">
             <jhi-constructor-pdf
                 [component]="component"

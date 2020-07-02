@@ -12,8 +12,8 @@ import { PdfService } from 'app/services/pdf.service';
   styleUrls: ['./constructor-pdf.component.scss']
 })
 export class ConstructorPdfComponent implements OnInit, OnDestroy {
-  defaultPdfUrl: SafeUrl = './../../../../content/images/pdf_upload.png';
-  loadedPdfUrl: SafeUrl = './../../../../content/images/pdf_uploaded.png';
+  defaultPdfUrl: SafeUrl = './../../../../content/images/pdf_layout.png';
+  loadedPdfUrl: SafeUrl = './../../../../content/images/pdf_up_layout.png';
   pdfSrc: SafeUrl = '';
   pathUrl = '';
   editing = false;

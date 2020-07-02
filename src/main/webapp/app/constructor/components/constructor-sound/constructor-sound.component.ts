@@ -12,7 +12,7 @@ import { SoundService } from 'app/services/sound.service';
   styleUrls: ['./constructor-sound.component.scss']
 })
 export class ConstructorSoundComponent implements OnInit, OnDestroy {
-  defaultSoundUrl: SafeUrl = './../../../../content/images/sound_upload.png';
+  defaultSoundUrl: SafeUrl = './../../../../content/images/audio_layout.png';
   loadedSoundUrl: SafeUrl = './../../../../content/images/sound_uploaded.png';
   soundSrc: SafeUrl = '';
   pathUrl = '';

@@ -28,17 +28,19 @@
           <div *ngIf="fileFormat === 'video' && videoSrc === ''" [ngClass]="{'test-video': thumbSrc !== ''}">
             <!-- Video thumbnail -->
             <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
-            <span class="play-icon-test" (click)="loadVideo()"><i class="icon ni-play"></i></span>
+            <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''"><i class="icon ni-play"></i></span>
             <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="thumbSrc !== ''">
           </div>
           <div *ngIf="fileFormat === 'video' && videoSrc !== ''">
             <!-- Video -->
             <video [src]="videoSrc" width="100%" controls #vPlayer></video>
           </div>
-          <div *ngIf="fileFormat === 'pdf'">
+          <div *ngIf="fileFormat === 'pdf'" class="test-pdf">
             <!-- Pdf -->
             <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc === ''">
-            <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''" (click)="pdfPreview()">
+            <span class="play-icon-test" (click)="pdfPreview()" *ngIf="pdfSrc !== ''"><i class="icon ni-view"></i></span>
+            <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''">
+            <!-- <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''" (click)="pdfPreview()"> -->
           </div>
           <div *ngIf="fileFormat === 'sound'">
             <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc === ''">
