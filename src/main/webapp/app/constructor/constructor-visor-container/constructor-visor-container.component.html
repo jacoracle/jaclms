@@ -12,6 +12,10 @@
 
     <div class="row-visor-container">
 
+      <div [hidden]="!showLoader" class="loader-layout">
+        <div class="loader2"></div>
+      </div>
+
       <div *ngIf="!contentBlocks.length" class="row-add-content">
         <button class="main-btn" (click)="addNewBlock()">
           <i class="icon ni-add"></i>

@@ -27,6 +27,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   templates: ITipoBloqueComponentes[] = [];
   selectedTemplateType = '';
   selectedBlock = -1;
+  newIndexOrderBlock = -1;
   contentBlocks = Array<IBloquesCurso>();
   nivel: NivelJerarquico = {
     nivelId: undefined,
@@ -42,10 +43,12 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   _curso: any;
   @Input()
   set curso(val: any) {
+    this.showLoader = false;
     this._curso = val;
     if (this._curso !== undefined) {
       this.nivel.cursoId = this._curso.id;
       if (this._curso.nivelesCurso.length) {
+        this.showLoader = false;
         this.nivel = this._curso.nivelesCurso[0].nivelJerarquico;
         this.nivel.cursoId = this._curso.id;
         this.contentBlocks = [];
@@ -60,6 +63,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     return this._curso;
   }
   visorSize = 'desktop';
+  showLoader = false;
 
   constructor(
     private contentBlocksService: ContentBlocksService,
@@ -70,6 +74,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     private navigationControlsService: NavigationControlsService,
     private imageService: ImageService
   ) {
+    this.showLoader = true;
     this.contentBlocks = [];
     this.subscription = this.contentBlocksService.getTempaltes().subscribe(templates => {
       this.templates = templates;
@@ -96,6 +101,21 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * actualiza el indice de los bloques de la mesa de trabajo cuando se
+   * reordena la tira de pelicula desde los botones y se actualiza el orden
+   * en cada objeto de bloque.
+   * @param oldIndex
+   * @param newIndex
+   */
+  updateBlocksIndexOrder(oldIndex: number, newIndex: number): void {
+    this.contentBlocks.splice(newIndex, 0, this.contentBlocks.splice(oldIndex, 1)[0]);
+    this.updateBlocksOrder();
+  }
+
+  /**
+   * asigna el orden correspondiente a los bloques de la mesa de trabajo
+   */
   updateBlocksOrder(): void {
     for (let i = 0; i < this.contentBlocks.length; i++) {
       this.contentBlocks[i].orden = i + 1;
@@ -128,6 +148,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   save(): void {
+    this.showLoader = true;
     this.success = false;
     this.error = false;
     this.nivel.bloquesCurso = this.contentBlocks;
@@ -142,8 +163,14 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<INivelJerarquico>>): void {
     result.subscribe(
-      res => this.onSaveSuccess(res),
-      () => this.onSaveError()
+      res => {
+        this.showLoader = false;
+        this.onSaveSuccess(res);
+      },
+      () => {
+        this.showLoader = false;
+        this.onSaveError();
+      }
     );
   }
 
