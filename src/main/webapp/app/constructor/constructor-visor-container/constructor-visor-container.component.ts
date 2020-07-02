@@ -356,6 +356,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.subscription = this.eventEmitterService.getInvokeSave().subscribe(() => {
       this.save();
     });
+    this.addNewBlock();
   }
 
   selectBlock(index: number): void {
