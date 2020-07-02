@@ -28,9 +28,10 @@ import { ConstructorPdfComponent } from 'app/constructor/components/constructor-
 import { ConstructorSoundComponent } from 'app/constructor/components/constructor-sound/constructor-sound.component';
 import { ContentBlock8Component } from 'app/constructor/content-blocks/content-block8/content-block8.component';
 import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  imports: [ConstructorSharedModule, AngularEditorModule],
+  imports: [ConstructorSharedModule, AngularEditorModule, DragDropModule],
   declarations: [
     ConstructorLayoutComponent,
     ConstructorFilmstripComponent,
