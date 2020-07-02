@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ImageService } from 'app/services/image.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
@@ -24,7 +24,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   loadedSoundUrl = './../../../content/images/sound_uploaded.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
-  typePdf = 'application/pdf';
 
   subscription: Subscription;
   imgSrc: SafeUrl = '';
@@ -40,6 +39,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   @ViewChild('fileInput', { static: false }) fileInput: any;
   fileFormat = '';
   @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
+  @ViewChild('sPlayer', { static: false }) soundplayer: ElementRef | undefined;
   showLoader = false;
   listenAudio = false;
 
@@ -90,6 +90,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.soundService.getPathUrl().subscribe(pathUrl => {
       this.pathUrl = pathUrl;
       this.fileFormat = 'sound';
+      this.listenAudio = false;
     });
 
     if (this.type === 'course') {
@@ -120,6 +121,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       if (this.soundSrc === '') {
         this.fileInput.nativeElement.value = '';
       }
+      setTimeout(() => {
+        if (this.soundplayer) {
+          this.soundplayer.nativeElement.play();
+        }
+      }, 200);
       this.showLoader = false;
     });
   }
@@ -283,12 +289,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.listenAudio = true;
     this.fileUploadService.getSound(this.pathUrl);
     this.showLoader = false;
-  }
-
-  deleteImage(): void {
-    this.imageService.setImgSrc('');
-    this.imageService.setPathUrl('');
-    this.fileInput.nativeElement.value = '';
   }
 
   ngOnDestroy(): void {

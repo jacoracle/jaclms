@@ -43,7 +43,7 @@
           <div *ngIf="fileFormat === 'sound'">
             <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc === ''">
             <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc !== '' && !listenAudio" (click)="loadSound()">
-            <audio [src]="soundSrc" controls #vPlayer *ngIf="soundSrc !== '' && listenAudio"></audio>
+            <audio [src]="soundSrc" controls #sPlayer *ngIf="soundSrc !== '' && listenAudio" ></audio>
           </div>
           <div [hidden]="!showLoader" class="loader-cp">
             <!-- Doing something -->
