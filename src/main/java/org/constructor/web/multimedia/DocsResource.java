@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.constructor.web.multimedia;
 
@@ -29,59 +29,59 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(RestConstants.PATH_API)
 public class DocsResource {
-	
+
 	/**
 	 * PATH
 	 */
 	private static final String PATH = System.getProperty("user.home") + "/resources" + File.separator;
-	
+
 	/**
 	 * Logger
 	 */
 	private final Logger log = LoggerFactory.getLogger(DocsResource.class);
-	
-	
-	/**
-	 * method Get  loadDocs
-	 * @param nameDocs
-	 * @return
-	 */
-	@RequestMapping(path = RestConstants.PATH_LOAD_DOCS, method = RequestMethod.GET )
-	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
-	public ResponseEntity<byte[]> loadImage(@RequestParam("file") String nameDocs) throws IOException {
-		StringBuilder builder = new StringBuilder();
-		builder.append(PATH);
-		HttpHeaders headers = new HttpHeaders();
-		log.debug("*************Nimbus Image Request*************");
-		log.debug("******** Path:  {}****** ", PATH);
-		byte[] fileArray = new byte[1];
-		File file = new File(builder.append(nameDocs).toString());
-		
-		if(!file.exists()) {
-			fileArray[0] = 0;
-			log.debug("******** Path not found****** ");
-			headers.setContentType(MediaType.APPLICATION_PDF);
-			return new ResponseEntity<>(fileArray,HttpStatus.BAD_REQUEST);
-		} 
-		
-		log.debug("********Load Image ******: {}", file);
-		fileArray = new byte[(int) file.length()];
-		
-		try { 
-			FileInputStream read = new FileInputStream(file);
-			log.debug("******** Reading File: {} *****", nameDocs);
-			read.read(fileArray);
-			read.close();
-			log.debug("******** Sending File: {} *****", nameDocs);
-			headers.setContentType(MediaType.APPLICATION_PDF);
-			return new ResponseEntity<>(fileArray,headers,HttpStatus.OK);
-		
-		}catch(IOException ex){
-			headers.setContentType(MediaType.APPLICATION_PDF);
-			return new ResponseEntity<>(fileArray,HttpStatus.BAD_REQUEST);
-		}
-		
-	}
-	
+
+
+    /**
+     * method Get  loadDocs
+     * @param nameDocs
+     * @return
+     */
+    @RequestMapping(path = RestConstants.PATH_LOAD_DOCS, method = RequestMethod.GET )
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
+    public ResponseEntity<byte[]> loadDocs(@RequestParam("file") String nameDocs) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(PATH);
+        HttpHeaders headers = new HttpHeaders();
+        log.debug("*************Nimbus docs Request*************");
+        log.debug("******* Path:  {}***** ", PATH);
+        byte[] fileArray = new byte[1];
+        File file = new File(builder.append(nameDocs).toString());
+
+        if(!file.exists()) {
+            fileArray[0] = 0;
+            log.debug("******* Path not found***** ");
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            return new ResponseEntity<>(fileArray,HttpStatus.BAD_REQUEST);
+        }
+
+        log.debug("********Load docs ******: {}", file);
+        fileArray = new byte[(int) file.length()];
+
+        try {
+            FileInputStream read = new FileInputStream(file);
+            log.debug("******* Reading File: {} ****", nameDocs);
+            read.read(fileArray);
+            read.close();
+            log.debug("******* Sending File: {} ****", nameDocs);
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            return new ResponseEntity<>(fileArray,headers,HttpStatus.OK);
+
+        }catch(IOException ex){
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            return new ResponseEntity<>(fileArray,HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 }
