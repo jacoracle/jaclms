@@ -5,7 +5,6 @@ import { VideoService } from 'app/services/video.service';
 import { Componente } from 'app/shared/model/componente.model';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { FileUploadService } from 'app/services/file-upload.service';
-import { IContenido } from 'app/shared/model/contenido.model';
 
 @Component({
   selector: 'jhi-constructor-video',
@@ -54,13 +53,7 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
     this.videoService.setEditing(false);
     this.videoService.setThumbSrc(this.thumbSrc);
     this.videoService.setPathUrl(this.pathUrl);
-    const videoProperties: IContenido = {
-      contenido: this.component!.contenido!.contenido!,
-      nombre: this.component!.contenido!.nombre,
-      extension: this.component!.contenido!.extension,
-      peso: this.component!.contenido!.peso
-    };
-    this.videoService.setVideoProperties(videoProperties);
+    this.videoService.setVideoProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }

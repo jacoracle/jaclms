@@ -109,7 +109,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     }
 
     this.subscription = this.imageService.getImageProperties().subscribe(props => {
-      // this.imageFileProperties = props;
+      // this.multimediaFileProperties = props;
       // console.error(this.imageFileProperties);
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
       console.error('########### Props seteadas desde componente de imagen: ->');
@@ -138,7 +138,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
 
-    this.subscription = this.soundService.getSoundProperties().subscribe(props => {
+    this.subscription = this.soundService.getAudioProperties().subscribe(props => {
       console.error('########### Props seteadas desde componente de pdf: ->');
       console.error(props);
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';

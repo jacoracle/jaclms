@@ -10,7 +10,7 @@ export class SoundService {
   private soundSrc = new Subject<SafeUrl>();
   private editing = new Subject<boolean>();
   private pathUrl = new Subject<string>();
-  private soundProperties = new Subject<Contenido>();
+  private audioProperties = new Subject<Contenido>();
 
   constructor() {}
 
@@ -38,11 +38,11 @@ export class SoundService {
     return this.pathUrl.asObservable();
   }
 
-  setSoundProperties(soundProperties: Contenido): void {
-    this.soundProperties.next(soundProperties);
+  setAudioProperties(audioProperties: Contenido): void {
+    this.audioProperties.next(audioProperties);
   }
 
-  getSoundProperties(): Observable<Contenido> {
-    return this.soundProperties.asObservable();
+  getAudioProperties(): Observable<Contenido> {
+    return this.audioProperties.asObservable();
   }
 }

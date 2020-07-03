@@ -5,7 +5,6 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { Componente } from 'app/shared/model/componente.model';
 import { FileUploadService } from 'app/services/file-upload.service';
-import { IContenido } from 'app/shared/model/contenido.model';
 
 @Component({
   selector: 'jhi-constructor-image',
@@ -44,13 +43,7 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
     this.imageService.setEditing(false);
     this.imageService.setImgSrc(this.imgSrc);
     this.imageService.setPathUrl(this.component!.contenido!.contenido!);
-    const imageProperties: IContenido = {
-      contenido: this.component!.contenido!.contenido!,
-      nombre: this.component!.contenido!.nombre,
-      extension: this.component!.contenido!.extension,
-      peso: this.component!.contenido!.peso
-    };
-    this.imageService.setImageProperties(imageProperties);
+    this.imageService.setImageProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }
