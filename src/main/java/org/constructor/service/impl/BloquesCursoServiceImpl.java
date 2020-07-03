@@ -18,6 +18,7 @@ import org.constructor.repository.NivelJerarquicoRepository;
 import org.constructor.service.BloquesCursoService;
 import org.constructor.service.dto.BloquesCursoDTO;
 import org.constructor.service.dto.ComponenteDTO;
+import org.constructor.service.multimedia.MultimediaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 	
 	@Autowired
 	private ContenidoRepository contenidoRepository;
+	
+	@Autowired 
+	private MultimediaService multimediaService;
 	
 
 	/**
@@ -97,16 +101,21 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 	 */
 	@Override
 	public void delete(Long id) {
-		 
-		/*Optional.of(bloquesCursoRepository.findById(id)).filter(Optional::isPresent)
-			.map(Optional::get).map(bloque -> {
-				bloque.setOrden(bloqueCurso.getOrden());
-				bloque.setMostrar(bloqueCurso.getMostrar());
-				bloque.setIndicadorOriginal(bloqueCurso.getIndicadorOriginal());
-				listBloquesCurso.add(bloque);
+		log.debug("Delete bloque_curso : {}", id);
+		Optional.of(bloquesCursoRepository.findById(id))
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.map(bloque -> {
+				bloque.getBloqueComponentes().getComponentes().stream().forEach(
+						componente ->{
+							if(!componente.getTipoComponente().getNombre().equals("text")) {
+								log.debug("Delete multimedia component");
+								multimediaService.deleteFile(componente.getContenido().getContenido());
+							}
+						}
+						);
 				return bloque;
-			});*/
-		
+			});
 		bloquesCursoRepository.deleteById(id);
 	}
 
@@ -122,7 +131,7 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 		List<BloquesCurso> listBloquesCurso = new ArrayList<>();
 		for (BloquesCursoDTO bloqueCursoDTO : bloquesCursoDTO) {
 			if (bloqueCursoDTO.getId() == null) {
-				log.debug("Insertando nuevo bloque curso : {}", bloqueCursoDTO);
+				log.debug("Insert new bloque_curso : {}", bloqueCursoDTO);
 				BloquesCurso newBloquesCurso = new BloquesCurso();
 				BloqueComponentes bloqueComponentes = new BloqueComponentes();
 				
