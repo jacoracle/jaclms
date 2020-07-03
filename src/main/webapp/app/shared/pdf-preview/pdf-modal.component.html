@@ -1,0 +1,11 @@
+<div class="modal-pdf-container">
+    <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-pdf" type="button"
+            (click)="activeModal.dismiss('closed')"><i class="icon ni-close"></i></button>
+    <div class="modal-pdf-body">
+        <div class="row-modal-pdf-modal">
+            <div class="col-form-pdf" *ngIf="pdfSrc !== ''">
+                <embed [src]="pdfSrc" frameBorder="0" height="100%" width="100%" [type]="typePdf">
+            </div>
+        </div>
+    </div>
+</div>

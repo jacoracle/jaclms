@@ -12,6 +12,10 @@
 
     <div class="row-visor-container">
 
+      <div [hidden]="!showLoader" class="loader-layout">
+        <div class="loader2"></div>
+      </div>
+
       <div *ngIf="!contentBlocks.length" class="row-add-content">
         <button class="main-btn" (click)="addNewBlock()">
           <i class="icon ni-add"></i>
@@ -43,7 +47,12 @@
           <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'video_envolvente'">
             <jhi-content-block7 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block7>
           </div>
-
+          <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'pdf'">
+            <jhi-content-block8 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block8>
+          </div>
+          <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'sound'">
+             <jhi-content-block9 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block9>
+          </div>
         </div>
         <!-- Add content -->
         <div *ngIf="selectedBlock === index" class="row-add-content">

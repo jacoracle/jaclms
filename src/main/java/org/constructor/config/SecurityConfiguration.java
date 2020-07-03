@@ -34,15 +34,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * CorsFilter
      */
     private final CorsFilter corsFilter;
-    
+
     /**
      * SecurityProblemSupport
      */
     private final SecurityProblemSupport problemSupport;
 
     /**
-     *  Constructor 
-     *  
+     *  Constructor
+     *
      * @param tokenProvider
      * @param corsFilter
      * @param problemSupport
@@ -55,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * PasswordEncoder
-     * 
+     *
      * @return BCryptPasswordEncoder
      */
     @Bean
@@ -93,7 +93,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(problemSupport)
         .and()
             .headers()
-            .contentSecurityPolicy("default-src * blob:; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src * data: blob:; font-src * data:")
+            .contentSecurityPolicy("default-src * blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src * data: blob:; font-src * data:")
         .and()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
         .and()
@@ -126,7 +126,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * JWTConfigurer
-     * 
+     *
      * @return tokenProvider
      */
     private JWTConfigurer securityConfigurerAdapter() {
