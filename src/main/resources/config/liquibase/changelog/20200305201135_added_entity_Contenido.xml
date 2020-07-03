@@ -22,10 +22,10 @@
             <column name="contenido" type="varchar(2000)">
                
             </column>	
-            <column name="nombre" type="varchar(2000)">
+            <column name="nombre" type="varchar(100)">
                
             </column>	
-            <column name="extension" type="varchar(2000)">
+            <column name="extension" type="varchar(10)">
                
             </column>	
             <column name="peso" type="bigint">

@@ -1,10 +1,23 @@
 package org.constructor.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
+import org.constructor.domain.BloqueComponentes;
 import org.constructor.domain.BloquesCurso;
+import org.constructor.domain.Componente;
+import org.constructor.domain.Contenido;
+import org.constructor.domain.NivelJerarquico;
+import org.constructor.repository.BloqueComponentesRepository;
 import org.constructor.repository.BloquesCursoRepository;
+import org.constructor.repository.ComponenteRepository;
+import org.constructor.repository.ContenidoRepository;
+import org.constructor.repository.NivelJerarquicoRepository;
 import org.constructor.service.BloquesCursoService;
+import org.constructor.service.dto.BloquesCursoDTO;
+import org.constructor.service.dto.ComponenteDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class BloquesCursoServiceImpl.
  */
@@ -26,6 +40,19 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 	/** The bloques curso repository. */
 	@Autowired
 	private  BloquesCursoRepository bloquesCursoRepository;
+	
+	@Autowired
+	private NivelJerarquicoRepository nivelJerarquicoRepository;
+	
+	@Autowired
+	private BloqueComponentesRepository bloqueComponentesRepository;
+
+	@Autowired
+	private ComponenteRepository componenteRepository;
+	
+	@Autowired
+	private ContenidoRepository contenidoRepository;
+	
 
 	/**
 	 * Save.
@@ -70,7 +97,82 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 	 */
 	@Override
 	public void delete(Long id) {
+		 
+		/*Optional.of(bloquesCursoRepository.findById(id)).filter(Optional::isPresent)
+			.map(Optional::get).map(bloque -> {
+				bloque.setOrden(bloqueCurso.getOrden());
+				bloque.setMostrar(bloqueCurso.getMostrar());
+				bloque.setIndicadorOriginal(bloqueCurso.getIndicadorOriginal());
+				listBloquesCurso.add(bloque);
+				return bloque;
+			});*/
+		
 		bloquesCursoRepository.deleteById(id);
+	}
+
+	/**
+	 * Update.
+	 *
+	 * @param id the id
+	 * @param bloquesCurso the bloques curso
+	 * @return the bloques curso
+	 */
+	@Override
+	public List<BloquesCurso> update(List<BloquesCursoDTO> bloquesCursoDTO) {
+		List<BloquesCurso> listBloquesCurso = new ArrayList<>();
+		for (BloquesCursoDTO bloqueCursoDTO : bloquesCursoDTO) {
+			if (bloqueCursoDTO.getId() == null) {
+				log.debug("Insertando nuevo bloque curso : {}", bloqueCursoDTO);
+				BloquesCurso newBloquesCurso = new BloquesCurso();
+				BloqueComponentes bloqueComponentes = new BloqueComponentes();
+				
+				Optional<NivelJerarquico> nivelJerarquico = nivelJerarquicoRepository.findById(bloqueCursoDTO.getNivelJerarquico().getNivelId());
+				
+				newBloquesCurso.setIndicadorOriginal(bloqueCursoDTO.getIndicadorOriginal());
+				newBloquesCurso.setMostrar(bloqueCursoDTO.getMostrar());
+				newBloquesCurso.setNivelJerarquico(nivelJerarquico.orElse(null));
+				newBloquesCurso.setOrden(bloqueCursoDTO.getOrden());
+				
+				bloqueComponentes.setOrden(bloqueCursoDTO.getBloqueComponentes().getOrden());
+				bloqueComponentes.setTipoBloqueComponentes(bloqueCursoDTO.getBloqueComponentes().getTipoBloqueComponentes());
+				bloqueComponentesRepository.save(bloqueComponentes);
+				
+				for (ComponenteDTO componenteDTO : bloqueCursoDTO.getBloqueComponentes().getComponentes()) {
+					//Guardando Componente y Contenido
+					Componente componente = new Componente();
+					Contenido contenido = new Contenido();
+					
+					componente.setBloqueComponentes(bloqueComponentes);
+					componente.setOrden(componenteDTO.getOrden());
+					componente.setTipoComponente(componenteDTO.getTipoComponente());
+					componente.setVersion(componenteDTO.getVersion());
+					componenteRepository.save(componente);
+					
+					contenido.setComponente(componente);
+					contenido.setContenido(componenteDTO.getContenido().getContenido());
+					contenido.setNombre(componenteDTO.getContenido().getNombre());
+					contenido.setExtension(componenteDTO.getContenido().getExtension());
+					contenido.setPeso(componenteDTO.getContenido().getPeso());
+					contenidoRepository.save(contenido);
+				}
+				newBloquesCurso.setBloqueComponentes(bloqueComponentes);
+				listBloquesCurso.add(bloquesCursoRepository.save(newBloquesCurso));
+
+			} else {
+				log.debug("Actualizando un bloquecurso: {}", bloqueCursoDTO);
+				 Optional.of(bloquesCursoRepository.findById(bloqueCursoDTO.getId())).filter(Optional::isPresent)
+						.map(Optional::get).map(bloque -> {
+							bloque.setOrden(bloqueCursoDTO.getOrden());
+							bloque.setMostrar(bloqueCursoDTO.getMostrar());
+							bloque.setIndicadorOriginal(bloqueCursoDTO.getIndicadorOriginal());
+							listBloquesCurso.add(bloque);
+							return bloque;
+						});
+			}
+		}
+		 Collections.sort(listBloquesCurso,
+                 (a, b) -> a.getOrden().compareTo(b.getOrden()));
+		return listBloquesCurso;
 	}
 
 }
