@@ -10,6 +10,7 @@ import { PdfService } from 'app/services/pdf.service';
 import { PdfModalService } from 'app/services/pdf-modal.service';
 import { SoundService } from 'app/services/sound.service';
 import { VideoModalService } from 'app/services/video-modal.service';
+import { Contenido } from 'app/shared/model/contenido.model';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -42,6 +43,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   @ViewChild('sPlayer', { static: false }) soundplayer: ElementRef | undefined;
   showLoader = false;
   listenAudio = false;
+  multimediaFileProperties: Contenido = {
+    nombre: '',
+    peso: 0,
+    extension: ''
+  };
 
   constructor(
     public imageService: ImageService,
@@ -101,6 +107,45 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         }
       });
     }
+
+    this.subscription = this.imageService.getImageProperties().subscribe(props => {
+      // this.imageFileProperties = props;
+      // console.error(this.imageFileProperties);
+      // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
+      console.error('########### Props seteadas desde componente de imagen: ->');
+      console.error(props);
+      this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
+      this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+    });
+
+    this.subscription = this.videoService.getVideoProperties().subscribe(props => {
+      console.error('########### Props seteadas desde componente de video: ->');
+      console.error(props);
+      this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
+      this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+    });
+
+    this.subscription = this.pdfService.getPdfProperties().subscribe(props => {
+      console.error('########### Props seteadas desde componente de pdf: ->');
+      console.error(props);
+      this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
+      this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+    });
+
+    this.subscription = this.soundService.getSoundProperties().subscribe(props => {
+      console.error('########### Props seteadas desde componente de pdf: ->');
+      console.error(props);
+      this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
+      this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+    });
   }
 
   subscriptionVideoThumb(): Subscription {

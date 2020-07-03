@@ -5,6 +5,7 @@ import { NavigationControlsService } from 'app/services/navigation-controls.serv
 import { Componente } from 'app/shared/model/componente.model';
 import { FileUploadService } from 'app/services/file-upload.service';
 import { SoundService } from 'app/services/sound.service';
+import { IContenido } from 'app/shared/model/contenido.model';
 
 @Component({
   selector: 'jhi-constructor-sound',
@@ -46,6 +47,13 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
     this.soundService.setEditing(false);
     this.soundService.setSoundSrc(this.soundSrc);
     this.soundService.setPathUrl(this.pathUrl);
+    const soundProperties: IContenido = {
+      contenido: this.component!.contenido!.contenido!,
+      nombre: this.component!.contenido!.nombre,
+      extension: this.component!.contenido!.extension,
+      peso: this.component!.contenido!.peso
+    };
+    this.soundService.setSoundProperties(soundProperties);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Componente } from 'app/shared/model/componente.model';
 import { TextService } from 'app/services/text.service';
 import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.service';
+import { NavigationControlsService } from 'app/services/navigation-controls.service';
 
 @Component({
   selector: 'jhi-visor-text',
@@ -20,7 +21,11 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
   @Input() templateType?: any;
   @Output() updateComponent = new EventEmitter();
 
-  constructor(private textService: TextService, private textEditorBehaviosService: TextEditorBehaviorService) {
+  constructor(
+    private textService: TextService,
+    private textEditorBehaviosService: TextEditorBehaviorService,
+    private navigationControlsService: NavigationControlsService
+  ) {
     this.subscription = this.textService.getEditing().subscribe(editing => {
       this.editing = editing;
     });
@@ -59,5 +64,7 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
     this.textService.setText(this.htmlContent);
     this.textService.setTemplateTypeId(this.templateType);
     this.textEditorBehaviosService.setShowTextEditor(true);
+    this.navigationControlsService.setOpenProperties(false);
+    this.navigationControlsService.setOpenTemplateGallery(true);
   }
 }
