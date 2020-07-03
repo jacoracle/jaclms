@@ -34,6 +34,12 @@
     <include file="config/liquibase/changelog/20200305201133_added_entity_Niveles_Curso.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201134_added_entity_Bloques_Curso.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201135_added_entity_Contenido.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200305201136_added_entity_Tipo_Modulo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200305201137_added_entity_Temas.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200305201138_added_entity_Autor.xml" relativeToChangelogFile="false"/>
+     <include file="config/liquibase/changelog/20200305201139_added_entity_Modulo.xml" relativeToChangelogFile="false"/>
+    
+    
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20200305201117_added_entity_constraints_NumeroGrado.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201119_added_entity_constraints_Curso.xml" relativeToChangelogFile="false"/>
@@ -46,5 +52,6 @@
     <include file="config/liquibase/changelog/20200305201132_added_entity_constraints_Componente.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201133_added_entity_constraints_Niveles_Curso.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201134_added_entity_constraints_Bloques_Curso.xml" relativeToChangelogFile="false"/>
+     <include file="config/liquibase/changelog/20200305201139_added_entity_constraints_Modulo.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

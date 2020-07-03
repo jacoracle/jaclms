@@ -1,4 +1,5 @@
 package org.constructor.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -40,6 +41,7 @@ public class NumeroGrado implements Serializable {
      */
     @OneToMany(mappedBy = "numeroGrado")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
     private Set<Curso> cursos = new HashSet<>();
 
     /**

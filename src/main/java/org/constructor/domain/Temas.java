@@ -12,21 +12,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 /**
  * @author Edukai
- * 
- * A Author
  *
  */
 @Entity
-@Table(name = "autor")
-public class Autor  implements Serializable{
+@Table(name = "temas")
+public class Temas implements Serializable {
 
 	/**
 	 * Serializable
 	 */
-	private static final long serialVersionUID = -1248773501039688662L;
+	private static final long serialVersionUID = 3164563005357070156L;
+
+	
 
 	/**
 	 * Long id
@@ -37,11 +36,11 @@ public class Autor  implements Serializable{
     private Long id;
 	
 	/**
-	 * String rol
+	 * String nombre
 	 */
-
-	@Column(name = "rol")
-    private String rol;
+	
+	@Column(name = "nombre")
+    private String nombre;
 
 	/**
 	 * Get
@@ -61,26 +60,27 @@ public class Autor  implements Serializable{
 
 	/**
 	 * Get
-	 * @return the rol
+	 * @return the nombre
 	 */
-	public String getRol() {
-		return rol;
+	public String getNombre() {
+		return nombre;
 	}
 
 	/**
 	 * Set
-	 * @param rol the rol to set
+	 * @param nombre the nombre to set
 	 */
-	public void setRol(final String rol) {
-		this.rol = rol;
+	public void setNombre(final String nombre) {
+		this.nombre = nombre;
 	}
+
 	
-	/**
-	 * toString
-	 */
+	   /**
+     * toString
+     */
 	@Override
 	public String toString() {
-		return "Author [id_autor=" + id + ", rol=" + rol + "]";
+		return "Temas [id=" + id + ", nombre=" + nombre +  "]";
 	}
 	
 }

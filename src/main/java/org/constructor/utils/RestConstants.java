@@ -112,4 +112,41 @@ public class RestConstants {
 	 *  Path para peticiones tipos-bloques-componentes
 	 */
 	public static final String PATH_TIPOS_BLOQUES_CPMPONENTES = "tipos-bloques-componentes";
-}
+	
+	// ---------------TipoModulo--------------------
+	
+	/**
+	 *  Path para peticiones tipo_modulo
+	 */
+	public static final String PATH_TIPO_MODULO = "tipo-modulo";
+	
+	/**
+	 *  Path para peticiones tipo_modulo
+	 */
+	public static final String PATH_TIPO_MODULO_ID = "tipo-modulo/{id}";
+	
+	// ---------------Temas--------------------
+	
+	/**
+	*  Path para peticiones temas
+    */
+	public static final String PATH_TEMAS = "temas";
+	
+	/**
+	 *  Path para peticiones temas por id
+	 */
+	public static final String PATH_TEMAS_ID = "temas/{id}";
+	
+	// ---------------Modulo--------------------
+	
+	/**
+	*  Path para peticiones modulo
+    */
+	public static final String PATH_MODULO = "modulo";
+	
+	/**
+	 *  Path para peticiones modulo por id
+	 */
+	public static final String PATH_MODULO_ID = "modulo/{id}";
+	}
+

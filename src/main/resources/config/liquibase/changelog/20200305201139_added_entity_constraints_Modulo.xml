@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Modulo.
+    -->
+    <changeSet id="20200305201119-2" author="jhipster">
+    
+    
+    <addForeignKeyConstraint baseColumnNames="tipo_modulo_id"
+                                 baseTableName="modulo"
+                                 constraintName="fk_modulo_tipo_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tipo_modulo"/>
+                                 
+    <addForeignKeyConstraint baseColumnNames="asignatura_id"
+                                 baseTableName="modulo"
+                                 constraintName="fk_modulo_asignatura_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="asignatura"/>
+    
+    
+       <addForeignKeyConstraint baseColumnNames="numero_grado_id"
+                                 baseTableName="modulo"
+                                 constraintName="fk_modulo_numero_grado_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="numero_grado"/>
+    
+    <addForeignKeyConstraint baseColumnNames="temas_id"
+                                 baseTableName="modulo"
+                                 constraintName="fk_modulo_temas_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="temas"/>
+    
+    
+    
+    
+     <addForeignKeyConstraint baseColumnNames="usuario_id"
+                                 baseTableName="modulo_usuario"
+                                 constraintName="fk_modulo_usuario_usuario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    
+    
+    
+     <addForeignKeyConstraint baseColumnNames="modulo_id"
+                                 baseTableName="modulo_usuario"
+                                 constraintName="fk_modulo_usuario_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="modulo"/>
+                                 
+    
+      </changeSet>
+</databaseChangeLog>
+    

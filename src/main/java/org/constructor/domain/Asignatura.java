@@ -2,6 +2,8 @@ package org.constructor.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
@@ -38,6 +40,7 @@ public class Asignatura implements Serializable {
      * Set Curso
      */
     @OneToMany(mappedBy = "asignatura")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Curso> cursos = new HashSet<>();
 
