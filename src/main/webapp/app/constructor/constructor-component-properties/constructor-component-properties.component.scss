@@ -82,10 +82,7 @@
   display: flex;
   justify-content: center;
   transition: 0.3s;
-  // cursor: pointer;
-  // &:hover {
-  //   filter: grayscale(100%);
-  // }
+
   div {
     position: relative;
     width: 100%;
@@ -94,7 +91,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 6px;
-    height: 140px;
+    height: 128px;
     overflow: hidden;
     border: 1px solid $border-component;
     background-color: white;
@@ -123,20 +120,13 @@
     border-radius: 8px;
   }
 }
-// &:hover {
-//   filter: grayscale(100%);
-// }
-
-.play-icon-test {
-  display: none;
-}
 
 .test-video {
   .play-icon-test {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(16, 18, 51, 0.7);
+    background-color: rgba(16, 18, 51, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,17 +134,94 @@
     cursor: pointer;
     z-index: 2;
     .icon {
-      font-size: 30px;
+      font-size: 34px;
       color: white;
-      text-shadow: 4px 2px 8px rgba(26, 61, 130, 0.6);
+      text-shadow: 4px 2px 8px rgba(26, 61, 130, 0.8);
       transition: 0.3s;
       opacity: 0.8;
+      cursor: pointer;
     }
     &:hover {
-      background-color: rgba(16, 18, 51, 0.9);
+      background-color: rgba(16, 18, 51, 0.7);
       .icon {
         opacity: 1;
       }
     }
   }
+}
+
+// Loader
+.loader-cp {
+  position: absolute !important;
+  width: 100% !important;
+  // height: 100% !important;
+  background-color: rgba(26, 61, 130, 0.6) !important;
+  z-index: 3 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  cursor: default !important;
+}
+
+.test-pdf {
+  .play-icon-test {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(16, 18, 51, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 2;
+    .icon {
+      font-size: 34px;
+      color: white;
+      text-shadow: 4px 2px 8px rgba(26, 61, 130, 0.8);
+      transition: 0.3s;
+      opacity: 0.8;
+      cursor: pointer;
+    }
+    &:hover {
+      background-color: rgba(16, 18, 51, 0.7);
+      .icon {
+        opacity: 1;
+      }
+    }
+  }
+}
+.test-audio {
+  .play-icon-test {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(16, 18, 51, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 2;
+    .icon {
+      font-size: 34px;
+      color: white;
+      text-shadow: 4px 2px 8px rgba(26, 61, 130, 0.8);
+      transition: 0.3s;
+      opacity: 0.8;
+      cursor: pointer;
+    }
+    &:hover {
+      background-color: rgba(16, 18, 51, 0.7);
+      .icon {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Audio Player
+.audioPlayer {
+  display: block;
+  border-radius: 0px;
+  margin: 0 auto;
 }

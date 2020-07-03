@@ -1,0 +1,85 @@
+@import '../../../content/scss/variables.scss';
+
+.modal-pdf-container {
+  position: relative;
+  width: 90%;
+  height: 90vh;
+  margin: 0 auto;
+  background-color: $bg-white;
+  border-radius: 4px;
+  top: 5%;
+  box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
+  @include smartphone {
+    width: 360px;
+    min-height: auto;
+    padding-bottom: 15px;
+  }
+
+  .btn-close-modal-pdf {
+    position: absolute;
+    top: 7px;
+    right: 13px;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    outline: none;
+    transition: 0.4s;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: $btn-white-hover;
+    }
+  }
+
+  .modal-pdf-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .row-modal-pdf-modal {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      @include smartphone {
+        width: 84%;
+      }
+
+      .col-form-pdf {
+        position: relative;
+        width: 100%;
+        height: calc(100% - 50px);
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        embed {
+          border-radius: 0 0 6px 6px;
+        }
+
+        @include smartphone {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

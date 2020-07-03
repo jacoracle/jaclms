@@ -1,10 +1,7 @@
-
 <div>
   <jhi-top-bar></jhi-top-bar>
 </div>
-
-<div id="grid-display-home">
-
+<div id="grid-display-home" [ngClass]="{'grid-darkmode': colorMode === 'ni-dark'}">
         <!-- Left sidebar -->
         <div [ngClass]="{'item-grid-1': !leftIsContracted, 'contracted': leftIsContracted}" id="item-grid-1">
           <button (click)="leftIsContracted = !leftIsContracted;"

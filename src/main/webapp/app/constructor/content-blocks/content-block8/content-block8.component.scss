@@ -1,0 +1,15 @@
+@import '../../../../content/scss/variables.scss';
+
+.col-cb-pdf {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .b-pdf {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+}

@@ -16,18 +16,18 @@ export class TemplateGalleryComponent implements OnInit {
   selectedContentBlockIndex = -1;
   filters = [
     {
+      text: 'Todos',
+      filter: 'all',
+      selected: true
+    },
+    {
       text: 'Texto',
       filter: 'text',
       selected: false
     },
     {
-      text: 'Imagen',
-      filter: 'image',
-      selected: false
-    },
-    {
-      text: 'Video',
-      filter: 'video',
+      text: 'Multimedia',
+      filter: 'media',
       selected: false
     }
   ];

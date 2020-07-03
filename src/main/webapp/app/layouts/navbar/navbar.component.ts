@@ -9,6 +9,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { ColorModeService } from 'app/services/color-mode.service';
 
 @Component({
   selector: 'jhi-navbar',
@@ -22,6 +23,7 @@ export class NavbarComponent implements OnInit {
   swaggerEnabled?: boolean;
   version: string;
   openMenu = false;
+  colorMode = '';
 
   constructor(
     private loginService: LoginService,
@@ -30,9 +32,13 @@ export class NavbarComponent implements OnInit {
     private accountService: AccountService,
     private loginModalService: LoginModalService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private colorModeService: ColorModeService
   ) {
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
+    this.colorModeService.getColorMode().subscribe(colorMode => {
+      this.colorMode = colorMode;
+    });
   }
 
   ngOnInit(): void {

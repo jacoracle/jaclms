@@ -1,4 +1,4 @@
-<div class="navbar-nimbus">
+<div class="navbar-nimbus" [ngClass]="{'navbar-darkmode': colorMode === 'ni-dark'}">
   <div class="row-nb-nimbus" [ngSwitch]="isAuthenticated()">
     <div class="nb-logo" routerLink="/home-page">
       <div class="nb-imagotipo">

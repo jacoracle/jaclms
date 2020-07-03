@@ -10,17 +10,18 @@
   </div>
   <!-- End Header -->
   <div class="c-component-content">
-    <div class="row-c-component-c">
+    <div class="row-c-component-c" cdkDropList (cdkDropListDropped)="drop($event)">
 
-      <div class="row-artboard-filmstrip" *ngFor="let contentBlock of contentBlocks; let index = index">
-        <div class="row-drag-ud"><div class="icon ni-drag"></div></div>
+      <div class="row-artboard-filmstrip" *ngFor="let contentBlock of contentBlocks; let index = index" cdkDrag>
+        <div class="row-drag-ud" *ngIf="validateFimstripsSize()">
+          <div class="icon ni-drag" ></div>
+        </div>
         <div
           class="artboard-mini"
           [ngClass]="{'ab-mini-select': selectedContentBlockIndex == index}"
           [style.backgroundImage]="'url(' + contentBlock.bloqueComponentes.tipoBloqueComponentes.iconPath + ')'"
           (click)="selectContentBlock(index)">
         </div>
-        <!-- <div class="artboard-mini ab-mini-1 ab-mini-select"></div> -->
         <div class="ab-mini-desc">
           <p>{{contentBlock.bloqueComponentes.name}}</p>
           <div class="delete-ab" (click)="deleteContentBlock(index)">
@@ -30,15 +31,6 @@
         </div>
       </div>
 
-      <!--
-      <div class="row-artboard-filmstrip">
-        <div class="row-drag-ud"></div>
-        <div class="artboard-mini ab-mini-new" (click)="createContentBlock()"></div>
-        <div class="ab-mini-desc">
-          <p>Crear</p>
-        </div>
-      </div>
-      -->
     </div>
   </div>
 </div>

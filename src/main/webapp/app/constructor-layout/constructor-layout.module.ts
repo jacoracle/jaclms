@@ -24,15 +24,19 @@ import { ConstructorHierarchicalStructureComponent } from '../constructor/constr
 import { ConstructorBookInformationComponent } from '../constructor/constructor-book-information/constructor-book-information.component';
 import { ConstructorComponentPropertiesComponent } from '../constructor/constructor-component-properties/constructor-component-properties.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { ConstructorPdfComponent } from 'app/constructor/components/constructor-pdf/constructor-pdf.component';
+import { ConstructorSoundComponent } from 'app/constructor/components/constructor-sound/constructor-sound.component';
+import { ContentBlock8Component } from 'app/constructor/content-blocks/content-block8/content-block8.component';
+import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  imports: [ConstructorSharedModule, AngularEditorModule],
+  imports: [ConstructorSharedModule, AngularEditorModule, DragDropModule],
   declarations: [
     ConstructorLayoutComponent,
     ConstructorFilmstripComponent,
     ConstructorVisorContainerComponent,
     ConstructorComponentContainerComponent,
-    ConstructorTextComponent,
     ContentBlock1Component,
     ContentBlock2Component,
     ContentBlock3Component,
@@ -40,9 +44,14 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     ContentBlock5Component,
     ContentBlock6Component,
     ContentBlock7Component,
+    ContentBlock8Component,
+    ContentBlock9Component,
+    ConstructorTextComponent,
     VisorTextComponent,
     ConstructorImageComponent,
     ConstructorVideoComponent,
+    ConstructorPdfComponent,
+    ConstructorSoundComponent,
     TopBarComponent,
     LeftSidebarComponent,
     RightSidebarComponent,
