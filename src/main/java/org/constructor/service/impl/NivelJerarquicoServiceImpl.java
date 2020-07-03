@@ -124,6 +124,9 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 				
 				contenido.setComponente(componente);
 				contenido.setContenido(componenteDTO.getContenido().getContenido());
+				contenido.setNombre(componenteDTO.getContenido().getNombre());
+				contenido.setExtension(componenteDTO.getContenido().getExtension());
+				contenido.setPeso(componenteDTO.getContenido().getPeso());
 				contenidoRepository.save(contenido);
 				
 			}
@@ -200,6 +203,9 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 		            							
 		            							contenido.setComponente(componente);
 		            							contenido.setContenido(componenteDTO.getContenido().getContenido());
+		            							contenido.setNombre(componenteDTO.getContenido().getNombre());
+		            							contenido.setExtension(componenteDTO.getContenido().getExtension());
+		            							contenido.setPeso(componenteDTO.getContenido().getPeso());
 		            							contenidoRepository.save(contenido);
 		            							
 		            						}
