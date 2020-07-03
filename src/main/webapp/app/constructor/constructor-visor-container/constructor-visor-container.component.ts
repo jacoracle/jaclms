@@ -15,7 +15,7 @@ import { EventEmitterService } from 'app/services/event-emitter.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { IContenido, Contenido } from 'app/shared/model/contenido.model';
 import { IBloquesCurso, BloquesCurso } from 'app/shared/model/bloques-curso.model';
-import { ImageService } from 'app/services/image.service';
+import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -68,7 +68,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     private textEditorBehaviosService: TextEditorBehaviorService,
     private eventEmitterService: EventEmitterService,
     private navigationControlsService: NavigationControlsService,
-    private imageService: ImageService
+    private bloquesCursoService: BloquesCursoService
   ) {
     this.contentBlocks = [];
     this.subscription = this.contentBlocksService.getTempaltes().subscribe(templates => {
@@ -83,6 +83,14 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
         this.updateBlocksOrder();
         this.contentBlocksService.setContentBlocks(this.contentBlocks);
         this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
+        // Guardar nivel nuevo incluyendo primer bloquesCurso creado
+        if (this.nivel.nivelId) {
+          this.bloquesCursoService.update(this.contentBlocks).subscribe(() => {});
+        }
+        // Actualizar bloquesCurso en base de datos con el nuevo orden, incluyendo el bloque nuevo
+        else {
+          this.save();
+        }
       }
     });
     this.subscription = this.contentBlocksService.getIndexBlockToDelete().subscribe(indexBlockToDelete => {
@@ -136,7 +144,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     } else {
       this.subscribeToSaveResponse(this.nivelJerarquicoService.create(this.nivel));
     }
-    // console.error(JSON.stringify(this.nivel));
     this.textEditorBehaviosService.setShowTextEditor(false);
   }
 
@@ -156,26 +163,12 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       })
     );
     this.nivel = res.body;
-    /*
-    this.contentBlocksService.setContentBlocks(this.contentBlocks);
-    */
     this.contentBlocks = [];
-    // this.contentBlocks = this.orderTextImageLevel(res.body.bloquesComponentes);
     this.contentBlocks = res.body.bloquesCurso;
     this.contentBlocksService.setContentBlocks(this.contentBlocks);
-    // this.updateContentBlocks(res.body.bloquesComponentes);
     this.navigationControlsService.setOpenTemplateGallery(false);
     this.navigationControlsService.setOpenProperties(false);
   }
-
-  /*
-  updateContentBlocks(contentBlocks: IBloqueComponentes[]): void {
-    for (let i = 0; i < contentBlocks.length; i++) {
-      this.contentBlocks.push(this.createContentBlock(contentBlocks[i]));
-    }
-    this.contentBlocksService.setContentBlocks(this.contentBlocks);
-  }
-  */
 
   protected onSaveError(): void {
     this.error = true;
@@ -194,8 +187,16 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       bloqueComponentes: this.createContentBlock(selectedTemplate),
       orden: this.determineNewBlockOrder(),
       mostrar: 1,
-      indicadorOriginal: 1
+      indicadorOriginal: 1,
+      nivelJerarquico: this.asignCurrentLevel()
     };
+  }
+
+  asignCurrentLevel(): INivelJerarquico | undefined {
+    if (this.nivel.nivelId) {
+      return { nivelId: this.nivel.nivelId };
+    }
+    return undefined;
   }
 
   createContentBlock(selectedTemplate: ITipoBloqueComponentes): IBloqueComponentes {
