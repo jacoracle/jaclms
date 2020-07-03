@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import org.constructor.domain.BloquesCurso;
 import org.constructor.service.BloquesCursoService;
+import org.constructor.service.dto.BloquesCursoDTO;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,15 +102,10 @@ public class BloquesCursoResource {
      * @throws URISyntaxException
      */
     @PutMapping(path = RestConstants.PATH_BLOQUES_CURSO)
-    public ResponseEntity<BloquesCurso> updateBloquesCurso(@RequestBody BloquesCurso bloquesCurso) throws URISyntaxException {
+    public ResponseEntity<List<BloquesCurso>> updateBloquesCurso(@RequestBody List<BloquesCursoDTO> bloquesCurso) throws URISyntaxException {
         log.debug("REST request to update BloquesCurso : {}", bloquesCurso);
-        if (bloquesCurso.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        BloquesCurso result = bloquesCursoService.save(bloquesCurso);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bloquesCurso.getId().toString()))
-            .body(result);
+        List<BloquesCurso> result = bloquesCursoService.update(bloquesCurso); 
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
     /**

@@ -19,7 +19,6 @@ import org.constructor.repository.NivelJerarquicoRepository;
 import org.constructor.repository.NivelesCursoRepository;
 import org.constructor.response.NivelJerarquicoResponse;
 import org.constructor.service.NivelJerarquicoService;
-import org.constructor.service.dto.BloqueComponentesDTO;
 import org.constructor.service.dto.BloquesCursoDTO;
 import org.constructor.service.dto.ComponenteDTO;
 import org.constructor.service.dto.NivelJerarquicoDTO;
