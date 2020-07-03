@@ -5,6 +5,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { ImageService } from './image.service';
 import { VideoService } from './video.service';
+import { PdfService } from 'app/services/pdf.service';
+import { SoundService } from 'app/services/sound.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,9 @@ export class FileUploadService {
     private http: HttpClient,
     private domSanitizer: DomSanitizer,
     private imageService: ImageService,
-    private videoService: VideoService
+    private videoService: VideoService,
+    private pdfService: PdfService,
+    private soundService: SoundService
   ) {}
 
   /*
@@ -66,6 +70,20 @@ export class FileUploadService {
     });
   }
 
+  getPdfPreviewFile(filePath: string): Observable<HttpResponse<Blob>> {
+    return this.http.get(SERVER_API_URL + '/api/loadDocs?file=' + filePath, {
+      observe: 'response',
+      responseType: 'blob'
+    });
+  }
+
+  getSoundFile(filePath: string): Observable<HttpResponse<Blob>> {
+    return this.http.get(SERVER_API_URL + '/api/loadAudio?file=' + filePath, {
+      observe: 'response',
+      responseType: 'blob'
+    });
+  }
+
   /*
    * Elimina archivo indicado del servidor.
    * @param filePath  Dirección donde está almacenado el archivo.
@@ -110,6 +128,22 @@ export class FileUploadService {
       const videoPath = URL.createObjectURL(data.body);
       const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
       this.videoService.setThumbSrc(objectUrl);
+    });
+  }
+
+  public getPdf(path: string): void {
+    this.getPdfPreviewFile(path).subscribe(data => {
+      const pdfPath = URL.createObjectURL(data.body);
+      const objectUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(pdfPath);
+      this.pdfService.setPdfSrc(objectUrl);
+    });
+  }
+
+  public getSound(path: string): void {
+    this.getSoundFile(path).subscribe(data => {
+      const soundPath = URL.createObjectURL(data.body);
+      const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(soundPath);
+      this.soundService.setSoundSrc(objectUrl);
     });
   }
 }

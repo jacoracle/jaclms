@@ -1,0 +1,12 @@
+<div class="modal-video-container">
+    <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-video" type="button"
+            (click)="activeModal.dismiss('closed')"><i class="icon ni-close"></i></button>
+    <div class="modal-video-body">
+        <div class="row-modal-video-modal">
+            <div class="col-form-video" *ngIf="videoSrc !== ''">
+                <!-- Video -->
+                <video [src]="videoSrc" width="88%" controls #vPlayer></video>
+            </div>
+        </div>
+    </div>
+</div>

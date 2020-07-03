@@ -4,6 +4,7 @@ import { NavigationControlsService } from '../../services/navigation-controls.se
 import { Subscription } from 'rxjs';
 import { IBloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'jhi-constructor-filmstrip',
@@ -103,6 +104,32 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
   deleteContentBlock(index: number): void {
     this.contentBlocksService.setIndexBlockToDelete(index);
     this.navigationControlsService.setOpenProperties(false);
+  }
+
+  validateFimstripsSize(): boolean {
+    return this.contentBlocks.length > 1;
+  }
+
+  isFirstFilm(index: number): boolean {
+    return index === 0;
+  }
+
+  isLastFilm(index: number): boolean {
+    return this.contentBlocks.length - 1 === index;
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.contentBlocks, event.previousIndex, event.currentIndex);
+    this.updateBlocksOrder();
+  }
+
+  /**
+   * asigna el orden correspondiente a los bloques de la mesa de trabajo
+   */
+  updateBlocksOrder(): void {
+    for (let i = 0; i < this.contentBlocks.length; i++) {
+      this.contentBlocks[i].orden = i + 1;
+    }
   }
 
   ngOnDestroy(): void {
