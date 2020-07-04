@@ -10,7 +10,7 @@ import { PdfService } from 'app/services/pdf.service';
 import { PdfModalService } from 'app/services/pdf-modal.service';
 import { SoundService } from 'app/services/sound.service';
 import { VideoModalService } from 'app/services/video-modal.service';
-import { Contenido } from 'app/shared/model/contenido.model';
+import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -33,7 +33,12 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   thumbSrc: SafeUrl = '';
   pdfSrc: SafeUrl = '';
   soundSrc: SafeUrl = '';
-  pathUrl = '';
+  contenidoProperties: IContenido = {
+    contenido: '',
+    nombre: '',
+    extension: '',
+    peso: 0
+  };
   maxImageSize = 5120000;
   selectedFiles = [];
   id = 0; // Id de curso o módulo a guardar.
@@ -77,25 +82,25 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     // Recibe el pathUrl de la imagen seleccionada.
     this.imageService.getPathUrl().subscribe(pathUrl => {
-      this.pathUrl = pathUrl;
+      this.contenidoProperties.contenido = pathUrl;
       this.fileFormat = 'image';
       this.listenAudio = false;
     });
     // Recibe el pathUrl del video seleccionado.
     this.videoService.getPathUrl().subscribe(pathUrl => {
-      this.pathUrl = pathUrl;
+      this.contenidoProperties.contenido = pathUrl;
       this.fileFormat = 'video';
       this.listenAudio = false;
     });
 
     this.pdfService.getPathUrl().subscribe(pathUrl => {
-      this.pathUrl = pathUrl;
+      this.contenidoProperties.contenido = pathUrl;
       this.fileFormat = 'pdf';
       this.listenAudio = false;
     });
 
     this.soundService.getPathUrl().subscribe(pathUrl => {
-      this.pathUrl = pathUrl;
+      this.contenidoProperties.contenido = pathUrl;
       this.fileFormat = 'sound';
       this.listenAudio = false;
     });
@@ -110,10 +115,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.imageService.getImageProperties().subscribe(props => {
       // this.multimediaFileProperties = props;
-      // console.error(this.imageFileProperties);
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
-      console.error('########### Props seteadas desde componente de imagen: ->');
-      console.error(props);
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
@@ -121,8 +123,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     });
 
     this.subscription = this.videoService.getVideoProperties().subscribe(props => {
-      console.error('########### Props seteadas desde componente de video: ->');
-      console.error(props);
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
@@ -130,8 +130,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     });
 
     this.subscription = this.pdfService.getPdfProperties().subscribe(props => {
-      console.error('########### Props seteadas desde componente de pdf: ->');
-      console.error(props);
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
@@ -139,8 +137,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     });
 
     this.subscription = this.soundService.getAudioProperties().subscribe(props => {
-      console.error('########### Props seteadas desde componente de pdf: ->');
-      console.error(props);
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
@@ -266,7 +262,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   delete(): void {
-    this.fileUploadService.deleteFile(this.pathUrl).subscribe(() => {
+    this.fileUploadService.deleteFile(this.contenidoProperties.contenido!).subscribe(() => {
       if (this.fileFormat === 'image') {
         this.setImageUrl('');
       } else if (this.fileFormat === 'video') {
@@ -327,7 +323,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   loadSound(): void {
     this.showLoader = true;
     this.listenAudio = true;
-    this.fileUploadService.getSound(this.pathUrl);
+    this.fileUploadService.getSound(this.contenidoProperties.contenido!);
     this.showLoader = false;
   }
 

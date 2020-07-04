@@ -52,7 +52,7 @@
 
         <div class="row-sidebar-up-image-btn">
           <button (click)="delete()" class="secondary-btn text-transform-none"
-            *ngIf="this.pathUrl !== ''">Eliminar</button>
+            *ngIf="contenidoProperties.contenido !== ''">Eliminar</button>
           <button type="button" class="main-btn" (click)="fileInput.click()">
             <span>Subir</span>
             <input #fileInput type="file" (change)="selectFile($event)" style="display:none;" />
