@@ -90,7 +90,21 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
         this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
         // Guardar nivel nuevo incluyendo primer bloquesCurso creado
         if (this.nivel.nivelId) {
-          this.bloquesCursoService.update(this.contentBlocks).subscribe(() => {});
+          this.bloquesCursoService.update(this.contentBlocks).subscribe(
+            res => {
+              if (res.body) {
+                this.contentBlocks = res.body;
+              }
+            },
+            () => {
+              this.eventManager.broadcast(
+                new JhiEventWithContent('constructorApp.blockUpdateError', {
+                  message: 'constructorApp.curso.blockUpdate.error',
+                  type: 'danger'
+                })
+              );
+            }
+          );
         }
         // Actualizar bloquesCurso en base de datos con el nuevo orden, incluyendo el bloque nuevo
         else {
@@ -336,10 +350,44 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   deleteContentBlock(index: number): void {
+    const backup = this.contentBlocks.map(obj => ({ ...obj }));
     if (index > -1) {
       this.contentBlocks.splice(index, 1);
       this.updateBlocksOrder();
-      this.contentBlocksService.setContentBlocks(this.contentBlocks);
+      this.bloquesCursoService.delete(backup[index].id!).subscribe(
+        () => {
+          // Eliminación satisfactoria
+          this.bloquesCursoService.update(this.contentBlocks).subscribe(
+            res => {
+              // Actualización satisfactoria
+              if (res.body) {
+                this.contentBlocks = res.body;
+                this.contentBlocksService.setContentBlocks(this.contentBlocks);
+              }
+            },
+            () => {
+              // Error al actualizar
+              this.contentBlocks = backup;
+              this.eventManager.broadcast(
+                new JhiEventWithContent('constructorApp.blockUpdateError', {
+                  message: 'constructorApp.curso.blockUpdate.error',
+                  type: 'danger'
+                })
+              );
+            }
+          );
+        },
+        () => {
+          // Error al eliminar
+          this.contentBlocks = backup;
+          this.eventManager.broadcast(
+            new JhiEventWithContent('constructorApp.blockUpdateError', {
+              message: 'constructorApp.curso.blockUpdate.error',
+              type: 'danger'
+            })
+          );
+        }
+      );
     }
   }
 
