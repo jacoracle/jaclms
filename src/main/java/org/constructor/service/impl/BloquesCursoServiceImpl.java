@@ -168,7 +168,7 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 				listBloquesCurso.add(bloquesCursoRepository.save(newBloquesCurso));
 
 			} else {
-				log.debug("Actualizando un bloquecurso: {}", bloqueCursoDTO);
+				log.debug("Actualizando un bloquecurso: {}", bloqueCursoDTO.getId());
 				 Optional.of(bloquesCursoRepository.findById(bloqueCursoDTO.getId())).filter(Optional::isPresent)
 						.map(Optional::get).map(bloque -> {
 							bloque.setOrden(bloqueCursoDTO.getOrden());

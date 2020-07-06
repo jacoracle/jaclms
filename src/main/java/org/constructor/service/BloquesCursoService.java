@@ -43,13 +43,13 @@ public interface BloquesCursoService {
 	 * @param id the id
 	 */
 	void delete(Long id);
+
 	
 	/**
 	 * Update.
 	 *
-	 * @param id the id
-	 * @param bloquesCurso the bloques curso
-	 * @return the bloques curso
+	 * @param bloquesCursoDTO the bloques curso DTO
+	 * @return the list
 	 */
 	List<BloquesCurso> update(List<BloquesCursoDTO> bloquesCursoDTO);
 	

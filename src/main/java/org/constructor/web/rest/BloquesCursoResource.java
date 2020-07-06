@@ -5,6 +5,7 @@ package org.constructor.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,10 +103,15 @@ public class BloquesCursoResource {
      * @throws URISyntaxException
      */
     @PutMapping(path = RestConstants.PATH_BLOQUES_CURSO)
-    public ResponseEntity<List<BloquesCurso>> updateBloquesCurso(@RequestBody List<BloquesCursoDTO> bloquesCurso) throws URISyntaxException {
+    public ResponseEntity<List<Optional<BloquesCurso>>> updateBloquesCurso(@RequestBody List<BloquesCursoDTO> bloquesCurso) throws URISyntaxException {
         log.debug("REST request to update BloquesCurso : {}", bloquesCurso);
-        List<BloquesCurso> result = bloquesCursoService.update(bloquesCurso); 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        List<Optional<BloquesCurso>> listBloqueCurso = new ArrayList<>();
+        List<BloquesCurso> result = bloquesCursoService.update(bloquesCurso);
+        for (BloquesCurso bloqueCurso : result) {
+        	listBloqueCurso.add(bloquesCursoService.findOne(bloqueCurso.getId()));
+        }
+        
+        return new ResponseEntity<>(listBloqueCurso, HttpStatus.OK);
     }
     
     /**
