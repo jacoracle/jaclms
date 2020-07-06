@@ -13,8 +13,8 @@
     <div class="row-c-component-c" cdkDropList (cdkDropListDropped)="drop($event)">
 
       <div class="row-artboard-filmstrip" *ngFor="let contentBlock of contentBlocks; let index = index" cdkDrag>
-        <div class="row-drag-ud" *ngIf="validateFimstripsSize()">
-          <div class="icon ni-drag" ></div>
+        <div class="row-drag-ud">
+          <div class="icon ni-drag" *ngIf="validateFimstripsSize()"></div>
         </div>
         <div
           class="artboard-mini"
