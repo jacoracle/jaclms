@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { IBloqueComponentes, BloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes, TipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { IComponente, Componente } from 'app/shared/model/componente.model';
@@ -16,6 +16,7 @@ import { NavigationControlsService } from 'app/services/navigation-controls.serv
 import { IContenido, Contenido } from 'app/shared/model/contenido.model';
 import { IBloquesCurso, BloquesCurso } from 'app/shared/model/bloques-curso.model';
 import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -64,6 +65,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
   visorSize = 'desktop';
   showLoader = false;
+  private ngUnsubscribe = new Subject();
 
   constructor(
     private contentBlocksService: ContentBlocksService,
@@ -76,51 +78,69 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   ) {
     this.showLoader = true;
     this.contentBlocks = [];
-    this.subscription = this.contentBlocksService.getTempaltes().subscribe(templates => {
-      this.templates = templates;
-    });
-    this.subscription = this.contentBlocksService.getSelectedBlock().subscribe(selectedBlock => {
-      if (selectedBlock !== undefined) {
-        if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
-          this.selectedBlock = 0;
-        }
-        this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
-        this.updateBlocksOrder();
-        this.contentBlocksService.setContentBlocks(this.contentBlocks);
-        this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
-        // Guardar nivel nuevo incluyendo primer bloquesCurso creado
-        if (this.nivel.nivelId) {
-          this.bloquesCursoService.update(this.contentBlocks).subscribe(
-            res => {
-              if (res.body) {
-                this.contentBlocks = res.body;
-              }
-            },
-            () => {
-              this.eventManager.broadcast(
-                new JhiEventWithContent('constructorApp.blockUpdateError', {
-                  message: 'constructorApp.curso.blockUpdate.error',
-                  type: 'danger'
-                })
+    this.subscription = this.contentBlocksService
+      .getTempaltes()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(templates => {
+        this.templates = templates;
+      });
+    this.subscription = this.contentBlocksService
+      .getSelectedBlock()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(selectedBlock => {
+        if (selectedBlock !== undefined) {
+          if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
+            this.selectedBlock = 0;
+          }
+          this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
+          this.updateBlocksOrder();
+          this.contentBlocksService.setContentBlocks(this.contentBlocks);
+          this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
+          // Guardar nivel nuevo incluyendo primer bloquesCurso creado
+          if (this.nivel.nivelId) {
+            this.subscription = this.bloquesCursoService
+              .update(this.contentBlocks)
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe(
+                res => {
+                  if (res.body) {
+                    this.contentBlocks = res.body;
+                  }
+                },
+                () => {
+                  this.eventManager.broadcast(
+                    new JhiEventWithContent('constructorApp.blockUpdateError', {
+                      message: 'constructorApp.curso.blockUpdate.error',
+                      type: 'danger'
+                    })
+                  );
+                }
               );
-            }
-          );
+          }
+          // Actualizar bloquesCurso en base de datos con el nuevo orden, incluyendo el bloque nuevo
+          else {
+            this.save();
+          }
         }
-        // Actualizar bloquesCurso en base de datos con el nuevo orden, incluyendo el bloque nuevo
-        else {
-          this.save();
-        }
-      }
-    });
-    this.subscription = this.contentBlocksService.getIndexBlockToDelete().subscribe(indexBlockToDelete => {
-      this.deleteContentBlock(indexBlockToDelete);
-    });
-    this.subscription = this.navigationControlsService.getVisorSize().subscribe(visorSize => {
-      this.visorSize = visorSize;
-    });
-    this.subscription = this.contentBlocksService.getSelectedBlockIndex().subscribe(selectedBlockIndex => {
-      this.selectedBlock = selectedBlockIndex;
-    });
+      });
+    this.subscription = this.contentBlocksService
+      .getIndexBlockToDelete()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(indexBlockToDelete => {
+        this.deleteContentBlock(indexBlockToDelete);
+      });
+    this.subscription = this.navigationControlsService
+      .getVisorSize()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(visorSize => {
+        this.visorSize = visorSize;
+      });
+    this.subscription = this.contentBlocksService
+      .getSelectedBlockIndex()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(selectedBlockIndex => {
+        this.selectedBlock = selectedBlockIndex;
+      });
   }
 
   /**
@@ -354,40 +374,47 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     if (index > -1) {
       this.contentBlocks.splice(index, 1);
       this.updateBlocksOrder();
-      this.bloquesCursoService.delete(backup[index].id!).subscribe(
-        () => {
-          // Eliminación satisfactoria
-          this.bloquesCursoService.update(this.contentBlocks).subscribe(
-            res => {
-              // Actualización satisfactoria
-              if (res.body) {
-                this.contentBlocks = res.body;
-                this.contentBlocksService.setContentBlocks(this.contentBlocks);
-              }
-            },
-            () => {
-              // Error al actualizar
-              this.contentBlocks = backup;
-              this.eventManager.broadcast(
-                new JhiEventWithContent('constructorApp.blockUpdateError', {
-                  message: 'constructorApp.curso.blockUpdate.error',
-                  type: 'danger'
-                })
+      this.subscription = this.bloquesCursoService
+        .delete(backup[index].id!)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          () => {
+            // Eliminación satisfactoria
+            this.bloquesCursoService
+              .update(this.contentBlocks)
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe(
+                res => {
+                  // Actualización satisfactoria
+                  if (res.body) {
+                    this.contentBlocks = res.body;
+                    this.contentBlocksService.setContentBlocks(this.contentBlocks);
+                  }
+                },
+                () => {
+                  // Error al actualizar
+                  this.contentBlocks = backup;
+                  this.contentBlocksService.setContentBlocks(this.contentBlocks);
+                  this.eventManager.broadcast(
+                    new JhiEventWithContent('constructorApp.blockUpdateError', {
+                      message: 'constructorApp.curso.blockUpdate.error',
+                      type: 'danger'
+                    })
+                  );
+                }
               );
-            }
-          );
-        },
-        () => {
-          // Error al eliminar
-          this.contentBlocks = backup;
-          this.eventManager.broadcast(
-            new JhiEventWithContent('constructorApp.blockUpdateError', {
-              message: 'constructorApp.curso.blockUpdate.error',
-              type: 'danger'
-            })
-          );
-        }
-      );
+          },
+          () => {
+            // Error al eliminar
+            this.contentBlocks = backup;
+            this.eventManager.broadcast(
+              new JhiEventWithContent('constructorApp.blockUpdateError', {
+                message: 'constructorApp.curso.blockUpdate.error',
+                type: 'danger'
+              })
+            );
+          }
+        );
     }
   }
 
@@ -402,9 +429,12 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.eventEmitterService.getInvokeSave().subscribe(() => {
-      this.save();
-    });
+    this.subscription = this.eventEmitterService
+      .getInvokeSave()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        this.save();
+      });
     this.addNewBlock();
   }
 
@@ -419,5 +449,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
