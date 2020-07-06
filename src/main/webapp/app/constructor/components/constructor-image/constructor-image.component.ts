@@ -5,6 +5,7 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { Componente } from 'app/shared/model/componente.model';
 import { FileUploadService } from 'app/services/file-upload.service';
+import { IContenido } from 'app/shared/model/contenido.model';
 
 @Component({
   selector: 'jhi-constructor-image',
@@ -18,6 +19,7 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @Input() component?: Componente;
   @Output() updateComponent = new EventEmitter();
+  @Output() updateMultimediaProperties = new EventEmitter<IContenido>();
   showLoader = false;
 
   constructor(
@@ -36,6 +38,10 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
       if (this.editing) {
         this.updateComponent.emit({ newValue: pathUrl, type: 'image' });
       }
+    });
+
+    this.subscription = this.imageService.getImageProperties().subscribe((objProperties: IContenido) => {
+      this.updateMultimediaProperties.emit(objProperties);
     });
   }
 

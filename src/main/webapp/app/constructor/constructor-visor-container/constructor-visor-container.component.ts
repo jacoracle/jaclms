@@ -147,6 +147,25 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     }
   }
 
+  onUpdateMultimediaBlock(event: Event, index: number): void {
+    console.error('tha fuck');
+    console.error(event['multimediaProperties']);
+    console.error(event['componentIndex']);
+
+    if (this.contentBlocks[index]) {
+      if (this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']]) {
+        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.nombre =
+          event['multimediaProperties'].nombre;
+        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.extension =
+          event['multimediaProperties'].extension;
+        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.peso =
+          event['multimediaProperties'].peso;
+        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.contenido =
+          event['multimediaProperties'].contenido;
+      }
+    }
+  }
+
   save(): void {
     this.showLoader = true;
     this.success = false;

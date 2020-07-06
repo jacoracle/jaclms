@@ -53,6 +53,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     peso: 0,
     extension: ''
   };
+  private _MIL = 1000;
+  private _MIL24 = 1024;
 
   constructor(
     public imageService: ImageService,
@@ -114,10 +116,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     }
 
     this.subscription = this.imageService.getImageProperties().subscribe(props => {
+      props.peso = 5045248;
       // this.multimediaFileProperties = props;
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
@@ -142,6 +145,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
+  }
+
+  convertBytesToMegabytes(byteSize: number): number {
+    return byteSize / this._MIL / this._MIL24;
   }
 
   subscriptionVideoThumb(): Subscription {
@@ -222,6 +229,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.selectedFiles = event.target.files;
         this.showLoader = true;
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
+          /*
           if (this.fileFormat === 'image' && this.imageFileTypes.includes(event.target.files[0].type)) {
             this.getImageUrl(data.path);
           } else if (this.fileFormat === 'video' && event.target.files[0].type === 'video/mp4') {
@@ -234,10 +242,26 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
             this.showErrorFileType(event);
             return;
           }
+          */
+
+          this.getDataMultimediaFile(this.castObjectAsContenido(data), this.fileFormat, event.target.files[0].type, event);
           this.showLoader = false;
         });
       }
     }
+  }
+
+  /**
+   * Castea el objeto devuelto por servicio cuando se carga un archivo multimedia
+   * @param data objeto que contiene las propiedades que seran seteadas a IContenido
+   */
+  castObjectAsContenido(data: any): IContenido {
+    return {
+      contenido: data.path,
+      extension: data.extension,
+      nombre: data.name,
+      peso: data.peso
+    };
   }
 
   getSoundUrl(soundPath: string): void {
@@ -259,6 +283,29 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   getImageUrl(imagePath: string): void {
     this.fileUploadService.getImage(imagePath);
     this.imageService.setPathUrl(imagePath);
+  }
+
+  getDataMultimediaFile(data: IContenido, fileFormat: string, fileType: string, event: any): void {
+    this.validateCalledToService(fileFormat, data, fileType, event);
+  }
+
+  validateCalledToService(fileFormat: string, obj: IContenido, fileType: string, event: any): void {
+    if (fileFormat === 'image' && this.imageFileTypes.includes(fileType)) {
+      this.fileUploadService.getImage(obj.contenido!);
+      this.imageService.setImageProperties(obj);
+    } else if (fileFormat === 'video' && fileType === 'video/mp4') {
+      this.fileUploadService.getVideoThumbnail(obj.contenido!);
+      this.fileUploadService.getVideo(obj.contenido!);
+      this.videoService.setVideoProperties(obj);
+    } else if (fileFormat === 'pdf' && fileType === 'application/pdf') {
+      this.fileUploadService.getPdf(obj.contenido!);
+      this.pdfService.setPdfProperties(obj);
+    } else if (fileFormat === 'sound' && fileType === 'audio/mpeg') {
+      this.fileUploadService.getSound(obj.contenido!);
+      this.soundService.setAudioProperties(obj);
+    } else {
+      this.showErrorFileType(event);
+    }
   }
 
   delete(): void {
