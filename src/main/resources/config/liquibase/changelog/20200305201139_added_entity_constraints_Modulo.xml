@@ -10,27 +10,33 @@
     
     
     <addForeignKeyConstraint baseColumnNames="tipo_modulo_id"
-                                 baseTableName="modulo"
-                                 constraintName="fk_modulo_tipo_modulo_id"
+                                 baseTableName="tipos_modulos_modulo"
+                                 constraintName="fk_tipos_modulos_modulo_tipo_modulo_id"
                                  referencedColumnNames="id"
                                  referencedTableName="tipo_modulo"/>
                                  
+        <addForeignKeyConstraint baseColumnNames="modulo_id"
+                                 baseTableName="tipos_modulos_modulo"
+                                 constraintName="fk_tipos_modulos_modulo_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="modulo"/>
+                                 
     <addForeignKeyConstraint baseColumnNames="asignatura_id"
                                  baseTableName="modulo"
-                                 constraintName="fk_modulo_asignatura_id"
+                                 constraintName="fk_modulo_id_asignatura_id"
                                  referencedColumnNames="id"
                                  referencedTableName="asignatura"/>
     
     
        <addForeignKeyConstraint baseColumnNames="numero_grado_id"
                                  baseTableName="modulo"
-                                 constraintName="fk_modulo_numero_grado_id"
+                                 constraintName="fk_modulo_id_numero_grado_id"
                                  referencedColumnNames="id"
                                  referencedTableName="numero_grado"/>
     
     <addForeignKeyConstraint baseColumnNames="temas_id"
                                  baseTableName="modulo"
-                                 constraintName="fk_modulo_temas_id"
+                                 constraintName="fk_modulo_id_temas_id"
                                  referencedColumnNames="id"
                                  referencedTableName="temas"/>
     

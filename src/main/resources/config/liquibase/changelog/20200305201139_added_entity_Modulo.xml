@@ -19,9 +19,6 @@
               <column name="titulo" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="tipo_modulo_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="asignatura_id" type="bigint">
                 <constraints nullable="true" />
             </column>
