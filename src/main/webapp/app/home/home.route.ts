@@ -1,11 +1,10 @@
 import { Route } from '@angular/router';
-
-import { HomeComponent } from './home.component';
 import { AuthGuardService } from 'app/services/auth-guard-service.service';
+import { ConstructorHomeComponent } from 'app/constructor-home/constructor-home.component';
 
 export const HOME_ROUTE: Route = {
   path: '',
-  component: HomeComponent,
+  component: ConstructorHomeComponent,
   canActivate: [AuthGuardService],
   data: {
     authorities: [],

@@ -22,6 +22,7 @@ import { CursoUpdateComponent } from './entities/curso/curso-update.component';
 import { CursoComponent } from './entities/curso/curso.component';
 import { FichaUpdateComponent } from './entities/ficha/ficha-update.component';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ConstructorHomeComponent } from './constructor-home/constructor-home.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     HomePageComponent,
     CursoComponent,
     CursoUpdateComponent,
-    FichaUpdateComponent
+    FichaUpdateComponent,
+    ConstructorHomeComponent
   ],
   bootstrap: [MainComponent]
 })
