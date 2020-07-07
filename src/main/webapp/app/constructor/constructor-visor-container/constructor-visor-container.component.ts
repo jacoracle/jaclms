@@ -17,6 +17,7 @@ import { IContenido, Contenido } from 'app/shared/model/contenido.model';
 import { IBloquesCurso, BloquesCurso } from 'app/shared/model/bloques-curso.model';
 import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
 import { takeUntil } from 'rxjs/operators';
+import { ContenidoService } from 'app/entities/contenido/contenido.service';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -74,7 +75,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     private textEditorBehaviosService: TextEditorBehaviorService,
     private eventEmitterService: EventEmitterService,
     private navigationControlsService: NavigationControlsService,
-    private bloquesCursoService: BloquesCursoService
+    private bloquesCursoService: BloquesCursoService,
+    private contenidoService: ContenidoService
   ) {
     this.showLoader = true;
     this.contentBlocks = [];
