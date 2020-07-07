@@ -34,9 +34,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="numero_grado"/>
                                  
-         <addForeignKeyConstraint baseColumnNames="modulo_id"
-                                 baseTableName="tipos_modulos_modulo"
-                                 constraintName="fk_tipos_modulos_modulo_modulo_id"
+         <addForeignKeyConstraint baseColumnNames="numero_grado_id"
+                                 baseTableName="numero_grado_modulo"
+                                 constraintName="fk_numero_grado_id_modulo_modulo_id"
                                  referencedColumnNames="id"
                                  referencedTableName="modulo"/>
                                  
