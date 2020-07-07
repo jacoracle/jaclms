@@ -1,4 +1,5 @@
 import { IBloqueComponentes } from './bloque-componentes.model';
+import { INivelJerarquico } from './nivel-jerarquico.model';
 
 export interface IBloquesCurso {
   id?: number;
@@ -6,6 +7,7 @@ export interface IBloquesCurso {
   orden?: number;
   mostrar?: number;
   indicadorOriginal?: number;
+  nivelJerarquico?: INivelJerarquico;
 }
 
 export class BloquesCurso implements IBloquesCurso {
@@ -14,6 +16,7 @@ export class BloquesCurso implements IBloquesCurso {
     public bloqueComponentes?: IBloqueComponentes,
     public orden?: number,
     public mostrar?: number,
-    public indicadorOriginal?: number
+    public indicadorOriginal?: number,
+    public nivelJerarquico?: INivelJerarquico
   ) {}
 }

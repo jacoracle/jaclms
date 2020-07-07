@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { IBloqueComponentes, BloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes, TipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { IComponente, Componente } from 'app/shared/model/componente.model';
@@ -15,7 +15,8 @@ import { EventEmitterService } from 'app/services/event-emitter.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { IContenido, Contenido } from 'app/shared/model/contenido.model';
 import { IBloquesCurso, BloquesCurso } from 'app/shared/model/bloques-curso.model';
-import { ImageService } from 'app/services/image.service';
+import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -64,6 +65,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
   visorSize = 'desktop';
   showLoader = false;
+  private ngUnsubscribe = new Subject();
 
   constructor(
     private contentBlocksService: ContentBlocksService,
@@ -72,33 +74,73 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     private textEditorBehaviosService: TextEditorBehaviorService,
     private eventEmitterService: EventEmitterService,
     private navigationControlsService: NavigationControlsService,
-    private imageService: ImageService
+    private bloquesCursoService: BloquesCursoService
   ) {
     this.showLoader = true;
     this.contentBlocks = [];
-    this.subscription = this.contentBlocksService.getTempaltes().subscribe(templates => {
-      this.templates = templates;
-    });
-    this.subscription = this.contentBlocksService.getSelectedBlock().subscribe(selectedBlock => {
-      if (selectedBlock !== undefined) {
-        if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
-          this.selectedBlock = 0;
+    this.subscription = this.contentBlocksService
+      .getTempaltes()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(templates => {
+        this.templates = templates;
+      });
+    this.subscription = this.contentBlocksService
+      .getSelectedBlock()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(selectedBlock => {
+        if (selectedBlock !== undefined) {
+          if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
+            this.selectedBlock = 0;
+          }
+          this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
+          this.updateBlocksOrder();
+          this.contentBlocksService.setContentBlocks(this.contentBlocks);
+          this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
+          // Guardar nivel nuevo incluyendo primer bloquesCurso creado
+          if (this.nivel.nivelId) {
+            this.subscription = this.bloquesCursoService
+              .update(this.contentBlocks)
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe(
+                res => {
+                  if (res.body) {
+                    this.contentBlocks = res.body;
+                  }
+                },
+                () => {
+                  this.eventManager.broadcast(
+                    new JhiEventWithContent('constructorApp.blockUpdateError', {
+                      message: 'constructorApp.curso.blockUpdate.error',
+                      type: 'danger'
+                    })
+                  );
+                }
+              );
+          }
+          // Actualizar bloquesCurso en base de datos con el nuevo orden, incluyendo el bloque nuevo
+          else {
+            this.save();
+          }
         }
-        this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
-        this.updateBlocksOrder();
-        this.contentBlocksService.setContentBlocks(this.contentBlocks);
-        this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
-      }
-    });
-    this.subscription = this.contentBlocksService.getIndexBlockToDelete().subscribe(indexBlockToDelete => {
-      this.deleteContentBlock(indexBlockToDelete);
-    });
-    this.subscription = this.navigationControlsService.getVisorSize().subscribe(visorSize => {
-      this.visorSize = visorSize;
-    });
-    this.subscription = this.contentBlocksService.getSelectedBlockIndex().subscribe(selectedBlockIndex => {
-      this.selectedBlock = selectedBlockIndex;
-    });
+      });
+    this.subscription = this.contentBlocksService
+      .getIndexBlockToDelete()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(indexBlockToDelete => {
+        this.deleteContentBlock(indexBlockToDelete);
+      });
+    this.subscription = this.navigationControlsService
+      .getVisorSize()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(visorSize => {
+        this.visorSize = visorSize;
+      });
+    this.subscription = this.contentBlocksService
+      .getSelectedBlockIndex()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(selectedBlockIndex => {
+        this.selectedBlock = selectedBlockIndex;
+      });
   }
 
   /**
@@ -176,7 +218,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     } else {
       this.subscribeToSaveResponse(this.nivelJerarquicoService.create(this.nivel));
     }
-    // console.error(JSON.stringify(this.nivel));
     this.textEditorBehaviosService.setShowTextEditor(false);
   }
 
@@ -202,26 +243,12 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       })
     );
     this.nivel = res.body;
-    /*
-    this.contentBlocksService.setContentBlocks(this.contentBlocks);
-    */
     this.contentBlocks = [];
-    // this.contentBlocks = this.orderTextImageLevel(res.body.bloquesComponentes);
     this.contentBlocks = res.body.bloquesCurso;
     this.contentBlocksService.setContentBlocks(this.contentBlocks);
-    // this.updateContentBlocks(res.body.bloquesComponentes);
     this.navigationControlsService.setOpenTemplateGallery(false);
     this.navigationControlsService.setOpenProperties(false);
   }
-
-  /*
-  updateContentBlocks(contentBlocks: IBloqueComponentes[]): void {
-    for (let i = 0; i < contentBlocks.length; i++) {
-      this.contentBlocks.push(this.createContentBlock(contentBlocks[i]));
-    }
-    this.contentBlocksService.setContentBlocks(this.contentBlocks);
-  }
-  */
 
   protected onSaveError(): void {
     this.error = true;
@@ -240,8 +267,16 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       bloqueComponentes: this.createContentBlock(selectedTemplate),
       orden: this.determineNewBlockOrder(),
       mostrar: 1,
-      indicadorOriginal: 1
+      indicadorOriginal: 1,
+      nivelJerarquico: this.asignCurrentLevel()
     };
+  }
+
+  asignCurrentLevel(): INivelJerarquico | undefined {
+    if (this.nivel.nivelId) {
+      return { nivelId: this.nivel.nivelId };
+    }
+    return undefined;
   }
 
   createContentBlock(selectedTemplate: ITipoBloqueComponentes): IBloqueComponentes {
@@ -354,10 +389,51 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   deleteContentBlock(index: number): void {
+    const backup = this.contentBlocks.map(obj => ({ ...obj }));
     if (index > -1) {
       this.contentBlocks.splice(index, 1);
       this.updateBlocksOrder();
-      this.contentBlocksService.setContentBlocks(this.contentBlocks);
+      this.subscription = this.bloquesCursoService
+        .delete(backup[index].id!)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          () => {
+            // Eliminación satisfactoria
+            this.bloquesCursoService
+              .update(this.contentBlocks)
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe(
+                res => {
+                  // Actualización satisfactoria
+                  if (res.body) {
+                    this.contentBlocks = res.body;
+                    this.contentBlocksService.setContentBlocks(this.contentBlocks);
+                  }
+                },
+                () => {
+                  // Error al actualizar
+                  this.contentBlocks = backup;
+                  this.contentBlocksService.setContentBlocks(this.contentBlocks);
+                  this.eventManager.broadcast(
+                    new JhiEventWithContent('constructorApp.blockUpdateError', {
+                      message: 'constructorApp.curso.blockUpdate.error',
+                      type: 'danger'
+                    })
+                  );
+                }
+              );
+          },
+          () => {
+            // Error al eliminar
+            this.contentBlocks = backup;
+            this.eventManager.broadcast(
+              new JhiEventWithContent('constructorApp.blockUpdateError', {
+                message: 'constructorApp.curso.blockUpdate.error',
+                type: 'danger'
+              })
+            );
+          }
+        );
     }
   }
 
@@ -372,9 +448,12 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.eventEmitterService.getInvokeSave().subscribe(() => {
-      this.save();
-    });
+    this.subscription = this.eventEmitterService
+      .getInvokeSave()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        this.save();
+      });
     this.addNewBlock();
   }
 
@@ -389,5 +468,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

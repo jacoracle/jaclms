@@ -112,11 +112,11 @@ public class RestConstants {
 	/**
 	* Path para peticiones bloquesCurso
 	*/
-	public static final String PATH_BLOQUES_CURSO = "bloquesCurso";
+	public static final String PATH_BLOQUES_CURSO = "bloques-curso";
 	
 	/**
 	* Path para peticiones bloquesCurso por id
 	*/
-	public static final String PATH_BLOQUE_CURSO_ID = "bloquesCurso/{id}";
+	public static final String PATH_BLOQUE_CURSO_ID = "bloques-curso/{id}";
 	
 }

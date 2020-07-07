@@ -12,7 +12,7 @@ public class VideoResponse<T> extends ParamOutputTO<T> {
 	/**
 	 * String name
 	 */
-	private String name;
+	private String nombre;
 	
 	/**
 	 * String path
@@ -60,19 +60,17 @@ public class VideoResponse<T> extends ParamOutputTO<T> {
 	}
 
 	/**
-	 * Get 
-	 * @return the name
+	 * @return the nombre
 	 */
-	public String getName() {
-		return name;
+	public String getNombre() {
+		return nombre;
 	}
 
 	/**
-	 * Set
-	 * @param name
+	 * @param nombre the nombre to set
 	 */
-	public void setName(final String name) {
-		this.name = name;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	/**
