@@ -5,6 +5,9 @@ import { VideoService } from 'app/services/video.service';
 import { Componente } from 'app/shared/model/componente.model';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { FileUploadService } from 'app/services/file-upload.service';
+import { IContenido, Contenido } from 'app/shared/model/contenido.model';
+import { JhiEventWithContent, JhiEventManager } from 'ng-jhipster';
+import { ContenidoService } from 'app/entities/contenido/contenido.service';
 
 @Component({
   selector: 'jhi-constructor-video',
@@ -20,10 +23,13 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @Input() component?: Componente;
   @Output() updateComponent = new EventEmitter();
+  @Output() updateMultimediaProperties = new EventEmitter<IContenido>();
   showLoader = false;
 
   constructor(
     public videoService: VideoService,
+    private contenidoService: ContenidoService,
+    private eventManager: JhiEventManager,
     public navigationControlsService: NavigationControlsService,
     public fileUploadService: FileUploadService,
     private domSanitizer: DomSanitizer
@@ -47,6 +53,38 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
         this.updateComponent.emit({ newValue: pathUrl, type: 'video' });
       }
     });
+
+    this.subscription = this.videoService.getVideoProperties().subscribe((objProperties: IContenido) => {
+      if (this.editing) {
+        this.updateMultimediaProperties.emit(objProperties);
+        // Actualizar contenido de componente en base de datos
+        const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
+        this.subscription = this.contenidoService.update(contenido).subscribe(
+          data => {
+            this.component!.contenido = data.body!;
+          },
+          () => {
+            this.eventManager.broadcast(
+              new JhiEventWithContent('constructorApp.blockUpdateError', {
+                message: 'constructorApp.curso.blockUpdate.error',
+                type: 'danger'
+              })
+            );
+          }
+        );
+      }
+    });
+  }
+
+  createUpdatedContent(content: IContenido, newContent: IContenido): IContenido {
+    return {
+      ...new Contenido(),
+      id: content.id,
+      contenido: newContent.contenido,
+      nombre: newContent.nombre,
+      extension: newContent.extension,
+      peso: newContent.peso
+    };
   }
 
   selectVideo(): void {

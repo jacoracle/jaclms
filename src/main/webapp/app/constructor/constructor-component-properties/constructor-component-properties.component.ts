@@ -110,8 +110,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     }
 
     this.subscription = this.imageService.getImageProperties().subscribe(props => {
-      props.peso = 5045248;
-      // this.multimediaFileProperties = props;
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
@@ -121,21 +119,21 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.videoService.getVideoProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
 
     this.subscription = this.pdfService.getPdfProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
 
     this.subscription = this.soundService.getAudioProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
