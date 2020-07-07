@@ -4,6 +4,9 @@ import { Componente } from 'app/shared/model/componente.model';
 import { TextService } from 'app/services/text.service';
 import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
+import { IContenido, Contenido } from 'app/shared/model/contenido.model';
+import { ContenidoService } from 'app/entities/contenido/contenido.service';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-visor-text',
@@ -24,7 +27,9 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
   constructor(
     private textService: TextService,
     private textEditorBehaviosService: TextEditorBehaviorService,
-    private navigationControlsService: NavigationControlsService
+    private navigationControlsService: NavigationControlsService,
+    private contenidoService: ContenidoService,
+    private eventManager: JhiEventManager
   ) {
     this.subscription = this.textService.getEditing().subscribe(editing => {
       this.editing = editing;
@@ -33,19 +38,31 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
       if (text && this.editing) {
         this.htmlContent = text;
         this.component!.contenido!.contenido = this.htmlContent;
-        // Actualizar contenido del componente en objeto de bloques de componentes de visorContainer
-        this.updateComponent.emit({ newValue: text, type: 'text' });
+        // Actualizar contenido de componente en base de datos
+        const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
+        this.subscription = this.contenidoService.update(contenido).subscribe(
+          data => {
+            this.component!.contenido = data.body!;
+          },
+          () => {
+            this.eventManager.broadcast(
+              new JhiEventWithContent('constructorApp.blockUpdateError', {
+                message: 'constructorApp.curso.blockUpdate.error',
+                type: 'danger'
+              })
+            );
+          }
+        );
       }
     });
-    /*
-    this.subscription = this.messageService.getMessage().subscribe(message => {
-      if (message) {
-        this.htmlContent = message.text;
-      } else {
-        this.htmlContent = '';
-      }
-    });
-    */
+  }
+
+  createUpdatedContent(content: IContenido, newContent: string): IContenido {
+    return {
+      ...new Contenido(),
+      id: content.id,
+      contenido: newContent
+    };
   }
 
   ngOnInit(): void {
