@@ -28,18 +28,30 @@
                                  referencedTableName="asignatura"/>
     
     
-       <addForeignKeyConstraint baseColumnNames="numero_grado_id"
-                                 baseTableName="modulo"
-                                 constraintName="fk_modulo_id_numero_grado_id"
+       <addForeignKeyConstraint baseColumnNames="modulo_id"
+                                 baseTableName="numero_grado_modulo"
+                                 constraintName="fk_numero_grado_modulo_modulo_id"
                                  referencedColumnNames="id"
                                  referencedTableName="numero_grado"/>
+                                 
+         <addForeignKeyConstraint baseColumnNames="modulo_id"
+                                 baseTableName="tipos_modulos_modulo"
+                                 constraintName="fk_tipos_modulos_modulo_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="modulo"/>
+                                 
     
     <addForeignKeyConstraint baseColumnNames="temas_id"
-                                 baseTableName="modulo"
-                                 constraintName="fk_modulo_id_temas_id"
+                                 baseTableName="temas_modulo"
+                                 constraintName="fk_temas_modulo_id_temas_id"
                                  referencedColumnNames="id"
                                  referencedTableName="temas"/>
-    
+                                 
+      <addForeignKeyConstraint baseColumnNames="modulo_id"
+                                 baseTableName="temas_modulo"
+                                 constraintName="fk_temas_modulo_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="modulo"/>
     
     
     
@@ -60,12 +72,16 @@
     
                                  
       <addForeignKeyConstraint baseColumnNames="roles_colaboradores_id"
-                                 baseTableName="modulo"
-                                 constraintName="fk_modulo_roles_colaboradores_id"
+                                 baseTableName="colaboradores_modulo"
+                                 constraintName="fk_colaboradores_modulo_roles_colaboradores_id"
                                  referencedColumnNames="id"
                                  referencedTableName="roles_colaboradores"/>
                                  
-                                 
+          <addForeignKeyConstraint baseColumnNames="modulo_id"
+                                 baseTableName="colaboradores_modulo"
+                                 constraintName="fk_colaboradores_modulo_modulo_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="modulo"/>                          
     
       </changeSet>
 </databaseChangeLog>

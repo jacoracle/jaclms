@@ -64,7 +64,7 @@ public class Modulo implements Serializable {
             name = "tipos_modulos_modulo", 
             joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="tipo_modulo_id", referencedColumnName = "id", nullable = false))
-	private Set<TipoModulo> tiposModulos  = new HashSet<>();
+	private Set<TipoModulo> tiposModulos  ;
     
     /**
      * asignatura
@@ -83,7 +83,7 @@ public class Modulo implements Serializable {
             name = "numero_grado_modulo", 
             joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="numero_grado_id", referencedColumnName = "id", nullable = false))
-	private Set<NumeroGrado>  numeroGrado  = new HashSet<>();
+	private Set<NumeroGrado>  numeroGrado  ;
  
     
     /**
@@ -94,7 +94,7 @@ public class Modulo implements Serializable {
             name = "temas_modulo", 
             joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="temas_id", referencedColumnName = "id", nullable = false))
-	private Set<Temas>  temas  = new HashSet<>();
+	private Set<Temas>  temas  ;
     
     /**
      * colaborador
@@ -104,13 +104,13 @@ public class Modulo implements Serializable {
 	            name = "colaboradores_modulo", 
 	            joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
 	            inverseJoinColumns = @JoinColumn(name="roles_colaboradores_id", referencedColumnName = "id", nullable = false))
-	    private Set<RolesColaboradores> rolesColaboradores  = new HashSet<>();
+	    private Set<RolesColaboradores> rolesColaboradores ;
     
     /**
      * user
      */
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(
             name = "modulo_usuario", 

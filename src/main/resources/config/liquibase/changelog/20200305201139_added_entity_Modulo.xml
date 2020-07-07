@@ -22,16 +22,7 @@
             <column name="asignatura_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            
-            <column name="numero_grado_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="temas_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-             <column name="roles_colaboradores_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
+     
             <column name="fecha_creacion_sys" type="date">
                 <constraints nullable="true" />
             </column>
