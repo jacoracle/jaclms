@@ -259,7 +259,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     return {
       contenido: data.path,
       extension: data.extension,
-      nombre: data.name,
+      nombre: data.nombre,
       peso: data.peso
     };
   }
