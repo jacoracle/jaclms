@@ -9,7 +9,6 @@ import { Contenido } from 'app/shared/model/contenido.model';
 export class ImageService {
   private imgSrc = new Subject<SafeUrl>();
   private editing = new Subject<boolean>();
-  private pathUrl = new Subject<string>();
   private imageProperties = new Subject<Contenido>();
 
   constructor() {}
@@ -28,14 +27,6 @@ export class ImageService {
 
   getEditing(): Observable<boolean> {
     return this.editing.asObservable();
-  }
-
-  setPathUrl(pathUrl: string): void {
-    this.pathUrl.next(pathUrl);
-  }
-
-  getPathUrl(): Observable<string> {
-    return this.pathUrl.asObservable();
   }
 
   getImageProperties(): Observable<Contenido> {

@@ -5,7 +5,9 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { Componente } from 'app/shared/model/componente.model';
 import { FileUploadService } from 'app/services/file-upload.service';
-import { IContenido } from 'app/shared/model/contenido.model';
+import { IContenido, Contenido } from 'app/shared/model/contenido.model';
+import { ContenidoService } from 'app/entities/contenido/contenido.service';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-constructor-image',
@@ -26,7 +28,9 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
     public imageService: ImageService,
     public navigationControlsService: NavigationControlsService,
     public fileUploadService: FileUploadService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private contenidoService: ContenidoService,
+    private eventManager: JhiEventManager
   ) {
     this.subscription = this.imageService.getEditing().subscribe(editing => (this.editing = editing));
     this.subscription = this.imageService.getImgSrc().subscribe(imgSrc => {
@@ -34,21 +38,43 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
         this.imgSrc = imgSrc;
       }
     });
-    this.subscription = this.imageService.getPathUrl().subscribe(pathUrl => {
-      if (this.editing) {
-        this.updateComponent.emit({ newValue: pathUrl, type: 'image' });
-      }
-    });
 
     this.subscription = this.imageService.getImageProperties().subscribe((objProperties: IContenido) => {
-      this.updateMultimediaProperties.emit(objProperties);
+      if (this.editing) {
+        this.updateMultimediaProperties.emit(objProperties);
+        // Actualizar contenido de componente en base de datos
+        const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
+        this.subscription = this.contenidoService.update(contenido).subscribe(
+          data => {
+            this.component!.contenido = data.body!;
+          },
+          () => {
+            this.eventManager.broadcast(
+              new JhiEventWithContent('constructorApp.blockUpdateError', {
+                message: 'constructorApp.curso.blockUpdate.error',
+                type: 'danger'
+              })
+            );
+          }
+        );
+      }
     });
+  }
+
+  createUpdatedContent(content: IContenido, newContent: IContenido): IContenido {
+    return {
+      ...new Contenido(),
+      id: content.id,
+      contenido: newContent.contenido,
+      nombre: newContent.nombre,
+      extension: newContent.extension,
+      peso: newContent.peso
+    };
   }
 
   selectImage(): void {
     this.imageService.setEditing(false);
     this.imageService.setImgSrc(this.imgSrc);
-    this.imageService.setPathUrl(this.component!.contenido!.contenido!);
     this.imageService.setImageProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);

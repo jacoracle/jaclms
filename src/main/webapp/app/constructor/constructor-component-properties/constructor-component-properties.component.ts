@@ -82,12 +82,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
     this.subscription = this.subscriptionVideoThumb();
 
-    // Recibe el pathUrl de la imagen seleccionada.
-    this.imageService.getPathUrl().subscribe(pathUrl => {
-      this.contenidoProperties.contenido = pathUrl;
-      this.fileFormat = 'image';
-      this.listenAudio = false;
-    });
     // Recibe el pathUrl del video seleccionado.
     this.videoService.getPathUrl().subscribe(pathUrl => {
       this.contenidoProperties.contenido = pathUrl;
@@ -282,7 +276,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   getImageUrl(imagePath: string): void {
     this.fileUploadService.getImage(imagePath);
-    this.imageService.setPathUrl(imagePath);
   }
 
   getDataMultimediaFile(data: IContenido, fileFormat: string, fileType: string, event: any): void {
@@ -310,9 +303,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   delete(): void {
     this.fileUploadService.deleteFile(this.contenidoProperties.contenido!).subscribe(() => {
-      if (this.fileFormat === 'image') {
-        this.setImageUrl('');
-      } else if (this.fileFormat === 'video') {
+      if (this.fileFormat === 'video') {
         this.setVideoUrl('');
       } else if (this.fileFormat === 'pdf') {
         this.setPdfUrl('');
@@ -342,9 +333,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.videoService.setPathUrl(imagePath);
   }
 
-  setImageUrl(imagePath: string): void {
+  setImageUrl(): void {
     this.imageService.setImgSrc('');
-    this.imageService.setPathUrl(imagePath);
   }
 
   showErrorFileSize(event: any): void {
