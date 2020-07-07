@@ -152,10 +152,8 @@ public class Modulo implements Serializable {
 		return titulo;
 	}
 
-	
-
-
 	/**
+	 * Get
 	 * @return the tiposModulos
 	 */
 	public Set<TipoModulo> getTiposModulos() {
@@ -164,14 +162,16 @@ public class Modulo implements Serializable {
 
 
 	/**
+	 * Set
 	 * @param tiposModulos the tiposModulos to set
 	 */
-	public void setTiposModulos(Set<TipoModulo> tiposModulos) {
+	public void setTiposModulos(final Set<TipoModulo> tiposModulos) {
 		this.tiposModulos = tiposModulos;
 	}
 
 
 	/**
+	 * Get
 	 * @return the temas
 	 */
 	public Set<Temas> getTemas() {
@@ -182,7 +182,7 @@ public class Modulo implements Serializable {
 	/**
 	 * @param temas the temas to set
 	 */
-	public void setTemas(Set<Temas> temas) {
+	public void setTemas(final Set<Temas> temas) {
 		this.temas = temas;
 	}
 
@@ -233,6 +233,7 @@ public class Modulo implements Serializable {
 
 
 	/**
+	 * Get
 	 * @return the rolesColaboradores
 	 */
 	public Set<RolesColaboradores> getRolesColaboradores() {
@@ -276,7 +277,7 @@ public class Modulo implements Serializable {
 	}
 
 	 /**
-     * Curso
+     * Modulo
      * @param fechaCreacionSys
      * @return
      */
