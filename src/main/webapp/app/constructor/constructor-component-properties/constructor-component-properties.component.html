@@ -14,6 +14,11 @@
 
   <div class="c-component-content">
     <div class="row-c-component-c">
+      <!-- Título tipo de componente -->
+      <!-- <div class="title-typeMedia">
+        <i class="icon ni-picture"></i>
+        <h6>Imagen</h6>
+      </div> -->
 
       <!-- Subir archivo -->
       <div class="cover-upload-c">
@@ -60,14 +65,20 @@
         </div>
 
         <div class="properties-file">
-          <label for="filename" >Nombre:</label>
-          <input type="text" class="" [(ngModel)]="multimediaFileProperties.nombre" name="filename" id="filename" disabled>
-          <label for="filesize" >Peso:</label>
-          <input type="text" class="" [(ngModel)]="multimediaFileProperties.peso" name="filesize" id="filesize" disabled>
-          <label for="filext" >Extensión:</label>
-          <input type="text" class="" [(ngModel)]="multimediaFileProperties.extension" name="filext" id="filext" disabled>
-          <label for="filext" >Path:</label>
-          <input type="text" class="" [(ngModel)]="multimediaFileProperties.contenido" name="filext" id="filext" disabled>
+          <h6>Información</h6>
+          <div class="pf-item">
+            <label for="filename" >Nombre:</label>
+            <input type="text" class="" [(ngModel)]="multimediaFileProperties.nombre" name="filename" id="filename" disabled>
+          </div>
+          <div class="pf-item">
+            <label for="filesize" >Peso:</label>
+            <input type="text" class="" [(ngModel)]="multimediaFileProperties.peso" name="filesize" id="filesize" disabled>
+          </div>
+          <div class="pf-item">
+            <label for="filext" >Extensión:</label>
+            <input type="text" class="" [(ngModel)]="multimediaFileProperties.extension" name="filext" id="filext" disabled>
+          </div>
+
         </div>
 
       </div>
