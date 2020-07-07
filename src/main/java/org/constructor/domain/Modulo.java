@@ -64,7 +64,7 @@ public class Modulo implements Serializable {
             name = "tipos_modulos_modulo", 
             joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="tipo_modulo_id", referencedColumnName = "id", nullable = false))
-	private Set<TipoModulo> tipoModulo  = new HashSet<>();
+	private Set<TipoModulo> tiposModulos  = new HashSet<>();
     
     /**
      * asignatura
@@ -155,21 +155,19 @@ public class Modulo implements Serializable {
 	
 
 
-
-
 	/**
-	 * @return the tipoModulo
+	 * @return the tiposModulos
 	 */
-	public Set<TipoModulo> getTipoModulo() {
-		return tipoModulo;
+	public Set<TipoModulo> getTiposModulos() {
+		return tiposModulos;
 	}
 
 
 	/**
-	 * @param tipoModulo the tipoModulo to set
+	 * @param tiposModulos the tiposModulos to set
 	 */
-	public void setTipoModulo(Set<TipoModulo> tipoModulo) {
-		this.tipoModulo = tipoModulo;
+	public void setTiposModulos(Set<TipoModulo> tiposModulos) {
+		this.tiposModulos = tiposModulos;
 	}
 
 
@@ -298,7 +296,7 @@ public class Modulo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Modulo [id=" + id + ", titulo=" + titulo + ", tipoModulo=" + tipoModulo + ", asignatura=" + asignatura
+		return "Modulo [id=" + id + ", titulo=" + titulo + ", tipoModulo=" + tiposModulos + ", asignatura=" + asignatura
 				+ ", numeroGrado=" + numeroGrado + ", temas=" + temas + ", rolesColaboradores=" + rolesColaboradores
 				+ ", user=" + user + ", fechaCreacionSys=" + fechaCreacionSys + "]";
 	}
