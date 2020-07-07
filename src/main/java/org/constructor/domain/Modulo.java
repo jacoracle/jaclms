@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,12 +53,18 @@ public class Modulo implements Serializable {
     @Column(name = "titulo")
     private String titulo;
     
+    
+  
+    
     /**
      * tipoModulo
      */
-    @ManyToOne
-    @JsonIgnoreProperties("modulos")
-    private TipoModulo tipoModulo;
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tipos_modulos_modulo", 
+            joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="tipo_modulo_id", referencedColumnName = "id", nullable = false))
+	private Set<TipoModulo> tipoModulo  = new HashSet<>();
     
     /**
      * asignatura
@@ -65,27 +72,39 @@ public class Modulo implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("modulos")
     private Asignatura asignatura;
+ 
     
+
     /**
      * numeroGrado
      */
-    @ManyToOne
-    @JsonIgnoreProperties("modulos")
-    private NumeroGrado numeroGrado;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "numero_grado_modulo", 
+            joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="numero_grado_id", referencedColumnName = "id", nullable = false))
+	private Set<NumeroGrado>  numeroGrado  = new HashSet<>();
+ 
     
     /**
      * temas
      */
-    @ManyToOne
-    @JsonIgnoreProperties("modulos")
-    private Temas temas;
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "temas_modulo", 
+            joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="temas_id", referencedColumnName = "id", nullable = false))
+	private Set<Temas>  temas  = new HashSet<>();
     
     /**
-     * colaborador_id
+     * colaborador
      */
-    @ManyToOne
-    @JsonIgnoreProperties("modulos")
-    private Colaborador colaborador;
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(
+	            name = "colaboradores_modulo", 
+	            joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
+	            inverseJoinColumns = @JoinColumn(name="roles_colaboradores_id", referencedColumnName = "id", nullable = false))
+	    private Set<RolesColaboradores> rolesColaboradores  = new HashSet<>();
     
     /**
      * user
@@ -133,39 +152,39 @@ public class Modulo implements Serializable {
 		return titulo;
 	}
 
+	
+
+
+
 
 	/**
-	 * Get
 	 * @return the tipoModulo
 	 */
-	public TipoModulo getTipoModulo() {
+	public Set<TipoModulo> getTipoModulo() {
 		return tipoModulo;
 	}
 
 
 	/**
-	 * Set
 	 * @param tipoModulo the tipoModulo to set
 	 */
-	public void setTipoModulo(final TipoModulo tipoModulo) {
+	public void setTipoModulo(Set<TipoModulo> tipoModulo) {
 		this.tipoModulo = tipoModulo;
 	}
 
 
 	/**
-	 * Get
 	 * @return the temas
 	 */
-	public Temas getTemas() {
+	public Set<Temas> getTemas() {
 		return temas;
 	}
 
 
 	/**
-	 * Set
 	 * @param temas the temas to set
 	 */
-	public void setTemas(final Temas temas) {
+	public void setTemas(Set<Temas> temas) {
 		this.temas = temas;
 	}
 
@@ -201,7 +220,7 @@ public class Modulo implements Serializable {
 	 * Get
 	 * @return the numeroGrado
 	 */
-	public NumeroGrado getNumeroGrado() {
+	public Set<NumeroGrado> getNumeroGrado() {
 		return numeroGrado;
 	}
 
@@ -210,26 +229,25 @@ public class Modulo implements Serializable {
 	 * Set
 	 * @param numeroGrado the numeroGrado to set
 	 */
-	public void setNumeroGrado(final NumeroGrado numeroGrado) {
+	public void setNumeroGrado(final Set<NumeroGrado> numeroGrado) {
 		this.numeroGrado = numeroGrado;
 	}
 
 
 	/**
-	 * Get
-	 * @return the colaborador
+	 * @return the rolesColaboradores
 	 */
-	public Colaborador getColaborador() {
-		return colaborador;
+	public Set<RolesColaboradores> getRolesColaboradores() {
+		return rolesColaboradores;
 	}
 
 
 	/**
 	 * Set
-	 * @param colaborador the colaborador to set
+	 * @param rolesColaboradores the rolesColaboradores to set
 	 */
-	public void setColaborador(final Colaborador colaborador) {
-		this.colaborador = colaborador;
+	public void setRolesColaboradores(final Set<RolesColaboradores> rolesColaboradores) {
+		this.rolesColaboradores = rolesColaboradores;
 	}
 
 
@@ -276,8 +294,19 @@ public class Modulo implements Serializable {
 	public void setFechaCreacionSys(final LocalDateTime fechaCreacionSys) {
 		  this.fechaCreacionSys = LocalDateTime.now();;
 	}
-    
-    
+
+
+	@Override
+	public String toString() {
+		return "Modulo [id=" + id + ", titulo=" + titulo + ", tipoModulo=" + tipoModulo + ", asignatura=" + asignatura
+				+ ", numeroGrado=" + numeroGrado + ", temas=" + temas + ", rolesColaboradores=" + rolesColaboradores
+				+ ", user=" + user + ", fechaCreacionSys=" + fechaCreacionSys + "]";
+	}
+
+
+
+
+
     
     
 }

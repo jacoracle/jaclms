@@ -52,6 +52,15 @@
                                  referencedTableName="modulo"/>
                                  
     
+                                 
+      <addForeignKeyConstraint baseColumnNames="roles_colaboradores_id"
+                                 baseTableName="modulo"
+                                 constraintName="fk_modulo_roles_colaboradores_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="roles_colaboradores"/>
+                                 
+                                 
+    
       </changeSet>
 </databaseChangeLog>
     

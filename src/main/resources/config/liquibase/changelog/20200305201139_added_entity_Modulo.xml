@@ -32,7 +32,7 @@
             <column name="temas_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-             <column name="colaborador_id" type="bigint">
+             <column name="roles_colaboradores_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="fecha_creacion_sys" type="date">
@@ -43,7 +43,7 @@
         </createTable>
     </changeSet>
             
-              <changeSet id="20200305201119-1-relations" author="jhipster">
+              <changeSet id="20200305201136-1-relations" author="jhipster">
     	<createTable tableName="modulo_usuario">
             <column name="usuario_id" type="bigint">
                 <constraints nullable="false"/>
@@ -53,6 +53,69 @@
             </column>
         </createTable>
     </changeSet>
+    
+      <changeSet id="20200305201141-1-relations" author="jhipster">
+        
+        <createTable tableName="tipos_modulos_modulo">
+            <column name="tipo_modulo_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modulo_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addPrimaryKey columnNames="modulo_id, tipo_modulo_id" tableName="tipos_modulos_modulo"/>
+        
+    </changeSet>
+    
+        <changeSet id="20200305201142-1-relations" author="jhipster">
+           <createTable tableName="numero_grado_modulo">
+            <column name="numero_grado_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modulo_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addPrimaryKey columnNames="modulo_id, numero_grado_id" tableName="numero_grado_modulo"/>
+        
+    </changeSet>
+    
+    
+    <changeSet id="20200305201137-1-relations" author="jhipster">
+        
+        <createTable tableName="temas_modulo">
+            <column name="temas_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modulo_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addPrimaryKey columnNames="modulo_id, temas_id" tableName="temas_modulo"/>
+        
+        
+        
+    </changeSet>
+    
+      <changeSet id="20200305201120-1-relations" author="jhipster">
+        
+        <createTable tableName="colaboradores_modulo">
+            <column name="roles_colaboradores_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modulo_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addPrimaryKey columnNames="modulo_id, roles_colaboradores_id" tableName="colaboradores_modulo"/>
+        
+    </changeSet>
+    
     
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
