@@ -8,6 +8,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
 import { ConstructorLayoutComponent } from './constructor-layout/constructor-layout.component';
 import { CourseConfigurationComponent } from './course-configuration/course-configuration.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { HomeComponent } from './home/home.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -38,6 +39,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'home-page',
           component: HomePageComponent
+        },
+        {
+          path: 'courses-home',
+          component: HomeComponent
         },
         {
           path: 'course-configuration',
