@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SafeUrl } from '@angular/platform-browser';
+import { Contenido } from 'app/shared/model/contenido.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class PdfService {
   private pdfSrc = new Subject<SafeUrl>();
   private editing = new Subject<boolean>();
   private pathUrl = new Subject<string>();
+  private pdfProperties = new Subject<Contenido>();
 
   constructor() {}
 
@@ -34,5 +36,13 @@ export class PdfService {
 
   getPathUrl(): Observable<string> {
     return this.pathUrl.asObservable();
+  }
+
+  setPdfProperties(pdfProperties: Contenido): void {
+    this.pdfProperties.next(pdfProperties);
+  }
+
+  getPdfProperties(): Observable<Contenido> {
+    return this.pdfProperties.asObservable();
   }
 }

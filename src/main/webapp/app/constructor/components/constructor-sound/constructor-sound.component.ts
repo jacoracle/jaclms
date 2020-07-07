@@ -46,6 +46,7 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
     this.soundService.setEditing(false);
     this.soundService.setSoundSrc(this.soundSrc);
     this.soundService.setPathUrl(this.pathUrl);
+    this.soundService.setAudioProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }

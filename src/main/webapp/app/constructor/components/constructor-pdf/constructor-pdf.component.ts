@@ -46,6 +46,7 @@ export class ConstructorPdfComponent implements OnInit, OnDestroy {
     this.pdfService.setEditing(false);
     this.pdfService.setPdfSrc(this.pdfSrc);
     this.pdfService.setPathUrl(this.pathUrl);
+    this.pdfService.setPdfProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }

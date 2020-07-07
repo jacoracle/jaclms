@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SafeUrl } from '@angular/platform-browser';
+import { Contenido } from 'app/shared/model/contenido.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class VideoService {
   private editing = new Subject<boolean>();
   private pathUrl = new Subject<string>();
   private thumbSrc = new Subject<SafeUrl>();
+  private videoProperties = new Subject<Contenido>();
 
   constructor() {}
 
@@ -43,5 +45,19 @@ export class VideoService {
 
   getThumbSrc(): Observable<SafeUrl> {
     return this.thumbSrc.asObservable();
+  }
+
+  /**
+   * to send values between video component and properties component
+   * @param videoProperties object with values of video properties
+   */
+  setVideoProperties(videoProperties: Contenido): void {
+    this.videoProperties.next(videoProperties);
+  }
+  /**
+   * get properties from video file
+   */
+  getVideoProperties(): Observable<Contenido> {
+    return this.videoProperties.asObservable();
   }
 }

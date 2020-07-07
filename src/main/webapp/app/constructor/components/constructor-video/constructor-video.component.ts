@@ -53,6 +53,7 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
     this.videoService.setEditing(false);
     this.videoService.setThumbSrc(this.thumbSrc);
     this.videoService.setPathUrl(this.pathUrl);
+    this.videoService.setVideoProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }
