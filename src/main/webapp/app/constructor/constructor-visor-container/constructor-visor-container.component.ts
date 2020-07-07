@@ -190,10 +190,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   onUpdateMultimediaBlock(event: Event, index: number): void {
-    console.error('tha fuck');
-    console.error(event['multimediaProperties']);
-    console.error(event['componentIndex']);
-
     if (this.contentBlocks[index]) {
       if (this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']]) {
         this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.nombre =
