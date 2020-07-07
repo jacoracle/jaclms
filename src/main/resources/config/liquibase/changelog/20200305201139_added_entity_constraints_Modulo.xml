@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Modulo.
     -->
-    <changeSet id="20200305201119-2" author="jhipster">
+    <changeSet id="20200305201139-2" author="jhipster">
     
     
     <addForeignKeyConstraint baseColumnNames="tipo_modulo_id"
