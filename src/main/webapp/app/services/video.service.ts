@@ -9,7 +9,6 @@ import { Contenido } from 'app/shared/model/contenido.model';
 export class VideoService {
   private videoSrc = new Subject<SafeUrl>();
   private editing = new Subject<boolean>();
-  private pathUrl = new Subject<string>();
   private thumbSrc = new Subject<SafeUrl>();
   private videoProperties = new Subject<Contenido>();
 
@@ -29,14 +28,6 @@ export class VideoService {
 
   getEditing(): Observable<boolean> {
     return this.editing.asObservable();
-  }
-
-  setPathUrl(pathUrl: string): void {
-    this.pathUrl.next(pathUrl);
-  }
-
-  getPathUrl(): Observable<string> {
-    return this.pathUrl.asObservable();
   }
 
   setThumbSrc(thumbSrc: SafeUrl): void {

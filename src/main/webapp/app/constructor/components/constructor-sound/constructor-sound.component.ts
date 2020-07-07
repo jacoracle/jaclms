@@ -40,12 +40,6 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
         this.soundSrc = pdfSrc;
       }
     });
-    this.subscription = this.soundService.getPathUrl().subscribe(pathUrl => {
-      if (this.editing) {
-        this.pathUrl = pathUrl;
-        this.updateComponent.emit({ newValue: pathUrl, type: 'image' });
-      }
-    });
 
     this.subscription = this.soundService.getAudioProperties().subscribe((objProperties: IContenido) => {
       if (this.editing) {
@@ -83,7 +77,6 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
   selectSound(): void {
     this.soundService.setEditing(false);
     this.soundService.setSoundSrc(this.soundSrc);
-    this.soundService.setPathUrl(this.pathUrl);
     this.soundService.setAudioProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);

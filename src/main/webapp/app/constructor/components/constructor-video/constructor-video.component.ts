@@ -47,12 +47,6 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
         this.thumbSrc = thumbSrc;
       }
     });
-    this.subscription = this.videoService.getPathUrl().subscribe(pathUrl => {
-      if (this.editing) {
-        this.pathUrl = pathUrl;
-        this.updateComponent.emit({ newValue: pathUrl, type: 'video' });
-      }
-    });
 
     this.subscription = this.videoService.getVideoProperties().subscribe((objProperties: IContenido) => {
       if (this.editing) {
@@ -90,7 +84,6 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
   selectVideo(): void {
     this.videoService.setEditing(false);
     this.videoService.setThumbSrc(this.thumbSrc);
-    this.videoService.setPathUrl(this.pathUrl);
     this.videoService.setVideoProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);

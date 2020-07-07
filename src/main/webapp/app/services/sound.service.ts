@@ -9,7 +9,6 @@ import { Contenido } from 'app/shared/model/contenido.model';
 export class SoundService {
   private soundSrc = new Subject<SafeUrl>();
   private editing = new Subject<boolean>();
-  private pathUrl = new Subject<string>();
   private audioProperties = new Subject<Contenido>();
 
   constructor() {}
@@ -28,14 +27,6 @@ export class SoundService {
 
   getEditing(): Observable<boolean> {
     return this.editing.asObservable();
-  }
-
-  setPathUrl(pathUrl: string): void {
-    this.pathUrl.next(pathUrl);
-  }
-
-  getPathUrl(): Observable<string> {
-    return this.pathUrl.asObservable();
   }
 
   setAudioProperties(audioProperties: Contenido): void {

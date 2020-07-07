@@ -82,25 +82,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
     this.subscription = this.subscriptionVideoThumb();
 
-    // Recibe el pathUrl del video seleccionado.
-    this.videoService.getPathUrl().subscribe(pathUrl => {
-      this.contenidoProperties.contenido = pathUrl;
-      this.fileFormat = 'video';
-      this.listenAudio = false;
-    });
-
-    this.pdfService.getPathUrl().subscribe(pathUrl => {
-      this.contenidoProperties.contenido = pathUrl;
-      this.fileFormat = 'pdf';
-      this.listenAudio = false;
-    });
-
-    this.soundService.getPathUrl().subscribe(pathUrl => {
-      this.contenidoProperties.contenido = pathUrl;
-      this.fileFormat = 'sound';
-      this.listenAudio = false;
-    });
-
     if (this.type === 'course') {
       this.subscription = this.currentCourseService.getCurrentCourse().subscribe(currentCourse => {
         if (currentCourse.id) {
@@ -256,26 +237,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     };
   }
 
-  getSoundUrl(soundPath: string): void {
-    this.fileUploadService.getSound(soundPath);
-    this.soundService.setPathUrl(soundPath);
-  }
-
-  getPdfUrl(pdfPath: string): void {
-    this.fileUploadService.getPdf(pdfPath);
-    this.pdfService.setPathUrl(pdfPath);
-  }
-
-  getVideoUrl(videoPath: string): void {
-    this.fileUploadService.getVideoThumbnail(videoPath);
-    this.fileUploadService.getVideo(videoPath);
-    this.videoService.setPathUrl(videoPath);
-  }
-
-  getImageUrl(imagePath: string): void {
-    this.fileUploadService.getImage(imagePath);
-  }
-
   getDataMultimediaFile(data: IContenido, fileFormat: string, fileType: string, event: any): void {
     this.validateCalledToService(fileFormat, data, fileType, event);
   }
@@ -317,18 +278,15 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   setSoundUrl(soundPath: string): void {
     this.soundService.setSoundSrc(soundPath);
-    this.soundService.setPathUrl(soundPath);
   }
 
   setPdfUrl(pdfPath: string): void {
     this.pdfService.setPdfSrc(pdfPath);
-    this.pdfService.setPathUrl(pdfPath);
   }
 
   setVideoUrl(imagePath: string): void {
     this.videoService.setThumbSrc(imagePath);
     this.videoService.setVideoSrc(imagePath);
-    this.videoService.setPathUrl(imagePath);
   }
 
   setImageUrl(): void {

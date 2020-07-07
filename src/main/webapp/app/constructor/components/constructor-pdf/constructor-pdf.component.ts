@@ -40,12 +40,6 @@ export class ConstructorPdfComponent implements OnInit, OnDestroy {
         this.pdfSrc = pdfSrc;
       }
     });
-    this.subscription = this.pdfService.getPathUrl().subscribe(pathUrl => {
-      if (this.editing) {
-        this.pathUrl = pathUrl;
-        this.updateComponent.emit({ newValue: pathUrl, type: 'image' });
-      }
-    });
 
     this.subscription = this.pdfService.getPdfProperties().subscribe((objProperties: IContenido) => {
       if (this.editing) {
@@ -83,7 +77,6 @@ export class ConstructorPdfComponent implements OnInit, OnDestroy {
   selectPdf(): void {
     this.pdfService.setEditing(false);
     this.pdfService.setPdfSrc(this.pdfSrc);
-    this.pdfService.setPathUrl(this.pathUrl);
     this.pdfService.setPdfProperties(this.component!.contenido!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
