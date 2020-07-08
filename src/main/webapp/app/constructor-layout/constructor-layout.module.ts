@@ -29,9 +29,10 @@ import { ConstructorSoundComponent } from 'app/constructor/components/constructo
 import { ContentBlock8Component } from 'app/constructor/content-blocks/content-block8/content-block8.component';
 import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
-  imports: [ConstructorSharedModule, AngularEditorModule, DragDropModule],
+  imports: [QuillModule.forRoot(), ConstructorSharedModule, AngularEditorModule, DragDropModule],
   declarations: [
     ConstructorLayoutComponent,
     ConstructorFilmstripComponent,

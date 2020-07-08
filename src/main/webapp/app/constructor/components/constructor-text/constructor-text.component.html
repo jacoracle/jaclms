@@ -1,8 +1,89 @@
-<angular-editor [placeholder]="placeholder" [(ngModel)]="htmlContent" [config]="editorConfig"></angular-editor>
+<!--<angular-editor [placeholder]="placeholder" [(ngModel)]="htmlContent" [config]="editorConfig"></angular-editor>
+&lt;!&ndash;-->
+<!--<quill-editor [placeholder]="placeholder" [(ngModel)]="htmlContent" [modules]="modules"></quill-editor>-->
+
+<quill-editor
+    [(ngModel)]="htmlContent">
+    <div quill-editor-toolbar>
+    <span class="ql-formats">
+      <select class="ql-align"></select>
+    </span>
+    <span class="ql-formats">
+      <select class="ql-font">
+        <option selected>Arial</option>
+        <option value="times-new-roman">Times New Roman</option>
+        <option value="calibri">Calibri</option>
+        <option value="comic-sans-ms">Comic Sans MS</option>
+      </select>
+      <!--<select class="ql-size"></select>-->
+    </span>
+    <span class="ql-formats">
+      <button class="ql-list" value="bullet"></button>
+      <button class="ql-list" value="ordered"></button>
+            <!--<button class="ql-indent" value="-1"></button>
+            <button class="ql-indent" value="+1"></button>-->
+    </span>
+    <span class="ql-formats">
+      <button class="ql-bold"></button>
+      <button class="ql-italic"></button>
+      <button class="ql-underline"></button>
+     <!-- <button class="ql-strike"></button>-->
+    </span>
+    <span class="ql-formats">
+      <select class="ql-color"></select>
+      <select class="ql-background"></select>
+    </span>
+   <!-- <span class="ql-formats">
+      <button class="ql-blockquote"></button>
+      <button class="ql-code-block"></button>
+      <button class="ql-link"></button>
+    </span>-->
+    <span class="ql-formats">
+     <select class="ql-header">
+        <option value="1">Heading 1</option>
+        <option value="2">Heading 2</option>
+        <option value="3">Heading 3</option>
+        <option value="4">Heading 4</option>
+        <option value="5">Heading 5</option>
+        <option value="6">Heading 6</option>
+      </select>
+    </span>
+    <span class="ql-formats">
+       <select class="ql-size"></select>
+    </span>
+    <!--<span class="ql-formats">
+      <button class="ql-script" value="sub"></button>
+      <button class="ql-script" value="super"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-clean"></button>
+    </span>-->
+    </div>
+</quill-editor>
+
+<style type=“text/css”>
+    .ql-font-arial {
+        font-family: 'Arial';
+    }
+
+    .ql-font-times-new-roman {
+        font-family: 'Times New Roman';
+    }
+
+    .ql-font-calibri {
+        font-family: 'Calibri';
+    }
+
+    .ql-font-comic-sans-ms {
+        font-family: 'Comic Sans MS';
+    }
+
+</style>
 
 <!--
 <div id="component-text-row">
   <div class="header-co-text">
+
     <div class="row-co-text">
       <div class="icons-co-1">
         <div class="item-icn-co icn-co-1"></div>
@@ -21,3 +102,4 @@
 
 </div>
 -->
+
