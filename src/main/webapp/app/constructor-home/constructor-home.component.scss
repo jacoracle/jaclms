@@ -194,3 +194,9 @@
     margin-top: -350px;
   }
 }
+
+.e-disabled {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.5;
+}
