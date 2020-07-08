@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { TextService } from 'app/services/text.service';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
@@ -8,10 +8,10 @@ import * as QuillNamespace from 'quill';
 @Component({
   selector: 'jhi-constructor-text',
   templateUrl: './constructor-text.component.html',
-  styleUrls: ['./constructor-text.component.scss']
+  styleUrls: ['./constructor-text.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ConstructorTextComponent implements OnInit, AfterViewInit {
-  modules = {};
   // htmlContent: any;
   placeholder =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
@@ -22,8 +22,6 @@ export class ConstructorTextComponent implements OnInit, AfterViewInit {
   @Input()
   set htmlContent(val: string) {
     this._htmlContent = val;
-    // eslint-disable-next-line no-console
-    console.log(val);
     this.textService.setText(this.htmlContent);
   }
   title = false;

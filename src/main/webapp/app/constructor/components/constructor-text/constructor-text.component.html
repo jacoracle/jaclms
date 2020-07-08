@@ -1,21 +1,18 @@
-<!--<angular-editor [placeholder]="placeholder" [(ngModel)]="htmlContent" [config]="editorConfig"></angular-editor>
-&lt;!&ndash;-->
-<!--<quill-editor [placeholder]="placeholder" [(ngModel)]="htmlContent" [modules]="modules"></quill-editor>-->
+<!--<angular-editor [placeholder]="placeholder" [(ngModel)]="htmlContent" [config]="editorConfig"></angular-editor>-->
 
-<quill-editor
-    [(ngModel)]="htmlContent">
+<quill-editor placeholder="Escribe aquí el texto..." [(ngModel)]="htmlContent" class="editor">
     <div quill-editor-toolbar>
     <span class="ql-formats">
       <select class="ql-align"></select>
     </span>
     <span class="ql-formats">
       <select class="ql-font">
-        <option selected>Arial</option>
+        <option selected >Arial</option>
         <option value="times-new-roman">Times New Roman</option>
         <option value="calibri">Calibri</option>
         <option value="comic-sans-ms">Comic Sans MS</option>
       </select>
-      <!--<select class="ql-size"></select>-->
+        <!--<select class="ql-size"></select>-->
     </span>
     <span class="ql-formats">
       <button class="ql-list" value="bullet"></button>
@@ -60,46 +57,4 @@
     </span>-->
     </div>
 </quill-editor>
-
-<style type=“text/css”>
-    .ql-font-arial {
-        font-family: 'Arial';
-    }
-
-    .ql-font-times-new-roman {
-        font-family: 'Times New Roman';
-    }
-
-    .ql-font-calibri {
-        font-family: 'Calibri';
-    }
-
-    .ql-font-comic-sans-ms {
-        font-family: 'Comic Sans MS';
-    }
-
-</style>
-
-<!--
-<div id="component-text-row">
-  <div class="header-co-text">
-
-    <div class="row-co-text">
-      <div class="icons-co-1">
-        <div class="item-icn-co icn-co-1"></div>
-        <div class="item-icn-co icn-co-2"></div>
-        <div class="item-icn-co icn-co-3"></div>
-        <div class="item-icn-co icn-co-4"></div>
-        <div class="item-icn-co icn-co-5"></div>
-      </div>
-      <div class="icons-co-1">
-        <div class="item-icn-co icn-co-6"></div>
-        <div class="item-icn-co icn-co-7"></div>
-        <div class="item-icn-co icn-co-8"></div>
-      </div>
-    </div>
-  </div>
-
-</div>
--->
 
