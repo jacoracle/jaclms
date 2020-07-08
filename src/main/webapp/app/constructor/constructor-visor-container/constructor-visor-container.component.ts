@@ -107,6 +107,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
                 res => {
                   if (res.body) {
                     this.contentBlocks = res.body;
+                    this.contentBlocksService.setContentBlocks(this.contentBlocks);
                   }
                 },
                 () => {
