@@ -33,7 +33,7 @@
             <jhi-content-block2 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block2>
           </div>
           <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'imagen'">
-            <jhi-content-block3 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block3>
+            <jhi-content-block3 [contentBlock]="block" (updateMultimediaBlock)="onUpdateMultimediaBlock($event, index)" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block3>
           </div>
           <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'imagen_texto'">
             <jhi-content-block4 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block4>

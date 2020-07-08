@@ -19,7 +19,6 @@ import org.constructor.repository.NivelJerarquicoRepository;
 import org.constructor.repository.NivelesCursoRepository;
 import org.constructor.response.NivelJerarquicoResponse;
 import org.constructor.service.NivelJerarquicoService;
-import org.constructor.service.dto.BloqueComponentesDTO;
 import org.constructor.service.dto.BloquesCursoDTO;
 import org.constructor.service.dto.ComponenteDTO;
 import org.constructor.service.dto.NivelJerarquicoDTO;
@@ -124,6 +123,9 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 				
 				contenido.setComponente(componente);
 				contenido.setContenido(componenteDTO.getContenido().getContenido());
+				contenido.setNombre(componenteDTO.getContenido().getNombre());
+				contenido.setExtension(componenteDTO.getContenido().getExtension());
+				contenido.setPeso(componenteDTO.getContenido().getPeso());
 				contenidoRepository.save(contenido);
 				
 			}
@@ -200,6 +202,9 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 		            							
 		            							contenido.setComponente(componente);
 		            							contenido.setContenido(componenteDTO.getContenido().getContenido());
+		            							contenido.setNombre(componenteDTO.getContenido().getNombre());
+		            							contenido.setExtension(componenteDTO.getContenido().getExtension());
+		            							contenido.setPeso(componenteDTO.getContenido().getPeso());
 		            							contenidoRepository.save(contenido);
 		            							
 		            						}

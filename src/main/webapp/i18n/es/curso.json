@@ -50,6 +50,9 @@
         "created": "Se ha guardado el proyecto satisfactoriamente.",
         "updated": "Se ha actualizado la información satisfactoriamente.",
         "error": "No se pudo guardar la información, por favor vuelve a intentar más tarde."
+      },
+      "blockUpdate": {
+        "error": "No se pudo guargar actualizar la información, por favor intenta de nuevo más tarde."
       }
     }
   }
