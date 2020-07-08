@@ -33,20 +33,20 @@
           <div *ngIf="fileFormat === 'video'" [ngClass]="{'test-video': thumbSrc !== ''}">
               <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
               <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''"><i class="icon ni-play"></i></span>
-              <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="videoSrc !== ''">
+              <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
            <!-- <video [src]="videoSrc" width="100%" controls #vPlayer></video>-->
           </div>
           <div *ngIf="fileFormat === 'pdf'" class="test-pdf">
             <!-- Pdf -->
-            <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc === ''">
-            <span class="play-icon-test" (click)="pdfPreview()" *ngIf="pdfSrc !== ''"><i class="icon ni-view"></i></span>
-            <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''">
+            <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
+            <span class="play-icon-test" (click)="pdfPreview()" *ngIf="multimediaFileProperties.contenido !== 'unknown'"><i class="icon ni-view"></i></span>
+            <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
             <!-- <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''" (click)="pdfPreview()"> -->
           </div>
           <div *ngIf="fileFormat === 'sound'" class="test-audio">
-            <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc === ''">
-            <span class="play-icon-test" (click)="loadSound()" *ngIf="soundSrc !== '' && !listenAudio"><i class="icon ni-play"></i></span>
-            <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="soundSrc !== '' && !listenAudio">
+            <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
+            <span class="play-icon-test" (click)="loadSound()" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio"><i class="icon ni-play"></i></span>
+            <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
             <audio [src]="soundSrc" controls controlsList="nodownload" #sPlayer *ngIf="soundSrc !== '' && listenAudio" class="audioPlayer" ></audio>
           </div>
           <div [hidden]="!showLoader" class="loader-cp">
