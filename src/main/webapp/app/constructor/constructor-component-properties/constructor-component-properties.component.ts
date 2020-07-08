@@ -53,8 +53,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     peso: 0,
     extension: ''
   };
-  private _MIL = 1000;
-  private _MIL24 = 1024;
+  private _MIL24 = 1024000;
 
   constructor(
     public imageService: ImageService,
@@ -94,6 +93,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
+      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
@@ -101,6 +101,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.subscription = this.videoService.getVideoProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
+      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
@@ -108,6 +109,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.subscription = this.pdfService.getPdfProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
+      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
@@ -115,13 +117,14 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.subscription = this.soundService.getAudioProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
+      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
     });
   }
 
   convertBytesToMegabytes(byteSize: number): number {
-    return byteSize / this._MIL / this._MIL24;
+    return parseFloat((byteSize / this._MIL24).toFixed(2));
   }
 
   subscriptionVideoThumb(): Subscription {
@@ -202,21 +205,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.selectedFiles = event.target.files;
         this.showLoader = true;
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
-          /*
-          if (this.fileFormat === 'image' && this.imageFileTypes.includes(event.target.files[0].type)) {
-            this.getImageUrl(data.path);
-          } else if (this.fileFormat === 'video' && event.target.files[0].type === 'video/mp4') {
-            this.getVideoUrl(data.path);
-          } else if (this.fileFormat === 'pdf' && event.target.files[0].type === 'application/pdf') {
-            this.getPdfUrl(data.path);
-          } else if (this.fileFormat === 'sound' && event.target.files[0].type === 'audio/mpeg') {
-            this.getSoundUrl(data.path);
-          } else {
-            this.showErrorFileType(event);
-            return;
-          }
-          */
-
           this.getDataMultimediaFile(this.castObjectAsContenido(data), this.fileFormat, event.target.files[0].type, event);
           this.showLoader = false;
         });
