@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import org.constructor.domain.TipoBloqueComponentes;
 import org.constructor.domain.TiposBloquesComponentes;
 import org.constructor.service.TiposBloquesComponentesService;
 import org.constructor.utils.RestConstants;
