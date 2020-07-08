@@ -33,7 +33,7 @@
           <div *ngIf="fileFormat === 'video'" [ngClass]="{'test-video': thumbSrc !== ''}">
               <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
               <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''"><i class="icon ni-play"></i></span>
-              <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="videoSrc !== ''">
+              <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
            <!-- <video [src]="videoSrc" width="100%" controls #vPlayer></video>-->
           </div>
           <div *ngIf="fileFormat === 'pdf'" class="test-pdf">
