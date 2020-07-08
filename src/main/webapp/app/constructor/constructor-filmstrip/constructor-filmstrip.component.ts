@@ -132,6 +132,7 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
       res => {
         if (res.body) {
           this.contentBlocks = res.body;
+          this.contentBlocksService.setContentBlocks(this.contentBlocks);
         }
       },
       () => {

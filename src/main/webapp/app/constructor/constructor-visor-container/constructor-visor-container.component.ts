@@ -143,6 +143,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       .subscribe(selectedBlockIndex => {
         this.selectedBlock = selectedBlockIndex;
       });
+    // Obtener bloquies actualizados de filmStrip
+    this.subscription = this.contentBlocksService.getContentBlocks().subscribe(contentBlocks => (this.contentBlocks = contentBlocks));
   }
 
   /**

@@ -48,13 +48,13 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   @ViewChild('sPlayer', { static: false }) soundplayer: ElementRef | undefined;
   showLoader = false;
   listenAudio = false;
+  viewPdf = false;
   multimediaFileProperties: Contenido = {
     nombre: '',
     peso: 0,
     extension: ''
   };
-  private _MIL = 1000;
-  private _MIL24 = 1024;
+  private _MIL24 = 1024000;
 
   constructor(
     public imageService: ImageService,
@@ -94,34 +94,42 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
+      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+      this.listenAudio = false;
     });
 
     this.subscription = this.videoService.getVideoProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
+      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+      this.listenAudio = false;
     });
 
     this.subscription = this.pdfService.getPdfProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
+      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+      this.listenAudio = false;
     });
 
     this.subscription = this.soundService.getAudioProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
+      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+      this.listenAudio = false;
     });
   }
 
   convertBytesToMegabytes(byteSize: number): number {
-    return byteSize / this._MIL / this._MIL24;
+    return parseFloat((byteSize / this._MIL24).toFixed(2));
   }
 
   subscriptionVideoThumb(): Subscription {
@@ -141,13 +149,17 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileFormat = 'sound';
       if (this.soundSrc === '') {
         this.fileInput.nativeElement.value = '';
-      }
-      setTimeout(() => {
-        if (this.soundplayer) {
-          this.soundplayer.nativeElement.play();
+      } else {
+        if (this.multimediaFileProperties.contenido !== undefined && this.listenAudio) {
+          this.showLoader = true;
+          setTimeout(() => {
+            if (this.soundplayer) {
+              this.soundplayer.nativeElement.play();
+            }
+          }, 200);
+          this.showLoader = false;
         }
-      }, 200);
-      this.showLoader = false;
+      }
     });
   }
 
@@ -157,6 +169,13 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileFormat = 'pdf';
       if (this.pdfSrc === '') {
         this.fileInput.nativeElement.value = '';
+      } else {
+        if (this.multimediaFileProperties.contenido !== undefined && this.viewPdf) {
+          this.showLoader = true;
+          this.pdfModalService.open(this.pdfSrc);
+          this.viewPdf = false;
+          this.showLoader = false;
+        }
       }
       this.showLoader = false;
     });
@@ -168,6 +187,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileFormat = 'video';
       if (this.videoSrc === '') {
         this.fileInput.nativeElement.value = '';
+      } else {
+        this.showLoader = true;
+        this.videoModalService.open(this.videoSrc);
+        this.showLoader = false;
       }
       this.showLoader = false;
     });
@@ -202,21 +225,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.selectedFiles = event.target.files;
         this.showLoader = true;
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
-          /*
-          if (this.fileFormat === 'image' && this.imageFileTypes.includes(event.target.files[0].type)) {
-            this.getImageUrl(data.path);
-          } else if (this.fileFormat === 'video' && event.target.files[0].type === 'video/mp4') {
-            this.getVideoUrl(data.path);
-          } else if (this.fileFormat === 'pdf' && event.target.files[0].type === 'application/pdf') {
-            this.getPdfUrl(data.path);
-          } else if (this.fileFormat === 'sound' && event.target.files[0].type === 'audio/mpeg') {
-            this.getSoundUrl(data.path);
-          } else {
-            this.showErrorFileType(event);
-            return;
-          }
-          */
-
           this.getDataMultimediaFile(this.castObjectAsContenido(data), this.fileFormat, event.target.files[0].type, event);
           this.showLoader = false;
         });
@@ -247,13 +255,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.imageService.setImageProperties(obj);
     } else if (fileFormat === 'video' && fileType === 'video/mp4') {
       this.fileUploadService.getVideoThumbnail(obj.contenido!);
-      this.fileUploadService.getVideo(obj.contenido!);
       this.videoService.setVideoProperties(obj);
     } else if (fileFormat === 'pdf' && fileType === 'application/pdf') {
-      this.fileUploadService.getPdf(obj.contenido!);
       this.pdfService.setPdfProperties(obj);
     } else if (fileFormat === 'sound' && fileType === 'audio/mpeg') {
-      this.fileUploadService.getSound(obj.contenido!);
       this.soundService.setAudioProperties(obj);
     } else {
       this.showErrorFileType(event);
@@ -308,16 +313,17 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   pdfPreview(): void {
-    this.showLoader = true;
-    this.pdfModalService.open(this.pdfSrc);
-    this.showLoader = false;
+    if (this.multimediaFileProperties.contenido != null) {
+      this.fileUploadService.getPdf(this.multimediaFileProperties.contenido);
+      this.viewPdf = true;
+    }
   }
 
   loadSound(): void {
-    this.showLoader = true;
-    this.listenAudio = true;
-    this.fileUploadService.getSound(this.contenidoProperties.contenido!);
-    this.showLoader = false;
+    if (this.multimediaFileProperties.contenido != null) {
+      this.fileUploadService.getSound(this.multimediaFileProperties.contenido);
+      this.listenAudio = true;
+    }
   }
 
   ngOnDestroy(): void {
@@ -325,8 +331,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   loadVideo(): void {
-    this.showLoader = true;
-    this.videoModalService.open(this.videoSrc);
-    this.showLoader = false;
+    if (this.multimediaFileProperties.contenido != null) {
+      this.fileUploadService.getVideo(this.multimediaFileProperties.contenido);
+    }
   }
 }

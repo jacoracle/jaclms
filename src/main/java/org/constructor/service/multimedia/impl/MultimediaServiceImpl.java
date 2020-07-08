@@ -106,7 +106,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				String  extension =   FilenameUtils.getExtension( multimedia.getOriginalFilename());
 				String replace = null; 
 				videoResponse.setExtension(extension);
-				videoResponse.setPeso(multimedia.getSize() /  1024 );
+				videoResponse.setPeso(multimedia.getSize());
 				videoResponse.setNombre( multimedia.getOriginalFilename());
 				//Create Path
 				StringBuilder builder = new StringBuilder();
