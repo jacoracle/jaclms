@@ -266,7 +266,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   delete(): void {
-    this.fileUploadService.deleteFile(this.contenidoProperties.contenido!).subscribe(() => {
+    this.fileUploadService.deleteFile(this.multimediaFileProperties.contenido!).subscribe(() => {
       if (this.fileFormat === 'video') {
         this.setVideoUrl('');
       } else if (this.fileFormat === 'pdf') {
@@ -283,19 +283,23 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   setSoundUrl(soundPath: string): void {
     this.soundService.setSoundSrc(soundPath);
+    this.soundService.setAudioProperties(this.contenidoProperties);
   }
 
   setPdfUrl(pdfPath: string): void {
     this.pdfService.setPdfSrc(pdfPath);
+    this.pdfService.setPdfProperties(this.contenidoProperties);
   }
 
-  setVideoUrl(imagePath: string): void {
-    this.videoService.setThumbSrc(imagePath);
-    this.videoService.setVideoSrc(imagePath);
+  setVideoUrl(videoPath: string): void {
+    this.videoService.setThumbSrc(videoPath);
+    this.videoService.setVideoSrc(videoPath);
+    this.videoService.setVideoProperties(this.contenidoProperties);
   }
 
-  setImageUrl(): void {
-    this.imageService.setImgSrc('');
+  setImageUrl(imagePath: string): void {
+    this.imageService.setImgSrc(imagePath);
+    this.imageService.setImageProperties(this.contenidoProperties);
   }
 
   showErrorFileSize(event: any): void {
