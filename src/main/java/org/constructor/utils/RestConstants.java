@@ -111,10 +111,10 @@ public class RestConstants {
 	/**
 	 *  Path para peticiones tipos-bloques-componentes
 	 */
-	public static final String PATH_TIPOS_BLOQUES_CPMPONENTES = "tipos-bloques-componentes";
+	public static final String PATH_TIPOS_BLOQUES_COMPONENTES = "tipos-bloques-componentes";
 	
 	/**
 	 *  Path para peticiones tipos-bloques-componentes por id
 	 */
-	public static final String PATH_TIPOS_BLOQUES_CPMPONENTES_ID = "tipos-bloques-componentes/{id}";
+	public static final String PATH_TIPOS_BLOQUES_COMPONENTES_ID = "tipos-bloques-componentes/{id}";
 }

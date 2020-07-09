@@ -81,7 +81,7 @@ public class TiposBloquesComponentesResource {
 	     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new tiposBloquesComponentes, or with status {@code 400 (Bad Request)} if the tiposBloquesComponentes has already an ID.
 	     * @throws URISyntaxException if the Location URI syntax is incorrect.
 	     */
-	    @PostMapping(path = RestConstants.PATH_TIPOS_BLOQUES_CPMPONENTES)
+	    @PostMapping(path = RestConstants.PATH_TIPOS_BLOQUES_COMPONENTES)
 	    public ResponseEntity<TiposBloquesComponentes> createTiposBloquesComponentes(@RequestBody TiposBloquesComponentes tiposBloquesComponentes) throws URISyntaxException {
 	        log.debug("REST request to save TiposBloquesComponentes : {}", tiposBloquesComponentes);
 	       
@@ -101,7 +101,7 @@ public class TiposBloquesComponentesResource {
 	     * or with status {@code 500 (Internal Server Error)} if the tiposBloquesComponentes couldn't be updated.
 	     * @throws URISyntaxException if the Location URI syntax is incorrect.
 	     */
-	    @PutMapping(path = RestConstants.PATH_TIPOS_BLOQUES_CPMPONENTES)
+	    @PutMapping(path = RestConstants.PATH_TIPOS_BLOQUES_COMPONENTES)
 	    public ResponseEntity<TiposBloquesComponentes> updateTiposBloquesComponentes(@RequestBody TiposBloquesComponentes tiposBloquesComponentes) throws URISyntaxException {
 	        log.debug("REST request to update TiposBloquesComponentes : {}", tiposBloquesComponentes);
 	        if (tiposBloquesComponentes.getId() == null) {
@@ -122,7 +122,7 @@ public class TiposBloquesComponentesResource {
 
 	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tipoBsloquesComponentes in body.
 	     */
-	    @GetMapping(path = RestConstants.PATH_TIPOS_BLOQUES_CPMPONENTES)
+	    @GetMapping(path = RestConstants.PATH_TIPOS_BLOQUES_COMPONENTES)
 	    public ResponseEntity<List<TiposBloquesComponentes>> getAllTiposBloquesComponentes(Pageable pageable) {
 	        log.debug("REST request to get a page of TiposBloquesComponentes");
 	        Page<TiposBloquesComponentes> page = tiposBloquesComponentesService.findAll(pageable);
@@ -137,7 +137,7 @@ public class TiposBloquesComponentesResource {
 	     * @param id the id of the tiposBloquesComponentes to retrieve.
 	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tiposBloquesComponentes, or with status {@code 404 (Not Found)}.
 	     */
-	    @GetMapping(path = RestConstants.PATH_TIPOS_BLOQUES_CPMPONENTES_ID)
+	    @GetMapping(path = RestConstants.PATH_TIPOS_BLOQUES_COMPONENTES_ID)
 	    public ResponseEntity<TiposBloquesComponentes> getTipoBloqueComponentes(@PathVariable Long id) {
 	        log.debug("REST request to get TiposBloquesComponentes : {}", id);
 	        Optional<TiposBloquesComponentes> tiposBloquesComponentes = tiposBloquesComponentesService.findOne(id);
@@ -150,7 +150,7 @@ public class TiposBloquesComponentesResource {
 	     * @param id the id of the tiposBloquesComponente to delete.
 	     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
 	     */
-	    @DeleteMapping(path = RestConstants.PATH_TIPOS_BLOQUES_CPMPONENTES_ID)
+	    @DeleteMapping(path = RestConstants.PATH_TIPOS_BLOQUES_COMPONENTES_ID)
 	    public ResponseEntity<Void> deleteTiposBloquesComponentes(@PathVariable Long id) {
 	        log.debug("REST request to delete TiposBloquesComponentes : {}", id);
 	        tiposBloquesComponentesService.delete(id);
