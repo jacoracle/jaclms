@@ -9,6 +9,8 @@ import { ConstructorLayoutComponent } from './constructor-layout/constructor-lay
 import { CourseConfigurationComponent } from './course-configuration/course-configuration.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HomeComponent } from './home/home.component';
+import { HomeModuleComponent } from './home-module/home-module.component';
+import { ModuleConfigurationComponent } from './module-configuration/module-configuration.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -45,8 +47,16 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: HomeComponent
         },
         {
+          path: 'modules-home',
+          component: HomeModuleComponent
+        },
+        {
           path: 'course-configuration',
           component: CourseConfigurationComponent
+        },
+        {
+          path: 'module-configuration',
+          component: ModuleConfigurationComponent
         },
         ...LAYOUT_ROUTES
       ],
