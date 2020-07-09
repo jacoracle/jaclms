@@ -6,9 +6,11 @@ package org.constructor.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 import org.constructor.domain.Contenido;
 import org.constructor.service.ContenidoService;
+import org.constructor.service.dto.ContenidoDTO;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -31,6 +33,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * @author Edukai
@@ -62,6 +65,7 @@ public class ContenidoResource {
      */
     @Autowired
 	private ContenidoService contenidoService;
+    
     
     /**
      * ContenidoResource
@@ -95,18 +99,25 @@ public class ContenidoResource {
 	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated contenido,
 	     * or with status {@code 400 (Bad Request)} if the contenido is not valid,
 	     * or with status {@code 500 (Internal Server Error)} if the contenido couldn't be updated.
-	     * @throws URISyntaxException if the Location URI syntax is incorrect.
+	     * @throws Exception 
 	     */
 	    @PutMapping(path = RestConstants.PATH_CONTENIDO)
-	    public ResponseEntity<Contenido> updateContenidos(@RequestBody Contenido contenido) throws URISyntaxException {
-	        log.debug("REST request to update Contenido : {}", contenido);
-	        if (contenido.getId() == null) {
+	    public ResponseEntity<Optional<Contenido>> updateContenidos(@RequestBody ContenidoDTO contenidoDTO) throws Exception {
+	        log.debug("REST request to update Contenido : {}", contenidoDTO);
+
+	        if (contenidoDTO.getId() == null) {
 	            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
 	        }
-	        Contenido result = contenidoService.save(contenido);
+	        if (contenidoDTO.getContenido() == null) {
+	        	 throw new BadRequestAlertException("Invalid content", ENTITY_NAME, "null content");
+	        }
+			
+	        Optional<Contenido> result = contenidoService.updateContenido(contenidoDTO);
+	        Optional<Contenido> contenido = contenidoService.findOne(result.get().getId());
+	        log.debug("Update Level  : {}", contenido);
 	        return ResponseEntity.ok()
-	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-	            .body(result);
+	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.get().getId().toString()))
+	            .body(contenido);
 	    }
 	    
 	    /**
@@ -126,16 +137,28 @@ public class ContenidoResource {
 	    }
 	    
 	    /**
+	     * {@code GET  /contenido/:id} : get the "id" contenido.
+	     *
+	     * @param id the id of the contenido to retrieve.
+	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the contenido, or with status {@code 404 (Not Found)}.
+	     */
+	    @GetMapping("/contenido/{id}")
+	    public ResponseEntity<Optional<Contenido>> getContenido(@PathVariable Long id) {
+	        log.debug("REST request to get contenido : {}", id);
+	        Optional<Contenido> contenido = contenidoService.findOne(id);
+	        return ResponseUtil.wrapOrNotFound(Optional.of(contenido));
+	    }
+	    
+	    /**
 	     * {@code DELETE  /contenido/:id} : delete the "id" contenido.
 	     *
 	     * @param id the id of the contenido to delete.
 	     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
 	     */
 	    @DeleteMapping("/contenido/{id}")
-	    public ResponseEntity<Void> deleteContenidos(@PathVariable Long id) {
+	    public ResponseEntity<Contenido> deleteContenido(@PathVariable Long id) {
 	        log.debug("REST request to delete Contenido : {}", id);
 	        contenidoService.delete(id);
-	        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
-	    
+	        return ResponseEntity.noContent() .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME,  id.toString())).build();
 	    }
 }

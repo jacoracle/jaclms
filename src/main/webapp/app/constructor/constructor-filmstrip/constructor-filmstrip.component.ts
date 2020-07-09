@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { IBloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-constructor-filmstrip',
@@ -49,7 +51,12 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
     }
   ];
 
-  constructor(private contentBlocksService: ContentBlocksService, private navigationControlsService: NavigationControlsService) {
+  constructor(
+    private contentBlocksService: ContentBlocksService,
+    private navigationControlsService: NavigationControlsService,
+    private bloquesCursoService: BloquesCursoService,
+    private eventManager: JhiEventManager
+  ) {
     this.contentBlocks = [];
     this.subscription = this.contentBlocksService.getContentBlocks().subscribe(contentBlocks => {
       if (contentBlocks) {
@@ -121,6 +128,22 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.contentBlocks, event.previousIndex, event.currentIndex);
     this.updateBlocksOrder();
+    this.bloquesCursoService.update(this.contentBlocks).subscribe(
+      res => {
+        if (res.body) {
+          this.contentBlocks = res.body;
+          this.contentBlocksService.setContentBlocks(this.contentBlocks);
+        }
+      },
+      () => {
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.blockUpdateError', {
+            message: 'constructorApp.curso.blockUpdate.error',
+            type: 'danger'
+          })
+        );
+      }
+    );
   }
 
   /**

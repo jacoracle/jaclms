@@ -1,6 +1,6 @@
 <!--<img class="block-pdf" [src]="pdfSrc" (click)="selectPdf()" *ngIf="!pdfSrc == ''">-->
-<img class="block-pdf" [src]="loadedPdfUrl" (click)="selectPdf()" *ngIf="pdfSrc != ''" [width]="600" [height]="300"></img>
-<img class="block-pdf" [src]="defaultPdfUrl" (click)="selectPdf()" *ngIf="pdfSrc === ''">
+<img class="block-pdf" [src]="loadedPdfUrl" (click)="selectPdf()" *ngIf="this.component && this.component.contenido && this.component.contenido.contenido !== ''" [width]="600" [height]="300"></img>
+<img class="block-pdf" [src]="defaultPdfUrl" (click)="selectPdf()" *ngIf="this.component && this.component.contenido && this.component.contenido.contenido === ''">
 <div [hidden]="!showLoader" class="loader-pdf">
     <div class="loader2"></div>
 </div>

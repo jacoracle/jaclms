@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SafeUrl } from '@angular/platform-browser';
+import { Contenido } from 'app/shared/model/contenido.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { SafeUrl } from '@angular/platform-browser';
 export class SoundService {
   private soundSrc = new Subject<SafeUrl>();
   private editing = new Subject<boolean>();
-  private pathUrl = new Subject<string>();
+  private audioProperties = new Subject<Contenido>();
 
   constructor() {}
 
@@ -28,11 +29,11 @@ export class SoundService {
     return this.editing.asObservable();
   }
 
-  setPathUrl(pathUrl: string): void {
-    this.pathUrl.next(pathUrl);
+  setAudioProperties(audioProperties: Contenido): void {
+    this.audioProperties.next(audioProperties);
   }
 
-  getPathUrl(): Observable<string> {
-    return this.pathUrl.asObservable();
+  getAudioProperties(): Observable<Contenido> {
+    return this.audioProperties.asObservable();
   }
 }

@@ -3,6 +3,7 @@ package org.constructor.service;
 import java.util.Optional;
 
 import org.constructor.domain.Contenido;
+import org.constructor.service.dto.ContenidoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,6 +20,14 @@ public interface ContenidoService {
 	 * @return the contenido
 	 */
 	Contenido save(Contenido contenido);
+	
+	/**
+	 * Update
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
+	Optional<Contenido> updateContenido(ContenidoDTO dto) throws Exception;
 	
 	/**
 	 * Find all.
