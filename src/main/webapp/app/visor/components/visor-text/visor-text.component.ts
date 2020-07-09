@@ -79,7 +79,7 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
     this.textService.setEditing(false);
     this.editing = true;
     this.textService.setText(this.htmlContent);
-    this.textService.setTemplateTypeId(this.templateType);
+    this.textService.setTemplateType(this.templateType);
     this.textEditorBehaviosService.setShowTextEditor(true);
     this.navigationControlsService.setOpenProperties(false);
     // this.navigationControlsService.setOpenTemplateGallery(true);
