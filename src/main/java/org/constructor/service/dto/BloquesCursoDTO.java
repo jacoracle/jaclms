@@ -23,6 +23,9 @@ public class BloquesCursoDTO {
 	
 	/** The autor. */
 	private Long autor;
+	
+	/** The nivel jerarquico DTO. */
+	private NivelJerarquicoDTO nivelJerarquico; 
 
 	/**
 	 * Gets the id.
@@ -131,16 +134,28 @@ public class BloquesCursoDTO {
 	public void setAutor(Long autor) {
 		this.autor = autor;
 	}
+	
+	
 
 	/**
-	 * To string.
-	 *
-	 * @return the string
+	 * @return the nivelJerarquico
 	 */
+	public NivelJerarquicoDTO getNivelJerarquico() {
+		return nivelJerarquico;
+	}
+
+	/**
+	 * @param nivelJerarquico the nivelJerarquico to set
+	 */
+	public void setNivelJerarquico(NivelJerarquicoDTO nivelJerarquico) {
+		this.nivelJerarquico = nivelJerarquico;
+	}
+
 	@Override
 	public String toString() {
 		return "BloquesCursoDTO [id=" + id + ", bloqueComponentes=" + bloqueComponentes + ", orden=" + orden
-				+ ", mostrar=" + mostrar + ", indicadorOriginal=" + indicadorOriginal + ", autor=" + autor + "]";
+				+ ", mostrar=" + mostrar + ", indicadorOriginal=" + indicadorOriginal + ", autor=" + autor
+				+ ", nivelJerarquicoDTO=" + nivelJerarquico + "]";
 	}
 
 }

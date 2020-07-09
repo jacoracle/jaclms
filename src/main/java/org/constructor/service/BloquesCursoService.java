@@ -1,8 +1,10 @@
 package org.constructor.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.constructor.domain.BloquesCurso;
+import org.constructor.service.dto.BloquesCursoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -41,5 +43,14 @@ public interface BloquesCursoService {
 	 * @param id the id
 	 */
 	void delete(Long id);
+
+	
+	/**
+	 * Update.
+	 *
+	 * @param bloquesCursoDTO the bloques curso DTO
+	 * @return the list
+	 */
+	List<BloquesCurso> update(List<BloquesCursoDTO> bloquesCursoDTO);
 	
 }

@@ -17,10 +17,19 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>	
             <column name="componente_id" type="bigint">
-                <constraints  nullable="false"/>
+                
             </column>
             <column name="contenido" type="varchar(2000)">
-                <constraints  nullable="false"/>
+               
+            </column>	
+            <column name="nombre" type="varchar(100)">
+               
+            </column>	
+            <column name="extension" type="varchar(10)">
+               
+            </column>	
+            <column name="peso" type="bigint">
+                
             </column>	
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
