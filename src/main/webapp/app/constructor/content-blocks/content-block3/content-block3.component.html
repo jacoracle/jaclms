@@ -3,7 +3,8 @@
     <div class="row-cb-img" *ngFor="let component of contentBlock.bloqueComponentes.componentes; let index = index;">
         <jhi-constructor-image
             [component]="component"
-            (updateComponent)="onUpdateComponent($event, index)">
+            (updateComponent)="onUpdateComponent($event, index)"
+            (updateMultimediaProperties)="onUpdateMultimediaProperties($event, index)">
         </jhi-constructor-image>
         <!--
         <img [src]="imgSrc" alt="">
