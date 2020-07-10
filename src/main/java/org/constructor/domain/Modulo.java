@@ -53,9 +53,12 @@ public class Modulo implements Serializable {
     @Column(name = "titulo")
     private String titulo;
     
-    
-  
-    
+    /**
+     * String descripcion
+     */
+    @Column(name = "descripcion")
+    private String descripcion;
+
     /**
      * tipoModulo
      */
@@ -195,6 +198,23 @@ public class Modulo implements Serializable {
 		this.titulo = titulo;
 	}
 
+	/**
+	 * Set
+	 * @return the descripcion
+	 */
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+
+	/**
+	 * Get
+	 * @param descripcion the descripcion to set
+	 */
+	public void setDescripcion(final String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 
 	/**
 	 * Get
@@ -295,17 +315,16 @@ public class Modulo implements Serializable {
 	}
 
 
+	/**
+	 * ToString
+	 */
 	@Override
 	public String toString() {
-		return "Modulo [id=" + id + ", titulo=" + titulo + ", tipoModulo=" + tiposModulos + ", asignatura=" + asignatura
-				+ ", numeroGrado=" + numeroGrado + ", temas=" + temas + ", rolesColaboradores=" + rolesColaboradores
-				+ ", user=" + user + ", fechaCreacionSys=" + fechaCreacionSys + "]";
+		return "Modulo [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", tiposModulos="
+				+ tiposModulos + ", asignatura=" + asignatura + ", numeroGrado=" + numeroGrado + ", temas=" + temas
+				+ ", rolesColaboradores=" + rolesColaboradores + ", user=" + user + ", fechaCreacionSys="
+				+ fechaCreacionSys + "]";
 	}
 
-
-
-
-
-    
     
 }
