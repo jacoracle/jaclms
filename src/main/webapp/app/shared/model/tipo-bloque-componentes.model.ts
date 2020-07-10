@@ -7,7 +7,7 @@ export interface ITipoBloqueComponentes {
   bloqueComponentes?: IBloqueComponentes[];
   iconPath?: string;
   tags?: string;
-  tiposComponentes?: ITipoComponente[];
+  tiposBloquesComponentes?: ITipoComponente[];
 }
 
 export class TipoBloqueComponentes implements ITipoBloqueComponentes {
@@ -17,6 +17,6 @@ export class TipoBloqueComponentes implements ITipoBloqueComponentes {
     public bloqueComponentes?: IBloqueComponentes[],
     public iconPath?: string,
     public tags?: string,
-    public tiposComponentes?: ITipoComponente[]
+    public tiposBloquesComponentes?: ITipoComponente[]
   ) {}
 }

@@ -281,7 +281,9 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   createContentBlock(selectedTemplate: ITipoBloqueComponentes): IBloqueComponentes {
+    console.error(selectedTemplate);
     const componentes = new Array<IComponente>();
+    /*
     if (selectedTemplate.nombre === 'imagen_texto') {
       selectedTemplate.tiposComponentes = this.orderTextImage(selectedTemplate.tiposComponentes!);
     }
@@ -291,7 +293,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     if (selectedTemplate.nombre === 'video_envolvente') {
       selectedTemplate.tiposComponentes = this.orderVideoText(selectedTemplate.tiposComponentes!);
     }
-    for (let i = 0; i < selectedTemplate.tiposComponentes!.length; i++) {
+    */
+    for (let i = 0; i < selectedTemplate.tiposBloquesComponentes.tiposComponentes!.length; i++) {
       componentes.push(this.createComponent(selectedTemplate.tiposComponentes![i], i + 1));
     }
     return {
