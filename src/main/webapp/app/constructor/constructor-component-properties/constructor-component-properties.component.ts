@@ -267,7 +267,9 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   delete(): void {
     this.fileUploadService.deleteFile(this.multimediaFileProperties.contenido!).subscribe(() => {
-      if (this.fileFormat === 'video') {
+      if (this.fileFormat === 'image') {
+        this.setImageUrl('');
+      } else if (this.fileFormat === 'video') {
         this.setVideoUrl('');
       } else if (this.fileFormat === 'pdf') {
         this.setPdfUrl('');
