@@ -1,18 +1,23 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, AfterContentInit } from '@angular/core';
 import { BloquesCurso } from 'app/shared/model/bloques-curso.model';
 import { IComponente } from 'app/shared/model/componente.model';
+import { ContentBlocksService } from 'app/services/content-blocks.service';
+import { ITargetScroll, TargetScroll } from 'app/shared/model/target-scroll.model';
 
 @Component({
   selector: 'jhi-content-block6',
   templateUrl: './content-block6.component.html',
   styleUrls: ['./content-block6.component.scss']
 })
-export class ContentBlock6Component {
+export class ContentBlock6Component implements AfterContentInit {
   imgSrc = './../../../../content/images/cover_upload.png';
   @Input() contentBlock?: BloquesCurso;
   @Output() updateBlock = new EventEmitter();
+  @Input() target?: HTMLElement;
+  @Input() index?: number;
+  newTarget: ITargetScroll[] = [];
 
-  constructor() {}
+  constructor(private contentBlocksService: ContentBlocksService) {}
 
   // Actualizar valor de componente y del bloque de contenido en visorContainer
   onUpdateComponent($event: Event, index: number): void {
@@ -34,5 +39,20 @@ export class ContentBlock6Component {
       }
     }
     return temp;
+  }
+
+  ngAfterContentInit(): void {
+    this.contentBlocksService.getTarget().subscribe(res => {
+      this.newTarget = res;
+      this.setTarget();
+    });
+  }
+
+  setTarget(): void {
+    if (this.newTarget !== undefined && this.index !== undefined && this.target != null) {
+      const targetScroll = new TargetScroll(this.index, this.target);
+      this.newTarget.push(targetScroll);
+      this.contentBlocksService.setTarget(this.newTarget);
+    }
   }
 }
