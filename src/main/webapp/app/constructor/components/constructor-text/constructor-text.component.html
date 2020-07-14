@@ -1,4 +1,4 @@
-<quill-editor placeholder="placeholder" [(ngModel)]="htmlContent" class="editor" (onEditorCreated)="afterCreated($event)">
+<quill-editor [(ngModel)]="htmlContent" class="editor" (onEditorCreated)="afterCreated($event)" [placeholder]="placeholder">
     <div quill-editor-toolbar>
     <span class="ql-formats">
       <select class="ql-align"></select>

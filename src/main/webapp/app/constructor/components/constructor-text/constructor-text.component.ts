@@ -53,7 +53,7 @@ export class ConstructorTextComponent {
   @Input()
   set htmlContent(val: string) {
     this._htmlContent = val;
-    this.textService.setText(this.htmlContent);
+    this.textService.setText(val);
   }
 
   restoreTitle(text: string): string {

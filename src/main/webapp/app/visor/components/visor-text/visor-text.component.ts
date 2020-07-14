@@ -35,8 +35,8 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
       this.editing = editing;
     });
     this.subscription = this.textService.getText().subscribe(text => {
-      if (text && this.editing) {
-        this.htmlContent = text;
+      if (this.editing) {
+        this.htmlContent = text ? text : '';
         this.component!.contenido!.contenido = this.htmlContent;
         // Actualizar contenido de componente en base de datos
         const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
