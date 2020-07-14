@@ -83,19 +83,11 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
   }
 
   /*
-   * Obtiene la imagen para el fimrstrip de acuerdo con el tipo de bloque de contenido.
+   * Selecciona el bloque de componentes y lo resalta en visorContainer.
    */
-  getContentBlockImage(path: string): string {
-    return path;
-  }
-
-  /*
-  
-  */
   selectContentBlock(selectedContentBlockIndex: number): void {
     this.selectedContentBlockIndex = selectedContentBlockIndex;
     this.contentBlocksService.setSelectedBlockIndex(this.selectedContentBlockIndex);
-    // this.messageService.sendMessage(text);
   }
 
   /*
@@ -115,14 +107,6 @@ export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, 
 
   validateFimstripsSize(): boolean {
     return this.contentBlocks.length > 1;
-  }
-
-  isFirstFilm(index: number): boolean {
-    return index === 0;
-  }
-
-  isLastFilm(index: number): boolean {
-    return this.contentBlocks.length - 1 === index;
   }
 
   drop(event: CdkDragDrop<string[]>): void {
