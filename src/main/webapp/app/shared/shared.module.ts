@@ -7,11 +7,13 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 import { VideoModalComponent } from 'app/shared/video-preview/video-modal.component';
+import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
 
 @NgModule({
   imports: [ConstructorSharedLibsModule],
   declarations: [
     FindLanguageFromKeyPipe,
+    SafeHtmlPipe,
     AlertComponent,
     AlertErrorComponent,
     LoginModalComponent,
@@ -23,6 +25,7 @@ import { VideoModalComponent } from 'app/shared/video-preview/video-modal.compon
   exports: [
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
+    SafeHtmlPipe,
     AlertComponent,
     AlertErrorComponent,
     LoginModalComponent,
