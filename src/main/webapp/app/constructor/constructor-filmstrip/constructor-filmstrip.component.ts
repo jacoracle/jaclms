@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { Subscription } from 'rxjs';
@@ -43,8 +43,6 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy {
     // eslint-disable-next-line no-console
     console.log(this.contentBlocksService.getTarget());
     this.contentBlocksService.getTarget().subscribe(res => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       this.target = res;
 
       this.selectContentBlock(0);
