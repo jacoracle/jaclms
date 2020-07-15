@@ -3,8 +3,18 @@ import { RouterModule } from '@angular/router';
 import { PhoneNumberComponent } from './phone-number/phone-number.component';
 import { CountryComponent } from './country/country.component';
 
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatChipsModule,
     RouterModule.forChild([
       {
         path: 'asignatura',
@@ -53,6 +63,7 @@ import { CountryComponent } from './country/country.component';
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])
   ],
+  exports: [MatAutocompleteModule, MatChipsModule, MatIconModule, MatInputModule],
   declarations: [PhoneNumberComponent, CountryComponent]
 })
 export class ConstructorEntityModule {}

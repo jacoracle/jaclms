@@ -15,21 +15,14 @@ type EntityArrayResponseType = HttpResponse<IModulo[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ModuloService {
-  public resourceUrl = SERVER_API_URL + 'api/modulos';
+  public resourceUrl = SERVER_API_URL + 'api/modulo';
   // public resourceUrlNewBook = SERVER_API_URL + 'api/curso-ficha';
 
   constructor(protected http: HttpClient) {}
 
-  create(modulo: any, cover?: File): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(modulo);
-    const form = new FormData();
-    // const courseBlob = new Blob(JSON.stringify(copy), { type: "application/json"});
-    form.append('course', JSON.stringify(copy));
-    if (cover) {
-      form.append('file', cover);
-    }
+  create(modulo: any): Observable<EntityResponseType> {
     return this.http
-      .post<IModulo>(this.resourceUrl, form, { observe: 'response' })
+      .post<IModulo>(this.resourceUrl, modulo, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
@@ -59,14 +52,14 @@ export class ModuloService {
 
   protected convertDateFromClient(curso: IModulo): IModulo {
     const copy: IModulo = Object.assign({}, curso, {
-      fechaCreacion: curso.fechaCreacion && curso.fechaCreacion.isValid() ? curso.fechaCreacion.format(DATE_FORMAT) : undefined
+      fechaCreacion: curso.fechaCreacionSys && curso.fechaCreacionSys.isValid() ? curso.fechaCreacionSys.format(DATE_FORMAT) : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.fechaCreacion = res.body.fechaCreacion ? moment(res.body.fechaCreacion) : undefined;
+      res.body.fechaCreacionSys = res.body.fechaCreacionSys ? moment(res.body.fechaCreacionSys) : undefined;
     }
     return res;
   }
@@ -74,7 +67,7 @@ export class ModuloService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((modulo: IModulo) => {
-        modulo.fechaCreacion = modulo.fechaCreacion ? moment(modulo.fechaCreacion) : undefined;
+        modulo.fechaCreacionSys = modulo.fechaCreacionSys ? moment(modulo.fechaCreacionSys) : undefined;
       });
     }
     return res;

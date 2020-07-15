@@ -23,9 +23,8 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,
-    private moduleService: ModuloService
-  ) // private cursoService: CursoService,
-  // private fileUploadService: FileUploadService,
+    private moduleService: ModuloService // private cursoService: CursoService,
+  ) // private fileUploadService: FileUploadService,
   // private sanitizer: DomSanitizer
   {}
 
@@ -70,7 +69,7 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     console.error('Error');
   }
 
-  deleteCourse(id: number, $event: any): void {
+  deleteModule(id: number, $event: any): void {
     $event.stopPropagation();
     this.moduleService.delete(id).subscribe(() => {
       this.modulos.splice(this.findElementById(this.modulos, id), 1);

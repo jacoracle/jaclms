@@ -1,0 +1,21 @@
+.container {
+  margin-top: 2.5em;
+  // padding: 2em;
+  display: flex;
+  flex-direction: column;
+  // flex-wrap: wrap;
+
+  .col-left {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .col-item {
+    padding: 1em 1em 0;
+    width: 33.3%;
+  }
+}
+
+.mat-form-field {
+  display: block !important;
+}

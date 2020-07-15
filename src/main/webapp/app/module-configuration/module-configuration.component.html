@@ -1,26 +1,10 @@
 <div class="main-container-br">
 
   <div class="window-course-configuration">
-
     <div class="window-cc-header">
       <div class="cc-header-topbar">
         <div class="cch-title">Configuración</div>
       </div>
-      <!--
-      <div class="cc-header-menu">
-        <div class="cch-menu-row">
-          <div *ngFor="let tab of tabs; let index = index;" (click)="changeSelectedIndex(index);">
-            <div class="ccc-element" [ngClass]="{'active-ccc-element': index === selectedTabIndex}">
-              <i class="icon" [ngClass]="tab.iconClass"></i>
-              <div class="c-title">{{tab.title}}</div>
-              <div class="alert-menu-conf" *ngIf="tab.error"></div>
-            </div>
-          </div>
-
-        </div>
-        <div class="meenu-course-mark" [style.transform]="'translateX(' + ((15 * (this.selectedTabIndex + 1)) + (this.selectedTabIndex * 95)) + 'px)'"></div>
-      </div>
-      -->
     </div>
 
     <div class="window-cc-body">
@@ -29,7 +13,7 @@
 
     <div class="window-cc-footer">
       <button routerLink="/" class="secondary-btn">Cancelar</button>
-      <button (click)="saveCourse()" class="main-btn">Crear Módulo</button>
+      <button (click)="saveModule()" class="main-btn">Crear Módulo</button>
     </div>
   </div>
 

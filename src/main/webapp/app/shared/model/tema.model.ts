@@ -1,7 +1,7 @@
 export interface ITema {
   id?: number;
-  descripcion?: string;
+  nombre?: string;
 }
 export class Tema implements ITema {
-  constructor(public id?: number, public descripcion?: string) {}
+  constructor(public id?: number, public nombre?: string) {}
 }

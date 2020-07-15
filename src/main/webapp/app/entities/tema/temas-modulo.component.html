@@ -1,0 +1,64 @@
+<!--
+<div>
+
+    <form role="form" novalidate>
+
+        <div>
+            <label>Temas del Módulo</label>
+
+            <div class="area-colaboradores">
+
+                <! -- Input y etiquetas -- >
+                <div class="search-field-colaboradores">
+                    <ul [hidden]="!selectedTopics.length">
+                        <li *ngFor="let topic of selectedTopics; let selectedIndex = index" class="selected-option">
+                            <span>{{topic ? ("(" + topic.id + ") " + topic.nombre).substring(0, 30) : ''}}</span>
+                            <a class="remove-button" (click)="removeTag(selectedIndex)"></a>
+                        </li>
+                    </ul>
+
+                    <div class="search-tag-colaborador">
+                        <i class="icon ni-add"></i>
+                        <input type="text" #inputstring (keyup)="search(inputstring.value)"
+                            (focusout)="removeResults()">
+                    </div>
+
+                </div>
+                <! -- Opciones -- >
+                <div class="auto-complete list-module-topic" [hidden]="!foundTopics.length">
+                    <ul class="suggestion-list">
+                        <li class="suggestion-item" *ngFor="let topicFound of foundTopics; let foundIndex = index"
+                            (mousedown)="addTag(foundIndex, topicFound);">
+                            {{topicFound ? ("(" + topicFound.id + ") " + topicFound.nombre).substring(0, 30) : ''}}
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+-->
+
+<div>
+    <mat-form-field>
+        <mat-chip-list #chipList aria-label="Prueba Chips Angular Material">
+            <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
+                (removed)="removeTipo(tipo)">
+                {{tipo.nombre}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Temas del Módulo" #moduleTypeInput [formControl]="moduleTypeCtrl"
+                [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTipo($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedTipo($event)">
+            <mat-option *ngFor="let typeModOpt of filteredTiposModulo | async" [value]="typeModOpt">
+                {{typeModOpt.nombre}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</div>

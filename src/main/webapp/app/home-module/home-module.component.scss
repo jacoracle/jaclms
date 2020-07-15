@@ -1,0 +1,17 @@
+.container-home-module {
+  margin-top: 2.9em;
+  padding: 1em;
+
+  .module-container {
+    padding: 2em;
+    color: #ccc;
+  }
+
+  .botonera-modulo {
+    width: 400px;
+
+    button {
+      display: inline-block;
+    }
+  }
+}

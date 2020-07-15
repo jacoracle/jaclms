@@ -1,7 +1,7 @@
 export interface ITipoModulo {
   id?: number;
-  descripcion?: string;
+  nombre?: string;
 }
 export class TipoModulo implements ITipoModulo {
-  constructor(public id?: number, public descripcion?: string) {}
+  constructor(public id?: number, public nombre?: string) {}
 }

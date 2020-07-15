@@ -1,4 +1,3 @@
-
 <form name="editForm" role="form" novalidate [formGroup]="editForm" class="form-window-configuration">
   <div class="row-form-window-c">
 
@@ -6,302 +5,114 @@
       <jhi-alert-error></jhi-alert-error>
     </div>
 
-    <!-- <h2 id="jhi-curso-heading" jhiTranslate="constructorApp.curso.home.createOrEditLabel">Create or edit a Curso</h2> -->
-
     <!-- Campos que no son obligatorios o se llenan de la base de datos - Inicia -->
     <div style="display: none;">
-        <div class="form-group" [hidden]="!editForm.get('id')!.value">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                readonly />
+      <div class="form-group" [hidden]="!editForm.get('id')!.value">
+        <label for="id" jhiTranslate="global.field.id">ID</label>
+        <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+      </div>
+      <div class="form-group">
+        <label class="form-control-label" for="field_fechaCreacionSys">Fecha Creacion Sys</label>
+        <!--jhiTranslate="constructorApp.modulo.fechaCreacionSys"-->
+        <div class="input-group">
+          <input [ngClass]="{'alert-input': !isValid('fechaCreacion')}" id="field_fechaCreacionSys" type="text"
+            class="form-control" name="fechaCreacionSys" ngbDatepicker #fechaCreacionSysDp="ngbDatepicker"
+            formControlName="fechaCreacionSys" />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-secondary" (click)="fechaCreacionSysDp.toggle()">
+              <fa-icon [icon]="'calendar-alt'"></fa-icon>
+            </button>
+          </span>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="constructorApp.curso.etapaEditorial" for="field_etapaEditorial">Etapa Editorial</label>
-            <select class="form-control" name="etapaEditorial" formControlName="etapaEditorial" id="field_etapaEditorial">
-                <option value="EDICION">{{'constructorApp.EtapaEditorial.EDICION' | translate}}</option>
-                <option value="PUBLICADO">{{'constructorApp.EtapaEditorial.PUBLICADO' | translate}}</option>
-                <option value="OTRO">{{'constructorApp.EtapaEditorial.OTRO' | translate}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="constructorApp.curso.fechaCreacionSys" for="field_fechaCreacionSys">Fecha Creacion Sys</label>
-            <div class="input-group">
-                <input [ngClass]="{'alert-input': !isValid('fechaCreacion')}" id="field_fechaCreacionSys" type="text" class="form-control" name="fechaCreacionSys" ngbDatepicker  #fechaCreacionSysDp="ngbDatepicker" formControlName="fechaCreacionSys"/>
-                <span class="input-group-append">
-                    <button type="button" class="btn btn-secondary" (click)="fechaCreacionSysDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="constructorApp.curso.fechaPublicacionSys" for="field_fechaPublicacionSys">Fecha Publicacion Sys</label>
-            <div class="input-group">
-                <input [ngClass]="{'alert-input': !isValid('fechaPublicacion')}" id="field_fechaPublicacionSys" type="text" class="form-control" name="fechaPublicacionSys" ngbDatepicker  #fechaPublicacionSysDp="ngbDatepicker" formControlName="fechaPublicacionSys"/>
-                <span class="input-group-append">
-                    <button type="button" class="btn btn-secondary" (click)="fechaPublicacionSysDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="constructorApp.curso.estatus" for="field_estatus">Estatus</label>
-            <input type="text" class="form-control" name="estatus" id="field_estatus"
-                   formControlName="estatus"/>
-        </div>
-        <div class="form-group col-md-4">
-            <label class="form-control-label" jhiTranslate="constructorApp.curso.version" for="field_version">Version</label>
-            <select class="form-control" id="field_version" name="version" formControlName="version">
-                <option [ngValue]="versionOption.id === editForm.get('version')!.value?.id ? editForm.get('version')!.value : versionOption" *ngFor="let versionOption of versions; trackBy: trackById">{{versionOption.id}}</option>
-            </select>
-        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-control-label" for="field_estatus">Estatus</label>
+        <input type="text" class="form-control" name="estatus" id="field_estatus" formControlName="estatus" />
+      </div>
+
     </div>
     <!-- Campos que no son obligatorios o se llenan de la base de datos - Termina -->
 
     <!-- Generales Inicia -->
-    <div [hidden]="selectedTabIndex !== 0" class=" row-window-general">
+    <div>
+
       <div class="rwg-header">
-        <h2 id="jhi-curso-heading" jhiTranslate="constructorApp.curso.home.titleGeneralConfg">Configuración general</h2>
+        <h2 id="jhi-curso-heading">Configuración general</h2>
+        <!--jhiTranslate="constructorApp.modulo.home.titleGeneralConfg"-->
         <p>*Campo obligatorio</p>
       </div>
 
+      <div class="container ">
 
+        <!-- Row -->
+        <div class="col-left">
 
-      <div class="row-generales margintop-25">
-        <!-- Col left -->
-        <div class="rg-col-1">
-          <!-- Row -->
-          <div class="rgc-row">
-            <div class="rgc-item">
-              <div class="form-nimbus">
-                  <!-- <label jhiTranslate="constructorApp.curso.titulo" for="field_titulo">Titulo</label> -->
-                  <label for="field_titulo">Titulo*</label>
-                  <input [ngClass]="{'alert-input': !isValid('titulo')}" maxlength="80" type="text" class="form-control" name="titulo" id="field_titulo" formControlName="titulo"/>
-                  <!-- Aquí va la alerta por campo del formulario -->
-                  <div *ngIf="!isValid('titulo')" class="form-alert"><p jhiTranslate="constructorApp.curso.validations.requiredField"></p></div>
-              </div>
-            </div>
-            <div class="rgc-item">
-              <div class="form-nimbus">
-                  <label jhiTranslate="constructorApp.curso.asignatura" for="field_asignatura">Asignatura</label>
-                    <div class="selectWrap">
-                      <select id="field_asignatura" name="asignatura" formControlName="asignatura">
-                        <option [ngValue]="asignaturaOption.id === editForm.get('asignatura')!.value?.id ? editForm.get('asignatura')!.value : asignaturaOption" *ngFor="let asignaturaOption of asignaturas; trackBy: trackById">{{asignaturaOption.descripcion}}</option>
-                      </select>
-                  </div>
-                  <div class="form-alert"><p></p></div>
-              </div>
-            </div>
-          </div>
-          <!-- Row -->
-          <div class="rgc-row margintop-25">
-            <div class="rgc-item">
-              <div class="form-nimbus">
-                  <label jhiTranslate="constructorApp.curso.resumenContenido" for="field_resumenContenido">Resumen Contenido</label>
-                  <textarea [ngClass]="{'alert-input': !isValid('resumenContenido')}" maxlength="2000" type="text" name="resumenContenido" id="field_resumenContenido" formControlName="resumenContenido" class="textarea-nimbus">Write something here</textarea>
-                  <!-- <input [ngClass]="{'alert-input': !isValid('resumenContenido')}" type="text" class="form-control" name="resumenContenido" id="field_resumenContenido" formControlName="resumenContenido"/> -->
-                  <!-- Aquí va la alerta por campo del formulario -->
-                  <div *ngIf="!isValid('resumenContenido')" class="form-alert"><p>Mensaje de corrección</p></div>
-              </div>
-            </div>
-            <div class="rgc-item">
-              <div class="form-nimbus">
-                  <label jhiTranslate="constructorApp.curso.descripcion" for="field_descripcion">Descripcion</label>
-                  <input [ngClass]="{'alert-input': !isValid('descripcion')}" maxlength="255" type="text" class="form-control" name="descripcion" id="field_descripcion" formControlName="descripcion"/>
-                  <!-- Aquí va la alerta por campo del formulario -->
-                  <div *ngIf="!isValid('descripcion')" class="form-alert"><p>Mensaje de corrección</p></div>
-              </div>
-            </div>
-          </div>
-          <!-- Row -->
-          <div class="rgc-row margintop-25">
-            <div class="rgc-item">
-              <div class="form-nimbus">
-                  <label jhiTranslate="constructorApp.curso.gradoAcademico" for="field_gradoAcademico">Grado Academico</label>
-                  <div class="selectWrap">
-                    <select id="field_gradoAcademico" name="gradoAcademico" formControlName="gradoAcademico" (change)="changeGradoAcademico($event)">
-                        <option [ngValue]="gradoAcademicoOption.id === editForm.get('gradoAcademico')!.value?.id ? editForm.get('gradoAcademico')!.value : gradoAcademicoOption" *ngFor="let gradoAcademicoOption of gradoAcademicos; trackBy: trackById">{{gradoAcademicoOption.descripcion}}</option>
-                    </select>
-                  </div>
-                  <div class="form-alert"></div>
-              </div>
-            </div>
-            <div class="rgc-item">
-              <div class="form-nimbus">
-                  <label jhiTranslate="constructorApp.curso.numeroGrado" for="field_numeroGrado">Numero Grado</label>
-                  <div class="selectWrap">
-                    <select id="field_numeroGrado" name="numeroGrado" formControlName="numeroGrado">
-                        <option [ngValue]="numeroGradoOption.id === editForm.get('numeroGrado')!.value?.id ? editForm.get('numeroGrado')!.value : numeroGradoOption" *ngFor="let numeroGradoOption of numerogrados; trackBy: trackById">{{numeroGradoOption.descripcion}}</option>
-                    </select>
-                  </div>
-                  <div class="form-alert"><p></p></div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-        <!-- End col left -->
-        <!-- Col right -->
-        <div class="rg-col-2">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil saepe, necessitatibus ratione tempora iste eveniet.</p>
-        </div>
-        <!-- End col right -->
-      </div>
-      <!-- End row generales -->
-
-
-
-      <div class="row-wg margintop-25">
-        <div class="col-window-g">
-
-        </div>
-
-        <div class="col-window-g">
-        </div>
-
-        <div class="col-window-g">
-        </div>
-
-      </div>
-      <!-- End row-wg -->
-    </div>
-    <!-- Generales Termina -->
-
-    <!-- Avanzado Inicia -->
-    <div [hidden]="selectedTabIndex !== 1" class="row-window-general">
-      <div class="rwg-header">
-        <h2 id="jhi-curso-heading" jhiTranslate="constructorApp.curso.home.titleAdvancelConfg">Configuración avanzada</h2>
-        <p>*Campo obligatorio</p>
-      </div>
-      <!-- Start row -->
-      <div class="row-wg z-index-3 margintop-25">
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label class="form-control-label" jhiTranslate="constructorApp.curso.fechaCreacion" for="field_fechaCreacion">Fecha Creacion</label>
-              <div class="input-group">
-                  <input [ngClass]="{'alert-input': !isValid('fechaCreacion')}" id="field_fechaCreacion" type="text" onkeydown="return false" class="form-control" name="fechaCreacion" ngbDatepicker  #fechaCreacionDp="ngbDatepicker" formControlName="fechaCreacion"/>
-                  <span class="input-group-append">
-                      <button type="button" class="btn-calendar-select" (click)="fechaCreacionDp.toggle()"><i class="icon ni-calendar icon-negative"></i></button>
-                  </span>
-              </div>
-              <div class="form-alert"><p></p></div>
-          </div>
-        </div>
-        <!-- End Col -->
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label class="form-control-label" jhiTranslate="constructorApp.curso.fechaPublicacion" for="field_fechaPublicacion">Fecha Publicacion</label>
-              <div class="input-group">
-                  <input [ngClass]="{'alert-input': !isValid('fechaPublicacion')}" id="field_fechaPublicacion" type="text" onkeydown="return false" class="form-control" name="fechaPublicacion" ngbDatepicker  #fechaPublicacionDp="ngbDatepicker" formControlName="fechaPublicacion"/>
-                  <span class="input-group-append">
-                      <button type="button" class="btn-calendar-select" (click)="fechaPublicacionDp.toggle()"><i class="icon ni-calendar icon-negative"></i></button>
-                  </span>
-              </div>
-              <div class="form-alert"><p></p></div>
-          </div>
-        </div>
-        <!-- End Col -->
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label jhiTranslate="constructorApp.curso.numeroEdicion" for="field_numeroEdicion">Numero Edicion</label>
-              <input [ngClass]="{'alert-input': !isValid('numeroEdicion')}" maxlength="30" type="text" class="form-control" name="numeroEdicion" id="field_numeroEdicion" formControlName="numeroEdicion"/>
+          <div class="col-item">
+            <div class="form-nimbus">
+              <label for="field_titulo">Título</label>
+              <!--jhiTranslate="constructorApp.modulo.titulo"-->
+              <input [ngClass]="{'alert-input': !isValid('titulo')}" maxlength="80" type="text" class="form-control"
+                name="titulo" id="field_titulo" formControlName="titulo" />
               <!-- Aquí va la alerta por campo del formulario -->
-              <div *ngIf="!isValid('numeroEdicion')" class="form-alert"><p>Mensaje de corrección</p></div>
+              <div *ngIf="!isValid('titulo')" class="form-alert">
+                <p>Mensaje de corrección</p>
+              </div>
+            </div>
           </div>
-        </div>
-        <!-- End Col -->
-      </div>
-      <!-- End Row -->
 
-      <!-- Start row colaboradores -->
-      <div class="row-colaboradores z-index-2">
-        <jhi-ficha-update></jhi-ficha-update>
-      </div>
-      <!-- End row colaboradores -->
+          <div class="col-item">
+            <div class="form-nimbus">
+              <label for="field_descripcion">Descripcion</label>
+              <!--jhiTranslate="constructorApp.curso.descripcion"-->
+              <input [ngClass]="{'alert-input': !isValid('descripcion')}" maxlength="255" type="text"
+                class="form-control" name="descripcion" id="field_descripcion" formControlName="descripcion" />
+              <!-- Aquí va la alerta por campo del formulario -->
+              <div *ngIf="!isValid('descripcion')" class="form-alert">
+                <p>Mensaje de corrección</p>
+              </div>
+            </div>
+          </div>
 
-      <!-- Start row 2 -->
-      <div class="row-wg margintop-25">
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label class="form-control-label" jhiTranslate="constructorApp.curso.modoDistribucion" for="field_modoDistribucion">Modo Distribucion</label>
+          <div class="col-item">
+            <div class="form-nimbus">
+              <label for="field_asignatura">Asignatura</label>
+              <!--jhiTranslate="constructorApp.curso.asignatura"-->
               <div class="selectWrap">
-                <select class="form-control" name="modoDistribucion" formControlName="modoDistribucion" id="field_modoDistribucion">
-                    <option value="PAGO">{{'constructorApp.ModoDistribucion.PAGO' | translate}}</option>
-                    <option value="GRATUITO">{{'constructorApp.ModoDistribucion.GRATUITO' | translate}}</option>
-                    <option value="LIBRE">{{'constructorApp.ModoDistribucion.LIBRE' | translate}}</option>
+                <select id="field_asignatura" name="asignatura" formControlName="asignatura">
+                  <option
+                    [ngValue]="asignaturaOption.id === editForm.get('asignatura')!.value?.id ? editForm.get('asignatura')!.value : asignaturaOption"
+                    *ngFor="let asignaturaOption of asignaturas; trackBy: trackById">{{asignaturaOption.descripcion}}
+                  </option>
                 </select>
               </div>
-              <div class="form-alert"><p></p></div>
-          </div>
-        </div>
-        <!-- End col   -->
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label class="form-control-label" jhiTranslate="constructorApp.curso.modalidad" for="field_modalidad">Modalidad</label>
-              <div class="selectWrap">
-                <select class="form-control" id="field_modalidad" name="modalidad" formControlName="modalidad">
-                    <option [ngValue]="modalidadOption.id === editForm.get('modalidad')!.value?.id ? editForm.get('modalidad')!.value : modalidadOption" *ngFor="let modalidadOption of modalidads; trackBy: trackById">{{modalidadOption.descripcion}}</option>
-                </select>
+              <div class="form-alert">
+                <p></p>
               </div>
-              <div class="form-alert"><p></p></div>
+            </div>
           </div>
+
         </div>
-        <!-- End col   -->
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label class="form-control-label" jhiTranslate="constructorApp.curso.categoria" for="field_categoria">Categoria</label>
-              <div class="selectWrap">
-                <select class="form-control" id="field_categoria" name="categoria" formControlName="categoria">
-                    <option [ngValue]="categoriaOption.id === editForm.get('categoria')!.value?.id ? editForm.get('categoria')!.value : categoriaOption" *ngFor="let categoriaOption of categorias; trackBy: trackById">{{categoriaOption.descripcion}}</option>
-                </select>
-              </div>
-              <div class="form-alert"><p></p></div>
-          </div>
+
+        <div>
+          <jhi-tipos-modulo></jhi-tipos-modulo>
         </div>
-        <!-- End col   -->
+        <div>
+          <jhi-colaboradores-modulo></jhi-colaboradores-modulo>
+        </div>
+        <div>
+          <jhi-temas-modulo></jhi-temas-modulo>
+        </div>
+        
+        <div>
+          <button (click)="test();">Seleccionados</button>
+        </div>
+
+
       </div>
-      <!-- End row   -->
-      <!-- Start row 3 -->
-      <div class="row-wg margintop-25 z-index-1">
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label class="form-control-label" jhiTranslate="constructorApp.curso.versionStr" for="field_versionStr">Version Str</label>
-              <input [ngClass]="{'alert-input': !isValid('versionStr')}" maxlength="30" type="text" class="form-control" name="versionStr" id="field_versionStr" formControlName="versionStr"/>
-              <!-- Aquí va la alerta por campo del formulario -->
-              <div *ngIf="!isValid('versionStr')" class="form-alert"><p>Mensaje de corrección</p></div>
-          </div>
-        </div>
-        <!-- End col   -->
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label class="form-control-label" jhiTranslate="constructorApp.curso.palabraClave" for="field_palabraClave">Palabra Clave</label>
-              <input [ngClass]="{'alert-input': !isValid('palabraClave')}"  maxlength="80" type="text" class="form-control" name="palabraClave" id="field_palabraClave" formControlName="palabraClave"/>
-              <!-- Aquí va la alerta por campo del formulario -->
-              <div *ngIf="!isValid('palabraClave')" class="form-alert"><p>Mensaje de corrección</p></div>
-          </div>
-        </div>
-        <!-- End col   -->
-        <!-- Start col -->
-        <div class="col-window-g">
-          <div class="form-nimbus">
-              <label class="form-control-label" jhiTranslate="constructorApp.curso.clave" for="field_clave">Clave</label>
-              <input [ngClass]="{'alert-input': !isValid('clave')}" maxlength="45" type="text" class="form-control" name="clave" id="field_clave" formControlName="clave"/>
-              <!-- Aquí va la alerta por campo del formulario -->
-              <div *ngIf="!isValid('clave')" class="form-alert"><p>Mensaje de corrección</p></div>
-          </div>
-        </div>
-        <!-- End col   -->
-      </div>
-      <!-- End row   -->
+      <!-- End container -->
 
     </div>
-    <!-- Avanzado Termina -->
+    <!-- end Generales -->
 
   </div>
 </form>
