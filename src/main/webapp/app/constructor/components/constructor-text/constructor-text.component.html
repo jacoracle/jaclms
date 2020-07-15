@@ -1,6 +1,6 @@
 <quill-editor [(ngModel)]="htmlContent" class="editor" (onEditorCreated)="afterCreated($event)" [placeholder]="placeholder">
     <div quill-editor-toolbar>
-    <span class="ql-formats">
+    <span class="ql-formats" [hidden]="isTitle">
       <select class="ql-align"></select>
     </span>
     <span class="ql-formats">
@@ -12,7 +12,7 @@
       </select>
         <!--<select class="ql-size"></select>-->
     </span>
-    <span class="ql-formats">
+    <span class="ql-formats" [hidden]="isTitle">
       <button class="ql-list" value="bullet"></button>
       <button class="ql-list" value="ordered"></button>
             <!--<button class="ql-indent" value="-1"></button>
@@ -43,9 +43,9 @@
         <option value="6">Heading 6</option>
       </select>
     </span>
-    <span class="ql-formats">
+    <!--<span class="ql-formats">
        <select class="ql-size"></select>
-    </span>
+    </span>-->
     <!--<span class="ql-formats">
       <button class="ql-script" value="sub"></button>
       <button class="ql-script" value="super"></button>

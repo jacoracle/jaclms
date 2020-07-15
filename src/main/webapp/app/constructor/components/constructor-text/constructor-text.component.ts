@@ -43,8 +43,17 @@ export class ConstructorTextComponent {
 
   get htmlContent(): string {
     if (this.isTitle && this.headingSelect === undefined) {
-      this.editor.setSelection(this._htmlContent.length, 0);
-      return '<h1>' + this.restoreTitle(this._htmlContent.replace(/\s/g, '&nbsp;'));
+      if (
+        this._htmlContent !== undefined &&
+        this._htmlContent !== '' &&
+        this._htmlContent !== null &&
+        this._htmlContent !== '<h1><br></h1>'
+      ) {
+        this.editor.setSelection(this._htmlContent.length, 0);
+        return this.restoreTitle(this._htmlContent);
+      } else {
+        return '';
+      }
     } else {
       return this._htmlContent;
     }
@@ -52,14 +61,23 @@ export class ConstructorTextComponent {
 
   @Input()
   set htmlContent(val: string) {
-    this._htmlContent = val;
-    this.textService.setText(val);
+    if (this.isTitle && this.headingSelect === undefined) {
+      this._htmlContent = this.restoreTitle(val);
+      this.textService.setText(this.restoreTitle(val));
+    } else {
+      this._htmlContent = val;
+      this.textService.setText(val);
+    }
   }
 
-  restoreTitle(text: string): string {
+  restoreTitle(text: string): any {
     if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1>') || text.startsWith('<h1><h1>')) {
-      return text.replace(/<[^>]*>/g, '') + '</h1>';
+      if (text.replace(/<[^>]*>/g, '').length > 0) {
+        return '<h1>' + text.replace(/<[^>]*>/g, '').replace(/\s/g, '&nbsp;') + '</h1>';
+      } else {
+        return '';
+      }
     }
-    return text;
+    return '<h1>' + text.replace(/\s/g, '&nbsp;');
   }
 }
