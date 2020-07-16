@@ -12,6 +12,9 @@ import { IModulo, Modulo } from 'app/shared/model/modulo.model';
 import { ColaboradoresModuleComponent } from '../colaboradores-modulo/colaboradores-modulo.component';
 import { TopicModuleComponent } from '../tema/temas-modulo.component';
 import { TypeModuleComponent } from '../tipo-modulo/tipo-modulo.component';
+import { IGradoAcademico } from 'app/shared/model/grado-academico.model';
+import { INumeroGrado } from 'app/shared/model/numero-grado.model';
+import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
 
 @Component({
   selector: 'jhi-modulo-update',
@@ -19,6 +22,11 @@ import { TypeModuleComponent } from '../tipo-modulo/tipo-modulo.component';
   styleUrls: ['./modulo-update.component.scss']
 })
 export class ModuloUpdateComponent implements OnInit {
+  gradoAcademicos: IGradoAcademico[] = [];
+  numerogrados: INumeroGrado[] = [];
+  selectedGradeModule: any;
+  selectedGradesModule: INumeroGrado[] = [];
+
   visible = true;
   selectable = true;
   removable = true;
@@ -39,6 +47,7 @@ export class ModuloUpdateComponent implements OnInit {
     descripcion: [],
     asignatura: [],
     rolesColaboradores: [],
+    gradoAcademico: [],
     numeroGrado: [],
     estatus: []
   });
@@ -50,6 +59,7 @@ export class ModuloUpdateComponent implements OnInit {
   constructor(
     protected moduloService: ModuloService,
     protected asignaturaService: AsignaturaService,
+    protected gradoAcademicoService: GradoAcademicoService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private eventManager: JhiEventManager,
@@ -68,6 +78,15 @@ export class ModuloUpdateComponent implements OnInit {
           })
         )
         .subscribe((resBody: IAsignatura[]) => (this.asignaturas = resBody));
+
+      this.gradoAcademicoService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IGradoAcademico[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: INumeroGrado[]) => (this.gradoAcademicos = resBody));
     });
   }
 
@@ -143,7 +162,7 @@ export class ModuloUpdateComponent implements OnInit {
       asignatura: this.editForm.get(['asignatura'])!.value,
       temas: this.temasModuloComponent.getTopics(),
       rolesColaboradores: this.colaboradoresComponent.getColaboradores(),
-      numeroGrado: this.editForm.get(['numeroGrado'])!.value,
+      numeroGrado: this.selectedGradesModule, // this.editForm.get(['numeroGrado'])!.value,
       estatus: this.editForm.get(['estatus'])!.value
     };
   }
@@ -179,5 +198,17 @@ export class ModuloUpdateComponent implements OnInit {
 
   test(): void {
     console.error(this.colaboradoresComponent.getColaboradores());
+  }
+
+  // cambios grado
+
+  changeGradoAcademico(e: any): void {
+    this.gradoAcademicoService.find(e.target.selectedIndex + 1).subscribe(res => {
+      if (res.body && res.body.numeroGrados) this.numerogrados = res.body.numeroGrados;
+    });
+  }
+
+  addGradoToList(): void {
+    this.selectedGradesModule.push(this.selectedGradeModule);
   }
 }
