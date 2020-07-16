@@ -27,18 +27,19 @@
                                  referencedColumnNames="id"
                                  referencedTableName="asignatura"/>
     
+       <addForeignKeyConstraint baseColumnNames="numero_grado_id"
+                                 baseTableName="numero_grado_modulo"
+                                 constraintName="fk_numero_grado_id_modulo_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="numero_grado"/>
     
        <addForeignKeyConstraint baseColumnNames="modulo_id"
                                  baseTableName="numero_grado_modulo"
                                  constraintName="fk_numero_grado_modulo_modulo_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="numero_grado"/>
-                                 
-         <addForeignKeyConstraint baseColumnNames="numero_grado_id"
-                                 baseTableName="numero_grado_modulo"
-                                 constraintName="fk_numero_grado_id_modulo_modulo_id"
-                                 referencedColumnNames="id"
                                  referencedTableName="modulo"/>
+                                 
+      
                                  
     
     <addForeignKeyConstraint baseColumnNames="temas_id"

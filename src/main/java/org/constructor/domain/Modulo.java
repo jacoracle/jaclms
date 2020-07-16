@@ -86,7 +86,7 @@ public class Modulo implements Serializable {
             name = "numero_grado_modulo", 
             joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="numero_grado_id", referencedColumnName = "id", nullable = false))
-	private Set<NumeroGrado>  numeroGrado  ;
+	private Set<NumeroGrado>  numeroGrados  ;
  
     
     /**
@@ -234,21 +234,22 @@ public class Modulo implements Serializable {
 	}
 
 
+	
+
+
 	/**
-	 * Get
-	 * @return the numeroGrado
+	 * @return the numeroGrados
 	 */
-	public Set<NumeroGrado> getNumeroGrado() {
-		return numeroGrado;
+	public Set<NumeroGrado> getNumeroGrados() {
+		return numeroGrados;
 	}
 
 
 	/**
-	 * Set
-	 * @param numeroGrado the numeroGrado to set
+	 * @param numeroGrados the numeroGrados to set
 	 */
-	public void setNumeroGrado(final Set<NumeroGrado> numeroGrado) {
-		this.numeroGrado = numeroGrado;
+	public void setNumeroGrados(Set<NumeroGrado> numeroGrados) {
+		this.numeroGrados = numeroGrados;
 	}
 
 
@@ -321,7 +322,7 @@ public class Modulo implements Serializable {
 	@Override
 	public String toString() {
 		return "Modulo [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", tiposModulos="
-				+ tiposModulos + ", asignatura=" + asignatura + ", numeroGrado=" + numeroGrado + ", temas=" + temas
+				+ tiposModulos + ", asignatura=" + asignatura + ", numeroGrados=" + numeroGrados + ", temas=" + temas
 				+ ", rolesColaboradores=" + rolesColaboradores + ", user=" + user + ", fechaCreacionSys="
 				+ fechaCreacionSys + "]";
 	}
