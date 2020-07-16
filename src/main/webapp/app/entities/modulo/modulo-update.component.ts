@@ -48,7 +48,7 @@ export class ModuloUpdateComponent implements OnInit {
     asignatura: [],
     rolesColaboradores: [],
     gradoAcademico: [],
-    numeroGrado: [],
+    numeroGrados: [],
     estatus: []
   });
   subscription: any;
@@ -104,7 +104,7 @@ export class ModuloUpdateComponent implements OnInit {
       temas: modulo.temas,
       tiposModulos: modulo.tiposModulos,
       rolesColaboradores: modulo.rolesColaboradores,
-      numeroGrado: modulo.numeroGrado,
+      numeroGrados: modulo.numeroGrados,
       estatus: modulo.estatus
     });
   }
@@ -162,7 +162,7 @@ export class ModuloUpdateComponent implements OnInit {
       asignatura: this.editForm.get(['asignatura'])!.value,
       temas: this.temasModuloComponent.getTopics(),
       rolesColaboradores: this.colaboradoresComponent.getColaboradores(),
-      numeroGrado: this.selectedGradesModule, // this.editForm.get(['numeroGrado'])!.value,
+      numeroGrados: this.selectedGradesModule, // this.editForm.get(['numeroGrado'])!.value,
       estatus: this.editForm.get(['estatus'])!.value
     };
   }
@@ -196,10 +196,6 @@ export class ModuloUpdateComponent implements OnInit {
     this.editForm.controls[controlName].setErrors(null);
   }
 
-  test(): void {
-    console.error(this.colaboradoresComponent.getColaboradores());
-  }
-
   // cambios grado
 
   changeGradoAcademico(e: any): void {
@@ -210,5 +206,13 @@ export class ModuloUpdateComponent implements OnInit {
 
   addGradoToList(): void {
     this.selectedGradesModule.push(this.selectedGradeModule);
+  }
+
+  remove(grado: INumeroGrado): void {
+    const index = this.selectedGradesModule.indexOf(grado);
+
+    if (index >= 0) {
+      this.selectedGradesModule.splice(index, 1);
+    }
   }
 }

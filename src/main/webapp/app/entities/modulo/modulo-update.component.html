@@ -103,53 +103,55 @@
           <jhi-temas-modulo></jhi-temas-modulo>
         </div>
 
-        
-        
-        <div>
 
-          <div class="rgc-row margintop-25">
-            <div class="rgc-item">
-              <div class="form-nimbus">
-                <label for="field_gradoAcademico">Grado
-                  Academico</label>
-                <div class="selectWrap">
-                  <select id="field_gradoAcademico" name="gradoAcademico" formControlName="gradoAcademico"
-                    (change)="changeGradoAcademico($event)">
-                    <option
-                      [ngValue]="gradoAcademicoOption.id === editForm.get('gradoAcademico')!.value?.id ? editForm.get('gradoAcademico')!.value : gradoAcademicoOption"
-                      *ngFor="let gradoAcademicoOption of gradoAcademicos; trackBy: trackById">
-                      {{gradoAcademicoOption.descripcion}}</option>
-                  </select>
-                </div>
-                <div class="form-alert"></div>
-              </div>
-            </div>
-            <div class="rgc-item">
-              <div class="form-nimbus">
-                <label for="field_numeroGrado">Numero Grado</label>
-                <div class="selectWrap">
-                  <select id="field_numeroGrado" [(ngModel)]="selectedGradeModule" name="numeroGrado" formControlName="numeroGrado" (change)="addGradoToList($event)">
-                    <option
-                      *ngFor="let numeroGradoOption of numerogrados;" [ngValue]="numeroGradoOption">
-                      {{numeroGradoOption.descripcion}}</option>
-                  </select>
-                </div>
-                <div class="form-alert">
-                  <p></p>
-                </div>
-              </div>
 
+        <div class="col-left">
+          <div class="col-item">
+            <div class="form-nimbus">
+              <label for="field_gradoAcademico">Grado
+                Academico</label>
+              <div class="selectWrap">
+                <select id="field_gradoAcademico" name="gradoAcademico" formControlName="gradoAcademico"
+                  (change)="changeGradoAcademico($event)">
+                  <option
+                    [ngValue]="gradoAcademicoOption.id === editForm.get('gradoAcademico')!.value?.id ? editForm.get('gradoAcademico')!.value : gradoAcademicoOption"
+                    *ngFor="let gradoAcademicoOption of gradoAcademicos; trackBy: trackById">
+                    {{gradoAcademicoOption.descripcion}}</option>
+                </select>
+              </div>
+              <div class="form-alert"></div>
             </div>
           </div>
+          <div class="col-item">
+            <div class="form-nimbus">
+              <label for="field_numeroGrado">Numero Grado</label>
+              <div class="selectWrap">
+                <select id="field_numeroGrado" [(ngModel)]="selectedGradeModule" name="numeroGrados"
+                  formControlName="numeroGrados" (change)="addGradoToList($event)">
+                  <option *ngFor="let numeroGradoOption of numerogrados;" [ngValue]="numeroGradoOption">
+                    {{numeroGradoOption.descripcion}}</option>
+                </select>
+              </div>
+              <div class="form-alert">
+                <p></p>
+              </div>
+            </div>
 
+          </div>
         </div>
 
-<p>{{selectedGradeModule | json}}</p>
-<p>{{selectedGradesModule | json}}</p>
-        
-        <div>
-          <button (click)="test();">Seleccionados</button>
+
+        <div class="chips-grades">
+          <mat-chip-list aria-label="Selected grades">
+            <mat-chip *ngFor="let grades of selectedGradesModule" [selectable]="selectable" [removable]="removable"
+              (removed)="remove(grades)">{{grades.descripcion}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
         </div>
+
+        <!-- <p>{{selectedGradeModule | json}}</p> -->
+        <!-- <p>{{selectedGradesModule | json}}</p> -->
 
 
       </div>

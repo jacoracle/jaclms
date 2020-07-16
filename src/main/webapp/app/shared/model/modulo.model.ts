@@ -16,7 +16,7 @@ export interface IModulo {
   descripcion?: string;
   fechaCreacion?: Moment;
   fechaCreacionSys?: Moment;
-  numeroGrado?: INumeroGrado[];
+  numeroGrados?: INumeroGrado[];
   estatus?: string;
 }
 
@@ -32,7 +32,7 @@ export class Modulo implements IModulo {
     public descripcion?: string,
     public fechaCreacion?: Moment,
     public fechaCreacionSys?: Moment,
-    public numeroGrado?: INumeroGrado[],
+    public numeroGrados?: INumeroGrado[],
     public estatus?: string
   ) {}
 }
