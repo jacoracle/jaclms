@@ -122,38 +122,29 @@
               <div class="form-alert"></div>
             </div>
           </div>
-          <div class="col-item">
-            <div class="form-nimbus">
-              <label for="field_numeroGrado">Numero Grado</label>
-              <div class="selectWrap">
-                <select id="field_numeroGrado" [(ngModel)]="selectedGradeModule" name="numeroGrados"
-                  formControlName="numeroGrados" (change)="addGradoToList($event)">
-                  <option *ngFor="let numeroGradoOption of numerogrados;" [ngValue]="numeroGradoOption">
-                    {{numeroGradoOption.descripcion}}</option>
-                </select>
-              </div>
-              <div class="form-alert">
-                <p></p>
-              </div>
-            </div>
 
+          <div class="chips-grades">
+            <mat-chip-list aria-label="Selected grades">
+              <mat-chip *ngFor="let grades of selectedGradesModule" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(grades)">{{grades.descripcion}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
           </div>
+
         </div>
 
-
-        <div class="chips-grades">
-          <mat-chip-list aria-label="Selected grades">
-            <mat-chip *ngFor="let grades of selectedGradesModule" [selectable]="selectable" [removable]="removable"
-              (removed)="remove(grades)">{{grades.descripcion}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-          </mat-chip-list>
+        <div class="row-module-grade">
+          <mat-form-field appearance="fill">
+            <mat-label>Número de Grado</mat-label>
+            <mat-select [formControl]="gradosCtrl" multiple (selectionChange)="setSelectedGrades($event)"
+            [(ngModel)]="actualSelectedGradesModule" name="actualSelectedGradesModule"><!--numerogrados-->
+              <mat-option *ngFor="let g of numerogrados" [value]="g.id">{{g.descripcion}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
-        <!-- <p>{{selectedGradeModule | json}}</p> -->
-        <!-- <p>{{selectedGradesModule | json}}</p> -->
-
-
+        
       </div>
       <!-- End container -->
 

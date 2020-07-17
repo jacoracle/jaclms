@@ -45,7 +45,7 @@
 -->
 <div>
     <mat-form-field>
-        <mat-chip-list #chipList aria-label="Prueba Chips Angular Material">
+        <mat-chip-list #chipList aria-label="Tipos de módulo">
             <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
                 (removed)="removeTipo(tipo)">
                 {{tipo.nombre}}

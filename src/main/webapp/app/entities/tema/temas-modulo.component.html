@@ -45,19 +45,19 @@
 
 <div>
     <mat-form-field>
-        <mat-chip-list #chipList aria-label="Prueba Chips Angular Material">
-            <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
-                (removed)="removeTipo(tipo)">
-                {{tipo.nombre}}
+        <mat-chip-list #chipList aria-label="Temas del Módulo">
+            <mat-chip *ngFor="let th of listThemes" [selectable]="selectable" [removable]="removable"
+                (removed)="removeTheme(th)">
+                {{th.nombre}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Temas del Módulo" #moduleTypeInput [formControl]="moduleTypeCtrl"
+            <input placeholder="Temas del Módulo" #themeInput [formControl]="themeCtrl"
                 [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTipo($event)">
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTheme($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedTipo($event)">
-            <mat-option *ngFor="let typeModOpt of filteredTiposModulo | async" [value]="typeModOpt">
-                {{typeModOpt.nombre}}
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedTheme($event)">
+            <mat-option *ngFor="let thOpt of filteredThemes | async" [value]="thOpt">
+                {{thOpt.nombre}}
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

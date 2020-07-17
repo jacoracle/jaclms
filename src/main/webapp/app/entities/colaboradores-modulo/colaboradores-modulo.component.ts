@@ -24,13 +24,13 @@ export class ColaboradoresModuleComponent implements OnInit {
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  moduleTypeCtrl = new FormControl();
+  colaboradorCtrl = new FormControl();
 
-  listTiposModuloTest: IRolesColaboradores[] = [];
-  listFullTiposModuloTest: IRolesColaboradores[] = [];
-  filteredTiposModulo: Observable<IRolesColaboradores[]>;
+  listRolesColaboradores: IRolesColaboradores[] = [];
+  listFullRolesColaboradores: IRolesColaboradores[] = [];
+  filteredRolesColaboradores: Observable<IRolesColaboradores[]>;
 
-  @ViewChild('moduleTypeInput', { static: false }) moduleTypeInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('colaboradorInput', { static: false }) colaboradorInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
 
   // Termina Chips Angular Material
@@ -50,14 +50,14 @@ export class ColaboradoresModuleComponent implements OnInit {
         })
       )
       .subscribe((resBody: IRolesColaboradores[]) => {
-        this.listFullTiposModuloTest = resBody;
+        this.listFullRolesColaboradores = resBody;
       });
 
-    this.filteredTiposModulo = this.moduleTypeCtrl.valueChanges.pipe(
+    this.filteredRolesColaboradores = this.colaboradorCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => (fruit ? this._filterTipo(fruit) : this.listFullTiposModuloTest.slice()))
+      map((fruit: string | null) => (fruit ? this._filterColaborador(fruit) : this.listFullRolesColaboradores.slice()))
     );
-    console.error(this.filteredTiposModulo);
+    console.error(this.filteredRolesColaboradores);
   }
 
   ngOnInit(): void {
@@ -74,7 +74,7 @@ export class ColaboradoresModuleComponent implements OnInit {
   }
 
   public getColaboradores(): IRolesColaboradores[] {
-    return this.listTiposModuloTest; //  this.selectedColaboradors;
+    return this.listRolesColaboradores; //  this.selectedColaboradors;
   }
 
   removeTag(index: number): void {
@@ -157,43 +157,42 @@ export class ColaboradoresModuleComponent implements OnInit {
 
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
-  addTipo(event: MatChipInputEvent): void {
+  addColaborador(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
     // Add our fruit
     if (value) {
-      this.listTiposModuloTest.push(value as IRolesColaboradores);
+      this.listRolesColaboradores.push(value as IRolesColaboradores);
     }
     // Reset the input value
     if (input) {
       input.value = '';
     }
-    this.moduleTypeCtrl.setValue(null);
+    this.colaboradorCtrl.setValue(null);
   }
 
-  removeTipo(fruit: IRolesColaboradores): void {
-    const index = this.listTiposModuloTest.indexOf(fruit);
+  removeColaborador(fruit: IRolesColaboradores): void {
+    const index = this.listRolesColaboradores.indexOf(fruit);
 
     if (index >= 0) {
-      this.listTiposModuloTest.splice(index, 1);
+      this.listRolesColaboradores.splice(index, 1);
     }
   }
 
-  selectedTipo(event: MatAutocompleteSelectedEvent): void {
-    this.listTiposModuloTest.push(event.option.value as IRolesColaboradores); //   viewValue
-    this.moduleTypeInput.nativeElement.value = '';
-    this.moduleTypeCtrl.setValue(null);
+  selectedColaborador(event: MatAutocompleteSelectedEvent): void {
+    if (!this.listRolesColaboradores.includes(event.option.value)) {
+      this.listRolesColaboradores.push(event.option.value as IRolesColaboradores); //   viewValue
+    }
+    this.colaboradorInput.nativeElement.value = '';
+    this.colaboradorCtrl.setValue(null);
   }
 
-  private _filterTipo(value: any): IRolesColaboradores[] {
-    // const filterValue = value.toLowerCase();
-    // let objTipo: ITipoModulo = value as ITipoModulo;
-    // objTipo.nombre = objTipo.nombre?.toLocaleLowerCase();
+  private _filterColaborador(value: any): IRolesColaboradores[] {
     if (typeof value === 'string') {
-      return this.listFullTiposModuloTest.filter(tipos => tipos.colaborador!.nombres!.toLowerCase().includes(value.toLowerCase())); //  { fruit.id === value.id && fruit.nombre === value.nombre });
+      return this.listFullRolesColaboradores.filter(rc => rc.colaborador!.nombres!.toLowerCase().includes(value.toLowerCase())); //  { fruit.id === value.id && fruit.nombre === value.nombre });
     }
-    return this.listFullTiposModuloTest.filter(tipos => {
-      tipos.id === value.id && tipos.colaborador === value.colaborador;
+    return this.listFullRolesColaboradores.filter(rc => {
+      rc.id === value.id && rc.colaborador === value.colaborador;
     });
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,7 +26,12 @@ export class ModuloUpdateComponent implements OnInit {
   numerogrados: INumeroGrado[] = [];
   selectedGradeModule: any;
   selectedGradesModule: INumeroGrado[] = [];
+  actualSelectedGradesModule: number[] = [];
 
+  gradosCtrl = new FormControl();
+  // actualSelectedGradesModule: INumeroGrado[] = [];
+
+  // chips
   visible = true;
   selectable = true;
   removable = true;
@@ -200,7 +205,10 @@ export class ModuloUpdateComponent implements OnInit {
 
   changeGradoAcademico(e: any): void {
     this.gradoAcademicoService.find(e.target.selectedIndex + 1).subscribe(res => {
-      if (res.body && res.body.numeroGrados) this.numerogrados = res.body.numeroGrados;
+      if (res.body && res.body.numeroGrados) {
+        this.numerogrados = res.body.numeroGrados;
+        this.updatingGradesSelected(null, false);
+      }
     });
   }
 
@@ -214,5 +222,55 @@ export class ModuloUpdateComponent implements OnInit {
     if (index >= 0) {
       this.selectedGradesModule.splice(index, 1);
     }
+  }
+
+  setSelectedGrades(evt: any): void {
+    this.updatingGradesSelected(evt, true);
+  }
+
+  /**
+   * update grades arrays to keep selected grades
+   * @param evt null or event if change option academic grades
+   * @param isChangeAcademicGrade flag to know if it's change event
+   */
+  updatingGradesSelected(evt: any, isChangeAcademicGrade: boolean): void {
+    let objectsGradesSelectedIds: INumeroGrado[] = [];
+
+    if (isChangeAcademicGrade) {
+      //  get objects from selected ids using event value and
+      objectsGradesSelectedIds = this.numerogrados.filter(el => {
+        return evt.value.some((f: number) => {
+          return f === el.id;
+        });
+      });
+    } else {
+      //  get objects from selected ids using general array to grade numbers selected globally
+      objectsGradesSelectedIds = this.numerogrados.filter(el => {
+        return this.selectedGradesModule.some((f: INumeroGrado) => {
+          return f.id === el.id && f.descripcion === el.descripcion;
+        });
+      });
+    }
+
+    const selectedGradesId = objectsGradesSelectedIds.map(function(obj): number {
+      return obj.id!;
+    });
+    //  set ids selected to array property on component
+    this.actualSelectedGradesModule = [...selectedGradesId];
+    //  merge global array and selected grades objects to delete duplicates
+    const joinSelectedGrades = [...this.selectedGradesModule, ...objectsGradesSelectedIds];
+
+    const uniqueSelectedGrades = joinSelectedGrades.reduce((acc: INumeroGrado[], current: INumeroGrado): INumeroGrado[] => {
+      const x = acc.find((item: any) => item.id === current.id);
+      if (!x) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, []);
+    //  set selected grades to global array
+    this.selectedGradesModule = [...uniqueSelectedGrades];
+    // console.error('################################################################');
+    // console.error(this.actualSelectedGradesModule);
   }
 }

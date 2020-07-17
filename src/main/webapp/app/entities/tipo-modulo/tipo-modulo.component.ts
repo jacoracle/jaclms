@@ -177,7 +177,9 @@ export class TypeModuleComponent implements OnInit {
   }
 
   selectedTipo(event: MatAutocompleteSelectedEvent): void {
-    this.listTiposModuloTest.push(event.option.value as ITipoModulo); //   viewValue
+    if (!this.listTiposModuloTest.includes(event.option.value)) {
+      this.listTiposModuloTest.push(event.option.value as ITipoModulo); //   viewValue
+    }
     this.moduleTypeInput.nativeElement.value = '';
     this.moduleTypeCtrl.setValue(null);
   }

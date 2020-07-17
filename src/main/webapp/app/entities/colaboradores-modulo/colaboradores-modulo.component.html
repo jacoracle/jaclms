@@ -46,20 +46,19 @@
 -->
 <div>
     <mat-form-field>
-        <mat-chip-list #chipList aria-label="Prueba Chips Angular Material">
-            <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
-                (removed)="removeTipo(tipo)">
-                {{ (tipo.colaborador.nombres + ' ' + tipo.colaborador.apellido1 + ' - ' + tipo.rolColaborador.descripcion).substring(0, 25) }}
+        <mat-chip-list #chipList aria-label="Colaboradores y Roles">
+            <mat-chip *ngFor="let rc of listRolesColaboradores" [selectable]="selectable" [removable]="removable"
+                (removed)="removeColaborador(rc)">
+                {{ (rc.colaborador.nombres + ' ' + rc.colaborador.apellido1 + ' - ' + rc.rolColaborador.descripcion).substring(0, 25) }}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Roles colaboradores" #moduleTypeInput [formControl]="moduleTypeCtrl" [matAutocomplete]="auto"
+            <input placeholder="Roles colaboradores" #colaboradorInput [formControl]="colaboradorCtrl" [matAutocomplete]="auto"
                 [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="addTipo($event)">
+                (matChipInputTokenEnd)="addColaborador($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedTipo($event)">
-            <mat-option *ngFor="let typeModOpt of filteredTiposModulo | async" [value]="typeModOpt">
-                <!-- {{typeModOpt.colaborador.nombres}} -->
-                {{(typeModOpt.colaborador.nombres + " " + typeModOpt.colaborador.apellido1 + " " + typeModOpt.colaborador.apellido2 + " - " + typeModOpt.rolColaborador.descripcion).substring(0, 30)}}
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedColaborador($event)">
+            <mat-option *ngFor="let rcOpt of filteredRolesColaboradores | async" [value]="rcOpt">
+                {{(rcOpt.colaborador.nombres + " " + rcOpt.colaborador.apellido1 + " " + rcOpt.colaborador.apellido2 + " - " + rcOpt.rolColaborador.descripcion).substring(0, 30)}}
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

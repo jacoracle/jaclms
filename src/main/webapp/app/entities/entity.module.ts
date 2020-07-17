@@ -9,12 +9,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatChipsModule,
+    MatSelectModule,
     RouterModule.forChild([
       {
         path: 'asignatura',
@@ -63,7 +65,7 @@ import { MatInputModule } from '@angular/material/input';
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])
   ],
-  exports: [MatAutocompleteModule, MatChipsModule, MatIconModule, MatInputModule],
+  exports: [MatAutocompleteModule, MatChipsModule, MatIconModule, MatInputModule, MatSelectModule],
   declarations: [PhoneNumberComponent, CountryComponent]
 })
 export class ConstructorEntityModule {}

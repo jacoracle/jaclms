@@ -24,13 +24,13 @@ export class TopicModuleComponent implements OnInit {
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  moduleTypeCtrl = new FormControl();
+  themeCtrl = new FormControl();
 
-  listTiposModuloTest: ITema[] = [];
-  listFullTiposModuloTest: ITema[] = [];
-  filteredTiposModulo: Observable<ITema[]>;
+  listThemes: ITema[] = [];
+  listFullThemes: ITema[] = [];
+  filteredThemes: Observable<ITema[]>;
 
-  @ViewChild('moduleTypeInput', { static: false }) moduleTypeInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('themeInput', { static: false }) themeInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
 
   // Termina Chips Angular Material
@@ -50,14 +50,14 @@ export class TopicModuleComponent implements OnInit {
         })
       )
       .subscribe((resBody: ITema[]) => {
-        this.listFullTiposModuloTest = resBody;
+        this.listFullThemes = resBody;
       });
 
-    this.filteredTiposModulo = this.moduleTypeCtrl.valueChanges.pipe(
+    this.filteredThemes = this.themeCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => (fruit ? this._filterTipo(fruit) : this.listFullTiposModuloTest.slice()))
+      map((fruit: string | null) => (fruit ? this._filterTheme(fruit) : this.listFullThemes.slice()))
     );
-    console.error(this.filteredTiposModulo);
+    console.error(this.filteredThemes);
   }
 
   ngOnInit(): void {
@@ -74,7 +74,7 @@ export class TopicModuleComponent implements OnInit {
   }
 
   public getTopics(): ITema[] {
-    return this.listTiposModuloTest; //  this.selectedTopics;
+    return this.listThemes; //  this.selectedTopics;
   }
 
   removeTag(index: number): void {
@@ -154,43 +154,42 @@ export class TopicModuleComponent implements OnInit {
 
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
-  addTipo(event: MatChipInputEvent): void {
+  addTheme(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
     // Add our fruit
     if (value) {
-      this.listTiposModuloTest.push(value as ITema);
+      this.listThemes.push(value as ITema);
     }
     // Reset the input value
     if (input) {
       input.value = '';
     }
-    this.moduleTypeCtrl.setValue(null);
+    this.themeCtrl.setValue(null);
   }
 
-  removeTipo(fruit: ITema): void {
-    const index = this.listTiposModuloTest.indexOf(fruit);
+  removeTheme(fruit: ITema): void {
+    const index = this.listThemes.indexOf(fruit);
 
     if (index >= 0) {
-      this.listTiposModuloTest.splice(index, 1);
+      this.listThemes.splice(index, 1);
     }
   }
 
-  selectedTipo(event: MatAutocompleteSelectedEvent): void {
-    this.listTiposModuloTest.push(event.option.value as ITema); //   viewValue
-    this.moduleTypeInput.nativeElement.value = '';
-    this.moduleTypeCtrl.setValue(null);
+  selectedTheme(event: MatAutocompleteSelectedEvent): void {
+    if (!this.listThemes.includes(event.option.value)) {
+      this.listThemes.push(event.option.value as ITema); //   viewValue
+    }
+    this.themeInput.nativeElement.value = '';
+    this.themeCtrl.setValue(null);
   }
 
-  private _filterTipo(value: any): ITema[] {
-    // const filterValue = value.toLowerCase();
-    // let objTipo: ITipoModulo = value as ITipoModulo;
-    // objTipo.nombre = objTipo.nombre?.toLocaleLowerCase();
+  private _filterTheme(value: any): ITema[] {
     if (typeof value === 'string') {
-      return this.listFullTiposModuloTest.filter(tipos => tipos.nombre!.toLowerCase().includes(value.toLowerCase())); //  { fruit.id === value.id && fruit.nombre === value.nombre });
+      return this.listFullThemes.filter(th => th.nombre!.toLowerCase().includes(value.toLowerCase())); //  { fruit.id === value.id && fruit.nombre === value.nombre });
     }
-    return this.listFullTiposModuloTest.filter(tipos => {
-      tipos.id === value.id && tipos.nombre === value.nombre;
+    return this.listFullThemes.filter(th => {
+      th.id === value.id && th.nombre === value.nombre;
     });
   }
 
