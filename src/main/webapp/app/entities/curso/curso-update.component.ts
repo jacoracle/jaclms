@@ -383,7 +383,7 @@ export class CursoUpdateComponent implements OnInit {
         /* Pruebas */
         const reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
-        reader.onload = e => {
+        reader.onload = (e: any): void => {
           // called once readAsDataURL is completed
           this.coverPath = e.target!['result'];
           // this.url = event.target.result;

@@ -25,9 +25,9 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ConstructorHomeComponent } from './constructor-home/constructor-home.component';
 import { ModuleConfigurationComponent } from './module-configuration/module-configuration.component';
 import { ModuloUpdateComponent } from './entities/modulo/modulo-update.component';
-import { ColaboradoresModuleComponent } from './entities/colaboradores-modulo/colaboradores-modulo.component';
 import { TopicModuleComponent } from './entities/tema/temas-modulo.component';
 import { TypeModuleComponent } from './entities/tipo-modulo/tipo-modulo.component';
+import { ColaboradoresModuleComponent } from './entities/colaborador/colaboradores-modulo.component';
 
 @NgModule({
   imports: [

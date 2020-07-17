@@ -1,52 +1,7 @@
-<!--
-<div>
 
-    <form role="form" novalidate>
-
-        <div>
-            <label for="field_colaboradors">Tipos de Módulo</label>
-
-            <div class="area-colaboradores">
-
-                <div class="search-field-colaboradores">
-                    <ul [hidden]="!selectedModuleTypes.length">
-                        <li *ngFor="let typeMod of selectedModuleTypes; let selectedIndex = index"
-                            class="selected-option">
-                            <span>{{typeMod ? ("(" + typeMod.id + ") " + typeMod.nombre).substring(0, 30) : ''}}</span>
-                            <a class="remove-button" (click)="removeTag(selectedIndex)"></a>
-                        </li>
-                    </ul>
-
-                    <div class="search-tag-colaborador">
-                        <i class="icon ni-add"></i>
-                        <input type="text" #inputstring (keyup)="search(inputstring.value)"
-                            (focusout)="removeResults()">
-                    </div>
-
-                </div>
-                <! -- Opciones -- >
-                <div class="auto-complete list-module-type" [hidden]="!foundTypesModule.length">
-                    <ul class="suggestion-list">
-                        <li class="suggestion-item"
-                            *ngFor="let typeModFound of foundTypesModule; let foundIndex = index"
-                            (mousedown)="addTag(foundIndex, typeModFound);">
-                            {{typeModFound ? ("(" + typeModFound.id + ") " + typeModFound.nombre).substring(0, 30) : ''}}
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-
-        </div>
-
-    </form>
-
-</div>
--->
 <div>
     <mat-form-field>
-        <mat-chip-list #chipList aria-label="Tipos de módulo">
-            <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
+        <mat-chip-list #chipList aria-label="Tipos de módulo">           <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
                 (removed)="removeTipo(tipo)">
                 {{tipo.nombre}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
@@ -62,3 +17,4 @@
         </mat-autocomplete>
     </mat-form-field>
 </div>
+ 

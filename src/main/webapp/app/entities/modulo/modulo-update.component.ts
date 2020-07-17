@@ -9,12 +9,12 @@ import { AsignaturaService } from 'app/entities/asignatura/asignatura.service';
 import { JhiEventManager, JhiAlert, JhiEventWithContent } from 'ng-jhipster';
 import { ModuloService } from './modulo.service';
 import { IModulo, Modulo } from 'app/shared/model/modulo.model';
-import { ColaboradoresModuleComponent } from '../colaboradores-modulo/colaboradores-modulo.component';
 import { TopicModuleComponent } from '../tema/temas-modulo.component';
 import { TypeModuleComponent } from '../tipo-modulo/tipo-modulo.component';
 import { IGradoAcademico } from 'app/shared/model/grado-academico.model';
 import { INumeroGrado } from 'app/shared/model/numero-grado.model';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
+import { ColaboradoresModuleComponent } from '../colaborador/colaboradores-modulo.component';
 
 @Component({
   selector: 'jhi-modulo-update',
