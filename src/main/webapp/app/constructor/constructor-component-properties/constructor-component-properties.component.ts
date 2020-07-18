@@ -54,7 +54,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     peso: 0,
     extension: ''
   };
+
+  private _GIB24 = 1024000000;
   private _MIL24 = 1024000;
+  private _KIL24 = 1024;
 
   constructor(
     public imageService: ImageService,
@@ -93,8 +96,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.subscription = this.imageService.getImageProperties().subscribe(props => {
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
-      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
@@ -102,8 +105,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.videoService.getVideoProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
-      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
@@ -111,8 +114,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.pdfService.getPdfProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
-      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
@@ -120,16 +123,36 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.soundService.getAudioProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
-      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
     });
   }
 
+  printSize(size: number): string {
+    let print;
+    if (size) {
+      if (size < this._GIB24) {
+        print = this.convertBytesToKilobytes(size) + ' KB';
+      } else {
+        print = this.convertBytesToMegabytes(size) + ' MB';
+      }
+    } else {
+      print = '0 Bytes';
+    }
+    return print;
+  }
+
   convertBytesToMegabytes(byteSize: number): number {
     return parseFloat((byteSize / this._MIL24).toFixed(2));
+  }
+
+  convertBytesToKilobytes(byteSize: number): number {
+    // eslint-disable-next-line no-debugger
+    debugger;
+    return parseFloat((byteSize / this._KIL24).toFixed(2));
   }
 
   subscriptionVideoThumb(): Subscription {
