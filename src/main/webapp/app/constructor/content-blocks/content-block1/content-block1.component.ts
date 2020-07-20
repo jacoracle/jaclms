@@ -28,8 +28,6 @@ export class ContentBlock1Component implements AfterContentInit {
 
   ngAfterContentInit(): void {
     this.contentBlocksService.getTarget().subscribe(res => {
-      // eslint-disable-next-line no-console
-      console.log(res);
       this.newTarget = res;
       this.setTarget();
     });
