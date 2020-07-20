@@ -150,8 +150,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   convertBytesToKilobytes(byteSize: number): number {
-    // eslint-disable-next-line no-debugger
-    debugger;
     return parseFloat((byteSize / this._KIL24).toFixed(2));
   }
 
