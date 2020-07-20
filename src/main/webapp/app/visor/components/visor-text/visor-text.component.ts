@@ -1,17 +1,18 @@
-import { Component, OnDestroy, Input, AfterViewInit, Output, EventEmitter, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Componente } from 'app/shared/model/componente.model';
 import { TextService } from 'app/services/text.service';
 import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
-import { IContenido, Contenido } from 'app/shared/model/contenido.model';
+import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { ContenidoService } from 'app/entities/contenido/contenido.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-visor-text',
   templateUrl: './visor-text.component.html',
-  styleUrls: ['./visor-text.component.scss']
+  styleUrls: ['./visor-text.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
   htmlContent = '';
@@ -35,8 +36,8 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
       this.editing = editing;
     });
     this.subscription = this.textService.getText().subscribe(text => {
-      if (text && this.editing) {
-        this.htmlContent = text;
+      if (this.editing) {
+        this.htmlContent = text ? text : '';
         this.component!.contenido!.contenido = this.htmlContent;
         // Actualizar contenido de componente en base de datos
         const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
@@ -79,7 +80,7 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
     this.textService.setEditing(false);
     this.editing = true;
     this.textService.setText(this.htmlContent);
-    this.textService.setTemplateTypeId(this.templateType);
+    this.textService.setTemplateType(this.templateType);
     this.textEditorBehaviosService.setShowTextEditor(true);
     this.navigationControlsService.setOpenProperties(false);
     // this.navigationControlsService.setOpenTemplateGallery(true);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { IBloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
+import { ITargetScroll, TargetScroll } from 'app/shared/model/target-scroll.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,11 @@ export class ContentBlocksService {
   contentBlocks = new Subject<IBloqueComponentes[]>();
   indexBlockToDelete = new Subject<number>();
   templates = new Subject<ITipoBloqueComponentes[]>();
+
+  targetScroll = new TargetScroll(999999, document.createElement('div'));
+  newTarget: ITargetScroll[] = [this.targetScroll];
   selectedBlockIndex = new Subject<number>();
+  target = new Subject<ITargetScroll[]>();
 
   constructor() {}
 
@@ -53,5 +58,16 @@ export class ContentBlocksService {
 
   setSelectedBlockIndex(index: number): void {
     this.selectedBlockIndex.next(index);
+  }
+
+  getTarget(): Observable<ITargetScroll[]> {
+    if (this.target.observers.length === 0) {
+      this.setTarget(this.newTarget);
+    }
+    return this.target;
+  }
+
+  setTarget(target: ITargetScroll[]): void {
+    this.target.next(target);
   }
 }

@@ -8,7 +8,6 @@ import { ConstructorAppRoutingModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
 import { ConstructorLayoutModule } from './constructor-layout/constructor-layout.module';
 import { ConstructorEntityModule } from './entities/entity.module';
-// jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
@@ -21,16 +20,18 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { CursoUpdateComponent } from './entities/curso/curso-update.component';
 import { CursoComponent } from './entities/curso/curso.component';
 import { FichaUpdateComponent } from './entities/ficha/ficha-update.component';
-import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { ConstructorHomeComponent } from './constructor-home/constructor-home.component';
 import { ModuleConfigurationComponent } from './module-configuration/module-configuration.component';
 import { ModuloUpdateComponent } from './entities/modulo/modulo-update.component';
 import { TopicModuleComponent } from './entities/tema/temas-modulo.component';
 import { TypeModuleComponent } from './entities/tipo-modulo/tipo-modulo.component';
 import { ColaboradoresModuleComponent } from './entities/colaborador/colaboradores-modulo.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   imports: [
+    QuillModule.forRoot(),
     BrowserModule,
     ConstructorSharedModule,
     ConstructorCoreModule,

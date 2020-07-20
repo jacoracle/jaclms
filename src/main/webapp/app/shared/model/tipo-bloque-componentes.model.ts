@@ -1,5 +1,5 @@
 import { IBloqueComponentes } from 'app/shared/model/bloque-componentes.model';
-import { ITiposBloquesComponentes } from './tipos-bloques-componentes.model';
+import { ITipoComponente } from './tipo-componente.model';
 
 export interface ITipoBloqueComponentes {
   id?: number;
@@ -7,7 +7,7 @@ export interface ITipoBloqueComponentes {
   bloqueComponentes?: IBloqueComponentes[];
   iconPath?: string;
   tags?: string;
-  tiposBloquesComponentes?: ITiposBloquesComponentes[];
+  tiposComponentes?: ITipoComponente[];
 }
 
 export class TipoBloqueComponentes implements ITipoBloqueComponentes {
@@ -17,6 +17,6 @@ export class TipoBloqueComponentes implements ITipoBloqueComponentes {
     public bloqueComponentes?: IBloqueComponentes[],
     public iconPath?: string,
     public tags?: string,
-    public tiposBloquesComponentes?: ITiposBloquesComponentes[]
+    public tiposComponentes?: ITipoComponente[]
   ) {}
 }

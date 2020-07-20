@@ -1,4 +1,4 @@
 <div class="final-block-row" (click)="editText()">
-  <div [innerHtml]="htmlContent" *ngIf="htmlContent !== ''"></div>
-  <div [innerHtml]="exampleContent" *ngIf="htmlContent === ''"></div>
+  <div class="ql-editor" [innerHtml]="htmlContent | safeHtml" *ngIf="htmlContent !== ''"></div>
+  <div class="ql-editor" [innerHtml]="exampleContent" *ngIf="htmlContent === ''"></div>
 </div>
