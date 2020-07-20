@@ -43,8 +43,6 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy {
     // eslint-disable-next-line no-console
     console.log(this.contentBlocksService.getTarget());
     this.contentBlocksService.getTarget().subscribe(res => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       this.target = res;
 
       this.selectContentBlock(0);
