@@ -1,25 +1,55 @@
-import { AfterContentInit, AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, OnDestroy } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
-import { NavigationControlsService } from 'app/services/navigation-controls.service';
+import { NavigationControlsService } from '../../services/navigation-controls.service';
 import { Subscription } from 'rxjs';
 import { IBloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { ITargetScroll } from 'app/shared/model/target-scroll.model';
 
 @Component({
   selector: 'jhi-constructor-filmstrip',
   templateUrl: './constructor-filmstrip.component.html',
   styleUrls: ['./constructor-filmstrip.component.scss']
 })
-export class ConstructorFilmstripComponent implements OnInit, OnDestroy {
+export class ConstructorFilmstripComponent implements OnInit, AfterContentInit, OnDestroy {
   selectedContentBlockIndex = -1;
   contentBlocks: IBloqueComponentes[];
+  selectedTemplateType = '';
   subscription: Subscription;
   templates: ITipoBloqueComponentes[] = [];
-  target: ITargetScroll[] | undefined;
+
+  imagePaths = [
+    {
+      id: 1,
+      name: 'title',
+      contentBlockType: 'titulo',
+      path: '../../../content/images/ab1.png',
+      tags: 'text'
+    },
+    {
+      id: 2,
+      name: 'text',
+      contentBlockType: 'texto',
+      path: '../../../content/images/ab2.png',
+      tags: 'text'
+    },
+    {
+      id: 3,
+      name: 'image',
+      contentBlockType: 'imagen',
+      path: '../../../content/images/ab3.png',
+      tags: 'image'
+    },
+    {
+      id: 4,
+      name: 'image_text',
+      contentBlockType: 'imagen_texto',
+      path: '../../../content/images/ab4.png',
+      tags: 'image text'
+    }
+  ];
 
   constructor(
     private contentBlocksService: ContentBlocksService,
@@ -39,31 +69,32 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy {
     this.subscription = this.contentBlocksService.getSelectedBlockIndex().subscribe(selectedBlockIndex => {
       this.selectedContentBlockIndex = selectedBlockIndex;
     });
-
-    // eslint-disable-next-line no-console
-    console.log(this.contentBlocksService.getTarget());
-    this.contentBlocksService.getTarget().subscribe(res => {
-      this.target = res;
-
-      this.selectContentBlock(0);
-    });
   }
 
   ngOnInit(): void {
     // this.contentBlocks = this.contentBlocksService.getContentBlocks();
-    // this.messageService.sendMessage(text);
   }
 
+  /*
+   * Selecciona el primer bloque de contenido al terminar de cargar la página.
+   */
+  ngAfterContentInit(): void {
+    this.selectContentBlock(0);
+  }
+
+  /*
+   * Selecciona el bloque de componentes y lo resalta en visorContainer.
+   */
   selectContentBlock(selectedContentBlockIndex: number): void {
     this.selectedContentBlockIndex = selectedContentBlockIndex;
     this.contentBlocksService.setSelectedBlockIndex(this.selectedContentBlockIndex);
-    if (this.target !== undefined) {
-      for (const entry of this.target) {
-        if (entry.index === selectedContentBlockIndex) {
-          this.scroll(entry.target);
-        }
-      }
-    }
+  }
+
+  /*
+   * Crea un bloque de contenido en el servicio ContentBlocksService.
+   */
+  createContentBlock(): void {
+    this.navigationControlsService.setOpenTemplateGallery(true);
   }
 
   /*
@@ -110,9 +141,5 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  scroll(el: HTMLElement): void {
-    el.scrollIntoView();
   }
 }

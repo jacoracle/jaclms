@@ -99,17 +99,29 @@ public class RestConstants {
 	*/
 	public static final String PATH_PAIS = "pais";
 	
-	// ---------------CONTENIDO--------------------
+	// ---------------Contenido--------------------
 	
 	/**
 	* Path para peticiones contenido
 	*/
 	public static final String PATH_CONTENIDO = "contenido";
 	
+	// ---------------TiposBloquesComponentes--------------------
 
-	// ---------------BloquesCurso--------------------
 	
 	/**
+	 *  Path para peticiones tipos-bloques-componentes
+	 */
+	public static final String PATH_TIPOS_BLOQUES_COMPONENTES = "tipos-bloques-componentes";
+	
+	/**
+	 *  Path para peticiones tipos-bloques-componentes por id
+	 */
+	public static final String PATH_TIPOS_BLOQUES_COMPONENTES_ID = "tipos-bloques-componentes/{id}";
+	
+	// ---------------BloquesCurso--------------------
+
+	/*
 	* Path para peticiones bloquesCurso
 	*/
 	public static final String PATH_BLOQUES_CURSO = "bloques-curso";
@@ -118,5 +130,5 @@ public class RestConstants {
 	* Path para peticiones bloquesCurso por id
 	*/
 	public static final String PATH_BLOQUE_CURSO_ID = "bloques-curso/{id}";
-	
+
 }
