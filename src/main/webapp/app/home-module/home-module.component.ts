@@ -20,20 +20,16 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   coverPaths = [];
   modulos: any = [];
 
-  constructor(
-    private accountService: AccountService,
-    private loginModalService: LoginModalService,
-    private moduleService: ModuloService // private cursoService: CursoService,
-  ) // private fileUploadService: FileUploadService,
-  // private sanitizer: DomSanitizer
-  {}
+  constructor(private accountService: AccountService, private loginModalService: LoginModalService, private moduleService: ModuloService) {}
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
         this.moduleService.query().subscribe(
-          (res: HttpResponse<IModulo[]>) => this.onQuerySuccess(res.body),
+          (res: HttpResponse<IModulo[]>) => {
+            this.modulos = res.body;
+          },
           () => this.onQueryError()
         );
       }
@@ -55,15 +51,6 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   }
 
   ngAfterContentInit(): void {}
-
-  protected onQuerySuccess(data: IModulo[] | null): void {
-    if (data) {
-      this.modulos = data;
-      for (let i = 0; i < this.modulos.length; i++) {
-        this.modulos[i].sanitizedPortadaUrl = '../../../content/images/no_cover.png';
-      }
-    }
-  }
 
   protected onQueryError(): void {
     console.error('Error');

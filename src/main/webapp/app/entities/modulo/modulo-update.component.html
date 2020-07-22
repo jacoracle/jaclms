@@ -5,34 +5,6 @@
       <jhi-alert-error></jhi-alert-error>
     </div>
 
-    <!-- Campos que no son obligatorios o se llenan de la base de datos - Inicia -->
-    <div style="display: none;">
-      <div class="form-group" [hidden]="!editForm.get('id')!.value">
-        <label for="id" jhiTranslate="global.field.id">ID</label>
-        <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-      </div>
-      <div class="form-group">
-        <label class="form-control-label" for="field_fechaCreacionSys">Fecha Creacion Sys</label>
-        <!--jhiTranslate="constructorApp.modulo.fechaCreacionSys"-->
-        <div class="input-group">
-          <input [ngClass]="{'alert-input': !isValid('fechaCreacion')}" id="field_fechaCreacionSys" type="text"
-            class="form-control" name="fechaCreacionSys" ngbDatepicker #fechaCreacionSysDp="ngbDatepicker"
-            formControlName="fechaCreacionSys" />
-          <span class="input-group-append">
-            <button type="button" class="btn btn-secondary" (click)="fechaCreacionSysDp.toggle()">
-              <fa-icon [icon]="'calendar-alt'"></fa-icon>
-            </button>
-          </span>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-control-label" for="field_estatus">Estatus</label>
-        <input type="text" class="form-control" name="estatus" id="field_estatus" formControlName="estatus" />
-      </div>
-
-    </div>
-    <!-- Campos que no son obligatorios o se llenan de la base de datos - Termina -->
-
     <!-- Generales Inicia -->
     <div>
 
