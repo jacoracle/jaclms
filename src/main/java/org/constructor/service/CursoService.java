@@ -23,6 +23,13 @@ public interface CursoService {
      */
     Curso save(Curso curso);
     
+    /**
+     * 
+     * @param authentication
+     * @param cursoFicha
+     * @param file
+     * @return
+     */
     CursoFicha save(Authentication authentication, CursoFicha cursoFicha, MultipartFile file);
 
     /**

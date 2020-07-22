@@ -3,7 +3,7 @@
  */
 package org.constructor.repository;
 
-import org.constructor.domain.TipoModulo;
+import org.constructor.module.domain.TipoModulo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

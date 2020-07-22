@@ -3,7 +3,6 @@ package org.constructor.response;
 import java.util.List;
 
 
-import org.constructor.domain.BloqueComponentes;
 import org.constructor.domain.BloquesCurso;
 
 /**
@@ -153,12 +152,17 @@ public class NivelJerarquicoResponse {
 	public void setBloquesCurso(List<BloquesCurso> bloquesCurso) {
 		this.bloquesCurso = bloquesCurso;
 	}
+	
+
+
 
 	@Override
 	public String toString() {
-		return "NivelJerarquicoResponse [cursoId=" + cursoId + ", nivelId=" + nivelId + ", nombre=" + nombre + ", tipo="
-				+ tipo + ", informacionAdicional=" + informacionAdicional + ", orden=" + orden + ", bloquesCurso="
-				+ bloquesCurso + "]";
+		return "NivelJerarquicoResponse [cursoId=" + cursoId + ", nivelId=" + nivelId
+				+ ", nombre=" + nombre + ", tipo=" + tipo + ", informacionAdicional=" + informacionAdicional
+				+ ", orden=" + orden + ", bloquesCurso=" + bloquesCurso + "]";
 	}
+
+	
 
 }

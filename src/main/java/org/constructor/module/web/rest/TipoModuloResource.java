@@ -1,14 +1,14 @@
 /**
  * 
  */
-package org.constructor.web.rest;
+package org.constructor.module.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import org.constructor.domain.TipoModulo;
+import org.constructor.module.domain.TipoModulo;
 import org.constructor.service.TipoModuloService;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;

@@ -1,16 +1,23 @@
-package org.constructor.service.dto;
+/**
+ * 
+ */
+package org.constructor.response;
 
-import java.util.Set;
+import java.util.List;
+
+import org.constructor.domain.BloquesCurso;
 
 /**
- * The Class NivelJerarquicoDTO.
+ * @author Edukai
+ *
  */
-public class NivelJerarquicoDTO {
+public class NivelJerarquicoModuloResponse {
+
 	
-	/** The curso id. */
-	private Long cursoId;
+	/** The modulo id. */
+	private Long moduloId;
 	
-	/** The nivelId. */
+	/** The nivel id. */
 	private Long nivelId;
 	
 	/** The nombre. */
@@ -19,47 +26,49 @@ public class NivelJerarquicoDTO {
 	/** The tipo. */
 	private String tipo;
 	
-	/** The orden nivel. */
-	private int orden;
-	
 	/** The informacion adicional. */
 	private int informacionAdicional;
 	
-	/** The bloques curso. */
-	private Set<BloquesCursoDTO> bloquesCurso;
-
+	/** The orden. */
+	private int orden;
+	
+	/** The bloques componentes. */
+	private List<BloquesCurso> bloquesCurso;
+	
 	/**
-	 * Gets the curso id.
-	 *
-	 * @return the curso id
+	 * Get
+	 * @return the moduloId
 	 */
-	public Long getCursoId() {
-		return cursoId;
+	public Long getModuloId() {
+		return moduloId;
 	}
 
 	/**
-	 * Sets the curso id.
-	 *
-	 * @param cursoId the new curso id
+	 * Set
+	 * @param moduloId the moduloId to set
 	 */
-	public void setCursoId(Long cursoId) {
-		this.cursoId = cursoId;
+	public void setModuloId(Long moduloId) {
+		this.moduloId = moduloId;
 	}
-
+	
 	/**
+	 * Gets the nivel id.
+	 *
 	 * @return the nivelId
 	 */
 	public Long getNivelId() {
 		return nivelId;
 	}
-
+	
 	/**
+	 * Sets the nivel id.
+	 *
 	 * @param nivelId the nivelId to set
 	 */
 	public void setNivelId(Long nivelId) {
 		this.nivelId = nivelId;
 	}
-
+	
 	/**
 	 * Gets the nombre.
 	 *
@@ -68,16 +77,16 @@ public class NivelJerarquicoDTO {
 	public String getNombre() {
 		return nombre;
 	}
-
+	
 	/**
 	 * Sets the nombre.
 	 *
-	 * @param nombre the new nombre
+	 * @param nombre the nombre to set
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
 	/**
 	 * Gets the tipo.
 	 *
@@ -86,78 +95,77 @@ public class NivelJerarquicoDTO {
 	public String getTipo() {
 		return tipo;
 	}
-
+	
 	/**
 	 * Sets the tipo.
 	 *
-	 * @param tipo the new tipo
+	 * @param tipo the tipo to set
 	 */
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
+	
 	/**
 	 * Gets the informacion adicional.
 	 *
-	 * @return the informacion adicional
+	 * @return the informacionAdicional
 	 */
 	public int getInformacionAdicional() {
 		return informacionAdicional;
 	}
-
+	
 	/**
 	 * Sets the informacion adicional.
 	 *
-	 * @param informacionAdicional the new informacion adicional
+	 * @param informacionAdicional the informacionAdicional to set
 	 */
 	public void setInformacionAdicional(int informacionAdicional) {
 		this.informacionAdicional = informacionAdicional;
 	}
-
-
+	
 	/**
-	 * Gets the orden nivel.
+	 * Gets the orden.
 	 *
-	 * @return the ordenNivel
+	 * @return the orden
 	 */
 	public int getOrden() {
 		return orden;
 	}
-
+	
 	/**
-	 * Sets the orden nivel.
+	 * Sets the orden.
 	 *
-	 * @param ordenNivel the ordenNivel to set
+	 * @param orden the orden to set
 	 */
 	public void setOrden(int orden) {
 		this.orden = orden;
 	}
-	
-
+		
 	/**
 	 * @return the bloquesCurso
 	 */
-	public Set<BloquesCursoDTO> getBloquesCurso() {
+	public List<BloquesCurso> getBloquesCurso() {
 		return bloquesCurso;
 	}
 
 	/**
 	 * @param bloquesCurso the bloquesCurso to set
 	 */
-	public void setBloquesCurso(Set<BloquesCursoDTO> bloquesCurso) {
+	public void setBloquesCurso(List<BloquesCurso> bloquesCurso) {
 		this.bloquesCurso = bloquesCurso;
 	}
+	
 
-
+	
 
 	@Override
 	public String toString() {
-		return "NivelJerarquicoDTO [cursoId=" + cursoId + ", nivelId=" + nivelId
-				+ ", nombre=" + nombre + ", tipo=" + tipo + ", orden=" + orden + ", informacionAdicional="
-				+ informacionAdicional + ", bloquesCurso=" + bloquesCurso + "]";
+		return "NivelJerarquicoModuloResponse [moduloId=" + moduloId + ", nivelId=" + nivelId 
+				+ ", nombre=" + nombre
+				+ ", tipo=" + tipo + ", informacionAdicional=" + informacionAdicional + ", orden=" + orden
+				+ ", bloquesCurso=" + bloquesCurso + "]";
 	}
+
 	
-	
-	
-	
+
 }
