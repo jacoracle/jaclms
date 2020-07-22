@@ -3,7 +3,7 @@
  */
 package org.constructor.repository;
 
-import org.constructor.domain.Temas;
+import org.constructor.module.domain.Temas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

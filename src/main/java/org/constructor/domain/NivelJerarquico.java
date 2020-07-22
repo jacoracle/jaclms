@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.constructor.module.domain.NivelesModulo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -61,6 +62,12 @@ public class NivelJerarquico implements Serializable  {
 	@OrderBy ("orden")
 	private Set<BloquesCurso> bloquesCurso;
 	
+	/** 
+	 * nivelJerarquico. 
+	 */
+	@OneToMany(mappedBy = "nivelJerarquico")
+	@JsonIgnore
+	private Set<NivelesModulo> nivelesModulo = new HashSet<>();
 
 	/**
 	 * Get.
@@ -187,6 +194,22 @@ public class NivelJerarquico implements Serializable  {
 	public void setBloquesCurso(Set<BloquesCurso> bloquesCurso) {
 		this.bloquesCurso = bloquesCurso;
 	}
+	
+	/**
+	 * Get
+	 * @return the nivelesModulo
+	 */
+	public Set<NivelesModulo> getNivelesModulo() {
+		return nivelesModulo;
+	}
+
+	/**
+	 * Set
+	 * @param nivelesModulo the nivelesModulo to set
+	 */
+	public void setNivelesModulo(Set<NivelesModulo> nivelesModulo) {
+		this.nivelesModulo = nivelesModulo;
+	}
 
 	@Override
 	public String toString() {
@@ -194,6 +217,11 @@ public class NivelJerarquico implements Serializable  {
 				+ ", tipo=" + tipo + ", estructuraJerarquica=" + estructuraJerarquica + ", bloquesCurso=" + bloquesCurso
 				+ "]";
 	}
+
+
+	
+
+
 
 	
 }

@@ -5,7 +5,7 @@ package org.constructor.service.impl;
 
 import java.util.Optional;
 
-import org.constructor.domain.Temas;
+import org.constructor.module.domain.Temas;
 import org.constructor.repository.TemasRepository;
 import org.constructor.service.TemasService;
 import org.slf4j.Logger;

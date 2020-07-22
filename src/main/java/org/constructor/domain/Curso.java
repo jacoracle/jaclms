@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.constructor.domain.enumeration.ModoDistribucion;
-
 import org.constructor.domain.enumeration.EtapaEditorial;
 
 /**

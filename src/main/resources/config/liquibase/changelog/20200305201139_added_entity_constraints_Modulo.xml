@@ -55,22 +55,6 @@
                                  referencedTableName="modulo"/>
     
     
-    
-     <addForeignKeyConstraint baseColumnNames="usuario_id"
-                                 baseTableName="modulo_usuario"
-                                 constraintName="fk_modulo_usuario_usuario_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-    
-    
-    
-     <addForeignKeyConstraint baseColumnNames="modulo_id"
-                                 baseTableName="modulo_usuario"
-                                 constraintName="fk_modulo_usuario_modulo_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="modulo"/>
-                                 
-    
                                  
       <addForeignKeyConstraint baseColumnNames="roles_colaboradores_id"
                                  baseTableName="colaboradores_modulo"
@@ -82,8 +66,24 @@
                                  baseTableName="colaboradores_modulo"
                                  constraintName="fk_colaboradores_modulo_modulo_modulo_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="modulo"/>                          
+                                 referencedTableName="modulo"/> 
+                                     
+ <addForeignKeyConstraint baseColumnNames="usuario_id"
+                                 baseTableName="modulo_usuario"
+                                 constraintName="fk_modulo_usuario_usuario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
     
+    
+    
+     <addForeignKeyConstraint baseColumnNames="modulo_id"
+                                 baseTableName="modulo_usuario"
+                                 constraintName="fk_modulo_usuario_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="modulo"/>                    
+    
+    
+  
       </changeSet>
 </databaseChangeLog>
     

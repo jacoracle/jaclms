@@ -1,14 +1,20 @@
+/**
+ * 
+ */
 package org.constructor.service.dto;
 
 import java.util.Set;
 
 /**
- * The Class NivelJerarquicoDTO.
+ * @author Edukai
+ *
  */
-public class NivelJerarquicoDTO {
+public class NivelJerarquicoModuloDTO {
+	
+	
 	
 	/** The curso id. */
-	private Long cursoId;
+	private Long moduloId;
 	
 	/** The nivelId. */
 	private Long nivelId;
@@ -28,23 +34,7 @@ public class NivelJerarquicoDTO {
 	/** The bloques curso. */
 	private Set<BloquesCursoDTO> bloquesCurso;
 
-	/**
-	 * Gets the curso id.
-	 *
-	 * @return the curso id
-	 */
-	public Long getCursoId() {
-		return cursoId;
-	}
 
-	/**
-	 * Sets the curso id.
-	 *
-	 * @param cursoId the new curso id
-	 */
-	public void setCursoId(Long cursoId) {
-		this.cursoId = cursoId;
-	}
 
 	/**
 	 * @return the nivelId
@@ -148,16 +138,30 @@ public class NivelJerarquicoDTO {
 		this.bloquesCurso = bloquesCurso;
 	}
 
+	/**
+	 * Get
+	 * @return the moduloId
+	 */
+	public Long getModuloId() {
+		return moduloId;
+	}
 
+	/**
+	 * Set
+	 * @param moduloId the moduloId to set
+	 */
+	public void setModuloId( final Long moduloId) {
+		this.moduloId = moduloId;
+	}
 
 	@Override
 	public String toString() {
-		return "NivelJerarquicoDTO [cursoId=" + cursoId + ", nivelId=" + nivelId
+		return "NivelJerarquicoDTO [ moduloId=" + moduloId + ", nivelId=" + nivelId
 				+ ", nombre=" + nombre + ", tipo=" + tipo + ", orden=" + orden + ", informacionAdicional="
 				+ informacionAdicional + ", bloquesCurso=" + bloquesCurso + "]";
 	}
 	
 	
 	
-	
+
 }

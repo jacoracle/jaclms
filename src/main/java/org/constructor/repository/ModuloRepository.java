@@ -3,8 +3,12 @@
  */
 package org.constructor.repository;
 
-import org.constructor.domain.Modulo;
+import java.util.List;
+
+import org.constructor.module.domain.Modulo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +18,10 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface ModuloRepository extends JpaRepository<Modulo, Long> {
+	
+	@Query("SELECT m from Modulo m JOIN FETCH  m.user mo where mo.id = :id")
+	List<Modulo> findAllModuloUserId (@Param("id")Long id);
+	
+	
 
 }

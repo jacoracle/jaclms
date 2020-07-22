@@ -138,16 +138,6 @@ public class BloqueComponentes implements Serializable {
 		this.bloquesCurso = bloquesCurso;
 	}
 
-	/**
-	 * To string.
-	 *
-	 * @return the string
-	 */
-	@Override
-	public String toString() {
-		return "BloqueComponentes [id=" + id + ", orden=" + orden + ", componentes=" + componente
-				+ ", tipoBloqueComponentes=" + tipoBloqueComponentes + "]";
-	}
-	
+
 	
 }

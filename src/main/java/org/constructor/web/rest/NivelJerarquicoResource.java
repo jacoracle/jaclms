@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.constructor.domain.NivelJerarquico;
+import org.constructor.response.NivelJerarquicoModuloResponse;
 import org.constructor.response.NivelJerarquicoResponse;
 import org.constructor.service.NivelJerarquicoService;
 import org.constructor.service.dto.NivelJerarquicoDTO;
+import org.constructor.service.dto.NivelJerarquicoModuloDTO;
 import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,14 +77,14 @@ public class NivelJerarquicoResource {
 	     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new nivelJerarquico, or with status {@code 400 (Bad Request)} if the nivelJerarquico has already an ID.
 	     * @throws Exception 
 	     */
-	    @PostMapping("/nivel-jerarquico")
+	    @PostMapping("curso/nivel-jerarquico")
 	    public ResponseEntity<NivelJerarquicoResponse> createNivelJerarquico(@RequestBody NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception {
 	        log.debug("REST request to save NivelJerarquico : {}", nivelJerarquicoDTO);
 	        if (nivelJerarquicoDTO == null) {
 	            throw new BadRequestAlertException("A new Nivel Jerarquico cannot already have an ID", ENTITY_NAME, "idexists");
 	        }
-	        NivelJerarquico result = nivelJerarquicoService.save(nivelJerarquicoDTO);
-	        NivelJerarquicoResponse nivelJerarquico = nivelJerarquicoService.findOne(result.getId());
+	        NivelJerarquico result = nivelJerarquicoService.saveCurso(nivelJerarquicoDTO);
+	        NivelJerarquicoResponse nivelJerarquico = nivelJerarquicoService.findOneCurso(result.getId());
 	        nivelJerarquico.setCursoId(nivelJerarquicoDTO.getCursoId());
 	        nivelJerarquico.setOrden(nivelJerarquicoDTO.getOrden());
 	        log.debug("result : {}", nivelJerarquico);
@@ -98,20 +100,88 @@ public class NivelJerarquicoResource {
 	     * or with status {@code 500 (Internal Server Error)} if the nivelJerarquico couldn't be updated.
 	     * @throws Exception 
 	     */
-	    @PutMapping("/nivel-jerarquico")
+	    @PutMapping("curso/nivel-jerarquico")
 	    public ResponseEntity<NivelJerarquicoResponse> updateNivelJerarquico(@RequestBody NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception {
 	        log.debug("REST request to update nivelJerarquico : {}", nivelJerarquicoDTO);
 	        if (nivelJerarquicoDTO == null) {
 	            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
 	        }
-	        Optional<NivelJerarquico> result = nivelJerarquicoService.updateNivelJerarquico(nivelJerarquicoDTO);
-	        NivelJerarquicoResponse nivelJerarquico = nivelJerarquicoService.findOne(result.get().getId());
+	        Optional<NivelJerarquico> result = nivelJerarquicoService.updateNivelJerarquicoCurso(nivelJerarquicoDTO);
+	        NivelJerarquicoResponse nivelJerarquico = nivelJerarquicoService.findOneCurso(result.get().getId());
 	        nivelJerarquico.setCursoId(nivelJerarquicoDTO.getCursoId());
 	        log.debug("Update Level  : {}", nivelJerarquico);
 	        return ResponseEntity.ok()
 	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.get().getId().toString()))
 	            .body(nivelJerarquico);
 	    }
+	    /**
+	     * {@code GET  /nivel-jerarquico/:id} : get the "id" nivelJerarquico.
+	     *
+	     * @param id the id of the nivelJerarquico to retrieve.
+	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the nivelJerarquico, or with status {@code 404 (Not Found)}.
+	     */
+	    @GetMapping("curso/nivel-jerarquico/{id}")
+	    public ResponseEntity<NivelJerarquicoResponse> getNivelJerarquico(@PathVariable Long id) {
+	        log.debug("REST request to get NivelJerarquico : {}", id);
+	        NivelJerarquicoResponse nivelJerarquico = nivelJerarquicoService.findOneCurso(id);
+	        return ResponseUtil.wrapOrNotFound(Optional.of(nivelJerarquico));
+	    }
+	    
+	    /**
+	     * {@code POST  modulo/nivel-jerarquico} : Create a new nivelJerarquico.
+	     *
+	     * @param nivelJerarquico to create.
+	     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new nivelJerarquico, or with status {@code 400 (Bad Request)} if the nivelJerarquico has already an ID.
+	     * @throws Exception 
+	     */
+	    @PostMapping("modulo/nivel-jerarquico")
+	    public ResponseEntity<NivelJerarquicoModuloResponse> createNivelJerarquicoModulo(@RequestBody NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception {
+	        log.debug("REST request to save NivelJerarquicoModulo : {}", nivelJerarquicoModulo);
+	        if (nivelJerarquicoModulo == null) {
+	            throw new BadRequestAlertException("A new Nivel Jerarquico cannot already have an ID", ENTITY_NAME, "idexists");
+	        }
+	        NivelJerarquico result = nivelJerarquicoService.saveModulo(nivelJerarquicoModulo);
+	        NivelJerarquicoModuloResponse nivelJerarquicoModule = nivelJerarquicoService.findOneModulo(result.getId());
+	        nivelJerarquicoModule.setModuloId(nivelJerarquicoModulo.getModuloId());
+	        nivelJerarquicoModule.setOrden(nivelJerarquicoModulo.getOrden());
+	        log.debug("result : {}", nivelJerarquicoModule);
+	        return ResponseUtil.wrapOrNotFound(Optional.of(nivelJerarquicoModule));
+	    }
+	    
+	    
+	    /**
+	     * updateNivelJerarquicoModulo
+	     * @param nivelJerarquicoModulo
+	     * @return
+	     * @throws Exception
+	     */
+	    @PutMapping("modulo/nivel-jerarquico")
+	    public ResponseEntity<NivelJerarquicoModuloResponse> updateNivelJerarquicoModulo(@RequestBody NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception {
+	        log.debug("REST request to update nivelJerarquicoModulo : {}", nivelJerarquicoModulo);
+	        if (nivelJerarquicoModulo == null) {
+	            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+	        }
+	        Optional<NivelJerarquico> result = nivelJerarquicoService.updateNivelJerarquicoModule(nivelJerarquicoModulo);
+	        NivelJerarquicoModuloResponse nivelJerarquico = nivelJerarquicoService.findOneModulo(result.get().getId());
+	        nivelJerarquico.setModuloId(nivelJerarquicoModulo.getModuloId());
+	        log.debug("Update Level  : {}", nivelJerarquico);
+	        return ResponseEntity.ok()
+	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.get().getId().toString()))
+	            .body(nivelJerarquico);
+	    }
+	    
+	    /**
+	     * getNivelJerarquicoModule
+	     * @param id
+	     * @return
+	     */
+	    @GetMapping("modulo/nivel-jerarquico/{id}")
+	    public ResponseEntity<NivelJerarquicoModuloResponse> getNivelJerarquicoModule(@PathVariable Long id) {
+	        log.debug("REST request to get NivelJerarquico : {}", id);
+	        NivelJerarquicoModuloResponse nivelJerarquico = nivelJerarquicoService.findOneModulo(id);
+	        return ResponseUtil.wrapOrNotFound(Optional.of(nivelJerarquico));
+	    }
+	   
 	    
 	    /**
 	     * {@code GET  /nivel-jerarquico} : get all the nivelJerarquico.
@@ -129,18 +199,7 @@ public class NivelJerarquicoResource {
 	        return ResponseEntity.ok().headers(headers).body(page.getContent());
 	    }
 	    
-	    /**
-	     * {@code GET  /nivel-jerarquico/:id} : get the "id" nivelJerarquico.
-	     *
-	     * @param id the id of the nivelJerarquico to retrieve.
-	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the nivelJerarquico, or with status {@code 404 (Not Found)}.
-	     */
-	    @GetMapping("/nivel-jerarquico/{id}")
-	    public ResponseEntity<NivelJerarquicoResponse> getNivelJerarquico(@PathVariable Long id) {
-	        log.debug("REST request to get NivelJerarquico : {}", id);
-	        NivelJerarquicoResponse nivelJerarquico = nivelJerarquicoService.findOne(id);
-	        return ResponseUtil.wrapOrNotFound(Optional.of(nivelJerarquico));
-	    }
+	  
 	    
 	    /**
 	     * {@code DELETE  /nivel-jerarquico/:id} : delete the "id" nivelJerarquico.

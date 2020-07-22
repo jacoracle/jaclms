@@ -3,11 +3,15 @@
  */
 package org.constructor.service;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.constructor.domain.Modulo;
+import org.constructor.module.domain.Modulo;
+import org.constructor.service.dto.ModuloDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Edukai
@@ -25,6 +29,15 @@ public interface ModuloService {
     Modulo save(Modulo modulo);
     
     /**
+     * ModuloDTO
+     * @param authentication
+     * @param moduloDTO
+     * @param file
+     * @return
+     */
+    ModuloDTO save(Authentication authentication, ModuloDTO moduloDTO, MultipartFile file);
+
+    /**
      * Get all the modulo.
      *
      * @param pageable the pagination information.
@@ -32,6 +45,12 @@ public interface ModuloService {
      */
     Page<Modulo> findAll(Pageable pageable);
     
+    /**
+     * findAllModuloUserId
+     * @param authentication
+     * @return
+     */
+    List<Modulo> findAllModuloUserId(Authentication authentication);
     /**
      * Get the "id" modulo.
      *
@@ -46,4 +65,6 @@ public interface ModuloService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    
+  
 }

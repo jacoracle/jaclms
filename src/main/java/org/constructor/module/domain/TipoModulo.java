@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.constructor.domain;
+package org.constructor.module.domain;
 
 import java.io.Serializable;
 

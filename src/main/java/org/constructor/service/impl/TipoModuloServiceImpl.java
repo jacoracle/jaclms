@@ -5,7 +5,7 @@ package org.constructor.service.impl;
 
 import java.util.Optional;
 
-import org.constructor.domain.TipoModulo;
+import org.constructor.module.domain.TipoModulo;
 import org.constructor.repository.TipoModuloRepository;
 import org.constructor.service.TipoModuloService;
 import org.slf4j.Logger;

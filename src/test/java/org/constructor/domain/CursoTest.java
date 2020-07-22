@@ -2,6 +2,7 @@ package org.constructor.domain;
 
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.constructor.web.rest.TestUtil;
 
 public class CursoTest {

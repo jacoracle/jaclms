@@ -5,7 +5,7 @@ package org.constructor.service;
 
 import java.util.Optional;
 
-import org.constructor.domain.TipoModulo;
+import org.constructor.module.domain.TipoModulo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
