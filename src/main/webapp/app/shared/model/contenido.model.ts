@@ -14,6 +14,6 @@ export class Contenido implements IContenido {
     public nombre?: string,
     public extension?: string,
     public peso?: number,
-    public pesoMB?: string
+    public pesoPrint?: string
   ) {}
 }

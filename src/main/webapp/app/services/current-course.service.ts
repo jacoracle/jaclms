@@ -7,8 +7,17 @@ import { ICurso } from 'app/shared/model/curso.model';
 })
 export class CurrentCourseService {
   private currentCourse = new Subject<ICurso>();
+  private type = '';
 
   constructor() {}
+
+  getType(): string {
+    return this.type;
+  }
+
+  setType(value: string): void {
+    this.type = value;
+  }
 
   getCurrentCourse(): Observable<ICurso> {
     return this.currentCourse.asObservable();

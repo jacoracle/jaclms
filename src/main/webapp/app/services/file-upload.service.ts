@@ -27,10 +27,10 @@ export class FileUploadService {
    * @param id    Id del curso al que se va a ligar la imagen.
    * @returns     Objeto con el path donde se guardó el archivo.
    */
-  pushFileStorage(file: File, id: number): Observable<any> {
+  pushFileStorage(file: File, id: number, type: string): Observable<any> {
     const data: FormData = new FormData();
     data.append('file', file);
-    data.append('id', 'Curso-' + id.toString());
+    data.append('id', type === 'course' ? 'Curso-' + id.toString() : 'Modulo-' + id.toString());
     return this.http.post(SERVER_API_URL + '/api/fileUpload', data);
   }
 

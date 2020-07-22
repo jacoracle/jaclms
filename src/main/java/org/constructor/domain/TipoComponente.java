@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -43,12 +44,9 @@ public class TipoComponente implements Serializable {
 	/**
 	 * tiposComponentes
 	 */
-	@OneToMany(mappedBy = "tipoComponente", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "tiposComponentes")
 	@JsonIgnore
-	private Set<TiposBloquesComponentes> tiposBloquesComponentes;
-	
-	
-	
+    private Set<TipoBloqueComponentes> tiposBloquesComponentes = new HashSet<>();
 	
 	/**
 	 * tipoComponente
@@ -89,19 +87,19 @@ public class TipoComponente implements Serializable {
 		this.nombre = nombre;
 	}
 
-
-
 	/**
+	 * Get
 	 * @return the tiposBloquesComponentes
 	 */
-	public Set<TiposBloquesComponentes> getTiposBloquesComponentes() {
+	public Set<TipoBloqueComponentes> getTiposBloquesComponentes() {
 		return tiposBloquesComponentes;
 	}
 
 	/**
-	 * @param tiposBloquesComponentes the tiposBloquesComponentes to set
+	 * Set
+	 * @param tiposBloquesComponentes
 	 */
-	public void setTiposBloquesComponentes(Set<TiposBloquesComponentes> tiposBloquesComponentes) {
+	public void setTiposBloquesComponentes(Set<TipoBloqueComponentes> tiposBloquesComponentes) {
 		this.tiposBloquesComponentes = tiposBloquesComponentes;
 	}
 

@@ -23,15 +23,15 @@ import { TemplateGalleryComponent } from '../constructor/template-gallery/templa
 import { ConstructorHierarchicalStructureComponent } from '../constructor/constructor-hierarchical-structure/constructor-hierarchical-structure.component';
 import { ConstructorBookInformationComponent } from '../constructor/constructor-book-information/constructor-book-information.component';
 import { ConstructorComponentPropertiesComponent } from '../constructor/constructor-component-properties/constructor-component-properties.component';
-import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ConstructorPdfComponent } from 'app/constructor/components/constructor-pdf/constructor-pdf.component';
 import { ConstructorSoundComponent } from 'app/constructor/components/constructor-sound/constructor-sound.component';
 import { ContentBlock8Component } from 'app/constructor/content-blocks/content-block8/content-block8.component';
 import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
-  imports: [ConstructorSharedModule, AngularEditorModule, DragDropModule],
+  imports: [QuillModule.forRoot(), ConstructorSharedModule, DragDropModule],
   declarations: [
     ConstructorLayoutComponent,
     ConstructorFilmstripComponent,

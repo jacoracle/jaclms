@@ -11,6 +11,7 @@ import { PdfModalService } from 'app/services/pdf-modal.service';
 import { SoundService } from 'app/services/sound.service';
 import { VideoModalService } from 'app/services/video-modal.service';
 import { Contenido, IContenido } from 'app/shared/model/contenido.model';
+import { CurrentModuleService } from 'app/services/current-module.service';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -42,7 +43,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   maxImageSize = 5120000;
   selectedFiles = [];
   id = 0; // Id de curso o módulo a guardar.
-  type = 'course'; // course, module
+  type = ''; // course, module
   @ViewChild('fileInput', { static: false }) fileInput: any;
   fileFormat = '';
   @ViewChild('sPlayer', { static: false }) soundplayer: ElementRef | undefined;
@@ -54,7 +55,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     peso: 0,
     extension: ''
   };
+
+  private _GIB24 = 1024000000;
   private _MIL24 = 1024000;
+  private _KIL24 = 1024;
 
   constructor(
     public imageService: ImageService,
@@ -64,6 +68,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     public eventManager: JhiEventManager,
     public fileUploadService: FileUploadService,
     public currentCourseService: CurrentCourseService,
+    public currentModuleService: CurrentModuleService,
     private pdfModalService: PdfModalService,
     private videoModalService: VideoModalService
   ) {
@@ -82,10 +87,18 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
     this.subscription = this.subscriptionVideoThumb();
 
+    this.type = this.currentCourseService.getType() !== '' ? this.currentCourseService.getType() : this.currentModuleService.getType();
     if (this.type === 'course') {
       this.subscription = this.currentCourseService.getCurrentCourse().subscribe(currentCourse => {
         if (currentCourse.id) {
           this.id = currentCourse.id;
+        }
+      });
+    } else {
+      this.type = this.currentModuleService.getType();
+      this.subscription = this.currentModuleService.getCurrentModule().subscribe(currentModule => {
+        if (currentModule.id) {
+          this.id = currentModule.id;
         }
       });
     }
@@ -93,8 +106,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.subscription = this.imageService.getImageProperties().subscribe(props => {
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
-      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
@@ -102,8 +115,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.videoService.getVideoProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
-      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
@@ -111,8 +124,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.pdfService.getPdfProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
-      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
@@ -120,16 +133,34 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.soundService.getAudioProperties().subscribe(props => {
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.peso = props.peso ? this.convertBytesToMegabytes(props.peso) : 0;
-      this.multimediaFileProperties.pesoMB = props.peso ? this.multimediaFileProperties.peso + ' MB' : '0 MB';
+      this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
+      this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
     });
   }
 
+  printSize(size: number): string {
+    let print;
+    if (size) {
+      if (size < this._GIB24) {
+        print = this.convertBytesToKilobytes(size) + ' KB';
+      } else {
+        print = this.convertBytesToMegabytes(size) + ' MB';
+      }
+    } else {
+      print = '0 Bytes';
+    }
+    return print;
+  }
+
   convertBytesToMegabytes(byteSize: number): number {
     return parseFloat((byteSize / this._MIL24).toFixed(2));
+  }
+
+  convertBytesToKilobytes(byteSize: number): number {
+    return parseFloat((byteSize / this._KIL24).toFixed(2));
   }
 
   subscriptionVideoThumb(): Subscription {
@@ -224,7 +255,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       } else {
         this.selectedFiles = event.target.files;
         this.showLoader = true;
-        this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
+        this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id, this.type).subscribe(data => {
           this.getDataMultimediaFile(this.castObjectAsContenido(data), this.fileFormat, event.target.files[0].type, event);
           this.showLoader = false;
         });

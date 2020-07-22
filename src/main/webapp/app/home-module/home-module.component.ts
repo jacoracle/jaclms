@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
+import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
@@ -8,6 +8,7 @@ import { ModuloService } from 'app/entities/modulo/modulo.service';
 import { IModulo } from 'app/shared/model/modulo.model';
 
 import { HttpResponse } from '@angular/common/http';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'jhi-home-module',
@@ -17,8 +18,8 @@ import { HttpResponse } from '@angular/common/http';
 export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
   authSubscription?: Subscription;
-  coverPaths = [];
   modulos: any = [];
+  defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
 
   constructor(private accountService: AccountService, private loginModalService: LoginModalService, private moduleService: ModuloService) {}
 
@@ -62,12 +63,6 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
       this.modulos.splice(this.findElementById(this.modulos, id), 1);
     });
   }
-
-  protected onDeleteSuccess(data: IModulo[] | null): void {
-    this.modulos = data ? data : [];
-  }
-
-  protected onDeleteError(): void {}
 
   findElementById(objectArray: any, id: number): number {
     let foundIndex = -1;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Observable, Subject } from 'rxjs';
 export class TextService {
   private text = new Subject<string>();
   private editing = new Subject<boolean>();
-  private templateTypeId = new Subject<number>();
+  private templateTypeId = new Subject<ITipoBloqueComponentes>();
 
   constructor() {}
 
@@ -27,11 +28,11 @@ export class TextService {
     this.editing.next(editing);
   }
 
-  getTemplateTypeId(): Observable<number> {
+  getTemplateType(): Observable<ITipoBloqueComponentes> {
     return this.templateTypeId.asObservable();
   }
 
-  setTemplateTypeId(templateType: number): void {
+  setTemplateType(templateType: ITipoBloqueComponentes): void {
     this.templateTypeId.next(templateType);
   }
 }
