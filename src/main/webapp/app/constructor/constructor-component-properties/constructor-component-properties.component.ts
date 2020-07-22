@@ -11,6 +11,7 @@ import { PdfModalService } from 'app/services/pdf-modal.service';
 import { SoundService } from 'app/services/sound.service';
 import { VideoModalService } from 'app/services/video-modal.service';
 import { Contenido, IContenido } from 'app/shared/model/contenido.model';
+import { CurrentModuleService } from 'app/services/current-module.service';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -42,7 +43,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   maxImageSize = 5120000;
   selectedFiles = [];
   id = 0; // Id de curso o módulo a guardar.
-  type = 'course'; // course, module
+  type = ''; // course, module
   @ViewChild('fileInput', { static: false }) fileInput: any;
   fileFormat = '';
   @ViewChild('sPlayer', { static: false }) soundplayer: ElementRef | undefined;
@@ -67,6 +68,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     public eventManager: JhiEventManager,
     public fileUploadService: FileUploadService,
     public currentCourseService: CurrentCourseService,
+    public currentModuleService: CurrentModuleService,
     private pdfModalService: PdfModalService,
     private videoModalService: VideoModalService
   ) {
@@ -85,10 +87,18 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
     this.subscription = this.subscriptionVideoThumb();
 
+    this.type = this.currentCourseService.getType() !== '' ? this.currentCourseService.getType() : this.currentModuleService.getType();
     if (this.type === 'course') {
       this.subscription = this.currentCourseService.getCurrentCourse().subscribe(currentCourse => {
         if (currentCourse.id) {
           this.id = currentCourse.id;
+        }
+      });
+    } else {
+      this.type = this.currentModuleService.getType();
+      this.subscription = this.currentModuleService.getCurrentModule().subscribe(currentModule => {
+        if (currentModule.id) {
+          this.id = currentModule.id;
         }
       });
     }
@@ -245,7 +255,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       } else {
         this.selectedFiles = event.target.files;
         this.showLoader = true;
-        this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id).subscribe(data => {
+        this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id, this.type).subscribe(data => {
           this.getDataMultimediaFile(this.castObjectAsContenido(data), this.fileFormat, event.target.files[0].type, event);
           this.showLoader = false;
         });

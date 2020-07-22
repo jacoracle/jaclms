@@ -181,7 +181,7 @@ export class ModuloUpdateComponent implements OnInit {
 
   protected onSaveSuccess(res: any): void {
     console.error('########   ID Módulo creado: ', res.body.id);
-    this.router.navigate(['/modules-home']); //  (['/constructor-layout', res.body.id]);
+    this.router.navigate(['/constructor-layout', res.body.id, 'module']);
     this.isSaving = false;
   }
 
@@ -234,7 +234,7 @@ export class ModuloUpdateComponent implements OnInit {
    * @param isChangeAcademicGrade flag to know if it's change event
    */
   updatingGradesSelected(evt: any, isChangeAcademicGrade: boolean): void {
-    let objectsGradesSelectedIds: INumeroGrado[] = [];
+    let objectsGradesSelectedIds: INumeroGrado[];
 
     if (isChangeAcademicGrade) {
       //  get objects from selected ids using event value and

@@ -37,7 +37,7 @@
     <div class="window-br-body" *ngIf="cursos.length">
 
       <div class="br-body-row">
-        <div class="course-cover-br" *ngFor="let curso of cursos" [routerLink]="['/constructor-layout', curso.id]">
+        <div class="course-cover-br" *ngFor="let curso of cursos" [routerLink]="['/constructor-layout', curso.id, 'course']">
 
           <div class="course-cover-br-margin">
             <img class="course-cover-br-image" [src]="curso.sanitizedPortadaUrl" alt="" *ngIf="curso.sanitizedPortadaUrl">

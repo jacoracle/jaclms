@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CursoService } from 'app/entities/curso/curso.service';
 import { CurrentCourseService } from 'app/services/current-course.service';
 import { ColorModeService } from 'app/services/color-mode.service';
+import { ModuloService } from 'app/entities/modulo/modulo.service';
+import { CurrentModuleService } from 'app/services/current-module.service';
 
 @Component({
   selector: 'jhi-constructor-layout',
@@ -17,20 +19,34 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
   showTextEditor = false;
   subscription: Subscription;
   curso: any;
+  modulo: any;
   colorMode = '';
 
   constructor(
     private textEditorBehaviosService: TextEditorBehaviorService,
     private route: ActivatedRoute,
     private cursoService: CursoService,
+    private moduloService: ModuloService,
     private currentCourseService: CurrentCourseService,
+    private currentModuleService: CurrentModuleService,
     private colorModeService: ColorModeService
   ) {
-    const cursoId = this.route.snapshot.paramMap.get('cursoId') as any;
-    this.cursoService.find(cursoId).subscribe(response => {
-      this.curso = response.body;
-      this.currentCourseService.setCurrentCourse(this.curso);
-    });
+    const id = this.route.snapshot.paramMap.get('id') as any;
+    const type = this.route.snapshot.paramMap.get('type') as string;
+
+    if (id && type === 'course') {
+      this.cursoService.find(id).subscribe(response => {
+        this.curso = response.body;
+        this.currentCourseService.setCurrentCourse(this.curso);
+        this.currentCourseService.setType(type);
+      });
+    } else {
+      this.moduloService.find(id).subscribe(response => {
+        this.modulo = response.body;
+        this.currentModuleService.setCurrentModule(this.modulo);
+        this.currentModuleService.setType(type);
+      });
+    }
     this.subscription = this.textEditorBehaviosService.getShowTextEditor().subscribe(showTextEditor => {
       this.showTextEditor = showTextEditor;
     });

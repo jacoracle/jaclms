@@ -31,7 +31,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
         },
         {
-          path: 'constructor-layout/:cursoId',
+          path: 'constructor-layout/:id/:type',
           component: ConstructorLayoutComponent,
           data: {
             reuse: true

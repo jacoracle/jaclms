@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { Subscription } from 'rxjs';

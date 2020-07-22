@@ -313,7 +313,7 @@ export class CursoUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(res: any): void {
-    this.router.navigate(['/constructor-layout', res.body.curso.id]);
+    this.router.navigate(['/constructor-layout', res.body.curso.id, 'course']);
     this.isSaving = false;
   }
 
@@ -340,7 +340,7 @@ export class CursoUpdateComponent implements OnInit {
    */
   upload(id: number): void {
     this.currentFileUpload = this.selectedFiles[0];
-    this.fileUploadService.pushFileStorage(this.currentFileUpload, id).subscribe(event => {
+    this.fileUploadService.pushFileStorage(this.currentFileUpload, id, 'course').subscribe(event => {
       this.portadaUrl = event.path;
       if (event) {
         this.getCover(event.path);

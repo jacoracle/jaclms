@@ -1,49 +1,52 @@
 <div class="main-container-br container-home-module">
 
-  <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
+    <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
-    <div class="recent-modules">
-      <div class="row-wbr-bt" *ngIf="modulos.length">
-        <p>Tus elementos recientes ( {{modulos.length}} )</p>
-      </div>
-    </div>
-
-    <div *ngIf="!modulos.length">
-      <div class="brm-2">
-        <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
-        <p>Para comenzar con un Módulo da click en el botón "Crear nuevo".</p>
-      </div>
-    </div>
-
-    <div class="window-br-body" *ngIf="modulos.length">
-
-      <div class="module-container">
-
-        <div *ngFor="let modulo of modulos">
-          <!--[routerLink]="['/constructor-layout', modulo.id]"-->
-          <p>{{ modulo | json }}</p>
-
-          <div (click)="deleteModule(modulo.id, $event)">
-            <i class="icon ni-delete icon-negative"></i>
-          </div>
-
-          <div>
-            <span
-              class="title-course-br">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span> <br>
-            <span
-              class="desc-course-br">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
-          </div>
+        <div class="recent-modules">
+            <div class="row-wbr-bt" *ngIf="modulos.length">
+                <p>Tus elementos recientes ( {{modulos.length}} )</p>
+            </div>
         </div>
 
-      </div>
+        <div *ngIf="!modulos.length">
+            <div class="brm-2">
+                <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
+                <p>Para comenzar con un Módulo da click en el botón "Crear nuevo".</p>
+            </div>
+        </div>
+
+        <div class="window-br-body" *ngIf="modulos.length">
+
+            <div class="br-body-row">
+                <div class="module-container">
+
+                    <div *ngFor="let modulo of modulos" [routerLink]="['/constructor-layout', modulo.id, 'module']">
+
+                        <div class="course-cover-br-margin">
+                            <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="modulo.sanitizedPortadaUrl">
+                        </div>
+
+                        <div (click)="deleteModule(modulo.id, $event)">
+                            <i class="icon ni-delete icon-negative"></i>
+                        </div>
+
+                        <div>
+                            <span class="title-course-br">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
+                            <br>
+                            <span class="desc-course-br">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="botonera-modulo">
+            <button routerLink="/" class="secondary-btn">Cancelar</button>
+            <button routerLink="/module-configuration" class="main-btn">Crear nuevo</button>
+        </div>
 
     </div>
-
-    <div class="botonera-modulo">
-      <button routerLink="/" class="secondary-btn">Cancelar</button>
-      <button routerLink="/module-configuration" class="main-btn">Crear nuevo</button>
-    </div>
-
-  </div>
 
 </div>
