@@ -1,7 +1,6 @@
 package org.constructor.web.rest;
 
 import org.constructor.ConstructorApp;
-import org.constructor.domain.Curso;
 import org.constructor.repository.CursoRepository;
 import org.constructor.service.CursoService;
 import org.constructor.web.rest.errors.ExceptionTranslator;
@@ -31,6 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.constructor.domain.enumeration.ModoDistribucion;
+import org.constructor.domain.Curso;
 import org.constructor.domain.enumeration.EtapaEditorial;
 /**
  * Integration tests for the {@link CursoResource} REST controller.

@@ -1,13 +1,14 @@
 /**
  * 
  */
-package org.constructor.domain;
+package org.constructor.module.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,8 +19,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.constructor.domain.Asignatura;
+import org.constructor.domain.NumeroGrado;
+import org.constructor.domain.RolesColaboradores;
+import org.constructor.domain.User;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -32,6 +38,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "modulo")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Modulo implements Serializable {
 
 	/**
@@ -109,6 +116,20 @@ public class Modulo implements Serializable {
 	            inverseJoinColumns = @JoinColumn(name="roles_colaboradores_id", referencedColumnName = "id", nullable = false))
 	    private Set<RolesColaboradores> rolesColaboradores ;
     
+
+    
+    /**
+     * LocalDate fechaCreacionSys
+     */
+    @Column(name = "fecha_creacion_sys")
+    private LocalDateTime fechaCreacionSys;
+
+    /**
+     * nivelesCurso
+     */
+    @OneToMany(mappedBy = "modulo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<NivelesModulo> nivelesModulo = new HashSet<>();
+    
     /**
      * user
      */
@@ -121,13 +142,6 @@ public class Modulo implements Serializable {
             inverseJoinColumns = @JoinColumn(name="usuario_id", referencedColumnName = "id", nullable = false))
     private Set<User> user = new HashSet<>();
     
-    
-    /**
-     * LocalDate fechaCreacionSys
-     */
-    @Column(name = "fecha_creacion_sys")
-    private LocalDateTime fechaCreacionSys;
-
 
 	/**
 	 * Get
@@ -314,7 +328,39 @@ public class Modulo implements Serializable {
 	public void setFechaCreacionSys(final LocalDateTime fechaCreacionSys) {
 		  this.fechaCreacionSys = LocalDateTime.now();;
 	}
+	
+	
+	
 
+	/**
+	 * @return the nivelesModulo
+	 */
+	public Set<NivelesModulo> getNivelesModulo() {
+		return nivelesModulo;
+	}
+
+
+	/**
+	 * @param nivelesModulo the nivelesModulo to set
+	 */
+	public void setNivelesModulo(Set<NivelesModulo> nivelesModulo) {
+		this.nivelesModulo = nivelesModulo;
+	}
+
+
+	/**
+	 * equals
+	 */
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Modulo)) {
+            return false;
+        }
+        return id != null && id.equals(((Modulo) o).id);
+    }
 
 	/**
 	 * ToString

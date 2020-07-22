@@ -5,7 +5,7 @@ package org.constructor.service;
 
 import java.util.Optional;
 
-import org.constructor.module.domain.Temas;
+import org.constructor.domain.TiposBloquesComponentes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,37 +13,39 @@ import org.springframework.data.domain.Pageable;
  * @author Edukai
  *
  */
-public interface TemasService {
 
-
-	/**
-     * Save a Temas.
+public interface TiposBloquesComponentesService {
+	
+	   /**
+     * Save a tiposBloquesComponentes.
      *
-     * @param temas the entity to save.
+     * @param modalidad the entity to save.
      * @return the persisted entity.
      */
-    Temas save(Temas temas);
-    
+	TiposBloquesComponentes save(TiposBloquesComponentes tiposBloquesComponentes);
+
     /**
-     * Get all the temas.
+     * Get all the tiposBloquesComponentes.
      *
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<Temas> findAll(Pageable pageable);
-    
+    Page<TiposBloquesComponentes> findAll(Pageable pageable);
+
+
     /**
-     * Get the "id" temas.
+     * Get the "id" tiposBloquesComponentes.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<Temas> findOne(Long id);
-    
+    Optional<TiposBloquesComponentes> findOne(Long id);
+
     /**
-     * Delete the "id" temas.
+     * Delete the "id" tiposBloquesComponentes.
      *
      * @param id the id of the entity.
      */
     void delete(Long id);
+
 }

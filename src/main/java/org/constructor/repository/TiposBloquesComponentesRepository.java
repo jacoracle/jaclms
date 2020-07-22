@@ -3,7 +3,8 @@
  */
 package org.constructor.repository;
 
-import org.constructor.module.domain.TipoModulo;
+
+import org.constructor.domain.TiposBloquesComponentes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TipoModuloRepository extends JpaRepository<TipoModulo, Long> {
+public interface TiposBloquesComponentesRepository  extends JpaRepository<TiposBloquesComponentes, Long> {
 
 }

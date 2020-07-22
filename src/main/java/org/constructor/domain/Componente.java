@@ -168,15 +168,9 @@ public class Componente implements Serializable {
 		this.contenido = contenido;
 	}
 
-	/**
-	 * To string.
-	 *
-	 * @return the string
-	 */
-	@Override
-	public String toString() {
-		return "Componente [id=" + id + ", contenido=" + contenido + ", version=" + version + ", orden=" + orden + "]";
-	}
+
+
+	
 
 	
 }

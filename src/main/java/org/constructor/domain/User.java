@@ -1,6 +1,7 @@
 package org.constructor.domain;
 
 import org.constructor.config.Constants;
+import org.constructor.module.domain.Modulo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
@@ -95,6 +96,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Curso> curso = new HashSet<>();
 
+ // ManyToMany to module relationship (JAM)
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Modulo> modulo = new HashSet<>();
     /**
      * Boolean activated
      */

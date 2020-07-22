@@ -3,8 +3,10 @@ package org.constructor.service;
 import java.util.Optional;
 
 import org.constructor.domain.NivelJerarquico;
+import org.constructor.response.NivelJerarquicoModuloResponse;
 import org.constructor.response.NivelJerarquicoResponse;
 import org.constructor.service.dto.NivelJerarquicoDTO;
+import org.constructor.service.dto.NivelJerarquicoModuloDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,9 +21,34 @@ public interface NivelJerarquicoService {
      * @param nivelJerarquico the entity to save.
      * @return the persisted entity.
      */
-    NivelJerarquico save(NivelJerarquicoDTO nivelJerarquico) throws Exception;
+    NivelJerarquico saveCurso(NivelJerarquicoDTO nivelJerarquico) throws Exception;
     
-    Optional<NivelJerarquico> updateNivelJerarquico(NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception;
+    /**
+     * module save
+     * 
+     * @param nivelJerarquico
+     * @return
+     * @throws Exception
+     */
+    NivelJerarquico saveModulo(NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception;
+    
+    
+    /**
+     * updateNivelJerarquico
+     * @param nivelJerarquicoDTO
+     * @return
+     * @throws Exception
+     */
+    Optional<NivelJerarquico> updateNivelJerarquicoCurso(NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception;
+
+    
+    /**
+     * 
+     * @param nivelJerarquicoModulo
+     * @return
+     * @throws Exception
+     */
+    Optional<NivelJerarquico> updateNivelJerarquicoModule(NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception;
 
     /**
      * Get all the nivelJerarquico.
@@ -37,7 +64,14 @@ public interface NivelJerarquicoService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    NivelJerarquicoResponse findOne(Long id);
+    NivelJerarquicoResponse findOneCurso(Long id);
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    NivelJerarquicoModuloResponse findOneModulo(Long id);
 
     /**
      * Delete the "id" nivelJerarquico.
