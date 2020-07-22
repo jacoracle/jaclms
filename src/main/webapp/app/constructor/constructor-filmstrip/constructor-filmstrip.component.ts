@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterContentInit } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
 import { NavigationControlsService } from '../../services/navigation-controls.service';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
   templateUrl: './constructor-filmstrip.component.html',
   styleUrls: ['./constructor-filmstrip.component.scss']
 })
-export class ConstructorFilmstripComponent implements OnInit, OnDestroy {
+export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterContentInit {
   selectedContentBlockIndex = -1;
   contentBlocks: IBloqueComponentes[];
   selectedTemplateType = '';
