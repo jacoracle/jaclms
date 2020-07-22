@@ -130,7 +130,7 @@ public class RestConstants {
 	* Path para peticiones bloquesCurso por id
 	*/
 	public static final String PATH_BLOQUE_CURSO_ID = "bloques-curso/{id}";
-	
+
 	// ---------------TipoModulo--------------------
 	
 		/**
