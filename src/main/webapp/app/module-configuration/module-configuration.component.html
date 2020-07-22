@@ -1,20 +1,22 @@
-<div class="main-container-module">
-
-  <div class="window-module-configuration">
-    <div class="window-module-header">
-      <div class="module-header-topbar">
-        <div class="module-window-title">Configuración</div>
+<div class="main-container-br main-container-module">
+  <div class="window-course-configuration window-module-configuration">
+    <!-- Window Header -->
+    <div class="window-cc-header window-module-header">
+      <div class="cc-header-topbar module-header-topbar">
+        <div class="cch-title module-window-title">Configurar Módulo</div>
+      </div>
+      <div class="cc-header-menu">
       </div>
     </div>
-
-    <div class="window-module-body">
+    <!-- Window Body -->
+    <div class="window-cc-body window-module-body">
       <jhi-modulo-update></jhi-modulo-update>
     </div>
-
-    <div class="window-module-footer">
+    <!-- Window Footer -->
+    <div class="window-cc-footer window-module-footer">
       <button routerLink="/" class="secondary-btn">Cancelar</button>
       <button (click)="saveModule()" class="main-btn">Crear Módulo</button>
     </div>
-  </div>
 
+  </div>
 </div>
