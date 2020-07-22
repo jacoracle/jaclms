@@ -103,14 +103,12 @@ export class ModuloUpdateComponent implements OnInit {
       id: modulo.id,
       titulo: modulo.titulo,
       descripcion: modulo.descripcion,
-      fechaCreacion: modulo.fechaCreacion,
       fechaCreacionSys: modulo.fechaCreacionSys,
       asignatura: modulo.asignatura,
       temas: modulo.temas,
       tiposModulos: modulo.tiposModulos,
       rolesColaboradores: modulo.rolesColaboradores,
-      numeroGrados: modulo.numeroGrados,
-      estatus: modulo.estatus
+      numeroGrados: modulo.numeroGrados
     });
   }
 
@@ -162,13 +160,11 @@ export class ModuloUpdateComponent implements OnInit {
       titulo: this.editForm.get(['titulo'])!.value,
       tiposModulos: this.tiposModuloComponent.getModuleTypes(),
       descripcion: this.editForm.get(['descripcion'])!.value,
-      fechaCreacion: this.editForm.get(['fechaCreacion'])!.value,
       fechaCreacionSys: this.editForm.get(['fechaCreacionSys'])!.value,
       asignatura: this.editForm.get(['asignatura'])!.value,
       temas: this.temasModuloComponent.getTopics(),
       rolesColaboradores: this.colaboradoresComponent.getColaboradores(),
-      numeroGrados: this.selectedGradesModule, // this.editForm.get(['numeroGrado'])!.value,
-      estatus: this.editForm.get(['estatus'])!.value
+      numeroGrados: this.selectedGradesModule
     };
   }
 
