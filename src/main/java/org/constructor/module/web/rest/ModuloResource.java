@@ -110,16 +110,15 @@ public class ModuloResource {
 	     */
 	    @PostMapping("/modulos")
 		public ResponseEntity<ModuloDTO> createModulos(Authentication authentication,
-				@RequestParam("module") String module, @RequestParam("file") Optional<MultipartFile> file)
+				@RequestBody Modulo module)
 				throws IOException {
 			log.debug("REST request to save Module : {}", module);
 			if (module == null) {
 				throw new BadRequestAlertException("A new curso cannot is empty", ENTITY_NAME, "");
 			}
-			ModuloDTO mo = new ObjectMapper().readValue(module, ModuloDTO.class);
-			log.debug("REST request to mo : {}", mo);
-			ModuloDTO result = moduloService.save(authentication, mo, file.isPresent() ? file.get() : null);
-			log.debug("result : {}", result);
+			log.debug("REST request to mo : {}", module);
+			ModuloDTO result = moduloService.save(authentication, module);
+			log.debug("result : {}",result);
 
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}

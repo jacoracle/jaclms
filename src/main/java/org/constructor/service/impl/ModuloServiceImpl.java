@@ -132,31 +132,25 @@ public class ModuloServiceImpl implements ModuloService {
 	 */
 	@Override
 	@Transactional
-	public ModuloDTO save(Authentication authentication, ModuloDTO moduloDTO, MultipartFile file) {
-		log.debug("Request to save Modulo : {}", moduloDTO);
-		Set<User> user = new HashSet<>();
-		Modulo modulo = new Modulo();
+	public ModuloDTO save(Authentication authentication, Modulo modulo) {
+		log.debug("Request to save Modulo : {}", modulo);
 		ModuloDTO mo = new ModuloDTO();
 
 		String usuarioNombre = authentication.getName();
-		user = userService.findUserByLogin(usuarioNombre);
-
-		modulo = moduloDTO.getModulo();
-
+		Set<User> user = userService.findUserByLogin(usuarioNombre);
+		
 		// Insert module whit module
 		modulo.setUser(user);
-		log.debug("update module whit module  : {}", modulo);
 		modulo = moduloRepository.save(modulo);
 
-		if (file != null) {
+		
 			MultimediaDTO multimediaDTO = new MultimediaDTO();
 			String identificador = "Module-" + modulo.getId();
-			multimediaDTO.setFile(file);
 			multimediaDTO.setId(identificador);
 			VideoResponse<?> respuesta = multimediaService.saveFile(multimediaDTO);
 			respuesta.getPath();
 		
-		}
+	
 		
 		
 		log.debug("modulo id {}", modulo.getId());
