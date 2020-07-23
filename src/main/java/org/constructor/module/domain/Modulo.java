@@ -135,7 +135,6 @@ public class Modulo implements Serializable {
      */
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(
             name = "modulo_usuario", 
             joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
@@ -298,7 +297,7 @@ public class Modulo implements Serializable {
 	 * Set
 	 * @param user the user to set
 	 */
-	public void setUser(final Set<User> user) {
+	public void setUser(Set<User> user) {
 		this.user = user;
 	}
 

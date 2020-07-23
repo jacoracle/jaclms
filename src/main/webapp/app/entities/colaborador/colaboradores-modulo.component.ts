@@ -57,7 +57,6 @@ export class ColaboradoresModuleComponent implements OnInit {
       startWith(null),
       map((fruit: string | null) => (fruit ? this._filterColaborador(fruit) : this.listFullRolesColaboradores.slice()))
     );
-    console.error(this.filteredRolesColaboradores);
   }
 
   ngOnInit(): void {
