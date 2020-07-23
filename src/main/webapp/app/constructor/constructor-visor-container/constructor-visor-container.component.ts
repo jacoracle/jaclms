@@ -7,7 +7,6 @@ import { Componente, IComponente } from 'app/shared/model/componente.model';
 import { INivelJerarquico, NivelJerarquico } from 'app/shared/model/nivel-jerarquico.model';
 import { NivelJerarquicoService } from 'app/entities/nivel-jerarquico/nivel-jerarquico.service';
 import { HttpResponse } from '@angular/common/http';
-import { TipoNivelJerarquico } from 'app/shared/model/enumerations/tipo-nivel-jerarquico.model';
 import { TipoComponente } from 'app/shared/model/tipo-componente.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.service';
