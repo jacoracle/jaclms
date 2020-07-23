@@ -31,9 +31,9 @@
                         </div>
 
                         <div>
-                            <span class="title-course-br">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
+                            <span class="title-course-br" *ngIf="modulo.titulo">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
                             <br>
-                            <span class="desc-course-br">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
+                            <span class="desc-course-br" *ngIf="modulo.descripcion">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
                         </div>
                     </div>
 

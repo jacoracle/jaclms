@@ -117,7 +117,6 @@ export class ModuloUpdateComponent implements OnInit {
   }
 
   save(): void {
-    console.error('######   SAVE');
     this.isSaving = true;
     const modulo = this.createFromForm();
 
@@ -176,7 +175,6 @@ export class ModuloUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(res: any): void {
-    console.error('########   ID Módulo creado: ', res.body.id);
     this.router.navigate(['/constructor-layout', res.body.id, 'module']);
     this.isSaving = false;
   }
@@ -266,7 +264,5 @@ export class ModuloUpdateComponent implements OnInit {
     }, []);
     //  set selected grades to global array
     this.selectedGradesModule = [...uniqueSelectedGrades];
-    // console.error('################################################################');
-    // console.error(this.actualSelectedGradesModule);
   }
 }

@@ -57,7 +57,6 @@ export class TopicModuleComponent implements OnInit {
       startWith(null),
       map((fruit: string | null) => (fruit ? this._filterTheme(fruit) : this.listFullThemes.slice()))
     );
-    console.error(this.filteredThemes);
   }
 
   ngOnInit(): void {

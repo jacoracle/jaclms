@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
-import { Subscription, Observable, Subject } from 'rxjs';
-import { IBloqueComponentes, BloqueComponentes } from 'app/shared/model/bloque-componentes.model';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { BloqueComponentes, IBloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
-import { IComponente, Componente } from 'app/shared/model/componente.model';
-import { NivelJerarquico, INivelJerarquico } from 'app/shared/model/nivel-jerarquico.model';
+import { Componente, IComponente } from 'app/shared/model/componente.model';
+import { INivelJerarquico, NivelJerarquico } from 'app/shared/model/nivel-jerarquico.model';
 import { NivelJerarquicoService } from 'app/entities/nivel-jerarquico/nivel-jerarquico.service';
 import { HttpResponse } from '@angular/common/http';
 import { TipoNivelJerarquico } from 'app/shared/model/enumerations/tipo-nivel-jerarquico.model';
@@ -13,8 +13,8 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.service';
 import { EventEmitterService } from 'app/services/event-emitter.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
-import { IContenido, Contenido } from 'app/shared/model/contenido.model';
-import { IBloquesCurso, BloquesCurso } from 'app/shared/model/bloques-curso.model';
+import { Contenido, IContenido } from 'app/shared/model/contenido.model';
+import { BloquesCurso, IBloquesCurso } from 'app/shared/model/bloques-curso.model';
 import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
 import { takeUntil } from 'rxjs/operators';
 
@@ -25,27 +25,20 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   subscription: Subscription;
-  selectedTemplateType = '';
   selectedBlock = -1;
-  newIndexOrderBlock = -1;
   contentBlocks = Array<IBloquesCurso>();
-  nivel: NivelJerarquico = {
-    nivelId: undefined,
-    cursoId: 11,
-    nombre: 'Lección de Español',
-    tipo: TipoNivelJerarquico['L'],
-    informacionAdicional: 0,
-    orden: 1,
-    bloquesCurso: undefined
-  };
+  nivel: NivelJerarquico = {};
   error = false;
   success = false;
   _curso: any;
+  _modulo: any;
+  @Input() type?: string;
+
   @Input()
   set curso(val: any) {
     this.showLoader = false;
     this._curso = val;
-    if (this._curso !== undefined) {
+    if (this._curso !== undefined && this.type === 'course') {
       this.nivel.cursoId = this._curso.id;
       if (this._curso.nivelesCurso.length) {
         this.showLoader = false;
@@ -61,6 +54,28 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   get curso(): any {
     return this._curso;
   }
+
+  @Input()
+  set modulo(val: any) {
+    this.showLoader = false;
+    this._modulo = val;
+    if (this._modulo !== undefined && this.type === 'module') {
+      this.nivel.moduloId = this._modulo.id;
+      if (this._modulo.nivelesModulo.length) {
+        this.showLoader = false;
+        this.nivel = this._modulo.nivelesModulo[0].nivelJerarquico;
+        this.nivel.moduloId = this._modulo.id;
+        this.contentBlocks = [];
+        this.contentBlocks = this.nivel.bloquesCurso!;
+        this.nivel.nivelId = this._modulo.nivelesModulo[0].nivelJerarquico.id;
+        this.contentBlocksService.setContentBlocks(this.contentBlocks);
+      }
+    }
+  }
+  get modulo(): any {
+    return this._modulo;
+  }
+
   visorSize = 'desktop';
   showLoader = false;
   private ngUnsubscribe = new Subject();
@@ -205,9 +220,9 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.error = false;
     this.nivel.bloquesCurso = this.contentBlocks;
     if (this.nivel.nivelId) {
-      this.subscribeToSaveResponse(this.nivelJerarquicoService.update(this.nivel));
+      this.subscribeToSaveResponse(this.nivelJerarquicoService.update(this.nivel, this.type));
     } else {
-      this.subscribeToSaveResponse(this.nivelJerarquicoService.create(this.nivel));
+      this.subscribeToSaveResponse(this.nivelJerarquicoService.create(this.nivel, this.type));
     }
     this.textEditorBehaviosService.setShowTextEditor(false);
   }
