@@ -435,4 +435,11 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 	            		);
 	}
 
+	@Override
+	public Optional<NivelJerarquico> findById(Long id) {
+		
+		
+		return nivelJerarquicoRepository.findById(id);
+	}
+
 }

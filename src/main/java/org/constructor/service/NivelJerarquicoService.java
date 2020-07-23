@@ -80,4 +80,5 @@ public interface NivelJerarquicoService {
      */
     void delete(Long id);
 
+    Optional<NivelJerarquico> findById(Long id);
 }

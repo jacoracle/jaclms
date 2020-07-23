@@ -120,11 +120,13 @@ public class NivelJerarquicoResource {
 	     * @param id the id of the nivelJerarquico to retrieve.
 	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the nivelJerarquico, or with status {@code 404 (Not Found)}.
 	     */
-	    @GetMapping("curso/nivel-jerarquico/{id}")
-	    public ResponseEntity<NivelJerarquicoResponse> getNivelJerarquico(@PathVariable Long id) {
+	    @GetMapping("/nivel-jerarquico/{id}")
+	    public ResponseEntity<NivelJerarquico> getNivelJerarquico(@PathVariable Long id) {
 	        log.debug("REST request to get NivelJerarquico : {}", id);
-	        NivelJerarquicoResponse nivelJerarquico = nivelJerarquicoService.findOneCurso(id);
-	        return ResponseUtil.wrapOrNotFound(Optional.of(nivelJerarquico));
+	        log.debug("REST  : {}", id);
+	        Optional<NivelJerarquico> nivelJerarquico = nivelJerarquicoService.findById(id);
+	        log.debug("REST NIVEEELLLL  : {}", nivelJerarquico);
+	        return ResponseUtil.wrapOrNotFound(nivelJerarquico);
 	    }
 	    
 	    /**

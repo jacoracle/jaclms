@@ -48,7 +48,7 @@ public class NivelJerarquico implements Serializable  {
     private String  tipo;
 	
 	/** orden_nivel. */
-	@OneToMany(mappedBy="nivelJerarquico", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="nivelJerarquico", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@OrderBy ("orden")
 	private Set<EstructuraJerarquica> estructuraJerarquica = new HashSet<>();
 		
