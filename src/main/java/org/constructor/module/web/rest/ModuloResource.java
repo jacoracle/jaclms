@@ -31,12 +31,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -88,7 +85,7 @@ public class ModuloResource {
 	     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new modulo, or with status {@code 400 (Bad Request)} if the modulo has already an ID.
 	     * @throws URISyntaxException if the Location URI syntax is incorrect.
 	     */
-	    @PostMapping(path = RestConstants.PATH_MODULO)
+	    @PostMapping("/modulos")
 	    public ResponseEntity<Modulo> createModulo(@RequestBody Modulo modulo) throws URISyntaxException {
 	        log.debug("REST request to save Modulo : {}", modulo);
 	        if (modulo.getId() != null) {
@@ -108,13 +105,13 @@ public class ModuloResource {
 	     * @return
 	     * @throws IOException
 	     */
-	    @PostMapping("/modulos")
+	    @PostMapping(path = RestConstants.PATH_MODULO)
 		public ResponseEntity<ModuloDTO> createModulos(Authentication authentication,
 				@RequestBody Modulo module)
 				throws IOException {
 			log.debug("REST request to save Module : {}", module);
 			if (module == null) {
-				throw new BadRequestAlertException("A new curso cannot is empty", ENTITY_NAME, "");
+				throw new BadRequestAlertException("A new module cannot is empty", ENTITY_NAME, "");
 			}
 			log.debug("REST request to mo : {}", module);
 			ModuloDTO result = moduloService.save(authentication, module);
@@ -153,7 +150,7 @@ public class ModuloResource {
 
 	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of modulo in body.
 	     */
-	    @GetMapping(path = RestConstants.PATH_MODULO)
+	    @GetMapping(path = RestConstants.PATH_MODULO_ALL)
 	    public ResponseEntity<List<Modulo>> getAllModulo(Pageable pageable) {
 	        log.debug("REST request to get a page of modulo");
 	        Page<Modulo> page = moduloService.findAll(pageable);
@@ -179,7 +176,7 @@ public class ModuloResource {
 	     * @param authentication
 	     * @return
 	     */
-	    @GetMapping("/modulos")
+	    @GetMapping(path = RestConstants.PATH_MODULO)
 	    public ResponseEntity<List<Modulo>> getAllModuleUser(Authentication authentication ) {
 	        log.debug("REST request to get a page of Module by User");
 	        List<Modulo> page = moduloService.findAllModuloUserId(authentication);
