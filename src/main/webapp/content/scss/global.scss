@@ -3605,3 +3605,39 @@ input[type='file'] {
     }
   }
 }
+
+// Angular material
+// Form multiple select wrap
+.testG .mat-form-field-wrapper .mat-form-field-flex {
+  background-color: rgba(0, 0, 0, 0);
+}
+.mat-form-field-label {
+  color: #1c2447;
+}
+.mat-select-arrow {
+  color: #1c2447;
+}
+.mat-form-field-underline {
+}
+.mat-form-field-appearance-fill .mat-form-field-underline::before {
+  background-color: $input-border-hover;
+}
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: $input-border-hover;
+}
+.mat-input-element {
+  caret-color: $input-border-focus;
+}
+.mat-form-field-appearance-legacy .mat-form-field-label {
+  color: #1c2447;
+}
+// Focus
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $input-border-focus;
+}
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: $input-border-focus;
+}
+// $input-border-light;
+// $input-border-hover;
+// $input-border-focus;

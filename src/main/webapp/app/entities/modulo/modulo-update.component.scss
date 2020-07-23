@@ -31,4 +31,22 @@
   position: relative;
   width: 100%;
   height: auto;
+  display: flex;
+  justify-content: space-between;
+  .rcm-col1 {
+    position: relative;
+    width: 48%;
+    height: auto;
+  }
+  .rcm-col2 {
+    position: relative;
+    width: 48%;
+    height: auto;
+  }
+}
+
+// **
+.mat-form-field-wrapper .mat-form-field-flex {
+  // background-color: rgba(0,0,0,.0) !important;
+  // background-color: red;
 }
