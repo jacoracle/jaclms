@@ -28,10 +28,10 @@
 
     .r1 {
       position: relative;
-      width: 30%;
+      width: 220px;
       height: 100%;
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       .logo-create {
         position: relative;
@@ -41,25 +41,55 @@
         background-position: center;
         background-size: 100%;
         background-repeat: no-repeat;
-        margin-left: 12%;
       }
     }
     .r2 {
       position: relative;
-      width: 70%;
+      width: calc(100% - 220px);
       height: 100%;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
-      .c1 {
+      justify-content: flex-start;
+      .windowHeader-title {
         position: relative;
-        width: 100%;
+        width: auto;
+        height: 50px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        border-left: 2px solid $blue-nimbus-dark;
+        padding-left: 20px;
+        .icon {
+          position: relative;
+          margin-right: 10px;
+          width: 30px;
+          height: 30px;
+          background-position: center;
+          background-size: 100%;
+          background-repeat: no-repeat;
+        }
+        .whModule {
+          background-image: url('../../content/images/module_icon.svg');
+        }
+        .whBook {
+          background-image: url('../../content/images/book_icon.svg');
+        }
+        h4 {
+          position: relative;
+          font-size: 18px;
+          font-weight: 600;
+          color: $blue-nimbus-dark;
+        }
+      }
+      .c1 {
+        position: absolute;
+        width: 300px;
         height: auto;
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
-        margin-bottom: 20px;
+        right: 0px;
+        bottom: 20px;
 
         .button-hc {
           position: relative;
@@ -182,6 +212,15 @@
 }
 .e-modulo {
   background-image: url('../../content/images/e-modulo.png');
+  .icon {
+    position: relative;
+    width: 65px;
+    height: 65px;
+    background-image: url('../../content/images/module_icon_n.svg');
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
 }
 .e-libro {
   background-image: url('../../content/images/e-libro.png');

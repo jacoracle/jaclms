@@ -35,7 +35,7 @@ public interface ModuloService {
      * @param file
      * @return
      */
-    ModuloDTO save(Authentication authentication, ModuloDTO moduloDTO, MultipartFile file);
+    ModuloDTO save(Authentication authentication, Modulo moduloDTO);
 
     /**
      * Get all the modulo.

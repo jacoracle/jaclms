@@ -30,8 +30,9 @@ public class ModuloDTO {
 	public void setModulo(Modulo modulo) {
 		this.modulo = modulo;
 	}
-	
-	
-	
 
+	@Override
+	public String toString() {
+		return "ModuloDTO [modulo=" + modulo + "]";
+	}
 }

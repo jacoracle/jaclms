@@ -9,15 +9,28 @@ type EntityResponseType = HttpResponse<INivelJerarquico>;
 
 @Injectable({ providedIn: 'root' })
 export class NivelJerarquicoService {
-  public resourceUrl = SERVER_API_URL + 'api/curso/nivel-jerarquico';
+  public resourceUrlCourse = SERVER_API_URL + 'api/curso/nivel-jerarquico';
+  public resourceUrlModule = SERVER_API_URL + 'api/modulo/nivel-jerarquico';
 
   constructor(protected http: HttpClient) {}
 
-  create(nivelJerarquico: INivelJerarquico): Observable<EntityResponseType> {
-    return this.http.post<INivelJerarquico>(this.resourceUrl, nivelJerarquico, { observe: 'response' });
+  create(nivelJerarquico: INivelJerarquico, type: string | undefined): Observable<EntityResponseType> {
+    let url;
+    if (type && type === 'course') {
+      url = this.resourceUrlCourse;
+    } else {
+      url = this.resourceUrlModule;
+    }
+    return this.http.post<INivelJerarquico>(url, nivelJerarquico, { observe: 'response' });
   }
 
-  update(nivelJerarquico: INivelJerarquico): Observable<EntityResponseType> {
-    return this.http.put<INivelJerarquico>(this.resourceUrl, nivelJerarquico, { observe: 'response' });
+  update(nivelJerarquico: INivelJerarquico, type: string | undefined): Observable<EntityResponseType> {
+    let url;
+    if (type && type === 'course') {
+      url = this.resourceUrlCourse;
+    } else {
+      url = this.resourceUrlModule;
+    }
+    return this.http.post<INivelJerarquico>(url, nivelJerarquico, { observe: 'response' });
   }
 }
