@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { EventEmitterService } from 'app/services/event-emitter.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { ColorModeService } from 'app/services/color-mode.service';
+import { CurrentCourseService } from 'app/services/current-course.service';
+import { CurrentModuleService } from 'app/services/current-module.service';
+import { IModulo } from 'app/shared/model/modulo.model';
+import { ICurso } from 'app/shared/model/curso.model';
 
 @Component({
   selector: 'jhi-top-bar',
@@ -12,6 +16,8 @@ import { ColorModeService } from 'app/services/color-mode.service';
   styleUrls: ['./top-bar.component.scss']
 })
 export class TopBarComponent {
+  title = '';
+  objectType = '';
   openMenu = false;
   isNavbarCollapsed = true;
   colorModes = [
@@ -54,11 +60,26 @@ export class TopBarComponent {
   constructor(
     private loginService: LoginService,
     private loginModalService: LoginModalService,
+    private currentCourseService: CurrentCourseService,
+    private currentModuleService: CurrentModuleService,
     private router: Router,
     private eventEmitterService: EventEmitterService,
     private navigationControlsService: NavigationControlsService,
     private colorModeService: ColorModeService
-  ) {}
+  ) {
+    this.objectType =
+      this.currentCourseService.getType() !== '' ? this.currentCourseService.getType() : this.currentModuleService.getType();
+
+    if (this.objectType === 'course') {
+      this.currentCourseService.getCurrentCourse().subscribe((actualCourse: ICurso) => {
+        this.title = actualCourse.titulo!.toUpperCase();
+      });
+    } else if (this.objectType === 'module') {
+      this.currentModuleService.getCurrentModule().subscribe((actualModule: IModulo) => {
+        this.title = actualModule.titulo!.toUpperCase();
+      });
+    }
+  }
 
   collapseNavbar(): void {
     this.isNavbarCollapsed = true;

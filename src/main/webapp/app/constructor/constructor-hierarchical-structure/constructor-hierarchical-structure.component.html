@@ -8,59 +8,25 @@
   </div>
   <div class="c-component-content">
     <div class="row-c-component-c">
-      <!-- Level 1 -->
-      <div class="hierarchical-element">
-        <div class="hier-header">
-          <i class="icon ni-arrow"></i>
-          <i class="icon ni-folder hier-active-icon"></i>
-          <p>N1 Título 1</p>
-          <i class="icon ni-menudots he-icon-menu"></i>
-        </div>
-        <!-- Level 2 -->
-        <div class="hier-header hier-second-level">
-          <i class="icon ni-arrow"></i>
-          <i class="icon ni-folder hier-active-icon"></i>
-          <p>N2 Título 1</p>
-          <i class="icon ni-menudots he-icon-menu"></i>
-        </div>
-        <!-- Level 3 -->
-        <div class="hier-header hier-third-level hier-active">
-          <i class="icon ni-doc hier-active-icon"></i>
-          <p>N3 Título 1</p>
-          <i class="icon ni-menudots he-icon-menu"></i>
-        </div>
-        <!-- Level 3 -->
-        <div class="hier-header hier-third-level">
-          <i class="icon ni-doc"></i>
-          <p>N3 Título 2</p>
-          <i class="icon ni-menudots he-icon-menu"></i>
-        </div>
-        <!-- Level 2 -->
-        <div class="hier-header hier-second-level">
-          <i class="icon ni-arrowright"></i>
-          <i class="icon ni-folder"></i>
-          <p>N2 Título 2</p>
-          <i class="icon ni-menudots he-icon-menu"></i>
-        </div>
-      </div>
-      <!-- Level 1  -->
-      <div class="hierarchical-element">
-        <div class="hier-header">
-          <i class="icon ni-arrowright"></i>
-          <i class="icon ni-folder"></i>
-          <p>N1 Título 2</p>
-          <i class="icon ni-menudots he-icon-menu"></i>
-        </div>
-      </div>
-      <!-- Level 1 -->
-      <div class="hierarchical-element">
-        <div class="hier-header">
-          <i class="icon ni-arrowright"></i>
-          <i class="icon ni-folder"></i>
-          <p>N1 Título 3</p>
-          <i class="icon ni-menudots he-icon-menu"></i>
-        </div>
-      </div>
+      <p>{{receivedObject!.titulo}}</p>
+
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag>
+          <!-- use a disabled button to provide padding for tree leaf -->
+          <button mat-icon-button disabled></button>
+          {{node.name}}
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag>
+            <mat-icon class="mat-icon-rtl-mirror" mat-icon-button matTreeNodeToggle 
+              [attr.aria-label]="'toggle ' + node.name">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          {{node.name}}
+        </mat-tree-node>
+      </mat-tree>
+
 
     </div>
   </div>

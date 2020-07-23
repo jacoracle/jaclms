@@ -29,9 +29,11 @@ import { ContentBlock8Component } from 'app/constructor/content-blocks/content-b
 import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  imports: [QuillModule.forRoot(), ConstructorSharedModule, DragDropModule],
+  imports: [QuillModule.forRoot(), ConstructorSharedModule, DragDropModule, MatIconModule, MatTreeModule],
   declarations: [
     ConstructorLayoutComponent,
     ConstructorFilmstripComponent,
