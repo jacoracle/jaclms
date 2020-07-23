@@ -20,6 +20,7 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   curso: any;
   modulo: any;
+  type: string;
   colorMode = '';
 
   constructor(
@@ -32,20 +33,21 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
     private colorModeService: ColorModeService
   ) {
     const id = this.route.snapshot.paramMap.get('id') as any;
-    const type = this.route.snapshot.paramMap.get('type') as string;
+    this.type = this.route.snapshot.paramMap.get('type') as string;
 
-    if (id && type === 'course') {
+    if (id && this.type === 'course') {
       this.cursoService.find(id).subscribe(response => {
         this.curso = response.body;
         this.currentCourseService.setCurrentCourse(this.curso);
-        this.currentCourseService.setType(type);
       });
-    } else {
+      this.currentCourseService.setType(this.type);
+    }
+    if (id && this.type === 'module') {
       this.moduloService.find(id).subscribe(response => {
         this.modulo = response.body;
         this.currentModuleService.setCurrentModule(this.modulo);
-        this.currentModuleService.setType(type);
       });
+      this.currentModuleService.setType(this.type);
     }
     this.subscription = this.textEditorBehaviosService.getShowTextEditor().subscribe(showTextEditor => {
       this.showTextEditor = showTextEditor;
@@ -55,9 +57,9 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  ngOnInit(): void {}
 }

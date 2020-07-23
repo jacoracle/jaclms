@@ -57,7 +57,6 @@ export class TypeModuleComponent implements OnInit {
       startWith(null),
       map((fruit: string | null) => (fruit ? this._filterTipo(fruit) : this.listFullTiposModuloTest.slice()))
     );
-    console.error(this.filteredTiposModulo);
   }
 
   ngOnInit(): void {
