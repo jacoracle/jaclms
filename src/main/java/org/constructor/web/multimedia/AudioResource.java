@@ -11,10 +11,10 @@ import org.constructor.security.AuthoritiesConstants;
 import org.constructor.utils.RestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,9 +29,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class AudioResource {
 
 	/**
+	 * properties linux
+	 */
+	@Value(value = "${rutas.linux}")
+	private String lin;
+
+	/**
+	 * properties windows
+	 */
+	@Value(value = "${rutas.windows}")
+	private String win;
+	/**
 	 * path
 	 */
-	private static final String PATH = System.getProperty("user.home") + "/resources" + File.separator;
+	private static final String PATH = System.getProperty("user.home") ;
 	
 	/**
 	 * Logger
@@ -52,7 +63,12 @@ public class AudioResource {
 	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> loadAudio(@RequestParam("file") String nameAudio) throws IOException {
 		StringBuilder builder = new StringBuilder();
-		builder.append(PATH);
+		if(win.equals(win)) {
+			builder.append(PATH).append(win);
+		}else {
+			builder.append(PATH).append(lin);
+		}
+			
 		log.debug("******** Nimbus Audio Request ******");
 		log.debug("******** Path:  {} ****** ", PATH);
 		
