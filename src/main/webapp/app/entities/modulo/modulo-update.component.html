@@ -45,7 +45,7 @@
               <select id="field_asignatura" name="asignatura" formControlName="asignatura">
                 <option
                   [ngValue]="asignaturaOption.id === editForm.get('asignatura')!.value?.id ? editForm.get('asignatura')!.value : asignaturaOption"
-                  *ngFor="let asignaturaOption of asignaturas; trackBy: trackById">{{asignaturaOption.descripcion}}
+                  *ngFor="let asignaturaOption of asignaturas;">{{asignaturaOption.descripcion}}
                 </option>
               </select>
             </div>
@@ -66,7 +66,7 @@
                 (change)="changeGradoAcademico($event)">
                 <option
                   [ngValue]="gradoAcademicoOption.id === editForm.get('gradoAcademico')!.value?.id ? editForm.get('gradoAcademico')!.value : gradoAcademicoOption"
-                  *ngFor="let gradoAcademicoOption of gradoAcademicos; trackBy: trackById">
+                  *ngFor="let gradoAcademicoOption of gradoAcademicos;">
                   {{gradoAcademicoOption.descripcion}}</option>
               </select>
             </div>
