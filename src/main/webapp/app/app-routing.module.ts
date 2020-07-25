@@ -11,6 +11,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { HomeComponent } from './home/home.component';
 import { HomeModuleComponent } from './home-module/home-module.component';
 import { ModuleConfigurationComponent } from './module-configuration/module-configuration.component';
+import { HomeLearningComponent } from './home-learning/home-learning.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -41,6 +42,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'home-page',
           component: HomePageComponent
+        },
+        {
+          path: 'learning-home',
+          component: HomeLearningComponent
         },
         {
           path: 'courses-home',

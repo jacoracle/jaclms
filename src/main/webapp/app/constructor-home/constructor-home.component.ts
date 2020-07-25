@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 export class ConstructorHomeComponent {
   constructor(private router: Router) {}
 
+  redirectLearningPath(): void {
+    this.router.navigate(['/learning-home']);
+  }
+
   redirectHome(): void {
     this.router.navigate(['/courses-home']);
   }

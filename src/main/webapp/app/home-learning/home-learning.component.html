@@ -1,0 +1,79 @@
+<div class="main-container-br">
+
+    <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
+        <!-- Window Header -->
+        <div class="window-br-header">
+            <div class="r1">
+                <div class="logo-create"></div>
+            </div>
+            <div class="r2">
+                <div class="windowHeader-title"><i class="icon whModule"></i>
+                    <h4>Rutas de aprendizaje</h4>
+                </div>
+                <div class="c1">
+                    <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
+                    <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window-br-body-topbar recent-modules">
+            <div class="row-wbr-bt" *ngIf="modulos.length">
+                <p>Tus módulos recientes ( {{modulos.length}} )</p>
+            </div>
+        </div>
+
+        <!-- Window Empty -->
+        <div class="window-br-body" *ngIf="!modulos.length">
+            <div class="container-br-message">
+                <div class="br-message">
+                    <div class="brm-1">
+                        <div class="br-message-icon"></div>
+                    </div>
+                    <div class="brm-2">
+                        <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
+                        <p>Para comenzar seleccione un Módulo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Window content Module -->
+        <div class="window-br-body" *ngIf="modulos.length">
+            <div class="br-body-row">
+                <div class="module-cover-br" *ngFor="let modulo of modulos"><!--[routerLink]="['/constructor-layout', modulo.id, 'module']"-->
+
+                    <div class="module-cover-br-margin">
+                        <!-- <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="modulo.sanitizedPortadaUrl"> -->
+                        <div class="module-cover-br-img"></div>
+                    </div>
+
+                    <div (click)="previewModule(modulo.id, $event)" class="delete-module-br">
+                        <i class="icon ni-delete icon-negative"></i>
+                    </div>
+
+                    <div class="module-desc-br-row">
+                        <span
+                            class="title-module-br">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
+                        <span
+                            class="desc-module-br">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
+                    </div>
+
+                </div>
+            </div>
+            <hr>
+            <div class="form-learning-path">
+                <label for="name">Nombre</label>
+                <input type="text" name="name" id="name"><br>
+                <label for="version">Versión</label>
+                <input type="text" name="version" id="version">
+            </div>
+        </div>
+
+        <!-- Window footer -->
+        <div class="window-br-footer">
+            <button routerLink="/" class="secondary-btn">Regresar</button>
+        </div>
+
+    </div>
+
+</div>
