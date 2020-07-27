@@ -63,7 +63,7 @@ public class ImageResource {
 		if(win.equals(win)) {
 			builder.append(PATH).append(win);
 		}else {
-			builder.append(PATH).append(lin);
+			builder.append(lin);
 		}
 			
 		

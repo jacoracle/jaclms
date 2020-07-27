@@ -102,7 +102,7 @@ public class VideoResource {
 		 if(win.equals(win)) {
 				builder.append(PATH).append(win);
 			}else {
-				builder.append(PATH).append(lin);
+				builder.append(lin);
 			}
 		File file = new File(builder.append(nameVideo).toString());
 		int frameNumber = 255;
@@ -132,7 +132,7 @@ public class VideoResource {
 		 if(win.equals(win)) {
 				builder.append(PATH).append(win);
 			}else {
-				builder.append(PATH).append(lin);
+				builder.append(lin);
 			}
 		log.debug("******** Nimbus Video Request ******");
 		log.debug("******** Path:  {} ****** ", nameVideo);

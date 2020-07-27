@@ -44,6 +44,7 @@ public class AudioResource {
 	 */
 	private static final String PATH = System.getProperty("user.home") ;
 	
+
 	/**
 	 * Logger
 	 */
@@ -66,7 +67,7 @@ public class AudioResource {
 		if(win.equals(win)) {
 			builder.append(PATH).append(win);
 		}else {
-			builder.append(PATH).append(lin);
+			builder.append(lin);
 		}
 			
 		log.debug("******** Nimbus Audio Request ******");
