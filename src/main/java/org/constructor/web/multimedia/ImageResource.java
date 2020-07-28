@@ -78,14 +78,14 @@ public class ImageResource {
 		}
 
 		HttpHeaders headers = new HttpHeaders();
-		log.debug("*************Nimbus Image Request*************");
-		log.debug("******** Path:  {}****** ", builder);
+		log.info("*************Nimbus Image Request*************");
+		log.info("******** Path:  {}****** ", builder);
 		byte[] fileArray = new byte[1];
 		File file = new File(builder.append(nameImage).toString());
 		
 		if(!file.exists()) {
 			fileArray[0] = 0;
-			log.debug("******** Path not found****** ");
+			log.info("******** Path not found : {}****** ", builder.append(nameImage).toString() );
 			headers.setContentType(MediaType.IMAGE_PNG);
 			return new ResponseEntity<>(fileArray,HttpStatus.BAD_REQUEST);
 		} 
