@@ -41,10 +41,15 @@ public class ImageResource {
 	@Value(value = "${rutas.windows}")
 	private String win;
 	/**
-	 * PATH
+	 * operating system
 	 */
+	String SistemaOperativo = System.getProperty("os.name");
 	
-	private static final String PATH = System.getProperty("user.home") ;
+	/**
+	 * osNameMatch
+	 */
+	 String osNameMatch = SistemaOperativo.toLowerCase();
+
 	/**
 	 * Logger
 	 */
@@ -60,16 +65,21 @@ public class ImageResource {
 	@Secured({ AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER })
 	public ResponseEntity<byte[]> loadImage(@RequestParam("file") String nameImage) throws IOException {
 		StringBuilder builder = new StringBuilder();
-		if(win.equals(win)) {
-			builder.append(PATH).append(win);
-		}else {
+		if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			builder.append(raiz).append(win);
+		}
+
+		else {
 			builder.append(lin);
 		}
-			
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		log.debug("*************Nimbus Image Request*************");
-		log.debug("******** Path:  {}****** ", PATH);
+		log.debug("******** Path:  {}****** ", builder);
 		byte[] fileArray = new byte[1];
 		File file = new File(builder.append(nameImage).toString());
 		

@@ -46,8 +46,16 @@ public class VideoResource {
 	@Value(value = "${rutas.windows}")
 	private String win;
 	
-	/** path. */
-	private static final String PATH = System.getProperty("user.home") ;
+	
+	/**
+	 * operating system
+	 */
+	String SistemaOperativo = System.getProperty("os.name");
+	
+	/**
+	 * osNameMatch
+	 */
+	 String osNameMatch = SistemaOperativo.toLowerCase();
 	
 	/** Logger. */
 	private final Logger log = LoggerFactory.getLogger(VideoResource.class);
@@ -99,11 +107,17 @@ public class VideoResource {
 	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> frameVideo(@RequestParam("file") String nameVideo) throws IOException, JCodecException{
 		StringBuilder builder = new StringBuilder();
-		 if(win.equals(win)) {
-				builder.append(PATH).append(win);
-			}else {
-				builder.append(lin);
-			}
+		if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			builder.append(raiz).append(win);
+		}
+
+		else {
+			builder.append(lin);
+		}
 		File file = new File(builder.append(nameVideo).toString());
 		int frameNumber = 255;
 		Picture frame = FrameGrab.getFrameFromFile(file, frameNumber);
@@ -129,11 +143,18 @@ public class VideoResource {
 	private ResponseEntity<byte[]> videoBanner(Boolean banner, String nameVideo ) {
 		
 		StringBuilder builder = new StringBuilder();
-		 if(win.equals(win)) {
-				builder.append(PATH).append(win);
-			}else {
-				builder.append(lin);
-			}
+		
+		if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			builder.append(raiz).append(win);
+		}
+
+		else {
+			builder.append(lin);
+		}
 		log.debug("******** Nimbus Video Request ******");
 		log.debug("******** Path:  {} ****** ", nameVideo);
 		

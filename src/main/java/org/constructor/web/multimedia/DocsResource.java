@@ -44,9 +44,14 @@ public class DocsResource {
 	@Value(value = "${rutas.windows}")
 	private String win;
 	/**
-	 * PATH
+	 * operating system
 	 */
-	private static final String PATH = System.getProperty("user.home") ;
+	String SistemaOperativo = System.getProperty("os.name");
+	
+	/**
+	 * osNameMatch
+	 */
+	 String osNameMatch = SistemaOperativo.toLowerCase();
 
 	/**
 	 * Logger
@@ -63,14 +68,20 @@ public class DocsResource {
     @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
     public ResponseEntity<byte[]> loadDocs(@RequestParam("file") String nameDocs) throws IOException {
         StringBuilder builder = new StringBuilder();
-        if(win.equals(win)) {
-			builder.append(PATH).append(win);
-		}else {
+    	if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			builder.append(raiz).append(win);
+		}
+
+		else {
 			builder.append(lin);
 		}
         HttpHeaders headers = new HttpHeaders();
         log.debug("*************Nimbus docs Request*************");
-        log.debug("******* Path:  {}***** ", PATH);
+        log.debug("******* Path:  {}***** ", builder);
         byte[] fileArray = new byte[1];
         File file = new File(builder.append(nameDocs).toString());
 

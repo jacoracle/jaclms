@@ -40,9 +40,14 @@ public class AudioResource {
 	@Value(value = "${rutas.windows}")
 	private String win;
 	/**
-	 * path
+	 * operating system
 	 */
-	private static final String PATH = System.getProperty("user.home") ;
+	String SistemaOperativo = System.getProperty("os.name");
+	
+	/**
+	 * osNameMatch
+	 */
+	 String osNameMatch = SistemaOperativo.toLowerCase();
 	
 
 	/**
@@ -64,14 +69,20 @@ public class AudioResource {
 	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> loadAudio(@RequestParam("file") String nameAudio) throws IOException {
 		StringBuilder builder = new StringBuilder();
-		if(win.equals(win)) {
-			builder.append(PATH).append(win);
-		}else {
+	  	if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			builder.append(raiz).append(win);
+		}
+
+		else {
 			builder.append(lin);
 		}
 			
 		log.debug("******** Nimbus Audio Request ******");
-		log.debug("******** Path:  {} ****** ", PATH);
+		log.debug("******** Path:  {} ****** ", builder);
 		
 		byte[] fileArray = new byte[1];
 		File file = new File(builder.append(nameAudio).toString());
