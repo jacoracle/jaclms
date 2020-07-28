@@ -119,7 +119,6 @@ public class VideoResource {
 			builder.append(lin);
 		}
 		log.info("******** Nimbus loadVideo Request ******");
-		log.info("******** Path: {} ******", builder.append(nameVideo).toString());
 		File file = new File(builder.append(nameVideo).toString());
 		int frameNumber = 255;
 		Picture frame = FrameGrab.getFrameFromFile(file, frameNumber);
