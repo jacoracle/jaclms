@@ -20,6 +20,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 export class ColaboradoresModuleComponent implements OnInit {
   // Chips Angular Material
 
+  private allowFreeTextAddCoworkerRol = false;
   visible = true;
   selectable = true;
   removable = true;
@@ -55,7 +56,7 @@ export class ColaboradoresModuleComponent implements OnInit {
 
     this.filteredRolesColaboradores = this.colaboradorCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => (fruit ? this._filterColaborador(fruit) : this.listFullRolesColaboradores.slice()))
+      map((coworker: string | null) => (coworker ? this._filterColaborador(coworker) : this.listFullRolesColaboradores.slice()))
     );
   }
 
@@ -79,21 +80,29 @@ export class ColaboradoresModuleComponent implements OnInit {
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
   addColaborador(event: MatChipInputEvent): void {
-    const input = event.input;
+    if (!this.allowFreeTextAddCoworkerRol) {
+      // only allowed to select from the filtered autocomplete list
+      console.error('allowFreeTextAddCoworkerRol is false');
+      return;
+    }
+    // Add our module type
     const value = event.value;
-    // Add our fruit
-    if (value) {
-      this.listRolesColaboradores.push(value as IRolesColaboradores);
+    if ((value || '').trim()) {
+      this.selectCoworkerRoleByName(value.trim());
     }
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
+
+    this.resetInputs();
+  }
+
+  private resetInputs(): void {
+    // clear input element
+    this.colaboradorInput.nativeElement.value = '';
+    // clear control value and trigger colaboradorCtrl.valueChanges event
     this.colaboradorCtrl.setValue(null);
   }
 
-  removeColaborador(fruit: IRolesColaboradores): void {
-    const index = this.listRolesColaboradores.indexOf(fruit);
+  removeColaborador(coworker: IRolesColaboradores): void {
+    const index = this.listRolesColaboradores.indexOf(coworker);
 
     if (index >= 0) {
       this.listRolesColaboradores.splice(index, 1);
@@ -110,11 +119,37 @@ export class ColaboradoresModuleComponent implements OnInit {
 
   private _filterColaborador(value: any): IRolesColaboradores[] {
     if (typeof value === 'string') {
-      return this.listFullRolesColaboradores.filter(rc => rc.colaborador!.nombres!.toLowerCase().includes(value.toLowerCase())); //  { fruit.id === value.id && fruit.nombre === value.nombre });
+      // return this.listFullRolesColaboradores.filter(rc => rc.colaborador!.nombres!.toLowerCase().includes(value.toLowerCase())); //  { rc.id === value.id && rc.nombre === value.nombre });
+      return this.filterCowerkerRoles(this.listFullRolesColaboradores, value);
     }
     return this.listFullRolesColaboradores.filter(rc => {
       rc.id === value.id && rc.colaborador === value.colaborador;
     });
+  }
+
+  private filterCowerkerRoles(coworkersRoleList: IRolesColaboradores[], coworkerValue: String): IRolesColaboradores[] {
+    let filteredCoworkersRolList: IRolesColaboradores[] = [];
+    const typedValue = coworkerValue.toLowerCase();
+    const coworkersRoleMatchingCoworkerRolName = coworkersRoleList.filter(t => t.colaborador!.nombres!.toLowerCase().includes(typedValue));
+    if (coworkersRoleMatchingCoworkerRolName.length || this.allowFreeTextAddCoworkerRol) {
+      filteredCoworkersRolList = coworkersRoleMatchingCoworkerRolName;
+      this.allowFreeTextAddCoworkerRol = true;
+    } else {
+      filteredCoworkersRolList = coworkersRoleMatchingCoworkerRolName;
+    }
+
+    return filteredCoworkersRolList;
+  }
+
+  private selectCoworkerRoleByName(coworkerRole: string): void {
+    const foundCoworker = this.listFullRolesColaboradores.filter(t => t.colaborador!.nombres!.toLowerCase() === coworkerRole.toLowerCase());
+    if (foundCoworker.length) {
+      this.listRolesColaboradores.push(foundCoworker[0]);
+      this.allowFreeTextAddCoworkerRol = true;
+    } else {
+      this.allowFreeTextAddCoworkerRol = false;
+      console.error('Colaborador y Rol inexistente, no puede agregarse.');
+    }
   }
 
   // TERMINA CODE DE CHIPS ANGULAR MATERIAL

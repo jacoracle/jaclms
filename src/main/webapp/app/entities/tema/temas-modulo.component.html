@@ -2,13 +2,13 @@
     <mat-form-field>
         <mat-chip-list #chipList aria-label="Temas del Módulo">
             <mat-chip *ngFor="let th of listThemes" [selectable]="selectable" [removable]="removable"
-                (removed)="removeTheme(th)">
+                (removed)="removeTopic(th)">
                 {{th.nombre}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Temas del Módulo" #themeInput [formControl]="themeCtrl"
+            <input placeholder="Temas del Módulo" #topicInput [formControl]="topicCtrl"
                 [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTheme($event)">
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTopic($event)">
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedTheme($event)">
             <mat-option *ngFor="let thOpt of filteredThemes | async" [value]="thOpt">

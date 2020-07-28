@@ -21,6 +21,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 export class TypeModuleComponent implements OnInit {
   // chips angular material
 
+  private allowFreeTextAddModuleType = false;
   visible = true;
   selectable = true;
   removable = true;
@@ -38,8 +39,6 @@ export class TypeModuleComponent implements OnInit {
   selectedModuleTypes: ITipoModulo[] = [];
   moduleTypes: ITipoModulo[] = [];
   foundTypesModule: ITipoModulo[] = [];
-
-  @ViewChild('inputstring', { static: false }) searchElement: ElementRef | undefined;
 
   constructor(protected tipoModuloService: TipoModuloService) {
     this.tipoModuloService
@@ -81,21 +80,30 @@ export class TypeModuleComponent implements OnInit {
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
   addTipo(event: MatChipInputEvent): void {
-    const input = event.input;
+    if (!this.allowFreeTextAddModuleType) {
+      // only allowed to select from the filtered autocomplete list
+      console.error('allowFreeTextAddModuleType is false');
+      return;
+    }
+
+    // Add our module type
     const value = event.value;
-    // Add our fruit
-    if (value) {
-      this.listTiposModuloTest.push(value as ITipoModulo);
+    if ((value || '').trim()) {
+      this.selectModuleTypeByName(value.trim());
     }
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
+
+    this.resetInputs();
+  }
+
+  private resetInputs(): void {
+    // clear input element
+    this.moduleTypeInput.nativeElement.value = '';
+    // clear control value and trigger moduleTypeCtrl.valueChanges event
     this.moduleTypeCtrl.setValue(null);
   }
 
-  removeTipo(fruit: ITipoModulo): void {
-    const index = this.listTiposModuloTest.indexOf(fruit);
+  removeTipo(moduleType: ITipoModulo): void {
+    const index = this.listTiposModuloTest.indexOf(moduleType);
 
     if (index >= 0) {
       this.listTiposModuloTest.splice(index, 1);
@@ -111,15 +119,38 @@ export class TypeModuleComponent implements OnInit {
   }
 
   private _filterTipo(value: any): ITipoModulo[] {
-    // const filterValue = value.toLowerCase();
-    // let objTipo: ITipoModulo = value as ITipoModulo;
-    // objTipo.nombre = objTipo.nombre?.toLocaleLowerCase();
     if (typeof value === 'string') {
-      return this.listFullTiposModuloTest.filter(tipos => tipos.nombre!.toLowerCase().includes(value.toLowerCase())); //  { fruit.id === value.id && fruit.nombre === value.nombre });
+      //  return this.listFullTiposModuloTest.filter(tipos => tipos.nombre!.toLowerCase().includes(value.toLowerCase()));
+      return this.filterModuleTypes(this.listFullTiposModuloTest, value);
     }
     return this.listFullTiposModuloTest.filter(tipos => {
       tipos.id === value.id && tipos.nombre === value.nombre;
     });
+  }
+
+  private filterModuleTypes(moduleTypesList: ITipoModulo[], moduleTypeValue: String): ITipoModulo[] {
+    let filteredModuleTypesList: ITipoModulo[] = [];
+    const typedValue = moduleTypeValue.toLowerCase();
+    const moduleTypesMatchingModuleTypeName = moduleTypesList.filter(t => t.nombre!.toLowerCase().includes(typedValue));
+    if (moduleTypesMatchingModuleTypeName.length || this.allowFreeTextAddModuleType) {
+      filteredModuleTypesList = moduleTypesMatchingModuleTypeName;
+      this.allowFreeTextAddModuleType = true;
+    } else {
+      filteredModuleTypesList = moduleTypesMatchingModuleTypeName;
+    }
+
+    return filteredModuleTypesList;
+  }
+
+  private selectModuleTypeByName(tipoModulo: string): void {
+    const foundTipoModulo = this.listFullTiposModuloTest.filter(t => t.nombre!.toLocaleLowerCase() === tipoModulo.toLowerCase());
+    if (foundTipoModulo.length) {
+      this.listTiposModuloTest.push(foundTipoModulo[0]);
+      this.allowFreeTextAddModuleType = true;
+    } else {
+      this.allowFreeTextAddModuleType = false;
+      console.error('Tipo Módulo inexistente, no puede agregarse.');
+    }
   }
 
   // TERMINA CODE DE CHIPS ANGULAR MATERIAL
