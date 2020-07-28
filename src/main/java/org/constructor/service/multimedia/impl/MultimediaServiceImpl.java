@@ -63,19 +63,34 @@ public class MultimediaServiceImpl implements MultimediaService {
 	private Long docs;
 
 	/**
+	 * properties linux
+	 */
+	@Value(value = "${rutas.linux}")
+	private String lin;
+
+	/**
+	 * properties windows
+	 */
+	@Value(value = "${rutas.windows}")
+	private String win;
+
+	/**
 	 * Logger
 	 */
 	private final Logger log = LoggerFactory.getLogger(MultimediaServiceImpl.class);
-	
+
 	/**
-	 * StringBuilder
+	 * operating system
 	 */
-	private static final StringBuilder UPLOAD_FOLDER = new StringBuilder(System.getProperty("user.home") + "/resources" + File.separator);
-	
+	String SistemaOperativo = System.getProperty("os.name");
+	 String osNameMatch = SistemaOperativo.toLowerCase();
+
 	/**
 	 * String nimbus
 	 */
-	private static final String nimbus = "nimbus"; 
+	private static final String nimbus = "nimbus";
+
+
 
     
     /**
@@ -92,6 +107,19 @@ public class MultimediaServiceImpl implements MultimediaService {
 	 */
 	@Override
 	public VideoResponse<?> saveFile(MultimediaDTO file) {
+		StringBuilder UPLOAD_FOLDER = new StringBuilder();
+
+		if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			UPLOAD_FOLDER.append(raiz).append(win);
+		}
+
+		else {
+			UPLOAD_FOLDER.append(lin);
+		}
 	    VideoResponse<?> videoResponse = new VideoResponse<>();
 	    log.info("*** FileUploadServiceImplement ****");
 	    log.info("*** Path Multimedia File : {} ****", UPLOAD_FOLDER);
@@ -117,7 +145,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				 */
 				if (extension.toUpperCase().equals(extAudio.MP3.toString())
 						 && ((( multimedia.getSize()/1024))/ 1024  ) <=  audio ) {
-					buildFile(builder, file);
+					buildFile(UPLOAD_FOLDER,builder, file);
 					builder.append("audio");
 					PathValidation.createPath(builder.toString());
 				     log.debug("builder audio : {}", builder);
@@ -128,7 +156,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				 */
 				if ((  extension.toUpperCase()).equals(extVideo.MP4.toString())
 						|| extension.toUpperCase().equals( extVideo.VGA.toString() ) && ((( multimedia.getSize()/1024))/ 1024  ) <=  video ) {
-					buildFile(builder, file);
+					buildFile(UPLOAD_FOLDER,builder, file);
 					builder.append( "video" );
 					PathValidation.createPath(builder.toString() );
 					log.debug("builder Video : {}", builder);
@@ -139,7 +167,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				 */
 				if ((extension.toUpperCase()).equals(extImage.PNG.toString())
 						|| extension.toUpperCase().equals(extImage.JPG.toString()) || extension.toUpperCase().equals(extImage.JPEG.toString()) && ((( multimedia.getSize()/1024))/ 1024  ) <=  image ) {
-					buildFile(builder, file);
+					buildFile(UPLOAD_FOLDER,builder, file);
 					builder.append("image");
 					PathValidation.createPath(builder.toString());
 					log.debug("builder image : {}", builder);
@@ -151,7 +179,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 				 */
 				if (extension.toUpperCase().equals(extDocs.PDF.toString())
 						|| extension.toUpperCase().equals(extDocs.DOCX.toString()) ||extension.toUpperCase().equals(extDocs.TXT.toString()) && ((( multimedia.getSize()/1024))/ 1024  ) <=  docs ) {
-					buildFile(builder, file  );
+					buildFile(UPLOAD_FOLDER,builder, file  );
 					builder.append("docs");
 					PathValidation.createPath(builder.toString());
 					log.debug("builder docs : {}", builder);
@@ -195,9 +223,10 @@ public class MultimediaServiceImpl implements MultimediaService {
 	 * @param file
 	 * @return
 	 */
-    private StringBuilder buildFile(StringBuilder builder,MultimediaDTO file ) {
+    private StringBuilder buildFile(StringBuilder UPLOAD_FOLDER,StringBuilder builder,MultimediaDTO file ) {
     	String idCurso = file.getId();
     	builder.append(UPLOAD_FOLDER.toString());
+		builder.append(File.separator);
 		builder.append(nimbus);
 		builder.append(File.separator);
 		builder.append(idCurso);
@@ -205,7 +234,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 		return builder;
 }
 
-    
+
 	/**
 	 * deleteCourseCover 
 	 * 
@@ -254,19 +283,34 @@ public class MultimediaServiceImpl implements MultimediaService {
 	 */
 	@Override
 	public String deleteFile(String pathfile) {
+		StringBuilder UPLOAD_FOLDER = new StringBuilder();
+		
+		if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			UPLOAD_FOLDER.append(raiz).append(win);
+		}
+
+		else {
+			UPLOAD_FOLDER.append(lin);
+		}
 		log.debug("deleteFile: {} ", pathfile);
 		StringBuilder sb = new StringBuilder();
 		String status = "";
 		boolean found = false;
 		
 		found = otherCourseCoverExists(pathfile);
-		
+		log.info(pathfile);
+		log.info(UPLOAD_FOLDER.toString());
 		if(found) {
 			status = "dependent";
 			return status;
 		}
 		sb.append(UPLOAD_FOLDER);
 		File file = new File(sb.append(pathfile).toString());
+		
 		if (file.exists()) {
 
 			if (file.delete()) {

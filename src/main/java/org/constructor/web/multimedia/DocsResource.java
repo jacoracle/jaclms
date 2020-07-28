@@ -11,6 +11,7 @@ import org.constructor.security.AuthoritiesConstants;
 import org.constructor.utils.RestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,10 +31,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(RestConstants.PATH_API)
 public class DocsResource {
 
+
 	/**
-	 * PATH
+	 * properties linux
 	 */
-	private static final String PATH = System.getProperty("user.home") + "/resources" + File.separator;
+	@Value(value = "${rutas.linux}")
+	private String lin;
+
+	/**
+	 * properties windows
+	 */
+	@Value(value = "${rutas.windows}")
+	private String win;
+	/**
+	 * operating system
+	 */
+	String SistemaOperativo = System.getProperty("os.name");
+	
+	/**
+	 * osNameMatch
+	 */
+	 String osNameMatch = SistemaOperativo.toLowerCase();
 
 	/**
 	 * Logger
@@ -50,10 +68,20 @@ public class DocsResource {
     @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
     public ResponseEntity<byte[]> loadDocs(@RequestParam("file") String nameDocs) throws IOException {
         StringBuilder builder = new StringBuilder();
-        builder.append(PATH);
+    	if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			builder.append(raiz).append(win);
+		}
+
+		else {
+			builder.append(lin);
+		}
         HttpHeaders headers = new HttpHeaders();
         log.debug("*************Nimbus docs Request*************");
-        log.debug("******* Path:  {}***** ", PATH);
+        log.debug("******* Path:  {}***** ", builder);
         byte[] fileArray = new byte[1];
         File file = new File(builder.append(nameDocs).toString());
 

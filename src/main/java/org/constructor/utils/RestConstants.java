@@ -161,6 +161,10 @@ public class RestConstants {
 		*  Path para peticiones modulo
 	    */
 		public static final String PATH_MODULO = "modulo";
+		/**
+		*  Path para peticiones modulo-ALL
+	    */
+		public static final String PATH_MODULO_ALL = "modulo-all";
 		
 		/**
 		 *  Path para peticiones modulo por id

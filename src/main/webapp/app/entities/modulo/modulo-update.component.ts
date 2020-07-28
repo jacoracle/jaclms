@@ -175,7 +175,7 @@ export class ModuloUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(res: any): void {
-    this.router.navigate(['/constructor-layout', res.body.id, 'module']);
+    this.router.navigate(['/constructor-layout', res.body.modulo.id, 'module']);
     this.isSaving = false;
   }
 

@@ -47,35 +47,14 @@
             </div>
 
             <div class="course-desc-br-row">
-                <span class="title-course-br">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
-                <span class="desc-course-br">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
+                <span class="title-course-br" *ngIf="modulo.titulo">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
+                <span class="desc-course-br" *ngIf="modulo.descripcion">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
             </div>
 
           </div>
         </div>
       </div>
 
-
-        <!-- <div class="window-br-body" *ngIf="modulos.length">
-            <div class="br-body-row">
-                <div class="module-container">
-                    <div *ngFor="let modulo of modulos" [routerLink]="['/constructor-layout', modulo.id, 'module']">
-                        <div class="course-cover-br-margin">
-                            <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="modulo.sanitizedPortadaUrl">
-                        </div>
-                        <div (click)="deleteModule(modulo.id, $event)">
-                            <i class="icon ni-delete icon-negative"></i>
-                        </div>
-                        <div>
-                            <span class="title-course-br" *ngIf="modulo.titulo">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
-                            <br>
-                            <span class="desc-course-br" *ngIf="modulo.descripcion">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- Window footer -->
         <div class="window-br-footer">
           <button routerLink="/" class="secondary-btn">Regresar</button>
           <button routerLink="/module-configuration" class="main-btn">Crear nuevo</button>

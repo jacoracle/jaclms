@@ -142,3 +142,8 @@ multimedia:
   image: 2
   audio: 5
   docs: 5
+
+#linux path and windows
+rutas:
+  windows: '/share/resource/'
+  linux: '/opt/share/resource/'

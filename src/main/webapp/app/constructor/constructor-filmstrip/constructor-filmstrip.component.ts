@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, AfterContentInit } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
 import { NavigationControlsService } from '../../services/navigation-controls.service';
 import { Subscription } from 'rxjs';
-import { IBloqueComponentes } from 'app/shared/model/bloque-componentes.model';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
@@ -15,7 +14,7 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 })
 export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterContentInit {
   selectedContentBlockIndex = -1;
-  contentBlocks: IBloqueComponentes[];
+  contentBlocks: any;
   selectedTemplateType = '';
   subscription: Subscription;
   templates: ITipoBloqueComponentes[] = [];
