@@ -1,12 +1,12 @@
 
 <div>
     <mat-form-field>
-        <mat-chip-list #chipList aria-label="Tipos de módulo">           <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
+        <mat-chip-list #chipList aria-label="Tipos de la Sesión">           <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
                 (removed)="removeTipo(tipo)">
                 {{tipo.nombre}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Tipos de módulo" #moduleTypeInput [formControl]="moduleTypeCtrl"
+            <input placeholder="Tipos de la Sesión" #moduleTypeInput [formControl]="moduleTypeCtrl"
                 [matAutocomplete]="auto" [matChipInputFor]="chipList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTipo($event)">
         </mat-chip-list>

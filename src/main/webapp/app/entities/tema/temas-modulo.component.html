@@ -1,12 +1,12 @@
 <div>
     <mat-form-field>
-        <mat-chip-list #chipList aria-label="Temas del Módulo">
+        <mat-chip-list #chipList aria-label="Temas de la Sesión">
             <mat-chip *ngFor="let th of listThemes" [selectable]="selectable" [removable]="removable"
                 (removed)="removeTopic(th)">
                 {{th.nombre}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Temas del Módulo" #topicInput [formControl]="topicCtrl"
+            <input placeholder="Temas de la Sesión" #topicInput [formControl]="topicCtrl"
                 [matAutocomplete]="auto" [matChipInputFor]="chipList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTopic($event)">
         </mat-chip-list>
