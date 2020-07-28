@@ -1,65 +1,77 @@
 <div class="main-container-br container-home-module">
 
-    <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
-      <!-- Window Header -->
-      <div class="window-br-header">
-        <div class="r1">
-          <div class="logo-create"></div>
+  <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
+    <!-- Window Header -->
+    <div class="window-br-header">
+      <div class="r1">
+        <div class="logo-create"></div>
+      </div>
+      <div class="r2">
+        <div class="windowHeader-title"><i class="icon whModule"></i>
+          <h4>Sesiones</h4>
         </div>
-        <div class="r2">
-          <div class="windowHeader-title"><i class="icon whModule"></i><h4>Sesiones</h4></div>
-          <div class="c1">
-            <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
-            <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
-          </div>
+        <div class="c1">
+          <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
+          <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
         </div>
       </div>
-
-      <div class="window-br-body-topbar recent-modules">
-        <div class="row-wbr-bt" *ngIf="modulos.length">
-          <p>Tus sesiones recientes ( {{modulos.length}} )</p>
-        </div>
-      </div>
-
-      <!-- Window Empty -->
-      <div class="window-br-body" *ngIf="!modulos.length">
-        <div class="container-br-message">
-          <div class="br-message">
-            <div class="brm-1"><div class="br-message-icon"></div></div>
-            <div class="brm-2"><p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
-              <p>Para comenzar da click en el botón "Crear sesión".</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Window content Module -->
-      <div class="window-br-body" *ngIf="modulos.length">
-        <div class="br-body-row">
-          <div class="course-cover-br" *ngFor="let modulo of modulos" [routerLink]="['/constructor-layout', modulo.id, 'module']">
-
-            <div class="course-cover-br-margin">
-                <!-- <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="modulo.sanitizedPortadaUrl"> -->
-                <div class="module-cover-br-image"></div>
-            </div>
-
-            <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
-                <i class="icon ni-delete icon-negative"></i>
-            </div>
-
-            <div class="course-desc-br-row">
-                <span class="title-course-br" *ngIf="modulo.titulo">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
-                <span class="desc-course-br" *ngIf="modulo.descripcion">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-        <div class="window-br-footer">
-          <button routerLink="/" class="secondary-btn">Regresar</button>
-          <button routerLink="/module-configuration" class="main-btn">Crear sesión</button>
-        </div>
-
     </div>
+
+    <div class="window-br-body-topbar recent-modules">
+      <div class="row-wbr-bt" *ngIf="modulos.length">
+        <p>Tus sesiones recientes ( {{modulos.length}} )</p>
+      </div>
+      <div [hidden]="!showLoader" class="loader-home-module">
+        <!-- Doing something -->
+        <span class="loader"></span>
+      </div>
+    </div>
+
+    <!-- Window Empty -->
+    <div class="window-br-body" *ngIf="!modulos.length">
+      <div class="container-br-message">
+        <div class="br-message">
+          <div class="brm-1">
+            <div class="br-message-icon"></div>
+          </div>
+          <div class="brm-2">
+            <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
+            <p>Para comenzar da click en el botón "Crear sesión".</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Window content Module -->
+    <div class="window-br-body" *ngIf="modulos.length">
+      <div class="br-body-row">
+        <div class="course-cover-br" *ngFor="let modulo of modulos"
+          [routerLink]="['/constructor-layout', modulo.id, 'module']">
+
+          <div class="course-cover-br-margin">
+            <!-- <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="modulo.sanitizedPortadaUrl"> -->
+            <div class="module-cover-br-image"></div>
+          </div>
+
+          <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
+            <i class="icon ni-delete icon-negative"></i>
+          </div>
+
+          <div class="course-desc-br-row">
+            <span class="title-course-br"
+              *ngIf="modulo.titulo">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
+            <span class="desc-course-br"
+              *ngIf="modulo.descripcion">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="window-br-footer">
+      <button routerLink="/" class="secondary-btn">Regresar</button>
+      <button routerLink="/module-configuration" class="main-btn">Crear sesión</button>
+    </div>
+
+  </div>
 
 </div>

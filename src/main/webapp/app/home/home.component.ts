@@ -13,13 +13,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.component.html',
-  styleUrls: ['home.scss']
+  styleUrls: ['home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
   authSubscription?: Subscription;
   coverPaths = [];
   cursos: any = [];
+  showLoader = false;
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
   ) {}
 
   ngOnInit(): void {
+    this.showLoader = true;
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
@@ -50,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
           this.cursos[i].sanitizedPortadaUrl = '../../../content/images/no_cover.png';
         }
       }
+      this.showLoader = false;
     }
   }
 
