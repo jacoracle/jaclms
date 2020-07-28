@@ -4,6 +4,8 @@ import { ICurso } from 'app/shared/model/curso.model';
 import { Subscription } from 'rxjs';
 import { FileUploadService } from 'app/services/file-upload.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { CurrentModuleService } from 'app/services/current-module.service';
+import { IModulo } from 'app/shared/model/modulo.model';
 
 @Component({
   selector: 'jhi-constructor-book-information',
@@ -13,11 +15,13 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class ConstructorBookInformationComponent implements OnInit {
   subscription: Subscription;
   course?: ICurso;
-  portadaUrl?: SafeUrl;
+  module?: IModulo;
+  portadaCursoUrl?: SafeUrl;
   isPngImage?: boolean;
 
   constructor(
     private currentCourseService: CurrentCourseService,
+    private currentModuloService: CurrentModuleService,
     private fileUploadService: FileUploadService,
     private sanitizer: DomSanitizer
   ) {
@@ -27,6 +31,10 @@ export class ConstructorBookInformationComponent implements OnInit {
         this.isPngImage = this.validateTypeImage(this.course.portadaUrl);
         this.getCover(this.course.portadaUrl);
       }
+    });
+
+    this.subscription = this.currentModuloService.getCurrentModule().subscribe(currentModule => {
+      this.module = currentModule;
     });
   }
 
@@ -39,8 +47,7 @@ export class ConstructorBookInformationComponent implements OnInit {
   private getCover(path: string): void {
     this.fileUploadService.getImageFile(path).subscribe(data => {
       const coverPath = URL.createObjectURL(data.body);
-      const objectUrl = this.sanitizer.bypassSecurityTrustUrl(coverPath);
-      this.portadaUrl = objectUrl;
+      this.portadaCursoUrl = this.sanitizer.bypassSecurityTrustUrl(coverPath);
     });
   }
 }

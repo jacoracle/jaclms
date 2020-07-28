@@ -80,7 +80,10 @@
         background-repeat: no-repeat;
       }
       .info-cover-default {
-        background-image: url('../../../content/images/cover_upload.png');
+        background-image: url('../../../content/images/no_cover.png');
+      }
+      .info-cover-module {
+        background-image: url('../../../content/images/module_cover.png');
       }
     }
     .ic-row-text {
