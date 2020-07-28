@@ -28,7 +28,7 @@
 
     <div class="window-cc-footer">
       <button routerLink="/" class="secondary-btn">Cancelar</button>
-      <button (click)="saveCourse()" class="main-btn">Crear proyecto</button>
+      <button (click)="saveCourse()" class="main-btn" [disabled]="firstClick">Crear proyecto</button>
     </div>
   </div>
 

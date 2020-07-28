@@ -15,7 +15,7 @@
     <!-- Window Footer -->
     <div class="window-cc-footer window-module-footer">
       <button routerLink="/" class="secondary-btn">Cancelar</button>
-      <button (click)="saveModule()" class="main-btn">Crear Sesión</button>
+      <button (click)="saveModule()" class="main-btn" [disabled]="firstClick">Crear Sesión</button>
     </div>
 
   </div>

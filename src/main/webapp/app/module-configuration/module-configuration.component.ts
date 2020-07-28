@@ -9,10 +9,12 @@ import { ModuloUpdateComponent } from 'app/entities/modulo/modulo-update.compone
 export class ModuleConfigurationComponent {
   @ViewChild(ModuloUpdateComponent, { static: false }) moduloUpdateComponent!: ModuloUpdateComponent;
   subscription: any;
+  firstClick = false;
 
   constructor() {}
 
   saveModule(): void {
     this.moduloUpdateComponent.save();
+    this.firstClick = this.moduloUpdateComponent.firstClick;
   }
 }
