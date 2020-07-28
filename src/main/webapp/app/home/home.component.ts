@@ -53,6 +53,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
         }
       }
       this.showLoader = false;
+    } else {
+      this.showLoader = false;
     }
   }
 
