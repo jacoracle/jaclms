@@ -74,10 +74,13 @@
         width: 76px;
         height: 50px;
         border-radius: 6px;
-        background-image: url('../../../content/images/cover_upload.png');
+        // background-image: url('../../../content/images/cover_upload.png');
         background-position: center;
         background-size: 100%;
         background-repeat: no-repeat;
+      }
+      .info-cover-default {
+        background-image: url('../../../content/images/cover_upload.png');
       }
     }
     .ic-row-text {

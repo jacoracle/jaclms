@@ -10,7 +10,7 @@
     <div class="row-c-component-c">
 
       <div class="ic-row-cover">
-        <img [src]="portadaUrl" *ngIf="portadaUrl && portadaUrl !== ''" class="info-cover">
+        <img [src]="portadaUrl" *ngIf="portadaUrl && portadaUrl !== ''" class="info-cover" [ngClass]="{ 'info-cover-default': !isPngImage }">
         <img src="../../../content/images/no_cover.png" *ngIf="!portadaUrl" class="info-cover">
       </div>
       <div class="ic-row-text">

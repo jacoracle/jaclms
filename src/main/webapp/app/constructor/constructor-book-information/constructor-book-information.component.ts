@@ -14,6 +14,7 @@ export class ConstructorBookInformationComponent implements OnInit {
   subscription: Subscription;
   course?: ICurso;
   portadaUrl?: SafeUrl;
+  isPngImage?: boolean;
 
   constructor(
     private currentCourseService: CurrentCourseService,
@@ -23,12 +24,17 @@ export class ConstructorBookInformationComponent implements OnInit {
     this.subscription = this.currentCourseService.getCurrentCourse().subscribe(currentCourse => {
       this.course = currentCourse;
       if (this.course.portadaUrl && this.course.portadaUrl !== '') {
+        this.isPngImage = this.validateTypeImage(this.course.portadaUrl);
         this.getCover(this.course.portadaUrl);
       }
     });
   }
 
   ngOnInit(): void {}
+
+  validateTypeImage(imgUri: string): boolean {
+    return imgUri.slice(imgUri.length - 3).toLowerCase() === 'png';
+  }
 
   private getCover(path: string): void {
     this.fileUploadService.getImageFile(path).subscribe(data => {
