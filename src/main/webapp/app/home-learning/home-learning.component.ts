@@ -9,6 +9,8 @@ import { IModulo } from 'app/shared/model/modulo.model';
 
 import { HttpResponse } from '@angular/common/http';
 import { SafeUrl } from '@angular/platform-browser';
+import { Validators, FormControl } from '@angular/forms';
+import { ErrorStateMatcherLearning } from './error-state-matcher-learning';
 
 @Component({
   selector: 'jhi-learning-module',
@@ -20,6 +22,13 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
   authSubscription?: Subscription;
   modulos: any = [];
   defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
+
+  sessionTitleFormCtrl = new FormControl('', [
+    Validators.required
+    // Validators.email,
+  ]);
+
+  matcher = new ErrorStateMatcherLearning();
 
   constructor(private accountService: AccountService, private loginModalService: LoginModalService, private moduleService: ModuloService) {}
 

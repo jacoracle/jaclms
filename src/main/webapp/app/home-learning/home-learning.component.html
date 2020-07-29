@@ -16,58 +16,50 @@
                 </div>
             </div>
         </div>
-
-        <div class="window-br-body-topbar recent-modules">
-            <div class="row-wbr-bt" *ngIf="modulos.length">
-                <p>Tus módulos recientes ( {{modulos.length}} )</p>
-            </div>
-        </div>
+        <!-- close header -->
 
         <!-- Window Empty -->
-        <div class="window-br-body" *ngIf="!modulos.length">
+        <div class="window-br-body" *ngIf="modulos.length">
             <div class="container-br-message">
                 <div class="br-message">
                     <div class="brm-1">
                         <div class="br-message-icon"></div>
                     </div>
                     <div class="brm-2">
-                        <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
-                        <p>Para comenzar seleccione un Módulo.</p>
+                        <p>Resultados de búsqueda de sesiones... ( {{modulos.length}} )</p>
+                        
+                        <div class="search-container-learning">
+                            <form class="example-form">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Título</mat-label>
+                                    <input matInput [formControl]="sessionTitleFormCtrl" [errorStateMatcher]="matcher"
+                                        placeholder="título de la sesión">
+                                    <mat-hint>Errors appear instantly!</mat-hint>
+                                    <mat-error
+                                        *ngIf="!sessionTitleFormCtrl.hasError('required')">
+                                        Captura el título de la sesión para filtrar
+                                    </mat-error>
+                                    <mat-error *ngIf="sessionTitleFormCtrl.hasError('required')">
+                                        El título es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </form>
+                        </div>
+                    
+
+                    <!--
+                        <div class="window-br-body-topbar recent-modules">
+                            <div class="row-wbr-bt" *ngIf="modulos.length">
+                                <p>Resultados de búsqueda de sesiones... ( {{modulos.length}} )</p>
+                            </div>
+                        </div>
+                    -->
+
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Window content Module -->
-        <div class="window-br-body" *ngIf="modulos.length">
-            <div class="br-body-row">
-                <div class="module-cover-br" *ngFor="let modulo of modulos"><!--[routerLink]="['/constructor-layout', modulo.id, 'module']"-->
-
-                    <div class="module-cover-br-margin">
-                        <!-- <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="modulo.sanitizedPortadaUrl"> -->
-                        <div class="module-cover-br-img"></div>
-                    </div>
-
-                    <div (click)="previewModule(modulo.id, $event)" class="delete-module-br">
-                        <i class="icon ni-delete icon-negative"></i>
-                    </div>
-
-                    <div class="module-desc-br-row">
-                        <span
-                            class="title-module-br">{{modulo.titulo.length > 48 ? modulo.titulo.substring(0, 48) + "..." : modulo.titulo}}</span>
-                        <span
-                            class="desc-module-br">{{modulo.descripcion.length > 48 ? modulo.descripcion.substring(0, 48) + "..." : modulo.descripcion}}</span>
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-            <div class="form-learning-path">
-                <label for="name">Nombre</label>
-                <input type="text" name="name" id="name"><br>
-                <label for="version">Versión</label>
-                <input type="text" name="version" id="version">
-            </div>
-        </div>
+        
 
         <!-- Window footer -->
         <div class="window-br-footer">
@@ -75,5 +67,6 @@
         </div>
 
     </div>
+    <!-- close div isAuthenticated -->
 
 </div>
