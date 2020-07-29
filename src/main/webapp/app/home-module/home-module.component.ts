@@ -20,16 +20,19 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   authSubscription?: Subscription;
   modulos: any = [];
   defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
+  showLoader = false;
 
   constructor(private accountService: AccountService, private loginModalService: LoginModalService, private moduleService: ModuloService) {}
 
   ngOnInit(): void {
+    this.showLoader = true;
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
         this.moduleService.query().subscribe(
           (res: HttpResponse<IModulo[]>) => {
             this.modulos = res.body;
+            this.showLoader = false;
           },
           () => this.onQueryError()
         );

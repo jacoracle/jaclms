@@ -34,6 +34,7 @@ type SelectableEntity = IModalidad | IVersion | ICategoria | IAsignatura | INume
   templateUrl: './curso-update.component.html'
 })
 export class CursoUpdateComponent implements OnInit {
+  firstClick = false;
   selectedTabIndex = 0;
   isSaving = false;
   modalidads: IModalidad[] = [];
@@ -270,6 +271,7 @@ export class CursoUpdateComponent implements OnInit {
     }
     curso.portadaUrl = this.portadaUrl;
     if (this.editForm.valid) {
+      this.firstClick = true;
       if (curso.id !== undefined && curso.id !== null) {
         this.subscribeToSaveResponse(this.cursoService.update(cursoFicha));
       } else {

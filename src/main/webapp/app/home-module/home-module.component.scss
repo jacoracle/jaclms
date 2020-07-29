@@ -390,3 +390,18 @@
     margin-top: -350px;
   }
 }
+// Loader
+.loader-home {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 100px);
+  // background-color: rgba(255, 255, 255, 0.9);
+  background-color: $window-body-color;
+  z-index: 3;
+  cursor: default;
+  border-radius: 0 0 6px 6px;
+  top: 100px;
+  .loader {
+    border: 3.6px solid $blue-nimbus-dark;
+  }
+}
