@@ -10,16 +10,14 @@
     <div class="row-c-component-c">
 
       <div class="ic-row-cover">
-        <img [src]="portadaUrl" *ngIf="portadaUrl && portadaUrl !== ''" class="info-cover">
-        <img src="../../../content/images/no_cover.png" *ngIf="!portadaUrl" class="info-cover">
+        <img [src]="portadaCursoUrl" *ngIf="portadaCursoUrl && portadaCursoUrl !== ''" class="info-cover" [ngClass]="{ 'info-cover-default': !isPngImage }">
+        <img *ngIf="module && module !== ''" class="info-cover info-cover-module">
+        <img *ngIf="(!portadaCursoUrl || portadaCursoUrl === '') && (!module || module === '')"  class="info-cover info-cover-default">
       </div>
       <div class="ic-row-text">
         <p *ngIf="course">{{course.titulo}}</p>
-        <!--
-        <p>Nombre de Autor</p>
-        -->
+        <p *ngIf="module">{{module.titulo}}</p>
       </div>
-
     </div>
   </div>
 </div>

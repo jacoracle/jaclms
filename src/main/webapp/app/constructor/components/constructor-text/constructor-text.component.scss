@@ -1,96 +1,28 @@
-#component-text-row {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: teal;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-
-  .header-co-text {
-    position: relative;
-    width: 100%;
-    height: 35px;
-    background-color: #e7e8ed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .row-co-text {
-      position: relative;
-      width: 96%;
-      height: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .icons-co-1 {
-        position: relative;
-        width: auto;
-        height: 35px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-
-        .item-icn-co {
-          position: relative;
-          width: 25px;
-          height: 25px;
-          margin-right: 12px;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: 70%;
-          border-radius: 8px;
-          background-color: rgba(150, 150, 150, 0);
-          transition: 0.3s;
-
-          &:hover {
-            background-color: rgba(150, 150, 150, 0.1);
-          }
-        }
-
-        .icn-co-1 {
-          background-image: url('../../../../content/images/tb_bold_icn.svg');
-          background-size: 65%;
-        }
-
-        .icn-co-2 {
-          background-image: url('../../../../content/images/tb_italic_icn.svg');
-        }
-
-        .icn-co-3 {
-          background-image: url('../../../../content/images/tb_underline_icn.svg');
-        }
-
-        .icn-co-4 {
-          background-image: url('../../../../content/images/tb_font-color_icn.svg');
-        }
-
-        .icn-co-5 {
-          background-image: url('../../../../content/images/tb_remove_icn.svg');
-          background-size: 80%;
-        }
-
-        .icn-co-6 {
-          background-image: url('../../../../content/images/tb_repeat_icn 2.svg');
-        }
-
-        .icn-co-7 {
-          //background-image: url('../../../../content/images/tb_undo_icn2.svg');
-        }
-
-        .icn-co-8 {
-          background-image: url('../../../../content/images/tb_repeat_icn.svg');
-        }
-      }
-    }
-  }
-}
-
 .editor {
   border: none;
   font-size: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+// Alto total de editor 180px
+.ql-toolbar.ql-snow {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: #e2e4e9;
+  padding: 0;
+  border: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.ql-container.ql-snow {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border: 0;
 }
 
 .ql-editor p {

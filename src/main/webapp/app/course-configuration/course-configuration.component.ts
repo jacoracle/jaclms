@@ -8,6 +8,7 @@ import { CursoUpdateComponent } from 'app/entities/curso/curso-update.component'
   styleUrls: ['./course-configuration.component.scss']
 })
 export class CourseConfigurationComponent {
+  firstClick = false;
   @Output() selectedTabIndex = 0;
   tabs = [
     {
@@ -49,5 +50,6 @@ export class CourseConfigurationComponent {
 
   saveCourse(): void {
     this.cursoUpdateComponent.save();
+    this.firstClick = this.cursoUpdateComponent.firstClick;
   }
 }

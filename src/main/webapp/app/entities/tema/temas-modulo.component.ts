@@ -20,17 +20,18 @@ import { MatChipInputEvent } from '@angular/material/chips';
 export class TopicModuleComponent implements OnInit {
   // Chips Angular Material
 
+  private allowFreeTextAddModuleTopic = false;
   visible = true;
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  themeCtrl = new FormControl();
+  topicCtrl = new FormControl();
 
   listThemes: ITema[] = [];
   listFullThemes: ITema[] = [];
   filteredThemes: Observable<ITema[]>;
 
-  @ViewChild('themeInput', { static: false }) themeInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('topicInput', { static: false }) topicInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
 
   // Termina Chips Angular Material
@@ -38,8 +39,6 @@ export class TopicModuleComponent implements OnInit {
   selectedTopics: ITema[] = [];
   topicsModule: ITema[] = [];
   foundTopics: ITema[] = [];
-
-  @ViewChild('inputstring', { static: false }) searchElement: ElementRef | undefined;
 
   constructor(protected temaService: TemaService) {
     this.temaService
@@ -53,7 +52,7 @@ export class TopicModuleComponent implements OnInit {
         this.listFullThemes = resBody;
       });
 
-    this.filteredThemes = this.themeCtrl.valueChanges.pipe(
+    this.filteredThemes = this.topicCtrl.valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) => (fruit ? this._filterTheme(fruit) : this.listFullThemes.slice()))
     );
@@ -78,22 +77,31 @@ export class TopicModuleComponent implements OnInit {
 
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
-  addTheme(event: MatChipInputEvent): void {
-    const input = event.input;
+  addTopic(event: MatChipInputEvent): void {
+    if (!this.allowFreeTextAddModuleTopic) {
+      // only allowed to select from the filtered autocomplete list
+      console.error('allowFreeTextAddModuleTopic is false');
+      return;
+    }
+
+    // Add our topic
     const value = event.value;
-    // Add our fruit
-    if (value) {
-      this.listThemes.push(value as ITema);
+    if ((value || '').trim()) {
+      this.selectTopicByName(value.trim());
     }
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
-    this.themeCtrl.setValue(null);
+
+    this.resetInputs();
   }
 
-  removeTheme(fruit: ITema): void {
-    const index = this.listThemes.indexOf(fruit);
+  private resetInputs(): void {
+    // clear input element
+    this.topicInput.nativeElement.value = '';
+    // clear control value and trigger topicCtrl.valueChanges event
+    this.topicCtrl.setValue(null);
+  }
+
+  removeTopic(topic: ITema): void {
+    const index = this.listThemes.indexOf(topic);
 
     if (index >= 0) {
       this.listThemes.splice(index, 1);
@@ -104,17 +112,43 @@ export class TopicModuleComponent implements OnInit {
     if (!this.listThemes.includes(event.option.value)) {
       this.listThemes.push(event.option.value as ITema); //   viewValue
     }
-    this.themeInput.nativeElement.value = '';
-    this.themeCtrl.setValue(null);
+    this.topicInput.nativeElement.value = '';
+    this.topicCtrl.setValue(null);
   }
 
   private _filterTheme(value: any): ITema[] {
     if (typeof value === 'string') {
-      return this.listFullThemes.filter(th => th.nombre!.toLowerCase().includes(value.toLowerCase())); //  { fruit.id === value.id && fruit.nombre === value.nombre });
+      // return this.listFullThemes.filter(th => th.nombre!.toLowerCase().includes(value.toLowerCase()));
+      return this.filterTopics(this.listFullThemes, value);
     }
     return this.listFullThemes.filter(th => {
       th.id === value.id && th.nombre === value.nombre;
     });
+  }
+
+  private filterTopics(topicsList: ITema[], topicValue: String): ITema[] {
+    let filteredTopicsList: ITema[] = [];
+    const typedValue = topicValue.toLowerCase();
+    const topicsMatchingTopicsName = topicsList.filter(t => t.nombre!.toLowerCase().includes(typedValue));
+    if (topicsMatchingTopicsName.length || this.allowFreeTextAddModuleTopic) {
+      filteredTopicsList = topicsMatchingTopicsName;
+      this.allowFreeTextAddModuleTopic = true;
+    } else {
+      filteredTopicsList = topicsMatchingTopicsName;
+    }
+
+    return filteredTopicsList;
+  }
+
+  private selectTopicByName(tipoModulo: string): void {
+    const foundTopic = this.listFullThemes.filter(t => t.nombre!.toLocaleLowerCase() === tipoModulo.toLowerCase());
+    if (foundTopic.length) {
+      this.listThemes.push(foundTopic[0]);
+      this.allowFreeTextAddModuleTopic = true;
+    } else {
+      this.allowFreeTextAddModuleTopic = false;
+      console.error('Tema inexistente, no puede agregarse.');
+    }
   }
 
   // TERMINA CODE DE CHIPS ANGULAR MATERIAL

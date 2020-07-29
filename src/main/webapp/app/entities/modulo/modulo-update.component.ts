@@ -22,6 +22,7 @@ import { ColaboradoresModuleComponent } from '../colaborador/colaboradores-modul
   styleUrls: ['./modulo-update.component.scss']
 })
 export class ModuloUpdateComponent implements OnInit {
+  firstClick = false;
   gradoAcademicos: IGradoAcademico[] = [];
   numerogrados: INumeroGrado[] = [];
   selectedGradeModule: any;
@@ -142,6 +143,7 @@ export class ModuloUpdateComponent implements OnInit {
     }
 
     if (this.editForm.valid) {
+      this.firstClick = true;
       if (modulo.id) {
         // console.error('##########   Deberá actualizar');
         this.subscribeToSaveResponse(this.moduloService.update(modulo));
@@ -175,7 +177,7 @@ export class ModuloUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(res: any): void {
-    this.router.navigate(['/constructor-layout', res.body.id, 'module']);
+    this.router.navigate(['/constructor-layout', res.body.modulo.id, 'module']);
     this.isSaving = false;
   }
 

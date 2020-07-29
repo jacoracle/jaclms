@@ -14,10 +14,10 @@ import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,9 +34,28 @@ import javax.imageio.ImageIO;
 @RestController
 @RequestMapping(RestConstants.PATH_API)
 public class VideoResource {
+	/**
+	 * properties linux
+	 */
+	@Value(value = "${rutas.linux}")
+	private String lin;
+
+	/**
+	 * properties windows
+	 */
+	@Value(value = "${rutas.windows}")
+	private String win;
 	
-	/** path. */
-	private static final String PATH = System.getProperty("user.home") + "/resources" + File.separator;
+	
+	/**
+	 * operating system
+	 */
+	String SistemaOperativo = System.getProperty("os.name");
+	
+	/**
+	 * osNameMatch
+	 */
+	 String osNameMatch = SistemaOperativo.toLowerCase();
 	
 	/** Logger. */
 	private final Logger log = LoggerFactory.getLogger(VideoResource.class);
@@ -88,7 +107,18 @@ public class VideoResource {
 	@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
 	public ResponseEntity<byte[]> frameVideo(@RequestParam("file") String nameVideo) throws IOException, JCodecException{
 		StringBuilder builder = new StringBuilder();
-		builder.append(PATH);
+		if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			builder.append(raiz).append(win);
+		}
+
+		else {
+			builder.append(lin);
+		}
+		log.info("******** Nimbus loadVideo Request ******");
 		File file = new File(builder.append(nameVideo).toString());
 		int frameNumber = 255;
 		Picture frame = FrameGrab.getFrameFromFile(file, frameNumber);
@@ -114,7 +144,18 @@ public class VideoResource {
 	private ResponseEntity<byte[]> videoBanner(Boolean banner, String nameVideo ) {
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append(PATH);
+		
+		if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
+		           || osNameMatch.equals("windows 7"))
+
+		{
+			String raiz = System.getProperty("user.home");
+			builder.append(raiz).append(win);
+		}
+
+		else {
+			builder.append(lin);
+		}
 		log.debug("******** Nimbus Video Request ******");
 		log.debug("******** Path:  {} ****** ", nameVideo);
 		
