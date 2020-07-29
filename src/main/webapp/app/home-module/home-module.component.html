@@ -17,13 +17,13 @@
       </div>
     </div>
 
+    <div [hidden]="!showLoader" class="loader-home">
+      <span class="loader"></span>
+    </div>
+
     <div class="window-br-body-topbar recent-modules">
       <div class="row-wbr-bt" *ngIf="modulos.length">
         <p>Tus sesiones recientes ( {{modulos.length}} )</p>
-      </div>
-      <div [hidden]="!showLoader" class="loader-home-module">
-        <!-- Doing something -->
-        <span class="loader"></span>
       </div>
     </div>
 

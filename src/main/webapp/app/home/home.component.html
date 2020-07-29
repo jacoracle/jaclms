@@ -15,16 +15,15 @@
           <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
         </div>
       </div>
+    </div>
 
+    <div [hidden]="!showLoader" class="loader-home">
+      <span class="loader"></span>
     </div>
 
     <div class="window-br-body-topbar">
       <div class="row-wbr-bt" *ngIf="cursos.length">
         <p>Tus elementos recientes ( {{cursos.length}} )</p>
-      </div>
-      <div [hidden]="!showLoader" class="loader-home">
-        <!-- Doing something -->
-        <span class="loader"></span>
       </div>
     </div>
 
