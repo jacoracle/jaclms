@@ -256,9 +256,8 @@ export class ModuloUpdateComponent implements OnInit {
     this.actualSelectedGradesModule = [...selectedGradesId];
 
     if (idAcademicGradeToAdd > 0) {
-      const newList = this.verifyList(idAcademicGradeToAdd, objectsGradesSelectedIds);
-      console.error(newList);
-      this.selectedGradesModule = [...newList];
+      const selectedGrades = this.verifyList(idAcademicGradeToAdd, objectsGradesSelectedIds);
+      this.selectedGradesModule = [...selectedGrades];
     }
   }
 
