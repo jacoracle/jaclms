@@ -15,6 +15,7 @@ import { IGradoAcademico } from 'app/shared/model/grado-academico.model';
 import { INumeroGrado } from 'app/shared/model/numero-grado.model';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
 import { ColaboradoresModuleComponent } from '../colaborador/colaboradores-modulo.component';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'jhi-modulo-update',
@@ -61,6 +62,7 @@ export class ModuloUpdateComponent implements OnInit {
   @ViewChild(ColaboradoresModuleComponent, { static: false }) colaboradoresComponent!: ColaboradoresModuleComponent;
   @ViewChild(TopicModuleComponent, { static: false }) temasModuloComponent!: TopicModuleComponent;
   @ViewChild(TypeModuleComponent, { static: false }) tiposModuloComponent!: TypeModuleComponent;
+  @ViewChild('inputGrades', { static: false }) inputGradesSelected!: MatSelect;
 
   constructor(
     protected moduloService: ModuloService,
@@ -113,10 +115,6 @@ export class ModuloUpdateComponent implements OnInit {
     });
   }
 
-  previousState(): void {
-    window.history.back();
-  }
-
   save(): void {
     this.isSaving = true;
     const modulo = this.createFromForm();
@@ -145,10 +143,10 @@ export class ModuloUpdateComponent implements OnInit {
     if (this.editForm.valid) {
       this.firstClick = true;
       if (modulo.id) {
-        // console.error('##########   Deberá actualizar');
+        // console.error('##########   Deberá actualizar: ', modulo);
         this.subscribeToSaveResponse(this.moduloService.update(modulo));
       } else {
-        // console.error('##########   Deberá guardar');
+        // console.error('##########   Deberá guardar: ', modulo);
         this.subscribeToSaveResponse(this.moduloService.create(modulo));
       }
     }
@@ -197,8 +195,7 @@ export class ModuloUpdateComponent implements OnInit {
     this.editForm.controls[controlName].setErrors(null);
   }
 
-  // cambios grado
-
+  // when academic grade selection change, must be loaded grades number
   changeGradoAcademico(e: any): void {
     this.gradoAcademicoService.find(e.target.selectedIndex + 1).subscribe(res => {
       if (res.body && res.body.numeroGrados) {
@@ -231,7 +228,7 @@ export class ModuloUpdateComponent implements OnInit {
    */
   updatingGradesSelected(evt: any, isChangeAcademicGrade: boolean): void {
     let objectsGradesSelectedIds: INumeroGrado[];
-
+    let idAcademicGradeToAdd = -1;
     if (isChangeAcademicGrade) {
       //  get objects from selected ids using event value and
       objectsGradesSelectedIds = this.numerogrados.filter(el => {
@@ -248,23 +245,31 @@ export class ModuloUpdateComponent implements OnInit {
       });
     }
 
+    if (objectsGradesSelectedIds.length) {
+      idAcademicGradeToAdd = objectsGradesSelectedIds[0].gradoAcademico!.id!;
+    }
+
     const selectedGradesId = objectsGradesSelectedIds.map(function(obj): number {
       return obj.id!;
     });
     //  set ids selected to array property on component
     this.actualSelectedGradesModule = [...selectedGradesId];
-    //  merge global array and selected grades objects to delete duplicates
-    const joinSelectedGrades = [...this.selectedGradesModule, ...objectsGradesSelectedIds];
 
-    const uniqueSelectedGrades = joinSelectedGrades.reduce((acc: INumeroGrado[], current: INumeroGrado): INumeroGrado[] => {
-      const x = acc.find((item: any) => item.id === current.id);
-      if (!x) {
-        return acc.concat([current]);
-      } else {
-        return acc;
-      }
-    }, []);
-    //  set selected grades to global array
-    this.selectedGradesModule = [...uniqueSelectedGrades];
+    if (idAcademicGradeToAdd > 0) {
+      const selectedGrades = this.verifyList(idAcademicGradeToAdd, objectsGradesSelectedIds);
+      this.selectedGradesModule = [...selectedGrades];
+    }
+  }
+
+  /**
+   * Verify element to add on ful list selected to delete unmarked items from multiple select
+   * @param academicGradeIdToAdd
+   * @param objectsGradesSelectedIds
+   */
+  verifyList(academicGradeIdToAdd: number, objectsGradesSelectedIds: INumeroGrado[]): INumeroGrado[] {
+    const onlySelected = this.selectedGradesModule.filter(ag => {
+      return ag.gradoAcademico!.id !== academicGradeIdToAdd;
+    });
+    return [...onlySelected, ...objectsGradesSelectedIds];
   }
 }

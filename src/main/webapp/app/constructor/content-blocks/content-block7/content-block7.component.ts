@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, AfterContentInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output, AfterContentInit, ViewEncapsulation } from '@angular/core';
 import { BloquesCurso } from 'app/shared/model/bloques-curso.model';
 import { IComponente } from 'app/shared/model/componente.model';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
@@ -7,7 +7,8 @@ import { ITargetScroll, TargetScroll } from 'app/shared/model/target-scroll.mode
 @Component({
   selector: 'jhi-content-block7',
   templateUrl: './content-block7.component.html',
-  styleUrls: ['./content-block7.component.scss']
+  styleUrls: ['./content-block7.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ContentBlock7Component implements AfterContentInit {
   imgSrc = './../../../../content/images/cover_upload.png';
