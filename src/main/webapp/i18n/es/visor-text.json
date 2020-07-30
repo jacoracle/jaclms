@@ -1,0 +1,9 @@
+{
+  "constructorApp": {
+    "contenido": {
+      "limit": {
+        "error": "El texto ingresado junto con el formato no puede exceder los 2000 caracteres."
+      }
+    }
+  }
+}
