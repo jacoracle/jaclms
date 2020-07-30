@@ -1,5 +1,4 @@
 import { TipoNivelJerarquico } from './enumerations/tipo-nivel-jerarquico.model';
-import { IBloqueComponentes } from './bloque-componentes.model';
 import { IBloquesCurso } from './bloques-curso.model';
 
 export interface INivelJerarquico {
