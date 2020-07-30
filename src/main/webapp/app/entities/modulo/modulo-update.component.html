@@ -60,7 +60,7 @@
 
           <div class="form-nimbus">
             <label for="field_gradoAcademico">Grado
-              Academico</label>
+              Académico</label>
             <div class="selectWrap">
               <select id="field_gradoAcademico" name="gradoAcademico" formControlName="gradoAcademico"
                 (change)="changeGradoAcademico($event)">
@@ -78,7 +78,7 @@
           <div class="row-module-grade">
             <mat-form-field appearance="fill" class="testG">
               <mat-label>Número de Grado</mat-label>
-              <mat-select [formControl]="gradosCtrl" multiple (selectionChange)="setSelectedGrades($event)"
+              <mat-select [formControl]="gradosCtrl" #inputGrades multiple (selectionChange)="setSelectedGrades($event)"
               [(ngModel)]="actualSelectedGradesModule" name="actualSelectedGradesModule">
                 <mat-option *ngFor="let g of numerogrados" [value]="g.id">{{g.descripcion}}</mat-option>
               </mat-select>
@@ -101,19 +101,19 @@
 
       <!-- Row -->
       <div class="row-conf-module margintop-25">
-        <div class="rcm-col1">
+        <div class="rcm-col">
           <jhi-tipos-modulo></jhi-tipos-modulo>
         </div>
-        <div class="rcm-col2">
+        <div class="rcm-col">
           <jhi-colaboradores-modulo></jhi-colaboradores-modulo>
         </div>
       </div>
 
       <div class="row-conf-module margintop-25">
-        <div class="rcm-col1">
+        <div class="rcm-col">
           <jhi-temas-modulo></jhi-temas-modulo>
         </div>
-        <div class="rcm-col2">
+        <div class="rcm-col">
         </div>
       </div>
       <!-- End Row -->
