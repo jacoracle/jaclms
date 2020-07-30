@@ -48,7 +48,7 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
             },
             () => {
               this.eventManager.broadcast(
-                new JhiEventWithContent('constructorApp.blockUpdateError', {
+                new JhiEventWithContent('constructorApp.httpError', {
                   message: 'constructorApp.curso.blockUpdate.error',
                   type: 'danger'
                 })
@@ -57,7 +57,7 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
           );
         } else {
           this.eventManager.broadcast(
-            new JhiEventWithContent('constructorApp.blockUpdateError', {
+            new JhiEventWithContent('constructorApp.validationError', {
               message: 'constructorApp.contenido.limit.error',
               type: 'danger'
             })
