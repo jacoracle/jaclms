@@ -27,27 +27,46 @@
                     </div>
                     <div class="brm-2">
                         <p>Resultados de búsqueda de sesiones... ( {{modulos.length}} )</p>
-                        
+
                         <div class="search-container-learning">
                             <form class="example-form">
-                                <mat-form-field class="example-full-width">
-                                    <mat-label>Título</mat-label>
-                                    <input matInput [formControl]="sessionTitleFormCtrl" [errorStateMatcher]="matcher"
-                                        placeholder="título de la sesión">
-                                    <mat-hint>Errors appear instantly!</mat-hint>
-                                    <mat-error
-                                        *ngIf="!sessionTitleFormCtrl.hasError('required')">
-                                        Captura el título de la sesión para filtrar
-                                    </mat-error>
-                                    <mat-error *ngIf="sessionTitleFormCtrl.hasError('required')">
-                                        El título es <strong>requerido</strong>
-                                    </mat-error>
-                                </mat-form-field>
+                                <div class="container-search-flearning">
+                                    <div class="rc-search-flearning">
+                                        <div class="cc-search-flearning">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Título</mat-label>
+                                                <input matInput [formControl]="sessionTitleFormCtrl"
+                                                    [errorStateMatcher]="matcher" placeholder="título de la sesión">
+                                                <mat-hint>Errors appear instantly!</mat-hint>
+                                                <mat-error *ngIf="!sessionTitleFormCtrl.hasError('required')">
+                                                    Captura el título de la sesión para filtrar
+                                                </mat-error>
+                                                <mat-error *ngIf="sessionTitleFormCtrl.hasError('required')">
+                                                    El título es <strong>requerido</strong>
+                                                </mat-error>
+                                            </mat-form-field>
+                                            <div class="cc-search-flearning">
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-label>Descripcion</mat-label>
+                                                    <input matInput [formControl]="sessionTitleFormCtrl"
+                                                        [errorStateMatcher]="matcher" placeholder="título de la sesión">
+                                                    <mat-hint>Errors appear instantly!</mat-hint>
+                                                    <mat-error *ngIf="!sessionTitleFormCtrl.hasError('required')">
+                                                        Captura la descripción para filtrar
+                                                    </mat-error>
+                                                    <mat-error *ngIf="sessionTitleFormCtrl.hasError('required')">
+                                                        La descripción es <strong>requerida</strong>
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
-                    
 
-                    <!--
+
+                        <!--
                         <div class="window-br-body-topbar recent-modules">
                             <div class="row-wbr-bt" *ngIf="modulos.length">
                                 <p>Resultados de búsqueda de sesiones... ( {{modulos.length}} )</p>
@@ -59,7 +78,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         <!-- Window footer -->
         <div class="window-br-footer">
