@@ -41,19 +41,30 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
         this.component!.contenido!.contenido = this.htmlContent;
         // Actualizar contenido de componente en base de datos
         const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
-        this.subscription = this.contenidoService.update(contenido).subscribe(
-          data => {
-            this.component!.contenido = data.body!;
-          },
-          () => {
+        if (contenido.contenido) {
+          if (contenido.contenido.length <= 2000) {
+            this.subscription = this.contenidoService.update(contenido).subscribe(
+              data => {
+                this.component!.contenido = data.body!;
+              },
+              () => {
+                this.eventManager.broadcast(
+                  new JhiEventWithContent('constructorApp.httpError', {
+                    message: 'constructorApp.curso.blockUpdate.error',
+                    type: 'danger'
+                  })
+                );
+              }
+            );
+          } else {
             this.eventManager.broadcast(
-              new JhiEventWithContent('constructorApp.blockUpdateError', {
-                message: 'constructorApp.curso.blockUpdate.error',
+              new JhiEventWithContent('constructorApp.validationError', {
+                message: 'constructorApp.contenido.limit.error',
                 type: 'danger'
               })
             );
           }
-        );
+        }
       }
     });
   }
