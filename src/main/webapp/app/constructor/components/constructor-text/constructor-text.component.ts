@@ -61,10 +61,18 @@ export class ConstructorTextComponent {
   set htmlContent(val: string) {
     if (this.isTitle && this.headingSelect === undefined) {
       this._htmlContent = this.restoreTitle(val);
-      this.textService.setText(this.restoreTitle(val));
+      // this.textService.setText(this.restoreTitle(val));
     } else {
       this._htmlContent = val;
-      this.textService.setText(val);
+      // this.textService.setText(val);
+    }
+  }
+
+  nowrite(): any {
+    if (this.isTitle && this.headingSelect === undefined) {
+      this.textService.setText(this.restoreTitle(this._htmlContent));
+    } else {
+      this.textService.setText(this._htmlContent);
     }
   }
 
