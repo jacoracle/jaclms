@@ -68,6 +68,14 @@ export class ConstructorTextComponent {
     }
   }
 
+  noWrite(): any {
+    if (this.isTitle && this.headingSelect === undefined) {
+      this.textService.setTextFinish(this.restoreTitle(this._htmlContent));
+    } else {
+      this.textService.setTextFinish(this._htmlContent);
+    }
+  }
+
   restoreTitle(text: string): any {
     if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1><h1>')) {
       if (this.textWithoutHtml(text).length > 0) {

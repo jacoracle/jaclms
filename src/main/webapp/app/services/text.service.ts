@@ -7,6 +7,7 @@ import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes
 })
 export class TextService {
   private text = new Subject<string>();
+  private textFinish = new Subject<string>();
   private editing = new Subject<boolean>();
   private templateTypeId = new Subject<ITipoBloqueComponentes>();
 
@@ -18,6 +19,14 @@ export class TextService {
 
   setText(text: string): void {
     this.text.next(text);
+  }
+
+  getTextFinish(): Observable<string> {
+    return this.textFinish.asObservable();
+  }
+
+  setTextFinish(value: string): void {
+    this.textFinish.next(value);
   }
 
   getEditing(): Observable<boolean> {

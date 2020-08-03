@@ -21,6 +21,7 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
   subscription: Subscription;
   imgSrc = './../../../../content/images/img3.png';
   editing = false;
+  text = '';
   @Input() component?: Componente;
   @Input() templateType?: any;
   @Output() updateComponent = new EventEmitter();
@@ -35,36 +36,43 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
     this.subscription = this.textService.getEditing().subscribe(editing => {
       this.editing = editing;
     });
-    this.subscription = this.textService.getText().subscribe(text => {
+    this.subscription = this.textService.getTextFinish().subscribe(textFinish => {
       if (this.editing) {
-        this.htmlContent = text ? text : '';
         this.component!.contenido!.contenido = this.htmlContent;
         // Actualizar contenido de componente en base de datos
-        const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
-        if (contenido.contenido) {
-          if (contenido.contenido.length <= 2000) {
-            this.subscription = this.contenidoService.update(contenido).subscribe(
-              data => {
-                this.component!.contenido = data.body!;
-              },
-              () => {
-                this.eventManager.broadcast(
-                  new JhiEventWithContent('constructorApp.httpError', {
-                    message: 'constructorApp.curso.blockUpdate.error',
-                    type: 'danger'
-                  })
-                );
-              }
-            );
-          } else {
-            this.eventManager.broadcast(
-              new JhiEventWithContent('constructorApp.validationError', {
-                message: 'constructorApp.contenido.limit.error',
-                type: 'danger'
-              })
-            );
+        if (textFinish === this.text && textFinish !== '') {
+          const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
+          if (contenido.contenido) {
+            if (contenido.contenido.length <= 2000) {
+              this.subscription = this.contenidoService.update(contenido).subscribe(
+                data => {
+                  this.component!.contenido = data.body!;
+                },
+                () => {
+                  this.eventManager.broadcast(
+                    new JhiEventWithContent('constructorApp.httpError', {
+                      message: 'constructorApp.curso.blockUpdate.error',
+                      type: 'danger'
+                    })
+                  );
+                }
+              );
+            } else {
+              this.eventManager.broadcast(
+                new JhiEventWithContent('constructorApp.validationError', {
+                  message: 'constructorApp.contenido.limit.error',
+                  type: 'danger'
+                })
+              );
+            }
           }
         }
+      }
+    });
+    this.textService.getText().subscribe(text => {
+      this.text = text;
+      if (this.editing) {
+        this.htmlContent = text ? text : '';
       }
     });
   }
