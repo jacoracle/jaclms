@@ -258,6 +258,9 @@ export class ModuloUpdateComponent implements OnInit {
     if (idAcademicGradeToAdd > 0) {
       const selectedGrades = this.verifyList(idAcademicGradeToAdd, objectsGradesSelectedIds);
       this.selectedGradesModule = [...selectedGrades];
+      this.editForm.get('gradoAcademico')!.disable();
+    } else {
+      this.editForm.get('gradoAcademico')!.enable();
     }
   }
 
