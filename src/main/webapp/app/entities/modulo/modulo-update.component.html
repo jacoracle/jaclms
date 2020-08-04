@@ -33,7 +33,7 @@
             <input [ngClass]="{'alert-input': !isValid('descripcion')}" maxlength="255" type="text"
               class="form-control" name="descripcion" id="field_descripcion" formControlName="descripcion" />
             <!-- Aquí va la alerta por campo del formulario -->
-            <div *ngIf="!isValid('descripcion')" class="form-alert"><p>Mensaje de corrección</p></div>
+            <div *ngIf="!isValid('descripcion')" class="form-alert"><p>La descripción no debe superar más de 50 caracteres.</p></div>
           </div>
         </div>
 
