@@ -109,38 +109,9 @@
     }
   }
 
-  /*
-  .window-br-body-topbar {
-    border: solid 1px red;
-    position: relative;
-    width: 100%;
-    height: 50px;
-    background-color: $window-body-color;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .row-wbr-bt {
-      border: solid 1px green;
-      position: relative;
-      width: 92%;
-      height: auto;
-
-      p {
-        position: relative;
-        font-size: 14px;
-        color: #292c36;
-        // margin-left: 4%;
-        // top: 15px;
-        cursor: default;
-      }
-    }
-  }
-  */
-
   // Window body
   .window-br-body {
-    border: solid 1px yellow;
+    border: solid 1px black;
     position: relative;
     width: 100%;
     height: 475px;
@@ -149,6 +120,7 @@
     padding-bottom: 30px;
   }
   .window-br-footer {
+    border: solid 1px black;
     position: relative;
     width: 100%;
     height: 75px;
@@ -164,6 +136,7 @@
     }
   }
 
+  /*
   .search-container-learning {
     border: solid 1px red;
 
@@ -177,9 +150,40 @@
       width: 100%;
     }
   }
+  */
+
+  .search-main-container {
+    // border: solid 1px red;
+    margin: 0 auto;
+    width: 94%;
+  }
+
+  .container-search-flearning {
+    // border: solid 1px red;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1em;
+    flex-direction: column;
+  }
+
+  .rc-search-flearning {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .cc-search-flearning {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 15px;
+    // border: solid 1px green;
+  }
 }
 // contenedor de elementos de modulo listados
 .br-body-row {
+  border: dotted 1px yellow;
   position: relative;
   width: 94%;
   height: auto;
@@ -190,186 +194,6 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  @include covers-l {
-    width: 98%;
-  }
-}
-// module element
-.module-cover-br {
-  position: relative;
-  width: 182px;
-  height: auto;
-  min-height: 175px;
-  margin-left: 14px;
-  margin-right: 14px;
-  margin-top: 16px;
-  margin-bottom: 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  cursor: pointer !important;
-  @include covers-xl {
-    margin-left: 16px;
-    margin-right: 16px;
-  }
-  @include covers-l {
-    margin-left: 9px;
-    margin-right: 9px;
-  }
-  @include covers-ml {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-
-  &:hover > .module-cover-br-margin {
-    background-color: rgba(135, 135, 150, 0.3) !important;
-  }
-  .module-cover-br-margin {
-    position: relative;
-    width: 182px;
-    height: 120px;
-    background-color: rgba(135, 135, 150, 0.1);
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.4s;
-    z-index: 1;
-
-    .module-cover-br-image {
-      position: relative;
-      width: 176px;
-      height: 114px;
-      border-radius: 4px;
-      cursor: pointer;
-      background-color: white;
-      transition: 0.4s;
-      opacity: 1;
-    }
-    .module-cover-br-img {
-      position: relative;
-      width: 176px;
-      height: 114px;
-      border-radius: 4px;
-      cursor: pointer;
-      background-color: white;
-      transition: 0.4s;
-      opacity: 1;
-      background-image: url('../../content/images/module_cover.png');
-      background-position: center;
-      background-size: 100%;
-      background-repeat: no-repeat;
-    }
-  }
-  .module-desc-br-row {
-    position: relative;
-    width: 100%;
-    height: auto;
-    min-height: 45px;
-    display: flex;
-    flex-direction: column;
-    z-index: 1;
-    margin-top: 5px;
-
-    .title-module-br {
-      position: relative;
-      width: 100%;
-      height: auto;
-      font-size: 13px;
-      color: $blue-nimbus-dark;
-      line-height: 16px;
-      font-weight: 400;
-    }
-    .desc-module-br {
-      position: relative;
-      width: 100%;
-      height: auto;
-      font-size: 12px;
-    }
-  }
-}
-.delete-module-br {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 30px;
-  height: 30px;
-  background-color: $main-btn-color;
-  z-index: 2;
-  transition: 0.3s;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .icon {
-    cursor: pointer;
-  }
-  &:hover {
-    background-color: $main-btn-color-hover;
-  }
-  &:focus {
-    outline: none;
-  }
-  &:active {
-    transform: scale(0.96);
-  }
-}
-
-.container-br-message {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .br-message {
-    position: relative;
-    width: 250px;
-    height: auto;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .brm-1 {
-      position: relative;
-      width: 100%;
-      height: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .br-message-icon {
-        position: relative;
-        width: 60px;
-        height: 60px;
-        background-image: url('../../content/images/icn_sessage_hand.svg');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 100%;
-        animation: handshake 2s ease-in-out 2;
-      }
-    }
-    .brm-2 {
-      position: relative;
-      width: 100%;
-      height: 100px;
-      text-align: center;
-      p {
-        color: $blue-nimbus-dark;
-        line-height: 22px;
-        cursor: default;
-
-        span {
-          color: #687c99;
-          font-weight: 700;
-        }
-      }
-    }
-  }
 }
 
 .form-learning-path {

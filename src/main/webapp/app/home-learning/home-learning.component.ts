@@ -9,8 +9,10 @@ import { IModulo } from 'app/shared/model/modulo.model';
 
 import { HttpResponse } from '@angular/common/http';
 import { SafeUrl } from '@angular/platform-browser';
-import { Validators, FormControl } from '@angular/forms';
+import { Validators, FormControl, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcherLearning } from './error-state-matcher-learning';
+
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-learning-module',
@@ -23,16 +25,58 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
   modulos: any = [];
   defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
 
-  sessionTitleFormCtrl = new FormControl('', [
-    Validators.required
-    // Validators.email,
-  ]);
+  filteredTopicOpts: any; // : Observable<IModulo[]>;
+  filteredTypeOpts: any;
+  filteredSubjectOpts: any;
+  filteredRoleOpts: any;
 
   matcher = new ErrorStateMatcherLearning();
 
-  constructor(private accountService: AccountService, private loginModalService: LoginModalService, private moduleService: ModuloService) {}
+  learningForm = this.formbuilder.group({
+    sessionTopic: [],
+    sessionSubject: [],
+    sessionType: [],
+    sessionDescriptionFormCtrl: [],
+    sessionTitleFormCtrl: new FormControl('', [
+      Validators.required
+      // Validators.email,
+    ])
+  });
+
+  constructor(
+    private accountService: AccountService,
+    private loginModalService: LoginModalService,
+    private formbuilder: FormBuilder,
+    private moduleService: ModuloService
+  ) {}
 
   ngOnInit(): void {
+    this.filteredTopicOpts = this.learningForm.get('sessionTopic')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value.descripcion)),
+      map(name => (name ? this._filter(name) : this.modulos.slice()))
+    );
+
+    this.filteredTypeOpts = this.learningForm.get('sessionType')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value.descripcion)),
+      map(name => (name ? this._filter(name) : this.modulos.slice()))
+    );
+
+    this.filteredSubjectOpts = this.learningForm.get('sessionSubject')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value.descripcion)),
+      map(name => (name ? this._filter_(name) : this.modulos.slice()))
+    );
+
+    /*
+    this.filteredRoleOpts = this.learningForm.get('sessionTopic')!.valueChanges.pipe(
+      startWith(''),
+      map(value => typeof value === 'string' ? value : value.descripcion),
+      map(name => name ? this._filter(name) : this.modulos.slice())
+    );
+    */
+
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
@@ -44,6 +88,20 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
         );
       }
     });
+  }
+
+  private _filter(value: string): IModulo[] {
+    const filterValue = value.toLowerCase();
+    return this.modulos.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
+  }
+
+  private _filter_(value: string): IModulo[] {
+    const filterValue = value.toLowerCase();
+    return this.modulos.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
+  }
+
+  displayFn(mod: IModulo): string {
+    return mod && mod.descripcion ? mod.descripcion : '';
   }
 
   isAuthenticated(): boolean {
