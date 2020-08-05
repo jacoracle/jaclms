@@ -17,7 +17,7 @@ export class ConstructorHomeComponent {
     this.router.navigate(['/courses-home']);
   }
 
-  redirectModules(): void {
+  redirectUMAs(): void {
     this.router.navigate(['/modules-home']);
   }
 }

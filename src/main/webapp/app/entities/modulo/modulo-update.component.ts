@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -51,7 +51,10 @@ export class ModuloUpdateComponent implements OnInit {
     titulo: [],
     fechaCreacion: [],
     fechaCreacionSys: [],
-    descripcion: [],
+    descripcion: new FormControl('', [
+      Validators.maxLength(50)
+      // Validators.email,
+    ]),
     asignatura: [],
     rolesColaboradores: [],
     gradoAcademico: [],
@@ -258,6 +261,9 @@ export class ModuloUpdateComponent implements OnInit {
     if (idAcademicGradeToAdd > 0) {
       const selectedGrades = this.verifyList(idAcademicGradeToAdd, objectsGradesSelectedIds);
       this.selectedGradesModule = [...selectedGrades];
+      this.editForm.get('gradoAcademico')!.disable();
+    } else {
+      this.editForm.get('gradoAcademico')!.enable();
     }
   }
 

@@ -13,7 +13,7 @@ export class ModuleConfigurationComponent {
 
   constructor() {}
 
-  saveModule(): void {
+  saveUMA(): void {
     this.moduloUpdateComponent.save();
     this.firstClick = this.moduloUpdateComponent.firstClick;
   }

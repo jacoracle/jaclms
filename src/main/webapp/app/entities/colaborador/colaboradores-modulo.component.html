@@ -6,9 +6,9 @@
                 {{ (rc.colaborador.nombres + ' ' + rc.colaborador.apellido1 + ' - ' + rc.rolColaborador.descripcion).substring(0, 25) }}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Roles colaboradores" #colaboradorInput [formControl]="colaboradorCtrl" [matAutocomplete]="auto"
-                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="addColaborador($event)">
+            <input placeholder="Colaboradores y roles" #colaboradorInput [formControl]="colaboradorCtrl"
+                [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addColaborador($event)">
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedColaborador($event)">
             <mat-option *ngFor="let rcOpt of filteredRolesColaboradores | async" [value]="rcOpt">
