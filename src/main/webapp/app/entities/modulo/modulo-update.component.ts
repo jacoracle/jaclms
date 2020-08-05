@@ -265,6 +265,7 @@ export class ModuloUpdateComponent implements OnInit {
       this.selectedGradesModule = [...selectedGrades];
       this.editForm.get('gradoAcademico')!.disable();
     } else {
+      this.selectedGradesModule = [];
       this.editForm.get('gradoAcademico')!.enable();
     }
   }
