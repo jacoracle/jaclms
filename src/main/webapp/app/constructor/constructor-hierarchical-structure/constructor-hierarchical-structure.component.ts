@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { HierarchicalLevel } from 'app/shared/model/enumerations/hierarchical-level.model';
 import { FlatNode } from 'app/shared/model/enumerations/flat-node.model';
+import { NivelJerarquicoService } from 'app/entities/nivel-jerarquico/nivel-jerarquico.service';
+import { INivel } from 'app/shared/model/nivel.model';
 
 @Component({
   selector: 'jhi-constructor-hierarchical-structure',
@@ -17,7 +19,13 @@ import { FlatNode } from 'app/shared/model/enumerations/flat-node.model';
 })
 export class ConstructorHierarchicalStructureComponent implements OnInit {
   objectType = '';
+  _transformer: any;
+  treeControl: any;
+  treeFlattener: any;
+  dataSource: any;
+
   receivedObject: any = {
+    id: 0,
     titulo: ''
   };
   // INICIA TREE
@@ -45,18 +53,13 @@ export class ConstructorHierarchicalStructureComponent implements OnInit {
       children: [{ name: 'Session/Curso 1' }, { name: 'Session/Curso 2' }, { name: 'Session/Curso 3' }]
     }
   ];
-
-  _transformer: any;
-  treeControl: any;
-  treeFlattener: any;
-  dataSource: any;
-
   // TERMINA TREE
 
   constructor(
     private route: ActivatedRoute,
     private currentCourseService: CurrentCourseService,
-    private currentModuleService: CurrentModuleService
+    private currentModuleService: CurrentModuleService,
+    private nivelJerarquicoService: NivelJerarquicoService
   ) {
     if (this.currentCourseService.getType() !== '') {
       this.objectType = this.currentCourseService.getType();
@@ -91,6 +94,10 @@ export class ConstructorHierarchicalStructureComponent implements OnInit {
       (node: any) => node.children
     );
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+    this.nivelJerarquicoService.query(this.receivedObject.id).subscribe(niveles => {
+      // this.dataSource.data = niveles;
+    });
     this.dataSource.data = this.TREE_DATA;
   }
 
@@ -105,5 +112,9 @@ export class ConstructorHierarchicalStructureComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.dataSource.data, event.previousIndex, event.currentIndex);
+  }
+
+  alert(str: string): void {
+    alert(str);
   }
 }
