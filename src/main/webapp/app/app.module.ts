@@ -29,6 +29,7 @@ import { TypeModuleComponent } from './entities/tipo-modulo/tipo-modulo.componen
 import { ColaboradoresModuleComponent } from './entities/colaborador/colaboradores-modulo.component';
 import { QuillModule } from 'ngx-quill';
 import { HomeLearningModule } from './home-learning/home-learning.module';
+import { HomeUmaGroupsModule } from './home-uma-groups/home-uma-groups.module';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { HomeLearningModule } from './home-learning/home-learning.module';
     ConstructorCoreModule,
     HomeModule,
     HomeLearningModule,
+    HomeUmaGroupsModule,
     ConstructorLayoutModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     ConstructorEntityModule,

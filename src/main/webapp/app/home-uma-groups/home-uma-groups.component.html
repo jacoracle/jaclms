@@ -1,0 +1,151 @@
+<div class="main-container-br">
+
+    <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
+        <!-- Window Header -->
+        <div class="window-br-header">
+            <div class="r1">
+                <div class="logo-create"></div>
+            </div>
+            <div class="r2">
+                <div class="windowHeader-title"><i class="icon whGroupUma"></i>
+                    <h4>Agrupador de UMAs</h4>
+                </div>
+                <div class="c1">
+                    <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
+                    <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
+                </div>
+            </div>
+        </div>
+        <!-- close header -->
+
+        <!--
+        <div class="window-br-body" *ngIf="modulos.length">
+            <div class="container-br-message">
+                <div class="br-message">
+                    <div class="brm-1">
+                        <div class="br-message-icon"></div>
+                    </div>
+                    <div class="brm-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+
+
+        <!-- Window Empty -->
+        <div class="window-br-body">
+            <div class="search-main-container">
+                <form name="learningForm" role="form" [formGroup]="learningForm">
+                    <div class="container-search-flearning">
+                        <p>Tus secuencias recientes ({{modulos.length}})</p>
+                        <div class="rc-search-flearning">
+                            <div class="cc-search-flearning">
+                                <mat-form-field>
+                                    <input type="text" placeholder="Buscar" matInput formControlName="sessionType"
+                                        [matAutocomplete]="autoInputSessionType">
+                                    <mat-autocomplete autoActiveFirstOption #autoInputSessionType="matAutocomplete"
+                                        [displayWith]="displayFn">
+                                        <mat-option *ngFor="let option of filteredTypeOpts | async" [value]="option">
+                                            {{option.descripcion}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <p>Filtrar por:</p>
+                        <div class="rc-search-flearning">
+                            <div class="cc-search-flearning">
+                                <mat-form-field>
+                                    <mat-label>Título</mat-label>
+                                    <input matInput formControlName="sessionTitleFormCtrl" [errorStateMatcher]="matcher"
+                                        placeholder="título de la sesión">
+                                    <mat-hint>Errors appear instantly!</mat-hint>
+                                    <mat-error *ngIf="!learningForm.get('sessionTitleFormCtrl').hasError('required')">
+                                        Captura el título de la sesión para filtrar
+                                    </mat-error>
+                                    <mat-error *ngIf="!learningForm.get('sessionTitleFormCtrl').hasError('required')">
+                                        El título es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="cc-search-flearning">
+                                <mat-form-field>
+                                    <mat-label>Descripcion</mat-label>
+                                    <input matInput formControlName="sessionDescriptionFormCtrl"
+                                        [errorStateMatcher]="matcher" placeholder="título de la sesión">
+                                    <mat-hint>Errors appear instantly!</mat-hint>
+                                    <mat-error
+                                        *ngIf="!learningForm.get('sessionDescriptionFormCtrl').hasError('required')">
+                                        Captura la descripción para filtrar
+                                    </mat-error>
+                                    <mat-error
+                                        *ngIf="!learningForm.get('sessionDescriptionFormCtrl').hasError('required')">
+                                        La descripción es <strong>requerida</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="cc-search-flearning">
+                                <mat-form-field>
+                                    <input type="text" placeholder="Área de conocimiento" matInput
+                                        formControlName="sessionSubject" [matAutocomplete]="autoInputSubject">
+                                    <mat-autocomplete autoActiveFirstOption #autoInputSubject="matAutocomplete"
+                                        [displayWith]="displayFn">
+                                        <mat-option *ngFor="let option of filteredSubjectOpts | async" [value]="option">
+                                            {{option.descripcion}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+                        <div class="rc-search-flearning">
+                            <div class="cc-search-flearning">
+
+                                <mat-form-field>
+                                    <input type="text" placeholder="Nivel Académico" matInput
+                                        formControlName="sessionTopic" [matAutocomplete]="autoInputTopic">
+                                    <mat-autocomplete autoActiveFirstOption #autoInputTopic="matAutocomplete"
+                                        [displayWith]="displayFn">
+                                        <mat-option *ngFor="let option of filteredTopicOpts | async" [value]="option">
+                                            {{option.descripcion}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <div class="cc-search-flearning">
+                                <mat-form-field>
+                                    <input type="text" placeholder="Tema" matInput formControlName="sessionTopic"
+                                        [matAutocomplete]="autoInputTopic">
+                                    <mat-autocomplete autoActiveFirstOption #autoInputTopic="matAutocomplete"
+                                        [displayWith]="displayFn">
+                                        <mat-option *ngFor="let option of filteredTopicOpts | async" [value]="option">
+                                            {{option.descripcion}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div *ngIf="modulos.length">
+                    <p>Resultados de búsqueda de sesiones... ( {{modulos.length}} )</p>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <!-- Window footer -->
+        <div class="window-br-footer">
+            <button routerLink="/" class="secondary-btn">Regresar</button>
+            <button routerLink="/" class="main-btn">Crear Agrupación</button>
+        </div>
+
+    </div>
+    <!-- close div isAuthenticated -->
+
+</div>

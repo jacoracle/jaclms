@@ -1,0 +1,14 @@
+{
+  "constructorApp": {
+    "uma": {
+      "home": {
+        "title": "UMA",
+        "createLabel": "Crear UMA",
+        "createOrEditLabel": "Crear o editar Curso",
+        "titleGeneralConfg": "Configuración general",
+        "titleAdvancelConfg": "Configuración avanzada",
+        "notFound": "Ningún UMA encontrado"
+      }
+    }
+  }
+}

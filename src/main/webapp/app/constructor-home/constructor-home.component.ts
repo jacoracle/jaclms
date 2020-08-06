@@ -13,11 +13,15 @@ export class ConstructorHomeComponent {
     this.router.navigate(['/learning-home']);
   }
 
+  redirectGroupUMA(): void {
+    this.router.navigate(['/groups-uma-home']);
+  }
+
   redirectHome(): void {
     this.router.navigate(['/courses-home']);
   }
 
   redirectUMAs(): void {
-    this.router.navigate(['/modules-home']);
+    this.router.navigate(['/uma-home']);
   }
 }

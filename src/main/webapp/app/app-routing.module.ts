@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { HomeModuleComponent } from './home-module/home-module.component';
 import { ModuleConfigurationComponent } from './module-configuration/module-configuration.component';
 import { HomeLearningComponent } from './home-learning/home-learning.component';
+import { HomeUmaGroupsComponent } from './home-uma-groups/home-uma-groups.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -52,15 +53,19 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: HomeComponent
         },
         {
-          path: 'modules-home',
+          path: 'uma-home',
           component: HomeModuleComponent
+        },
+        {
+          path: 'groups-uma-home',
+          component: HomeUmaGroupsComponent
         },
         {
           path: 'course-configuration',
           component: CourseConfigurationComponent
         },
         {
-          path: 'module-configuration',
+          path: 'uma-configuration',
           component: ModuleConfigurationComponent
         },
         ...LAYOUT_ROUTES
