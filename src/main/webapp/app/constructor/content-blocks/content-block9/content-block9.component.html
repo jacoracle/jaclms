@@ -4,8 +4,7 @@
         <div *ngIf="contentBlock.bloqueComponentes.tipoBloqueComponentes">
             <jhi-constructor-sound
                 [component]="component"
-                (updateComponent)="onUpdateComponent($event, index)"
-                (updateMultimediaProperties)="onUpdateMultimediaProperties($event, index)">
+                (updateComponent)="onUpdateComponent($event, index)">
             </jhi-constructor-sound>
         </div>
     </div>

@@ -23,7 +23,6 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @Input() component?: Componente;
   @Output() updateComponent = new EventEmitter();
-  @Output() updateMultimediaProperties = new EventEmitter<IContenido>();
   showLoader = false;
 
   constructor(
@@ -43,7 +42,7 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
 
     this.subscription = this.soundService.getAudioProperties().subscribe((objProperties: IContenido) => {
       if (this.editing) {
-        this.updateMultimediaProperties.emit(objProperties);
+        this.updateComponent.emit(objProperties);
         // Actualizar contenido de componente en base de datos
         const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
         this.subscription = this.contenidoService.update(contenido).subscribe(

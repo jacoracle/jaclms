@@ -12,7 +12,6 @@ export class ContentBlock5Component implements AfterContentInit {
   videoSrc = './../../../../content/images/cover_upload.png';
   @Input() contentBlock?: BloquesCurso;
   @Output() updateBlock = new EventEmitter();
-  @Output() updateMultimediaBlock = new EventEmitter();
   @Input() target?: HTMLElement;
   @Input() index?: number;
   newTarget: ITargetScroll[] = [];
@@ -24,14 +23,8 @@ export class ContentBlock5Component implements AfterContentInit {
     this.updateBlock.emit({
       newValue: $event['newValue'],
       type: $event['type'],
-      componentIndex: index
-    });
-  }
-
-  onUpdateMultimediaProperties($event: Event, index: number): void {
-    this.updateMultimediaBlock.emit({
-      multimediaProperties: $event,
-      componentIndex: index
+      componentIndex: index,
+      multimediaProperties: $event
     });
   }
 

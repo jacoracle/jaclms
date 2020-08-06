@@ -24,12 +24,6 @@ export class ContentBlock3Component implements AfterContentInit {
     this.updateBlock.emit({
       newValue: $event['newValue'],
       type: $event['type'],
-      componentIndex: index
-    });
-  }
-
-  onUpdateMultimediaProperties($event: Event, index: number): void {
-    this.updateMultimediaBlock.emit({
       multimediaProperties: $event,
       componentIndex: index
     });

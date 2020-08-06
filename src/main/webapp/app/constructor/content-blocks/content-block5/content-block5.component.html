@@ -3,8 +3,7 @@
         <div class="cc-video" *ngFor="let component of contentBlock.bloqueComponentes.componentes; let index = index;">
             <jhi-constructor-video
                 [component]="component" class="jhi-c-video"
-                (updateComponent)="onUpdateComponent($event, index)"
-                (updateMultimediaProperties)="onUpdateMultimediaProperties($event, index)">
+                (updateComponent)="onUpdateComponent($event, index)">
             </jhi-constructor-video>
         </div>
     </div>

@@ -1,11 +1,11 @@
-import { Component, OnDestroy, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ImageService } from 'app/services/image.service';
-import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { Componente } from 'app/shared/model/componente.model';
 import { FileUploadService } from 'app/services/file-upload.service';
-import { IContenido, Contenido } from 'app/shared/model/contenido.model';
+import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { ContenidoService } from 'app/entities/contenido/contenido.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
@@ -21,7 +21,6 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @Input() component?: Componente;
   @Output() updateComponent = new EventEmitter();
-  @Output() updateMultimediaProperties = new EventEmitter<IContenido>();
   showLoader = false;
 
   constructor(
@@ -41,7 +40,7 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
 
     this.subscription = this.imageService.getImageProperties().subscribe((objProperties: IContenido) => {
       if (this.editing) {
-        this.updateMultimediaProperties.emit(objProperties);
+        this.updateComponent.emit(objProperties);
         // Actualizar contenido de componente en base de datos
         const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
         this.subscription = this.contenidoService.update(contenido).subscribe(
@@ -85,8 +84,7 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
     this.fileUploadService.getImageFile(path).subscribe(data => {
       this.showLoader = false;
       const imagePath = URL.createObjectURL(data.body);
-      const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
-      this.imgSrc = objectUrl;
+      this.imgSrc = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
     });
   }
 

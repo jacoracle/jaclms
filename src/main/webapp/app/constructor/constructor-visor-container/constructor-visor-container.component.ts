@@ -16,6 +16,15 @@ import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { BloquesCurso, IBloquesCurso } from 'app/shared/model/bloques-curso.model';
 import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
 import { takeUntil } from 'rxjs/operators';
+import { ContentBlock1Component } from 'app/constructor/content-blocks/content-block1/content-block1.component';
+import { ContentBlock2Component } from 'app/constructor/content-blocks/content-block2/content-block2.component';
+import { ContentBlock3Component } from 'app/constructor/content-blocks/content-block3/content-block3.component';
+import { ContentBlock4Component } from 'app/constructor/content-blocks/content-block4/content-block4.component';
+import { ContentBlock5Component } from 'app/constructor/content-blocks/content-block5/content-block5.component';
+import { ContentBlock6Component } from 'app/constructor/content-blocks/content-block6/content-block6.component';
+import { ContentBlock7Component } from 'app/constructor/content-blocks/content-block7/content-block7.component';
+import { ContentBlock8Component } from 'app/constructor/content-blocks/content-block8/content-block8.component';
+import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -32,6 +41,19 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   _curso: any;
   _modulo: any;
   @Input() type?: string;
+
+  componentes = [
+    { nombre: 'titulo', componente: ContentBlock1Component },
+    { nombre: 'texto', componente: ContentBlock2Component },
+    { nombre: 'imagen', componente: ContentBlock3Component },
+    { nombre: 'imagen_texto', componente: ContentBlock4Component },
+    { nombre: 'video', componente: ContentBlock5Component },
+    { nombre: 'indicacion_video', componente: ContentBlock6Component },
+    { nombre: 'video_envolvente', componente: ContentBlock7Component },
+    { nombre: 'pdf', componente: ContentBlock8Component },
+    { nombre: 'sound', componente: ContentBlock9Component },
+    { nombre: 'actividades_interactvas', componente: ContentBlock9Component }
+  ];
 
   @Input()
   set curso(val: any) {
@@ -50,6 +72,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   get curso(): any {
     return this._curso;
   }
@@ -71,6 +94,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   get modulo(): any {
     return this._modulo;
   }

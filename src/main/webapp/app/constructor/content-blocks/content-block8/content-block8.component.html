@@ -4,8 +4,7 @@
         <div *ngIf="contentBlock.bloqueComponentes.tipoBloqueComponentes">
             <jhi-constructor-pdf
                 [component]="component"
-                (updateComponent)="onUpdateComponent($event, index)"
-                (updateMultimediaProperties)="onUpdateMultimediaProperties($event, index)">
+                (updateComponent)="onUpdateComponent($event, index)">
             </jhi-constructor-pdf>
         </div>
     </div>
