@@ -3,6 +3,7 @@
  */
 package org.constructor.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,8 +63,9 @@ public interface ModuloService {
      * Delete the "id" modulo.
      *
      * @param id the id of the entity.
+     * @throws IOException 
      */
-    void delete(Long id);
+    void delete(Long id) throws IOException;
     
   
 }

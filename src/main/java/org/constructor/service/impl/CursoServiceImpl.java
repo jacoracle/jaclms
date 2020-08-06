@@ -5,6 +5,7 @@ import org.constructor.service.FichaService;
 import org.constructor.service.UserService;
 import org.constructor.service.dto.MultimediaDTO;
 import org.constructor.service.multimedia.MultimediaService;
+import org.constructor.service.multimedia.impl.MultimediaServiceImpl;
 import org.constructor.domain.Curso;
 import org.constructor.domain.CursoFicha;
 import org.constructor.domain.Ficha;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -49,8 +51,17 @@ public class CursoServiceImpl implements CursoService {
     @Autowired
     private FichaService fichaService;
     
+    /**
+     * multimediaService
+     */
     @Autowired
     private MultimediaService multimediaService;
+    
+    /**
+	 * multimediaServiceImpl
+	 */
+	@Autowired
+	private MultimediaServiceImpl multimediaServiceImpl;
     
     /**
      * Service UserService 
@@ -125,12 +136,17 @@ public class CursoServiceImpl implements CursoService {
      * Delete the curso by id.
      *
      * @param id the id of the entity.
+     * @throws IOException 
      */
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id) throws IOException {
         log.debug("Request to delete Curso : {}", id);
         cursoRepository.deleteById(id);
+		String carpeta = "Curso-" + id;
+		boolean bandera = multimediaServiceImpl.deleteDirectory(carpeta);
+		log.debug("Request to carpeta  : {}", carpeta);
+		log.debug("Request to delete  : {}", bandera);
     }
 
     /**

@@ -3,6 +3,7 @@
  */
 package org.constructor.service.impl;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.constructor.service.UserService;
 import org.constructor.service.dto.ModuloDTO;
 import org.constructor.service.dto.MultimediaDTO;
 import org.constructor.service.multimedia.MultimediaService;
+import org.constructor.service.multimedia.impl.MultimediaServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,13 @@ public class ModuloServiceImpl implements ModuloService {
 	 */
 	@Autowired
 	private MultimediaService multimediaService;
+	
+	
+	/**
+	 * multimediaServiceImpl
+	 */
+	@Autowired
+	private MultimediaServiceImpl multimediaServiceImpl;
 
 	/**
 	 * Service UserService
@@ -118,11 +127,15 @@ public class ModuloServiceImpl implements ModuloService {
 
 	/**
 	 * Delete
+	 * @throws IOException 
 	 */
 	@Override
-	public void delete(Long id) {
+	public void delete(Long id) throws IOException {
 		log.debug("Request Service to delete modulo : {}", id);
 		moduloRepository.deleteById(id);
+		String carpeta = "Modulo-" + id;
+		boolean bandera = multimediaServiceImpl.deleteDirectory(carpeta);
+		log.debug("Request Service to delete bandera : {}", bandera);
 
 	}
 

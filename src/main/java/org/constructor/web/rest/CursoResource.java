@@ -158,9 +158,10 @@ public class CursoResource {
      *
      * @param id the id of the curso to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     * @throws IOException 
      */
     @DeleteMapping("/cursos/{id}")
-    public ResponseEntity<Void> deleteCurso(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCurso(@PathVariable Long id) throws IOException {
         log.debug("REST request to delete Curso : {}", id);
         cursoService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
