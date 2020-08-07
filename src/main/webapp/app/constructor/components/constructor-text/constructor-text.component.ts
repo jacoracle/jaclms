@@ -31,7 +31,10 @@ export class ConstructorTextComponent {
       this._htmlContent = text;
     });
     this.textService.getTemplateType().subscribe(templateTypeId => {
-      this.isTitle = templateTypeId.nombre === 'titulo';
+      const componente = templateTypeId.nombre;
+      if (componente === 'titulo' || componente === 'actividad') {
+        this.isTitle = true;
+      }
     });
   }
 

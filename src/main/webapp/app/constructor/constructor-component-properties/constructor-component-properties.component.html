@@ -49,6 +49,12 @@
             <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
             <audio [src]="soundSrc" controls controlsList="nodownload" #sPlayer *ngIf="soundSrc !== '' && listenAudio" class="audioPlayer" ></audio>
           </div>
+          <div *ngIf="fileFormat === 'activity'" class="test-pdf">
+              <!-- Pdf -->
+              <img [src]="defaultActivityUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
+              <span class="play-icon-test" (click)="pdfPreview()" *ngIf="multimediaFileProperties.contenido !== 'unknown'"><i class="icon ni-view"></i></span>
+              <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
+          </div>
           <div [hidden]="!showLoader" class="loader-cp">
             <!-- Doing something -->
             <span class="loader"></span>
@@ -58,10 +64,13 @@
         <div class="row-sidebar-up-image-btn">
           <button (click)="delete()" class="secondary-btn text-transform-none"
             *ngIf="multimediaFileProperties.contenido !== 'unknown'">Eliminar</button>
-          <button type="button" class="main-btn" (click)="fileInput.click()">
+          <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="fileFormat !== 'activity'">
             <span>Subir</span>
             <input #fileInput type="file" (change)="selectFile($event)" style="display:none;" />
           </button>
+            <button type="button" class="main-btn" (click)="createActivity()" *ngIf="fileFormat === 'activity'">
+                <span>Crear Actividad</span>
+            </button>
         </div>
 
         <div class="properties-file">

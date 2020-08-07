@@ -12,6 +12,8 @@ import { SoundService } from 'app/services/sound.service';
 import { VideoModalService } from 'app/services/video-modal.service';
 import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { CurrentModuleService } from 'app/services/current-module.service';
+import { ActivityService } from 'app/services/activity.service';
+import { ActivityModalService } from 'app/services/activity-modal.service';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -25,6 +27,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   loadedPdfUrl = './../../../content/images/pdf_up_thumb.png';
   defaultSoundUrl = './../../../content/images/audio_thumb.png';
   loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
+  defaultActivityUrl = './../../../content/images/activity_thumb.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
 
@@ -34,6 +37,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   thumbSrc: SafeUrl = '';
   pdfSrc: SafeUrl = '';
   soundSrc: SafeUrl = '';
+  activitySrc: SafeUrl = '';
   contenidoProperties: IContenido = {
     contenido: '',
     nombre: '',
@@ -65,12 +69,14 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     public videoService: VideoService,
     public pdfService: PdfService,
     public soundService: SoundService,
+    public activityService: ActivityService,
     public eventManager: JhiEventManager,
     public fileUploadService: FileUploadService,
     public currentCourseService: CurrentCourseService,
     public currentModuleService: CurrentModuleService,
     private pdfModalService: PdfModalService,
-    private videoModalService: VideoModalService
+    private videoModalService: VideoModalService,
+    private activityModalService: ActivityModalService
   ) {
     // Recibe el src de la imagen a mostrar
     this.subscription = this.subscriptionImage();
@@ -86,6 +92,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
     this.subscription = this.subscriptionVideoThumb();
+
+    // Formulario de la actividad a mostrar como preview
+    this.subscription = this.subscriptionActivity();
+
     this.type = this.currentCourseService.getType() !== '' ? this.currentCourseService.getType() : this.currentModuleService.getType();
     if (this.type === 'course') {
       this.subscription = this.currentCourseService.getCurrentCourse().subscribe(currentCourse => {
@@ -135,6 +145,12 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
       this.multimediaFileProperties.extension = props.extension ? props.extension : 'unknown';
+      this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
+      this.listenAudio = false;
+    });
+
+    this.subscription = this.activityService.getActivityProperties().subscribe(props => {
+      this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
       this.listenAudio = false;
     });
@@ -221,6 +237,23 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.showLoader = true;
         this.videoModalService.open(this.videoSrc);
         this.showLoader = false;
+      }
+      this.showLoader = false;
+    });
+  }
+
+  subscriptionActivity(): Subscription {
+    return this.activityService.getActivitySrc().subscribe(activitySrc => {
+      this.activitySrc = activitySrc;
+      this.fileFormat = 'activity';
+      if (this.activitySrc === '') {
+        this.fileInput.nativeElement.value = '';
+      } else {
+        /*if (this.multimediaFileProperties.contenido !== undefined && this.viewPdf) {*/
+        this.showLoader = true;
+        this.activityModalService.open();
+        this.showLoader = false;
+        /*}*/
       }
       this.showLoader = false;
     });
@@ -353,6 +386,13 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileUploadService.getPdf(this.multimediaFileProperties.contenido);
       this.viewPdf = true;
     }
+  }
+
+  createActivity(): void {
+    /*  if (this.multimediaFileProperties.contenido != null) {*/
+    this.activityModalService.open();
+    this.viewPdf = true;
+    /* }*/
   }
 
   loadSound(): void {

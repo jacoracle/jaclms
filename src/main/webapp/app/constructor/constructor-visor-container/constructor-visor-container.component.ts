@@ -25,6 +25,7 @@ import { ContentBlock6Component } from 'app/constructor/content-blocks/content-b
 import { ContentBlock7Component } from 'app/constructor/content-blocks/content-block7/content-block7.component';
 import { ContentBlock8Component } from 'app/constructor/content-blocks/content-block8/content-block8.component';
 import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
+import { ContentBlock10Component } from 'app/constructor/content-blocks/content-block10/content-block10.component';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -52,7 +53,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     { nombre: 'video_envolvente', componente: ContentBlock7Component },
     { nombre: 'pdf', componente: ContentBlock8Component },
     { nombre: 'sound', componente: ContentBlock9Component },
-    { nombre: 'actividades_interactvas', componente: ContentBlock9Component }
+    { nombre: 'actividad', componente: ContentBlock10Component }
   ];
 
   @Input()

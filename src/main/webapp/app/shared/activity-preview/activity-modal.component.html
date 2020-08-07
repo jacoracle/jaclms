@@ -1,0 +1,52 @@
+<div class="modal-video-container">
+    <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-video" type="button"
+            (click)="activeModal.dismiss('closed')"><i class="icon ni-close"></i></button>
+
+    <form name="activityForm" role="form" novalidate [formGroup]="activityForm" class="form-window-configuration">
+        <div class="row-form-window-c">
+            <div class="alert-course-configuration">
+                <jhi-alert-error></jhi-alert-error>
+            </div>
+
+            <!-- Generales Inicia -->
+            <div class="row-window-general">
+                <!-- Header -->
+                <div class="rwg-header">
+                    <h2 id="jhi-curso-heading">Configuración general</h2>
+                    <!--jhiTranslate="constructorApp.modulo.home.titleGeneralConfg"-->
+                    <p>*Campo obligatorio</p>
+                </div>
+
+                <!-- Row -->
+                <div class="row-wg margintop-25">
+                    <div class="col-window-g">
+                        <div class="form-nimbus">
+                            <label for="id_question">Pregunta 1 *</label>
+                            <!--jhiTranslate="constructorApp.modulo.titulo"-->
+                            <input [ngClass]="{'alert-input': !isValid('question')}" maxlength="50" type="text" class="form-control"
+                                   name="question" id="id_question" formControlName="question"/>
+                            <!-- Aquí va la alerta por campo del formulario -->
+                            <div *ngIf="!isValid('question')" class="form-alert"><p>Mensaje de corrección</p></div>
+                        </div>
+                    </div>
+                </div><!-- End Row -->
+
+                <div class="row-wg margintop-25">
+                    <div class="col-window-g">
+                        <div class="form-nimbus">
+                            <label for="id_question2">Pregunta 2 *</label>
+                            <!--jhiTranslate="constructorApp.modulo.titulo"-->
+                            <input [ngClass]="{'alert-input': !isValid('question2')}" maxlength="50" type="text" class="form-control"
+                                   name="question2" id="id_question2" formControlName="question2"/>
+                            <!-- Aquí va la alerta por campo del formulario -->
+                            <div *ngIf="!isValid('question2')" class="form-alert"><p>Mensaje de corrección</p></div>
+                        </div>
+                    </div>
+                </div><!-- End Row -->
+
+            </div><!-- End row-window-general -->
+        </div>
+    </form>
+
+
+</div>
