@@ -1,7 +1,6 @@
 import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { ModuloService } from 'app/entities/modulo/modulo.service';
@@ -22,7 +21,7 @@ import { map, startWith } from 'rxjs/operators';
 export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
   authSubscription?: Subscription;
-  modulos: any = [];
+  secuenciasUma: IModulo[] = new Array<IModulo>();
   defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
 
   filteredTopicOpts: any; // : Observable<IModulo[]>;
@@ -32,57 +31,44 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
 
   matcher = new ErrorStateMatcherUtil();
 
-  learningForm = this.formbuilder.group({
+  groupUmaForm = this.formbuilder.group({
     sessionTopic: [],
-    sessionSubject: [],
+    umaAreaKnowledge: [],
     sessionType: [],
-    sessionDescriptionFormCtrl: [],
-    sessionTitleFormCtrl: new FormControl('', [
+    umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(50)]),
+    umaTitleFormCtrl: new FormControl('', [
       Validators.required
       // Validators.email,
     ])
   });
 
-  constructor(
-    private accountService: AccountService,
-    private loginModalService: LoginModalService,
-    private formbuilder: FormBuilder,
-    private moduleService: ModuloService
-  ) {}
+  constructor(private accountService: AccountService, private formbuilder: FormBuilder, private agrupadorService: ModuloService) {}
 
   ngOnInit(): void {
-    this.filteredTopicOpts = this.learningForm.get('sessionTopic')!.valueChanges.pipe(
+    this.filteredTopicOpts = this.groupUmaForm.get('sessionTopic')!.valueChanges.pipe(
       startWith(''),
       map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter(name) : this.modulos.slice()))
+      map(name => (name ? this._filter(name) : this.secuenciasUma.slice()))
     );
 
-    this.filteredTypeOpts = this.learningForm.get('sessionType')!.valueChanges.pipe(
+    this.filteredTypeOpts = this.groupUmaForm.get('sessionType')!.valueChanges.pipe(
       startWith(''),
       map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter(name) : this.modulos.slice()))
+      map(name => (name ? this._filter(name) : this.secuenciasUma.slice()))
     );
 
-    this.filteredSubjectOpts = this.learningForm.get('sessionSubject')!.valueChanges.pipe(
+    this.filteredSubjectOpts = this.groupUmaForm.get('umaAreaKnowledge')!.valueChanges.pipe(
       startWith(''),
       map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter_(name) : this.modulos.slice()))
+      map(name => (name ? this._filter_(name) : this.secuenciasUma.slice()))
     );
-
-    /*
-    this.filteredRoleOpts = this.learningForm.get('sessionTopic')!.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.descripcion),
-      map(name => name ? this._filter(name) : this.modulos.slice())
-    );
-    */
 
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
-        this.moduleService.query().subscribe(
+        this.agrupadorService.query().subscribe(
           (res: HttpResponse<IModulo[]>) => {
-            this.modulos = res.body;
+            this.secuenciasUma = Array.from(res.body!);
           },
           () => this.onQueryError()
         );
@@ -92,12 +78,12 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
 
   private _filter(value: string): IModulo[] {
     const filterValue = value.toLowerCase();
-    return this.modulos.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
+    return this.secuenciasUma.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
   }
 
   private _filter_(value: string): IModulo[] {
     const filterValue = value.toLowerCase();
-    return this.modulos.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
+    return this.secuenciasUma.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
   }
 
   displayFn(mod: IModulo): string {
@@ -106,10 +92,6 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
 
   isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
-  }
-
-  login(): void {
-    this.loginModalService.open();
   }
 
   ngOnDestroy(): void {
@@ -124,11 +106,6 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     console.error('Error');
   }
 
-  previewModule(id: number, $event: any): void {
-    $event.stopPropagation();
-    console.error('####     Debería mostrar el Preview del Módulo');
-  }
-
   findElementById(objectArray: any, id: number): number {
     let foundIndex = -1;
     objectArray.forEach((value: any, index: number) => {
@@ -137,5 +114,9 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
       }
     });
     return foundIndex;
+  }
+
+  searchUmas(): void {
+    console.error('Debera buscar agrupadociones/secuencias de UMAs');
   }
 }

@@ -14,7 +14,7 @@ export class ConstructorHomeComponent {
   }
 
   redirectGroupUMA(): void {
-    this.router.navigate(['/groups-uma-home']);
+    this.router.navigate(['/uma-groups-home']);
   }
 
   redirectHome(): void {

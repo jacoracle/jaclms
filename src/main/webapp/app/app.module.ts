@@ -30,6 +30,8 @@ import { ColaboradoresModuleComponent } from './entities/colaborador/colaborador
 import { QuillModule } from 'ngx-quill';
 import { HomeLearningModule } from './home-learning/home-learning.module';
 import { HomeUmaGroupsModule } from './home-uma-groups/home-uma-groups.module';
+import { AgrupadorUmaUpdateComponent } from './entities/agrupador/agrupador-uma-update.component';
+import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
 
 @NgModule({
   imports: [
@@ -56,10 +58,12 @@ import { HomeUmaGroupsModule } from './home-uma-groups/home-uma-groups.module';
     FooterComponent,
     CourseConfigurationComponent,
     ModuleConfigurationComponent,
+    GroupUmaConfigurationComponent,
     HomePageComponent,
     CursoComponent,
     CursoUpdateComponent,
     ModuloUpdateComponent,
+    AgrupadorUmaUpdateComponent,
     FichaUpdateComponent,
     ColaboradoresModuleComponent,
     TopicModuleComponent,

@@ -13,6 +13,7 @@ import { HomeModuleComponent } from './home-module/home-module.component';
 import { ModuleConfigurationComponent } from './module-configuration/module-configuration.component';
 import { HomeLearningComponent } from './home-learning/home-learning.component';
 import { HomeUmaGroupsComponent } from './home-uma-groups/home-uma-groups.component';
+import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -57,7 +58,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: HomeModuleComponent
         },
         {
-          path: 'groups-uma-home',
+          path: 'uma-groups-home',
           component: HomeUmaGroupsComponent
         },
         {
@@ -67,6 +68,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'uma-configuration',
           component: ModuleConfigurationComponent
+        },
+        {
+          path: 'group-configuration',
+          component: GroupUmaConfigurationComponent
         },
         ...LAYOUT_ROUTES
       ],
