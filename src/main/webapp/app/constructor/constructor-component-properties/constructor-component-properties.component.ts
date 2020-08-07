@@ -249,11 +249,9 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       if (this.activitySrc === '') {
         this.fileInput.nativeElement.value = '';
       } else {
-        /*if (this.multimediaFileProperties.contenido !== undefined && this.viewPdf) {*/
         this.showLoader = true;
         this.activityModalService.open();
         this.showLoader = false;
-        /*}*/
       }
       this.showLoader = false;
     });
