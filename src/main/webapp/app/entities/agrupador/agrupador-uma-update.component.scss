@@ -1,0 +1,173 @@
+@import '../../../content/scss/variables.scss';
+
+#grid-display-home {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  // height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: row;
+}
+#item-grid-1 {
+  position: absolute;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  border-right: 1px solid $window-divider-color;
+  transition: 0.3s;
+  background-color: $color-sidebar;
+}
+#item-grid-2 {
+  position: absolute;
+  left: 260px;
+  width: calc(100% - 520px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+}
+.grid-visor-container {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 180px);
+  z-index: 1;
+}
+.grid-component-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 180px;
+  background-color: $color-sidebar;
+  z-index: 2;
+}
+// Collapse grid-visor-container
+.gvc-collapse {
+  height: calc(100% - 30px);
+}
+// Collapse grid-component-container
+.gcc-collapse {
+  height: 30px;
+}
+
+// Expand sidebar
+#item-grid-3 {
+  position: absolute;
+  right: 0;
+  width: 260px;
+  height: 100%;
+  background-color: $color-sidebar;
+  border-left: 1px solid #e7e8ed;
+  transition: 0.3s;
+}
+
+.btn-contract-right {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  height: 30px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  z-index: 1;
+  background-color: $color-sidebar;
+  border-top: 1px solid $window-divider-color;
+  &:hover > .icon {
+    opacity: 1;
+  }
+  .icon {
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 24px;
+    height: 24px;
+    transition: 0.3s;
+    transform: rotateY(0deg);
+    opacity: 0.6;
+    font-size: 28px;
+  }
+}
+
+.btn-contract-left {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  bottom: 0;
+  z-index: 2;
+  transition: 0.4s;
+  background-color: $color-sidebar;
+  border-top: 1px solid $window-divider-color;
+  &:hover > .icon {
+    opacity: 1;
+  }
+  .icon {
+    position: absolute;
+    right: 4px;
+    top: 1px;
+    width: 24px;
+    height: 24px;
+    transition: 0.3s;
+    transform: rotateY(0deg);
+    opacity: 0.6;
+    font-size: 28px;
+  }
+}
+
+.left-sidebar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+.right-sidebar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+.expand-button .icon {
+  transform: rotateY(180deg);
+  transition: 0.3s;
+}
+#item-grid-1 .expand-button .icon {
+  right: 0px;
+}
+#item-grid-3 .expand-button .icon {
+}
+
+// Contract
+.contracted {
+  width: 30px !important;
+}
+.contracted .left-sidebar {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.1s, visibility 0.1s;
+}
+.contracted .right-sidebar {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.1s, visibility 0.1s;
+}
+.one-contract {
+  left: 30px !important;
+  width: calc(100% - 290px) !important;
+}
+.two-contract {
+  left: 30px !important;
+  width: calc(100% - 60px) !important;
+}
+.three-contract {
+  left: 260px !important;
+  width: calc(100% - 290px) !important;
+}

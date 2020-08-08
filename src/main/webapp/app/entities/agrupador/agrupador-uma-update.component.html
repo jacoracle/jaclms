@@ -1,19 +1,82 @@
-<form name="editForm" role="form" novalidate [formGroup]="editForm" class="form-window-configuration">
+<!-- <form name="editForm" role="form" novalidate [formGroup]="editForm" class="form-window-configuration">
+
     <div class="row-form-window-c">
         <div class="alert-course-configuration">
             <jhi-alert-error></jhi-alert-error>
         </div>
 
-        <!-- Generales Inicia -->
         <div class="row-window-general">
-            <!-- Header -->
+
             <div class="rwg-header">
                 <h2 id="jhi-curso-heading">Configuración general</h2>
                 <p>*Campo obligatorio</p>
             </div>
 
+        </div>
 
-
-        </div><!-- End row-window-general -->
     </div>
-</form>
+</form> -->
+
+<div class="row-form-window-c">
+    <div class="alert-course-configuration">
+        <jhi-alert-error></jhi-alert-error>
+    </div>
+
+    <div class="row-window-general">
+
+        <div class="rwg-header">
+            <h2 id="jhi-curso-heading">Configuración general de la Secuencia</h2>
+            <p>*Campo obligatorio</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div>
+    <jhi-top-bar></jhi-top-bar>
+  </div>
+  <div id="grid-display-home" [ngClass]="{'grid-darkmode': colorMode === 'ni-dark'}">
+          <!-- Left sidebar -->
+          <div [ngClass]="{'item-grid-1': !leftIsContracted, 'contracted': leftIsContracted}" id="item-grid-1">
+            <button (click)="leftIsContracted = !leftIsContracted;"
+            [ngClass]="{'contract-button': !leftIsContracted, 'expand-button': leftIsContracted}"
+            id="btn-contract-left" class="btn-contract-left">
+              <i class="icon ni-arrow-left"></i>
+            </button>
+  
+            <div class="left-sidebar">
+              <jhi-left-sidebar></jhi-left-sidebar>
+            </div>
+          </div>
+  
+          <!-- Main content -->
+          <div [ngClass]="{'item-grid-2': !rightIsContracted && !leftIsContracted,
+          'one-contract': !rightIsContracted && leftIsContracted,
+          'two-contract': rightIsContracted && leftIsContracted,
+          'three-contract': rightIsContracted && !leftIsContracted
+          }" id="item-grid-2">
+            <!-- Visor container -->
+            <div class="grid-visor-container" [ngClass]="{'gvc-collapse': !showTextEditor}">
+              <jhi-constructor-visor-container  [type]="type" [curso]="curso" [modulo]="modulo" ></jhi-constructor-visor-container>
+            </div>
+            <!-- Component container -->
+            <div class="grid-component-container" [ngClass]="{'gcc-collapse': !showTextEditor}">
+              <jhi-constructor-component-container></jhi-constructor-component-container>
+            </div>
+          </div>
+  
+          <!-- Right sidebar -->
+          <div [ngClass]="{'item-grid-3': !rightIsContracted, 'contracted': rightIsContracted}" id="item-grid-3">
+            <button (click)="rightIsContracted = !rightIsContracted;"
+            [ngClass]="{'contract-button': !rightIsContracted, 'expand-button': rightIsContracted}"
+            class="btn-contract-right">
+              <i class="icon ni-arrow-right"></i>
+            </button>
+            <div class="right-sidebar">
+              <jhi-right-sidebar></jhi-right-sidebar>
+            </div>
+          </div>
+  
+  </div>
+  
