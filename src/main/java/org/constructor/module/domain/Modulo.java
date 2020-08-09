@@ -141,6 +141,9 @@ public class Modulo implements Serializable {
             inverseJoinColumns = @JoinColumn(name="usuario_id", referencedColumnName = "id", nullable = false))
     private Set<User> user = new HashSet<>();
     
+    @JsonIgnore
+    @OneToMany(mappedBy = "modulo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<AgrupadorModulo> agrupador;
 
 	/**
 	 * Get
@@ -344,6 +347,22 @@ public class Modulo implements Serializable {
 	 */
 	public void setNivelesModulo(Set<NivelesModulo> nivelesModulo) {
 		this.nivelesModulo = nivelesModulo;
+	}
+
+
+	/**
+	 * @return the agrupador
+	 */
+	public Set<AgrupadorModulo> getAgrupador() {
+		return agrupador;
+	}
+
+
+	/**
+	 * @param agrupador the agrupador to set
+	 */
+	public void setAgrupador(Set<AgrupadorModulo> agrupador) {
+		this.agrupador = agrupador;
 	}
 
 
