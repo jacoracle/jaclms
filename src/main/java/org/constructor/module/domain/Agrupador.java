@@ -77,7 +77,7 @@ public class Agrupador  implements Serializable{
     /**
      * Etiqueta
      */
-    @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Etiqueta> etiquetas = new HashSet<>();
  
 
