@@ -7,14 +7,17 @@
         Added the constraints for entity Agrupador.
     -->
     <changeSet id="20200305201143-1" author="jhipster">
-
-                                 
-      <addForeignKeyConstraint baseColumnNames="agrupador_id"
+    
+    
+    
+       <addForeignKeyConstraint baseColumnNames="agrupador_id"
                                  baseTableName="etiqueta_agrupador"
                                  constraintName="fk_etiqueta_agrupador_agrupador_id"
                                  referencedColumnNames="id"
                                  referencedTableName="agrupador"/>
-                                 
+
+                            
+
      
 
       </changeSet>

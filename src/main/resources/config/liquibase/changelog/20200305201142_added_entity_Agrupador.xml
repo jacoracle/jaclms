@@ -54,6 +54,16 @@
    
     </changeSet>
     
+           <changeSet id="20200305201144-1-relations" author="jhipster">
+    	<createTable tableName="agrupador_usuario">
+            <column name="usuario_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agrupador_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

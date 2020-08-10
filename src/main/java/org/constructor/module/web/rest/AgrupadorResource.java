@@ -4,12 +4,15 @@
 package org.constructor.module.web.rest;
 
 import java.net.URI;
+import java.io.IOException;
+
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
 import org.constructor.module.domain.Agrupador;
 import org.constructor.service.AgrupadorService;
+import org.constructor.service.dto.AgrupadorDTO;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import org.springframework.security.core.Authentication;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -80,8 +85,8 @@ public class AgrupadorResource {
 	  * @return
 	  * @throws URISyntaxException
 	  */
-	    @PostMapping(path = RestConstants.PATH_AGRUPADOR)
-	    public ResponseEntity<Agrupador> createAgrupador(@RequestBody Agrupador agrupador) throws URISyntaxException {
+	    @PostMapping("/agrupadores")
+	    public ResponseEntity<Agrupador> createAgrupadores(@RequestBody Agrupador agrupador) throws URISyntaxException {
 	        log.debug("REST request to save Agrupador : {}", agrupador);
 	       
 	        Agrupador result = agrupadorService.save(agrupador);
@@ -91,6 +96,26 @@ public class AgrupadorResource {
 	    }
 	    
 	    
+		 /**
+		  * Post agrupador
+		  * @param agrupador
+		  * @return
+		  * @throws URISyntaxException
+		  */
+		    @PostMapping(path = RestConstants.PATH_AGRUPADOR)
+		    public ResponseEntity<AgrupadorDTO> createAgrupador(Authentication authentication,
+		    		@RequestBody Agrupador agrupador) throws IOException {
+		        log.debug("REST request to save Agrupador : {}", agrupador);
+		    	if (agrupador == null) {
+					throw new BadRequestAlertException("A new module cannot is empty", ENTITY_NAME, "");
+				}
+				log.debug("REST request to mo : {}", agrupador);
+				AgrupadorDTO result = agrupadorService.save(authentication, agrupador);
+				log.debug("result : {}",result);
+
+				return new ResponseEntity<>(result, HttpStatus.OK);
+			}
+		    
 	 
 	    /**
 	     * Update agrupador
