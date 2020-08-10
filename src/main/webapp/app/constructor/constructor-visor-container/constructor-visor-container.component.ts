@@ -60,13 +60,13 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this._modulo = val;
     if (this._modulo !== undefined && this.type === 'module') {
       this.nivel.moduloId = this._modulo.id;
-      if (this._modulo.nivelesModulo.length) {
+      if (this._modulo.nivelesModulo) {
         this.showLoader = false;
-        this.nivel = this._modulo.nivelesModulo[0].nivelJerarquico;
+        this.nivel = this._modulo.nivelesModulo.nivelJerarquico;
         this.nivel.moduloId = this._modulo.id;
         this.contentBlocks = [];
         this.contentBlocks = this.nivel.bloquesCurso!;
-        this.nivel.nivelId = this._modulo.nivelesModulo[0].nivelJerarquico.id;
+        this.nivel.nivelId = this._modulo.nivelesModulo.nivelJerarquico.id;
         this.contentBlocksService.setContentBlocks(this.contentBlocks);
       }
     }
