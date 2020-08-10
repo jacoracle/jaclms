@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * A NivelJeraquico.
  */
 @Entity
-@Table(name = "nivel_jerarquico")
+@Table(name = "nivel_modulo")
 public class NivelJerarquico implements Serializable  {
 		
 	/** Serializable. */
@@ -46,11 +46,6 @@ public class NivelJerarquico implements Serializable  {
 	/** String tipo. */
 	@Column(name = "tipo")
     private String  tipo;
-	
-	/** orden_nivel. */
-	@OneToMany(mappedBy="nivelJerarquico", fetch = FetchType.EAGER)
-	@OrderBy ("orden")
-	private Set<EstructuraJerarquica> estructuraJerarquica = new HashSet<>();
 		
 	/** nivelJerarquico. */
 	@OneToMany(mappedBy = "nivelJerarquico")
@@ -103,24 +98,6 @@ public class NivelJerarquico implements Serializable  {
 	 */
 	public void setInformacionAdicional(int informacionAdicional) {
 		this.informacionAdicional = informacionAdicional;
-	}
-
-	/**
-	 * Get .
-	 *
-	 * @return the estructuraJerarquica
-	 */
-	public Set<EstructuraJerarquica> getEstructuraJerarquica() {
-		return estructuraJerarquica;
-	}
-
-	/**
-	 * Set.
-	 *
-	 * @param estructuraJerarquica the new estructura jerarquica
-	 */
-	public void setEstructuraJerarquica(Set<EstructuraJerarquica> estructuraJerarquica) {
-		this.estructuraJerarquica = estructuraJerarquica;
 	}
 
 	/**
@@ -214,14 +191,9 @@ public class NivelJerarquico implements Serializable  {
 	@Override
 	public String toString() {
 		return "NivelJerarquico [id=" + id + ", nombre=" + nombre + ", informacionAdicional=" + informacionAdicional
-				+ ", tipo=" + tipo + ", estructuraJerarquica=" + estructuraJerarquica + ", bloquesCurso=" + bloquesCurso
-				+ "]";
+				+ ", tipo=" + tipo + ", nivelesCurso=" + nivelesCurso + ", bloquesCurso=" + bloquesCurso
+				+ ", nivelesModulo=" + nivelesModulo + "]";
 	}
-
-
-	
-
-
 
 	
 }

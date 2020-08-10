@@ -52,7 +52,6 @@
     <include file="config/liquibase/changelog/20200305201120_added_entity_constraints_Ficha.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201121_added_entity_constraints_Colaborador.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201127_added_entity_constraints_Country.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20200305201128_added_entity_constraints_Nivel_Jerarquico.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201130_added_entity_constraints_Tipo_Componente.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201131_added_entity_constraints_Bloque_Componentes.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201132_added_entity_constraints_Componente.xml" relativeToChangelogFile="false"/>

@@ -36,9 +36,6 @@ public class EstructuraJerarquica implements Serializable{
 	/**
 	 * NivelJerarquico nivelJerarquico
 	 */
-	@JsonIgnore
-	@ManyToOne
-    @JoinColumn(name = "nivel_jerarquico_id", nullable=false)
     private NivelJerarquico nivelJerarquico;
 	
 	/**

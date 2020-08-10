@@ -52,7 +52,7 @@ public class NivelesCurso  implements Serializable{
 	 */
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "nivel_jerarquico_id", nullable=false)
+	@JoinColumn(name = "nivel_modulo_id", nullable=false)
     private NivelJerarquico nivelJerarquico;
 	
 	/**

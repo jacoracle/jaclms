@@ -12,7 +12,7 @@
         Added the entity nivel_jerarquico.
     -->
     <changeSet id="20200305201128-1" author="jhipster">
-        <createTable tableName="nivel_jerarquico">
+        <createTable tableName="nivel_modulo">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
