@@ -10,6 +10,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   imports: [
@@ -65,7 +66,7 @@ import { MatSelectModule } from '@angular/material/select';
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])
   ],
-  exports: [MatAutocompleteModule, MatChipsModule, MatIconModule, MatInputModule, MatSelectModule],
+  exports: [MatAutocompleteModule, MatChipsModule, MatIconModule, MatInputModule, MatSelectModule, MatExpansionModule],
   declarations: [PhoneNumberComponent, CountryComponent]
 })
 export class ConstructorEntityModule {}

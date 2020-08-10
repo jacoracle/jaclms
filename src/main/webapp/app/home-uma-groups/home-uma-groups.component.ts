@@ -7,7 +7,6 @@ import { ModuloService } from 'app/entities/modulo/modulo.service';
 import { IModulo } from 'app/shared/model/modulo.model';
 
 import { HttpResponse } from '@angular/common/http';
-import { SafeUrl } from '@angular/platform-browser';
 import { Validators, FormControl, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcherUtil } from './error-state-matcher';
 
@@ -22,7 +21,7 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
   account: Account | null = null;
   authSubscription?: Subscription;
   secuenciasUma: IModulo[] = new Array<IModulo>();
-  defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
+  // defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
 
   filteredTopicOpts: any; // : Observable<IModulo[]>;
   filteredTypeOpts: any;

@@ -1,82 +1,187 @@
-<!-- <form name="editForm" role="form" novalidate [formGroup]="editForm" class="form-window-configuration">
+<div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
 
-    <div class="row-form-window-c">
-        <div class="alert-course-configuration">
-            <jhi-alert-error></jhi-alert-error>
-        </div>
+  <!-- Window Empty -->
+  <div class="window-br-body">
+    <div class="search-main-container">
+      <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
 
-        <div class="row-window-general">
+        <div class="container-search-form-uma">
 
-            <div class="rwg-header">
-                <h2 id="jhi-curso-heading">Configuración general</h2>
-                <p>*Campo obligatorio</p>
+          <div class="row-search-gral">
+            <p class="txt-recent-umas">Tus secuencias recientes ({{secuenciasUma.length}})</p>
+          </div>
+
+          <div class="container-field-filter">
+            <p>Registrar Grupo:</p>
+
+            <div class="row-filter-uma">
+              <div>
+                <mat-form-field>
+                  <mat-label>Título del Grupo</mat-label>
+                  <input matInput formControlName="umaTitleFormCtrl" [errorStateMatcher]="matcher"
+                    placeholder="Título del Grupo">
+                  <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                  <mat-error *ngIf="groupUmaForm.get('umaTitleFormCtrl').hasError('required')">
+                    El título del Grupo de UMAS es requerido.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Descripción</mat-label>
+                  <input matInput formControlName="umaDescriptionFormCtrl" [errorStateMatcher]="matcher"
+                    placeholder="título de la sesión">
+                  <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                  <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('required')">
+                    La descripción del Grupo de UMAS es requerido.
+                  </mat-error>
+                  <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('maxlength')">
+                    La descripción del Grupo no debe superar los 50 caracteres.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <input type="text" placeholder="Tags de búsqueda" matInput formControlName="umaAreaKnowledge"
+                    [matAutocomplete]="autoInputSubject">
+                  <mat-autocomplete autoActiveFirstOption #autoInputSubject="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let option of filteredSubjectOpts | async" [value]="option">
+                      {{option.descripcion}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
             </div>
 
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+    <!-- close search-main-container -->
+
+    <div class="result-search-container">
+
+      <!-- expansion panel cool -->
+      <div *ngIf="secuenciasUma.length">
+        <p>Resultados de búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p>
+        <div class="container-result-groups">
+          <div *ngFor="let sec of secuenciasUma">
+            <!-- <mat-nav-list> -->
+            <mat-expansion-panel class="group-cover-panel" matTooltip="Despliegue para ver más detalles">
+              <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'200px'">
+                <span class="title-panel">
+                  {{sec.titulo}}
+                </span>
+              </mat-expansion-panel-header>
+
+              <div class="panel-body-group">
+
+                <div (click)="deleteModule(sec.id, $event)" class="delete-group">
+                  <i class="icon ni-delete icon-negative"></i>
+                </div>
+
+                <div class="">
+                  <!--mat-list-item-->
+                  <span class="desc-group-panel" [routerLink]="['/constructor-layout', sec.id, 'module']"
+                    *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
+
+                  <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
+                  <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+                    laudantium ullam sed, ipsa perferendis quisquam earum beatae repellat, quos,
+                    aut impedit voluptatibus nemo similique quod?</p>
+
+                </div>
+
+              </div>
+
+
+            </mat-expansion-panel>
+            <!-- </mat-nav-list> -->
+
+          </div>
         </div>
 
-    </div>
-</form> -->
+      </div>
 
-<div class="row-form-window-c">
-    <div class="alert-course-configuration">
-        <jhi-alert-error></jhi-alert-error>
-    </div>
+      <hr>
 
-    <div class="row-window-general">
+      <!-- expansion panel -->
+      <div *ngIf="secuenciasUma.length">
+        <p>Resultados de búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p>
+        <div class="groups-search-row">
+          <div *ngFor="let sec of secuenciasUma">
+            <!-- <mat-nav-list> -->
+            <mat-expansion-panel class="group-cover-panel_" matTooltip="Despliegue para ver más detalles">
+              <mat-expansion-panel-header>
+                <span class="title-panel">
+                  {{sec.titulo}}
+                </span>
+              </mat-expansion-panel-header>
 
-        <div class="rwg-header">
-            <h2 id="jhi-curso-heading">Configuración general de la Secuencia</h2>
-            <p>*Campo obligatorio</p>
+              <div class="group-body-panel exp-pan-group-item">
+
+                <div (click)="deleteModule(sec.id, $event)" class="delete-group-panel">
+                  <i class="icon ni-delete icon-negative"></i>
+                </div>
+
+                <div class="group-panel-content">
+                  <!--mat-list-item-->
+                  <span class="desc-group-panel" [routerLink]="['/constructor-layout', sec.id, 'module']"
+                    *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
+
+                  <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
+
+                </div>
+
+              </div>
+
+
+            </mat-expansion-panel>
+            <!-- </mat-nav-list> -->
+
+          </div>
         </div>
 
+      </div>
+
+      <hr>
+
+      <!-- cuadros -->
+      <div *ngIf="secuenciasUma.length">
+        <p>Resultados de búsqueda de secuencias/agrupaciones de UMAs... ( {{secuenciasUma.length}} )</p>
+
+        <div class="groups-search-row">
+          <div class="group-cover-br" *ngFor="let sec of secuenciasUma"
+            [routerLink]="['/constructor-layout', sec.id, 'module']">
+
+            <div class="group-cover-br-margin">
+              <!-- <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="sec.sanitizedPortadaUrl"> -->
+              <div class="group-cover-br-image"></div>
+            </div>
+
+            <div (click)="deleteModule(sec.id, $event)" class="delete-group-br">
+              <i class="icon ni-delete icon-negative"></i>
+            </div>
+
+            <div class="group-desc-br-row">
+              <span class="title-group-br"
+                *ngIf="sec.titulo">{{sec.titulo.length > 48 ? sec.titulo.substring(0, 48) + "..." : sec.titulo}}</span>
+              <span class="desc-group-br"
+                *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </div>
+
+
+  </div>
+  <!-- close window-br-body div -->
+
 
 </div>
-
-<div>
-    <jhi-top-bar></jhi-top-bar>
-  </div>
-  <div id="grid-display-home" [ngClass]="{'grid-darkmode': colorMode === 'ni-dark'}">
-          <!-- Left sidebar -->
-          <div [ngClass]="{'item-grid-1': !leftIsContracted, 'contracted': leftIsContracted}" id="item-grid-1">
-            <button (click)="leftIsContracted = !leftIsContracted;"
-            [ngClass]="{'contract-button': !leftIsContracted, 'expand-button': leftIsContracted}"
-            id="btn-contract-left" class="btn-contract-left">
-              <i class="icon ni-arrow-left"></i>
-            </button>
-  
-            <div class="left-sidebar">
-              <jhi-left-sidebar></jhi-left-sidebar>
-            </div>
-          </div>
-  
-          <!-- Main content -->
-          <div [ngClass]="{'item-grid-2': !rightIsContracted && !leftIsContracted,
-          'one-contract': !rightIsContracted && leftIsContracted,
-          'two-contract': rightIsContracted && leftIsContracted,
-          'three-contract': rightIsContracted && !leftIsContracted
-          }" id="item-grid-2">
-            <!-- Visor container -->
-            <div class="grid-visor-container" [ngClass]="{'gvc-collapse': !showTextEditor}">
-              <jhi-constructor-visor-container  [type]="type" [curso]="curso" [modulo]="modulo" ></jhi-constructor-visor-container>
-            </div>
-            <!-- Component container -->
-            <div class="grid-component-container" [ngClass]="{'gcc-collapse': !showTextEditor}">
-              <jhi-constructor-component-container></jhi-constructor-component-container>
-            </div>
-          </div>
-  
-          <!-- Right sidebar -->
-          <div [ngClass]="{'item-grid-3': !rightIsContracted, 'contracted': rightIsContracted}" id="item-grid-3">
-            <button (click)="rightIsContracted = !rightIsContracted;"
-            [ngClass]="{'contract-button': !rightIsContracted, 'expand-button': rightIsContracted}"
-            class="btn-contract-right">
-              <i class="icon ni-arrow-right"></i>
-            </button>
-            <div class="right-sidebar">
-              <jhi-right-sidebar></jhi-right-sidebar>
-            </div>
-          </div>
-  
-  </div>
-  
+<!-- close div isAuthenticated -->
