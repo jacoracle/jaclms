@@ -13,10 +13,10 @@
                                  referencedColumnNames="id"
                                  referencedTableName="curso"/>
                                  
-    <addForeignKeyConstraint baseColumnNames="nivel_jerarquico_id"
+    <addForeignKeyConstraint baseColumnNames="nivel_modulo_id"
                                  baseTableName="niveles_curso"
-                                 constraintName="fk_niveles_curso_nivel_jerarquico_id"
+                                 constraintName="fk_niveles_curso_nivel_modulo_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="nivel_jerarquico"/>
+                                 referencedTableName="nivel_modulo"/>
     </changeSet>
 </databaseChangeLog>

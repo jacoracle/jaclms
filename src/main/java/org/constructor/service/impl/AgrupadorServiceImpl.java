@@ -3,15 +3,23 @@
  */
 package org.constructor.service.impl;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import org.constructor.domain.User;
 import org.constructor.module.domain.Agrupador;
 import org.constructor.repository.AgrupadorRepository;
 import org.constructor.service.AgrupadorService;
+import org.constructor.service.UserService;
+import org.constructor.service.dto.AgrupadorDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +41,13 @@ public class AgrupadorServiceImpl  implements AgrupadorService{
 	 * Repository   
 	 */
 	private final AgrupadorRepository agrupadorRepository;
+	
+	
+	/**
+	 * Service UserService
+	 */
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * AgrupadorServiceImpl
@@ -79,5 +94,46 @@ public class AgrupadorServiceImpl  implements AgrupadorService{
 		agrupadorRepository.deleteById(id);
 		
 	}
+
+	/**
+	 * findAllAgrupadorUserId
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<Agrupador> findAllAgrupadorUserId(Authentication authentication) {
+		log.debug("Request to get all Agrupador by User ");
+		Set<User> user = new HashSet<>();
+		User userName = new User();
+
+		// Get userbyLogin
+		String usuarioNombre = authentication.getName(); 
+		user = userService.findUserByLogin(usuarioNombre);
+
+		for (User usuario : user) {
+			userName = usuario;
+		}
+		return agrupadorRepository.findAllAgrupadorUserId(userName.getId());
+	}
+
+	/**
+	 * Save user
+	 */
+	@Override
+	@Transactional
+	public AgrupadorDTO save(Authentication authentication, Agrupador agrupador) {
+		log.debug("Request to save agrupador : {}", agrupador);
+		AgrupadorDTO agrup = new AgrupadorDTO();
+
+		String usuarioNombre = authentication.getName();
+		Set<User> user = userService.findUserByLogin(usuarioNombre);
+
+		agrupador.setUser(user);
+		agrupador = agrupadorRepository.save(agrupador);
+		log.debug("agrupador id {}", agrupador.getId());
+		agrup.setAgrupador(agrupador);
+		
+		return agrup;
+	}
+	
 
 }

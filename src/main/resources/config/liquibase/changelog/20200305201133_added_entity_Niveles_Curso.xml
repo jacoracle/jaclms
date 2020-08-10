@@ -19,7 +19,7 @@
   			<column name="curso_id" type="bigint">
                 <constraints  nullable="false"/>
             </column>	
-           <column name="nivel_jerarquico_id" type="bigint">
+           <column name="nivel_modulo_id" type="bigint">
                 <constraints  nullable="false"/>
             </column>	
             <column name="orden" type="bigint">

@@ -7,11 +7,11 @@
         Added the constraints for entity niveles_curso.
     -->
     <changeSet id="20200305201134-2" author="jhipster">
-    <addForeignKeyConstraint baseColumnNames="nivel_jerarquico_id"
+    <addForeignKeyConstraint baseColumnNames="nivel_modulo_id"
                                  baseTableName="bloques_curso"
-                                 constraintName="fk_bloques_curso_nivel_jerarquico_id"
+                                 constraintName="fk_bloques_curso_nivel_modulo_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="nivel_jerarquico"/>
+                                 referencedTableName="nivel_modulo"/>
                                  
     <addForeignKeyConstraint baseColumnNames="bloque_componentes_id"
                                  baseTableName="bloques_curso"

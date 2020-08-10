@@ -21,6 +21,21 @@
                                  referencedColumnNames="id"
                                  referencedTableName="agrupador"/>
                                  
+      <addForeignKeyConstraint baseColumnNames="usuario_id"
+                                 baseTableName="agrupador_usuario"
+                                 constraintName="fk_agrupador_usuario_usuario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    
+    
+    
+     <addForeignKeyConstraint baseColumnNames="agrupador_id"
+                                 baseTableName="agrupador_usuario"
+                                 constraintName="fk_agrupador_usuario_agrupador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="agrupador"/>                    
+    
+                                 
       
  
      

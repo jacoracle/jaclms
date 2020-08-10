@@ -20,6 +20,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.constructor.domain.Asignatura;
@@ -127,8 +128,8 @@ public class Modulo implements Serializable {
     /**
      * nivelesCurso
      */
-    @OneToMany(mappedBy = "modulo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<NivelesModulo> nivelesModulo = new HashSet<>();
+    @OneToOne(mappedBy = "modulo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private NivelesModulo nivelesModulo;
     
     /**
      * user
@@ -331,13 +332,11 @@ public class Modulo implements Serializable {
 		  this.fechaCreacionSys = LocalDateTime.now();;
 	}
 	
-	
-	
 
 	/**
 	 * @return the nivelesModulo
 	 */
-	public Set<NivelesModulo> getNivelesModulo() {
+	public NivelesModulo getNivelesModulo() {
 		return nivelesModulo;
 	}
 
@@ -345,7 +344,7 @@ public class Modulo implements Serializable {
 	/**
 	 * @param nivelesModulo the nivelesModulo to set
 	 */
-	public void setNivelesModulo(Set<NivelesModulo> nivelesModulo) {
+	public void setNivelesModulo(NivelesModulo nivelesModulo) {
 		this.nivelesModulo = nivelesModulo;
 	}
 

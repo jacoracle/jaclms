@@ -15,14 +15,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+import org.constructor.domain.User;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -77,15 +80,30 @@ public class Agrupador  implements Serializable{
     /**
      * Etiqueta
      */
-    @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "agrupador_id")
     private Set<Etiqueta> etiquetas = new HashSet<>();
  
 
+    /**
+     * modulos
+     */
     @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(nullable = true)
     @JsonManagedReference
     private Set<AgrupadorModulo> modulos = new HashSet<>();
     
+    
+    /**
+     * user
+     */
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "agrupador_usuario", 
+            joinColumns = @JoinColumn(name = "agrupador_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="usuario_id", referencedColumnName = "id", nullable = false))
+    private Set<User> user = new HashSet<>();
 
 	/**
 	 * Get
@@ -199,16 +217,41 @@ public class Agrupador  implements Serializable{
 	public void setEtiquetas(Set<Etiqueta> etiquetas) {
 		this.etiquetas = etiquetas;
 	}
+	
 
+	/**
+	 * @return the user
+	 */
+	public Set<User> getUser() {
+		return user;
+	}
 
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(Set<User> user) {
+		this.user = user;
+	}
+	
+	/**
+	 * equals
+	 */
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Agrupador)) {
+            return false;
+        }
+        return id != null && id.equals(((Agrupador) o).id);
+    }
 
+	@Override
+	public String toString() {
+		return "Agrupador [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fechaInicio="
+				+ fechaInicio + ", fechaFin=" + fechaFin + ", etiquetas=" + etiquetas + "]";
+	}
 
-
-
-
-    
-    
-    
-    
     
 }

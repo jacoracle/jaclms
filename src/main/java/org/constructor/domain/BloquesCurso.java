@@ -51,7 +51,7 @@ public class BloquesCurso  implements Serializable {
 	
 	/** The nivel jerarquico. */
 	@ManyToOne
-	@JoinColumn(name = "nivel_jerarquico_id", nullable=false)
+	@JoinColumn(name = "nivel_modulo_id", nullable=false)
 	@JsonIgnore
 	private NivelJerarquico nivelJerarquico;
 	

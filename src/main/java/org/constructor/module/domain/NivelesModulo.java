@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
@@ -45,9 +46,9 @@ public class NivelesModulo  implements Serializable{
 	/**
 	 * modulo_id
 	 */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "modulo_id")
 	@JsonIgnore
-	@ManyToOne
-    @JoinColumn(name = "modulo_id", nullable=false)
     private Modulo modulo;
 	
 	/**
@@ -55,7 +56,7 @@ public class NivelesModulo  implements Serializable{
 	 */
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "nivel_jerarquico_id", nullable=false)
+	@JoinColumn(name = "nivel_modulo_id", nullable=false)
     private NivelJerarquico nivelJerarquico;
 	
 	/**

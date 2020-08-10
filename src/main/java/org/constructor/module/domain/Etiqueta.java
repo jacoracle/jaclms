@@ -11,11 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 
 /**
@@ -44,17 +43,7 @@ public class Etiqueta implements Serializable{
     @Column(name = "descripcion")
     private String descripcion;
     
-    
-    /**
-     * agrupador
-     */
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "agrupador_id", nullable=false)
-    private Agrupador agrupador;
-	
 
- 
 	/**
 	 * @return the id
 	 */
@@ -69,9 +58,6 @@ public class Etiqueta implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
-
 
 
 	/**
@@ -89,29 +75,9 @@ public class Etiqueta implements Serializable{
 		this.descripcion = descripcion;
 	}
 
-
-
-
-
-	/**
-	 * @return the agrupador
-	 */
-	public Agrupador getAgrupador() {
-		return agrupador;
-	}
-
-
-	/**
-	 * @param agrupador the agrupador to set
-	 */
-	public void setAgrupador(Agrupador agrupador) {
-		this.agrupador = agrupador;
-	}
-
-
 	@Override
 	public String toString() {
-		return "Etiquetas [id=" + id + ", descripcion=" + descripcion + ", agrupador=" + agrupador + "]";
+		return "Etiquetas [id=" + id + ", descripcion=" + descripcion + "]";
 	}
 
 
