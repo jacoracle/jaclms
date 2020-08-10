@@ -80,7 +80,8 @@ public class Agrupador  implements Serializable{
     /**
      * Etiqueta
      */
-    @OneToMany(mappedBy = "agrupador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "agrupador_id")
     private Set<Etiqueta> etiquetas = new HashSet<>();
  
 
