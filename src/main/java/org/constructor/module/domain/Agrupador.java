@@ -80,7 +80,7 @@ public class Agrupador  implements Serializable{
     /**
      * Etiqueta
      */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "agrupador_id")
     private Set<Etiqueta> etiquetas = new HashSet<>();
  
@@ -250,18 +250,8 @@ public class Agrupador  implements Serializable{
 	@Override
 	public String toString() {
 		return "Agrupador [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fechaInicio="
-				+ fechaInicio + ", fechaFin=" + fechaFin + ", etiquetas=" + etiquetas + ", modulos=" + modulos + "]";
+				+ fechaInicio + ", fechaFin=" + fechaFin + ", etiquetas=" + etiquetas + "]";
 	}
 
-
-
-
-
-
-
-    
-    
-    
-    
     
 }
