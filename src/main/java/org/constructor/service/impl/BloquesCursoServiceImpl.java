@@ -9,12 +9,12 @@ import org.constructor.domain.BloqueComponentes;
 import org.constructor.domain.BloquesCurso;
 import org.constructor.domain.Componente;
 import org.constructor.domain.Contenido;
-import org.constructor.domain.NivelJerarquico;
+import org.constructor.domain.NivelModulo;
 import org.constructor.repository.BloqueComponentesRepository;
 import org.constructor.repository.BloquesCursoRepository;
 import org.constructor.repository.ComponenteRepository;
 import org.constructor.repository.ContenidoRepository;
-import org.constructor.repository.NivelJerarquicoRepository;
+import org.constructor.repository.NivelModuloRepository;
 import org.constructor.service.BloquesCursoService;
 import org.constructor.service.dto.BloquesCursoDTO;
 import org.constructor.service.dto.ComponenteDTO;
@@ -43,7 +43,7 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 	private  BloquesCursoRepository bloquesCursoRepository;
 	
 	@Autowired
-	private NivelJerarquicoRepository nivelJerarquicoRepository;
+	private NivelModuloRepository nivelModuloRepository;
 	
 	@Autowired
 	private BloqueComponentesRepository bloqueComponentesRepository;
@@ -135,11 +135,11 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 				BloquesCurso newBloquesCurso = new BloquesCurso();
 				BloqueComponentes bloqueComponentes = new BloqueComponentes();
 				
-				Optional<NivelJerarquico> nivelJerarquico = nivelJerarquicoRepository.findById(bloqueCursoDTO.getNivelJerarquico().getNivelId());
+				Optional<NivelModulo> nivelModulo = nivelModuloRepository.findById(bloqueCursoDTO.getNivelJerarquico().getNivelId());
 				
 				newBloquesCurso.setIndicadorOriginal(bloqueCursoDTO.getIndicadorOriginal());
 				newBloquesCurso.setMostrar(bloqueCursoDTO.getMostrar());
-				newBloquesCurso.setNivelJerarquico(nivelJerarquico.orElse(null));
+				newBloquesCurso.setNivelModulo(nivelModulo.orElse(null));
 				newBloquesCurso.setOrden(bloqueCursoDTO.getOrden());
 				
 				bloqueComponentes.setOrden(bloqueCursoDTO.getBloqueComponentes().getOrden());

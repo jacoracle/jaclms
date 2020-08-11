@@ -2,26 +2,26 @@ package org.constructor.service;
 
 import java.util.Optional;
 
-import org.constructor.domain.NivelJerarquico;
+import org.constructor.domain.NivelModulo;
 import org.constructor.response.NivelJerarquicoModuloResponse;
 import org.constructor.response.NivelJerarquicoResponse;
-import org.constructor.service.dto.NivelJerarquicoDTO;
+import org.constructor.service.dto.NivelModuloDTO;
 import org.constructor.service.dto.NivelJerarquicoModuloDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Service Interface for managing {@link NivelJerarquico}.
+ * Service Interface for managing {@link NivelModulo}.
  */
-public interface NivelJerarquicoService {
+public interface NivelModuloService {
 	
 	 /**
-     * Save a NivelJerarquico.
+     * Save a NivelModulo.
      *
      * @param nivelJerarquico the entity to save.
      * @return the persisted entity.
      */
-    NivelJerarquico saveCurso(NivelJerarquicoDTO nivelJerarquico) throws Exception;
+    NivelModulo saveCurso(NivelModuloDTO nivelJerarquico) throws Exception;
     
     /**
      * module save
@@ -30,16 +30,16 @@ public interface NivelJerarquicoService {
      * @return
      * @throws Exception
      */
-    NivelJerarquico saveModulo(NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception;
+    NivelModulo saveModulo(NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception;
     
     
     /**
      * updateNivelJerarquico
-     * @param nivelJerarquicoDTO
+     * @param nivelModuloDTO
      * @return
      * @throws Exception
      */
-    Optional<NivelJerarquico> updateNivelJerarquicoCurso(NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception;
+    Optional<NivelModulo> updateNivelJerarquicoCurso(NivelModuloDTO nivelModuloDTO) throws Exception;
 
     
     /**
@@ -48,7 +48,7 @@ public interface NivelJerarquicoService {
      * @return
      * @throws Exception
      */
-    Optional<NivelJerarquico> updateNivelJerarquicoModule(NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception;
+    Optional<NivelModulo> updateNivelJerarquicoModule(NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception;
 
     /**
      * Get all the nivelJerarquico.
@@ -56,7 +56,7 @@ public interface NivelJerarquicoService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<NivelJerarquico> findAll(Pageable pageable);
+    Page<NivelModulo> findAll(Pageable pageable);
     
     /**
      * Get the "id" nivelJerarquico.

@@ -34,9 +34,9 @@ public class EstructuraJerarquica implements Serializable{
     private Long id;
 	
 	/**
-	 * NivelJerarquico nivelJerarquico
+	 * NivelModulo nivelModulo
 	 */
-    private NivelJerarquico nivelJerarquico;
+    private NivelModulo nivelModulo;
 	
 	/**
 	 * int subNivelJerarquico
@@ -69,18 +69,18 @@ public class EstructuraJerarquica implements Serializable{
 
 	/**
 	 * Get 
-	 * @return the nivelJerarquico 
+	 * @return the nivelModulo 
 	 */
-	public NivelJerarquico getNivelJerarquico() {
-		return nivelJerarquico;
+	public NivelModulo getNivelJerarquico() {
+		return nivelModulo;
 	}
 
 	/**
 	 * Set
-	 * @param nivelJerarquico
+	 * @param nivelModulo
 	 */
-	public void setNivelJerarquico(NivelJerarquico nivelJerarquico) {
-		this.nivelJerarquico = nivelJerarquico;
+	public void setNivelJerarquico(NivelModulo nivelModulo) {
+		this.nivelModulo = nivelModulo;
 	}
 
 	/**

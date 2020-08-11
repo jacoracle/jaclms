@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "nivel_modulo")
-public class NivelJerarquico implements Serializable  {
+public class NivelModulo implements Serializable  {
 		
 	/** Serializable. */
 	private static final long serialVersionUID = 1L;
@@ -48,19 +48,19 @@ public class NivelJerarquico implements Serializable  {
     private String  tipo;
 		
 	/** nivelJerarquico. */
-	@OneToMany(mappedBy = "nivelJerarquico")
+	@OneToMany(mappedBy = "nivelModulo")
 	@JsonIgnore
 	private Set<NivelesCurso> nivelesCurso = new HashSet<>(); 
 	
 	/** The bloques curso. */
-	@OneToMany(mappedBy = "nivelJerarquico", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE )
+	@OneToMany(mappedBy = "nivelModulo", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE )
 	@OrderBy ("orden")
 	private Set<BloquesCurso> bloquesCurso;
 	
 	/** 
 	 * nivelJerarquico. 
 	 */
-	@OneToMany(mappedBy = "nivelJerarquico")
+	@OneToMany(mappedBy = "nivelModulo")
 	@JsonIgnore
 	private Set<NivelesModulo> nivelesModulo = new HashSet<>();
 
@@ -190,7 +190,7 @@ public class NivelJerarquico implements Serializable  {
 
 	@Override
 	public String toString() {
-		return "NivelJerarquico [id=" + id + ", nombre=" + nombre + ", informacionAdicional=" + informacionAdicional
+		return "NivelModulo [id=" + id + ", nombre=" + nombre + ", informacionAdicional=" + informacionAdicional
 				+ ", tipo=" + tipo + ", nivelesCurso=" + nivelesCurso + ", bloquesCurso=" + bloquesCurso
 				+ ", nivelesModulo=" + nivelesModulo + "]";
 	}

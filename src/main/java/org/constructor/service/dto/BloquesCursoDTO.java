@@ -25,7 +25,7 @@ public class BloquesCursoDTO {
 	private Long autor;
 	
 	/** The nivel jerarquico DTO. */
-	private NivelJerarquicoDTO nivelJerarquico; 
+	private NivelModuloDTO nivelJerarquico; 
 
 	/**
 	 * Gets the id.
@@ -140,14 +140,14 @@ public class BloquesCursoDTO {
 	/**
 	 * @return the nivelJerarquico
 	 */
-	public NivelJerarquicoDTO getNivelJerarquico() {
+	public NivelModuloDTO getNivelJerarquico() {
 		return nivelJerarquico;
 	}
 
 	/**
 	 * @param nivelJerarquico the nivelJerarquico to set
 	 */
-	public void setNivelJerarquico(NivelJerarquicoDTO nivelJerarquico) {
+	public void setNivelJerarquico(NivelModuloDTO nivelJerarquico) {
 		this.nivelJerarquico = nivelJerarquico;
 	}
 

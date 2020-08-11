@@ -18,7 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import org.constructor.domain.NivelJerarquico;
+import org.constructor.domain.NivelModulo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -57,7 +57,7 @@ public class NivelesModulo  implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "nivel_modulo_id", nullable=false)
-    private NivelJerarquico nivelJerarquico;
+    private NivelModulo nivelModulo;
 	
 	/**
 	 * orden_nivel
@@ -100,18 +100,18 @@ public class NivelesModulo  implements Serializable{
 
 	/**
 	 * Get
-	 * @return the nivelJerarquico
+	 * @return the nivelModulo
 	 */
-	public NivelJerarquico getNivelJerarquico() {
-		return nivelJerarquico;
+	public NivelModulo getNivelJerarquico() {
+		return nivelModulo;
 	}
 
 	/**
 	 * Set
-	 * @param nivelJerarquico the nivelJerarquico to set
+	 * @param nivelModulo the nivelModulo to set
 	 */
-	public void setNivelJerarquico(final NivelJerarquico nivelJerarquico) {
-		this.nivelJerarquico = nivelJerarquico;
+	public void setNivelJerarquico(final NivelModulo nivelModulo) {
+		this.nivelModulo = nivelModulo;
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class NivelesModulo  implements Serializable{
 
 	@Override
 	public String toString() {
-		return "NivelesModulo [id=" + id + ", id_nivel_jerarquico=" + nivelJerarquico + ", ordenNivel=" + ordenNivel + "]";
+		return "NivelesModulo [id=" + id + ", id_nivel_jerarquico=" + nivelModulo + ", ordenNivel=" + ordenNivel + "]";
 	}
 
 

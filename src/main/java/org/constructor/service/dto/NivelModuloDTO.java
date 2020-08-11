@@ -3,9 +3,9 @@ package org.constructor.service.dto;
 import java.util.Set;
 
 /**
- * The Class NivelJerarquicoDTO.
+ * The Class NivelModuloDTO.
  */
-public class NivelJerarquicoDTO {
+public class NivelModuloDTO {
 	
 	/** The curso id. */
 	private Long cursoId;
@@ -152,7 +152,7 @@ public class NivelJerarquicoDTO {
 
 	@Override
 	public String toString() {
-		return "NivelJerarquicoDTO [cursoId=" + cursoId + ", nivelId=" + nivelId
+		return "NivelModuloDTO [cursoId=" + cursoId + ", nivelId=" + nivelId
 				+ ", nombre=" + nombre + ", tipo=" + tipo + ", orden=" + orden + ", informacionAdicional="
 				+ informacionAdicional + ", bloquesCurso=" + bloquesCurso + "]";
 	}
