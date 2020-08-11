@@ -93,6 +93,7 @@ public class Agrupador  implements Serializable{
     @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(nullable = true)
     @JsonManagedReference
+	@OrderBy ("orden ASC")
     private Set<AgrupadorModulo> modulos = new HashSet<>();
     
     
