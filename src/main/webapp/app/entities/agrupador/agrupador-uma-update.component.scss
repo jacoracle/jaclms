@@ -17,7 +17,7 @@
     // border: solid 1px black;
     position: relative;
     width: 100%;
-    height: 475px;
+    height: auto; //  475px;
     background-color: $window-body-color;
     overflow-y: auto;
     padding-bottom: 30px;
@@ -60,7 +60,7 @@
           .row-filter-uma {
             // border: solid 1px red;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             .mat-form-field {
               width: 90%;
             }

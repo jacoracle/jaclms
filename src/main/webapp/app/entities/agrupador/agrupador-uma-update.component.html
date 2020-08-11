@@ -1,187 +1,169 @@
 <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
 
-  <!-- Window Empty -->
-  <div class="window-br-body">
-    <div class="search-main-container">
-      <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
+  <mat-horizontal-stepper [linear]="!isCompleted" #stepper>
+    <mat-step [stepControl]="groupUmaForm" editable="false">
+      <!-- <form [formGroup]="firstFormGroup"> -->
+      <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
+      <!-- <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        </mat-form-field> -->
 
-        <div class="container-search-form-uma">
+      <!-- Window Empty -->
+      <div class="window-br-body">
+        <div class="search-main-container">
+          <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
 
-          <div class="row-search-gral">
-            <p class="txt-recent-umas">Tus secuencias recientes ({{secuenciasUma.length}})</p>
-          </div>
+            <div class="container-search-form-uma">
 
-          <div class="container-field-filter">
-            <p>Registrar Grupo:</p>
-
-            <div class="row-filter-uma">
-              <div>
-                <mat-form-field>
-                  <mat-label>Título del Grupo</mat-label>
-                  <input matInput formControlName="umaTitleFormCtrl" [errorStateMatcher]="matcher"
-                    placeholder="Título del Grupo">
-                  <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                  <mat-error *ngIf="groupUmaForm.get('umaTitleFormCtrl').hasError('required')">
-                    El título del Grupo de UMAS es requerido.
-                  </mat-error>
-                </mat-form-field>
+              <div class="row-search-gral">
+                <p class="txt-recent-umas">Tus secuencias recientes ({{secuenciasUma.length}})</p>
               </div>
-              <div>
-                <mat-form-field>
-                  <mat-label>Descripción</mat-label>
-                  <input matInput formControlName="umaDescriptionFormCtrl" [errorStateMatcher]="matcher"
-                    placeholder="título de la sesión">
-                  <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                  <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('required')">
-                    La descripción del Grupo de UMAS es requerido.
-                  </mat-error>
-                  <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('maxlength')">
-                    La descripción del Grupo no debe superar los 50 caracteres.
-                  </mat-error>
-                </mat-form-field>
+
+              <div class="container-field-filter">
+                <p>Registrar Grupo:</p>
+
+                <div class="row-filter-uma">
+                  <div>
+                    <mat-form-field>
+                      <mat-label>Título del Grupo</mat-label>
+                      <input matInput formControlName="umaTitleFormCtrl" [errorStateMatcher]="matcher"
+                        placeholder="Título del Grupo">
+                      <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                      <mat-error *ngIf="groupUmaForm.get('umaTitleFormCtrl').hasError('required')">
+                        El título del Grupo de UMAS es requerido.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <mat-form-field>
+                      <mat-label>Descripción</mat-label>
+                      <input matInput formControlName="umaDescriptionFormCtrl" [errorStateMatcher]="matcher"
+                        placeholder="título de la sesión">
+                      <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                      <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('required')">
+                        La descripción del Grupo de UMAS es requerido.
+                      </mat-error>
+                      <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('maxlength')">
+                        La descripción del Grupo no debe superar los 50 caracteres.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+
+                <div class="row-filter-uma">
+                  <div>
+                    <mat-form-field>
+                      <input type="text" placeholder="Tags de búsqueda" matInput #txtTag
+                        formControlName="umaAreaKnowledge" [matAutocomplete]="autoInputSubject"
+                        (keyup.enter)="simulacionTagsChips(txtTag.value)">
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <div class="chips-grades">
+                      <mat-chip-list aria-label="Search tags">
+                        <mat-chip *ngFor="let grades of selectedGradesModule" [selectable]="selectable"
+                          [removable]="removable" (removed)="remove(grades)">{{grades.descripcion}}
+                          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                      </mat-chip-list>
+                    </div>
+
+                  </div>
+                </div>
+
               </div>
-              <div>
-                <mat-form-field>
-                  <input type="text" placeholder="Tags de búsqueda" matInput formControlName="umaAreaKnowledge"
-                    [matAutocomplete]="autoInputSubject">
-                  <mat-autocomplete autoActiveFirstOption #autoInputSubject="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let option of filteredSubjectOpts | async" [value]="option">
-                      {{option.descripcion}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-              </div>
+
             </div>
-
-          </div>
+          </form>
 
         </div>
-      </form>
+        <!-- close search-main-container -->
+        <div>
+          <button class="main-btn" (click)="saveSequenceGroup()" mat-button matStepperNext>Crear</button>
+        </div>
 
-    </div>
-    <!-- close search-main-container -->
+      </div>
+      <!-- close window-br-body div -->
+      <!-- </form> -->
+    </mat-step>
 
-    <div class="result-search-container">
+    <mat-step [stepControl]="secondFormGroup">
+      <!-- <form [formGroup]="secondFormGroup"> -->
+      <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
+      <!-- <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+        </mat-form-field> -->
 
-      <!-- expansion panel cool -->
-      <div *ngIf="secuenciasUma.length">
-        <p>Resultados de búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p>
-        <div class="container-result-groups">
-          <div *ngFor="let sec of secuenciasUma">
-            <!-- <mat-nav-list> -->
-            <mat-expansion-panel class="group-cover-panel" matTooltip="Despliegue para ver más detalles">
-              <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'200px'">
-                <span class="title-panel">
-                  {{sec.titulo}}
-                </span>
-              </mat-expansion-panel-header>
+      <div class="result-search-container">
 
-              <div class="panel-body-group">
+        <div>
+          <!-- <button mat-button matStepperPrevious>Anterior</button> -->
+          <button class="main-btn" mat-button matStepperNext (click)="saveSequenceGroup()">Crear Secuencia</button>
+          <button class="secondary-btn" mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+            {{!isLinear ? 'Enable step mode' : 'Disable step mode'}}
+          </button>
+        </div>
 
-                <div (click)="deleteModule(sec.id, $event)" class="delete-group">
-                  <i class="icon ni-delete icon-negative"></i>
+        <!-- expansion panel cool -->
+        <div *ngIf="secuenciasUma.length">
+          <p>Resultados de búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p>
+          <div class="container-result-groups">
+            <div *ngFor="let sec of secuenciasUma">
+              <!-- <mat-nav-list> -->
+              <mat-expansion-panel class="group-cover-panel" matTooltip="Despliegue para ver más detalles">
+                <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'200px'">
+                  <span class="title-panel">
+                    {{sec.titulo}}
+                  </span>
+                </mat-expansion-panel-header>
+
+                <div class="panel-body-group">
+
+                  <div (click)="deleteModule(sec.id, $event)" class="delete-group">
+                    <i class="icon ni-delete icon-negative"></i>
+                  </div>
+
+                  <div class="">
+                    <!--mat-list-item-->
+                    <span class="desc-group-panel" [routerLink]="['/constructor-layout', sec.id, 'module']"
+                      *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
+
+                    <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+                      laudantium ullam sed, ipsa perferendis quisquam earum beatae repellat, quos,
+                      aut impedit voluptatibus nemo similique quod?</p>
+
+                  </div>
+
                 </div>
 
-                <div class="">
-                  <!--mat-list-item-->
-                  <span class="desc-group-panel" [routerLink]="['/constructor-layout', sec.id, 'module']"
-                    *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
 
-                  <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
-                  <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
-                    laudantium ullam sed, ipsa perferendis quisquam earum beatae repellat, quos,
-                    aut impedit voluptatibus nemo similique quod?</p>
+              </mat-expansion-panel>
+              <!-- </mat-nav-list> -->
 
-                </div>
-
-              </div>
-
-
-            </mat-expansion-panel>
-            <!-- </mat-nav-list> -->
-
+            </div>
           </div>
+
         </div>
 
       </div>
 
-      <hr>
-
-      <!-- expansion panel -->
-      <div *ngIf="secuenciasUma.length">
-        <p>Resultados de búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p>
-        <div class="groups-search-row">
-          <div *ngFor="let sec of secuenciasUma">
-            <!-- <mat-nav-list> -->
-            <mat-expansion-panel class="group-cover-panel_" matTooltip="Despliegue para ver más detalles">
-              <mat-expansion-panel-header>
-                <span class="title-panel">
-                  {{sec.titulo}}
-                </span>
-              </mat-expansion-panel-header>
-
-              <div class="group-body-panel exp-pan-group-item">
-
-                <div (click)="deleteModule(sec.id, $event)" class="delete-group-panel">
-                  <i class="icon ni-delete icon-negative"></i>
-                </div>
-
-                <div class="group-panel-content">
-                  <!--mat-list-item-->
-                  <span class="desc-group-panel" [routerLink]="['/constructor-layout', sec.id, 'module']"
-                    *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
-
-                  <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
-
-                </div>
-
-              </div>
-
-
-            </mat-expansion-panel>
-            <!-- </mat-nav-list> -->
-
-          </div>
-        </div>
-
+      <!-- </form> -->
+    </mat-step>
+    <!-- <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
       </div>
+    </mat-step> -->
+  </mat-horizontal-stepper>
 
-      <hr>
-
-      <!-- cuadros -->
-      <div *ngIf="secuenciasUma.length">
-        <p>Resultados de búsqueda de secuencias/agrupaciones de UMAs... ( {{secuenciasUma.length}} )</p>
-
-        <div class="groups-search-row">
-          <div class="group-cover-br" *ngFor="let sec of secuenciasUma"
-            [routerLink]="['/constructor-layout', sec.id, 'module']">
-
-            <div class="group-cover-br-margin">
-              <!-- <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="sec.sanitizedPortadaUrl"> -->
-              <div class="group-cover-br-image"></div>
-            </div>
-
-            <div (click)="deleteModule(sec.id, $event)" class="delete-group-br">
-              <i class="icon ni-delete icon-negative"></i>
-            </div>
-
-            <div class="group-desc-br-row">
-              <span class="title-group-br"
-                *ngIf="sec.titulo">{{sec.titulo.length > 48 ? sec.titulo.substring(0, 48) + "..." : sec.titulo}}</span>
-              <span class="desc-group-br"
-                *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-
-  </div>
-  <!-- close window-br-body div -->
-
+  <p>{{isCompleted}}</p>
 
 </div>
 <!-- close div isAuthenticated -->
