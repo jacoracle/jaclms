@@ -59,6 +59,9 @@ public interface AgrupadorService {
      * @return the entity.
      */
     Optional<Agrupador> findOne(Long id);
+    
+    
+
 
     /**
      * Delete the "id" agrupador.

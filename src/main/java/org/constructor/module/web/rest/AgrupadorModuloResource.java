@@ -5,13 +5,16 @@ package org.constructor.module.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.constructor.module.domain.Agrupador;
 import org.constructor.module.domain.AgrupadorModulo;
+import org.constructor.repository.AgrupadorRepository;
 import org.constructor.service.AgrupadorModuloService;
+import org.constructor.service.dto.UpdateAgrupadorDTO;
 import org.constructor.utils.RestConstants;
-import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +67,8 @@ public class AgrupadorModuloResource {
      */
     @Autowired
 	private AgrupadorModuloService agrupadorModuloService ;
+    @Autowired
+    private AgrupadorRepository agrupadorRepository;
     
     
     /**
@@ -98,18 +103,21 @@ public class AgrupadorModuloResource {
 	     * Update AgrupadorModulo
 	     * @param agrupadorModulo
 	     * @return
-	     * @throws URISyntaxException
+	     * @throws Exception 
 	     */
 	    @PutMapping(path = RestConstants.PATH_AGRUPADOR_MODULO)
-	    public ResponseEntity<AgrupadorModulo> updateAgrupadorModulo(@RequestBody AgrupadorModulo agrupadorModulo) throws URISyntaxException {
-	        log.debug("REST request to update AgrupadorModulo : {}", agrupadorModulo);
-	        if (agrupadorModulo.getId() == null) {
-	            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-	        }
-	        AgrupadorModulo result = agrupadorModuloService.save(agrupadorModulo);
+	    public ResponseEntity<List<Agrupador>> updateAgrupadorModulo(@RequestBody List<UpdateAgrupadorDTO> dto) throws Exception {
+	        log.debug("REST request to update AgrupadorModulo : {}", dto);
+	     
+	        List<Agrupador> listAgrupador = new ArrayList<>();
+	        List<AgrupadorModulo> result = agrupadorModuloService.updateAgrupadorModulo(dto);
+	        for (AgrupadorModulo agrupadorModulo : result) {
+	        	listAgrupador.add(agrupadorRepository.findById(agrupadorModulo.getAgrupador().getId()).get());
+	        	
+			}
+
 	        return ResponseEntity.ok()
-	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-	            .body(result);
+	            .body(listAgrupador);
 	    }
 
 	    
