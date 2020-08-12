@@ -1,16 +1,14 @@
 import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { ModuloService } from 'app/entities/modulo/modulo.service';
-import { IModulo } from 'app/shared/model/modulo.model';
-
 import { HttpResponse } from '@angular/common/http';
 import { Validators, FormControl, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcherUtil } from './error-state-matcher';
 
 import { map, startWith } from 'rxjs/operators';
+import { IAgrupador } from 'app/shared/model/agrupador-uma.model';
+import { AgrupadorService } from 'app/entities/agrupador/agrupador-uma.service';
 
 @Component({
   selector: 'jhi-home-uma-groups',
@@ -20,7 +18,7 @@ import { map, startWith } from 'rxjs/operators';
 export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
   authSubscription?: Subscription;
-  secuenciasUma: IModulo[] = new Array<IModulo>();
+  secuenciasUma: IAgrupador[] = new Array<IAgrupador>();
   // defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
 
   filteredTopicOpts: any; // : Observable<IModulo[]>;
@@ -41,7 +39,7 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     ])
   });
 
-  constructor(private accountService: AccountService, private formbuilder: FormBuilder, private agrupadorService: ModuloService) {}
+  constructor(private accountService: AccountService, private formbuilder: FormBuilder, private agrupadorService: AgrupadorService) {}
 
   ngOnInit(): void {
     this.filteredTopicOpts = this.groupUmaForm.get('sessionTopic')!.valueChanges.pipe(
@@ -66,7 +64,7 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
       this.account = account;
       if (this.account) {
         this.agrupadorService.query().subscribe(
-          (res: HttpResponse<IModulo[]>) => {
+          (res: HttpResponse<IAgrupador[]>) => {
             this.secuenciasUma = Array.from(res.body!);
           },
           () => this.onQueryError()
@@ -75,17 +73,17 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     });
   }
 
-  private _filter(value: string): IModulo[] {
+  private _filter(value: string): IAgrupador[] {
     const filterValue = value.toLowerCase();
-    return this.secuenciasUma.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
+    return this.secuenciasUma.filter((option: IAgrupador) => option.descripcion!.toLowerCase().includes(filterValue));
   }
 
-  private _filter_(value: string): IModulo[] {
+  private _filter_(value: string): IAgrupador[] {
     const filterValue = value.toLowerCase();
-    return this.secuenciasUma.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
+    return this.secuenciasUma.filter((option: IAgrupador) => option.descripcion!.toLowerCase().includes(filterValue));
   }
 
-  displayFn(mod: IModulo): string {
+  displayFn(mod: IAgrupador): string {
     return mod && mod.descripcion ? mod.descripcion : '';
   }
 

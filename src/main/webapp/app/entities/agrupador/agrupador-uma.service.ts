@@ -8,10 +8,10 @@ import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
-import { IModulo } from 'app/shared/model/modulo.model';
+import { IAgrupador } from 'app/shared/model/agrupador-uma.model';
 
-type EntityResponseType = HttpResponse<IModulo>;
-type EntityArrayResponseType = HttpResponse<IModulo[]>;
+type EntityResponseType = HttpResponse<IAgrupador>;
+type EntityArrayResponseType = HttpResponse<IAgrupador[]>;
 
 @Injectable({ providedIn: 'root' })
 export class AgrupadorService {
@@ -21,27 +21,27 @@ export class AgrupadorService {
 
   create(modulo: any): Observable<EntityResponseType> {
     return this.http
-      .post<IModulo>(this.resourceUrl, modulo, { observe: 'response' })
+      .post<IAgrupador>(this.resourceUrl, modulo, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   update(modulo: any): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(modulo);
     return this.http
-      .put<IModulo>(this.resourceUrl, copy, { observe: 'response' })
+      .put<IAgrupador>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   find(id: number): Observable<EntityResponseType> {
     return this.http
-      .get<IModulo>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .get<IAgrupador>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<IModulo[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .get<IAgrupador[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
@@ -49,24 +49,27 @@ export class AgrupadorService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  protected convertDateFromClient(curso: IModulo): IModulo {
-    const copy: IModulo = Object.assign({}, curso, {
-      fechaCreacion: curso.fechaCreacionSys && curso.fechaCreacionSys.isValid() ? curso.fechaCreacionSys.format(DATE_FORMAT) : undefined
+  protected convertDateFromClient(agrupador: IAgrupador): IAgrupador {
+    const copy: IAgrupador = Object.assign({}, agrupador, {
+      fechaInicioSys:
+        agrupador.fechaInicioSys && agrupador.fechaInicioSys.isValid() ? agrupador.fechaInicioSys.format(DATE_FORMAT) : undefined,
+      fechaFinSys: agrupador.fechaFinSys && agrupador.fechaFinSys.isValid() ? agrupador.fechaFinSys.format(DATE_FORMAT) : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.fechaCreacionSys = res.body.fechaCreacionSys ? moment(res.body.fechaCreacionSys) : undefined;
+      res.body.fechaInicioSys = res.body.fechaInicio ? moment(res.body.fechaInicio) : undefined;
     }
     return res;
   }
 
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
-      res.body.forEach((modulo: IModulo) => {
-        modulo.fechaCreacionSys = modulo.fechaCreacionSys ? moment(modulo.fechaCreacionSys) : undefined;
+      res.body.forEach((agrupador: IAgrupador) => {
+        agrupador.fechaInicioSys = agrupador.fechaInicio ? moment(agrupador.fechaInicio) : undefined;
+        agrupador.fechaFinSys = agrupador.fechaFin ? moment(agrupador.fechaFin) : undefined;
       });
     }
     return res;

@@ -2,12 +2,28 @@
   "constructorApp": {
     "uma": {
       "home": {
-        "title": "UMA",
+        "title": "Cursos",
         "createLabel": "Crear UMA",
-        "createOrEditLabel": "Crear o editar Curso",
+        "createOrEditLabel": "Crear o editar UMA",
         "titleGeneralConfg": "Configuración general",
         "titleAdvancelConfg": "Configuración avanzada",
-        "notFound": "Ningún UMA encontrado"
+        "notFound": "Ningún UMA pudo ser encontrada"
+      },
+      "created": "Un nuevo Curso ha sido creado con el identificador {{ param }}",
+      "updated": "Un Curso ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Curso ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Curso {{ id }}?"
+      },
+      "detail": {
+        "title": "UMA"
+      },
+      "validations": {
+        "formError": "Por favor revisa la información y vuelve a intentarlo.",
+        "fileSize": "El archivo debe pesar menos de 5MB.",
+        "fileType": "Tipo de archivo no permitido.",
+        "dates": "La fecha de creación no puede ser posterior a la fecha de publicación.",
+        "requiredField": "Este campo es requerido."
       }
     }
   }

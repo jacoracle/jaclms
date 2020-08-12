@@ -1,0 +1,161 @@
+<div class="secuence-group-container">
+
+    <!-- <div>
+        <button mat-button matStepperPrevious>Anterior</button>
+        <button class="main-btn" mat-button matStepperNext (click)="saveSequenceGroup()">Crear Secuencia</button>
+        <button class="secondary-btn" mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+            {{!isLinear ? 'Enable step mode' : 'Disable step mode'}}
+        </button>
+    </div> -->
+
+    <div class="search-uma-container">
+        <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
+
+            <div class="container-search-form-uma">
+
+                <div class="row-search-gral">
+                    <p class="txt-recent-umas">Tus UMAS recientes ({{secuenciasUma.length}})</p>
+                    <div>
+                        <mat-form-field>
+                            <input type="text" placeholder="Buscar" matInput formControlName="sessionType"
+                                [matAutocomplete]="autoInputSessionType">
+                            <mat-autocomplete autoActiveFirstOption #autoInputSessionType="matAutocomplete"
+                                [displayWith]="displayFn">
+                                <mat-option *ngFor="let option of filteredTypeOpts | async" [value]="option">
+                                    {{option.descripcion}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="container-field-filter">
+                    <p>Filtrar por:</p>
+
+                    <div class="row-filter-uma">
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Título de la UMA</mat-label>
+                                <input matInput formControlName="umaTitleFormCtrl" [errorStateMatcher]="matcher"
+                                    placeholder="Título del UMA">
+                                <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                                <mat-error *ngIf="groupUmaForm.get('umaTitleFormCtrl').hasError('required')">
+                                    Captura el título del UMA para filtrar.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Descripción UMA</mat-label>
+                                <input matInput formControlName="umaDescriptionFormCtrl" [errorStateMatcher]="matcher"
+                                    placeholder="título de la sesión">
+                                <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                                <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('maxlength')">
+                                    La descripción del UMA a filtrar no debe superar los 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <input type="text" placeholder="Área de conocimiento" matInput
+                                    formControlName="umaAreaKnowledge" [matAutocomplete]="autoInputSubject">
+                                <mat-autocomplete autoActiveFirstOption #autoInputSubject="matAutocomplete"
+                                    [displayWith]="displayFn">
+                                    <mat-option *ngFor="let option of filteredSubjectOpts | async" [value]="option">
+                                        {{option.descripcion}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row-filter-uma">
+                        <div>
+                            <mat-form-field>
+                                <input type="text" placeholder="Nivel Académico" matInput formControlName="sessionTopic"
+                                    [matAutocomplete]="autoInputTopic">
+                                <mat-autocomplete autoActiveFirstOption #autoInputTopic="matAutocomplete"
+                                    [displayWith]="displayFn">
+                                    <mat-option *ngFor="let option of filteredTopicOpts | async" [value]="option">
+                                        {{option.descripcion}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <input type="text" placeholder="Tema" matInput formControlName="sessionTopic"
+                                    [matAutocomplete]="autoInputTopic">
+                                <mat-autocomplete autoActiveFirstOption #autoInputTopic="matAutocomplete"
+                                    [displayWith]="displayFn">
+                                    <mat-option *ngFor="let option of filteredTopicOpts | async" [value]="option">
+                                        {{option.descripcion}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="btn-search-group">
+                            <button (click)="searchUmas()" class="main-btn">
+                                <span class="material-icons">search</span>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+
+    <div class="result-search-container">
+        <!-- expansion panel cool -->
+        <div *ngIf="secuenciasUma.length">
+            <p>Resultados de búsqueda de UMAs... ( {{secuenciasUma.length}} )</p>
+            <div class="container-result-groups">
+                <div *ngFor="let sec of secuenciasUma">
+                    <!-- <mat-nav-list> -->
+                    <mat-expansion-panel class="group-cover-panel" matTooltip="Despliegue para ver más detalles">
+                        <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'200px'">
+                            <span class="title-panel">
+                                {{sec.titulo}}
+                            </span>
+                        </mat-expansion-panel-header>
+
+                        <div class="panel-body-group">
+
+                            <div (click)="deleteModule(sec.id, $event)" class="delete-group">
+                                <i class="icon ni-delete icon-negative"></i>
+                            </div>
+
+                            <div class="">
+                                <!--mat-list-item-->
+                                <span class="desc-group-panel" [routerLink]="['/constructor-layout', sec.id, 'module']"
+                                    *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
+
+                                <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+                                    laudantium ullam sed, ipsa perferendis quisquam earum beatae repellat, quos,
+                                    aut impedit voluptatibus nemo similique quod?</p>
+
+                            </div>
+
+                        </div>
+
+
+                    </mat-expansion-panel>
+                    <!-- </mat-nav-list> -->
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="sequence-uma-bar">
+        <p>tira de umas</p>
+    </div>
+
+</div>

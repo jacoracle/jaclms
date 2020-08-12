@@ -32,6 +32,7 @@ import { HomeLearningModule } from './home-learning/home-learning.module';
 import { HomeUmaGroupsModule } from './home-uma-groups/home-uma-groups.module';
 import { AgrupadorUmaUpdateComponent } from './entities/agrupador/agrupador-uma-update.component';
 import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
+import { SecuenciaAgrupadorUpdateComponent } from './entities/agrupador/secuencia-uma-update.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-
     CursoUpdateComponent,
     ModuloUpdateComponent,
     AgrupadorUmaUpdateComponent,
+    SecuenciaAgrupadorUpdateComponent,
     FichaUpdateComponent,
     ColaboradoresModuleComponent,
     TopicModuleComponent,

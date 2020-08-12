@@ -1,6 +1,6 @@
 @import '../../content/scss/variables.scss';
 
-.window-course-configuration {
+.window-group-configuration {
   position: relative;
   width: 92%;
   max-width: 1150px;
@@ -13,7 +13,7 @@
   justify-content: center;
   margin-top: 70px;
 
-  .window-cc-header {
+  .window-group-header {
     position: relative;
     width: 100%;
     background-color: $window-header-color;
@@ -27,7 +27,7 @@
     justify-content: flex-start;
     align-items: center;
 
-    .cc-header-topbar {
+    .group-header-topbar {
       position: relative;
       width: 100%;
       height: 40px;
@@ -44,94 +44,12 @@
         font-size: 15px;
       }
     }
-    .cc-header-menu {
-      position: relative;
-      width: 100%;
-      height: 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .cch-menu-row {
-        position: relative;
-        width: 98%;
-        height: 60px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-
-        .ccc-element {
-          position: relative;
-          width: 80px;
-          height: 60px;
-          margin-left: 15px;
-          margin-right: 15px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: 0.4s;
-          opacity: 0.5;
-
-          &:hover {
-            opacity: 1;
-          }
-
-          .icon {
-            position: relative;
-            font-size: 22px;
-          }
-          .c-title {
-            position: relative;
-            width: 100%;
-            height: 20px;
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            font-weight: 600;
-            color: $blue-nimbus-dark;
-          }
-        }
-
-        .active-ccc-element {
-          opacity: 1;
-          cursor: default;
-          pointer-events: none;
-        }
-      }
-    }
   }
 }
 
-.meenu-course-mark {
-  position: absolute;
-  width: 80px;
-  height: 2px;
-  left: 12px;
-  bottom: 0;
-  transition: all 0.4s ease-in-out;
-  background: $blue-nimbus-light;
-}
-.alert-menu-conf {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  top: 10px;
-  right: 22px;
-  border-radius: 50%;
-  background-color: $alert-color;
-  background-image: url('../../content/images/alert_menu_icn2.svg');
-  background-position: center;
-  background-size: 70%;
-  background-repeat: no-repeat;
-  z-index: 2;
-}
-
 // Window Body
-.window-cc-body {
+.window-group-body {
+  // border: solid 1px red;
   position: relative;
   width: 100%;
   height: 525px;
@@ -140,7 +58,7 @@
 }
 
 // Footer
-.window-cc-footer {
+.window-group-footer {
   position: relative;
   width: 100%;
   height: 75px;
@@ -158,7 +76,7 @@
 }
 
 @media (min-height: 800px) {
-  .window-course-configuration {
+  .window-group-configuration {
     height: 700px;
     top: 50%;
     margin-top: -350px;

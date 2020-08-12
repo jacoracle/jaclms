@@ -1,36 +1,30 @@
-<div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
+<div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
-  <mat-horizontal-stepper [linear]="!isCompleted" #stepper>
-    <mat-step [stepControl]="groupUmaForm" editable="false">
-      <!-- <form [formGroup]="firstFormGroup"> -->
-      <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
-      <!-- <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-        </mat-form-field> -->
+  <div class="container-stepper-group">
+    <mat-horizontal-stepper [linear]="!isCompleted" #stepper>
+      <mat-step [stepControl]="groupUmaForm" editable="false">
+        <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
 
-      <!-- Window Empty -->
-      <div class="window-br-body">
-        <div class="search-main-container">
-          <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
+        <div class="register-main-container">
+          <form name="groupUmaForm" role="form" autocomplete="off" [formGroup]="groupUmaForm">
 
-            <div class="container-search-form-uma">
+            <div class="register-form-group">
 
-              <div class="row-search-gral">
-                <p class="txt-recent-umas">Tus secuencias recientes ({{secuenciasUma.length}})</p>
+              <div class="row-text-groups">
+                <p class="txt-recent-groups">Tus secuencias recientes ({{secuenciasUma.length}})</p>
               </div>
 
-              <div class="container-field-filter">
+              <div class="container-field-register">
                 <p>Registrar Grupo:</p>
 
-                <div class="row-filter-uma">
+                <div class="row-form-group">
                   <div>
                     <mat-form-field>
                       <mat-label>Título del Grupo</mat-label>
-                      <input matInput formControlName="umaTitleFormCtrl" [errorStateMatcher]="matcher"
+                      <input matInput formControlName="titleSequenceUmas" [errorStateMatcher]="matcher"
                         placeholder="Título del Grupo">
                       <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                      <mat-error *ngIf="groupUmaForm.get('umaTitleFormCtrl').hasError('required')">
+                      <mat-error *ngIf="groupUmaForm.get('titleSequenceUmas').hasError('required')">
                         El título del Grupo de UMAS es requerido.
                       </mat-error>
                     </mat-form-field>
@@ -38,13 +32,13 @@
                   <div>
                     <mat-form-field>
                       <mat-label>Descripción</mat-label>
-                      <input matInput formControlName="umaDescriptionFormCtrl" [errorStateMatcher]="matcher"
+                      <input matInput formControlName="desciptionSequenceUmas" [errorStateMatcher]="matcher"
                         placeholder="título de la sesión">
                       <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                      <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('required')">
+                      <mat-error *ngIf="groupUmaForm.get('desciptionSequenceUmas').hasError('required')">
                         La descripción del Grupo de UMAS es requerido.
                       </mat-error>
-                      <mat-error *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('maxlength')">
+                      <mat-error *ngIf="groupUmaForm.get('desciptionSequenceUmas').hasError('maxlength')">
                         La descripción del Grupo no debe superar los 50 caracteres.
                       </mat-error>
                     </mat-form-field>
@@ -52,118 +46,65 @@
 
                 </div>
 
-                <div class="row-filter-uma">
+                <div class="row-form-group-tag">
                   <div>
-                    <mat-form-field>
-                      <input type="text" placeholder="Tags de búsqueda" matInput #txtTag
-                        formControlName="umaAreaKnowledge" [matAutocomplete]="autoInputSubject"
-                        (keyup.enter)="simulacionTagsChips(txtTag.value)">
+                    <mat-form-field class="example-chip-list">
+                      <mat-chip-list #chipList aria-label="Fruit selection">
+                        <mat-chip *ngFor="let fruit of tagsBusquedaAgrupador" [selectable]="selectable"
+                          [removable]="removable" (removed)="removeTag(fruit)">
+                          {{fruit.descripcion}}
+                          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Tags de búsqueda" [matChipInputFor]="chipList"
+                          formControlName="searchTagsSequenceUmas" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                          [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTag($event)">
+                      </mat-chip-list>
+                      <mat-error *ngIf="groupUmaForm.get('searchTagsSequenceUmas').hasError('required')">
+                        Debe registrar al menos un Tag para la búsqueda.
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div>
-                    <div class="chips-grades">
-                      <mat-chip-list aria-label="Search tags">
-                        <mat-chip *ngFor="let grades of selectedGradesModule" [selectable]="selectable"
-                          [removable]="removable" (removed)="remove(grades)">{{grades.descripcion}}
-                          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                        </mat-chip>
-                      </mat-chip-list>
-                    </div>
 
                   </div>
                 </div>
 
               </div>
 
+              <div class="btns-register">
+                <button class="main-btn" (click)="saveSequenceGroup()" mat-button matStepperNext>
+                  Crear Grupo
+                </button>
+                <!-- <button class="secondary-btn" type="submit">
+                  Submit
+                </button> -->
+              </div>
+
             </div>
           </form>
 
         </div>
-        <!-- close search-main-container -->
-        <div>
-          <button class="main-btn" (click)="saveSequenceGroup()" mat-button matStepperNext>Crear</button>
-        </div>
+        <!-- close register-main-container -->
+      </mat-step>
 
-      </div>
-      <!-- close window-br-body div -->
-      <!-- </form> -->
-    </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
 
-    <mat-step [stepControl]="secondFormGroup">
-      <!-- <form [formGroup]="secondFormGroup"> -->
-      <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
-      <!-- <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-        </mat-form-field> -->
+        <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
 
-      <div class="result-search-container">
+        <!-- componente que contiene contenido de paso 2 para crear la secuencia/agrupación de umas una vez generado el Grupo -->
+        <jhi-secuencia-uma-update></jhi-secuencia-uma-update>
 
-        <div>
-          <!-- <button mat-button matStepperPrevious>Anterior</button> -->
-          <button class="main-btn" mat-button matStepperNext (click)="saveSequenceGroup()">Crear Secuencia</button>
-          <button class="secondary-btn" mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-            {{!isLinear ? 'Enable step mode' : 'Disable step mode'}}
-          </button>
-        </div>
-
-        <!-- expansion panel cool -->
-        <div *ngIf="secuenciasUma.length">
-          <p>Resultados de búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p>
-          <div class="container-result-groups">
-            <div *ngFor="let sec of secuenciasUma">
-              <!-- <mat-nav-list> -->
-              <mat-expansion-panel class="group-cover-panel" matTooltip="Despliegue para ver más detalles">
-                <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'200px'">
-                  <span class="title-panel">
-                    {{sec.titulo}}
-                  </span>
-                </mat-expansion-panel-header>
-
-                <div class="panel-body-group">
-
-                  <div (click)="deleteModule(sec.id, $event)" class="delete-group">
-                    <i class="icon ni-delete icon-negative"></i>
-                  </div>
-
-                  <div class="">
-                    <!--mat-list-item-->
-                    <span class="desc-group-panel" [routerLink]="['/constructor-layout', sec.id, 'module']"
-                      *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
-
-                    <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
-                      laudantium ullam sed, ipsa perferendis quisquam earum beatae repellat, quos,
-                      aut impedit voluptatibus nemo similique quod?</p>
-
-                  </div>
-
-                </div>
-
-
-              </mat-expansion-panel>
-              <!-- </mat-nav-list> -->
-
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- </form> -->
-    </mat-step>
-    <!-- <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
+      </mat-step>
+      <!-- <mat-step>
+      <ng-template matStepLabel>Terminado</ng-template>
+      <p>último paso.</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button matStepperPrevious>Volver</button>
+        <button mat-button (click)="stepper.reset()">Reset Step</button>
       </div>
     </mat-step> -->
-  </mat-horizontal-stepper>
-
-  <p>{{isCompleted}}</p>
-
+    </mat-horizontal-stepper>
+    <p>{{isCompleted}}</p>
+  </div>
 </div>
 <!-- close div isAuthenticated -->
