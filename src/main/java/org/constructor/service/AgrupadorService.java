@@ -36,6 +36,12 @@ public interface AgrupadorService {
 	 */
 	AgrupadorDTO save(Authentication authentication, Agrupador agrupadorDTO);
 
+    /**
+     * service for the last 10
+     * @param pageable
+     * @return
+     */
+    Page<Agrupador> findFirst10AgrupadorByOrderByIdDesc(Pageable pageable);
 
     /**
      * Get all the agrupador.

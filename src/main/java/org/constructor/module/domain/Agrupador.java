@@ -70,12 +70,14 @@ public class Agrupador  implements Serializable{
      * LocalDate fechaInicio
      */
     @Column(name = "fecha_inicio")
+	@OrderBy ("orden ASC")
     private LocalDateTime fechaInicio;
     
     /**
      * LocalDate fechaFin
      */
     @Column(name = "fecha_fin")
+	@OrderBy ("orden ASC")
     private LocalDateTime fechaFin;
      
     /**

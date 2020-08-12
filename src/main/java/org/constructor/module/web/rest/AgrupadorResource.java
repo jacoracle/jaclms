@@ -145,7 +145,7 @@ public class AgrupadorResource {
 	    @GetMapping(path = RestConstants.PATH_AGRUPADOR)
 	    public ResponseEntity<List<Agrupador>> getAllAgrupador(Pageable pageable) {
 	        log.debug("REST request to get a page of Agrupador");
-	        Page<Agrupador> page = agrupadorService.findAll(pageable);
+	        Page<Agrupador> page = agrupadorService.findFirst10AgrupadorByOrderByIdDesc(pageable);
 	        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 	        return ResponseEntity.ok().headers(headers).body(page.getContent());
 	    }
