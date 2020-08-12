@@ -17,6 +17,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { Agrupador, IAgrupador } from 'app/shared/model/agrupador-uma.model';
 import { JhiEventWithContent, JhiEventManager } from 'ng-jhipster';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'jhi-secuencia-uma-update',
@@ -29,6 +30,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
   secuenciasUma: IModulo[] = new Array<IModulo>();
+  tiraUmas: IModulo[] = new Array<IModulo>();
 
   // chips
   selectedGradesModule: INumeroGrado[] = [];
@@ -99,6 +101,11 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       secondCtrl: ['', Validators.required]
     });
     this.tagsBusquedaAgrupador = [];
+    this.tiraUmas.push({
+      id: 0,
+      descripcion: 'prueba',
+      titulo: 'test'
+    });
   }
 
   ngOnInit(): void {
@@ -376,4 +383,13 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   }
 
   // termina chips
+
+  // drag drop tira de umas
+  drop(event: CdkDragDrop<any[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
+  }
 }

@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -67,7 +68,16 @@ import { MatStepperModule } from '@angular/material/stepper';
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])
   ],
-  exports: [MatAutocompleteModule, MatChipsModule, MatIconModule, MatInputModule, MatSelectModule, MatExpansionModule, MatStepperModule],
+  exports: [
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    MatExpansionModule,
+    MatStepperModule,
+    DragDropModule
+  ],
   declarations: [PhoneNumberComponent, CountryComponent]
 })
 export class ConstructorEntityModule {}
