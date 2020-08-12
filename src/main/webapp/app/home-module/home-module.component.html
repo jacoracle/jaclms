@@ -22,8 +22,9 @@
     </div>
 
     <div class="window-br-body-topbar recent-modules">
+      <div class="line-gradient"></div>
       <div class="row-wbr-bt" *ngIf="modulos.length">
-        <p>Tus sesiones recientes ( {{modulos.length}} )</p>
+        <p>Tus UMA's recientes ( {{modulos.length}} )</p>
       </div>
     </div>
 
@@ -47,10 +48,7 @@
         <div class="course-cover-br" *ngFor="let modulo of modulos"
           [routerLink]="['/constructor-layout', modulo.id, 'module']">
 
-          <div class="course-cover-br-margin">
-            <!-- <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="modulo.sanitizedPortadaUrl"> -->
-            <div class="module-cover-br-image"></div>
-          </div>
+          <div class="module-cover-br-image"></div>
 
           <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
             <i class="icon ni-delete icon-negative"></i>
