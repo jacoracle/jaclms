@@ -3,11 +3,14 @@
  */
 package org.constructor.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.constructor.module.domain.AgrupadorModulo;
 import org.constructor.repository.AgrupadorModuloRepository;
 import org.constructor.service.AgrupadorModuloService;
+import org.constructor.service.dto.UpdateAgrupadorDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -82,5 +85,31 @@ public class AgrupadorModuloServiceImpl implements AgrupadorModuloService {
 		agrupadorModuloRepository.deleteById(id);
 		
 	}
+
+
+	/**
+	 * updateAgrupadorModulo
+	 */
+	@Override
+	public  List<AgrupadorModulo> updateAgrupadorModulo(List<UpdateAgrupadorDTO> dto) throws Exception {
+		
+		     List<AgrupadorModulo>  agrupadorModulo = new ArrayList<>();
+		
+		for (UpdateAgrupadorDTO updateDto : dto) {
+		    Optional.of(agrupadorModuloRepository.findById(updateDto.getId()))
+			 .filter(Optional::isPresent)
+	            .map(Optional::get)
+	            .map( agrupador -> {
+	            	agrupador.setOrden(updateDto.getOrden());
+	            	agrupadorModulo.add(agrupador);
+	            return updateDto;
+	            }
+	            		);	
+		
+		}
+		return agrupadorModulo;
+		
+	}
+	
 
 }

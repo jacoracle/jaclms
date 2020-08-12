@@ -4,7 +4,7 @@
 package org.constructor.module.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.constructor.domain.User;
@@ -69,19 +70,22 @@ public class Agrupador  implements Serializable{
      * LocalDate fechaInicio
      */
     @Column(name = "fecha_inicio")
-    private LocalDate fechaInicio;
+	@OrderBy ("orden ASC")
+    private LocalDateTime fechaInicio;
     
     /**
      * LocalDate fechaFin
      */
     @Column(name = "fecha_fin")
-    private LocalDate fechaFin;
+	@OrderBy ("orden ASC")
+    private LocalDateTime fechaFin;
      
     /**
      * Etiqueta
      */
     @OneToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "agrupador_id")
+    @OrderBy
     private Set<Etiqueta> etiquetas = new HashSet<>();
  
 
@@ -91,6 +95,7 @@ public class Agrupador  implements Serializable{
     @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(nullable = true)
     @JsonManagedReference
+	@OrderBy ("orden ASC")
     private Set<AgrupadorModulo> modulos = new HashSet<>();
     
     
@@ -153,39 +158,54 @@ public class Agrupador  implements Serializable{
 		this.descripcion = descripcion;
 	}
 
-
-	/**
-	 * Get
+	 /**
 	 * @return the fechaInicio
 	 */
-	public LocalDate getFechaInicio() {
+	public LocalDateTime getFechaInicio() {
 		return fechaInicio;
 	}
 
 	/**
-	 * Set
 	 * @param fechaInicio the fechaInicio to set
 	 */
-	public void setFechaInicio(LocalDate fechaInicio) {
-		this.fechaInicio = fechaInicio;
+	public void setFechaInicio(LocalDateTime fechaInicio) {
+	       this.fechaInicio = LocalDateTime.now();;
 	}
 
 	/**
-	 * Get
+    * Agrupador
+    * @param fechaInicio
+    * @return
+    */
+   public Agrupador fechaInicio(LocalDateTime fechaInicio) {
+       this.fechaInicio = LocalDateTime.now();;
+       return this;
+   }
+
+
+	/**
 	 * @return the fechaFin
 	 */
-	public LocalDate getFechaFin() {
+	public LocalDateTime getFechaFin() {
 		return fechaFin;
 	}
 
 	/**
-	 * Set
 	 * @param fechaFin the fechaFin to set
 	 */
-	public void setFechaFin(LocalDate fechaFin) {
-		this.fechaFin = fechaFin;
+	public void setFechaFin(LocalDateTime fechaFin) {
+	       this.fechaFin = LocalDateTime.now();;
 	}
-	
+
+	/**
+    * Agrupador
+    * @param fechaFin
+    * @return
+    */
+   public Agrupador fechaFin(LocalDateTime fechaFin) {
+       this.fechaFin = LocalDateTime.now();;
+       return this;
+   }
 	
 
 	/**

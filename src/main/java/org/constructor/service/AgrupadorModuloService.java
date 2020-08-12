@@ -3,9 +3,11 @@
  */
 package org.constructor.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.constructor.module.domain.AgrupadorModulo;
+import org.constructor.service.dto.UpdateAgrupadorDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -23,6 +25,14 @@ public interface AgrupadorModuloService {
      * @return the persisted entity.
      */
 	AgrupadorModulo save(AgrupadorModulo agrupadorModulo);
+	
+	/**
+	 * Update
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
+	List<AgrupadorModulo> updateAgrupadorModulo(List<UpdateAgrupadorDTO> dto) throws Exception;
 
     /**
      * Get all the agrupador.
