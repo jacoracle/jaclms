@@ -77,9 +77,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ agrupador }) => {
+    this.activatedRoute.data.subscribe(() => {
       //   this.updateForm(agrupador);
-      console.error(agrupador);
 
       // este subscribe es para la validación que no logre hacer funcionar con la funcion al final de este ts
       this.groupUmaForm

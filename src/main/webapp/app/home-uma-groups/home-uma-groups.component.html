@@ -1,8 +1,10 @@
-<div class="main-container-br">
-
-    <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
+<div class="main-groups-uma-container">
+    <div class="alert-sequence-configuration">
+        <jhi-alert-error></jhi-alert-error>
+    </div>
+    <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-home-groups">
         <!-- Window Header -->
-        <div class="window-br-header">
+        <div class="window-home-groups-header">
             <div class="r1">
                 <div class="logo-create"></div>
             </div>
@@ -19,7 +21,7 @@
         <!-- close header -->
 
         <!-- Window Empty -->
-        <div class="window-br-body">
+        <div class="home-groups-body">
             <div class="search-main-container">
                 <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
 
@@ -29,12 +31,13 @@
                             <p class="txt-recent-umas">Tus secuencias recientes ({{secuenciasUma.length}})</p>
                             <div>
                                 <mat-form-field>
-                                    <input type="text" placeholder="Buscar" matInput formControlName="sessionType"
-                                        [matAutocomplete]="autoInputSessionType">
-                                    <mat-autocomplete autoActiveFirstOption #autoInputSessionType="matAutocomplete"
+                                    <input type="text" placeholder="Buscar" matInput formControlName="tituloAgrupador"
+                                        [matAutocomplete]="autoInputTituloAgrupador">
+                                    <mat-autocomplete autoActiveFirstOption #autoInputTituloAgrupador="matAutocomplete"
                                         [displayWith]="displayFn">
-                                        <mat-option *ngFor="let option of filteredTypeOpts | async" [value]="option">
-                                            {{option.descripcion}}
+                                        <mat-option *ngFor="let option of filteredSequencesUmas | async"
+                                            [value]="option">
+                                            {{option.titulo}}
                                         </mat-option>
                                     </mat-autocomplete>
                                 </mat-form-field>
@@ -47,11 +50,12 @@
                             <div class="row-filter-uma">
                                 <div>
                                     <mat-form-field>
-                                        <mat-label>Título</mat-label>
-                                        <input matInput formControlName="umaTitleFormCtrl" [errorStateMatcher]="matcher"
-                                            placeholder="Título del UMA">
+                                        <mat-label>Título del Grupo</mat-label>
+                                        <input matInput formControlName="sequenceTitleFormCtrl"
+                                            [errorStateMatcher]="matcher" placeholder="Filtrar por título del grupo">
                                         <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                                        <mat-error *ngIf="groupUmaForm.get('umaTitleFormCtrl').hasError('required')">
+                                        <mat-error
+                                            *ngIf="groupUmaForm.get('sequenceTitleFormCtrl').hasError('required')">
                                             Captura el título del UMA para filtrar.
                                         </mat-error>
                                     </mat-form-field>
@@ -59,26 +63,21 @@
                                 <div>
                                     <mat-form-field>
                                         <mat-label>Descripción</mat-label>
-                                        <input matInput formControlName="umaDescriptionFormCtrl"
-                                            [errorStateMatcher]="matcher" placeholder="título de la sesión">
+                                        <input matInput formControlName="sequenceDescriptionFormCtrl"
+                                            [errorStateMatcher]="matcher"
+                                            placeholder="filtrar por parte de la descripción">
                                         <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
                                         <mat-error
-                                            *ngIf="groupUmaForm.get('umaDescriptionFormCtrl').hasError('maxlength')">
+                                            *ngIf="groupUmaForm.get('sequenceDescriptionFormCtrl').hasError('maxlength')">
                                             La descripción del UMA a filtrar no debe superar los 50 caracteres.
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div>
                                     <mat-form-field>
-                                        <input type="text" placeholder="Área de conocimiento" matInput
-                                            formControlName="umaAreaKnowledge" [matAutocomplete]="autoInputSubject">
-                                        <mat-autocomplete autoActiveFirstOption #autoInputSubject="matAutocomplete"
-                                            [displayWith]="displayFn">
-                                            <mat-option *ngFor="let option of filteredSubjectOpts | async"
-                                                [value]="option">
-                                                {{option.descripcion}}
-                                            </mat-option>
-                                        </mat-autocomplete>
+                                        <mat-label>Área de Conocimiento</mat-label>
+                                        <input matInput formControlName="sequenceAreaKnowledgeFormCtrl"
+                                            placeholder="Filtrar por área de conocimiento">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -86,28 +85,16 @@
                             <div class="row-filter-uma">
                                 <div>
                                     <mat-form-field>
-                                        <input type="text" placeholder="Nivel Académico" matInput
-                                            formControlName="sessionTopic" [matAutocomplete]="autoInputTopic">
-                                        <mat-autocomplete autoActiveFirstOption #autoInputTopic="matAutocomplete"
-                                            [displayWith]="displayFn">
-                                            <mat-option *ngFor="let option of filteredTopicOpts | async"
-                                                [value]="option">
-                                                {{option.descripcion}}
-                                            </mat-option>
-                                        </mat-autocomplete>
+                                        <mat-label>Nivel Académico</mat-label>
+                                        <input matInput formControlName="sequenceAcademicGradeFormCtrl"
+                                            placeholder="Filtrar por nivel académico">
                                     </mat-form-field>
                                 </div>
                                 <div>
                                     <mat-form-field>
-                                        <input type="text" placeholder="Tema" matInput formControlName="sessionTopic"
-                                            [matAutocomplete]="autoInputTopic">
-                                        <mat-autocomplete autoActiveFirstOption #autoInputTopic="matAutocomplete"
-                                            [displayWith]="displayFn">
-                                            <mat-option *ngFor="let option of filteredTopicOpts | async"
-                                                [value]="option">
-                                                {{option.descripcion}}
-                                            </mat-option>
-                                        </mat-autocomplete>
+                                        <mat-label>Tema del Grupo</mat-label>
+                                        <input type="text" placeholder="Filtrar por tema del grupo" matInput
+                                            formControlName="sequenceTopicFormCtrl">
                                     </mat-form-field>
                                 </div>
                                 <div class="btn-search-group">
@@ -129,9 +116,10 @@
 
                 <!-- expansion panel cool -->
                 <div *ngIf="secuenciasUma.length">
-                    <p>Resultados de búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p>
+                    <p>Resultados de la búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p>
                     <div class="container-result-groups">
-                        <div *ngFor="let sec of secuenciasUma">
+                        <!-- <div *ngFor="let sec of secuenciasUma">    NO BORRAR ESTA LINEA-->
+                        <div *ngFor="let sec of filteredSequencesUmas | async">
                             <!-- <mat-nav-list> -->
                             <mat-expansion-panel class="group-cover-panel"
                                 matTooltip="Despliegue para ver más detalles">
@@ -178,7 +166,7 @@
         <!-- close window-br-body div -->
 
         <!-- Window footer -->
-        <div class="window-br-footer">
+        <div class="home-groups-footer">
             <button routerLink="/" class="secondary-btn">Regresar</button>
             <button routerLink="/group-configuration" class="main-btn">Crear Agrupador</button>
         </div>

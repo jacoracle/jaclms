@@ -102,9 +102,8 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ agrupador }) => {
+    this.activatedRoute.data.subscribe(() => {
       //   this.updateForm(agrupador);
-      console.error(agrupador);
 
       /*
             this.filteredTopicOpts = this.groupUmaForm.get('sessionTopic')!.valueChanges.pipe(

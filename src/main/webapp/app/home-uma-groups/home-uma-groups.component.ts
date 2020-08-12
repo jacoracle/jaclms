@@ -9,6 +9,7 @@ import { ErrorStateMatcherUtil } from './error-state-matcher';
 import { map, startWith } from 'rxjs/operators';
 import { IAgrupador } from 'app/shared/model/agrupador-uma.model';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador-uma.service';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-home-uma-groups',
@@ -21,45 +22,35 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
   secuenciasUma: IAgrupador[] = new Array<IAgrupador>();
   // defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
 
-  filteredTopicOpts: any; // : Observable<IModulo[]>;
-  filteredTypeOpts: any;
-  filteredSubjectOpts: any;
-  filteredRoleOpts: any;
-
+  filteredSequencesUmas: any;
   matcher = new ErrorStateMatcherUtil();
 
   groupUmaForm = this.formbuilder.group({
-    sessionTopic: [],
-    umaAreaKnowledge: [],
-    sessionType: [],
-    umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(50)]),
-    umaTitleFormCtrl: new FormControl('', [
+    tituloAgrupador: [],
+    sequenceTitleFormCtrl: new FormControl('', [
       Validators.required
       // Validators.email,
-    ])
+    ]),
+    sequenceDescriptionFormCtrl: new FormControl('', [Validators.maxLength(50)]),
+    sequenceAreaKnowledgeFormCtrl: [],
+    sequenceAcademicGradeFormCtrl: [],
+    sequenceTopicFormCtrl: []
   });
 
-  constructor(private accountService: AccountService, private formbuilder: FormBuilder, private agrupadorService: AgrupadorService) {}
+  constructor(
+    private accountService: AccountService,
+    private formbuilder: FormBuilder,
+    private agrupadorService: AgrupadorService,
+    private eventManager: JhiEventManager
+  ) {
+    this.filteredSequencesUmas = this.groupUmaForm.get('tituloAgrupador')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value.descripcion)),
+      map(title => (title ? this._filterSequencesByTitle(title) : this.secuenciasUma.slice()))
+    );
+  }
 
   ngOnInit(): void {
-    this.filteredTopicOpts = this.groupUmaForm.get('sessionTopic')!.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter(name) : this.secuenciasUma.slice()))
-    );
-
-    this.filteredTypeOpts = this.groupUmaForm.get('sessionType')!.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter(name) : this.secuenciasUma.slice()))
-    );
-
-    this.filteredSubjectOpts = this.groupUmaForm.get('umaAreaKnowledge')!.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter_(name) : this.secuenciasUma.slice()))
-    );
-
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
@@ -73,18 +64,13 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     });
   }
 
-  private _filter(value: string): IAgrupador[] {
+  private _filterSequencesByTitle(value: string): IAgrupador[] {
     const filterValue = value.toLowerCase();
-    return this.secuenciasUma.filter((option: IAgrupador) => option.descripcion!.toLowerCase().includes(filterValue));
-  }
-
-  private _filter_(value: string): IAgrupador[] {
-    const filterValue = value.toLowerCase();
-    return this.secuenciasUma.filter((option: IAgrupador) => option.descripcion!.toLowerCase().includes(filterValue));
+    return this.secuenciasUma.filter((option: IAgrupador) => option.titulo!.toLowerCase().includes(filterValue));
   }
 
   displayFn(mod: IAgrupador): string {
-    return mod && mod.descripcion ? mod.descripcion : '';
+    return mod && mod.titulo ? mod.titulo : '';
   }
 
   isAuthenticated(): boolean {
@@ -103,17 +89,10 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     console.error('Error');
   }
 
-  findElementById(objectArray: any, id: number): number {
-    let foundIndex = -1;
-    objectArray.forEach((value: any, index: number) => {
-      if (value.id === id) {
-        foundIndex = index;
-      }
-    });
-    return foundIndex;
-  }
-
   searchUmas(): void {
     console.error('Debera buscar agrupadociones/secuencias de UMAs');
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.save' })
+    );
   }
 }

@@ -23,7 +23,8 @@
         "fileSize": "El archivo debe pesar menos de 5MB.",
         "fileType": "Tipo de archivo no permitido.",
         "dates": "La fecha de creación no puede ser posterior a la fecha de publicación.",
-        "requiredField": "Este campo es requerido."
+        "requiredField": "Este campo es requerido.",
+        "save": "Debera ejecutar busqueda con los filtros, pendiente..."
       }
     }
   }
