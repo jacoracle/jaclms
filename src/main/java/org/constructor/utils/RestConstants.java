@@ -173,6 +173,11 @@ public class RestConstants {
 	public static final String PATH_AGRUPADOR = "agrupador";
 	
 	/**
+	 * Path para peticiones agrupador
+	 */
+	public static final String PATH_AGRUPADOR_ALL = "agrupador-all";
+	
+	/**
 	 * Path para peticiones agrupador por id
 	 */
 	public static final String PATH_AGRUPADOR_ID = "agrupador/{id}";

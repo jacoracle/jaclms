@@ -41,7 +41,7 @@ public interface AgrupadorService {
      * @param pageable
      * @return
      */
-    Page<Agrupador> findFirst10AgrupadorByOrderByIdDesc(Pageable pageable);
+    Page<Agrupador> findFirst20AgrupadorByOrderByIdDesc(Pageable pageable);
 
     /**
      * Get all the agrupador.

@@ -25,7 +25,7 @@ public interface AgrupadorRepository extends JpaRepository<Agrupador, Long> {
 	@Query("SELECT a from Agrupador a JOIN FETCH  a.user ag where ag.id = :id")
 	List<Agrupador> findAllAgrupadorUserId (@Param("id")Long id);
 	
-    Page<Agrupador> findFirst10AgrupadorByOrderByIdDesc(Pageable pageable);
+    Page<Agrupador> findFirst20AgrupadorByOrderByIdDesc(Pageable pageable);
 
 
 }

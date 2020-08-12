@@ -140,10 +140,10 @@ public class AgrupadorServiceImpl  implements AgrupadorService{
 	 * Get service for the last 10
 	 */
 	@Override
-	public Page<Agrupador> findFirst10AgrupadorByOrderByIdDesc(Pageable pageable) {
+	public Page<Agrupador> findFirst20AgrupadorByOrderByIdDesc(Pageable pageable) {
 		 log.debug("Request to get all agrupador");
 
-	        return agrupadorRepository.findFirst10AgrupadorByOrderByIdDesc(pageable);
+	        return agrupadorRepository.findFirst20AgrupadorByOrderByIdDesc(pageable);
 	}
 
 
