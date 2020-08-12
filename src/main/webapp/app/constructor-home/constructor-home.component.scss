@@ -116,10 +116,20 @@
     position: relative;
     width: 100%;
     height: 50px;
-    background-color: $window-body-color;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #eaedf4;
+
+    .line-gradient {
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      top: 0;
+      left: 0;
+      background: rgb(24, 186, 251);
+      background: linear-gradient(90deg, rgba(24, 186, 251, 1) 0%, rgba(61, 144, 225, 1) 100%);
+    }
 
     .row-wbr-bt {
       position: relative;
@@ -130,8 +140,6 @@
         position: relative;
         font-size: 14px;
         color: #292c36;
-        // margin-left: 4%;
-        // top: 15px;
         cursor: default;
       }
     }
@@ -161,7 +169,7 @@
 
 .row-new-home {
   position: relative;
-  width: 70%;
+  width: 92%;
   height: auto;
   z-index: 1;
   margin: 0 auto;
@@ -169,61 +177,76 @@
   flex-direction: row;
   // flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 40px;
+  // margin-top: 40px;
+  margin-top: 80px;
 }
 // Home element
 .home-element {
   position: relative;
-  width: 200px;
-  height: 160px;
+  width: 286px;
+  height: 140px;
   background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100%;
   cursor: pointer;
-  transition: 0.3s;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  transition: border 0.5s;
   box-shadow: 0 20px 30px rgba(0, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
+  border: 5px solid #eaedf4;
   &:hover {
-    box-shadow: 0 20px 20px rgba(0, 18, 51, 0.2), 0 6px 22px rgba(16, 18, 51, 0.15);
+    // box-shadow: 0 20px 20px rgba(0, 18, 51, 0.2), 0 6px 22px rgba(16, 18, 51, 0.15);
+    border: 5px solid #18bafb;
   }
 
-  .icon {
-    font-size: 80px;
-    color: white;
-  }
-
-  h4 {
-    position: absolute;
-    width: 100%;
-    height: 20px;
-    bottom: -35px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    color: $blue-nimbus-dark;
-  }
-}
-.e-rutas {
-  background-image: url('../../content/images/e-ruta.png');
-}
-.e-modulo {
-  background-image: url('../../content/images/e-modulo.png');
-  .icon {
+  .he-text {
     position: relative;
-    width: 65px;
-    height: 65px;
-    background-image: url('../../content/images/module_icon_n.svg');
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
+    width: 60%;
+    height: auto;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    h4 {
+      position: relative;
+      width: 100%;
+      height: auto;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 600;
+      color: $blue-nimbus-dark;
+      margin-bottom: 8px;
+    }
+    p {
+      position: relative;
+      width: 100%;
+      height: auto;
+      line-height: 18px;
+      font-size: 13px;
+    }
   }
-}
-.e-libro {
-  background-image: url('../../content/images/e-libro.png');
+
+  .he-img {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    top: 10px;
+    left: -12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+  .heimg1 {
+    background-image: url('../../content/images/h1.png');
+  }
+  .heimg2 {
+    background-image: url('../../content/images/h2.png');
+  }
+  .heimg3 {
+    background-image: url('../../content/images/h3.png');
+  }
 }
 
 @media (min-height: 800px) {
