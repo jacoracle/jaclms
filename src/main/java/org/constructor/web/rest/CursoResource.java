@@ -35,6 +35,7 @@ import java.util.Optional;
  * REST controller for managing {@link org.constructor.domain.Curso}.
  */
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET})
 @RequestMapping("/api")
 public class CursoResource {
 
