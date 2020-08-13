@@ -170,5 +170,30 @@ public class RestConstants {
 		 *  Path para peticiones modulo por id
 		 */
 		public static final String PATH_MODULO_ID = "modulo/{id}";
+		
+		// ---------------Actividades--------------------
+		
+		/**
+		*  Path para peticiones actividad
+	    */
+		public static final String ACTIVIDAD = "actividad";
+		
+		/**
+		*  Path para peticiones actividad by id
+	    */
+		public static final String ACTIVIDAD_ID = "actividad/{id}";
+		
+		
+		/**
+		*  Path para peticiones tipoActividadInteractiva
+	    */
+		public static final String TIPO_ACTIVIDAD = "tipo-actividad";
+		
+		/**
+		*  Path para peticiones tipoActividadInteractiva
+	    */
+		public static final String TIPO_ACTIVIDAD_ID = "tipo-actividad/{id}";
+		
+			
 
 }

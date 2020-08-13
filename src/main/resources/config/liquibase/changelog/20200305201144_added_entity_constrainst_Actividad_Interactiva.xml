@@ -6,11 +6,18 @@
     <!--
         Added the constraints for entity niveles_modulo.
     -->
-    <changeSet id="20200305201141-2" author="jhipster">
+    <changeSet id="20200305201144-2" author="jhipster">
     <addForeignKeyConstraint baseColumnNames="tipo_actividad_interactiva_id"
                                  baseTableName="actividad_interactiva"
                                  constraintName="fk_actividad_interactiva_tipo_actividad_interactiva_id"
                                  referencedColumnNames="id"
                                  referencedTableName="tipo_actividad_interactiva"/>
+                                 
+     <addForeignKeyConstraint baseColumnNames="componente_id"
+                                 baseTableName="actividad_interactiva"
+                                 constraintName="fk_actividad_interactiva_componente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="componente"/>
+                                 
     </changeSet>
 </databaseChangeLog>

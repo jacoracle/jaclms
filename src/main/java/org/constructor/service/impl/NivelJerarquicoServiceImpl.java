@@ -10,8 +10,10 @@ import org.constructor.domain.Contenido;
 import org.constructor.domain.Curso;
 import org.constructor.domain.NivelJerarquico;
 import org.constructor.domain.NivelesCurso;
+import org.constructor.interactive.domain.ActividadInteractiva;
 import org.constructor.module.domain.Modulo;
 import org.constructor.module.domain.NivelesModulo;
+import org.constructor.repository.ActividadInteractivaRepository;
 import org.constructor.repository.BloqueComponentesRepository;
 import org.constructor.repository.BloquesCursoRepository;
 import org.constructor.repository.ComponenteRepository;
@@ -24,6 +26,7 @@ import org.constructor.repository.NivelesModuloRepository;
 import org.constructor.response.NivelJerarquicoModuloResponse;
 import org.constructor.response.NivelJerarquicoResponse;
 import org.constructor.service.NivelJerarquicoService;
+import org.constructor.service.dto.ActividadInteractivaDTO;
 import org.constructor.service.dto.BloquesCursoDTO;
 import org.constructor.service.dto.ComponenteDTO;
 import org.constructor.service.dto.NivelJerarquicoDTO;
@@ -81,6 +84,9 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 	 @Autowired
 	 private ContenidoRepository contenidoRepository;
 	 
+	 @Autowired
+	 private ActividadInteractivaRepository actividadInteractivaRepository;
+	 
 	 
 	 
 	    /**
@@ -125,9 +131,14 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 			bloqueComponentes.setTipoBloqueComponentes(bloquesCursoDTO.getBloqueComponentes().getTipoBloqueComponentes());
 			bloqueComponentesRepository.save(bloqueComponentes);
 			
+			
+			
 			for (ComponenteDTO componenteDTO : bloquesCursoDTO.getBloqueComponentes().getComponentes()) {
 				//Guardando Componente y Contenido
 				Componente componente = new Componente();
+				
+				
+				
 				Contenido contenido = new Contenido();
 				componente.setBloqueComponentes(bloqueComponentes);
 				componente.setOrden(componenteDTO.getOrden());
@@ -135,13 +146,27 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 				componente.setVersion(componenteDTO.getVersion());
 				componenteRepository.save(componente);
 				
+				if(componenteDTO.getActividadesInteractivas() != null)   {
+					for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
+						ActividadInteractiva actv = new ActividadInteractiva();
+						actv.setComponente(componente);
+						actv.setContenido(actividadInteractiva.getContenido());
+						actv.setEvaluable(actividadInteractiva.getEvaluable());
+						actv.setGamificacion(actividadInteractiva.getGamificacion());
+						actv.setIntentos(actividadInteractiva.getIntentos());
+						actividadInteractivaRepository.save(actv);
+					}
+					
+					
+				}
+				if (contenido !=null ) {
 				contenido.setComponente(componente);
 				contenido.setContenido(componenteDTO.getContenido().getContenido());
 				contenido.setNombre(componenteDTO.getContenido().getNombre());
 				contenido.setExtension(componenteDTO.getContenido().getExtension());
 				contenido.setPeso(componenteDTO.getContenido().getPeso());
 				contenidoRepository.save(contenido);
-				
+				}
 			}
 			bloquesCurso.setBloqueComponentes(bloqueComponentes);
 			bloquesCursoRepository.save(bloquesCurso);
@@ -206,21 +231,35 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 		            				bloqueCursoDTO.getBloqueComponentes().getComponentes().stream().forEach(
 		            						componenteDTO -> {
 		            							Componente componente = new Componente();
-		            							Contenido contenido = new Contenido();
+		            							
 		            							
 		            							componente.setBloqueComponentes(bloqueComponentes);
 		            							componente.setOrden(componenteDTO.getOrden());
 		            							componente.setTipoComponente(componenteDTO.getTipoComponente());
 		            							componente.setVersion(componenteDTO.getVersion());
 		            							componenteRepository.save(componente);
-		            							
+		            							if(componenteDTO.getActividadesInteractivas() != null)   {
+		            								for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
+		            									ActividadInteractiva actv = new ActividadInteractiva();
+		            									actv.setComponente(componente);
+		            									actv.setContenido(actividadInteractiva.getContenido());
+		            									actv.setEvaluable(actividadInteractiva.getEvaluable());
+		            									actv.setGamificacion(actividadInteractiva.getGamificacion());
+		            									actv.setIntentos(actividadInteractiva.getIntentos());
+		            									actividadInteractivaRepository.save(actv);
+		            								}
+		            								
+		            								
+		            							}
+		            							if(componenteDTO.getContenido() != null) {
+		            								Contenido contenido = new Contenido();
 		            							contenido.setComponente(componente);
 		            							contenido.setContenido(componenteDTO.getContenido().getContenido());
 		            							contenido.setNombre(componenteDTO.getContenido().getNombre());
 		            							contenido.setExtension(componenteDTO.getContenido().getExtension());
 		            							contenido.setPeso(componenteDTO.getContenido().getPeso());
 		            							contenidoRepository.save(contenido);
-		            							
+		            							}
 		            						}
 		            						);
 		            				
@@ -313,20 +352,33 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 			for (ComponenteDTO componenteDTO : bloquesCursoDTO.getBloqueComponentes().getComponentes()) {
 				//Guardando Componente y Contenido
 				Componente componente = new Componente();
-				Contenido contenido = new Contenido();
 				componente.setBloqueComponentes(bloqueComponentes);
 				componente.setOrden(componenteDTO.getOrden());
 				componente.setTipoComponente(componenteDTO.getTipoComponente());
 				componente.setVersion(componenteDTO.getVersion());
 				componenteRepository.save(componente);
-				
+				if(componenteDTO.getActividadesInteractivas() != null)   {
+					for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
+						ActividadInteractiva actv = new ActividadInteractiva();
+						actv.setComponente(componente);
+						actv.setContenido( actividadInteractiva.getContenido());
+						actv.setEvaluable(actividadInteractiva.getEvaluable());
+						actv.setGamificacion(actividadInteractiva.getGamificacion());
+						actv.setIntentos(actividadInteractiva.getIntentos());
+						actividadInteractivaRepository.save(actv);
+					}
+					
+					
+				}
+				if(componenteDTO.getContenido() != null) {
+					Contenido contenido = new Contenido();
 				contenido.setComponente(componente);
 				contenido.setContenido(componenteDTO.getContenido().getContenido());
 				contenido.setNombre(componenteDTO.getContenido().getNombre());
 				contenido.setExtension(componenteDTO.getContenido().getExtension());
 				contenido.setPeso(componenteDTO.getContenido().getPeso());
 				contenidoRepository.save(contenido);
-				
+				}
 			}
 			bloquesCurso.setBloqueComponentes(bloqueComponentes);
 			bloquesCursoRepository.save(bloquesCurso);
@@ -407,21 +459,34 @@ public class NivelJerarquicoServiceImpl  implements NivelJerarquicoService {
 	            				bloqueCursoDTO.getBloqueComponentes().getComponentes().stream().forEach(
 	            						componenteDTO -> {
 	            							Componente componente = new Componente();
-	            							Contenido contenido = new Contenido();
 	            							
 	            							componente.setBloqueComponentes(bloqueComponentes);
 	            							componente.setOrden(componenteDTO.getOrden());
 	            							componente.setTipoComponente(componenteDTO.getTipoComponente());
 	            							componente.setVersion(componenteDTO.getVersion());
 	            							componenteRepository.save(componente);
-	            							
+	            							if(componenteDTO.getActividadesInteractivas() != null)   {
+	            								for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
+	            									ActividadInteractiva actv = new ActividadInteractiva();
+	            									actv.setComponente(componente);
+	            									actv.setContenido( actividadInteractiva.getContenido());
+	            									actv.setEvaluable(actividadInteractiva.getEvaluable());
+	            									actv.setGamificacion(actividadInteractiva.getGamificacion());
+	            									actv.setIntentos(actividadInteractiva.getIntentos());
+	            									actividadInteractivaRepository.save(actv);
+	            								}
+	            								
+	            								 
+	            							}
+	            							if(componenteDTO.getContenido() != null) {
+	            								Contenido contenido = new Contenido();
 	            							contenido.setComponente(componente);
 	            							contenido.setContenido(componenteDTO.getContenido().getContenido());
 	            							contenido.setNombre(componenteDTO.getContenido().getNombre());
 	            							contenido.setExtension(componenteDTO.getContenido().getExtension());
 	            							contenido.setPeso(componenteDTO.getContenido().getPeso());
 	            							contenidoRepository.save(contenido);
-	            							
+	            							}
 	            						}
 	            						);
 	            				

@@ -1,6 +1,7 @@
 package org.constructor.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,9 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import org.constructor.interactive.domain.ActividadInteractiva;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -58,6 +62,12 @@ public class Componente implements Serializable {
 	@OneToOne(mappedBy = "componente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Contenido contenido;
 
+	/**
+	 * actividadInteractiva
+	 */
+	
+    @OneToMany(mappedBy = "componente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<ActividadInteractiva>  actividadInteractiva;
 	
 	/**
 	 * Get.
@@ -166,6 +176,32 @@ public class Componente implements Serializable {
 	 */
 	public void setContenido(Contenido contenido) {
 		this.contenido = contenido;
+	}
+
+	/**
+	 * Get
+	 * @return the actividadInteractiva
+	 */
+	public Set<ActividadInteractiva> getActividadInteractiva() {
+		return actividadInteractiva;
+	}
+
+	/**
+	 * Set
+	 * @param actividadInteractiva the actividadInteractiva to set
+	 */
+	public void setActividadInteractiva(final Set<ActividadInteractiva> actividadInteractiva) {
+		this.actividadInteractiva = actividadInteractiva;
+	}
+
+	/**
+	 * ToString
+	 */
+	@Override
+	public String toString() {
+		return "Componente [id=" + id + ", version=" + version + ", orden=" + orden + ", tipoComponente="
+				+ tipoComponente + ", bloqueComponentes=" + bloqueComponentes + ", contenido=" + contenido
+				+ ", actividadInteractiva=" + actividadInteractiva + "]";
 	}
 
 

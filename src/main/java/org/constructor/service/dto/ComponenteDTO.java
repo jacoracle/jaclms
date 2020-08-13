@@ -1,6 +1,9 @@
 package org.constructor.service.dto;
 
+import java.util.Set;
+
 import org.constructor.domain.TipoComponente;
+import org.constructor.interactive.domain.ActividadInteractiva;
 
 /**
  * The Class ComponenteDTO.
@@ -22,6 +25,8 @@ public class ComponenteDTO {
 	
 	/** The contenido. */
 	private ContenidoDTO contenido;
+	
+	private Set<ActividadInteractivaDTO>  actividadesInteractivas;
  
 	/**
 	 * Gets the id.
@@ -106,10 +111,28 @@ public class ComponenteDTO {
 		this.contenido = contenido;
 	}
 
+	
+
+	/**
+	 * @return the actividadesInteractivas
+	 */
+	public Set<ActividadInteractivaDTO> getActividadesInteractivas() {
+		return actividadesInteractivas;
+	}
+
+	/**
+	 * @param actividadesInteractivas the actividadesInteractivas to set
+	 */
+	public void setActividadesInteractivas(Set<ActividadInteractivaDTO> actividadesInteractivas) {
+		this.actividadesInteractivas = actividadesInteractivas;
+	}
+
 	@Override
 	public String toString() {
-		return "ComponenteDTO [id=" + id + ", tipoComponente=" + tipoComponente + ", contenido=" + contenido
-				+ ", version=" + version + ", orden=" + orden + "]";
+		return "ComponenteDTO [id=" + id + ", tipoComponente=" + tipoComponente + ", version=" + version + ", orden="
+				+ orden + ", contenido=" + contenido + ", actividadesInteractivas=" + actividadesInteractivas + "]";
 	}
+
+
 	
 }
