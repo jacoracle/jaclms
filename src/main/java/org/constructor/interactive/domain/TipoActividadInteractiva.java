@@ -63,7 +63,7 @@ public class TipoActividadInteractiva implements Serializable {
 	 */
 	@JsonIgnore
     @OneToMany(mappedBy = "tipoActividadInteractiva", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ActividadInteractiva>  actividadInteractiva;
+    private Set<ActividadInteractiva>  actividadesInteractivas;
 	/**
 	 * Get
 	 * @return the id
@@ -129,18 +129,22 @@ public class TipoActividadInteractiva implements Serializable {
 	}
 
 	/**
-	 * @return the actividadInteractiva
+	 * @return the actividadesInteractivas
 	 */
-	public Set<ActividadInteractiva> getActividadInteractiva() {
-		return actividadInteractiva;
+	public Set<ActividadInteractiva> getActividadesInteractivas() {
+		return actividadesInteractivas;
 	}
 
 	/**
-	 * @param actividadInteractiva the actividadInteractiva to set
+	 * @param actividadesInteractivas the actividadesInteractivas to set
 	 */
-	public void setActividadInteractiva(Set<ActividadInteractiva> actividadInteractiva) {
-		this.actividadInteractiva = actividadInteractiva;
+	public void setActividadesInteractivas(Set<ActividadInteractiva> actividadesInteractivas) {
+		this.actividadesInteractivas = actividadesInteractivas;
 	}
+
+
+
+
 
 
 	

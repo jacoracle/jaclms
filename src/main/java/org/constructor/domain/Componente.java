@@ -67,7 +67,7 @@ public class Componente implements Serializable {
 	 */
 	
     @OneToMany(mappedBy = "componente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ActividadInteractiva>  actividadInteractiva;
+    private Set<ActividadInteractiva>  actividadesInteractivas;
 	
 	/**
 	 * Get.
@@ -178,20 +178,21 @@ public class Componente implements Serializable {
 		this.contenido = contenido;
 	}
 
+	
+
+
 	/**
-	 * Get
-	 * @return the actividadInteractiva
+	 * @return the actividadesInteractivas
 	 */
-	public Set<ActividadInteractiva> getActividadInteractiva() {
-		return actividadInteractiva;
+	public Set<ActividadInteractiva> getActividadesInteractivas() {
+		return actividadesInteractivas;
 	}
 
 	/**
-	 * Set
-	 * @param actividadInteractiva the actividadInteractiva to set
+	 * @param actividadesInteractivas the actividadesInteractivas to set
 	 */
-	public void setActividadInteractiva(final Set<ActividadInteractiva> actividadInteractiva) {
-		this.actividadInteractiva = actividadInteractiva;
+	public void setActividadesInteractivas(Set<ActividadInteractiva> actividadesInteractivas) {
+		this.actividadesInteractivas = actividadesInteractivas;
 	}
 
 	/**
@@ -201,7 +202,7 @@ public class Componente implements Serializable {
 	public String toString() {
 		return "Componente [id=" + id + ", version=" + version + ", orden=" + orden + ", tipoComponente="
 				+ tipoComponente + ", bloqueComponentes=" + bloqueComponentes + ", contenido=" + contenido
-				+ ", actividadInteractiva=" + actividadInteractiva + "]";
+				+ ", actividadInteractivas=" + actividadesInteractivas + "]";
 	}
 
 
