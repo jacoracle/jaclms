@@ -1,5 +1,5 @@
 .main-secuence-group-container {
-  border: solid 1px yellow;
+  // border: solid 1px yellow;
   height: auto;
   display: flex;
   // flex-direction: row;
@@ -74,22 +74,30 @@
         // border: solid 1px red;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
+
+        .drag-item-uma {
+          margin: 0 6px;
+          border: solid 1px #3e66b5;
+        }
       }
     }
   }
 
   .sequence-uma-bar {
-    border: solid 1px red;
+    // border: solid 1px red;
     min-height: 100px;
     padding: 5px;
     width: 25%;
     .uma-item-sequence {
-      border: solid 1px chartreuse;
+      border: solid 1px #b5b5b5;
+      background-color: #ccc;
       padding: 1em;
-      min-height: 100px;
+      min-height: 395px;
       .item-uma {
-        border: solid 1px #ccc;
+        background-color: #dadada;
+        border: solid 1px #a5a5a5;
         padding: 1em;
+        text-align: center;
       }
     }
   }

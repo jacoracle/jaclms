@@ -7,8 +7,8 @@ import { Validators, FormControl, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcherUtil } from './error-state-matcher';
 
 import { map, startWith } from 'rxjs/operators';
-import { IAgrupador } from 'app/shared/model/agrupador-uma.model';
-import { AgrupadorService } from 'app/entities/agrupador/agrupador-uma.service';
+import { IAgrupador } from 'app/shared/model/agrupador.model';
+import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({

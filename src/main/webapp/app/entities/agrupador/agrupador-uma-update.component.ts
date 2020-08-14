@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { AsignaturaService } from 'app/entities/asignatura/asignatura.service';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
-import { AgrupadorService } from './agrupador-uma.service';
+import { AgrupadorService } from './agrupador.service';
 import { Subscription, Observable } from 'rxjs';
 import { ErrorStateMatcherUtil } from 'app/home-uma-groups/error-state-matcher';
 import { AccountService } from 'app/core/auth/account.service';
@@ -12,7 +12,7 @@ import { HttpResponse } from '@angular/common/http';
 import { TagAgrupador } from 'app/shared/model/tag-agrupador.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
-import { Agrupador, IAgrupador } from 'app/shared/model/agrupador-uma.model';
+import { Agrupador, IAgrupador } from 'app/shared/model/agrupador.model';
 import { JhiEventWithContent, JhiEventManager } from 'ng-jhipster';
 
 @Component({
@@ -22,6 +22,8 @@ import { JhiEventWithContent, JhiEventManager } from 'ng-jhipster';
 })
 export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   @ViewChild('chipList', { static: false }) chipList: MatChipList | undefined;
+
+  createdGroupSequence!: IAgrupador;
 
   account: Account | null = null;
   authSubscription?: Subscription;
@@ -183,6 +185,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     // this.router.navigate(['/uma-groups-home', res.body.modulo.id, 'module']);
     console.error('####         POST AGRUPADOR DONE');
     console.error(res);
+    this.createdGroupSequence = res.body.agrupador;
     this.isSaving = false;
     // this.router.navigate(['/uma-groups-home']);
   }

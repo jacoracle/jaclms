@@ -1,23 +1,19 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsignaturaService } from 'app/entities/asignatura/asignatura.service';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
-import { AgrupadorService } from './agrupador-uma.service';
+import { AgrupadorService } from './agrupador.service';
 import { Subscription, Observable } from 'rxjs';
 import { IModulo } from 'app/shared/model/modulo.model';
-import { ErrorStateMatcherUtil } from 'app/home-uma-groups/error-state-matcher';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { HttpResponse } from '@angular/common/http';
-import { map, startWith } from 'rxjs/operators';
-import { INumeroGrado } from 'app/shared/model/numero-grado.model';
-import { TagAgrupador } from 'app/shared/model/tag-agrupador.model';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
-import { Agrupador, IAgrupador } from 'app/shared/model/agrupador-uma.model';
-import { JhiEventWithContent, JhiEventManager } from 'ng-jhipster';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { IAgrupador } from 'app/shared/model/agrupador.model';
+import { CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
+import { AgrupadorUmaService } from './agrupador-uma.service';
+import { ModuloService } from '../modulo/modulo.service';
+import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.model';
 
 @Component({
   selector: 'jhi-secuencia-uma-update',
@@ -25,62 +21,38 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./secuencia-uma-update.component.scss']
 })
 export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
-  @ViewChild('chipList', { static: false }) chipList: MatChipList | undefined;
+  @Input()
+  set createGroup(val: any) {
+    if (val) {
+      this.agrupadorObj = val;
+      console.error('#### Input Agrupador Recibido');
+      console.error(val);
+    }
+  }
+  get createGroup(): any {
+    return this.agrupadorObj;
+  }
+
+  agrupadorObj!: IAgrupador | null;
 
   account: Account | null = null;
   authSubscription?: Subscription;
-  secuenciasUma: IModulo[] = new Array<IModulo>();
+  umasList: IModulo[] = new Array<IModulo>();
   tiraUmas: IModulo[] = new Array<IModulo>();
 
-  // chips
-  selectedGradesModule: INumeroGrado[] = [];
-  actualSelectedGradesModule: number[] = [];
-  numerogrados: INumeroGrado[] = [];
-  selectedGradeModule: any;
-
-  // ajuste
-  tagsBusquedaAgrupador: TagAgrupador[] = [];
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-
-  // termina chips
-
-  // stepper
-  isCompleted = false;
-  isLinear = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  // termina stepper
-
-  filteredTopicOpts: any; // : Observable<IModulo[]>;
   filteredTypeOpts: any;
-  filteredSubjectOpts: any;
-  filteredRoleOpts: any;
-
-  matcher = new ErrorStateMatcherUtil();
 
   groupUmaForm = this.formbuilder.group({
     sessionTopic: [],
     umaAreaKnowledge: [],
     sessionType: [],
     umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(50)]),
-    umaTitleFormCtrl: new FormControl('', [
-      Validators.required
-      // Validators.email,
-    ]),
-
-    titleSequenceUmas: new FormControl('', [
-      Validators.required
-      // Validators.email,
-    ]),
+    umaTitleFormCtrl: new FormControl('', [Validators.required]),
+    titleSequenceUmas: new FormControl('', [Validators.required]),
     desciptionSequenceUmas: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    searchTagsSequenceUmas: [] //  this.formbuilder.array(this.tagsBusquedaAgrupador, this.validateArrayNotEmpty)
+    searchTagsSequenceUmas: []
   });
 
-  gradosCtrl = new FormControl();
   isSaving = false;
   subscription: any;
 
@@ -88,61 +60,29 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     private formbuilder: FormBuilder,
     private accountService: AccountService,
     protected agrupadorService: AgrupadorService,
+    protected umaService: ModuloService,
+    protected agrupadorUmaService: AgrupadorUmaService,
     protected asignaturaService: AsignaturaService,
     protected gradoAcademicoService: GradoAcademicoService,
     protected activatedRoute: ActivatedRoute,
-    private eventManager: JhiEventManager,
     private router: Router
   ) {
-    this.firstFormGroup = this.formbuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this.formbuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
-    this.tagsBusquedaAgrupador = [];
-    this.tiraUmas.push({
-      id: 0,
-      descripcion: 'prueba',
-      titulo: 'test'
-    });
+    // this.tiraUmas.push({
+    //   id: 0,
+    //   descripcion: 'prueba',
+    //   titulo: 'test'
+    // });
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(() => {
-      //   this.updateForm(agrupador);
-
-      /*
-            this.filteredTopicOpts = this.groupUmaForm.get('sessionTopic')!.valueChanges.pipe(
-              startWith(''),
-              map(value => (typeof value === 'string' ? value : value.descripcion)),
-              map(name => (name ? this._filter(name) : this.secuenciasUma.slice()))
-            );
-      
-            this.filteredTypeOpts = this.groupUmaForm.get('sessionType')!.valueChanges.pipe(
-              startWith(''),
-              map(value => (typeof value === 'string' ? value : value.descripcion)),
-              map(name => (name ? this._filter(name) : this.secuenciasUma.slice()))
-            );
-            */
-
-      this.filteredSubjectOpts = this.groupUmaForm.get('searchTagsSequenceUmas')!.valueChanges.pipe(
-        startWith(''),
-        map(value => (typeof value === 'string' ? value : value.descripcion)),
-        map(name => (name ? this._filter_(name) : this.secuenciasUma.slice()))
-      );
-
-      this.groupUmaForm
-        .get('searchTagsSequenceUmas')!
-        .statusChanges.subscribe(status => (this.chipList!.errorState = status === 'INVALID'));
-    });
+    this.activatedRoute.data.subscribe(() => {});
 
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
-        this.agrupadorService.query().subscribe(
+        this.umaService.query().subscribe(
           (res: HttpResponse<IModulo[]>) => {
-            this.secuenciasUma = Array.from(res.body!);
+            this.umasList = Array.from(res.body!);
           },
           () => this.onQueryError()
         );
@@ -156,79 +96,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  saveSequenceGroup(): void {
-    if (this.groupUmaForm.valid) {
-      this.isCompleted = true;
-      this.isSaving = true;
-      const agrupador: IAgrupador = this.createFromForm();
-      console.error('Deberá guardar');
-      console.error(agrupador);
-
-      if (!agrupador.titulo) {
-        this.eventManager.broadcast(
-          new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
-        );
-        this.makeInvalid('titulo');
-      }
-      if (agrupador.titulo && agrupador.titulo.length > 50) {
-        this.eventManager.broadcast(
-          new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
-        );
-        this.makeInvalid('titulo');
-      }
-
-      if (agrupador.descripcion && agrupador.descripcion.length > 50) {
-        this.eventManager.broadcast(
-          new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
-        );
-        this.makeInvalid('descripcion');
-      }
-
-      if (this.groupUmaForm.valid) {
-        // this.firstClick = true;
-        if (agrupador.id) {
-          console.error('##########   Deberá actualizar: ', agrupador);
-          this.subscribeToSaveResponse(this.agrupadorService.update(agrupador));
-        } else {
-          console.error('##########   Deberá guardar: ', agrupador);
-          this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
-        }
-      }
-    }
-  }
-
-  makeInvalid(controlName: string): void {
-    this.groupUmaForm.controls[controlName].setErrors(new Error());
-  }
-
-  makeValid(controlName: string): void {
-    this.groupUmaForm.controls[controlName].setErrors(null);
-  }
-
-  private createFromForm(): IAgrupador {
-    return {
-      ...new Agrupador(),
-      titulo: this.groupUmaForm.get(['titleSequenceUmas'])!.value,
-      descripcion: this.groupUmaForm.get(['desciptionSequenceUmas'])!.value,
-      etiquetas: this.tagsBusquedaAgrupador,
-      id: 0, //  this.groupUmaForm.get(['id'])!.value,
-      fechaFin: '',
-      fechaInicio: '',
-      modulos: []
-      // tiposModulos: this.tiposModuloComponent.getModuleTypes()
-    };
-  }
-
-  private _filter(value: string): IModulo[] {
-    const filterValue = value.toLowerCase();
-    return this.secuenciasUma.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
-  }
-
-  private _filter_(value: string): IModulo[] {
-    const filterValue = value.toLowerCase();
-    return this.secuenciasUma.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
-  }
-
   displayFn(mod: IModulo): string {
     return mod && mod.descripcion ? mod.descripcion : '';
   }
@@ -237,7 +104,47 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     return this.accountService.isAuthenticated();
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IModulo>>): void {
+  protected onQueryError(): void {
+    console.error('Aquí debería informar el erro con un alerta en pantalla. ERROR AL CARGAR LAS UMAS');
+  }
+
+  // drag drop tira de umas
+  drop(event: CdkDragDrop<any[]>): void {
+    const idx = event.container.data.indexOf(event.previousContainer.data[event.previousIndex]);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else if (idx !== -1) {
+      return;
+    } else {
+      //  transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.addUmaToSequence(event.previousIndex, event.currentIndex);
+    }
+  }
+
+  addUmaToSequence(idx: number, orden: number): void {
+    const objUmaToAdd = this.umasList[idx];
+    console.error(objUmaToAdd);
+    console.error('#### Agrupador Creado');
+    console.error(this.agrupadorObj);
+
+    console.error('#### Agrupador Modulo to Save');
+    const objToSave = this.dataToAgrupadorUma(objUmaToAdd, orden);
+    console.error(objToSave);
+    this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
+  }
+
+  private dataToAgrupadorUma(objUmaToAdd: any, ordenn: number): IAgrupadorUma {
+    return {
+      ...new AgrupadorUma(),
+      id: 0,
+      agrupador: this.agrupadorObj!,
+      modulo: objUmaToAdd,
+      orden: ordenn
+    };
+  }
+
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupadorUma>>): void {
     result.subscribe(
       res => this.onSaveSuccess(res),
       () => this.onSaveError()
@@ -246,7 +153,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   protected onSaveSuccess(res: any): void {
     // this.router.navigate(['/uma-groups-home', res.body.modulo.id, 'module']);
-    console.error('####         POST AGRUPADOR DONE');
+    console.error('#### Sequencia creada (Agrupador Modulo)');
     console.error(res);
     this.isSaving = false;
     // this.router.navigate(['/uma-groups-home']);
@@ -254,142 +161,5 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   protected onSaveError(): void {
     this.isSaving = false;
-  }
-
-  protected onQueryError(): void {
-    console.error('Error');
-  }
-
-  addGradoToList(): void {
-    this.selectedGradesModule.push(this.selectedGradeModule);
-    // this.tagsBusquedaAgrupador.push('Test');
-  }
-
-  remove(grado: INumeroGrado): void {
-    const index = this.selectedGradesModule.indexOf(grado);
-
-    if (index >= 0) {
-      this.selectedGradesModule.splice(index, 1);
-      this.actualSelectedGradesModule.splice(index, 1);
-      this.updatingGradesSelected(null, false);
-    }
-  }
-
-  setSelectedGrades(evt: any): void {
-    this.updatingGradesSelected(evt, true);
-  }
-
-  /**
-   * update grades arrays to keep selected grades
-   * @param evt null or event if change option academic grades
-   * @param isChangeAcademicGrade flag to know if it's change event
-   */
-  updatingGradesSelected(evt: any, isChangeAcademicGrade: boolean): void {
-    let objectsGradesSelectedIds: INumeroGrado[];
-    let idAcademicGradeToAdd = -1;
-    if (isChangeAcademicGrade) {
-      //  get objects from selected ids using event value and
-      objectsGradesSelectedIds = this.numerogrados.filter(el => {
-        return evt.value.some((f: number) => {
-          return f === el.id;
-        });
-      });
-    } else {
-      //  get objects from selected ids using general array to grade numbers selected globally
-      objectsGradesSelectedIds = this.numerogrados.filter(el => {
-        return this.selectedGradesModule.some((f: INumeroGrado) => {
-          return f.id === el.id && f.descripcion === el.descripcion;
-        });
-      });
-    }
-
-    if (objectsGradesSelectedIds.length) {
-      idAcademicGradeToAdd = objectsGradesSelectedIds[0].gradoAcademico!.id!;
-    }
-
-    const selectedGradesId = objectsGradesSelectedIds.map(function(obj): number {
-      return obj.id!;
-    });
-    //  set ids selected to array property on component
-    this.actualSelectedGradesModule = [...selectedGradesId];
-
-    if (idAcademicGradeToAdd > 0) {
-      const selectedGrades = this.verifyList(idAcademicGradeToAdd, objectsGradesSelectedIds);
-      this.selectedGradesModule = [...selectedGrades];
-      // this.editForm.get('gradoAcademico')!.disable();
-    } else {
-      this.selectedGradesModule = [];
-      // this.editForm.get('gradoAcademico')!.enable();
-    }
-  }
-
-  /**
-   * Verify element to add on ful list selected to delete unmarked items from multiple select
-   * @param academicGradeIdToAdd
-   * @param objectsGradesSelectedIds
-   */
-  verifyList(academicGradeIdToAdd: number, objectsGradesSelectedIds: INumeroGrado[]): INumeroGrado[] {
-    const onlySelected = this.selectedGradesModule.filter(ag => {
-      return ag.gradoAcademico!.id !== academicGradeIdToAdd;
-    });
-    return [...onlySelected, ...objectsGradesSelectedIds];
-  }
-
-  simulacionTagsChips(tagToAdd: string): void {
-    console.error('add tag ', tagToAdd);
-    this.numerogrados = [];
-    this.gradoAcademicoService.find(1).subscribe(res => {
-      if (res.body && res.body.numeroGrados) {
-        this.numerogrados = res.body.numeroGrados;
-        // this.updatingGradesSelected(null, false);
-      }
-    });
-    this.selectedGradesModule.push(this.numerogrados[0]);
-  }
-
-  // chips
-
-  addTag(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.tagsBusquedaAgrupador.push({ id: 0, descripcion: value.trim() });
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
-  }
-
-  removeTag(fruit: TagAgrupador): void {
-    const index = this.tagsBusquedaAgrupador.indexOf(fruit);
-
-    if (index >= 0) {
-      this.tagsBusquedaAgrupador.splice(index, 1);
-    }
-  }
-
-  // no pude hacer que funcionara esta cosa
-  validateArrayNotEmpty(c: FormControl): any {
-    if (c.value && c.value.length === 0) {
-      return {
-        validateArrayNotEmpty: { valid: false }
-      };
-    }
-    return null;
-  }
-
-  // termina chips
-
-  // drag drop tira de umas
-  drop(event: CdkDragDrop<any[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-    }
   }
 }

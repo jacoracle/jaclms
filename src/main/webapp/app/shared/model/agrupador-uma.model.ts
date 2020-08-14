@@ -1,28 +1,13 @@
-import { ITagAgrupador } from './tag-agrupador.model';
-import { Moment } from 'moment';
+import { IAgrupador } from './agrupador.model';
+import { IModulo } from './modulo.model';
 
-export interface IAgrupador {
-  titulo?: string;
-  descripcion?: string;
-  etiquetas?: ITagAgrupador[];
+export interface IAgrupadorUma {
   id?: number;
-  fechaFin?: string; //    verificar el tipo y si se queda o se quita
-  fechaFinSys?: Moment;
-  fechaInicio?: string; //    verificar el tipo y si se queda o se quita
-  fechaInicioSys?: Moment;
-  modulos?: any[]; //    este sera de tipo AgrupadorModulo
+  agrupador?: IAgrupador;
+  modulo?: IModulo; //  este es una uma, pero por cambio del cliente ya creado se quedo como modulo
+  orden?: number;
 }
 
-export class Agrupador implements IAgrupador {
-  constructor(
-    public titulo?: string,
-    public descripcion?: string,
-    public etiquetas?: ITagAgrupador[],
-    public id?: number,
-    public fechaFin?: string,
-    public fechaFinSys?: Moment,
-    public fechaInicio?: string,
-    public fechaInicioSys?: Moment,
-    public modulos?: any[]
-  ) {}
+export class AgrupadorUma implements IAgrupadorUma {
+  constructor(public titulo?: string, public agrupador?: IAgrupador, public modulo?: IModulo, public orden?: number) {}
 }
