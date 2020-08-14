@@ -42,8 +42,8 @@ public class TipoActividadInteractiva implements Serializable {
 	/**
 	 * String tipoActividad
 	 */
-	@Column(name = "tipo_actividad")
-	private String tipoActividad;
+	@Column(name = "tipoActividad ")
+	private String tipoActividad ;
 	
 	/**
 	 * subtipo
