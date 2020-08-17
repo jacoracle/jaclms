@@ -154,7 +154,6 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 				for (ComponenteDTO componenteDTO : bloqueCursoDTO.getBloqueComponentes().getComponentes()) {
 					//Guardando Componente y Contenido
 					Componente componente = new Componente();
-					Contenido contenido = new Contenido();
 					
 					componente.setBloqueComponentes(bloqueComponentes);
 					componente.setOrden(componenteDTO.getOrden());
@@ -174,7 +173,9 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 						
 						
 					}
-					if (contenido !=null ) {
+					if(componenteDTO.getContenido() != null) {
+						Contenido contenido = new Contenido();
+
 					contenido.setComponente(componente);
 					contenido.setContenido(componenteDTO.getContenido().getContenido());
 					contenido.setNombre(componenteDTO.getContenido().getNombre());
