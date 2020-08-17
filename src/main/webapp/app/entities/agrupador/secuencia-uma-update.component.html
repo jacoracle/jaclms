@@ -137,7 +137,7 @@
         <div class="uma-item-sequence" cdkDropList [cdkDropListData]="tiraUmas" (cdkDropListDropped)="drop($event)">
             <div cdkDrag *ngFor="let item of tiraUmas">
                 <div class="item-uma">
-                    {{item.titulo}}
+                    {{item.modulo.titulo}}
                 </div>
             </div>
         </div>

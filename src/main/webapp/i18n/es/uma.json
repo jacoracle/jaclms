@@ -26,6 +26,9 @@
         "requiredField": "Este campo es requerido.",
         "save": "Debera ejecutar busqueda con los filtros, pendiente..."
       }
+    },
+    "tiraUpdate": {
+      "error": "No se pudo actualizar el orden de las UMAs, por favor intenta de nuevo."
     }
   }
 }

@@ -10,10 +10,12 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { HttpResponse } from '@angular/common/http';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
-import { CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AgrupadorUmaService } from './agrupador-uma.service';
 import { ModuloService } from '../modulo/modulo.service';
 import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.model';
+// import { IOrdenUMA } from 'app/shared/model/uma-agrupador-orden.model';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-secuencia-uma-update',
@@ -38,7 +40,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
   umasList: IModulo[] = new Array<IModulo>();
-  tiraUmas: IModulo[] = new Array<IModulo>();
+  // tiraUmas: IModulo[] = new Array<IModulo>();
+  tiraUmas: IAgrupadorUma[] = new Array<IAgrupadorUma>();
+  isReorder: boolean;
 
   filteredTypeOpts: any;
 
@@ -65,6 +69,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     protected asignaturaService: AsignaturaService,
     protected gradoAcademicoService: GradoAcademicoService,
     protected activatedRoute: ActivatedRoute,
+    private eventManager: JhiEventManager,
     private router: Router
   ) {
     // this.tiraUmas.push({
@@ -72,6 +77,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     //   descripcion: 'prueba',
     //   titulo: 'test'
     // });
+    this.isReorder = false;
   }
 
   ngOnInit(): void {
@@ -112,13 +118,54 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   drop(event: CdkDragDrop<any[]>): void {
     const idx = event.container.data.indexOf(event.previousContainer.data[event.previousIndex]);
     if (event.previousContainer === event.container) {
+      this.isReorder = true;
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updateUmasOrder();
+      /*
+      const umaSequenceObj = this.tiraUmas[event.currentIndex];// es el current porque al ejecutar el moveItem se actualiza la lista por 2wayDataBinding
+      const agrupadorModuloObj: IOrdenUMA[] = [
+        {
+          id: umaSequenceObj.id,
+          orden: event.currentIndex
+        }
+      ];
+
+      this.agrupadorUmaService.update(agrupadorModuloObj).subscribe(
+        (res) => this.onSaveSuccess(res),
+        () => this.onSaveError()
+      );
+      */
+
+      this.agrupadorUmaService.update(this.tiraUmas).subscribe(
+        res => {
+          if (res.body) {
+            console.error('#### Response PUT umas');
+            console.error(res.body);
+            // this.tiraUmas = res.body.agrupador!.modulos!;
+          }
+        },
+        () => {
+          this.eventManager.broadcast(
+            new JhiEventWithContent('constructorApp.tiraUpdate', {
+              message: 'constructorApp.tiraUpdate.error',
+              type: 'danger'
+            })
+          );
+        }
+      );
     } else if (idx !== -1) {
       return;
     } else {
+      this.isReorder = false;
       //  transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       this.addUmaToSequence(event.previousIndex, event.currentIndex);
+    }
+  }
+
+  updateUmasOrder(): void {
+    for (let i = 0; i < this.tiraUmas.length; i++) {
+      this.tiraUmas[i].orden = i;
     }
   }
 
@@ -129,7 +176,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     console.error(this.agrupadorObj);
 
     console.error('#### Agrupador Modulo to Save');
-    const objToSave = this.dataToAgrupadorUma(objUmaToAdd, orden);
+    const objToSave: IAgrupadorUma = this.dataToAgrupadorUma(objUmaToAdd, orden);
     console.error(objToSave);
     this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
   }
@@ -146,7 +193,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupadorUma>>): void {
     result.subscribe(
-      res => this.onSaveSuccess(res),
+      res => this.onSaveSuccess(res.body),
       () => this.onSaveError()
     );
   }
@@ -156,6 +203,10 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     console.error('#### Sequencia creada (Agrupador Modulo)');
     console.error(res);
     this.isSaving = false;
+    if (!this.isReorder) {
+      this.tiraUmas.push(res);
+    }
+    // this.tiraUmas
     // this.router.navigate(['/uma-groups-home']);
   }
 
