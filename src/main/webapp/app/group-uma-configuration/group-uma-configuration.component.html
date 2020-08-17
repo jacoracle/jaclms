@@ -8,12 +8,48 @@
     </div>
     <!-- Window Body -->
     <div class="window-group-body">
-      <jhi-agrupador-uma-update></jhi-agrupador-uma-update>
+
+      <!-- <jhi-agrupador-uma-update></jhi-agrupador-uma-update> -->
+
+      <!-- SE MUEVE STEPPER DE AGRUPADOR-UMA-UPDATE A ESTE COMPONENTE -->
+
+      <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
+
+        <div class="container-stepper-group">
+          <mat-horizontal-stepper [linear]="!isCompleted" #stepper>
+
+            <mat-step [stepControl]="groupUmaForm" editable="false">
+
+              <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
+              <jhi-agrupador-uma-update (createdGroupEventEmit)="setAgrupador($event)"></jhi-agrupador-uma-update>
+
+            </mat-step>
+
+            <mat-step [stepControl]="secondFormGroup">
+
+              <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
+              <!-- componente que contiene contenido de paso 2 para crear la secuencia/agrupación de umas una vez generado el Grupo -->
+              <jhi-secuencia-uma-update [createGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
+
+            </mat-step>
+            <!-- <mat-step>
+            <ng-template matStepLabel>Terminado</ng-template>
+            <p>último paso.</p>
+            <div>
+              <button mat-button matStepperPrevious>Volver</button>
+              <button mat-button (click)="stepper.reset()">Reset Step</button>
+            </div>
+          </mat-step> -->
+          </mat-horizontal-stepper>
+          <p>{{isCompleted}}</p>
+        </div>
+      </div>
+
+
     </div>
     <!-- Window Footer -->
     <div class="window-group-footer">
       <button routerLink="/uma-groups-home" class="secondary-btn">Cancelar</button>
-      <!-- <button (click)="saveUMA()" class="main-btn" [disabled]="firstClick">Crear Secuencia</button> -->
     </div>
 
   </div>

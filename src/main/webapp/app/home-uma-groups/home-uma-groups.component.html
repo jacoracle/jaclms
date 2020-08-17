@@ -131,16 +131,14 @@
                                         <i class="icon ni-delete icon-negative"></i>
                                     </div>
 
-                                    <div class="">
+                                    <div class="" [routerLink]="['/sequence-configuration', sec.id]">
                                         <!--mat-list-item-->
                                         <span class="desc-group-panel"
-                                            [routerLink]="['/constructor-layout', sec.id, 'module']"
                                             *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
 
                                         <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
                                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
-                                            laudantium ullam sed, ipsa perferendis quisquam earum beatae repellat, quos,
-                                            aut impedit voluptatibus nemo similique quod?</p>
+                                            laudantium ullam sed</p>
 
                                     </div>
 

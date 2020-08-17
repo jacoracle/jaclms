@@ -59,6 +59,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   isSaving = false;
   subscription: any;
+  idSequenceToLoad!: number;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -70,18 +71,18 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     protected gradoAcademicoService: GradoAcademicoService,
     protected activatedRoute: ActivatedRoute,
     private eventManager: JhiEventManager,
+    // private route: ActivatedRoute,
     private router: Router
   ) {
-    // this.tiraUmas.push({
-    //   id: 0,
-    //   descripcion: 'prueba',
-    //   titulo: 'test'
-    // });
     this.isReorder = false;
+    this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
+    console.error('#### Group UMA configuration ID Grupo recibido: ', this.idSequenceToLoad);
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(() => {});
+    this.activatedRoute.data.subscribe(() => {
+      // console.error('#### URL Data: ', data);
+    });
 
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
@@ -92,6 +93,16 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
           },
           () => this.onQueryError()
         );
+        if (this.idSequenceToLoad) {
+          this.agrupadorService.find(this.idSequenceToLoad).subscribe(res => {
+            if (res.body) {
+              console.error('#### Response Query Agrupador con ID: ', this.idSequenceToLoad);
+              console.error(res.body);
+              this.tiraUmas = [...res.body.modulos!];
+              // this.updatingGradesSelected(null, false);
+            }
+          });
+        }
       }
     });
   }

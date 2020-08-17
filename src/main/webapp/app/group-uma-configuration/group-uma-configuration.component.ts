@@ -1,35 +1,67 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { AccountService } from 'app/core/auth/account.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Account } from 'app/core/user/account.model';
+import { JhiEventManager } from 'ng-jhipster';
+import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
+import { IAgrupador } from 'app/shared/model/agrupador.model';
 
 @Component({
   selector: 'jhi-group-uma-configuration',
   templateUrl: './group-uma-configuration.component.html',
   styleUrls: ['./group-uma-configuration.component.scss']
 })
-export class GroupUmaConfigurationComponent {
-  // @ViewChild(AgrupadorUmaUpdateComponent, { static: false }) agrupadorComponent!: AgrupadorUmaUpdateComponent;
-  subscription: any;
-  firstClick = false;
+export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
+  isSaving = false;
+  authSubscription?: Subscription;
+  account: Account | null = null;
+  createdGroupSequence!: IAgrupador;
 
-  constructor() {}
+  // stepper
+  isCompleted = false;
+  isLinear = false;
+  secondFormGroup!: FormGroup;
+  // termina stepper
 
-  saveUMA(): void {
-    // this.agrupadorComponent.save();
-    // this.firstClick = this.agrupadorComponent.firstClick;
-    console.error('Deberá guardar');
+  constructor(
+    private accountService: AccountService,
+    private formbuilder: FormBuilder,
+    private eventManager: JhiEventManager,
+    protected agrupadorService: AgrupadorService
+  ) {
+    this.secondFormGroup = this.formbuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
   }
 
-  previewModule(id: number, $event: any): void {
-    $event.stopPropagation();
-    console.error('####     Debería mostrar el Preview del Módulo');
-  }
-
-  findElementById(objectArray: any, id: number): number {
-    let foundIndex = -1;
-    objectArray.forEach((value: any, index: number) => {
-      if (value.id === id) {
-        foundIndex = index;
+  ngOnInit(): void {
+    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
+      this.account = account;
+      if (this.account) {
+        console.error('LOGUEADO');
       }
     });
-    return foundIndex;
+  }
+
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
+
+  isAuthenticated(): boolean {
+    return this.accountService.isAuthenticated();
+  }
+
+  private onQueryError(): void {
+    console.error('#### ERROR AL REALIZAR LA CONSULTA');
+  }
+
+  setAgrupador(event: any): void {
+    console.error('Dato del Output emitido: ');
+    console.error(event);
+    this.createdGroupSequence = event;
   }
 }

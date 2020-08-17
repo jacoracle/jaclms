@@ -1,110 +1,80 @@
-<div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
+<div class="register-main-container">
+  <form name="groupUmaForm" role="form" autocomplete="off" [formGroup]="groupUmaForm">
 
-  <div class="container-stepper-group">
-    <mat-horizontal-stepper [linear]="!isCompleted" #stepper>
-      <mat-step [stepControl]="groupUmaForm" editable="false">
-        <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
+    <div class="register-form-group">
 
-        <div class="register-main-container">
-          <form name="groupUmaForm" role="form" autocomplete="off" [formGroup]="groupUmaForm">
+      <div class="row-text-groups">
+        <p class="txt-recent-groups">Tus secuencias recientes ({{secuenciasUma.length}})</p>
+      </div>
 
-            <div class="register-form-group">
+      <div class="container-field-register">
+        <p>Registrar Grupo:</p>
 
-              <div class="row-text-groups">
-                <p class="txt-recent-groups">Tus secuencias recientes ({{secuenciasUma.length}})</p>
-              </div>
-
-              <div class="container-field-register">
-                <p>Registrar Grupo:</p>
-
-                <div class="row-form-group">
-                  <div>
-                    <mat-form-field>
-                      <mat-label>Título del Grupo</mat-label>
-                      <input matInput formControlName="titleSequenceUmas" [errorStateMatcher]="matcher"
-                        placeholder="Título del Grupo">
-                      <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                      <mat-error *ngIf="groupUmaForm.get('titleSequenceUmas').hasError('required')">
-                        El título del Grupo de UMAS es requerido.
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div>
-                    <mat-form-field>
-                      <mat-label>Descripción</mat-label>
-                      <input matInput formControlName="desciptionSequenceUmas" [errorStateMatcher]="matcher"
-                        placeholder="título de la sesión">
-                      <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                      <mat-error *ngIf="groupUmaForm.get('desciptionSequenceUmas').hasError('required')">
-                        La descripción del Grupo de UMAS es requerido.
-                      </mat-error>
-                      <mat-error *ngIf="groupUmaForm.get('desciptionSequenceUmas').hasError('maxlength')">
-                        La descripción del Grupo no debe superar los 50 caracteres.
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-
-                </div>
-
-                <div class="row-form-group-tag">
-                  <div>
-                    <mat-form-field class="example-chip-list">
-                      <mat-chip-list #chipList aria-label="Fruit selection">
-                        <mat-chip *ngFor="let fruit of tagsBusquedaAgrupador" [selectable]="selectable"
-                          [removable]="removable" (removed)="removeTag(fruit)">
-                          {{fruit.descripcion}}
-                          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                        </mat-chip>
-                        <input placeholder="Tags de búsqueda" [matChipInputFor]="chipList"
-                          formControlName="searchTagsSequenceUmas" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                          [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTag($event)">
-                      </mat-chip-list>
-                      <mat-error *ngIf="groupUmaForm.get('searchTagsSequenceUmas').hasError('required')">
-                        Debe registrar al menos un Tag para la búsqueda.
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div>
-
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="btns-register">
-                <button class="main-btn" (click)="saveSequenceGroup()" mat-button matStepperNext>
-                  Crear Grupo
-                </button>
-                <!-- <button class="secondary-btn" type="submit">
-                  Submit
-                </button> -->
-              </div>
-
-            </div>
-          </form>
+        <div class="row-form-group">
+          <div>
+            <mat-form-field>
+              <mat-label>Título del Grupo</mat-label>
+              <input matInput formControlName="titleSequenceUmas" [errorStateMatcher]="matcher"
+                placeholder="Título del Grupo">
+              <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+              <mat-error *ngIf="groupUmaForm.get('titleSequenceUmas').hasError('required')">
+                El título del Grupo de UMAS es requerido.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Descripción</mat-label>
+              <input matInput formControlName="desciptionSequenceUmas" [errorStateMatcher]="matcher"
+                placeholder="título de la sesión">
+              <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+              <mat-error *ngIf="groupUmaForm.get('desciptionSequenceUmas').hasError('required')">
+                La descripción del Grupo de UMAS es requerido.
+              </mat-error>
+              <mat-error *ngIf="groupUmaForm.get('desciptionSequenceUmas').hasError('maxlength')">
+                La descripción del Grupo no debe superar los 50 caracteres.
+              </mat-error>
+            </mat-form-field>
+          </div>
 
         </div>
-        <!-- close register-main-container -->
-      </mat-step>
 
-      <mat-step [stepControl]="secondFormGroup">
+        <div class="row-form-group-tag">
+          <div>
+            <mat-form-field class="example-chip-list">
+              <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip *ngFor="let fruit of tagsBusquedaAgrupador" [selectable]="selectable" [removable]="removable"
+                  (removed)="removeTag(fruit)">
+                  {{fruit.descripcion}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Tags de búsqueda" [matChipInputFor]="chipList"
+                  formControlName="searchTagsSequenceUmas" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTag($event)">
+              </mat-chip-list>
+              <mat-error *ngIf="groupUmaForm.get('searchTagsSequenceUmas').hasError('required')">
+                Debe registrar al menos un Tag para la búsqueda.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
 
-        <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
+          </div>
+        </div>
 
-        <!-- componente que contiene contenido de paso 2 para crear la secuencia/agrupación de umas una vez generado el Grupo -->
-        <jhi-secuencia-uma-update [createGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
-
-      </mat-step>
-      <!-- <mat-step>
-      <ng-template matStepLabel>Terminado</ng-template>
-      <p>último paso.</p>
-      <div>
-        <button mat-button matStepperPrevious>Volver</button>
-        <button mat-button (click)="stepper.reset()">Reset Step</button>
       </div>
-    </mat-step> -->
-    </mat-horizontal-stepper>
-    <p>{{isCompleted}}</p>
-  </div>
+
+      <div class="btns-register">
+        <button class="main-btn" (click)="saveSequenceGroup()" mat-button matStepperNext>
+          Crear Grupo
+        </button>
+        <!-- <button class="secondary-btn" type="submit">
+                        Submit
+                      </button> -->
+      </div>
+
+    </div>
+  </form>
+
 </div>
-<!-- close div isAuthenticated -->
+<!-- close register-main-container -->
