@@ -100,6 +100,7 @@ public class AgrupadorModuloServiceImpl implements AgrupadorModuloService {
 			 .filter(Optional::isPresent)
 	            .map(Optional::get)
 	            .map( agrupador -> {
+	            	agrupador.setId(updateDto.getId());
 	            	agrupador.setOrden(updateDto.getOrden());
 	            	agrupadorModulo.add(agrupador);
 	            return updateDto;
