@@ -10,12 +10,15 @@ import org.constructor.domain.BloquesCurso;
 import org.constructor.domain.Componente;
 import org.constructor.domain.Contenido;
 import org.constructor.domain.NivelJerarquico;
+import org.constructor.interactive.domain.ActividadInteractiva;
+import org.constructor.repository.ActividadInteractivaRepository;
 import org.constructor.repository.BloqueComponentesRepository;
 import org.constructor.repository.BloquesCursoRepository;
 import org.constructor.repository.ComponenteRepository;
 import org.constructor.repository.ContenidoRepository;
 import org.constructor.repository.NivelJerarquicoRepository;
 import org.constructor.service.BloquesCursoService;
+import org.constructor.service.dto.ActividadInteractivaDTO;
 import org.constructor.service.dto.BloquesCursoDTO;
 import org.constructor.service.dto.ComponenteDTO;
 import org.constructor.service.multimedia.MultimediaService;
@@ -57,6 +60,8 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 	@Autowired 
 	private MultimediaService multimediaService;
 	
+	 @Autowired
+	 private ActividadInteractivaRepository actividadInteractivaRepository;
 
 	/**
 	 * Save.
@@ -156,13 +161,27 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 					componente.setTipoComponente(componenteDTO.getTipoComponente());
 					componente.setVersion(componenteDTO.getVersion());
 					componenteRepository.save(componente);
-					
+					if(componenteDTO.getActividadesInteractivas() != null)   {
+						for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
+							ActividadInteractiva actv = new ActividadInteractiva();
+							actv.setComponente(componente);
+							actv.setContenido(actividadInteractiva.getContenido());
+							actv.setEvaluable(actividadInteractiva.getEvaluable());
+							actv.setGamificacion(actividadInteractiva.getGamificacion());
+							actv.setIntentos(actividadInteractiva.getIntentos());
+							actividadInteractivaRepository.save(actv);
+						}
+						
+						
+					}
+					if (contenido !=null ) {
 					contenido.setComponente(componente);
 					contenido.setContenido(componenteDTO.getContenido().getContenido());
 					contenido.setNombre(componenteDTO.getContenido().getNombre());
 					contenido.setExtension(componenteDTO.getContenido().getExtension());
 					contenido.setPeso(componenteDTO.getContenido().getPeso());
 					contenidoRepository.save(contenido);
+					}
 				}
 				newBloquesCurso.setBloqueComponentes(bloqueComponentes);
 				listBloquesCurso.add(bloquesCursoRepository.save(newBloquesCurso));

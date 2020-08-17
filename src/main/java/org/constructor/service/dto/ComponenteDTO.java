@@ -3,7 +3,6 @@ package org.constructor.service.dto;
 import java.util.Set;
 
 import org.constructor.domain.TipoComponente;
-import org.constructor.interactive.domain.ActividadInteractiva;
 
 /**
  * The Class ComponenteDTO.
