@@ -257,16 +257,26 @@ public class Agrupador  implements Serializable{
 	 * equals
 	 */
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) {
+	   public boolean equals(Object obj) {
+        if (obj == this) {
             return true;
         }
-        if (!(o instanceof Agrupador)) {
+        if (!(obj instanceof Agrupador)) {
             return false;
         }
-        return id != null && id.equals(((Agrupador) o).id);
+        Agrupador other = (Agrupador) obj;
+        return this.id.equals(other.id);
     }
 
+	/**
+	 * hashCode
+	 */
+	@Override
+
+	   public int hashCode() {
+	        return id.hashCode();
+	    }
+	
 	@Override
 	public String toString() {
 		return "Agrupador [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fechaInicio="

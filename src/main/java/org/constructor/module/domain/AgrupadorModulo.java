@@ -126,6 +126,32 @@ public class AgrupadorModulo implements Serializable {
 	}
 
 
+	/**
+	 * equals
+	 */
+	@Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof AgrupadorModulo)) {
+            return false;
+        }
+        AgrupadorModulo other = (AgrupadorModulo) obj;
+        return this.id.equals(other.id);
+    }
+	
+	/**
+	 * hashCode
+	 */
+	@Override
+	   public int hashCode() {
+	        return id.hashCode();
+	    }
+	
+	/**
+	 * toString
+	 */
 	@Override
 	public String toString() {
 		return "AgrupadorModulo [id=" + id + ", orden=" + orden + ", modulo=" + modulo + ", agrupador=" + agrupador

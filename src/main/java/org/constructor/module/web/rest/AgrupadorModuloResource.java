@@ -6,6 +6,7 @@ package org.constructor.module.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.constructor.module.domain.Agrupador;
 import org.constructor.module.domain.AgrupadorModulo;
 import org.constructor.repository.AgrupadorRepository;
 import org.constructor.service.AgrupadorModuloService;
+import org.constructor.service.dto.AgrupadorModuloDTO;
 import org.constructor.service.dto.UpdateAgrupadorDTO;
 import org.constructor.utils.RestConstants;
 import org.slf4j.Logger;
@@ -88,13 +90,17 @@ public class AgrupadorModuloResource {
 	  * @throws URISyntaxException
 	  */
 	    @PostMapping(path = RestConstants.PATH_AGRUPADOR_MODULO)
-	    public ResponseEntity<AgrupadorModulo> createAgrupadorModulo(@RequestBody AgrupadorModulo agrupadorModulo) throws URISyntaxException {
+	    public ResponseEntity<AgrupadorModuloDTO> createAgrupadorModulo(@RequestBody AgrupadorModulo agrupadorModulo) throws URISyntaxException {
 	        log.debug("REST request to save AgrupadorModulo : {}", agrupadorModulo);
-	       
+	        AgrupadorModuloDTO dto = new AgrupadorModuloDTO();
 	        AgrupadorModulo result = agrupadorModuloService.save(agrupadorModulo);
+	        dto.setId(result.getId());
+	        dto.setOrden(result.getOrden());
+	        dto.setModulo(result.getModulo());
+	        dto.setAgrupador(result.getAgrupador());
 	        return ResponseEntity.created(new URI("/api/agrupador/" + result.getId()))
 	            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-	            .body(result);
+	            .body(dto);
 	    }
 	    
 	    
@@ -109,7 +115,7 @@ public class AgrupadorModuloResource {
 	    public ResponseEntity<List<Agrupador>> updateAgrupadorModulo(@RequestBody List<UpdateAgrupadorDTO> dto) throws Exception {
 	        log.debug("REST request to update AgrupadorModulo : {}", dto);
 	     
-	        List<Agrupador> listAgrupador = new ArrayList<>();
+	        List<Agrupador> listAgrupador =  new ArrayList<>(new LinkedHashSet<>());
 	        List<AgrupadorModulo> result = agrupadorModuloService.updateAgrupadorModulo(dto);
 	        for (AgrupadorModulo agrupadorModulo : result) {
 	        	listAgrupador.add(agrupadorRepository.findById(agrupadorModulo.getAgrupador().getId()).get());

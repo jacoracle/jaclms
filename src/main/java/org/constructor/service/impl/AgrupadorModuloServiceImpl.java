@@ -4,6 +4,7 @@
 package org.constructor.service.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,22 +94,28 @@ public class AgrupadorModuloServiceImpl implements AgrupadorModuloService {
 	@Override
 	public  List<AgrupadorModulo> updateAgrupadorModulo(List<UpdateAgrupadorDTO> dto) throws Exception {
 		
-		     List<AgrupadorModulo>  agrupadorModulo = new ArrayList<>();
+		     List<AgrupadorModulo>  agrupadorModulo = new ArrayList<>(new LinkedHashSet<AgrupadorModulo>());
 		
 		for (UpdateAgrupadorDTO updateDto : dto) {
 		    Optional.of(agrupadorModuloRepository.findById(updateDto.getId()))
 			 .filter(Optional::isPresent)
 	            .map(Optional::get)
 	            .map( agrupador -> {
-	            	agrupador.setId(updateDto.getId());
+	            
 	            	agrupador.setOrden(updateDto.getOrden());
+	            	agrupadorModulo.clear();
 	            	agrupadorModulo.add(agrupador);
-	            return updateDto;
+	        		log.debug("Request to   : {}", agrupador);
+
+	            return agrupador;
 	            }
 	            		);	
 		
 		}
+		log.debug("Request to hahshahsas   : {}", agrupadorModulo);
+
 		return agrupadorModulo;
+	
 		
 	}
 	
