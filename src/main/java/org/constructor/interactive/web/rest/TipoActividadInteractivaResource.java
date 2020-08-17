@@ -139,8 +139,8 @@ public class TipoActividadInteractivaResource {
 	@GetMapping(path = RestConstants.TIPO_ACTIVIDAD_ID)
 	public ResponseEntity<TipoActividadInteractiva> getTipoActividadInteractiva(@PathVariable Long id) {
 		log.debug("REST request to get TipoActividadInteractiva : {}", id);
-		Optional<TipoActividadInteractiva> temas = tipoActividadInteractivaService.findOne(id);
-		return ResponseUtil.wrapOrNotFound(temas);
+		Optional<TipoActividadInteractiva> tipoActividad = tipoActividadInteractivaService.findOne(id);
+		return ResponseUtil.wrapOrNotFound(tipoActividad);
 	}
 
 	/**

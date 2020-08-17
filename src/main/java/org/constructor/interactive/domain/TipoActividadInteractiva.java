@@ -42,7 +42,7 @@ public class TipoActividadInteractiva implements Serializable {
 	/**
 	 * String tipoActividad
 	 */
-	@Column(name = "tipoActividad ")
+	@Column(name = "tipo_actividad ")
 	private String tipoActividad ;
 	
 	/**
