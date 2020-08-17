@@ -88,17 +88,17 @@ $max-width: 1200px;
 }
 
 @mixin covers-xl {
-  @media screen and (min-width: 1240px) {
+  @media screen and (min-width: 1280px) {
     @content;
   }
 }
 @mixin covers-l {
-  @media (min-width: 1115px) and (max-width: 1239px) {
+  @media (min-width: 1199px) and (max-width: 1279px) {
     @content;
   }
 }
 @mixin covers-ml {
-  @media (min-width: 900px) and (max-width: 1114px) {
+  @media (min-width: 900px) and (max-width: 1199px) {
     @content;
   }
 }

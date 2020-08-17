@@ -44,8 +44,9 @@
     </div>
     <!-- Window content Module -->
     <div class="window-br-body" *ngIf="modulos.length">
-      <div class="br-body-row">
-        <div class="course-cover-br" *ngFor="let modulo of modulos"
+      <div class="grid-cards">
+
+        <div class="course-cover-br box-card" *ngFor="let modulo of modulos"
           [routerLink]="['/constructor-layout', modulo.id, 'module']">
 
           <div class="module-cover-br-image"></div>
@@ -62,7 +63,10 @@
           </div>
 
         </div>
+
       </div>
+
+
     </div>
 
     <div class="window-br-footer">

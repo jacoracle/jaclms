@@ -1,17 +1,20 @@
-<div class="main-container-br main-container-module">
-  <div class="window-course-configuration window-module-configuration">
-    <!-- Window Header -->
-    <div class="window-cc-header window-module-header">
-      <div class="cc-header-topbar module-header-topbar">
-        <div class="cch-title module-window-title">Configurar UMA</div>
-      </div>
+<div class="main-container-br container-home-module">
+  <div class="window-br">
+
+    <!-- Header -->
+    <div class="window-br-header">
+      <h4>Configurar UMA</h4>
     </div>
-    <!-- Window Body -->
-    <div class="window-cc-body window-module-body">
+    <div class="window-br-body-topbar">
+      <div class="line-gradient"></div>
+        <p>Configura Uma</p>
+    </div>
+    <!-- Body -->
+    <div class="window-br-body">
       <jhi-modulo-update></jhi-modulo-update>
     </div>
-    <!-- Window Footer -->
-    <div class="window-cc-footer window-module-footer">
+    <!-- Footer -->
+    <div class="window-br-footer">
       <button routerLink="/" class="secondary-btn">Cancelar</button>
       <button (click)="saveUMA()" class="main-btn" [disabled]="firstClick">Crear UMA</button>
     </div>
