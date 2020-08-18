@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { AccountService } from 'app/core/auth/account.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Account } from 'app/core/user/account.model';
 import { JhiEventManager } from 'ng-jhipster';
@@ -18,6 +18,8 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   authSubscription?: Subscription;
   account: Account | null = null;
   createdGroupSequence!: IAgrupador;
+
+  formSteps = new FormArray([]);
 
   // stepper
   isCompleted = false;
@@ -43,6 +45,8 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
         console.error('LOGUEADO');
       }
     });
+
+    console.error('FORM ARRAY: ', this.formSteps);
   }
 
   ngOnDestroy(): void {
@@ -63,5 +67,10 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     console.error('Dato del Output emitido: ');
     console.error(event);
     this.createdGroupSequence = event;
+  }
+
+  setCreateForm(evt: any): void {
+    console.error(evt);
+    this.formSteps.push(evt);
   }
 }

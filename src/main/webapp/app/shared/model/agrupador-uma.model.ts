@@ -4,7 +4,7 @@ import { IModulo } from './modulo.model';
 export interface IAgrupadorUma {
   id?: number;
   agrupador?: IAgrupador;
-  modulo?: IModulo; //  este es una uma, pero por cambio del cliente ya creado se quedo como modulo
+  modulo?: IModulo; //  es una uma, pero por cambio del cliente ya creado, se quedo como modulo
   orden?: number;
 }
 

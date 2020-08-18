@@ -133,23 +133,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updateUmasOrder();
 
-      this.agrupadorUmaService.update(this.tiraUmas).subscribe(
-        res => {
-          if (res.body) {
-            console.error('#### Response PUT umas');
-            console.error(res.body);
-            // this.tiraUmas = res.body.agrupador!.modulos!;
-          }
-        },
-        () => {
-          this.eventManager.broadcast(
-            new JhiEventWithContent('constructorApp.tiraUpdate', {
-              message: 'constructorApp.tiraUpdate.error',
-              type: 'danger'
-            })
-          );
-        }
-      );
+      this.updateSequenceUmaOrder();
     } else if (idx !== -1) {
       return;
     } else {
@@ -158,6 +142,29 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       this.addUmaToSequence(event.previousIndex, event.currentIndex);
     }
+  }
+
+  /**
+   * Execute PUT request to update order uma list
+   */
+  updateSequenceUmaOrder(): void {
+    this.agrupadorUmaService.update(this.tiraUmas).subscribe(
+      res => {
+        if (res.body) {
+          console.error('#### Response PUT umas');
+          console.error(res.body);
+          // this.tiraUmas = res.body.agrupador!.modulos!;
+        }
+      },
+      () => {
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.tiraUpdate', {
+            message: 'constructorApp.tiraUpdate.error',
+            type: 'danger'
+          })
+        );
+      }
+    );
   }
 
   updateUmasOrder(): void {
@@ -186,6 +193,15 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       modulo: objUmaToAdd,
       orden: ordenn
     };
+  }
+
+  deleteUmaFromSequence(item: IAgrupadorUma): void {
+    console.error('#### Elemento a Eliminar de la tira de UMAs');
+    console.error(item);
+    this.agrupadorUmaService.delete(item.id!).subscribe(() => {
+      this.updateUmasOrder();
+      this.updateSequenceUmaOrder();
+    });
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupadorUma>>): void {

@@ -19,6 +19,7 @@ import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 })
 export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   @Output() createdGroupEventEmit: EventEmitter<IAgrupador> = new EventEmitter<IAgrupador>();
+  @Output() formCreateEvent: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
   @ViewChild('chipList', { static: false }) chipList: MatChipList | undefined;
 
   isSaving = false;

@@ -61,7 +61,8 @@
                             <div>
                                 <mat-form-field>
                                     <mat-label>Tema del UMA</mat-label>
-                                    <input type="text" placeholder="filtrar por tema" matInput formControlName="sessionTopic">
+                                    <input type="text" placeholder="filtrar por tema" matInput
+                                        formControlName="sessionTopic">
                                 </mat-form-field>
                             </div>
                             <div class="btn-search-group">
@@ -130,9 +131,15 @@
             <div cdkDrag *ngFor="let item of tiraUmas">
                 <div class="item-uma">
                     {{item.modulo.titulo}}
+                    <span class="material-icons" (click)="deleteUmaFromSequence(item)">
+                        delete_forever
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 
+</div>
+<div class="btn-sequence">
+    <button routerLink="/uma-groups-home" class="secondary-btn">Cerrar</button>
 </div>

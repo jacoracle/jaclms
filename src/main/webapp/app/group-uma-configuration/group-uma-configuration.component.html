@@ -17,7 +17,7 @@
             <mat-step [stepControl]="groupUmaForm" editable="false">
 
               <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
-              <jhi-agrupador-uma-update (createdGroupEventEmit)="setAgrupador($event)"></jhi-agrupador-uma-update>
+              <jhi-agrupador-uma-update (createdGroupEventEmit)="setAgrupador($event)" (formCreateEvent)="setCreateForm($event)" ></jhi-agrupador-uma-update>
 
             </mat-step>
 
@@ -36,9 +36,9 @@
 
     </div>
     <!-- Window Footer -->
-    <div class="window-group-footer">
+    <!-- <div class="window-group-footer">
       <button routerLink="/uma-groups-home" class="secondary-btn">Cerrar</button>
-    </div>
+    </div> -->
 
   </div>
 </div>

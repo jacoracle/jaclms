@@ -55,7 +55,11 @@
     // close container-field-filter
 
     .btns-register {
+      display: flex;
       margin-top: 15px;
+      button {
+        margin: 5px;
+      }
     }
   }
   // close container-register-form-group

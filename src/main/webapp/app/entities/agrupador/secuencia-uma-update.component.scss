@@ -85,14 +85,14 @@
 
   .sequence-uma-bar {
     // border: solid 1px red;
-    min-height: 100px;
+    min-height: 300px;
     padding: 5px;
     width: 25%;
     .uma-item-sequence {
       border: solid 1px #b5b5b5;
       background-color: #ccc;
       padding: 1em;
-      min-height: 395px;
+      min-height: 375px;
       .item-uma {
         background-color: #dadada;
         border: solid 1px #a5a5a5;
@@ -101,4 +101,8 @@
       }
     }
   }
+}
+
+.btn-sequence {
+  margin: 5px;
 }
