@@ -6,6 +6,7 @@ package org.constructor.service.impl;
 import java.util.Optional;
 
 import org.constructor.interactive.domain.ActividadInteractiva;
+import org.constructor.interactive.domain.TipoActividadInteractiva;
 import org.constructor.repository.ActividadInteractivaRepository;
 import org.constructor.service.ActividadInteractivaService;
 import org.constructor.service.dto.ActividadInteractivaDTO;
@@ -90,17 +91,27 @@ public class ActividadInteractivaServiceImpl implements ActividadInteractivaServ
 	 */
 	@Override
 	public Optional<ActividadInteractiva> updateActividad(ActividadInteractivaDTO dto) throws Exception {
-		 return Optional.of(actividadInteractivaRepository
+		log.debug("Request Service id  : {}", dto.getId());
+
+		return Optional.of(actividadInteractivaRepository
 	            .findById(dto.getId()))
 	            .filter(Optional::isPresent)
 	            .map(Optional::get)
 	            .map( actividadInteractiva -> {
+	            	log.debug("Request Service actividadInteractivasssss  : {}", actividadInteractiva);
 	            	actividadInteractiva.setId(dto.getId());
+	            	TipoActividadInteractiva tipoActividadInteractiva =  new TipoActividadInteractiva();
+	        		tipoActividadInteractiva = 	actividadInteractivaRepository.getTipoActividadId(dto.getTipoActividadInteractiva().getTipoActividad(), 
+	        				dto.getTipoActividadInteractiva().getSubtipo(), 
+	        				dto.getTipoActividadInteractiva().getOpcion());
+	        	
 	            	actividadInteractiva.setContenido(dto.getContenido());
 	            	actividadInteractiva.setEvaluable(dto.getEvaluable());
 	            	actividadInteractiva.setIntentos(dto.getIntentos());
 	            	actividadInteractiva.setGamificacion(dto.getGamificacion());
-	            	
+	            	actividadInteractiva.setTipoActividadInteractiva(tipoActividadInteractiva);
+	        	
+
 	            	return actividadInteractiva;
 	            }
 	            		);	

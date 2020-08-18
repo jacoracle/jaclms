@@ -3,6 +3,7 @@
  */
 package org.constructor.service.dto;
 
+import org.constructor.interactive.domain.TipoActividadInteractiva;
 
 /**
  * @author Edukai
@@ -36,6 +37,8 @@ public class ActividadInteractivaDTO {
 	 * Long gamificacion
 	 */
 	private Long gamificacion;
+	
+	private TipoActividadInteractiva tipoActividadInteractiva ;  
 
 	/**
 	 * @return the id
@@ -109,6 +112,22 @@ public class ActividadInteractivaDTO {
 	 */
 	public void setGamificacion(Long gamificacion) {
 		this.gamificacion = gamificacion;
+	}
+	
+	
+
+	/**
+	 * @return the tipoActividadInteractiva
+	 */
+	public TipoActividadInteractiva getTipoActividadInteractiva() {
+		return tipoActividadInteractiva;
+	}
+
+	/**
+	 * @param tipoActividadInteractiva the tipoActividadInteractiva to set
+	 */
+	public void setTipoActividadInteractiva(TipoActividadInteractiva tipoActividadInteractiva) {
+		this.tipoActividadInteractiva = tipoActividadInteractiva;
 	}
 
 	@Override

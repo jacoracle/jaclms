@@ -35,6 +35,7 @@ public class TipoActividadInteractiva implements Serializable {
 	/**
 	 * Long Id
 	 */
+	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
