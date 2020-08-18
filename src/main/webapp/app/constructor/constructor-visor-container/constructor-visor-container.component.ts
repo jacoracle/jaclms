@@ -26,6 +26,7 @@ import { ContentBlock7Component } from 'app/constructor/content-blocks/content-b
 import { ContentBlock8Component } from 'app/constructor/content-blocks/content-block8/content-block8.component';
 import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
 import { ContentBlock10Component } from 'app/constructor/content-blocks/content-block10/content-block10.component';
+import { ActividadInteractiva, ContenidoActividad, IActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -178,18 +179,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * actualiza el indice de los bloques de la mesa de trabajo cuando se
-   * reordena la tira de pelicula desde los botones y se actualiza el orden
-   * en cada objeto de bloque.
-   * @param oldIndex
-   * @param newIndex
-   */
-  updateBlocksIndexOrder(oldIndex: number, newIndex: number): void {
-    this.contentBlocks.splice(newIndex, 0, this.contentBlocks.splice(oldIndex, 1)[0]);
-    this.updateBlocksOrder();
-  }
-
-  /**
    * asigna el orden correspondiente a los bloques de la mesa de trabajo
    */
   updateBlocksOrder(): void {
@@ -219,21 +208,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
             break;
           }
         }
-      }
-    }
-  }
-
-  onUpdateMultimediaBlock(event: Event, index: number): void {
-    if (this.contentBlocks[index]) {
-      if (this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']]) {
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.nombre =
-          event['multimediaProperties'].nombre;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.extension =
-          event['multimediaProperties'].extension;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.peso =
-          event['multimediaProperties'].peso;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.contenido =
-          event['multimediaProperties'].contenido;
       }
     }
   }
@@ -328,17 +302,44 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     return {
       ...new Componente(),
       id: undefined,
-      contenido: this.createContenido(''),
+      contenido: this.createContenido(componentType, ''),
+      actividadesInteractivas: this.createActividadInteractva(componentType),
       tipoComponente: componentType,
       version: 1,
       orden: order
     };
   }
 
-  createContenido(contenido: string): IContenido {
+  createContenido(componentType: TipoComponente, contenido: string): IContenido | null {
+    if (componentType.nombre === 'activity') {
+      return null;
+    } else {
+      return {
+        ...new Contenido(),
+        contenido
+      };
+    }
+  }
+
+  createActividadInteractva(componentType: TipoComponente): IActividadInteractiva[] | null {
+    if (componentType.nombre === 'activity') {
+      const actividad = [];
+      actividad.push({
+        ...new ActividadInteractiva(),
+        contenido: this.createContenidoActividad(),
+        evaluable: null,
+        intentos: null,
+        gamificacion: null
+      });
+      return actividad;
+    } else {
+      return null;
+    }
+  }
+
+  createContenidoActividad(): ContenidoActividad {
     return {
-      ...new Contenido(),
-      contenido
+      ...new ContenidoActividad()
     };
   }
 

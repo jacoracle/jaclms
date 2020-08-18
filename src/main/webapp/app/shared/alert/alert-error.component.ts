@@ -76,6 +76,10 @@ export class AlertErrorComponent implements OnDestroy {
           this.addErrorAlert('Not found', 'error.url.not.found');
           break;
 
+        case 405:
+          this.addErrorAlert('Not permitido', 'error.url.not.found');
+          break;
+
         default:
           if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
             this.addErrorAlert(httpErrorResponse.error.message);

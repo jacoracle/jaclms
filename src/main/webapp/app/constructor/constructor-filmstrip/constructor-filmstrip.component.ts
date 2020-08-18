@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, AfterContentInit } from '@angular/core';
+import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
-import { NavigationControlsService } from '../../services/navigation-controls.service';
+import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { Subscription } from 'rxjs';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -15,40 +15,8 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterContentInit {
   selectedContentBlockIndex = -1;
   contentBlocks: any;
-  selectedTemplateType = '';
   subscription: Subscription;
   templates: ITipoBloqueComponentes[] = [];
-
-  imagePaths = [
-    {
-      id: 1,
-      name: 'title',
-      contentBlockType: 'titulo',
-      path: '../../../content/images/ab1.png',
-      tags: 'text'
-    },
-    {
-      id: 2,
-      name: 'text',
-      contentBlockType: 'texto',
-      path: '../../../content/images/ab2.png',
-      tags: 'text'
-    },
-    {
-      id: 3,
-      name: 'image',
-      contentBlockType: 'imagen',
-      path: '../../../content/images/ab3.png',
-      tags: 'image'
-    },
-    {
-      id: 4,
-      name: 'image_text',
-      contentBlockType: 'imagen_texto',
-      path: '../../../content/images/ab4.png',
-      tags: 'image text'
-    }
-  ];
 
   constructor(
     private contentBlocksService: ContentBlocksService,
@@ -87,13 +55,6 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterCo
   selectContentBlock(selectedContentBlockIndex: number): void {
     this.selectedContentBlockIndex = selectedContentBlockIndex;
     this.contentBlocksService.setSelectedBlockIndex(this.selectedContentBlockIndex);
-  }
-
-  /*
-   * Crea un bloque de contenido en el servicio ContentBlocksService.
-   */
-  createContentBlock(): void {
-    this.navigationControlsService.setOpenTemplateGallery(true);
   }
 
   /*

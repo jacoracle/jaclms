@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SafeUrl } from '@angular/platform-browser';
-import { Contenido } from 'app/shared/model/contenido.model';
+import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,12 @@ import { Contenido } from 'app/shared/model/contenido.model';
 export class ActivityService {
   private activitySrc = new Subject<SafeUrl>();
   private editing = new Subject<boolean>();
-  private activityProperties = new Subject<Contenido>();
+  private activityProperties = new Subject<ActividadInteractiva[]>();
 
   constructor() {}
 
-  setActivitySrc(videoSrc: SafeUrl): void {
-    this.activitySrc.next(videoSrc);
+  setActivitySrc(activitySrc: SafeUrl): void {
+    this.activitySrc.next(activitySrc);
   }
 
   getActivitySrc(): Observable<SafeUrl> {
@@ -31,15 +31,15 @@ export class ActivityService {
 
   /**
    * to send values between video component and properties component
-   * @param videoProperties object with values of video properties
+   * @param activityProperties object with values of video properties
    */
-  setActivityProperties(videoProperties: Contenido): void {
-    this.activityProperties.next(videoProperties);
+  setActivityProperties(activityProperties: ActividadInteractiva[]): void {
+    this.activityProperties.next(activityProperties);
   }
   /**
    * get properties from video file
    */
-  getActivityProperties(): Observable<Contenido> {
+  getActivityProperties(): Observable<ActividadInteractiva[]> {
     return this.activityProperties.asObservable();
   }
 }

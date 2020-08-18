@@ -14,6 +14,9 @@ import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { CurrentModuleService } from 'app/services/current-module.service';
 import { ActivityService } from 'app/services/activity.service';
 import { ActivityModalService } from 'app/services/activity-modal.service';
+import { ActividadInteractiva, ContenidoActividad } from 'app/shared/model/actividad-interactiva.model';
+import { cantidadAtributos } from 'app/shared/util/util';
+import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -28,6 +31,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   defaultSoundUrl = './../../../content/images/audio_thumb.png';
   loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
   defaultActivityUrl = './../../../content/images/activity_thumb.png';
+  loadedFormActivity = './../../../content/images/activity_up_thumb.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
 
@@ -59,6 +63,12 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     peso: 0,
     extension: ''
   };
+
+  actividadProperties: ActividadInteractiva = {
+    id: 0,
+    contenido: undefined
+  };
+  actividadesInteractivas: ActividadInteractiva[] = [];
 
   private _GIB24 = 1024000000;
   private _MIL24 = 1024000;
@@ -150,9 +160,14 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     });
 
     this.subscription = this.activityService.getActivityProperties().subscribe(props => {
-      this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
-      this.multimediaFileProperties.contenido = props.contenido ? props.contenido : 'unknown';
-      this.listenAudio = false;
+      this.actividadesInteractivas = props;
+      const indexActividad = props.length - 1;
+      const actividadInteractiva = props[indexActividad];
+      if (actividadInteractiva) {
+        this.actividadProperties.contenido =
+          cantidadAtributos(actividadInteractiva.contenido) > 0 ? actividadInteractiva.contenido : 'unknown';
+        this.actividadProperties.id = actividadInteractiva.id ? actividadInteractiva.id : 0;
+      }
     });
   }
 
@@ -247,11 +262,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.activitySrc = activitySrc;
       this.fileFormat = 'activity';
       if (this.activitySrc === '') {
-        this.fileInput.nativeElement.value = '';
+        // this.fileInput.nativeElement.value = '';
       } else {
-        this.showLoader = true;
+        /* this.showLoader = true;
         this.activityModalService.open();
-        this.showLoader = false;
+        this.showLoader = false;*/
       }
       this.showLoader = false;
     });
@@ -330,17 +345,22 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.fileUploadService.deleteFile(this.multimediaFileProperties.contenido!).subscribe(() => {
       if (this.fileFormat === 'image') {
         this.setImageUrl('');
+        this.fileInput.nativeElement.value = '';
       } else if (this.fileFormat === 'video') {
         this.setVideoUrl('');
+        this.fileInput.nativeElement.value = '';
       } else if (this.fileFormat === 'pdf') {
         this.setPdfUrl('');
+        this.fileInput.nativeElement.value = '';
       } else if (this.fileFormat === 'sound') {
         this.setSoundUrl('');
+        this.fileInput.nativeElement.value = '';
+      } else if (this.fileFormat === 'activity') {
+        this.deleteActivity();
       } else {
         this.showErrorFileType('');
         return;
       }
-      this.fileInput.nativeElement.value = '';
     });
   }
 
@@ -386,11 +406,30 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     }
   }
 
-  createActivity(): void {
-    /*  if (this.multimediaFileProperties.contenido != null) {*/
-    this.activityModalService.open();
-    this.viewPdf = true;
-    /* }*/
+  createUpdateActivity(): void {
+    const indexActividad = this.actividadesInteractivas.length - 1;
+    const actividadInteractiva = this.actividadesInteractivas[indexActividad];
+    const jsonFormIn = actividadInteractiva.contenido as IActividadPregunta;
+
+    this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
+      this.showLoader = true;
+      if (actividadInteractiva && jsonFormOut && cantidadAtributos(jsonFormOut) > 0) {
+        Object.assign(actividadInteractiva.contenido, jsonFormOut);
+        this.actividadesInteractivas[indexActividad] = actividadInteractiva;
+        this.activityService.setActivityProperties(this.actividadesInteractivas);
+      }
+      this.showLoader = false;
+    });
+  }
+
+  deleteActivity(): void {
+    this.showLoader = true;
+    const indexActividad = this.actividadesInteractivas.length - 1;
+    const actividadInteractiva = this.actividadesInteractivas[indexActividad];
+    actividadInteractiva.contenido = new ContenidoActividad();
+    this.actividadesInteractivas[indexActividad] = actividadInteractiva;
+    this.activityService.setActivityProperties(this.actividadesInteractivas);
+    this.showLoader = false;
   }
 
   loadSound(): void {

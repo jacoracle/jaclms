@@ -5,7 +5,7 @@ import { ContentBlocksService } from 'app/services/content-blocks.service';
 import { ITargetScroll, TargetScroll } from 'app/shared/model/target-scroll.model';
 
 @Component({
-  selector: 'jhi-content-block1',
+  selector: 'jhi-content-block10',
   templateUrl: './content-block10.component.html',
   styleUrls: ['./content-block10.component.scss']
 })

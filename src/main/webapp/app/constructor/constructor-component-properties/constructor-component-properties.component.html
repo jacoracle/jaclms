@@ -31,29 +31,29 @@
             <img [src]="imgSrc" alt="" class="cover-upload-img" *ngIf="imgSrc !== ''">
           </div>
           <div *ngIf="fileFormat === 'video'" [ngClass]="{'test-video': thumbSrc !== ''}">
+              <!-- <video [src]="videoSrc" width="100%" controls #vPlayer></video>-->
               <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
               <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''"><i class="icon ni-play"></i></span>
               <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
-           <!-- <video [src]="videoSrc" width="100%" controls #vPlayer></video>-->
           </div>
           <div *ngIf="fileFormat === 'pdf'" class="test-pdf">
             <!-- Pdf -->
             <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
             <span class="play-icon-test" (click)="pdfPreview()" *ngIf="multimediaFileProperties.contenido !== 'unknown'"><i class="icon ni-view"></i></span>
             <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
-            <!-- <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="pdfSrc !== ''" (click)="pdfPreview()"> -->
           </div>
           <div *ngIf="fileFormat === 'sound'" class="test-audio">
+              <!-- Audio -->
             <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
             <span class="play-icon-test" (click)="loadSound()" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio"><i class="icon ni-play"></i></span>
             <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
             <audio [src]="soundSrc" controls controlsList="nodownload" #sPlayer *ngIf="soundSrc !== '' && listenAudio" class="audioPlayer" ></audio>
           </div>
           <div *ngIf="fileFormat === 'activity'" class="test-pdf">
-              <!-- Pdf -->
-              <img [src]="defaultActivityUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
-              <span class="play-icon-test" (click)="pdfPreview()" *ngIf="multimediaFileProperties.contenido !== 'unknown'"><i class="icon ni-view"></i></span>
-              <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
+              <!-- Activity -->
+              <img [src]="defaultActivityUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id === 0">
+              <span class="play-icon-test" (click)="createUpdateActivity()" *ngIf=" this.actividadProperties.contenido !== 'unknown'"><i class="icon ni-view"></i></span>
+              <img [src]="loadedFormActivity" alt="" class="cover-upload-img" *ngIf="actividadProperties.id !== 0 ">
           </div>
           <div [hidden]="!showLoader" class="loader-cp">
             <!-- Doing something -->
@@ -63,13 +63,14 @@
 
         <div class="row-sidebar-up-image-btn">
           <button (click)="delete()" class="secondary-btn text-transform-none"
-            *ngIf="multimediaFileProperties.contenido !== 'unknown'">Eliminar</button>
+            *ngIf="multimediaFileProperties.contenido !== 'unknown' &&
+                   this.actividadProperties.contenido !== 'unknown' ">Eliminar</button>
           <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="fileFormat !== 'activity'">
             <span>Subir</span>
             <input #fileInput type="file" (change)="selectFile($event)" style="display:none;" />
           </button>
-            <button type="button" class="main-btn" (click)="createActivity()" *ngIf="fileFormat === 'activity'">
-                <span>Crear Actividad</span>
+            <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="fileFormat === 'activity'">
+                <span>Actividad</span>
             </button>
         </div>
 

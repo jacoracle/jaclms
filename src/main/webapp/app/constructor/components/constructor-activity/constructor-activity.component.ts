@@ -4,10 +4,10 @@ import { Subscription } from 'rxjs';
 import { Componente } from 'app/shared/model/componente.model';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { FileUploadService } from 'app/services/file-upload.service';
-import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { ContenidoService } from 'app/entities/contenido/contenido.service';
 import { ActivityService } from 'app/services/activity.service';
+import { ActividadInteractiva, IActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
+import { ContenidoActividadService } from 'app/entities/contenido/contenido-actividad.service';
 
 @Component({
   selector: 'jhi-constructor-activity',
@@ -26,7 +26,7 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
 
   constructor(
     public activityService: ActivityService,
-    private contenidoService: ContenidoService,
+    private contenidoActividadService: ContenidoActividadService,
     private eventManager: JhiEventManager,
     public navigationControlsService: NavigationControlsService,
     public fileUploadService: FileUploadService,
@@ -40,43 +40,53 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.subscription = this.activityService.getActivityProperties().subscribe((objProperties: IContenido) => {
-      if (this.editing) {
-        this.updateComponent.emit(objProperties);
-        // Actualizar contenido de componente en base de datos
-        const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
-        this.subscription = this.contenidoService.update(contenido).subscribe(
-          data => {
-            this.component!.contenido = data.body!;
-          },
-          () => {
-            this.eventManager.broadcast(
-              new JhiEventWithContent('constructorApp.blockUpdateError', {
-                message: 'constructorApp.curso.blockUpdate.error',
-                type: 'danger'
-              })
-            );
-          }
-        );
+    this.subscription = this.activityService.getActivityProperties().subscribe((objProperties: IActividadInteractiva[]) => {
+      if (this.component!.actividadesInteractivas) {
+        const indexActividad = this.component!.actividadesInteractivas.length - 1;
+        if (this.editing && indexActividad !== undefined) {
+          this.updateComponent.emit(objProperties);
+          // Actualizar contenido de componente en base de datos
+          const contenidoActividad = this.createUpdatedActividad(
+            this.component!.actividadesInteractivas[indexActividad],
+            objProperties[indexActividad]
+          );
+          this.subscription = this.contenidoActividadService.update(contenidoActividad).subscribe(
+            data => {
+              this.component!.actividadesInteractivas![indexActividad] = data.body!;
+            },
+            () => {
+              this.eventManager.broadcast(
+                new JhiEventWithContent('constructorApp.blockUpdateError', {
+                  message: 'constructorApp.curso.blockUpdate.error',
+                  type: 'danger'
+                })
+              );
+            }
+          );
+        }
       }
     });
   }
 
-  createUpdatedContent(content: IContenido, newContent: IContenido): IContenido {
-    return {
-      ...new Contenido(),
-      id: content.id,
-      contenido: newContent.contenido,
-      nombre: newContent.nombre,
-      extension: newContent.extension,
-      peso: newContent.peso
-    };
+  createUpdatedActividad(content: ActividadInteractiva, newContent: ActividadInteractiva): IActividadInteractiva {
+    if (content.contenido && newContent.contenido) {
+      return {
+        ...new ActividadInteractiva(),
+        id: content.id,
+        contenido: newContent.contenido,
+        evaluable: newContent.evaluable,
+        intentos: newContent.intentos,
+        gamificacion: newContent.gamificacion
+      };
+    } else {
+      return content;
+    }
   }
 
   selectActivity(): void {
     this.activityService.setEditing(false);
     this.activityService.setActivitySrc(this.activitySrc);
-    this.activityService.setActivityProperties(this.component!.contenido!);
+    this.activityService.setActivityProperties(this.component!.actividadesInteractivas!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);
   }
@@ -85,8 +95,8 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
     this.showLoader = true;
     this.fileUploadService.getVideoThumbnailFile(path).subscribe(data => {
       this.showLoader = false;
-      const videoPath = URL.createObjectURL(data.body);
-      this.activitySrc = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
+      const activityPath = URL.createObjectURL(data.body);
+      this.activitySrc = this.domSanitizer.bypassSecurityTrustUrl(activityPath);
     });
   }
 

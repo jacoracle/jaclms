@@ -1,0 +1,12 @@
+{
+  "constructorApp": {
+    "activityForm": {
+      "closeModal": {
+        "success": "El formulario es correcto"
+      },
+      "invalidForm": {
+        "error": "El formulario es incorrecto"
+      }
+    }
+  }
+}

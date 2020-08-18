@@ -1,52 +1,150 @@
-<div class="modal-video-container">
-    <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-video" type="button"
-            (click)="activeModal.dismiss('closed')"><i class="icon ni-close"></i></button>
+<div class="modal-activity-container">
+    <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-activity" type="button"
+            (click)="close()"><i class="icon ni-close"></i></button>
 
-    <form name="activityForm" role="form" novalidate [formGroup]="activityForm" class="form-window-configuration">
-        <div class="row-form-window-c">
-            <div class="alert-course-configuration">
-                <jhi-alert-error></jhi-alert-error>
-            </div>
-
-            <!-- Generales Inicia -->
-            <div class="row-window-general">
-                <!-- Header -->
-                <div class="rwg-header">
-                    <h2 id="jhi-curso-heading">Configuración general</h2>
-                    <!--jhiTranslate="constructorApp.modulo.home.titleGeneralConfg"-->
-                    <p>*Campo obligatorio</p>
+    <!-- Body modal -->
+    <div class="modal-activity-body">
+        <form name="activityForm" role="form" novalidate [formGroup]="activityForm" class="form-window-configuration">
+            <!-- Ventana Modal -->
+            <div class="row-form-window-c">
+                <div class="alert-course-configuration">
+                    <jhi-alert-error></jhi-alert-error>
                 </div>
 
-                <!-- Row -->
-                <div class="row-wg margintop-25">
-                    <div class="col-window-g">
-                        <div class="form-nimbus">
-                            <label for="id_question">Pregunta 1 *</label>
-                            <!--jhiTranslate="constructorApp.modulo.titulo"-->
-                            <input [ngClass]="{'alert-input': !isValid('question')}" maxlength="50" type="text" class="form-control"
-                                   name="question" id="id_question" formControlName="question"/>
-                            <!-- Aquí va la alerta por campo del formulario -->
-                            <div *ngIf="!isValid('question')" class="form-alert"><p>Mensaje de corrección</p></div>
+                <!-- Generales Inicia -->
+                <div class="row-window-general">
+                    <!-- Header -->
+                    <div class="rwg-header">
+                        <h2 id="jhi-curso-heading">Configuración general</h2>
+                        <p>*Campo obligatorio</p>
+                    </div>
+
+                   <!-- <div class="row-wg margintop-40">
+                        <div class="col-question">
+                            <pre> {{ activityForm.getRawValue() | json }}</pre>
+                        </div>
+                    </div>-->
+
+                    <div class="row-wg margintop-40">
+                        <div>
+                            <label>Seleccione el tipo de preguntas</label>
+                        </div>
+                        <div class="col-type-question" formGroupName="tipoActividad">
+                            <mat-radio-group aria-label="Select an option" formControlName="opcion"
+                                             name="opcion">
+                                <mat-radio-button value="unica" id="type_question"
+                                                  class="question-radio" (change)="onOpcionChange($event)">Unica
+                                </mat-radio-button>
+                                <mat-radio-button value="multiple" id="type_question2"
+                                                  class="question-radio" (change)="onOpcionChange($event)">Multiple
+                                </mat-radio-button>
+                            </mat-radio-group>
                         </div>
                     </div>
-                </div><!-- End Row -->
 
-                <div class="row-wg margintop-25">
-                    <div class="col-window-g">
-                        <div class="form-nimbus">
-                            <label for="id_question2">Pregunta 2 *</label>
-                            <!--jhiTranslate="constructorApp.modulo.titulo"-->
-                            <input [ngClass]="{'alert-input': !isValid('question2')}" maxlength="50" type="text" class="form-control"
-                                   name="question2" id="id_question2" formControlName="question2"/>
-                            <!-- Aquí va la alerta por campo del formulario -->
-                            <div *ngIf="!isValid('question2')" class="form-alert"><p>Mensaje de corrección</p></div>
+                    <!-- Preguntas -->
+                    <div class="width-100" formArrayName="preguntas"
+                         *ngFor="let pregunta of preguntas().controls; let indQuestion = index;">
+                        <!-- Ingresar pregunta -->
+                        <div class="row-wg margintop-40">
+                            <div class="col-question" [formGroupName]="indQuestion">
+                                <mat-form-field>
+                                    <mat-label><label for="id_question{{indQuestion}}">Pregunta {{indQuestion + 1}}
+                                        *</label></mat-label>
+                                    <input matInput [ngClass]="{'alert-input': !isValidQuestion(indQuestion)}"
+                                           class="form-control"
+                                           formControlName="pregunta" placeholder="Haz una pregunta ..."
+                                           name="pregunta{{indQuestion}}"
+                                           id="id_question{{indQuestion}}">
+                                </mat-form-field>
+                                <div class="form-nimbus">
+                                    <div *ngIf="!isValidQuestion(indQuestion)" class="form-alert">
+                                        <p>Mensaje de corrección</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- Ingresar pregunta -->
+
+                        <!-- Respuestas -->
+                        <div [formGroupName]="indQuestion">
+                            <!-- Ingresar Respuesta -->
+                            <div class="row-wg answer-question-space" formArrayName="respuestas"
+                                 *ngFor="let answer of respuestas(indQuestion).controls; let indAnswer = index;"
+                                 [ngClass]="{'answer-space': indAnswer >0 }">
+                                <div class="col-window-g" [formGroupName]="indAnswer">
+                                    <div class="form-nimbus">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text answer-question-space">
+                                                    <mat-radio-group formControlName="correcta" name="correcta">
+                                                        <mat-radio-button class="answer-radio"
+                                                                          *ngIf="typeQuestion() === 'unica'"
+                                                                          [value]="true"
+                                                                          [checked]="this.campoRespuesta(indQuestion, indAnswer, 'correcta').value"
+                                                                          (change)="onRadioChange(indQuestion, indAnswer)"
+                                                                          id="id_type_question{{indQuestion}}_answer{{indAnswer}}">
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+
+                                                    <mat-checkbox class="answer-radio" id="id_type2_question{{indQuestion}}_answer{{indAnswer}}"
+                                                                  *ngIf="typeQuestion() === 'multiple'"
+                                                                  formControlName="correcta"
+                                                                  (change)="onCheckChange()">
+                                                    </mat-checkbox>
+                                                </div>
+                                            </div>
+                                            <label for="id_answer{{indAnswer}}_question{{indQuestion}}"></label>
+                                            <input [ngClass]="{'alert-input': !isValidAnswer(indQuestion, indAnswer)}"
+                                                   maxlength="50" type="text" class="form-control answer-question-space"
+                                                   name="respuesta{{indAnswer}}" id="id_answer{{indAnswer}}_question{{indQuestion}}"
+                                                   formControlName="respuesta" placeholder="agrega una opcion..."
+                                                    (focusout)="refreshQuestion(indQuestion)" />
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text answer-question-space">
+                                                    <button name="deleteQuestion" class="delete-answer"
+                                                            (click)="removeAnswer(indQuestion, indAnswer)">-
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!isValidAnswer(indQuestion, indAnswer)" class="form-alert">
+                                                <p>Mensaje de corrección</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- Ingresar Respuesta -->
+
+                            <div class="row-wg">
+                                <div class="col-window-g">
+                                    <div class="form-nimbus">
+                                        <button class="link" (click)="addAnswer(indQuestion)"
+                                                [disabled]="respuestas(indQuestion).controls.length>=4">
+                                            <span> + &nbsp;&nbsp; Agregar Opción</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- respuestas -->
+                        <mat-divider></mat-divider>
+                    </div><!-- Preguntas -->
+
+                    <div class="row-wg">
+                        <div class="col-window-g">
+                            <button mat-raised-button color="primary"
+                                    (click)="addQuestion()"
+                                    [disabled]="preguntas().controls.length >= 10">
+                                <span>Agregar Pregunta</span>
+                            </button>
                         </div>
                     </div>
-                </div><!-- End Row -->
 
-            </div><!-- End row-window-general -->
-        </div>
-    </form>
+                    <div class="window-cc-footer window-module-footer">
+                        <button (click)="close()" class="secondary-btn">Cancelar</button>
+                        <button type="button" (click)="onSubmit()" class="main-btn">Crear Actividad</button>
+                    </div>
 
-
+                </div><!-- Generales -->
+            </div><!-- Ventana Modal -->
+        </form>
+    </div> <!-- Body modal -->
 </div>
