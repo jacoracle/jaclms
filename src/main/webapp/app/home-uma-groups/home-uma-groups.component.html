@@ -21,10 +21,10 @@
         </div>
 
         <div class="window-br-body-topbar">
-          <div class="line-gradient"></div>
-          <div class="row-wbr-bt">
-            <p>Tus grupos recientes ({{secuenciasUma.length}})</p>
-          </div>
+            <div class="line-gradient"></div>
+            <div class="row-wbr-bt">
+                <p>Tus grupos recientes ({{secuenciasUma.length}})</p>
+            </div>
         </div>
 
         <!-- Window Empty -->
@@ -33,14 +33,12 @@
                 <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
                     <div class="container-search-form-uma">
                         <div class="row-search-gral">
-                            <!-- <p class="txt-recent-umas">Tus grupos recientes ({{secuenciasUma.length}})</p> -->
                             <mat-form-field>
                                 <input type="text" placeholder="Buscar" matInput formControlName="tituloAgrupador"
                                     [matAutocomplete]="autoInputTituloAgrupador">
                                 <mat-autocomplete autoActiveFirstOption #autoInputTituloAgrupador="matAutocomplete"
                                     [displayWith]="displayFn">
-                                    <mat-option *ngFor="let option of filteredSequencesUmas | async"
-                                        [value]="option">
+                                    <mat-option *ngFor="let option of filteredSequencesUmas | async" [value]="option">
                                         {{option.titulo}}
                                     </mat-option>
                                 </mat-autocomplete>
@@ -51,48 +49,46 @@
                             <p>Filtrar por:</p>
 
                             <div class="row-filter-uma">
-                              <mat-form-field>
-                                  <mat-label>Título del Grupo</mat-label>
-                                  <input matInput formControlName="sequenceTitleFormCtrl"
-                                      [errorStateMatcher]="matcher" placeholder="Filtrar por título del grupo">
-                                  <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                                  <mat-error
-                                      *ngIf="groupUmaForm.get('sequenceTitleFormCtrl').hasError('required')">
-                                      Captura el título del UMA para filtrar.
-                                  </mat-error>
-                              </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Título del Grupo</mat-label>
+                                    <input matInput formControlName="sequenceTitleFormCtrl"
+                                        [errorStateMatcher]="matcher" placeholder="Filtrar por título del grupo">
+                                    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                                    <mat-error *ngIf="groupUmaForm.get('sequenceTitleFormCtrl').hasError('required')">
+                                        Captura el título del UMA para filtrar.
+                                    </mat-error>
+                                </mat-form-field>
 
-                              <mat-form-field>
-                                  <mat-label>Descripción</mat-label>
-                                  <input matInput formControlName="sequenceDescriptionFormCtrl"
-                                      [errorStateMatcher]="matcher"
-                                      placeholder="filtrar por parte de la descripción">
-                                  <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                                  <mat-error
-                                      *ngIf="groupUmaForm.get('sequenceDescriptionFormCtrl').hasError('maxlength')">
-                                      La descripción del UMA a filtrar no debe superar los 50 caracteres.
-                                  </mat-error>
-                              </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Descripción</mat-label>
+                                    <input matInput formControlName="sequenceDescriptionFormCtrl"
+                                        [errorStateMatcher]="matcher" placeholder="filtrar por parte de la descripción">
+                                    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                                    <mat-error
+                                        *ngIf="groupUmaForm.get('sequenceDescriptionFormCtrl').hasError('maxlength')">
+                                        La descripción del UMA a filtrar no debe superar los 50 caracteres.
+                                    </mat-error>
+                                </mat-form-field>
 
-                              <mat-form-field>
-                                  <mat-label>Área de Conocimiento</mat-label>
-                                  <input matInput formControlName="sequenceAreaKnowledgeFormCtrl"
-                                      placeholder="Filtrar por área de conocimiento">
-                              </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Área de Conocimiento</mat-label>
+                                    <input matInput formControlName="sequenceAreaKnowledgeFormCtrl"
+                                        placeholder="Filtrar por área de conocimiento">
+                                </mat-form-field>
 
                             </div>
                             <div class="row-filter-uma">
-                              <mat-form-field>
-                                  <mat-label>Nivel Académico</mat-label>
-                                  <input matInput formControlName="sequenceAcademicGradeFormCtrl"
-                                      placeholder="Filtrar por nivel académico">
-                              </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Nivel Académico</mat-label>
+                                    <input matInput formControlName="sequenceAcademicGradeFormCtrl"
+                                        placeholder="Filtrar por nivel académico">
+                                </mat-form-field>
 
-                              <mat-form-field>
-                                  <mat-label>Tema del Grupo</mat-label>
-                                  <input type="text" placeholder="Filtrar por tema del grupo" matInput
-                                      formControlName="sequenceTopicFormCtrl">
-                              </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Tema del Grupo</mat-label>
+                                    <input type="text" placeholder="Filtrar por tema del grupo" matInput
+                                        formControlName="sequenceTopicFormCtrl">
+                                </mat-form-field>
                             </div>
                         </div>
 
@@ -112,7 +108,6 @@
 
                 <!-- expansion panel cool -->
                 <div *ngIf="secuenciasUma.length">
-                    <!-- <p>Resultados de la búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p> -->
                     <div class="container-result-groups">
                         <!-- <div *ngFor="let sec of secuenciasUma">    NO BORRAR ESTA LINEA-->
                         <div *ngFor="let sec of filteredSequencesUmas | async">
@@ -134,7 +129,7 @@
                                     <div class="" [routerLink]="['/sequence-configuration', sec.id]">
                                         <!--mat-list-item-->
                                         <span class="desc-group-panel"
-                                            *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
+                                            *ngIf="sec.descripcion">{{sec.descripcion.length > 30 ? sec.descripcion.substring(0, 30) + "..." : sec.descripcion}}</span>
 
                                         <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
                                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate

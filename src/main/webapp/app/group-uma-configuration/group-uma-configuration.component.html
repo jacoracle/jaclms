@@ -9,10 +9,6 @@
     <!-- Window Body -->
     <div class="window-group-body">
 
-      <!-- <jhi-agrupador-uma-update></jhi-agrupador-uma-update> -->
-
-      <!-- SE MUEVE STEPPER DE AGRUPADOR-UMA-UPDATE A ESTE COMPONENTE -->
-
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
         <div class="container-stepper-group">
@@ -32,16 +28,8 @@
               <jhi-secuencia-uma-update [createGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
 
             </mat-step>
-            <!-- <mat-step>
-            <ng-template matStepLabel>Terminado</ng-template>
-            <p>último paso.</p>
-            <div>
-              <button mat-button matStepperPrevious>Volver</button>
-              <button mat-button (click)="stepper.reset()">Reset Step</button>
-            </div>
-          </mat-step> -->
+
           </mat-horizontal-stepper>
-          <p>{{isCompleted}}</p>
         </div>
       </div>
 
@@ -49,7 +37,7 @@
     </div>
     <!-- Window Footer -->
     <div class="window-group-footer">
-      <button routerLink="/uma-groups-home" class="secondary-btn">Cancelar</button>
+      <button routerLink="/uma-groups-home" class="secondary-btn">Cerrar</button>
     </div>
 
   </div>

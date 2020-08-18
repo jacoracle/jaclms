@@ -132,20 +132,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       this.isReorder = true;
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updateUmasOrder();
-      /*
-      const umaSequenceObj = this.tiraUmas[event.currentIndex];// es el current porque al ejecutar el moveItem se actualiza la lista por 2wayDataBinding
-      const agrupadorModuloObj: IOrdenUMA[] = [
-        {
-          id: umaSequenceObj.id,
-          orden: event.currentIndex
-        }
-      ];
-
-      this.agrupadorUmaService.update(agrupadorModuloObj).subscribe(
-        (res) => this.onSaveSuccess(res),
-        () => this.onSaveError()
-      );
-      */
 
       this.agrupadorUmaService.update(this.tiraUmas).subscribe(
         res => {
