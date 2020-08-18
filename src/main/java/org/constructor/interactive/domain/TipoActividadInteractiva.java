@@ -62,7 +62,7 @@ public class TipoActividadInteractiva implements Serializable {
 	 * actividadInteractiva
 	 */
 	@JsonIgnore
-    @OneToMany(mappedBy = "tipoActividadInteractiva", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tipoActividadInteractiva", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<ActividadInteractiva>  actividadesInteractivas;
 	/**
 	 * Get

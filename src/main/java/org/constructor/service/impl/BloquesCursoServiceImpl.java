@@ -113,7 +113,7 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 			.map(bloque -> {
 				bloque.getBloqueComponentes().getComponentes().stream().forEach(
 						componente ->{
-							if(!componente.getTipoComponente().getNombre().equals("text")) {
+							if(!componente.getTipoComponente().getNombre().equals("text") || !componente.getTipoComponente().getNombre().equals("activity")) {
 								log.debug("Delete multimedia component");
 								multimediaService.deleteFile(componente.getContenido().getContenido());
 							}

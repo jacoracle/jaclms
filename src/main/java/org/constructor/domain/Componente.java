@@ -66,7 +66,7 @@ public class Componente implements Serializable {
 	 * actividadInteractiva
 	 */
 	
-    @OneToMany(mappedBy = "componente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "componente", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<ActividadInteractiva>  actividadesInteractivas;
 	
 	/**
