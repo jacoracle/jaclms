@@ -198,6 +198,8 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   deleteUmaFromSequence(item: IAgrupadorUma): void {
     console.error('#### Elemento a Eliminar de la tira de UMAs');
     console.error(item);
+    this.tiraUmas.splice(this.tiraUmas.indexOf(item), 1);
+
     this.agrupadorUmaService.delete(item.id!).subscribe(() => {
       this.updateUmasOrder();
       this.updateSequenceUmaOrder();

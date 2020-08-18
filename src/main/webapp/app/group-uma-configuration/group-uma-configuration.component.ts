@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
@@ -7,6 +7,7 @@ import { Account } from 'app/core/user/account.model';
 import { JhiEventManager } from 'ng-jhipster';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'jhi-group-uma-configuration',
@@ -14,6 +15,7 @@ import { IAgrupador } from 'app/shared/model/agrupador.model';
   styleUrls: ['./group-uma-configuration.component.scss']
 })
 export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
+  @ViewChild(MatHorizontalStepper, { static: false }) stepper!: MatHorizontalStepper;
   isSaving = false;
   authSubscription?: Subscription;
   account: Account | null = null;
@@ -34,8 +36,9 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     protected agrupadorService: AgrupadorService
   ) {
     this.secondFormGroup = this.formbuilder.group({
-      secondCtrl: ['', Validators.required]
+      default: ['', Validators.required]
     });
+    this.formSteps.push(this.secondFormGroup);
   }
 
   ngOnInit(): void {
@@ -67,10 +70,15 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     console.error('Dato del Output emitido: ');
     console.error(event);
     this.createdGroupSequence = event;
+    this.isCompleted = false;
   }
 
   setCreateForm(evt: any): void {
+    console.error('#### Evento emitido para formulario de registro');
     console.error(evt);
+    this.formSteps.removeAt(0);
     this.formSteps.push(evt);
+    // this.isCompleted = this.createdGroupSequence ? true : false;
+    this.stepper.selected.completed = this.createdGroupSequence ? true : false;
   }
 }

@@ -12,16 +12,17 @@
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
         <div class="container-stepper-group">
+          <p>{{isCompleted}}</p>
           <mat-horizontal-stepper [linear]="!isCompleted" #stepper>
 
-            <mat-step [stepControl]="groupUmaForm" editable="false">
+            <mat-step [stepControl]="formSteps?.get([0])" editable="false">
 
               <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
               <jhi-agrupador-uma-update (createdGroupEventEmit)="setAgrupador($event)" (formCreateEvent)="setCreateForm($event)" ></jhi-agrupador-uma-update>
 
             </mat-step>
 
-            <mat-step [stepControl]="secondFormGroup">
+            <mat-step><!--[stepControl]="secondFormGroup"-->
 
               <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
               <!-- componente que contiene contenido de paso 2 para crear la secuencia/agrupación de umas una vez generado el Grupo -->

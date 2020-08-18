@@ -59,6 +59,11 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     this.secondFormGroup = this.formbuilder.group({
       secondCtrl: ['', Validators.required]
     });
+
+    this.groupUmaForm.statusChanges.subscribe(val => {
+      console.error('#### Estado del formulario de registro de agrupador: ', val);
+      this.formCreateEvent.emit(this.groupUmaForm);
+    });
   }
 
   ngOnInit(): void {
