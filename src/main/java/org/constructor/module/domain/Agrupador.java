@@ -92,7 +92,7 @@ public class Agrupador  implements Serializable{
     /**
      * modulos
      */
-    @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @Column(nullable = true)
     @JsonManagedReference
 	@OrderBy ("orden ASC")

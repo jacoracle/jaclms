@@ -143,7 +143,7 @@ public class Modulo implements Serializable {
     private Set<User> user = new HashSet<>();
     
     @JsonIgnore
-    @OneToMany(mappedBy = "modulo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "modulo", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<AgrupadorModulo> agrupador;
 
 	/**
