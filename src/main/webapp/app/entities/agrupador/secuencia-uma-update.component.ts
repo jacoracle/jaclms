@@ -98,6 +98,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
             if (res.body) {
               console.error('#### Response Query Agrupador con ID: ', this.idSequenceToLoad);
               console.error(res.body);
+              this.agrupadorObj = res.body;
               this.tiraUmas = [...res.body.modulos!];
               // this.updatingGradesSelected(null, false);
             }
@@ -122,7 +123,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   }
 
   protected onQueryError(): void {
-    console.error('Aquí debería informar el erro con un alerta en pantalla. ERROR AL CARGAR LAS UMAS');
+    console.error('Aquí debería informar el error con un alerta en pantalla. ERROR AL CARGAR LAS UMAS');
   }
 
   // drag drop tira de umas
