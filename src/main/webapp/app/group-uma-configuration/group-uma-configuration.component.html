@@ -4,17 +4,16 @@
     <div class="window-br-header">
       <h4>Configurar Grupo de UMAs</h4>
     </div>
-    <div class="window-br-body-topbar">
+    <div class="window-br-body-topbar-hide">
       <div class="line-gradient"></div>
     </div>
 
     <!-- Body -->
-    <div class="window-br-body">
+    <div class="window-br-body-full">
 
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
         <div class="container-stepper-group">
-          <p>{{isCompleted}}</p>
           <mat-horizontal-stepper [linear]="!isCompleted" #stepper>
 
             <mat-step [stepControl]="formSteps?.get([0])" editable="false">
@@ -42,7 +41,8 @@
     <!-- Footer -->
     <div class="window-br-footer">
       <button routerLink="/uma-groups-home" class="secondary-btn">Cancelar</button>
-      <!-- <button (click)="saveUMA()" class="main-btn" [disabled]="firstClick">Crear UMA</button> -->
+      <button class="main-btn">Siguiente</button>
+      <p>{{isCompleted}}</p>
     </div>
 
   </div>
