@@ -35,6 +35,7 @@ export class ActivityModalComponent implements OnInit {
           subtipo: new FormControl(jsonForm.tipoActividad.subtipo, [Validators.required]),
           opcion: new FormControl(jsonForm.tipoActividad.opcion, [Validators.required])
         }),
+        evaluable: new FormControl(jsonForm.evaluable, [Validators.required]),
         preguntas: this.arrayFormGroupPreguntas(jsonForm)
       });
     } else {
@@ -44,6 +45,7 @@ export class ActivityModalComponent implements OnInit {
           subtipo: new FormControl(SubTipoActividad.texto, [Validators.required]),
           opcion: new FormControl(OpcionPreguntas.unica, [Validators.required])
         }),
+        evaluable: new FormControl(false, [Validators.required]),
         preguntas: this.arrayFormGroupPreguntas(jsonForm)
       });
     }
@@ -297,6 +299,10 @@ export class ActivityModalComponent implements OnInit {
 
   refreshForm(): void {
     this.refreshAnswers();
+    const evaluable = this.activityForm.get('evaluable');
+    if (evaluable) {
+      evaluable.updateValueAndValidity({ onlySelf: true, emitEvent: true });
+    }
     this.activityForm.updateValueAndValidity({ onlySelf: true, emitEvent: true });
   }
 

@@ -76,7 +76,8 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
         contenido: newContent.contenido,
         evaluable: newContent.evaluable,
         intentos: newContent.intentos,
-        gamificacion: newContent.gamificacion
+        gamificacion: newContent.gamificacion,
+        tipoActividadInteractiva: newContent.tipoActividadInteractiva
       };
     } else {
       return content;

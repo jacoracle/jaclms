@@ -1,16 +1,13 @@
+import { TipoActividad } from 'app/shared/model/actividad-interactiva.model';
+
 export interface IActividadPregunta {
   tipoActividad: TipoActividad;
   preguntas: Preguntas[];
+  evaluable: boolean;
 }
 
 export class ActividadPregunta implements IActividadPregunta {
-  constructor(public tipoActividad: TipoActividad, public preguntas: Preguntas[]) {}
-}
-
-export class TipoActividad {
-  public tipoActividad?: string;
-  public subtipo?: number;
-  public opcion?: string;
+  constructor(public tipoActividad: TipoActividad, public preguntas: Preguntas[], public evaluable: boolean) {}
 }
 
 export class Preguntas {

@@ -410,10 +410,19 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     const indexActividad = this.actividadesInteractivas.length - 1;
     const actividadInteractiva = this.actividadesInteractivas[indexActividad];
     const jsonFormIn = actividadInteractiva.contenido as IActividadPregunta;
-
+    if (typeof actividadInteractiva.evaluable === 'boolean') {
+      jsonFormIn.evaluable = actividadInteractiva.evaluable;
+    }
+    if (actividadInteractiva.tipoActividadInteractiva) {
+      jsonFormIn.tipoActividad = actividadInteractiva.tipoActividadInteractiva;
+    }
     this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
       this.showLoader = true;
       if (actividadInteractiva && jsonFormOut && cantidadAtributos(jsonFormOut) > 0) {
+        this.actividadesInteractivas[indexActividad].tipoActividadInteractiva = jsonFormOut.tipoActividad;
+        delete jsonFormOut.tipoActividad;
+        this.actividadesInteractivas[indexActividad].evaluable = jsonFormOut.evaluable;
+        delete jsonFormOut.evaluable;
         Object.assign(actividadInteractiva.contenido, jsonFormOut);
         this.actividadesInteractivas[indexActividad] = actividadInteractiva;
         this.activityService.setActivityProperties(this.actividadesInteractivas);
@@ -427,6 +436,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     const indexActividad = this.actividadesInteractivas.length - 1;
     const actividadInteractiva = this.actividadesInteractivas[indexActividad];
     actividadInteractiva.contenido = new ContenidoActividad();
+    actividadInteractiva.evaluable = false;
     this.actividadesInteractivas[indexActividad] = actividadInteractiva;
     this.activityService.setActivityProperties(this.actividadesInteractivas);
     this.showLoader = false;

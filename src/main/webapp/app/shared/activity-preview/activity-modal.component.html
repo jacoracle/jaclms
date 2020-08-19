@@ -18,8 +18,8 @@
                         <h2 id="jhi-curso-heading">Configuración general</h2>
                         <p>*Campo obligatorio</p>
                     </div>
-
-                   <!-- <div class="row-wg margintop-40">
+<!--
+                    <div class="row-wg margintop-40">
                         <div class="col-question">
                             <pre> {{ activityForm.getRawValue() | json }}</pre>
                         </div>
@@ -138,7 +138,11 @@
                         </div>
                     </div>
 
+
                     <div class="window-cc-footer window-module-footer">
+                        <mat-checkbox mat-raised-button id="evaluable" formControlName="evaluable">
+                            Evaluable
+                        </mat-checkbox>
                         <button (click)="close()" class="secondary-btn">Cancelar</button>
                         <button type="button" (click)="onSubmit()" class="main-btn">Crear Actividad</button>
                     </div>
