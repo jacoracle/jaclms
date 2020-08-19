@@ -21,10 +21,10 @@
         </div>
 
         <div class="window-br-body-topbar">
-            <div class="line-gradient"></div>
-            <div class="row-wbr-bt">
-                <p>Tus grupos recientes ({{secuenciasUma.length}})</p>
-            </div>
+          <div class="line-gradient"></div>
+          <div class="row-wbr-bt">
+            <p>Tus grupos recientes ({{secuenciasUma.length}})</p>
+          </div>
         </div>
 
         <!-- Window Empty -->
@@ -108,40 +108,31 @@
 
                 <!-- expansion panel cool -->
                 <div *ngIf="secuenciasUma.length">
-                    <div class="container-result-groups">
+                    <!-- <p>Resultados de la búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p> -->
+                    <div class="grid-cards">
                         <!-- <div *ngFor="let sec of secuenciasUma">    NO BORRAR ESTA LINEA-->
                         <div *ngFor="let sec of filteredSequencesUmas | async">
                             <!-- <mat-nav-list> -->
-                            <mat-expansion-panel class="group-cover-panel"
-                                matTooltip="Despliegue para ver más detalles">
-                                <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'200px'">
-                                    <span class="title-panel">
-                                        {{sec.titulo}}
-                                    </span>
-                                </mat-expansion-panel-header>
+                            <div class="box-card" [routerLink]="['/sequence-configuration', sec.id]">
+                              <div class="group-cover-br-image"></div>
 
-                                <div class="panel-body-group">
+                              <div (click)="deleteModule(sec.id, $event)" class="delete-course-br">
+                                <i class="icon ni-delete icon-negative"></i>
+                              </div>
+                              <!-- Preview -->
+                              <div class="preview-course-br">
+                                <i class="icon ni-view icon-negative"></i>
+                              </div>
 
-                                    <div (click)="deleteModule(sec.id, $event)" class="delete-group">
-                                        <i class="icon ni-delete icon-negative"></i>
-                                    </div>
+                              <div class="course-desc-br-row">
+                                <span class="title-course-br">
+                                  {{sec.titulo}}</span>
+                                <span class="desc-course-br"
+                                  *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
+                              </div>
 
-                                    <div class="" [routerLink]="['/sequence-configuration', sec.id]">
-                                        <!--mat-list-item-->
-                                        <span class="desc-group-panel"
-                                            *ngIf="sec.descripcion">{{sec.descripcion.length > 30 ? sec.descripcion.substring(0, 30) + "..." : sec.descripcion}}</span>
+                            </div>
 
-                                        <p>Aquí podría ir más contenido que crean necesario, iconos o algo cool.</p>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
-                                            laudantium ullam sed</p>
-
-                                    </div>
-
-                                </div>
-
-
-                            </mat-expansion-panel>
-                            <!-- </mat-nav-list> -->
 
                         </div>
                     </div>

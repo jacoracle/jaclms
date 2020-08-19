@@ -97,67 +97,63 @@
   left: 300px;
   // background-color: blue;
 
-  .container-result-groups {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+  .group-cover-panel {
+    position: relative;
+    width: 200px;
+    height: auto;
+    max-height: 250px;
+    // overflow-y: auto;
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-top: 16px;
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    cursor: pointer !important;
+    background-color: red;
 
-    .group-cover-panel {
+    .title-panel {
+      font-size: 14px;
+      margin-right: 5px;
+    }
+
+    .panel-body-group {
+      max-height: 180px;
+      padding-top: 20px;
+      overflow-y: auto;
       position: relative;
-      width: 200px;
-      height: auto;
-      max-height: 250px;
-      // overflow-y: auto;
-      margin-left: 14px;
-      margin-right: 14px;
-      margin-top: 16px;
-      margin-bottom: 4px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      cursor: pointer !important;
 
-      .title-panel {
-        font-size: 14px;
-        margin-right: 5px;
-      }
+      .delete-group {
+        // border: solid 1px green;
+        bottom: 8px;
+        position: sticky; //  absolute;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background-color: $main-btn-color;
+        z-index: 2;
+        transition: 0.3s;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
 
-      .panel-body-group {
-        max-height: 180px;
-        padding-top: 20px;
-        overflow-y: auto;
-        position: relative;
+        .icon {
+          cursor: pointer;
+        }
 
-        .delete-group {
-          // border: solid 1px green;
-          bottom: 8px;
-          position: sticky; //  absolute;
-          right: 10px;
-          width: 30px;
-          height: 30px;
-          background-color: $main-btn-color;
-          z-index: 2;
-          transition: 0.3s;
-          border-radius: 50%;
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
+        &:hover {
+          background-color: $main-btn-color-hover;
+        }
 
-          .icon {
-            cursor: pointer;
-          }
+        &:focus {
+          outline: none;
+        }
 
-          &:hover {
-            background-color: $main-btn-color-hover;
-          }
-
-          &:focus {
-            outline: none;
-          }
-
-          &:active {
-            transform: scale(0.96);
-          }
+        &:active {
+          transform: scale(0.96);
         }
       }
     }

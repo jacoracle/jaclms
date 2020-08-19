@@ -1,9 +1,9 @@
 // FORMULARIO DE REGISTRO
 
-// container register group fields
 .register-main-container {
-  margin: 15px auto;
-  width: 94%;
+  position: relative;
+  width: 100%;
+  height: auto;
 
   // container register group fields
   .register-form-group {
@@ -53,14 +53,16 @@
       }
     }
     // close container-field-filter
-
-    .btns-register {
-      display: flex;
-      margin-top: 15px;
-      button {
-        margin: 5px;
-      }
-    }
   }
   // close container-register-form-group
+}
+
+.row-btn-register-group {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  padding-bottom: 40px;
+  padding-bottom: 20px;
+  justify-content: center;
 }

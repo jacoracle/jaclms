@@ -1,84 +1,8 @@
-@import '../../content/scss/variables.scss';
-
-.window-group-configuration {
-  position: relative;
-  width: 92%;
-  max-width: 1150px;
-  height: 700px;
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 70px;
-
-  .window-group-header {
-    position: relative;
-    width: 100%;
-    background-color: $window-header-color;
-    border-radius: 6px 6px 0 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid $window-divider-color;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    .group-header-topbar {
-      position: relative;
-      width: 100%;
-      height: 40px;
-      background-color: $window-header-color;
-      border-radius: 4px 4px 0 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .cch-title {
-        position: relative;
-        width: auto;
-        height: auto;
-        font-size: 15px;
-      }
-    }
-  }
+.container-stepper-group {
 }
-
-// Window Body
-.window-group-body {
-  // border: solid 1px red;
+.mat-stepper-horizontal {
+  background-color: transparent;
   position: relative;
   width: 100%;
-  height: 525px;
-  background-color: $window-body-color;
-  overflow-y: auto;
-}
-
-// Footer
-.window-group-footer {
-  position: relative;
-  width: 100%;
-  height: 75px;
-  background-color: $window-footer-color;
-  border-top: 1px solid $window-divider-color;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0 0 6px 6px;
-
-  button {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-}
-
-@media (min-height: 800px) {
-  .window-group-configuration {
-    height: 700px;
-    top: 50%;
-    margin-top: -350px;
-  }
+  height: auto;
 }
