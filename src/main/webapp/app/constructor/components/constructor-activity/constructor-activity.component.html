@@ -1,8 +1,8 @@
 <!--
 <video class="block-video-file" [src]="videoSrc" (click)="selectVideo()" *ngIf="videoSrc != ''"></video>
 -->
-<img class="img-actividad" [src]="defaultActivityUrl" (click)="selectActivity()" *ngIf="activitySrc === ''">
-<img class="img-actividad" [src]="activitySrc" (click)="selectActivity()" *ngIf="activitySrc !== ''">
+<img class="img-actividad" [src]="defaultActivityUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) == 0">
+<img class="img-actividad" [src]="loadedActivityUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) > 0">
 <!-- <div [hidden]="!showLoader">Cargando</div> -->
 <div [hidden]="!showLoader" class="loader-actividad">
   <div class="loader2"></div>

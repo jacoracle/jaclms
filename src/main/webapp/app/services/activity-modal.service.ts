@@ -11,7 +11,7 @@ export class ActivityModalService {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  open(jsonForm: IActividadPregunta): NgbModalRef {
+  open(jsonForm: IActividadPregunta | undefined): NgbModalRef {
     let modalRef;
     if (!this.isOpen) {
       this.isOpen = true;

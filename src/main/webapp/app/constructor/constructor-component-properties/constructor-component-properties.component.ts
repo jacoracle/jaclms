@@ -258,8 +258,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   subscriptionActivity(): Subscription {
-    return this.activityService.getActivitySrc().subscribe(activitySrc => {
-      this.activitySrc = activitySrc;
+    return this.activityService.getActivityProperties().subscribe(actividadesInteractivas => {
+      this.actividadesInteractivas = actividadesInteractivas;
       this.fileFormat = 'activity';
       if (this.activitySrc === '') {
         // this.fileInput.nativeElement.value = '';
@@ -409,13 +409,17 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   createUpdateActivity(): void {
     const indexActividad = this.actividadesInteractivas.length - 1;
     const actividadInteractiva = this.actividadesInteractivas[indexActividad];
-    const jsonFormIn = actividadInteractiva.contenido as IActividadPregunta;
-    if (typeof actividadInteractiva.evaluable === 'boolean') {
-      jsonFormIn.evaluable = actividadInteractiva.evaluable;
+    let jsonFormIn: IActividadPregunta | undefined;
+    if (cantidadAtributos(actividadInteractiva.contenido) > 0) {
+      jsonFormIn = actividadInteractiva.contenido as IActividadPregunta;
+      if (typeof actividadInteractiva.evaluable === 'boolean') {
+        jsonFormIn.evaluable = actividadInteractiva.evaluable;
+      }
+      if (actividadInteractiva.tipoActividadInteractiva) {
+        jsonFormIn.tipoActividad = actividadInteractiva.tipoActividadInteractiva;
+      }
     }
-    if (actividadInteractiva.tipoActividadInteractiva) {
-      jsonFormIn.tipoActividad = actividadInteractiva.tipoActividadInteractiva;
-    }
+
     this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
       this.showLoader = true;
       if (actividadInteractiva && jsonFormOut && cantidadAtributos(jsonFormOut) > 0) {

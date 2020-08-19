@@ -26,13 +26,9 @@
                         </div>
                     </div>-->
 
-                    <mat-drawer-container class="example-container">
+                    <mat-drawer-container>
 
                         <mat-drawer-content class="mat-drawer-content">
-                            <jhi-activity-preview [jsonForm]="activityForm.getRawValue()"></jhi-activity-preview>
-                        </mat-drawer-content>
-
-                        <mat-drawer mode="side" opened>
                             <div class="row-wg margintop-40">
                                 <div>
                                     <label>Seleccione el tipo de preguntas</label>
@@ -159,6 +155,10 @@
                                 </div>
                             </div>
 
+                        </mat-drawer-content>
+
+                        <mat-drawer mode="side" opened>
+                            <jhi-activity-preview [jsonForm]="activityForm.getRawValue()"></jhi-activity-preview>
                         </mat-drawer>
                     </mat-drawer-container>
 
