@@ -84,6 +84,9 @@
     justify-content: flex-start;
   }
 }
+.rwg-header {
+  height: 36px;
+}
 
 .window-cc-footer {
   position: relative;
@@ -166,7 +169,7 @@ mat-form-field {
 }
 
 .answer-question-space {
-  margin-top: 10px;
+  margin-top: 22px;
   box-sizing: unset;
 }
 
@@ -230,7 +233,11 @@ mat-form-field {
 }
 
 .col-question {
-  width: 75%;
+  width: 150%;
+}
+.col-delete-question {
+  width: 25%;
+  margin-top: 28px;
 }
 
 .col-type-question {
@@ -242,4 +249,11 @@ mat-form-field {
 }
 .nowrap {
   white-space: nowrap;
+}
+
+.mat-drawer-content {
+  margin-left: 756px !important;
+}
+.mat-drawer-inner-container {
+  margin-right: 350px !important;
 }

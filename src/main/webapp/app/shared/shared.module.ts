@@ -19,6 +19,9 @@ import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
+import { ActivityPreviewComponent } from 'app/shared/activity-preview/activity-preview.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   imports: [
@@ -32,7 +35,9 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     MatCardModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule
   ],
   declarations: [
     FindLanguageFromKeyPipe,
@@ -43,6 +48,7 @@ import { MatButtonModule } from '@angular/material/button';
     PdfModalComponent,
     VideoModalComponent,
     ActivityModalComponent,
+    ActivityPreviewComponent,
     HasAnyAuthorityDirective
   ],
   entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, ActivityModalComponent],

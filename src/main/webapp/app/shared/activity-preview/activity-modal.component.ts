@@ -154,6 +154,15 @@ export class ActivityModalComponent implements OnInit {
     this.refreshForm();
   }
 
+  removeQuestion(indQuestion: number): any {
+    this.refreshForm();
+    const controlesPreguntas = this.preguntas().controls;
+    if (indQuestion > -1 && controlesPreguntas.length > 1) {
+      controlesPreguntas.splice(indQuestion, 1);
+    }
+    this.refreshForm();
+  }
+
   controlPregunta(indQuestion: number): AbstractControl | null | undefined {
     const controlesPreguntas = this.preguntas().controls;
     let controlPregunta;
