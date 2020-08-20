@@ -1,12 +1,12 @@
 import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { HttpResponse } from '@angular/common/http';
 import { Validators, FormControl, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcherUtil } from './error-state-matcher';
 
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
@@ -19,6 +19,8 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
   authSubscription?: Subscription;
+  subscription?: Subscription;
+  private ngUnsubscribeSubject = new Subject();
   secuenciasUma: IAgrupador[] = new Array<IAgrupador>();
   // defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
 
@@ -48,13 +50,28 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
       map(value => (typeof value === 'string' ? value : value.descripcion)),
       map(title => (title ? this._filterSequencesByTitle(title) : this.secuenciasUma.slice()))
     );
+
+    /*
+  this.subscription = this.groupUmaForm.get('tituloAgrupador')!.valueChanges.pipe(
+    startWith(''),
+    map(value => (typeof value === 'string' ? value : value.descripcion)),
+    map(title => (title ? this._filterSequencesByTitle(title) : this.secuenciasUma.slice()))
+  ).subscribe((res) => {
+    console.error('IN CONSTRUCTOR!!!');
+    console.error(res);
+    this.secuenciasUma = [...res];
+  }
+  );
+  */
+    console.error('#### filteredSequencesUmas');
+    console.error(this.filteredSequencesUmas);
   }
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
-        this.agrupadorService.query().subscribe(
+        this.subscription = this.agrupadorService.query().subscribe(
           (res: HttpResponse<IAgrupador[]>) => {
             this.secuenciasUma = Array.from(res.body!);
           },
@@ -81,6 +98,9 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
+    this.subscription!.unsubscribe();
+    this.ngUnsubscribeSubject.next();
+    this.ngUnsubscribeSubject.complete();
   }
 
   ngAfterContentInit(): void {}
@@ -94,5 +114,27 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.save' })
     );
+  }
+
+  deleteGroup(agrupador: IAgrupador, evt: any): void {
+    evt.stopPropagation();
+    this.secuenciasUma.splice(this.secuenciasUma.indexOf(agrupador), 1);
+    this.subscription = this.filteredSequencesUmas.pipe(takeUntil(this.ngUnsubscribeSubject)).subscribe((res: IAgrupador[]) => {
+      console.error('eliminacion subscribe');
+      console.error(res);
+    });
+    this.groupUmaForm.get('tituloAgrupador')!.setValue('');
+
+    this.subscription = this.agrupadorService
+      .delete(agrupador.id!)
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(() => {
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.agrupador.deleted',
+            type: 'success'
+          })
+        );
+      });
   }
 }

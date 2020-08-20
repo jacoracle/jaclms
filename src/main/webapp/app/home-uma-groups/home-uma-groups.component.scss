@@ -163,3 +163,10 @@
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled='true']) {
   background: transparent;
 }
+
+.alert-sequence-configuration {
+  // border: solid 1px red;
+  position: absolute;
+  top: 50px;
+  z-index: 99999;
+}

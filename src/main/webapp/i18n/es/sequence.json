@@ -1,0 +1,31 @@
+{
+  "constructorApp": {
+    "agrupador": {
+      "home": {
+        "title": "Agrupador",
+        "createLabel": "Crear Agrupador",
+        "createOrEditLabel": "Crear o editar Agrupador",
+        "titleGeneralConfg": "Configuración general",
+        "titleAdvancelConfg": "Configuración avanzada",
+        "notFound": "Ningún Agrupador pudo ser encontrado"
+      },
+      "created": "El Agrupador ha sido creado.",
+      "updated": "El Agrupador ha sido actualizado.",
+      "deleted": "El Agrupador ha sido eliminado.",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar el Agrupador {{ id }}?"
+      },
+      "detail": {
+        "title": "Agrupador"
+      },
+      "validations": {
+        "formError": "Por favor revisa la información y vuelve a intentarlo.",
+        "fileSize": "El archivo debe pesar menos de 5MB.",
+        "fileType": "Tipo de archivo no permitido.",
+        "dates": "La fecha de creación no puede ser posterior a la fecha de publicación.",
+        "requiredField": "Este campo es requerido.",
+        "save": "Debera ejecutar busqueda con los filtros, pendiente..."
+      }
+    }
+  }
+}

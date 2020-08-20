@@ -1,11 +1,11 @@
 <!-- delete class css main-groups-uma-container -->
 <div class="main-container-br">
-    <div class="alert-sequence-configuration">
-        <jhi-alert-error></jhi-alert-error>
-    </div>
     <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
         <!-- Window Header -->
         <div class="window-br-header">
+            <div class="alert-sequence-configuration">
+                <jhi-alert-error></jhi-alert-error>
+            </div>
             <div class="r1">
                 <div class="logo-create"></div>
             </div>
@@ -21,10 +21,10 @@
         </div>
 
         <div class="window-br-body-topbar">
-          <div class="line-gradient"></div>
-          <div class="row-wbr-bt">
-            <p>Tus grupos recientes ({{secuenciasUma.length}})</p>
-          </div>
+            <div class="line-gradient"></div>
+            <div class="row-wbr-bt">
+                <p>Tus grupos recientes ({{secuenciasUma.length}})</p>
+            </div>
         </div>
 
         <!-- Window Empty -->
@@ -114,22 +114,22 @@
                         <div *ngFor="let sec of filteredSequencesUmas | async">
                             <!-- <mat-nav-list> -->
                             <div class="box-card" [routerLink]="['/sequence-configuration', sec.id]">
-                              <div class="group-cover-br-image"></div>
+                                <div class="group-cover-br-image"></div>
 
-                              <div (click)="deleteModule(sec.id, $event)" class="delete-course-br">
-                                <i class="icon ni-delete icon-negative"></i>
-                              </div>
-                              <!-- Preview -->
-                              <div class="preview-course-br">
-                                <i class="icon ni-view icon-negative"></i>
-                              </div>
+                                <div (click)="deleteGroup(sec, $event)" class="delete-course-br">
+                                    <i class="icon ni-delete icon-negative"></i>
+                                </div>
+                                <!-- Preview -->
+                                <div class="preview-course-br">
+                                    <i class="icon ni-view icon-negative"></i>
+                                </div>
 
-                              <div class="course-desc-br-row">
-                                <span class="title-course-br">
-                                  {{sec.titulo}}</span>
-                                <span class="desc-course-br"
-                                  *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
-                              </div>
+                                <div class="course-desc-br-row">
+                                    <span class="title-course-br">
+                                        {{sec.titulo}}</span>
+                                    <span class="desc-course-br"
+                                        *ngIf="sec.descripcion">{{sec.descripcion.length > 30 ? sec.descripcion.substring(0, 30) + "..." : sec.descripcion}}</span>
+                                </div>
 
                             </div>
 
