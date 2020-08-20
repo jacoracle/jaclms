@@ -21,7 +21,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./agrupador-uma-update.component.scss']
 })
 export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
-  @Input() groupId?: number;
+  @Input() groupId!: number;
   @Output() createdGroupEventEmit: EventEmitter<IAgrupador> = new EventEmitter<IAgrupador>();
   @Output() formCreateEvent: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
   @ViewChild('chipList', { static: false }) chipList: MatChipList | undefined;
@@ -52,7 +52,6 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     desciptionSequenceUmas: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     searchTagsSequenceUmas: [] //  this.formbuilder.array(this.tagsBusquedaAgrupador, this.validateArrayNotEmpty)
   });
-  secondFormGroup!: FormGroup;
   // TERMINA FORMULARIO
 
   secuenciasUma: IAgrupador[] = new Array<IAgrupador>();
@@ -65,12 +64,11 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     protected agrupadorService: AgrupadorService
   ) {
     this.tagsBusquedaAgrupador = [];
-    this.secondFormGroup = this.formbuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
 
-    this.groupUmaForm.statusChanges.subscribe(val => {
-      console.error('#### Estado del formulario de registro de agrupador: ', val);
+    console.error('#### agrupador-uma-update Agrupador recibido con ID: ', this.groupId);
+
+    this.groupUmaForm.statusChanges.subscribe(() => {
+      // console.error('#### Estado del formulario de registro de agrupador: ', val);
       this.formCreateEvent.emit(this.groupUmaForm);
     });
   }
@@ -107,7 +105,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
 
   loadDataAgrupador(): void {
     this.subscription = this.agrupadorService
-      .find(this.groupId!)
+      .find(this.groupId)
       .pipe(takeUntil(this.ngUnsubscribeSubject))
       .subscribe(res => {
         console.error('#### Datos consultados del Agrupador:');

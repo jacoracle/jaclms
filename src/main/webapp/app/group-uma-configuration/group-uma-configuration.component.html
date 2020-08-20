@@ -16,7 +16,7 @@
         <div class="container-stepper-group">
           <mat-horizontal-stepper [linear]="!isCompleted" #stepper class="stepper-n-content">
 
-            <mat-step [stepControl]="formSteps?.get([0])" editable="false">
+            <mat-step [stepControl]="formSteps?.get([0])" editable="isStepEditable">
 
               <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
               <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)" (formCreateEvent)="setCreateForm($event)" ></jhi-agrupador-uma-update>
@@ -27,7 +27,7 @@
 
               <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
               <!-- componente que contiene contenido de paso 2 para crear la secuencia/agrupación de umas una vez generado el Grupo -->
-              <jhi-secuencia-uma-update [createGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
+              <jhi-secuencia-uma-update [createdGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
 
             </mat-step>
 
