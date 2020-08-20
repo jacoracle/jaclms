@@ -72,13 +72,13 @@
         <div class="result-search-container">
             <!-- expansion panel cool -->
             <div *ngIf="umasList.length">
-                <p>Resultados de la búsqueda de UMAs... ( {{umasList.length}} )</p>
+                <p class="p-result">Resultados de la búsqueda de UMAs... ( {{umasList.length}} )</p>
                 <div class="grid-cards" cdkDropList [cdkDropListData]="umasList"
                     (cdkDropListDropped)="drop($event)">
                     <div class="drag-item-uma" *ngFor="let sec of umasList" cdkDrag>
                         <!-- <mat-nav-list> -->
 
-                        <div class="box-card">
+                        <div class="box-card cursor-drag">
                           <div class="module-cover-br-image"></div>
 
                           <!-- Preview -->
@@ -136,13 +136,22 @@
     <!--termina sequence-uma-body-->
 
     <div class="sequence-uma-bar">
+      <div class="title-sequence-uma">Secuancia de Umas</div>
         <div class="uma-item-sequence" cdkDropList [cdkDropListData]="tiraUmas" (cdkDropListDropped)="drop($event)">
             <div cdkDrag *ngFor="let item of tiraUmas">
                 <div class="item-uma">
-                    {{item.modulo.titulo}}
-                    <span class="material-icons" (click)="deleteUmaFromSequence(item)">
-                        delete_forever
+                  <div class="course-desc-br-row">
+                    <span class="title-course-br">
+                      {{item.modulo.titulo}}
                     </span>
+                    <!-- <span class="desc-course-br"
+                      *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span> -->
+                  </div>
+
+                    <div (click)="deleteUmaFromSequence(item)" class="delete-course-br">
+                        <i class="icon ni-delete icon-negative"></i>
+                        <!-- delete_forever -->
+                    </div>
                 </div>
             </div>
         </div>
