@@ -50,21 +50,7 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
       map(value => (typeof value === 'string' ? value : value.descripcion)),
       map(title => (title ? this._filterSequencesByTitle(title) : this.secuenciasUma.slice()))
     );
-
-    /*
-  this.subscription = this.groupUmaForm.get('tituloAgrupador')!.valueChanges.pipe(
-    startWith(''),
-    map(value => (typeof value === 'string' ? value : value.descripcion)),
-    map(title => (title ? this._filterSequencesByTitle(title) : this.secuenciasUma.slice()))
-  ).subscribe((res) => {
-    console.error('IN CONSTRUCTOR!!!');
-    console.error(res);
-    this.secuenciasUma = [...res];
-  }
-  );
-  */
-    console.error('#### filteredSequencesUmas');
-    console.error(this.filteredSequencesUmas);
+    // console.error(this.filteredSequencesUmas);
   }
 
   ngOnInit(): void {

@@ -27,6 +27,7 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   // stepper
   isCompleted = false;
   isLinear = false;
+  isStepEditable!: boolean;
   secondFormGroup!: FormGroup;
   // termina stepper
 
@@ -41,6 +42,8 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   ) {
     this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
 
+    this.isStepEditable = this.idSequenceToLoad > 0;
+
     this.secondFormGroup = this.formbuilder.group({
       default: ['', Validators.required]
     });
@@ -54,9 +57,8 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
         console.error('LOGUEADO');
       }
     });
-
-    console.error('FORM ARRAY: ', this.formSteps);
-    console.error('Agrupador Recibido con ID: ', this.idSequenceToLoad);
+    console.error('#### FORM ARRAY: ', this.formSteps);
+    console.error('#### Agrupador Recibido con ID: ', this.idSequenceToLoad);
   }
 
   ngOnDestroy(): void {
@@ -74,15 +76,15 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   }
 
   setAgrupador(event: any): void {
-    console.error('Dato del Output emitido: ');
+    console.error('#### Dato del Output emitido: ');
     console.error(event);
     this.createdGroupSequence = event;
     this.isCompleted = false;
   }
 
   setCreateForm(evt: any): void {
-    console.error('#### Evento emitido para formulario de registro');
-    console.error(evt);
+    // console.error('#### Evento emitido para formulario de registro');
+    // console.error(evt);
     this.formSteps.removeAt(0);
     this.formSteps.push(evt);
     // this.isCompleted = this.createdGroupSequence ? true : false;

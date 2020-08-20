@@ -24,14 +24,12 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 })
 export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   @Input()
-  set createGroup(val: any) {
+  set createdGroup(val: any) {
     if (val) {
       this.agrupadorObj = val;
-      console.error('#### Input Agrupador Recibido');
-      console.error(val);
     }
   }
-  get createGroup(): any {
+  get createdGroup(): any {
     return this.agrupadorObj;
   }
 
