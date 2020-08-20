@@ -1,16 +1,19 @@
-import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { ErrorStateMatcherUtil } from 'app/home-uma-groups/error-state-matcher';
 import { Agrupador, IAgrupador } from 'app/shared/model/agrupador.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { TagAgrupador } from 'app/shared/model/tag-agrupador.model';
+import { TagAgrupador, ITagAgrupador } from 'app/shared/model/tag-agrupador.model';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { JhiEventWithContent, JhiEventManager } from 'ng-jhipster';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-agrupador-uma-update',
@@ -18,12 +21,17 @@ import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
   styleUrls: ['./agrupador-uma-update.component.scss']
 })
 export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
+  @Input() groupId?: number;
   @Output() createdGroupEventEmit: EventEmitter<IAgrupador> = new EventEmitter<IAgrupador>();
   @Output() formCreateEvent: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
   @ViewChild('chipList', { static: false }) chipList: MatChipList | undefined;
 
+  // session
+  account: Account | null = null;
+
   isSaving = false;
   subscription!: Subscription;
+  private ngUnsubscribeSubject = new Subject();
   createdGroupSequence!: IAgrupador;
   // chips
   tagsBusquedaAgrupador: TagAgrupador[] = [];
@@ -50,6 +58,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   secuenciasUma: IAgrupador[] = new Array<IAgrupador>();
 
   constructor(
+    private accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     private formbuilder: FormBuilder,
     private eventManager: JhiEventManager,
@@ -71,6 +80,18 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       //   this.updateForm(agrupador);
     });
 
+    this.subscription = this.accountService
+      .getAuthenticationState()
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(account => {
+        this.account = account;
+        if (this.account && this.groupId) {
+          this.loadDataAgrupador();
+        }
+      });
+
+    console.error('#### Consultar datos de Agrupador: ', this.groupId);
+
     // este subscribe es para la validación que no logre hacer funcionar con la funcion al final de este ts
     this.groupUmaForm.get('searchTagsSequenceUmas')!.statusChanges.subscribe(status => (this.chipList!.errorState = status === 'INVALID'));
   }
@@ -78,7 +99,32 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+      this.subscription.unsubscribe();
+      this.ngUnsubscribeSubject.next();
+      this.ngUnsubscribeSubject.complete();
     }
+  }
+
+  loadDataAgrupador(): void {
+    this.subscription = this.agrupadorService
+      .find(this.groupId!)
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(res => {
+        console.error('#### Datos consultados del Agrupador:');
+        console.error(res);
+        this.mapDataToForm(res.body as IAgrupador);
+      });
+  }
+
+  mapDataToForm(data: IAgrupador): void {
+    if (!data) {
+      return;
+    }
+    this.groupUmaForm.patchValue({
+      titleSequenceUmas: data.titulo,
+      desciptionSequenceUmas: data.descripcion,
+      searchTagsSequenceUmas: data.etiquetas!.map((t: ITagAgrupador) => t.descripcion)
+    });
   }
 
   saveSequenceGroup(): void {

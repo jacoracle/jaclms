@@ -4,10 +4,11 @@ import { AccountService } from 'app/core/auth/account.service';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Account } from 'app/core/user/account.model';
-import { JhiEventManager } from 'ng-jhipster';
+// import { JhiEventManager } from 'ng-jhipster';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
 import { MatHorizontalStepper } from '@angular/material/stepper';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'jhi-group-uma-configuration',
@@ -29,12 +30,17 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   secondFormGroup!: FormGroup;
   // termina stepper
 
+  idSequenceToLoad!: number;
+
   constructor(
     private accountService: AccountService,
     private formbuilder: FormBuilder,
-    private eventManager: JhiEventManager,
+    protected activatedRoute: ActivatedRoute,
+    // private eventManager: JhiEventManager,
     protected agrupadorService: AgrupadorService
   ) {
+    this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
+
     this.secondFormGroup = this.formbuilder.group({
       default: ['', Validators.required]
     });
@@ -50,6 +56,7 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     });
 
     console.error('FORM ARRAY: ', this.formSteps);
+    console.error('Agrupador Recibido con ID: ', this.idSequenceToLoad);
   }
 
   ngOnDestroy(): void {

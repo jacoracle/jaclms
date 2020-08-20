@@ -20,7 +20,7 @@
             <mat-step [stepControl]="formSteps?.get([0])" editable="false">
 
               <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
-              <jhi-agrupador-uma-update (createdGroupEventEmit)="setAgrupador($event)" (formCreateEvent)="setCreateForm($event)" ></jhi-agrupador-uma-update>
+              <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)" (formCreateEvent)="setCreateForm($event)" ></jhi-agrupador-uma-update>
 
             </mat-step>
 
