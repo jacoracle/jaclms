@@ -2,14 +2,13 @@
 
     <div class="sequence-uma-body">
 
-        <div class="search-uma-container">
+        <div class="search-main-container">
             <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
 
                 <div class="container-search-form-uma">
 
                     <div class="row-search-gral">
-                        <p class="txt-recent-umas">Tus UMAS recientes ({{umasList.length}})</p>
-                        <div>
+                        <!-- <p class="txt-recent-umas">Tus UMAS recientes ({{umasList.length}})</p> -->
                             <mat-form-field>
                                 <input type="text" placeholder="Buscar" matInput formControlName="sessionType"
                                     [matAutocomplete]="autoInputSessionType">
@@ -20,61 +19,52 @@
                                     </mat-option>
                                 </mat-autocomplete>
                             </mat-form-field>
-                        </div>
                     </div>
 
                     <div class="container-field-filter">
                         <p>Filtrar por:</p>
 
                         <div class="row-filter-uma">
-                            <div>
                                 <mat-form-field>
                                     <mat-label>Título de la UMA</mat-label>
                                     <input matInput formControlName="umaTitleFormCtrl"
                                         placeholder="filtrar por título del UMA">
                                 </mat-form-field>
-                            </div>
-                            <div>
                                 <mat-form-field>
                                     <mat-label>Descripción UMA</mat-label>
                                     <input matInput formControlName="umaDescriptionFormCtrl"
                                         placeholder="filtrar por descripción">
                                 </mat-form-field>
-                            </div>
-                            <div>
                                 <mat-form-field>
                                     <mat-label>Área de conocimiento</mat-label>
                                     <input type="text" placeholder="indicio de del área de conocimiento" matInput
                                         formControlName="umaAreaKnowledge" [matAutocomplete]="autoInputSubject">
                                 </mat-form-field>
-                            </div>
                         </div>
 
                         <div class="row-filter-uma">
-                            <div>
                                 <mat-form-field>
                                     <mat-label>Nivel Académico</mat-label>
                                     <input type="text" placeholder="filtrar por nivel académico" matInput
                                         formControlName="sessionTopic">
                                 </mat-form-field>
-                            </div>
-                            <div>
+
                                 <mat-form-field>
                                     <mat-label>Tema del UMA</mat-label>
                                     <input type="text" placeholder="filtrar por tema" matInput
                                         formControlName="sessionTopic">
                                 </mat-form-field>
-                            </div>
-                            <div class="btn-search-group">
-                                <button (click)="searchUmas()" class="main-btn">
-                                    <span class="material-icons">search</span>
-                                    Buscar UMAS
-                                </button>
-                            </div>
                         </div>
                     </div>
 
                 </div>
+
+                <div class="btn-search-group">
+                    <button (click)="searchUmas()" class="main-btn">
+                        Buscar Umas
+                    </button>
+                </div>
+
             </form>
 
         </div>
@@ -83,11 +73,30 @@
             <!-- expansion panel cool -->
             <div *ngIf="umasList.length">
                 <p>Resultados de la búsqueda de UMAs... ( {{umasList.length}} )</p>
-                <div class="container-result-groups" cdkDropList [cdkDropListData]="umasList"
+                <div class="grid-cards" cdkDropList [cdkDropListData]="umasList"
                     (cdkDropListDropped)="drop($event)">
                     <div class="drag-item-uma" *ngFor="let sec of umasList" cdkDrag>
                         <!-- <mat-nav-list> -->
-                        <mat-expansion-panel class="group-cover-panel" matTooltip="Despliegue para ver más detalles">
+
+                        <div class="box-card">
+                          <div class="module-cover-br-image"></div>
+
+                          <!-- Preview -->
+                          <div class="preview-course-br">
+                            <i class="icon ni-view icon-negative"></i>
+                          </div>
+
+                          <div class="course-desc-br-row">
+                            <span class="title-course-br">
+                              {{sec.titulo}}</span>
+                            <span class="desc-course-br"
+                              *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
+                          </div>
+
+                        </div>
+
+
+                        <!-- <mat-expansion-panel class="" matTooltip="Despliegue para ver más detalles">
                             <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'200px'">
                                 <span class="title-panel">
                                     {{sec.titulo}}
@@ -101,7 +110,7 @@
                                 </div>
 
                                 <div class="">
-                                    <!--mat-list-item-->
+
                                     <span class="desc-group-panel"
                                         [routerLink]="['/constructor-layout', sec.id, 'module']"
                                         *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span>
@@ -113,7 +122,7 @@
                             </div>
 
 
-                        </mat-expansion-panel>
+                        </mat-expansion-panel> -->
                         <!-- </mat-nav-list> -->
 
                     </div>
@@ -140,6 +149,6 @@
     </div>
 
 </div>
-<div class="btn-sequence">
+<!-- <div class="btn-sequence">
     <button routerLink="/uma-groups-home" class="secondary-btn">Cerrar</button>
-</div>
+</div> -->

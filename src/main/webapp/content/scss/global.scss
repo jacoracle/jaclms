@@ -3296,6 +3296,17 @@ input[type='file'] {
   // height: auto !important;
   // margin: 0 auto !important;
 }
+.stepper-n-content {
+  position: relative;
+  width: 100%;
+
+  .mat-horizontal-content-container {
+    // background-color: teal;
+    height: calc(100% - 200px);
+    height: calc(100vh - 303px);
+    overflow: auto;
+  }
+}
 .container-stepper-group {
   .mat-stepper-horizontal {
     .mat-horizontal-stepper-header-container {
@@ -3315,6 +3326,10 @@ input[type='file'] {
 .mat-step-header .mat-step-icon-state-done,
 .mat-step-header .mat-step-icon-state-edit {
   background-color: $blue-nimbus-light;
+}
+.mat-horizontal-content-container {
+  overflow: hidden;
+  padding: 0 !important;
 }
 
 // Angular editor

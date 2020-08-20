@@ -14,7 +14,7 @@
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
         <div class="container-stepper-group">
-          <mat-horizontal-stepper [linear]="!isCompleted" #stepper>
+          <mat-horizontal-stepper [linear]="!isCompleted" #stepper class="stepper-n-content">
 
             <mat-step [stepControl]="formSteps?.get([0])" editable="false">
 

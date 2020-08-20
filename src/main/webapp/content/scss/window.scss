@@ -250,6 +250,8 @@
     font-size: 12px;
     text-align: center;
     color: lightslategrey;
+    line-height: 13px;
+    margin-top: 6px;
   }
 }
 
@@ -438,5 +440,5 @@
   height: calc(100% - 158px);
   background-color: $window-body-color;
   overflow-y: auto;
-  padding-bottom: 30px;
+  // padding-bottom: 30px;
 }

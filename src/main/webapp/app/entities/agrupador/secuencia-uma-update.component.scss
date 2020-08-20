@@ -1,16 +1,23 @@
+@import '../../../content/scss/variables.scss';
 .main-secuence-group-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 303px);
+  // height: 100%;
   // border: solid 1px yellow;
-  height: auto;
   display: flex;
-  // flex-direction: row;
 
   .sequence-uma-body {
-    width: 75%;
+    position: relative;
+    width: calc(100% - 280px);
+    height: auto;
+    // background-color: blue;
+    display: flex;
 
     // container search uma fields
     .search-uma-container {
-      margin: 15px auto;
-      width: 94%;
+      margin: 0;
+      width: calc(100% - 300px);
 
       // container search and filter fields
       .container-search-form-uma {
@@ -67,13 +74,10 @@
     }
 
     .result-search-container {
-      margin: 15px auto;
-      width: 94%;
-
       .container-result-groups {
         // border: solid 1px red;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        // display: grid;
+        // grid-template-columns: repeat(4, 1fr);
 
         .drag-item-uma {
           margin: 0 6px;
@@ -84,14 +88,20 @@
   }
 
   .sequence-uma-bar {
-    // border: solid 1px red;
-    min-height: 300px;
-    padding: 5px;
-    width: 25%;
+    padding: 0px;
+    width: 280px;
+    height: 100%;
+    // background-color: pink;
+    position: relative;
+    // height: calc(100% - 300px);
+    border-left: 1px solid silver;
+    background-color: white;
     .uma-item-sequence {
-      border: solid 1px #b5b5b5;
-      background-color: #ccc;
+      // background-color: #ccc;
       padding: 1em;
+      position: relative;
+      width: 100%;
+      height: 100%;
       min-height: 375px;
       .item-uma {
         background-color: #dadada;
@@ -105,4 +115,166 @@
 
 .btn-sequence {
   margin: 5px;
+}
+
+// background-image: url('../../content/images/logo_create.svg');
+.whGroupUma {
+  background-image: url('../../../content/images/module_icon.svg');
+}
+// container search fields
+.search-main-container {
+  position: fixed;
+  width: 299px;
+  height: calc(100% - 300px);
+  background-color: $window-footer-color;
+  border-right: 1px solid $window-divider-color;
+  form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    .container-search-form-uma {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 50px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+
+      // box general search
+      .row-search-gral {
+        position: relative;
+        width: 85%;
+        height: auto;
+        // grid-template-columns: repeat(4, 1fr);
+        .txt-recent-umas {
+          display: flex;
+          align-items: center;
+          min-width: 200px;
+        }
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+
+      .container-field-filter {
+        position: relative;
+        width: 85%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+
+        p {
+          position: relative;
+          width: 100%;
+          height: auto;
+        }
+
+        .row-filter-uma {
+          position: relative;
+          width: 100%;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          // grid-template-columns: repeat(3, 1fr);
+
+          .mat-form-field {
+            position: relative;
+            width: 100%;
+            height: auto;
+            margin-top: 15px;
+          }
+        }
+      }
+
+      // close container-field-filter
+    }
+  }
+
+  // close container-search-form-uma
+}
+.btn-search-group {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eaedf4;
+}
+// container with results after to execute search
+.result-search-container {
+  position: relative;
+  width: calc(100% - 300px);
+  height: auto;
+  left: 300px;
+
+  .group-cover-panel {
+    position: relative;
+    width: 200px;
+    height: auto;
+    max-height: 250px;
+    // overflow-y: auto;
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-top: 16px;
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    cursor: pointer !important;
+    background-color: red;
+
+    .title-panel {
+      font-size: 14px;
+      margin-right: 5px;
+    }
+
+    .panel-body-group {
+      max-height: 180px;
+      padding-top: 20px;
+      overflow-y: auto;
+      position: relative;
+
+      .delete-group {
+        // border: solid 1px green;
+        bottom: 8px;
+        position: sticky; //  absolute;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background-color: $main-btn-color;
+        z-index: 2;
+        transition: 0.3s;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .icon {
+          cursor: pointer;
+        }
+
+        &:hover {
+          background-color: $main-btn-color-hover;
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &:active {
+          transform: scale(0.96);
+        }
+      }
+    }
+  }
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled='true']) {
+  background: transparent;
 }
