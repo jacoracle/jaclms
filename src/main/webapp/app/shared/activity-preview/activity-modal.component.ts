@@ -267,6 +267,15 @@ export class ActivityModalComponent implements OnInit {
     return campo;
   }
 
+  campoRespuestaCorrecta(indQuestion: number, indAnswer: number): boolean {
+    const campoRespuesta = this.campoRespuesta(indQuestion, indAnswer, 'correcta');
+    if (campoRespuesta) {
+      return campoRespuesta.value;
+    } else {
+      return false;
+    }
+  }
+
   controlRespuesta(indQuestion: number, indAnswer: number): AbstractControl | null | undefined {
     const controlesRespuestas = this.respuestas(indQuestion).controls;
     let controlRespuesta;

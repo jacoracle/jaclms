@@ -1,7 +1,7 @@
-<mat-list *ngFor="let pregunta of jsonForm.preguntas; let indQuestion = index;">
+<mat-list *ngFor="let pregunta of preguntas(); let indQuestion = index;">
     <mat-divider></mat-divider>
     <mat-list-item>{{indQuestion + 1}}.- {{pregunta.pregunta}}?</mat-list-item>
-    <mat-list role="list" *ngFor="let respuesta of jsonForm.preguntas[indQuestion].respuestas; let indAnswer = index;">
+    <mat-list role="list"  *ngFor="let respuesta of respuestas(indQuestion);">
         <mat-list-item role="listitem" [ngClass]="{'rojita': respuesta.correcta}">{{respuesta.respuesta}}</mat-list-item>
     </mat-list>
 </mat-list>
