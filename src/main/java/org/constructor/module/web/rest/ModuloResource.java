@@ -46,7 +46,7 @@ import io.github.jhipster.web.util.ResponseUtil;
  *
  */
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RequestMapping(RestConstants.PATH_API)
 public class ModuloResource {
 

@@ -21,6 +21,7 @@ import javax.validation.Valid;
  * Controller to authenticate users.
  */
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RequestMapping("/api")
 public class UserJWTController {
 

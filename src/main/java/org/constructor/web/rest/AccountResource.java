@@ -28,7 +28,7 @@ import java.util.*;
  * REST controller for managing the current user's account.
  */
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RequestMapping("/api")
 public class AccountResource {
 
