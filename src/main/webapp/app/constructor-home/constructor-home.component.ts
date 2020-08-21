@@ -9,11 +9,19 @@ import { Router } from '@angular/router';
 export class ConstructorHomeComponent {
   constructor(private router: Router) {}
 
+  redirectLearningPath(): void {
+    this.router.navigate(['/learning-home']);
+  }
+
+  redirectGroupUMA(): void {
+    this.router.navigate(['/uma-groups-home']);
+  }
+
   redirectHome(): void {
     this.router.navigate(['/courses-home']);
   }
 
   redirectUMAs(): void {
-    this.router.navigate(['/modules-home']);
+    this.router.navigate(['/uma-home']);
   }
 }

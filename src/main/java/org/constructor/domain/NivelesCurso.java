@@ -52,8 +52,8 @@ public class NivelesCurso  implements Serializable{
 	 */
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "nivel_jerarquico_id", nullable=false)
-    private NivelJerarquico nivelJerarquico;
+	@JoinColumn(name = "nivel_modulo_id", nullable=false)
+    private NivelModulo nivelModulo;
 	
 	/**
 	 * orden_nivel
@@ -94,18 +94,18 @@ public class NivelesCurso  implements Serializable{
 
 	/**
 	 * Get
-	 * @return the nivelJerarquico
+	 * @return the nivelModulo
 	 */
-	public NivelJerarquico getNivelJerarquico() {
-		return nivelJerarquico;
+	public NivelModulo getNivelJerarquico() {
+		return nivelModulo;
 	}
 
 	/**
 	 * Set
-	 * @param nivelJerarquico the nivelJerarquico to set
+	 * @param nivelModulo the nivelModulo to set
 	 */
-	public void setNivelJerarquico(NivelJerarquico nivelJerarquico) {
-		this.nivelJerarquico = nivelJerarquico;
+	public void setNivelJerarquico(NivelModulo nivelModulo) {
+		this.nivelModulo = nivelModulo;
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class NivelesCurso  implements Serializable{
 	@Override
 	public String toString() {
 		return "NivelesCurso [id=" + id + ", id_nivel_jerarquico="
-				+ nivelJerarquico + ", ordenNivel=" + ordenNivel + "]";
+				+ nivelModulo + ", ordenNivel=" + ordenNivel + "]";
 	}
 	
 	

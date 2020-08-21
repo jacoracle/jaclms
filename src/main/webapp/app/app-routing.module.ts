@@ -11,6 +11,10 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { HomeComponent } from './home/home.component';
 import { HomeModuleComponent } from './home-module/home-module.component';
 import { ModuleConfigurationComponent } from './module-configuration/module-configuration.component';
+import { HomeLearningComponent } from './home-learning/home-learning.component';
+import { HomeUmaGroupsComponent } from './home-uma-groups/home-uma-groups.component';
+import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
+// import { SecuenciaAgrupadorUpdateComponent } from './entities/agrupador/secuencia-uma-update.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -43,20 +47,40 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: HomePageComponent
         },
         {
+          path: 'learning-home',
+          component: HomeLearningComponent
+        },
+        {
           path: 'courses-home',
           component: HomeComponent
         },
         {
-          path: 'modules-home',
+          path: 'uma-home',
           component: HomeModuleComponent
+        },
+        {
+          path: 'uma-groups-home',
+          component: HomeUmaGroupsComponent
         },
         {
           path: 'course-configuration',
           component: CourseConfigurationComponent
         },
         {
-          path: 'module-configuration',
+          path: 'uma-configuration',
           component: ModuleConfigurationComponent
+        },
+        {
+          path: 'group-configuration',
+          component: GroupUmaConfigurationComponent
+        },
+        // {
+        //   path: 'sequence-configuration/:id',
+        //   component: SecuenciaAgrupadorUpdateComponent
+        // },
+        {
+          path: 'sequence-configuration/:id',
+          component: GroupUmaConfigurationComponent
         },
         ...LAYOUT_ROUTES
       ],

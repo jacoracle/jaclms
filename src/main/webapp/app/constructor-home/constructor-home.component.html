@@ -7,7 +7,6 @@
         <div class="logo-create"></div>
       </div>
       <div class="r2">
-        <!-- <div class="windowHeader-title"><h4>¡Bienvenido!</h4></div> -->
         <div class="c1">
           <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
           <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
@@ -17,6 +16,7 @@
     </div>
 
     <div class="window-br-body-topbar">
+      <div class="line-gradient"></div>
       <div class="row-wbr-bt">
         <p>Selecciona una opción</p>
       </div>
@@ -24,18 +24,33 @@
 
     <div class="window-br-body">
       <div class="row-new-home">
-        <div class="home-element e-rutas e-disabled">
-          <div class="icon ni-template"></div>
-          <h4>Rutas de aprendizaje</h4>
+        <div class="home-element" (click)="redirectUMAs();">
+          <div class="he-img heimg1"></div>
+          <div class="he-text">
+            <h4>Constructor <br> de UMA's</h4>
+            <p>Crea y edita UMA's (Unidad mínima de aprendizaje.</p>
+          </div>
         </div>
-        <div class="home-element e-modulo" (click)="redirectUMAs();"> <!--e-disabled-->
-          <div class="icon"></div>
-          <h4>UMA's</h4>
+        <div class="home-element" (click)="redirectGroupUMA();">
+          <div class="he-img heimg2"></div>
+          <div class="he-text">
+            <h4>Agrupador <br> de UMA's</h4>
+            <p>Agrupa y crea secuencia de UMA's.</p>
+          </div>
         </div>
-        <div class="home-element e-libro" (click)="redirectHome();">
+        <div class="home-element" (click)="redirectLearningPath();">
+          <div class="he-img heimg3"></div>
+          <div class="he-text">
+            <h4>Rutas de aprendizaje</h4>
+            <p>Agrega grupos de UMA's para crear rutas de aprendizaje o libros.</p>
+          </div>
+        </div>
+        <!--
+        <div class="home-element e-libro e-disabled" (click)="redirectHome();">
           <div class="icon ni-book"></div>
           <h4>Libros</h4>
         </div>
+        -->
       </div>
 
     </div>

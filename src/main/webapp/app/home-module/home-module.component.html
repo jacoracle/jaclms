@@ -1,4 +1,4 @@
-<div class="main-container-br container-home-module">
+<div class="main-container-br">
 
   <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
     <!-- Window Header -->
@@ -22,8 +22,9 @@
     </div>
 
     <div class="window-br-body-topbar recent-modules">
+      <div class="line-gradient"></div>
       <div class="row-wbr-bt" *ngIf="modulos.length">
-        <p>Tus sesiones recientes ( {{modulos.length}} )</p>
+        <p>Tus UMA's recientes ( {{modulos.length}} )</p>
       </div>
     </div>
 
@@ -43,14 +44,12 @@
     </div>
     <!-- Window content Module -->
     <div class="window-br-body" *ngIf="modulos.length">
-      <div class="br-body-row">
-        <div class="course-cover-br" *ngFor="let modulo of modulos"
+      <div class="grid-cards">
+
+        <div class="course-cover-br box-card" *ngFor="let modulo of modulos"
           [routerLink]="['/constructor-layout', modulo.id, 'module']">
 
-          <div class="course-cover-br-margin">
-            <!-- <img class="course-cover-br-image" [src]="defaultModuleUrl" alt="" *ngIf="modulo.sanitizedPortadaUrl"> -->
-            <div class="module-cover-br-image"></div>
-          </div>
+          <div class="module-cover-br-image"></div>
 
           <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
             <i class="icon ni-delete icon-negative"></i>
@@ -64,12 +63,15 @@
           </div>
 
         </div>
+
       </div>
+
+
     </div>
 
     <div class="window-br-footer">
       <button routerLink="/" class="secondary-btn">Regresar</button>
-      <button routerLink="/module-configuration" class="main-btn">Crear UMA</button>
+      <button routerLink="/uma-configuration" class="main-btn">Crear UMA</button>
     </div>
 
   </div>

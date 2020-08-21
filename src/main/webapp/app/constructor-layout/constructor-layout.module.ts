@@ -59,6 +59,13 @@ import { QuillModule } from 'ngx-quill';
     ConstructorHierarchicalStructureComponent,
     ConstructorBookInformationComponent,
     ConstructorComponentPropertiesComponent
+  ],
+  exports: [
+    TopBarComponent,
+    RightSidebarComponent,
+    LeftSidebarComponent,
+    ConstructorVisorContainerComponent,
+    ConstructorComponentContainerComponent
   ]
 })
 export class ConstructorLayoutModule {}

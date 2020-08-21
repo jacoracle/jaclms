@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NivelesCursoRepository extends JpaRepository<NivelesCurso, Long>  {
 	
-	@Query("select niveles from NivelesCurso niveles join fetch niveles.nivelJerarquico nj where nj.id =:id")
+	@Query("select niveles from NivelesCurso niveles join fetch niveles.nivelModulo nj where nj.id =:id")
     Optional<NivelesCurso> findByIdNivel(@Param("id") Long id);
 	
 	@Query("select niveles from NivelesCurso niveles join fetch niveles.curso nc where nc.id =:id")

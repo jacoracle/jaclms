@@ -24,8 +24,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * A NivelJeraquico.
  */
 @Entity
-@Table(name = "nivel_jerarquico")
-public class NivelJerarquico implements Serializable  {
+@Table(name = "nivel_modulo")
+public class NivelModulo implements Serializable  {
 		
 	/** Serializable. */
 	private static final long serialVersionUID = 1L;
@@ -46,26 +46,21 @@ public class NivelJerarquico implements Serializable  {
 	/** String tipo. */
 	@Column(name = "tipo")
     private String  tipo;
-	
-	/** orden_nivel. */
-	@OneToMany(mappedBy="nivelJerarquico", fetch = FetchType.EAGER)
-	@OrderBy ("orden")
-	private Set<EstructuraJerarquica> estructuraJerarquica = new HashSet<>();
 		
 	/** nivelJerarquico. */
-	@OneToMany(mappedBy = "nivelJerarquico")
+	@OneToMany(mappedBy = "nivelModulo")
 	@JsonIgnore
 	private Set<NivelesCurso> nivelesCurso = new HashSet<>(); 
 	
 	/** The bloques curso. */
-	@OneToMany(mappedBy = "nivelJerarquico", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE )
+	@OneToMany(mappedBy = "nivelModulo", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE )
 	@OrderBy ("orden")
 	private Set<BloquesCurso> bloquesCurso;
 	
 	/** 
 	 * nivelJerarquico. 
 	 */
-	@OneToMany(mappedBy = "nivelJerarquico")
+	@OneToMany(mappedBy = "nivelModulo")
 	@JsonIgnore
 	private Set<NivelesModulo> nivelesModulo = new HashSet<>();
 
@@ -103,24 +98,6 @@ public class NivelJerarquico implements Serializable  {
 	 */
 	public void setInformacionAdicional(int informacionAdicional) {
 		this.informacionAdicional = informacionAdicional;
-	}
-
-	/**
-	 * Get .
-	 *
-	 * @return the estructuraJerarquica
-	 */
-	public Set<EstructuraJerarquica> getEstructuraJerarquica() {
-		return estructuraJerarquica;
-	}
-
-	/**
-	 * Set.
-	 *
-	 * @param estructuraJerarquica the new estructura jerarquica
-	 */
-	public void setEstructuraJerarquica(Set<EstructuraJerarquica> estructuraJerarquica) {
-		this.estructuraJerarquica = estructuraJerarquica;
 	}
 
 	/**
@@ -213,15 +190,10 @@ public class NivelJerarquico implements Serializable  {
 
 	@Override
 	public String toString() {
-		return "NivelJerarquico [id=" + id + ", nombre=" + nombre + ", informacionAdicional=" + informacionAdicional
-				+ ", tipo=" + tipo + ", estructuraJerarquica=" + estructuraJerarquica + ", bloquesCurso=" + bloquesCurso
-				+ "]";
+		return "NivelModulo [id=" + id + ", nombre=" + nombre + ", informacionAdicional=" + informacionAdicional
+				+ ", tipo=" + tipo + ", nivelesCurso=" + nivelesCurso + ", bloquesCurso=" + bloquesCurso
+				+ ", nivelesModulo=" + nivelesModulo + "]";
 	}
-
-
-	
-
-
 
 	
 }

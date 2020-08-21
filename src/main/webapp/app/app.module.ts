@@ -28,6 +28,11 @@ import { TopicModuleComponent } from './entities/tema/temas-modulo.component';
 import { TypeModuleComponent } from './entities/tipo-modulo/tipo-modulo.component';
 import { ColaboradoresModuleComponent } from './entities/colaborador/colaboradores-modulo.component';
 import { QuillModule } from 'ngx-quill';
+import { HomeLearningModule } from './home-learning/home-learning.module';
+import { HomeUmaGroupsModule } from './home-uma-groups/home-uma-groups.module';
+import { AgrupadorUmaUpdateComponent } from './entities/agrupador/agrupador-uma-update.component';
+import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
+import { SecuenciaAgrupadorUpdateComponent } from './entities/agrupador/secuencia-uma-update.component';
 
 @NgModule({
   imports: [
@@ -36,6 +41,8 @@ import { QuillModule } from 'ngx-quill';
     ConstructorSharedModule,
     ConstructorCoreModule,
     HomeModule,
+    HomeLearningModule,
+    HomeUmaGroupsModule,
     ConstructorLayoutModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     ConstructorEntityModule,
@@ -52,10 +59,13 @@ import { QuillModule } from 'ngx-quill';
     FooterComponent,
     CourseConfigurationComponent,
     ModuleConfigurationComponent,
+    GroupUmaConfigurationComponent,
     HomePageComponent,
     CursoComponent,
     CursoUpdateComponent,
     ModuloUpdateComponent,
+    AgrupadorUmaUpdateComponent,
+    SecuenciaAgrupadorUpdateComponent,
     FichaUpdateComponent,
     ColaboradoresModuleComponent,
     TopicModuleComponent,
