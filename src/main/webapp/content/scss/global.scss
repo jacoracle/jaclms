@@ -3328,7 +3328,8 @@ input[type='file'] {
   background-color: $blue-nimbus-light;
 }
 .mat-horizontal-content-container {
-  overflow: hidden;
+  // overflow: hidden;
+  overflow: visible;
   padding: 0 !important;
 }
 
