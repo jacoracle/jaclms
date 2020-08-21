@@ -5,7 +5,7 @@ import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms'
 import { ErrorStateMatcherUtil } from 'app/home-uma-groups/error-state-matcher';
 import { Agrupador, IAgrupador } from 'app/shared/model/agrupador.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { TagAgrupador, ITagAgrupador } from 'app/shared/model/tag-agrupador.model';
+import { TagAgrupador } from 'app/shared/model/tag-agrupador.model';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
@@ -121,8 +121,9 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     this.groupUmaForm.patchValue({
       titleSequenceUmas: data.titulo,
       desciptionSequenceUmas: data.descripcion,
-      searchTagsSequenceUmas: data.etiquetas!.map((t: ITagAgrupador) => t.descripcion)
+      searchTagsSequenceUmas: [] // data.etiquetas//  !.map((t: ITagAgrupador) => t.descripcion)
     });
+    this.tagsBusquedaAgrupador = [...data.etiquetas!];
   }
 
   saveSequenceGroup(): void {

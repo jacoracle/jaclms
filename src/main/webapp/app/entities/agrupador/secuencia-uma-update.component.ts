@@ -126,13 +126,32 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   // drag drop tira de umas
   drop(event: CdkDragDrop<any[]>): void {
+    const objExiste = event.container.data.find((au: IAgrupadorUma) => {
+      return au.modulo!.id === event.previousContainer.data[event.previousIndex].id;
+    });
+
+    if (objExiste) {
+      return;
+    } else if (event.previousContainer === event.container) {
+      this.isReorder = true;
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updateUmasOrder();
+      this.updateSequenceUmaOrder();
+    } else {
+      this.isReorder = false;
+      //  transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.addUmaToSequence(event.previousIndex, event.currentIndex);
+    }
+
+    /*
     const idx = event.container.data.indexOf(event.previousContainer.data[event.previousIndex]);
     if (event.previousContainer === event.container) {
       this.isReorder = true;
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.updateUmasOrder();
+      // this.updateUmasOrder();
+      // this.updateSequenceUmaOrder();
 
-      this.updateSequenceUmaOrder();
     } else if (idx !== -1) {
       return;
     } else {
@@ -141,6 +160,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       this.addUmaToSequence(event.previousIndex, event.currentIndex);
     }
+    */
   }
 
   /**
