@@ -1,4 +1,7 @@
 <div class="main-container-br">
+  <div class="alert-sequence-configuration">
+    <jhi-alert-error></jhi-alert-error>
+  </div>
   <div class="window-br">
     <!-- Header -->
     <div class="window-br-header">
@@ -19,11 +22,13 @@
             <mat-step [stepControl]="formSteps?.get([0])" editable="isStepEditable">
 
               <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
-              <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)" (formCreateEvent)="setCreateForm($event)" ></jhi-agrupador-uma-update>
+              <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
+                (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
 
             </mat-step>
 
-            <mat-step><!--[stepControl]="secondFormGroup"-->
+            <mat-step>
+              <!--[stepControl]="secondFormGroup"-->
 
               <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
               <!-- componente que contiene contenido de paso 2 para crear la secuencia/agrupación de umas una vez generado el Grupo -->
@@ -40,9 +45,15 @@
 
     <!-- Footer -->
     <div class="window-br-footer">
-      <button routerLink="/uma-groups-home" class="secondary-btn">Cancelar</button>
-      <button class="main-btn">GUARDAR (Pendiente)</button>
-      <p>{{isCompleted}}</p>
+      <!-- this cancel is for (back home) -->
+      <button *ngIf="!isCreation()" routerLink="/uma-groups-home" class="secondary-btn">Cancelar</button>
+      <!-- this save is form (save group) -->
+      <button *ngIf="!isViewDetailOrEdit()" (click)="executeSave()" class="main-btn">Guardar</button>
+      <!-- this save is for (save & update) -->
+      <button *ngIf="isViewDetailOrEdit() && !isCreation()" (click)="executeSave()" class="main-btn">Guardar</button>
+      <!-- this cancel is for (delete changes) (click)="revertData()"-->
+      <button *ngIf="isCreation()" class="secondary-btn" routerLink="/uma-groups-home">Cancelar</button>
+      <!-- <p>{{isCompleted}} - ID: {{idSequenceToLoad}}</p> -->
     </div>
 
   </div>

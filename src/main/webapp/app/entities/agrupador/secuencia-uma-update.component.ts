@@ -74,7 +74,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   ) {
     this.isReorder = false;
     this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
-    console.error('#### Group UMA configuration ID Grupo recibido: ', this.idSequenceToLoad);
+    // console.error('#### Group UMA configuration ID Grupo recibido: ', this.idSequenceToLoad);
   }
 
   ngOnInit(): void {
@@ -94,8 +94,8 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
         if (this.idSequenceToLoad) {
           this.agrupadorService.find(this.idSequenceToLoad).subscribe(res => {
             if (res.body) {
-              console.error('#### Response Query Agrupador con ID: ', this.idSequenceToLoad);
-              console.error(res.body);
+              // console.error('#### Response Query Agrupador con ID: ', this.idSequenceToLoad);
+              // console.error(res.body);
               this.agrupadorObj = res.body;
               this.tiraUmas = [...res.body.modulos!];
               // this.updatingGradesSelected(null, false);
@@ -170,9 +170,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     this.agrupadorUmaService.update(this.tiraUmas).subscribe(
       res => {
         if (res.body) {
-          console.error('#### Response PUT umas');
-          console.error(res.body);
-          // this.tiraUmas = res.body.agrupador!.modulos!;
+          // console.error('#### Response PUT umas');
+          // console.error(res.body);
+          this.tiraUmas = res.body.agrupador!.modulos!;
         }
       },
       () => {
@@ -194,13 +194,13 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   addUmaToSequence(idx: number, orden: number): void {
     const objUmaToAdd = this.umasList[idx];
-    console.error(objUmaToAdd);
-    console.error('#### Agrupador Creado');
-    console.error(this.agrupadorObj);
+    // console.error(objUmaToAdd);
+    // console.error('#### Agrupador Creado');
+    // console.error(this.agrupadorObj);
 
-    console.error('#### Agrupador Modulo to Save');
+    // console.error('#### Agrupador Modulo to Save');
     const objToSave: IAgrupadorUma = this.dataToAgrupadorUma(objUmaToAdd, orden);
-    console.error(objToSave);
+    // console.error(objToSave);
     this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
   }
 
@@ -215,8 +215,8 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   }
 
   deleteUmaFromSequence(item: IAgrupadorUma): void {
-    console.error('#### Elemento a Eliminar de la tira de UMAs');
-    console.error(item);
+    // console.error('#### Elemento a Eliminar de la tira de UMAs');
+    // console.error(item);
     this.tiraUmas.splice(this.tiraUmas.indexOf(item), 1);
 
     this.agrupadorUmaService.delete(item.id!).subscribe(() => {
@@ -234,8 +234,8 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   protected onSaveSuccess(res: any): void {
     // this.router.navigate(['/uma-groups-home', res.body.modulo.id, 'module']);
-    console.error('#### Sequencia creada (Agrupador Modulo)');
-    console.error(res);
+    // console.error('#### Sequencia creada (Agrupador Modulo)');
+    // console.error(res);
     this.isSaving = false;
     if (!this.isReorder) {
       this.tiraUmas.push(res);

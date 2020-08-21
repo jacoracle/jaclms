@@ -96,7 +96,7 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
   }
 
   searchUmas(): void {
-    console.error('Debera buscar agrupadociones/secuencias de UMAs');
+    // console.error('Debera buscar agrupadociones/secuencias de UMAs');
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.save' })
     );
@@ -105,10 +105,12 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
   deleteGroup(agrupador: IAgrupador, evt: any): void {
     evt.stopPropagation();
     this.secuenciasUma.splice(this.secuenciasUma.indexOf(agrupador), 1);
+    /*
     this.subscription = this.filteredSequencesUmas.pipe(takeUntil(this.ngUnsubscribeSubject)).subscribe((res: IAgrupador[]) => {
-      console.error('eliminacion subscribe');
-      console.error(res);
+      console.error('eliminación de grupo, subscribe');
+      // console.error(res);
     });
+    */
     this.groupUmaForm.get('tituloAgrupador')!.setValue('');
 
     this.subscription = this.agrupadorService

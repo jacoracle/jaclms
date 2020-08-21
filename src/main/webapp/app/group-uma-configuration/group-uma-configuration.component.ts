@@ -8,7 +8,9 @@ import { Account } from 'app/core/user/account.model';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
 import { MatHorizontalStepper } from '@angular/material/stepper';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AgrupadorUmaUpdateComponent } from 'app/entities/agrupador/agrupador-uma-update.component';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-group-uma-configuration',
@@ -16,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./group-uma-configuration.component.scss']
 })
 export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
+  @ViewChild(AgrupadorUmaUpdateComponent, { static: false }) umaUpdateComponente!: AgrupadorUmaUpdateComponent;
   @ViewChild(MatHorizontalStepper, { static: false }) stepper!: MatHorizontalStepper;
   isSaving = false;
   authSubscription?: Subscription;
@@ -31,12 +34,15 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   secondFormGroup!: FormGroup;
   // termina stepper
 
+  isNewGroup!: boolean;
   idSequenceToLoad!: number;
 
   constructor(
+    private eventManager: JhiEventManager,
     private accountService: AccountService,
     private formbuilder: FormBuilder,
     protected activatedRoute: ActivatedRoute,
+    private router: Router,
     // private eventManager: JhiEventManager,
     protected agrupadorService: AgrupadorService
   ) {
@@ -57,8 +63,8 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
         console.error('LOGUEADO');
       }
     });
-    console.error('#### FORM ARRAY: ', this.formSteps);
-    console.error('#### Agrupador Recibido con ID: ', this.idSequenceToLoad);
+    // console.error('#### FORM ARRAY: ', this.formSteps);
+    // console.error('#### Agrupador Recibido con ID: ', this.idSequenceToLoad);
   }
 
   ngOnDestroy(): void {
@@ -79,7 +85,18 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     console.error('#### Dato del Output emitido: ');
     console.error(event);
     this.createdGroupSequence = event;
+    this.isNewGroup = true;
     this.isCompleted = false;
+    if (this.createdGroupSequence) {
+      this.stepper.next();
+    } else {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', {
+          message: 'constructorApp.agrupador.validations.saveError',
+          type: 'danger'
+        })
+      );
+    }
   }
 
   setCreateForm(evt: any): void {
@@ -89,5 +106,28 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     this.formSteps.push(evt);
     // this.isCompleted = this.createdGroupSequence ? true : false;
     this.stepper.selected.completed = this.createdGroupSequence ? true : false;
+  }
+
+  /**
+   * to verify if it is a exists group
+   */
+  isViewDetailOrEdit(): boolean {
+    return this.idSequenceToLoad > 0;
+  }
+
+  /**
+   * to indicate if user is creating a new group
+   */
+  isCreation(): boolean {
+    return this.isNewGroup;
+  }
+
+  executeSave(): void {
+    this.umaUpdateComponente.saveSequenceGroup();
+  }
+
+  revertData(): void {
+    this.umaUpdateComponente.revertSequenceGroup(this.createdGroupSequence.id!);
+    this.router.navigate(['/group-configuration']);
   }
 }

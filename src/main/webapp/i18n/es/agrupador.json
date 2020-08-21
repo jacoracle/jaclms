@@ -1,6 +1,6 @@
 {
   "constructorApp": {
-    "sequence": {
+    "agrupador": {
       "home": {
         "title": "Agrupador",
         "createLabel": "Crear Agrupador",
@@ -9,11 +9,11 @@
         "titleAdvancelConfg": "Configuración avanzada",
         "notFound": "Ningún Agrupador pudo ser encontrado"
       },
-      "created": "La secuencia ha sido creada.",
-      "updated": "La secuencia ha sido actualizada.",
-      "deleted": "La secuencia ha sido eliminada.",
+      "created": "El Agrupador ha sido creado.",
+      "updated": "El Agrupador ha sido actualizado.",
+      "deleted": "El Agrupador ha sido eliminado.",
       "delete": {
-        "question": "¿Seguro que quiere eliminar la Secuencia {{ id }}?"
+        "question": "¿Seguro que quiere eliminar el Agrupador {{ id }}?"
       },
       "detail": {
         "title": "Agrupador"

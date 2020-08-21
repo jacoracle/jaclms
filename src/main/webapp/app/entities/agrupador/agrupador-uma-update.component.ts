@@ -64,9 +64,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     protected agrupadorService: AgrupadorService
   ) {
     this.tagsBusquedaAgrupador = [];
-
-    console.error('#### agrupador-uma-update Agrupador recibido con ID: ', this.groupId);
-
+    // console.error('#### agrupador-uma-update Agrupador recibido con ID: ', this.groupId);
     this.groupUmaForm.statusChanges.subscribe(() => {
       // console.error('#### Estado del formulario de registro de agrupador: ', val);
       this.formCreateEvent.emit(this.groupUmaForm);
@@ -88,8 +86,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
         }
       });
 
-    console.error('#### Consultar datos de Agrupador: ', this.groupId);
-
+    // console.error('#### Consultar datos de Agrupador: ', this.groupId);
     // este subscribe es para la validación que no logre hacer funcionar con la funcion al final de este ts
     this.groupUmaForm.get('searchTagsSequenceUmas')!.statusChanges.subscribe(status => (this.chipList!.errorState = status === 'INVALID'));
   }
@@ -108,8 +105,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       .find(this.groupId)
       .pipe(takeUntil(this.ngUnsubscribeSubject))
       .subscribe(res => {
-        console.error('#### Datos consultados del Agrupador:');
-        console.error(res);
+        // console.error('#### Datos consultados del Agrupador:');
+        // console.error(res);
         this.mapDataToForm(res.body as IAgrupador);
       });
   }
@@ -131,8 +128,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       // this.isCompleted = true;
       this.isSaving = true;
       const agrupador: IAgrupador = this.mapFormDataToAgrupador();
-      console.error('Deberá guardar');
-      console.error(agrupador);
+      // console.error('Deberá guardar');
+      // console.error(agrupador);
 
       if (!agrupador.titulo) {
         this.eventManager.broadcast(
@@ -167,6 +164,17 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
+  revertSequenceGroup(groupId: number): void {
+    if (groupId) {
+      this.subscription = this.agrupadorService
+        .delete(groupId)
+        .pipe(takeUntil(this.ngUnsubscribeSubject))
+        .subscribe(() => {
+          console.error('#### Agrupador eliminado con ID: ', groupId);
+        });
+    }
+  }
+
   makeInvalid(controlName: string): void {
     this.groupUmaForm.controls[controlName].setErrors(new Error());
   }
@@ -181,12 +189,16 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       titulo: this.groupUmaForm.get(['titleSequenceUmas'])!.value,
       descripcion: this.groupUmaForm.get(['desciptionSequenceUmas'])!.value,
       etiquetas: this.tagsBusquedaAgrupador,
-      id: 0, //  this.groupUmaForm.get(['id'])!.value,
+      id: this.getGroupIdFromInputReceived(), //  0, //  this.groupUmaForm.get(['id'])!.value,
       fechaFin: '',
       fechaInicio: '',
       modulos: []
       // tiposModulos: this.tiposModuloComponent.getModuleTypes()
     };
+  }
+
+  getGroupIdFromInputReceived(): number {
+    return this.groupId ? this.groupId : 0;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupador>>): void {
@@ -198,8 +210,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
 
   protected onSaveSuccess(res: any): void {
     // this.router.navigate(['/uma-groups-home', res.body.modulo.id, 'module']);
-    console.error('####         POST AGRUPADOR DONE');
-    console.error(res);
+    // console.error('####         POST AGRUPADOR DONE');
+    // console.error(res);
     this.createdGroupSequence = res.body.agrupador;
     this.createdGroupEventEmit.emit(res.body.agrupador);
     this.isSaving = false;
@@ -208,6 +220,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
 
   protected onSaveError(): void {
     this.isSaving = false;
+    this.createdGroupEventEmit.emit(undefined);
   }
 
   private onQueryError(): void {
