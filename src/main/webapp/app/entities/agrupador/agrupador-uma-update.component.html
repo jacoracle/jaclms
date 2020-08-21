@@ -1,5 +1,5 @@
 <div class="register-main-container">
-  <form name="groupUmaForm" role="form" autocomplete="off" [formGroup]="groupUmaForm!">
+  <form name="groupUmaForm" role="form" autocomplete="off" [formGroup]="groupUmaForm">
 
     <div class="register-form-group">
 
@@ -13,7 +13,7 @@
               <input matInput formControlName="titleSequenceUmas" [errorStateMatcher]="matcher"
                 placeholder="Título del Grupo">
               <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-              <mat-error *ngIf="groupUmaForm.get('titleSequenceUmas').hasError('required')">
+              <mat-error *ngIf="groupUmaForm!.get('titleSequenceUmas')!.hasError('required')">
                 El título del Grupo de UMAS es requerido.
               </mat-error>
             </mat-form-field>
@@ -24,10 +24,10 @@
               <input matInput formControlName="desciptionSequenceUmas" [errorStateMatcher]="matcher"
                 placeholder="título de la sesión">
               <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-              <mat-error *ngIf="groupUmaForm.get('desciptionSequenceUmas').hasError('required')">
+              <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('required')">
                 La descripción del Grupo de UMAS es requerido.
               </mat-error>
-              <mat-error *ngIf="groupUmaForm.get('desciptionSequenceUmas').hasError('maxlength')">
+              <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('maxlength')">
                 La descripción del Grupo no debe superar los 50 caracteres.
               </mat-error>
             </mat-form-field>
@@ -39,7 +39,7 @@
           <div>
             <mat-form-field class="example-chip-list">
               <mat-chip-list #chipList aria-label="Fruit selection">
-                <mat-chip *ngFor="let fruit of tagsBusquedaAgrupador" [selectable]="selectable" [removable]="removable"
+                <mat-chip *ngFor="let fruit of tagsBusquedaAgrupador!" [selectable]="selectable" [removable]="removable"
                   (removed)="removeTag(fruit)">
                   {{fruit.descripcion}}
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
@@ -48,7 +48,7 @@
                   formControlName="searchTagsSequenceUmas" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTag($event)">
               </mat-chip-list>
-              <mat-error *ngIf="groupUmaForm.get('searchTagsSequenceUmas').hasError('required')">
+              <mat-error *ngIf="groupUmaForm!.get('searchTagsSequenceUmas')!.hasError('required')">
                 Debe registrar al menos un Tag para la búsqueda.
               </mat-error>
             </mat-form-field>

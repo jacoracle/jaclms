@@ -47,10 +47,10 @@
                                     <input matInput formControlName="sessionTitleFormCtrl" [errorStateMatcher]="matcher"
                                         placeholder="título de la sesión">
                                     <mat-hint>Errors appear instantly!</mat-hint>
-                                    <mat-error *ngIf="!learningForm.get('sessionTitleFormCtrl').hasError('required')">
+                                    <mat-error *ngIf="!learningForm!.get('sessionTitleFormCtrl')!.hasError('required')">
                                         Captura el título de la sesión para filtrar
                                     </mat-error>
-                                    <mat-error *ngIf="!learningForm.get('sessionTitleFormCtrl').hasError('required')">
+                                    <mat-error *ngIf="!learningForm!.get('sessionTitleFormCtrl')!.hasError('required')">
                                         El título es <strong>requerido</strong>
                                     </mat-error>
                                 </mat-form-field>
@@ -62,11 +62,11 @@
                                         [errorStateMatcher]="matcher" placeholder="título de la sesión">
                                     <mat-hint>Errors appear instantly!</mat-hint>
                                     <mat-error
-                                        *ngIf="!learningForm.get('sessionDescriptionFormCtrl').hasError('required')">
+                                        *ngIf="!learningForm!.get('sessionDescriptionFormCtrl')!.hasError('required')">
                                         Captura la descripción para filtrar
                                     </mat-error>
                                     <mat-error
-                                        *ngIf="!learningForm.get('sessionDescriptionFormCtrl').hasError('required')">
+                                        *ngIf="!learningForm!.get('sessionDescriptionFormCtrl')!.hasError('required')">
                                         La descripción es <strong>requerida</strong>
                                     </mat-error>
                                 </mat-form-field>
@@ -79,7 +79,7 @@
                                         formControlName="sessionSubject" [matAutocomplete]="autoInputSubject">
                                     <mat-autocomplete autoActiveFirstOption #autoInputSubject="matAutocomplete"
                                         [displayWith]="displayFn">
-                                        <mat-option *ngFor="let option of filteredSubjectOpts | async" [value]="option">
+                                        <mat-option *ngFor="let option of filteredSubjectOpts! | async" [value]="option">
                                             {{option.descripcion}}
                                         </mat-option>
                                     </mat-autocomplete>
@@ -107,7 +107,7 @@
                                         formControlName="sessionType" [matAutocomplete]="autoInputSessionType">
                                     <mat-autocomplete autoActiveFirstOption #autoInputSessionType="matAutocomplete"
                                         [displayWith]="displayFn">
-                                        <mat-option *ngFor="let option of filteredTypeOpts | async" [value]="option">
+                                        <mat-option *ngFor="let option of filteredTypeOpts! | async" [value]="option">
                                             {{option.descripcion}}
                                         </mat-option>
                                     </mat-autocomplete>
@@ -142,7 +142,7 @@
                                         [matAutocomplete]="autoInputTopic">
                                     <mat-autocomplete autoActiveFirstOption #autoInputTopic="matAutocomplete"
                                         [displayWith]="displayFn">
-                                        <mat-option *ngFor="let option of filteredTopicOpts | async" [value]="option">
+                                        <mat-option *ngFor="let option of filteredTopicOpts! | async" [value]="option">
                                             {{option.descripcion}}
                                         </mat-option>
                                     </mat-autocomplete>
@@ -160,7 +160,7 @@
                     </div>
                 </form>
 
-                <div *ngIf="modulos.length">
+                <div *ngIf="modulos!.length">
                     <p>Resultados de búsqueda de sesiones... ( {{modulos.length}} )</p>
                 </div>
 

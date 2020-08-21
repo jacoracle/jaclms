@@ -50,7 +50,7 @@
       <!-- this save is form (save group) -->
       <button *ngIf="!isViewDetailOrEdit()" (click)="executeSave()" class="main-btn">Guardar</button>
       <!-- this save is for (save & update) -->
-      <button *ngIf="isViewDetailOrEdit() && !isCreation()" (click)="executeSave()" class="main-btn">Guardar</button>
+      <button *ngIf="isViewDetailOrEdit() && !isCreation()" (click)="executeSave()" class="main-btn">Guardar.</button>
       <!-- this cancel is for (delete changes) (click)="revertData()"-->
       <button *ngIf="isCreation()" class="secondary-btn" routerLink="/uma-groups-home">Cancelar</button>
       <!-- <p>{{isCompleted}} - ID: {{idSequenceToLoad}}</p> -->
