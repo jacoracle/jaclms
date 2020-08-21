@@ -2,119 +2,271 @@
 
 .modal-activity-container {
   position: relative;
-  width: 90%;
-  height: 90vh;
+  width: 98%;
+  height: 96vh;
   margin: 0 auto;
   background-color: $bg-white;
   border-radius: 4px;
-  top: 5%;
+  top: 2%;
   box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
-  @include smartphone {
-    width: 360px;
-    min-height: auto;
-    padding-bottom: 15px;
-  }
+  display: flex;
+  flex-direction: column;
 
-  .btn-close-modal-activity {
-    position: absolute;
-    top: 7px;
-    right: 13px;
-    width: 35px;
-    height: 35px;
-    border-radius: 100%;
-    background-color: transparent;
-    cursor: pointer;
-    border: 0;
-    outline: none;
-    transition: 0.4s;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    // align-items: center;
-
-    .icon {
-      font-size: 30px;
-      cursor: pointer;
-    }
-
-    &:hover {
-      background-color: $btn-white-hover;
-    }
-  }
-
-  .alert-course-configuration {
-    position: absolute;
-    z-index: 6;
-    width: 400px;
-    height: auto;
-    top: -2px;
-    right: 300px;
-    -webkit-transition: 0.3s;
-    transition: 0.3s;
-  }
-
-  .modal-activity-body {
+  .modal-act-header {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 69px;
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    // align-items: center;
-    max-height: calc(100% - 0px);
-    overflow-y: auto;
+    align-items: center;
+    border-bottom: 1px solid $window-divider-color;
+  }
+
+  .modal-act-content {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 70px);
+    display: flex;
+    flex-direction: column;
+    .modal-act-body {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 70px);
+      display: flex;
+      justify-content: space-around;
+      // overflow-y: auto;
+      background-color: $window-body-color;
+      .mat-drawer-content {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        overflow-y: auto;
+        margin-left: 0 !important;
+        order: 1;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        .header-mdc {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          height: 100px;
+          background-color: #e5e9ec;
+          display: flex;
+          align-items: center;
+        }
+        .content-preguntas {
+          position: relative;
+          width: 100%;
+          height: auto;
+        }
+      }
+      .mat-drawer-preview {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        overflow-y: auto;
+        border-left: 1px solid $window-divider-color;
+        background-color: white;
+        color: rgba(0, 0, 0, 0.87);
+        order: 2;
+      }
+    }
+    .modal-act-footer {
+      position: relative;
+      width: 100%;
+      height: 69px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $window-footer-color;
+      border-top: 1px solid $window-divider-color;
+      button {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+    }
+  }
+}
+
+.type-q {
+  position: relative;
+  width: 300px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  label {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  col-type-question {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  .ev-check {
+    position: relative;
+    width: 300px;
+    height: auto;
+    display: flex;
+    margin-left: 20px;
+  }
+}
+
+// Header
+.row-mah {
+  position: relative;
+  width: 96%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .nimbus-imagotype {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../content/images/logo_register.svg');
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-right: 20px;
+  }
+  h2 {
+    position: relative;
+    width: auto;
+    height: auto;
+    color: $blue-nimbus-dark;
+    font-size: 19px;
+    text-align: center;
+  }
+  h3 {
+    position: relative;
+    width: auto;
+    height: auto;
+    color: lightslategrey;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 400;
+    margin-left: 20px;
+  }
+}
+.alert-course-configuration {
+  position: absolute;
+  z-index: 6;
+  width: 300px;
+  height: auto;
+  top: 9px;
+  right: 0px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.btn-close-modal-activity {
+  position: absolute;
+  top: 7px;
+  right: 13px;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background-color: transparent;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  transition: 0.4s;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  .icon {
+    font-size: 30px;
+    cursor: pointer;
+  }
+  &:hover {
+    background-color: $btn-white-hover;
   }
 }
 
 .row-wg {
   position: relative;
-  width: 100%;
+  width: 94%;
   height: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  margin: 0 auto;
 
-  .col-window-g {
+  .col-question {
     position: relative;
-    width: 100%;
+    width: calc(100% - 80px);
     height: auto;
+    .mat-form-field {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+  }
+  .col-delete-question {
+    position: relative;
+    width: 80px;
+    height: 70px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-start;
+    button {
+    }
   }
 }
-
-.rwg-header {
-  height: 36px;
-}
-
-.window-cc-footer {
+.row-answer {
   position: relative;
-  width: 100%;
-  height: 75px;
-  background-color: $window-footer-color;
-  border-top: 1px solid $window-divider-color;
+  width: 90%;
+  height: auto;
+  margin: 0 auto;
+}
+// .rwg-header {
+//   height: 36px;
+// }
+.row-add-answer {
+  position: relative;
+  width: 94%;
+  height: auto;
   display: flex;
-  //justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  border-radius: 0 0 6px 6px;
-  padding-left: 670px;
-
+  margin: 0 auto;
+  margin-top: 20px;
+  border-bottom: 1px solid $window-divider-color;
+  padding-bottom: 20px;
   button {
-    margin-left: 15px;
-    margin-right: 15px;
+    span {
+      margin-left: 8px;
+    }
+  }
+}
+.row-add-question {
+  position: relative;
+  width: 94%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 30px;
+  button {
+    span {
+      margin-left: 8px;
+    }
   }
 }
 
 .form-nimbus {
   flex-direction: row;
 }
-
-.row-window-general .row-wg .col-window-g {
-  width: 100%;
-  height: 76px;
+.cont-radio {
+  width: 20px;
+  height: 20px;
 }
 
 .form-nimbus .form-alert {
@@ -171,8 +323,12 @@ mat-form-field {
 }
 
 .answer-question-space {
-  margin-top: 22px;
+  margin-top: 20px;
   box-sizing: unset;
+  width: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input-group > .input-group-append > .btn,
@@ -212,39 +368,21 @@ mat-form-field {
   transition: 0.3s;
 }
 
-.answer-space {
-  margin-top: -18px;
-}
-
-.link {
-  font-family: 'Verdana', serif;
-  font-size: 1em;
-  text-align: left;
-  color: blue;
-  background: none;
-  border: none;
-  cursor: pointer;
-  -moz-user-select: text;
-}
+// .answer-space {
+//   margin-top: -18px;
+// }
 
 .delete-answer {
-  color: blue;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.col-question {
-  width: 150%;
-}
-
-.col-delete-question {
-  width: 25%;
-  margin-top: 28px;
-}
-
-.col-type-question {
-  width: 75%;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  outline: none;
+  border: 0;
+  background-color: transparent;
+  &:active {
+    outline: none;
+    border: 0;
+  }
 }
 
 .mat-radio-button ~ .mat-radio-button {
@@ -253,31 +391,4 @@ mat-form-field {
 
 .nowrap {
   white-space: nowrap;
-}
-
-/*.mat-drawer-content {
-  margin-left: 756px !important;
-}*/
-
-.mat-drawer-container {
-  background-color: white;
-}
-
-.mat-drawer-inner-container {
-  margin-right: 350px !important;
-  max-width: 412px;
-  background-color: #fafafa;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
-}
-
-.mat-drawer {
-  left: 664px;
-}
-
-.mat-drawer-content {
-  margin-left: 0 !important;
-  margin-right: 434px !important;
-  overflow: hidden !important;
 }
