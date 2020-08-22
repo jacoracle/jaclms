@@ -155,7 +155,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
         // this.firstClick = true;
         if (agrupador.id) {
           console.error('##########   Deberá actualizar: ', agrupador);
-          this.subscribeToSaveResponse(this.agrupadorService.update(agrupador));
+          this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
         } else {
           console.error('##########   Deberá guardar: ', agrupador);
           this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
@@ -204,6 +204,17 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupador>>): void {
     result.subscribe(
       res => this.onSaveSuccess(res),
+      () => this.onSaveError()
+    );
+  }
+
+  private subscribeToUpdateResponse(result: Observable<HttpResponse<IAgrupador>>): void {
+    result.subscribe(
+      res => {
+        this.createdGroupSequence = res.body!;
+        this.createdGroupEventEmit.emit(res.body!);
+        this.isSaving = false;
+      },
       () => this.onSaveError()
     );
   }
