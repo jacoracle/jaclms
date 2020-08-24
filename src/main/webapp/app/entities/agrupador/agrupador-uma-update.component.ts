@@ -154,10 +154,10 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       if (this.groupUmaForm.valid) {
         // this.firstClick = true;
         if (agrupador.id) {
-          console.error('##########   Deberá actualizar: ', agrupador);
+          // console.error('##########   Deberá actualizar: ', agrupador);
           this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
         } else {
-          console.error('##########   Deberá guardar: ', agrupador);
+          // console.error('##########   Deberá guardar: ', agrupador);
           this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
         }
       }
