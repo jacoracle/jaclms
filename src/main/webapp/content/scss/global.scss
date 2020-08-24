@@ -3301,4 +3301,42 @@ input[type='file'] {
 .mat-divider {
   display: none;
 }
+.input-group > .input-group-prepend > .btn,
+.input-group > .input-group-prepend > .input-group-text,
+.input-group > .input-group-append:not(:last-child) > .btn,
+.input-group > .input-group-append:not(:last-child) > .input-group-text,
+.input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+.input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+  width: 20px !important;
+  height: 24px;
+  background-color: white;
+  border: 2px solid #dee6f4;
+  outline: none;
+  padding-left: 12px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+// Preview activity
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+  display: block;
+  height: auto !important;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  padding: 0;
+}
+.mat-list-item {
+  font-family: 'Open Sans', sans-serif !important;
+}
+.style-question {
+  .mat-list-item-content {
+    color: #1a3d82 !important;
+    font-weight: 700 !important;
+  }
+}
+.style-answer {
+  padding-left: 32px;
+}
 // Last

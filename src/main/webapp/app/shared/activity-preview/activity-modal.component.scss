@@ -35,7 +35,8 @@
       display: flex;
       justify-content: space-around;
       // overflow-y: auto;
-      background-color: $window-body-color;
+      // background-color: $window-body-color;
+      background-color: white;
       .mat-drawer-content {
         position: relative;
         width: 50%;
@@ -46,19 +47,29 @@
         background-color: transparent;
         display: flex;
         flex-direction: column;
+        padding-bottom: 30px;
         .header-mdc {
           position: relative;
           z-index: 2;
           width: 100%;
-          height: 100px;
-          background-color: #e5e9ec;
+          height: auto;
+          min-height: 90px;
+          background-color: $window-divider-color;
           display: flex;
           align-items: center;
+          padding-top: 10px;
+          padding-bottom: 10px;
         }
         .content-preguntas {
           position: relative;
-          width: 100%;
+          width: 94%;
           height: auto;
+          background-color: white;
+          border: 1px solid $window-divider-color;
+          margin: 0 auto;
+          margin-top: 20px;
+          border-radius: 6px;
+          padding-top: 20px;
         }
       }
       .mat-drawer-preview {
@@ -70,6 +81,7 @@
         background-color: white;
         color: rgba(0, 0, 0, 0.87);
         order: 2;
+        background-color: $blue-darkness;
       }
     }
     .modal-act-footer {
@@ -92,7 +104,7 @@
 .type-q {
   position: relative;
   width: 300px;
-  height: auto;
+  height: 60px;
   display: flex;
   flex-direction: column;
   margin-left: 30px;
@@ -101,18 +113,18 @@
     width: 100%;
     height: auto;
   }
-  col-type-question {
+  .col-type-question {
     position: relative;
     width: 100%;
     height: auto;
   }
-  .ev-check {
-    position: relative;
-    width: 300px;
-    height: auto;
-    display: flex;
-    margin-left: 20px;
-  }
+  // .ev-check {
+  //   position: relative;
+  //   width: 300px;
+  //   height: auto;
+  //   display: flex;
+  //   margin-left: 20px;
+  // }
 }
 
 // Header
@@ -391,4 +403,25 @@ mat-form-field {
 
 .nowrap {
   white-space: nowrap;
+}
+// .mat-list-base {
+//   padding-top: 0px;
+//   display: block;
+//   background-color: white;
+//   position: relative;
+//   width: 96%;
+//   height: auto;
+//   margin: 0 auto;
+//   margin-top: 20px;
+//   border-radius: 6px;
+//   padding-top: 15px !important;
+//   padding-bottom: 10px !important;
+//   display: flex;
+//   flex-direction: column;
+// }
+.mat-divider {
+  display: none !important;
+}
+.mat-list-item-content {
+  // color: $text-color !important;
 }

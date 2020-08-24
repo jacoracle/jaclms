@@ -1,4 +1,33 @@
 .rojita {
-  font-weight: bold;
-  color: #ff4081;
+  // font-weight: bold;
+  // color: #ff4081;
+  color: #4caf50 !important;
+}
+.mat-test {
+  padding-top: 0px;
+  display: block;
+  background-color: white;
+  position: relative;
+  width: 96%;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 6px;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+  display: flex;
+  flex-direction: column;
+}
+.qNumber {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #1a3d82;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 6px;
+  font-size: 14px;
 }
