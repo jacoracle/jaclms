@@ -41,9 +41,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/constructor?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: root
-    password: administrador
+    url: jdbc:h2:file:./target/h2db/db/constructor;DB_CLOSE_DELAY=-1
+    username: constructor
+    password:
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -51,8 +51,8 @@ spring:
     console:
       enabled: false
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    database: MYSQL
+    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
+    database: H2
     show-sql: true
     properties:
       hibernate.id.new_generator_mappings: true
