@@ -5,9 +5,11 @@ package org.constructor.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.module.domain.Modulo;
 import org.constructor.service.dto.ModuloDTO;
+import org.constructor.service.dto.ModuloFiltroDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -44,6 +46,23 @@ public interface ModuloService {
      */
     Page<Modulo> findAll(Pageable pageable);
     
+    
+    /**
+     * findModuloByBusqueda
+     * @param dto
+     * @return
+     * @throws Exception
+     */
+    Set<Modulo>  findModuloByFiltros(ModuloFiltroDTO dto) throws Exception ;
+
+
+     /**
+      * findModuloByTituloByDescripcion
+      * @param titulo
+      * @param descripcion
+      * @return
+      */
+    Set<Modulo>  findModuloByTituloByDescripcion ( ModuloFiltroDTO dto);
     /**
      * findAllModuloUserId
      * @param authentication
