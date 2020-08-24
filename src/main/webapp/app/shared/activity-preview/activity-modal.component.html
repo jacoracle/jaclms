@@ -27,7 +27,7 @@
           <mat-drawer-content class="mat-drawer-content">
             <div class="header-mdc">
               <div class="type-q">
-                <label>Seleccione el tipo de preguntas</label>
+                <label>Selecciona el tipo de respuesta:</label>
                 <div class="col-type-question" formGroupName="tipoActividad">
                     <mat-radio-group aria-label="Select an option" formControlName="opcion"
                                      name="opcion">
@@ -41,10 +41,11 @@
                     </mat-radio-group>
                 </div>
               </div>
-              <div class="ev-check">
-                <mat-checkbox mat-raised-button id="evaluable" formControlName="evaluable">
-                  Evaluable
-                </mat-checkbox>
+              <div class="type-q">
+                <label>Evaluable:</label>
+                <div class="col-type-question">
+                  <mat-checkbox mat-raised-button id="evaluable" formControlName="evaluable"></mat-checkbox>
+                </div>
               </div>
             </div>
                   <!-- <div>
