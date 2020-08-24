@@ -45,15 +45,16 @@
 
     <!-- Footer -->
     <div class="window-br-footer">
-      <!-- this cancel is for (back home) -->
-      <button *ngIf="!isCreation()" routerLink="/uma-groups-home" class="secondary-btn">Cancelar</button>
-      <!-- this save is form (save group) -->
-      <button *ngIf="!isViewDetailOrEdit()" (click)="executeSave()" class="main-btn">Guardar</button>
-      <!-- this save is for (save & update) -->
-      <button *ngIf="isViewDetailOrEdit() && !isCreation()" (click)="executeSave()" class="main-btn">Guardar.</button>
-      <!-- this cancel is for (delete changes) (click)="revertData()"-->
-      <button *ngIf="isCreation()" class="secondary-btn" routerLink="/uma-groups-home">Cancelar</button>
+      <!-- this cancel is for (back home)-->
+      <button *ngIf="!isCreation()" routerLink="/uma-groups-home" matTooltip="Regresar al Home." class="secondary-btn">Cancelar</button>
+      <!-- this cancel is for (delete created group)-->
+      <button *ngIf="isCreation()" class="secondary-btn" (click)="revertData()" matTooltip="Deshace el Agrupador creado.">Cancelar</button>
+      <!-- this save is form save a new group or edit group (save group) *ngIf="!isViewDetailOrEdit()"  -->
+      <button  (click)="executeSave($event)" class="main-btn" matTooltip="Guarda y/o actualiza Agrupador.">Guardar</button>
+      <!-- this save is for  -->
+      <!-- <button *ngIf="isViewDetailOrEdit() && !isCreation()" (click)="executeSave($event)" class="main-btn">Guardar (save & update)</button> -->
       <!-- <p>{{isCompleted}} - ID: {{idSequenceToLoad}}</p> -->
+      <button *ngIf="isCreation() && !isViewDetailOrEdit()" class="secondary-btn" matTooltip="Aceptar cambios y regresar al Home." routerLink="/uma-groups-home">Aceptar</button>
     </div>
 
   </div>

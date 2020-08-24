@@ -224,6 +224,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     // console.error('####         POST AGRUPADOR DONE');
     // console.error(res);
     this.createdGroupSequence = res.body.agrupador;
+    this.groupId = res.body.agrupador.id;
     this.createdGroupEventEmit.emit(res.body.agrupador);
     this.isSaving = false;
     // this.router.navigate(['/uma-groups-home']);

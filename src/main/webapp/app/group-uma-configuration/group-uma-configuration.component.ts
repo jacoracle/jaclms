@@ -82,8 +82,8 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   }
 
   setAgrupador(event: any): void {
-    console.error('#### Dato del Output emitido: ');
-    console.error(event);
+    // console.error('#### Dato del Output emitido: ');
+    // console.error(event);
     this.createdGroupSequence = event;
     this.isNewGroup = true;
     this.isCompleted = false;
@@ -122,12 +122,25 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     return this.isNewGroup;
   }
 
-  executeSave(): void {
+  executeSave(evt: any): void {
+    evt.stopPropagation();
     this.umaUpdateComponente.saveSequenceGroup();
   }
 
   revertData(): void {
     this.umaUpdateComponente.revertSequenceGroup(this.createdGroupSequence.id!);
-    this.router.navigate(['/group-configuration']);
+    /*
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.agrupador.revert' })
+    );
+    
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.agrupador.revert',
+        type: 'success'
+      })
+    );
+    */
+    this.router.navigate(['/uma-groups-home']);
   }
 }

@@ -12,6 +12,7 @@
       "created": "El Agrupador ha sido creado.",
       "updated": "El Agrupador ha sido actualizado.",
       "deleted": "El Agrupador ha sido eliminado.",
+      "revert": "El Agrupador y los cambios realizados han sido revertidos, Agrupador eliminado.",
       "delete": {
         "question": "¿Seguro que quiere eliminar el Agrupador {{ id }}?"
       },
