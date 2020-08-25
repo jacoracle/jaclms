@@ -15,8 +15,10 @@ import org.constructor.repository.ModuloRepository;
 import org.constructor.service.ModuloService;
 import org.constructor.service.UserService;
 import org.constructor.service.dto.ModuloDTO;
+import org.constructor.service.dto.ModuloFiltroDTO;
 import org.constructor.service.dto.MultimediaDTO;
 import org.constructor.service.multimedia.MultimediaService;
+import org.constructor.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +46,6 @@ public class ModuloServiceImpl implements ModuloService {
 	 */
 	private final ModuloRepository moduloRepository;
 
-	
-	
 	/**
 	 * MultimediaService
 	 */
@@ -89,7 +89,7 @@ public class ModuloServiceImpl implements ModuloService {
 	/**
 	 * findAllModuloUserId
 	 * 
-	*/
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<Modulo> findAllModuloUserId(Authentication authentication) {
@@ -98,7 +98,7 @@ public class ModuloServiceImpl implements ModuloService {
 		User userName = new User();
 
 		// Get userbyLogin
-		String usuarioNombre = authentication.getName(); 
+		String usuarioNombre = authentication.getName();
 		user = userService.findUserByLogin(usuarioNombre);
 
 		for (User usuario : user) {
@@ -106,11 +106,12 @@ public class ModuloServiceImpl implements ModuloService {
 		}
 		return moduloRepository.findAllModuloUserId(userName.getId());
 	}
+
 	/**
 	 * findOne
 	 */
-	 @Override
-	 @Transactional(readOnly = true)
+	@Override
+	@Transactional(readOnly = true)
 	public Optional<Modulo> findOne(Long id) {
 		log.debug("Request Service to get modulo : {}", id);
 		return moduloRepository.findById(id);
@@ -137,25 +138,85 @@ public class ModuloServiceImpl implements ModuloService {
 
 		String usuarioNombre = authentication.getName();
 		Set<User> user = userService.findUserByLogin(usuarioNombre);
-		
+
 		// Insert module whit module
 		modulo.setUser(user);
 		modulo = moduloRepository.save(modulo);
 
-		
-			MultimediaDTO multimediaDTO = new MultimediaDTO();
-			String identificador = "Module-" + modulo.getId();
-			multimediaDTO.setId(identificador);
-			VideoResponse<?> respuesta = multimediaService.saveFile(multimediaDTO);
-			respuesta.getPath();
-		
-	
-		
-		
+		MultimediaDTO multimediaDTO = new MultimediaDTO();
+		String identificador = "Module-" + modulo.getId();
+		multimediaDTO.setId(identificador);
+		VideoResponse<?> respuesta = multimediaService.saveFile(multimediaDTO);
+		respuesta.getPath();
+
 		log.debug("modulo id {}", modulo.getId());
 		mo.setModulo(modulo);
-		
+
 		return mo;
+	}
+
+	/**
+	 * seeker
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Set<Modulo> findModuloByFiltros(ModuloFiltroDTO dto) throws Exception {
+		ModuloFiltroDTO modu = new ModuloFiltroDTO();
+		Set<Modulo> mod = new HashSet<>();
+		if (dto.getTitulo() == null && dto.getDescripcion() == null && dto.getAsignatura() == null
+				&& dto.getNumeroGrados() == null && dto.getTemas() == null) {
+			throw new Exception(ErrorConstants.ERROR_FILTER);
+		}
+
+		modu = funtionFilter(dto);
+		if (modu.getTitulo() != null && modu.getDescripcion() != null && modu.getAsignatura().equals("")
+				&& modu.getNumeroGrados().equals("") && modu.getTemas().equals("")) {
+			mod = moduloRepository.findModuloByTituloByDescripcion(dto.getTitulo(), dto.getDescripcion());
+		} else {
+
+			mod = moduloRepository.findModuloByTituloByDescripcionByNumeroGrados(modu.getTitulo(),
+					modu.getDescripcion(), modu.getAsignatura(), modu.getNumeroGrados(), modu.getTemas());
+			log.debug("modulo id {}", mod);
+
+		}
+
+		return mod;
+	}
+
+	/**
+	 * findModuloByTituloByDescripcion
+	 */
+	@Override
+	public Set<Modulo> findModuloByTituloByDescripcion(ModuloFiltroDTO dto) {
+		return moduloRepository.findModuloByTituloByDescripcion(dto.getTitulo(), dto.getDescripcion());
+	}
+
+	/**
+	 * funtionFilter
+	 * @param dto
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private ModuloFiltroDTO funtionFilter(ModuloFiltroDTO dto) {
+
+		if (dto.getTitulo() == null) {
+			dto.setTitulo("");
+		}
+		if (dto.getDescripcion() == null) {
+			dto.setDescripcion("");
+		}
+
+		if (dto.getAsignatura() == null) {
+			dto.setAsignatura("");
+		}
+		if (dto.getNumeroGrados() == null) {
+			dto.setNumeroGrados("");
+		}
+		if (dto.getTemas() == null) {
+			dto.setTemas("");
+		}
+		return dto;
+
 	}
 
 }

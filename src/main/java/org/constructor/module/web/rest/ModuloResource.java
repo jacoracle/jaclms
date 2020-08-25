@@ -8,10 +8,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.module.domain.Modulo;
 import org.constructor.service.ModuloService;
 import org.constructor.service.dto.ModuloDTO;
+import org.constructor.service.dto.ModuloFiltroDTO;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -33,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -97,6 +98,7 @@ public class ModuloResource {
 	            .body(result);
 	    }
 	    
+	 
 	    /**
 	     * 
 	     * @param authentication
@@ -158,6 +160,9 @@ public class ModuloResource {
 	        return ResponseEntity.ok().headers(headers).body(page.getContent());
 	    }
 	    
+	   
+	 	    
+	    
 	    /**
 	     * {@code GET  /modulo/:id} : get the "id" modulo.
 	     *
@@ -195,4 +200,18 @@ public class ModuloResource {
 	        moduloService.delete(id);
 	        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
 	    }
+	    
+	   /**
+	    * getModuloFiltro
+	    * @param dto
+	    * @return
+	    * @throws Exception
+	    */
+	    @GetMapping(path = RestConstants.PATH_BUSQUEDA)	   
+	    public Set<Modulo> getModuloByBusqueda(@RequestBody ModuloFiltroDTO dto) throws Exception {    	
+	    	
+	        return  moduloService.findModuloByFiltros(dto);
+
+	    	
+ 	    }
 }
