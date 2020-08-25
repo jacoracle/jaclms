@@ -1,0 +1,66 @@
+<form [formGroup]="groupQuestion">
+    <!-- Respuestas -->
+    <div class="row-answer">
+        <!-- Ingresar Respuesta -->
+        <div class="" formArrayName="respuestas"
+             *ngFor="let answer of controlesRespuestas(indQuestion); let indAnswer = index;"
+             [ngClass]="{'answer-space': indAnswer >0 }">
+            <div class="" [formGroupName]="indAnswer">
+                <div class="form-nimbus">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text answer-question-space">
+                                <mat-radio-group formControlName="correcta" class="cont-radio"
+                                                 name="correcta{{indQuestion}}">
+                                    <mat-radio-button class="answer-radio"
+                                                      *ngIf="typeQuestion === 'unica' || typeQuestion==='verdaderoFalso'"
+                                                      [value]="true"
+                                                      [checked]="this.campoRespuestaCorrecta(indQuestion, indAnswer)"
+                                                      (change)="onRadioChange(indQuestion, indAnswer)"
+                                                      id="id_type_question{{indQuestion}}_answer{{indAnswer}}">
+                                    </mat-radio-button>
+                                </mat-radio-group>
+
+                                <mat-checkbox class="answer-radio"
+                                              id="id_type2_question{{indQuestion}}_answer{{indAnswer}}"
+                                              *ngIf="typeQuestion === 'multiple'"
+                                              formControlName="correcta"
+                                              (change)="onCheckChange()">
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <label for="id_answer{{indAnswer}}_question{{indQuestion}}"></label>
+                        <input
+                            [ngClass]="{'alert-input': !isValidAnswer(indQuestion, indAnswer)}"
+                            maxlength="50" type="text"
+                            class="form-control answer-question-space"
+                            name="respuesta{{indAnswer}}"
+                            id="id_answer{{indAnswer}}_question{{indQuestion}}"
+                            formControlName="respuesta" placeholder="Respuesta..."
+                            (focusout)="refreshQuestion(indQuestion)"/>
+                        <div class="input-group-prepend" *ngIf="typeQuestion !== 'verdaderoFalso'">
+                            <div class="input-group-text answer-question-space">
+                                <button name="deleteQuestion" class="delete-answer"
+                                        (click)="removeAnswer(indQuestion, indAnswer)">
+                                    <i class="icon ni-delete"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="!isValidAnswer(indQuestion, indAnswer)"
+                             class="form-alert">
+                            <p>Mensaje de corrección</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Ingresar Respuesta -->
+
+        <div class="row-add-answer">
+            <button class="secondary-btn" (click)="addAnswer(indQuestion)"
+                    [disabled]="controlesRespuestas(indQuestion).length>=4" *ngIf="typeQuestion !== 'verdaderoFalso'">
+                <i class="icon ni-add icon-negative"></i>
+                <span>Agregar respuesta</span>
+            </button>
+        </div>
+    </div> <!-- respuestas -->
+</form>

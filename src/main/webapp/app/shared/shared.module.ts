@@ -22,6 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ActivityPreviewComponent } from 'app/shared/activity-preview/activity-preview.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { ActivityAnswersComponent } from 'app/shared/activity-preview/questions/answers/activity-answers.component';
+import { ActivityQuestionsComponent } from 'app/shared/activity-preview/questions/activity-questions.component';
 
 @NgModule({
   imports: [
@@ -49,6 +51,8 @@ import { MatListModule } from '@angular/material/list';
     VideoModalComponent,
     ActivityModalComponent,
     ActivityPreviewComponent,
+    ActivityAnswersComponent,
+    ActivityQuestionsComponent,
     HasAnyAuthorityDirective
   ],
   entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, ActivityModalComponent],

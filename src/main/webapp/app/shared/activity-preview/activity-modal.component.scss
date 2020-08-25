@@ -103,7 +103,32 @@
 
 .type-q {
   position: relative;
-  width: 300px;
+  width: 350px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  label {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  .col-type-question {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  // .ev-check {
+  //   position: relative;
+  //   width: 300px;
+  //   height: auto;
+  //   display: flex;
+  //   margin-left: 20px;
+  // }
+}
+.type-q-evaluable {
+  position: relative;
+  width: 100px;
   height: 60px;
   display: flex;
   flex-direction: column;
@@ -316,11 +341,6 @@ mat-form-field {
 
 .question-radio {
   // height: 30px;
-}
-
-.answer-radio {
-  width: 20px;
-  height: 20px;
 }
 
 .answer-delete {

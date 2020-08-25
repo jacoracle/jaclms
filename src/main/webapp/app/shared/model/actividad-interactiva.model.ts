@@ -22,6 +22,6 @@ export class ContenidoActividad {}
 
 export class TipoActividad {
   public tipoActividad?: string;
-  public subtipo?: number;
+  public subtipo?: string;
   public opcion?: string;
 }

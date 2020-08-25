@@ -417,17 +417,29 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       }
       if (actividadInteractiva.tipoActividadInteractiva) {
         jsonFormIn.tipoActividad = actividadInteractiva.tipoActividadInteractiva;
+        if (
+          actividadInteractiva.tipoActividadInteractiva.opcion === 'unica' &&
+          actividadInteractiva.tipoActividadInteractiva.subtipo === 'falsoVerdadero'
+        ) {
+          jsonFormIn.tipoActividad.subtipo = 'texto';
+          jsonFormIn.tipoActividad.opcion = 'verdaderoFalso';
+        }
       }
     }
 
     this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
+      const jsonOutAssign = jsonFormOut;
       this.showLoader = true;
       if (actividadInteractiva && jsonFormOut && cantidadAtributos(jsonFormOut) > 0) {
+        if (jsonFormOut.tipoActividad.opcion === 'verdaderoFalso') {
+          jsonFormOut.tipoActividad.opcion = 'unica';
+          jsonFormOut.tipoActividad.subtipo = 'falsoVerdadero';
+        }
         this.actividadesInteractivas[indexActividad].tipoActividadInteractiva = jsonFormOut.tipoActividad;
-        delete jsonFormOut.tipoActividad;
         this.actividadesInteractivas[indexActividad].evaluable = jsonFormOut.evaluable;
-        delete jsonFormOut.evaluable;
-        Object.assign(actividadInteractiva.contenido, jsonFormOut);
+        delete jsonOutAssign.tipoActividad;
+        delete jsonOutAssign.evaluable;
+        Object.assign(actividadInteractiva.contenido, jsonOutAssign);
         this.actividadesInteractivas[indexActividad] = actividadInteractiva;
         this.activityService.setActivityProperties(this.actividadesInteractivas);
       }

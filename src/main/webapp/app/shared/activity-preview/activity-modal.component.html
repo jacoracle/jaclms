@@ -10,10 +10,6 @@
         <!-- <p>*Campo obligatorio</p> -->
     </div>
   </div>
-    <!-- <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-activity" type="button"
-            (click)="close()"><i class="icon ni-close"></i></button> -->
-
-    <!-- Content body -->
     <form name="activityForm" role="form" novalidate [formGroup]="activityForm" class="modal-act-content">
       <!-- Body -->
       <!--
@@ -32,142 +28,30 @@
                     <mat-radio-group aria-label="Select an option" formControlName="opcion"
                                      name="opcion">
                         <mat-radio-button value="unica" id="type_question"
-                                          class="question-radio" (change)="onOpcionChange($event)">Unica
+                                          class="question-radio" (change)="onOpcionChange($event)">
+                            Única
                         </mat-radio-button>
                         <mat-radio-button value="multiple" id="type_question2"
                                           class="question-radio" (change)="onOpcionChange($event)">
-                            Multiple
+                            Múltiple
+                        </mat-radio-button>
+                        <mat-radio-button value="verdaderoFalso" id="type_question3" class="question-radio"
+                                          (change)="onOpcionChange($event)">
+                            Verdadero Falso
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
               </div>
-              <div class="type-q">
-                <label>Evaluable:</label>
+              <div class="type-q-evaluable">
                 <div class="col-type-question">
+                    <label>Evaluable:</label>
                   <mat-checkbox mat-raised-button id="evaluable" formControlName="evaluable"></mat-checkbox>
                 </div>
               </div>
             </div>
-                  <!-- <div>
-                      <label>Seleccione el tipo de preguntas</label>
-                  </div>
-                  <div class="col-type-question" formGroupName="tipoActividad">
-                      <mat-radio-group aria-label="Select an option" formControlName="opcion"
-                                       name="opcion">
-                          <mat-radio-button value="unica" id="type_question"
-                                            class="question-radio" (change)="onOpcionChange($event)">Unica
-                          </mat-radio-button>
-                          <mat-radio-button value="multiple" id="type_question2"
-                                            class="question-radio" (change)="onOpcionChange($event)">
-                              Multiple
-                          </mat-radio-button>
-                      </mat-radio-group>
-                  </div> -->
-              <!-- Preguntas -->
-            <div formArrayName="preguntas"
-            *ngFor="let pregunta of preguntas().controls; let indQuestion = index;" class="content-preguntas">
-              <!-- <mat-divider></mat-divider> -->
-              <!-- Ingresar pregunta -->
-              <div class="row-wg">
-                 <div class="col-question" [formGroupName]="indQuestion">
-                     <mat-form-field>
-                         <mat-label><label
-                             for="id_question{{indQuestion}}">Pregunta {{indQuestion + 1}}
-                             *</label></mat-label>
-                         <input matInput [ngClass]="{'alert-input': !isValidQuestion(indQuestion)}"
-                                class="form-control"
-                                formControlName="pregunta" placeholder="Haz una pregunta ..."
-                                name="pregunta{{indQuestion}}"
-                                id="id_question{{indQuestion}}">
-                     </mat-form-field>
-                     <div class="form-nimbus">
-                         <div *ngIf="!isValidQuestion(indQuestion)" class="form-alert">
-                             <p>Mensaje de corrección</p>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="col-delete-question">
-                     <button (click)="removeQuestion(indQuestion)" class="btn-circle bs-danger">
-                      <i class="icon ni-delete icon-negative"></i>
-                     </button>
-                 </div>
-              </div><!-- Ingresar pregunta -->
 
-              <!-- Respuestas -->
-              <div [formGroupName]="indQuestion" class="row-answer">
-                 <!-- Ingresar Respuesta -->
-                 <div class="" formArrayName="respuestas"
-                      *ngFor="let answer of respuestas(indQuestion).controls; let indAnswer = index;"
-                      [ngClass]="{'answer-space': indAnswer >0 }">
-                     <div class="" [formGroupName]="indAnswer">
-                         <div class="form-nimbus">
-                             <div class="input-group">
-                                 <div class="input-group-prepend">
-                                     <div class="input-group-text answer-question-space">
-                                         <mat-radio-group formControlName="correcta" class="cont-radio"
-                                                          name="correcta{{indQuestion}}">
-                                             <mat-radio-button class="answer-radio"
-                                                               *ngIf="typeQuestion() === 'unica'"
-                                                               [value]="true"
-                                                               [checked]="this.campoRespuestaCorrecta(indQuestion, indAnswer)"
-                                                               (change)="onRadioChange(indQuestion, indAnswer)"
-                                                               id="id_type_question{{indQuestion}}_answer{{indAnswer}}">
-                                             </mat-radio-button>
-                                         </mat-radio-group>
-
-                                         <mat-checkbox class="answer-radio"
-                                                       id="id_type2_question{{indQuestion}}_answer{{indAnswer}}"
-                                                       *ngIf="typeQuestion() === 'multiple'"
-                                                       formControlName="correcta"
-                                                       (change)="onCheckChange()">
-                                         </mat-checkbox>
-                                     </div>
-                                 </div>
-                                 <label for="id_answer{{indAnswer}}_question{{indQuestion}}"></label>
-                                 <input
-                                     [ngClass]="{'alert-input': !isValidAnswer(indQuestion, indAnswer)}"
-                                     maxlength="50" type="text"
-                                     class="form-control answer-question-space"
-                                     name="respuesta{{indAnswer}}"
-                                     id="id_answer{{indAnswer}}_question{{indQuestion}}"
-                                     formControlName="respuesta" placeholder="Respuesta..."
-                                     (focusout)="refreshQuestion(indQuestion)"/>
-                                 <div class="input-group-prepend">
-                                     <div class="input-group-text answer-question-space">
-                                         <button name="deleteQuestion" class="delete-answer"
-                                                 (click)="removeAnswer(indQuestion, indAnswer)">
-                                          <i class="icon ni-delete"></i>
-                                         </button>
-                                     </div>
-                                 </div>
-                                 <div *ngIf="!isValidAnswer(indQuestion, indAnswer)"
-                                      class="form-alert">
-                                     <p>Mensaje de corrección</p>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div><!-- Ingresar Respuesta -->
-
-                 <div class="row-add-answer">
-                   <button class="secondary-btn" (click)="addAnswer(indQuestion)"
-                           [disabled]="respuestas(indQuestion).controls.length>=4">
-                      <i class="icon ni-add icon-negative"></i>
-                       <span>Agregar respuesta</span>
-                   </button>
-                 </div>
-              </div> <!-- respuestas -->
-              <!-- <mat-divider></mat-divider> -->
-            </div><!-- Preguntas -->
-
-            <div class="row-add-question">
-              <button class="main-btn" (click)="addQuestion()"
-                      [disabled]="preguntas().controls.length >= 10">
-                  <i class="icon ni-add icon-negative"></i>
-                  <span>Agregar Pregunta</span>
-              </button>
-            </div>
-
+              <jhi-activity-questions [activityForm]="activityForm" [submitted]="submitted" [typeQuestion]="typeQuestion()">
+              </jhi-activity-questions>
 
           </mat-drawer-content>
           <!-- Preview -->
@@ -178,9 +62,6 @@
       <!-- End body -->
       <!-- Footer -->
       <div class="modal-act-footer">
-        <!-- <mat-checkbox mat-raised-button id="evaluable" formControlName="evaluable">
-          Evaluable
-        </mat-checkbox> -->
         <button (click)="close()" class="secondary-btn">Cancelar</button>
         <button type="button" (click)="onSubmit()" class="main-btn">Crear Actividad</button>
       </div>
