@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -208,9 +209,14 @@ public class ModuloResource {
 	    * @throws Exception
 	    */
 	    @GetMapping(path = RestConstants.PATH_BUSQUEDA)	   
-	    public Set<Modulo> getModuloByBusqueda(@RequestBody ModuloFiltroDTO dto) throws Exception {    	
-	    	
-	        return  moduloService.findModuloByFiltros(dto);
+	    public Set<Modulo> getModuloByBusqueda(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String asignatura, @RequestParam String numeroGrados, @RequestParam String temas) throws Exception {   
+	    	 ModuloFiltroDTO mdto = new ModuloFiltroDTO();
+	    	 mdto.setTitulo(titulo);
+	    	 mdto.setDescripcion(descripcion);
+	    	 mdto.setAsignatura(asignatura);
+	    	 mdto.setNumeroGrados(numeroGrados);
+	    	 mdto.setTemas(temas);
+	        return  moduloService.findModuloByFiltros(mdto);
 
 	    	
  	    }

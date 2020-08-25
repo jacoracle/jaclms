@@ -176,7 +176,7 @@ public class ModuloServiceImpl implements ModuloService {
 
 			mod = moduloRepository.findModuloByTituloByDescripcionByNumeroGrados(modu.getTitulo(),
 					modu.getDescripcion(), modu.getAsignatura(), modu.getNumeroGrados(), modu.getTemas());
-			log.debug("modulo id {}", mod);
+			log.debug("modulo {}", mod);
 
 		}
 
