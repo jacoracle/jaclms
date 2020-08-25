@@ -1,0 +1,29 @@
+<div class="container-preview-uma">
+    <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-preview-uma" type="button"
+        (click)="activeModal.dismiss('closed')"><i class="icon ni-close"></i></button>
+    <div class="modal-preview-uma-body">
+        <div class="row-modal-preview-uma">
+            <div class="col-form-preview">
+                <!-- <video [src]="videoSrc" width="88%" controls #vPlayer></video> -->
+                <p>Preview del UMA</p>
+                <p>{{umaData!.nivelesModulo!.nivelJerarquico!.bloquesCurso | json}}</p>
+                <div class="content-uma">
+                    <ng-container *ngFor="let obj of bloquesUma!">
+                        <p>Tipo del componente:
+                            <strong>{{obj!.bloqueComponentes!.tipoBloqueComponentes.nombre}}</strong></p>
+                        <p>
+                            {{obj!.bloqueComponentes.componentes | json}}
+                        </p>
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'texto'"><!--aquí voy directo por el nombre, porq no sé q sentido tiene ir al array tiposBloquesComponentes si siempre trae un item (¬¬') -->
+                            <div *ngFor="let c of obj.bloqueComponentes!.componentes">
+                                <div class="content-text-uma" [innerHtml]="c.contenido.contenido"></div><!--{{c.contenido.contenido}}-->
+                            </div>
+                            <hr>
+                        </ng-container>
+
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

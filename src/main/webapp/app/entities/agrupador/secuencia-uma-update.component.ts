@@ -16,6 +16,7 @@ import { ModuloService } from '../modulo/modulo.service';
 import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.model';
 // import { IOrdenUMA } from 'app/shared/model/uma-agrupador-orden.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { UmaPreviewModalService } from 'app/services/uma-preview-modal.service';
 
 @Component({
   selector: 'jhi-secuencia-uma-update',
@@ -67,6 +68,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     protected agrupadorUmaService: AgrupadorUmaService,
     protected asignaturaService: AsignaturaService,
     protected gradoAcademicoService: GradoAcademicoService,
+    private umaPreviewModal: UmaPreviewModalService,
     protected activatedRoute: ActivatedRoute,
     private eventManager: JhiEventManager,
     // private route: ActivatedRoute,
@@ -246,5 +248,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  openPreview(secuence: any): void {
+    this.umaPreviewModal.open(secuence);
   }
 }

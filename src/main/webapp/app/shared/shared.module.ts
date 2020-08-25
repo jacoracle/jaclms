@@ -8,6 +8,7 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 import { VideoModalComponent } from 'app/shared/video-preview/video-modal.component';
 import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
+import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
 
 @NgModule({
   imports: [ConstructorSharedLibsModule],
@@ -19,9 +20,10 @@ import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
     LoginModalComponent,
     PdfModalComponent,
     VideoModalComponent,
+    UmaPreviewModalComponent,
     HasAnyAuthorityDirective
   ],
-  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent],
+  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, UmaPreviewModalComponent],
   exports: [
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
@@ -31,7 +33,8 @@ import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
     LoginModalComponent,
     PdfModalComponent,
     HasAnyAuthorityDirective,
-    VideoModalComponent
+    VideoModalComponent,
+    UmaPreviewModalComponent
   ]
 })
 export class ConstructorSharedModule {}
