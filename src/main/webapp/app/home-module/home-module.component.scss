@@ -1,0 +1,42 @@
+// container search and filter fields
+.container-search-form-uma {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1em;
+  flex-direction: column;
+
+  // box general search
+  .row-search-gral {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+
+    .txt-recent-umas {
+      display: flex;
+      align-items: center;
+      // align-self: start;
+      min-width: 200px;
+    }
+
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .container-field-filter {
+    border: 1px solid #a4b9e2;
+    padding: 4px 6px;
+    border-radius: 6px;
+
+    // filter uma fields
+    .row-filter-uma {
+      // border: solid 1px red;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      .mat-form-field {
+        width: 90%;
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AsignaturaService } from 'app/entities/asignatura/asignatura.service';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
 import { AgrupadorService } from './agrupador.service';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { IModulo } from 'app/shared/model/modulo.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
@@ -17,6 +17,7 @@ import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.mode
 // import { IOrdenUMA } from 'app/shared/model/uma-agrupador-orden.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { UmaPreviewModalService } from 'app/services/uma-preview-modal.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-secuencia-uma-update',
@@ -37,7 +38,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   agrupadorObj!: IAgrupador | null;
 
   account: Account | null = null;
-  authSubscription?: Subscription;
+  // authSubscription?: Subscription;
+  subscription!: Subscription;
+  private ngUnsubscribeSubject = new Subject();
   umasList: IModulo[] = new Array<IModulo>();
   // tiraUmas: IModulo[] = new Array<IModulo>();
   tiraUmas: IAgrupadorUma[] = new Array<IAgrupadorUma>();
@@ -46,18 +49,15 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   filteredTypeOpts: any;
 
   groupUmaForm = this.formbuilder.group({
-    sessionTopic: [],
-    umaAreaKnowledge: [],
-    sessionType: [],
-    umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(50)]),
-    umaTitleFormCtrl: new FormControl('', [Validators.required]),
-    titleSequenceUmas: new FormControl('', [Validators.required]),
-    desciptionSequenceUmas: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    searchTagsSequenceUmas: []
+    sessionType: new FormControl('', [Validators.maxLength(30)]),
+    sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+    umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+    academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+    umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+    umaTitleFormCtrl: new FormControl('', [Validators.maxLength(30)])
   });
 
   isSaving = false;
-  subscription: any;
   idSequenceToLoad!: number;
 
   constructor(
@@ -84,7 +84,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       // console.error('#### URL Data: ', data);
     });
 
-    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
+    this.subscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
         this.umaService.query().subscribe(
@@ -94,23 +94,28 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
           () => this.onQueryError()
         );
         if (this.idSequenceToLoad) {
-          this.agrupadorService.find(this.idSequenceToLoad).subscribe(res => {
-            if (res.body) {
-              // console.error('#### Response Query Agrupador con ID: ', this.idSequenceToLoad);
-              // console.error(res.body);
-              this.agrupadorObj = res.body;
-              this.tiraUmas = [...res.body.modulos!];
-              // this.updatingGradesSelected(null, false);
-            }
-          });
+          this.agrupadorService
+            .find(this.idSequenceToLoad)
+            .pipe(takeUntil(this.ngUnsubscribeSubject))
+            .subscribe(res => {
+              if (res.body) {
+                // console.error('#### Response Query Agrupador con ID: ', this.idSequenceToLoad);
+                // console.error(res.body);
+                this.agrupadorObj = res.body;
+                this.tiraUmas = [...res.body.modulos!];
+                // this.updatingGradesSelected(null, false);
+              }
+            });
         }
       }
     });
   }
 
   ngOnDestroy(): void {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.ngUnsubscribeSubject.next();
+      this.ngUnsubscribeSubject.complete();
     }
   }
 
@@ -145,31 +150,13 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       this.addUmaToSequence(event.previousIndex, event.currentIndex);
     }
-
-    /*
-    const idx = event.container.data.indexOf(event.previousContainer.data[event.previousIndex]);
-    if (event.previousContainer === event.container) {
-      this.isReorder = true;
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      // this.updateUmasOrder();
-      // this.updateSequenceUmaOrder();
-
-    } else if (idx !== -1) {
-      return;
-    } else {
-      this.isReorder = false;
-      //  transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      this.addUmaToSequence(event.previousIndex, event.currentIndex);
-    }
-    */
   }
 
   /**
    * Execute PUT request to update order uma list
    */
   updateSequenceUmaOrder(): void {
-    this.agrupadorUmaService.update(this.tiraUmas).subscribe(
+    this.subscription = this.agrupadorUmaService.update(this.tiraUmas).subscribe(
       res => {
         if (res.body) {
           // console.error('#### Response PUT umas');
@@ -199,8 +186,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     // console.error(objUmaToAdd);
     // console.error('#### Agrupador Creado');
     // console.error(this.agrupadorObj);
-
-    // console.error('#### Agrupador Modulo to Save');
     const objToSave: IAgrupadorUma = this.dataToAgrupadorUma(objUmaToAdd, orden);
     // console.error(objToSave);
     this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
@@ -217,18 +202,16 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   }
 
   deleteUmaFromSequence(item: IAgrupadorUma): void {
-    // console.error('#### Elemento a Eliminar de la tira de UMAs');
-    // console.error(item);
     this.tiraUmas.splice(this.tiraUmas.indexOf(item), 1);
 
-    this.agrupadorUmaService.delete(item.id!).subscribe(() => {
+    this.subscription = this.agrupadorUmaService.delete(item.id!).subscribe(() => {
       this.updateUmasOrder();
       this.updateSequenceUmaOrder();
     });
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupadorUma>>): void {
-    result.subscribe(
+    this.subscription = result.subscribe(
       res => this.onSaveSuccess(res.body),
       () => this.onSaveError()
     );
@@ -242,7 +225,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     if (!this.isReorder) {
       this.tiraUmas.push(res);
     }
-    // this.tiraUmas
     // this.router.navigate(['/uma-groups-home']);
   }
 
@@ -252,5 +234,28 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   openPreview(secuence: any): void {
     this.umaPreviewModal.open(secuence);
+  }
+
+  executeSearch(): void {
+    // this.groupUmaForm.
+
+    this.subscription = this.umaService
+      .search(this.mapFormToSearchParams())
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(res => {
+        console.error('#### Response búsqueda: ');
+        console.error(res);
+      });
+    // console.error(this.mapFormToSearchParams());
+  }
+
+  mapFormToSearchParams(): any {
+    return {
+      asignatura: this.groupUmaForm.get('umaAreaKnowledgeFormCtrl')!.value,
+      descripcion: this.groupUmaForm.get('umaDescriptionFormCtrl')!.value,
+      numeroGrados: this.groupUmaForm.get('academicGradeFormCtrl')!.value,
+      temas: this.groupUmaForm.get('sessionTopicFormCtrl')!.value,
+      titulo: this.groupUmaForm.get('umaTitleFormCtrl')!.value
+    };
   }
 }

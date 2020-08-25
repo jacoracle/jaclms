@@ -53,19 +53,21 @@ export class AlertErrorComponent implements OnDestroy {
           if (errorHeader) {
             const entityName = translateService.instant('global.menu.entities.' + entityKey);
             this.addErrorAlert(errorHeader, errorHeader, { entityName });
-          } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.fieldErrors) {
-            const fieldErrors = httpErrorResponse.error.fieldErrors;
-            for (const fieldError of fieldErrors) {
-              if (['Min', 'Max', 'DecimalMin', 'DecimalMax'].includes(fieldError.message)) {
-                fieldError.message = 'Size';
+          } else if (httpErrorResponse.error) {
+            if (httpErrorResponse.error !== '' && httpErrorResponse.error.fieldErrors) {
+              const fieldErrors = httpErrorResponse.error.fieldErrors;
+              for (const fieldError of fieldErrors) {
+                if (['Min', 'Max', 'DecimalMin', 'DecimalMax'].includes(fieldError.message)) {
+                  fieldError.message = 'Size';
+                }
+                // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
+                const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
+                const fieldName = translateService.instant('constructorApp.' + fieldError.objectName + '.' + convertedField);
+                this.addErrorAlert('Error on field "' + fieldName + '"', 'error.' + fieldError.message, { fieldName });
               }
-              // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
-              const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
-              const fieldName = translateService.instant('constructorApp.' + fieldError.objectName + '.' + convertedField);
-              this.addErrorAlert('Error on field "' + fieldName + '"', 'error.' + fieldError.message, { fieldName });
+            } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
+              this.addErrorAlert(httpErrorResponse.error.message, httpErrorResponse.error.message, httpErrorResponse.error.params);
             }
-          } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
-            this.addErrorAlert(httpErrorResponse.error.message, httpErrorResponse.error.message, httpErrorResponse.error.params);
           } else {
             this.addErrorAlert(httpErrorResponse.error);
           }

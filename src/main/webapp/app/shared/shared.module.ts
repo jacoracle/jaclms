@@ -9,6 +9,7 @@ import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 import { VideoModalComponent } from 'app/shared/video-preview/video-modal.component';
 import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
 import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   imports: [ConstructorSharedLibsModule],
@@ -25,6 +26,7 @@ import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
   ],
   entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, UmaPreviewModalComponent],
   exports: [
+    MatInputModule,
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
     SafeHtmlPipe,

@@ -1,5 +1,5 @@
 import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
@@ -9,6 +9,8 @@ import { IModulo } from 'app/shared/model/modulo.model';
 
 import { HttpResponse } from '@angular/common/http';
 import { SafeUrl } from '@angular/platform-browser';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-home-module',
@@ -17,16 +19,32 @@ import { SafeUrl } from '@angular/platform-browser';
 })
 export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
-  authSubscription?: Subscription;
+  // authSubscription?: Subscription;
+  subscription!: Subscription;
+  private ngUnsubscribeSubject = new Subject();
   modulos: any = [];
   defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
   showLoader = false;
 
-  constructor(private accountService: AccountService, private loginModalService: LoginModalService, private moduleService: ModuloService) {}
+  umaForm = this.formbuilder.group({
+    sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+    umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+    academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+    umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+    umaTitleFormCtrl: new FormControl('', [Validators.maxLength(30)])
+  });
+
+  constructor(
+    private accountService: AccountService,
+    private loginModalService: LoginModalService,
+    private formbuilder: FormBuilder,
+    private moduleService: ModuloService,
+    private umaSeachService: ModuloService
+  ) {}
 
   ngOnInit(): void {
     this.showLoader = true;
-    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
+    this.subscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
         this.moduleService.query().subscribe(
@@ -49,8 +67,10 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   }
 
   ngOnDestroy(): void {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.ngUnsubscribeSubject.next();
+      this.ngUnsubscribeSubject.complete();
     }
   }
 
@@ -75,5 +95,26 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
       }
     });
     return foundIndex;
+  }
+
+  executeSearch(): void {
+    // this.groupUmaForm.
+    this.subscription = this.umaSeachService
+      .search(this.mapFormToSearchParams())
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(res => {
+        console.error('#### Response búsqueda: ');
+        console.error(res);
+      });
+  }
+
+  mapFormToSearchParams(): any {
+    return {
+      asignatura: this.umaForm.get('umaAreaKnowledgeFormCtrl')!.value,
+      descripcion: this.umaForm.get('umaDescriptionFormCtrl')!.value,
+      numeroGrados: this.umaForm.get('academicGradeFormCtrl')!.value,
+      temas: this.umaForm.get('sessionTopicFormCtrl')!.value,
+      titulo: this.umaForm.get('umaTitleFormCtrl')!.value
+    };
   }
 }
