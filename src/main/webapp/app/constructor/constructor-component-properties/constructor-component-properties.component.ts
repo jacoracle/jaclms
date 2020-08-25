@@ -409,6 +409,17 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   createUpdateActivity(): void {
     const indexActividad = this.actividadesInteractivas.length - 1;
     const actividadInteractiva = this.actividadesInteractivas[indexActividad];
+    const jsonFormIn = this.jsonFormEntrada(actividadInteractiva);
+
+    this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
+      this.actividadesInteractivas[indexActividad] = this.jsonFormSalida(jsonFormOut, actividadInteractiva);
+      this.activityService.setActivityProperties(this.actividadesInteractivas);
+
+      this.showLoader = false;
+    });
+  }
+
+  jsonFormEntrada(actividadInteractiva: ActividadInteractiva): IActividadPregunta | undefined {
     let jsonFormIn: IActividadPregunta | undefined;
     if (cantidadAtributos(actividadInteractiva.contenido) > 0) {
       jsonFormIn = actividadInteractiva.contenido as IActividadPregunta;
@@ -419,32 +430,33 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         jsonFormIn.tipoActividad = actividadInteractiva.tipoActividadInteractiva;
         if (
           actividadInteractiva.tipoActividadInteractiva.opcion === 'unica' &&
-          actividadInteractiva.tipoActividadInteractiva.subtipo === 'falsoVerdadero'
+          actividadInteractiva.tipoActividadInteractiva.subtipo === 'verdaderoFalso'
         ) {
           jsonFormIn.tipoActividad.subtipo = 'texto';
           jsonFormIn.tipoActividad.opcion = 'verdaderoFalso';
         }
       }
     }
+    return jsonFormIn;
+  }
 
-    this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
-      const jsonOutAssign = jsonFormOut;
-      this.showLoader = true;
-      if (actividadInteractiva && jsonFormOut && cantidadAtributos(jsonFormOut) > 0) {
-        if (jsonFormOut.tipoActividad.opcion === 'verdaderoFalso') {
-          jsonFormOut.tipoActividad.opcion = 'unica';
-          jsonFormOut.tipoActividad.subtipo = 'falsoVerdadero';
-        }
-        this.actividadesInteractivas[indexActividad].tipoActividadInteractiva = jsonFormOut.tipoActividad;
-        this.actividadesInteractivas[indexActividad].evaluable = jsonFormOut.evaluable;
-        delete jsonOutAssign.tipoActividad;
-        delete jsonOutAssign.evaluable;
-        Object.assign(actividadInteractiva.contenido, jsonOutAssign);
-        this.actividadesInteractivas[indexActividad] = actividadInteractiva;
-        this.activityService.setActivityProperties(this.actividadesInteractivas);
+  jsonFormSalida(jsonFormOut: IActividadPregunta, actividadInteractiva: ActividadInteractiva): ActividadInteractiva {
+    this.showLoader = true;
+    if (actividadInteractiva && jsonFormOut && cantidadAtributos(jsonFormOut) > 0) {
+      if (jsonFormOut.tipoActividad.opcion === 'verdaderoFalso') {
+        jsonFormOut.tipoActividad.opcion = 'unica';
+        jsonFormOut.tipoActividad.subtipo = 'verdaderoFalso';
       }
-      this.showLoader = false;
-    });
+      actividadInteractiva.tipoActividadInteractiva = jsonFormOut.tipoActividad;
+      actividadInteractiva.evaluable = jsonFormOut.evaluable;
+      if (cantidadAtributos(actividadInteractiva.tipoActividadInteractiva) > 0) {
+        delete jsonFormOut.tipoActividad;
+        delete jsonFormOut.evaluable;
+        actividadInteractiva.contenido = new ContenidoActividad();
+        Object.assign(actividadInteractiva.contenido, jsonFormOut);
+      }
+    }
+    return actividadInteractiva;
   }
 
   deleteActivity(): void {
