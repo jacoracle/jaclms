@@ -412,9 +412,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     const jsonFormIn = this.jsonFormEntrada(actividadInteractiva);
 
     this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
-      this.actividadesInteractivas[indexActividad] = this.jsonFormSalida(jsonFormOut, actividadInteractiva);
-      this.activityService.setActivityProperties(this.actividadesInteractivas);
-
+      if (jsonFormOut) {
+        this.actividadesInteractivas[indexActividad] = this.jsonFormSalida(jsonFormOut, actividadInteractiva);
+        this.activityService.setActivityProperties(this.actividadesInteractivas);
+      }
       this.showLoader = false;
     });
   }
