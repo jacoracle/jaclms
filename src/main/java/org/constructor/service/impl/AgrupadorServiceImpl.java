@@ -91,6 +91,9 @@ public class AgrupadorServiceImpl  implements AgrupadorService{
         return agrupadorRepository.findById(id);
 	}
 
+	/**
+	 * Delete by id
+	 */
 	@Override
 	public void delete(Long id) {
 		log.debug("Request to delete agrupador : {}", id);
@@ -153,9 +156,6 @@ public class AgrupadorServiceImpl  implements AgrupadorService{
 		}
 	        return new PageImpl<>(agrupadorList);
 	}
-
-
-
 
 
 }
