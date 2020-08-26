@@ -37,6 +37,16 @@
             </mat-step>
 
           </mat-horizontal-stepper>
+          <br>
+          <pre>
+            Estado del formulario: {{formSteps?.get([0]).valid}}
+            <br>
+            Estatus: {{formSteps?.get([0]).status}}
+            <br>
+          </pre>
+          <pre>
+            {{formSteps.get([0]).value | json}}
+          </pre>
         </div>
       </div>
 
@@ -53,8 +63,7 @@
       <button  (click)="executeSave($event)" class="main-btn" matTooltip="Guarda y/o actualiza Agrupador.">Guardar</button>
       <!-- this save is for  -->
       <!-- <button *ngIf="isViewDetailOrEdit() && !isCreation()" (click)="executeSave($event)" class="main-btn">Guardar (save & update)</button> -->
-      <!-- <p>{{isCompleted}} - ID: {{idSequenceToLoad}}</p> -->
-      <button *ngIf="isCreation() && !isViewDetailOrEdit()" class="secondary-btn" matTooltip="Aceptar cambios y regresar al Home." routerLink="/uma-groups-home">Aceptar</button>
+      <!-- <button *ngIf="isCreation() && !isViewDetailOrEdit()" class="secondary-btn" matTooltip="Aceptar cambios y regresar al Home." routerLink="/uma-groups-home">Aceptar</button> -->
     </div>
 
   </div>
