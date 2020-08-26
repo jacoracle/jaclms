@@ -9,6 +9,7 @@
   border-radius: 4px;
   top: 5%;
   box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
+
   @include smartphone {
     width: 360px;
     min-height: auto;
@@ -59,6 +60,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       @include smartphone {
         width: 84%;
       }
@@ -81,15 +83,86 @@
         }
 
         .content-uma {
-          border: solid 1px #ccc;
+          border: solid 1px greenyellow;
+          width: 100%;
 
           .content-text-uma {
             background-color: lightblue;
             color: #fff;
             padding: 10px 15px;
           }
+
+          .content-text-title-uma {
+            background-color: #ccc;
+            border: solid 1px yellow;
+          }
+
+          .content-img-block {
+            align-items: center;
+            background-color: #ccc;
+            border: solid 1px lightcoral;
+            display: flex;
+            justify-content: center;
+            min-height: 300px;
+            padding: 10px;
+          }
+
+          .content-pdf-block,
+          .content-sound-block,
+          .content-video-block {
+            align-items: center;
+            background-color: #ccc;
+            border: solid 1px black;
+            display: flex;
+            justify-content: center;
+            min-height: 250px;
+            padding: 10px;
+            text-align: center;
+
+            span {
+              font-size: 3.5em;
+            }
+          }
         }
       }
+    }
+  }
+}
+
+.container-componentes {
+  display: flex;
+  border: solid 1px #000;
+
+  .text-content-block {
+    border: solid 1px red;
+    padding: 10px;
+    width: 50%;
+  }
+
+  .img-content-block {
+    border: solid 1px blue;
+    padding: 6px;
+    width: 50%;
+  }
+
+  .video-content-block {
+    border: solid 1px green;
+    padding: 10px;
+    width: 50%;
+  }
+
+  .text-video-content-block {
+    display: block;
+    color: salmon;
+  }
+
+  .video-indicacion-content-block {
+    border: solid 1px #ccc;
+    display: inline-block;
+    text-align: center;
+    width: 90%;
+    span {
+      font-size: 3.5em;
     }
   }
 }

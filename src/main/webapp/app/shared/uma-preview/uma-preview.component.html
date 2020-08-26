@@ -6,20 +6,142 @@
             <div class="col-form-preview">
                 <!-- <video [src]="videoSrc" width="88%" controls #vPlayer></video> -->
                 <p>Preview del UMA</p>
-                <p>{{umaData!.nivelesModulo!.nivelJerarquico!.bloquesCurso | json}}</p>
+                <!-- <p>{{umaData!.nivelesModulo!.nivelJerarquico!.bloquesCurso | json}}</p> -->
                 <div class="content-uma">
                     <ng-container *ngFor="let obj of bloquesUma!">
                         <p>Tipo del componente:
                             <strong>{{obj!.bloqueComponentes!.tipoBloqueComponentes.nombre}}</strong></p>
-                        <p>
-                            {{obj!.bloqueComponentes.componentes | json}}
-                        </p>
-                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'texto'"><!--aquí voy directo por el nombre, porq no sé q sentido tiene ir al array tiposBloquesComponentes si siempre trae un item (¬¬') -->
+                        <!-- <p>{{obj!.bloqueComponentes.componentes | json}}</p> -->
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen_texto'">
+
+                            <div class="container-componentes">
+                                <ng-container *ngFor="let bc of obj.bloqueComponentes.componentes">
+
+                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'text'">
+                                        <div class="text-content-block">
+                                            <div [innerHtml]="bc.contenido.contenido"></div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'image'">
+                                        <div class="img-content-block">
+                                            <img [src]="bc.contenido.contenido">
+                                        </div>
+                                    </ng-container>
+
+
+                                </ng-container>
+                            </div>
+                            <!-- termina container-componentes -->
+                        </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'titulo'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-                                <div class="content-text-uma" [innerHtml]="c.contenido.contenido"></div><!--{{c.contenido.contenido}}-->
+                                <div class="content-text-title-uma" [innerHtml]="c.contenido.contenido"></div>
+                                <!--{{c.contenido.contenido}}-->
                             </div>
                             <hr>
                         </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'texto'">
+                            <div *ngFor="let c of obj.bloqueComponentes!.componentes">
+                                <div class="content-text-uma" [innerHtml]="c.contenido.contenido"></div>
+                                <!--{{c.contenido.contenido}}-->
+                            </div>
+                            <hr>
+                        </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen'">
+                            <div *ngFor="let c of obj.bloqueComponentes!.componentes">
+                                <div class="content-img-block">
+                                    <!-- <p>{{c.contenido.contenido}}</p> -->
+                                    <img [src]="c.contenido.contenido">
+                                </div>
+                            </div>
+                            <hr>
+                        </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'pdf'">
+                            <div *ngFor="let c of obj.bloqueComponentes!.componentes">
+                                <div class="content-pdf-block">
+                                    <span class="material-icons">
+                                        picture_as_pdf
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                        </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'sound'">
+                            <div *ngFor="let c of obj.bloqueComponentes!.componentes">
+                                <div class="content-sound-block">
+                                    <span class="material-icons">
+                                        surround_sound
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                        </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'video'">
+                            <div *ngFor="let c of obj.bloqueComponentes!.componentes">
+                                <div class="content-video-block">
+                                    <span class="material-icons">
+                                        video_library
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                        </ng-container>
+
+                        <ng-container
+                            *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'indicacion_video'">
+                            <div class="container-componentes">
+                                <ng-container *ngFor="let bc of obj.bloqueComponentes.componentes">
+
+                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'text'">
+                                        <div class="text-video-content-block">
+                                            <div [innerHtml]="bc.contenido.contenido"></div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'video'">
+                                        <div class="video-indicacion-content-block">
+                                            <span class="material-icons">
+                                                video_library
+                                            </span>
+                                        </div>
+                                    </ng-container>
+
+
+                                </ng-container>
+                            </div>
+                            <hr>
+                        </ng-container>
+
+                        <ng-container
+                            *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'video_envolvente'">
+                            <div class="container-componentes">
+                                <ng-container *ngFor="let bc of obj.bloqueComponentes.componentes">
+
+                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'text'">
+                                        <div class="text-content-block">
+                                            <div [innerHtml]="bc.contenido.contenido"></div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'video'">
+                                        <div class="video-content-block">
+                                            <span class="material-icons">
+                                                video_library
+                                            </span>
+                                        </div>
+                                    </ng-container>
+
+
+                                </ng-container>
+                            </div>
+                            <hr>
+                        </ng-container>
+
 
                     </ng-container>
                 </div>
