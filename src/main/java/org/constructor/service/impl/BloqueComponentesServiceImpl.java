@@ -50,6 +50,7 @@ public class BloqueComponentesServiceImpl implements BloqueComponentesService {
 	 */
 	@Override
 	public Page<BloqueComponentes> findAll(Pageable pageable) {
+		log.debug("fin all bloque componente: {}", pageable);
 		return bloqueComponentesRepository.findAll(pageable);
 	}
 

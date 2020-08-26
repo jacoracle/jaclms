@@ -43,7 +43,7 @@ public class TipoBloqueComponentesServiceImpl implements TipoBloqueComponentesSe
 	 */
 	@Override
 	public TipoBloqueComponentes save(TipoBloqueComponentes tipoBloqueComponentes) {
-		
+		log.debug("Save tipoBloqueComponentes: {}", tipoBloqueComponentes);
 		return tipoBloqueComponentesRepository.save(tipoBloqueComponentes);
 	}
 

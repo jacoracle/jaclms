@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import org.springframework.core.annotation.Order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
