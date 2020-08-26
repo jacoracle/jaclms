@@ -123,7 +123,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     this.groupUmaForm.patchValue({
       titleSequenceUmas: data.titulo,
       desciptionSequenceUmas: data.descripcion,
-      searchTagsSequenceUmas: [] // data.etiquetas//  !.map((t: ITagAgrupador) => t.descripcion)
+      searchTagsSequenceUmas: [], // data.etiquetas//  !.map((t: ITagAgrupador) => t.descripcion)
+      sendRegisterForm: true
     });
     this.tagsBusquedaAgrupador = [...data.etiquetas!];
   }
