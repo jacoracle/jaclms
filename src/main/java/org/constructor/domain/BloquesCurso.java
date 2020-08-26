@@ -49,11 +49,11 @@ public class BloquesCurso  implements Serializable {
 	@Column(name = "indicador_original")
 	private Long indicadorOriginal;
 	
-	/** The nivel jerarquico. */
+	/** The Nivel Modulo. */
 	@ManyToOne
-	@JoinColumn(name = "nivel_jerarquico_id", nullable=false)
+	@JoinColumn(name = "nivel_modulo_id", nullable=false)
 	@JsonIgnore
-	private NivelJerarquico nivelJerarquico;
+	private NivelModulo nivelModulo;
 	
 	/** The bloque componentes. */
 	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
@@ -156,25 +156,21 @@ public class BloquesCurso  implements Serializable {
 	public void setIndicadorOriginal(Long indicadorOriginal) {
 		this.indicadorOriginal = indicadorOriginal;
 	}
-
-	/**
-	 * Gets the nivel jerarquico.
-	 *
-	 * @return the nivelJerarquico
-	 */
-	public NivelJerarquico getNivelJerarquico() {
-		return nivelJerarquico;
-	}
-
-	/**
-	 * Sets the nivel jerarquico.
-	 *
-	 * @param nivelJerarquico the nivelJerarquico to set
-	 */
-	public void setNivelJerarquico(NivelJerarquico nivelJerarquico) {
-		this.nivelJerarquico = nivelJerarquico;
-	}
 	
+	/**
+	 * @return the nivelModulo
+	 */
+	public NivelModulo getNivelModulo() {
+		return nivelModulo;
+	}
+
+	/**
+	 * @param nivelModulo the nivelModulo to set
+	 */
+	public void setNivelModulo(NivelModulo nivelModulo) {
+		this.nivelModulo = nivelModulo;
+	}
+
 	/**
 	 * Gets the bloque componentes.
 	 *

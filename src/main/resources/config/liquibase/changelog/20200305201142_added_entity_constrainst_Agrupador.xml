@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Agrupador.
+    -->
+    <changeSet id="20200305201142-1" author="jhipster">
+    
+      <addForeignKeyConstraint baseColumnNames="modulo_id"
+                                 baseTableName="agrupador_modulo"
+                                 constraintName="fk_agrupador_modulo_modulo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="modulo"/>
+    
+    
+      <addForeignKeyConstraint baseColumnNames="agrupador_id"
+                                 baseTableName="agrupador_modulo"
+                                 constraintName="fk_agrupador_modulo_agrupador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="agrupador"/>
+                                 
+      <addForeignKeyConstraint baseColumnNames="usuario_id"
+                                 baseTableName="agrupador_usuario"
+                                 constraintName="fk_agrupador_usuario_usuario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    
+    
+    
+     <addForeignKeyConstraint baseColumnNames="agrupador_id"
+                                 baseTableName="agrupador_usuario"
+                                 constraintName="fk_agrupador_usuario_agrupador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="agrupador"/>                    
+    
+                                 
+      
+ 
+     
+
+      </changeSet>
+</databaseChangeLog>
+    

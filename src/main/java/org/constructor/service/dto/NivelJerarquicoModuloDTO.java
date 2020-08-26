@@ -156,7 +156,7 @@ public class NivelJerarquicoModuloDTO {
 
 	@Override
 	public String toString() {
-		return "NivelJerarquicoDTO [ moduloId=" + moduloId + ", nivelId=" + nivelId
+		return "NivelModuloDTO [ moduloId=" + moduloId + ", nivelId=" + nivelId
 				+ ", nombre=" + nombre + ", tipo=" + tipo + ", orden=" + orden + ", informacionAdicional="
 				+ informacionAdicional + ", bloquesCurso=" + bloquesCurso + "]";
 	}

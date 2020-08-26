@@ -80,6 +80,13 @@ import { ConstructorActivityComponent } from 'app/constructor/components/constru
     ConstructorHierarchicalStructureComponent,
     ConstructorBookInformationComponent,
     ConstructorComponentPropertiesComponent
+  ],
+  exports: [
+    TopBarComponent,
+    RightSidebarComponent,
+    LeftSidebarComponent,
+    ConstructorVisorContainerComponent,
+    ConstructorComponentContainerComponent
   ]
 })
 export class ConstructorLayoutModule {}

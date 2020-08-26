@@ -1,0 +1,20 @@
+.container-stepper-group {
+}
+.mat-stepper-horizontal {
+  background-color: transparent;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.container-stepper-group {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.alert-sequence-configuration {
+  // border: solid 1px red;
+  position: absolute;
+  top: 85px;
+  z-index: 99999;
+}
