@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.springframework.core.annotation.Order;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -49,7 +51,8 @@ public class TipoBloqueComponentes implements Serializable {
 	
 	
 	@OneToMany(mappedBy="tipoBloqueComponentes", fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
-	@OrderBy ("orden")
+	@OrderBy ("orden ASC")
+
 	private Set<TiposBloquesComponentes> tiposBloquesComponentes  = new HashSet<>();
 	
 	/** The bloque componentes. */
