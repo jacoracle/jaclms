@@ -43,6 +43,7 @@ public class EstructuraJerarquicaServiceImpl implements EstructuraJerarquicaServ
 	 */
 	@Override
 	public EstructuraJerarquica save(EstructuraJerarquica estructuraJerarquica) {
+		log.debug("Save estructuraJerarquica: {}", estructuraJerarquica);
 		return estructuraJerarquicaRepository.save(estructuraJerarquica);
 	}
 
