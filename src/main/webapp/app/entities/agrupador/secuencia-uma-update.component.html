@@ -60,11 +60,11 @@
                 </div>
 
                 <div class="btn-search-group">
-                    <button class="main-btn mr-2" (click)="executeSearch()" type="button">
+                  <button class="secondary-btn" (click)="resetUmas()" type="button">
+                      Limpiar
+                  </button>
+                    <button class="main-btn" (click)="executeSearch()" type="button">
                         Buscar
-                    </button>
-                    <button class="secondary-btn" (click)="resetUmas()" type="button">
-                        Restablecer
                     </button>
                 </div>
 
@@ -138,7 +138,7 @@
     <!--termina sequence-uma-body-->
 
     <div class="sequence-uma-bar">
-        <div class="title-sequence-uma">.:. Secuencia de Umas .:.</div>
+        <div class="title-sequence-uma">Secuencia de Umas</div>
         <div class="uma-item-sequence" cdkDropList [cdkDropListData]="tiraUmas" (cdkDropListDropped)="drop($event)">
             <div cdkDrag *ngFor="let item of tiraUmas">
                 <div class="item-uma">
