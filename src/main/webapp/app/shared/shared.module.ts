@@ -10,6 +10,7 @@ import { VideoModalComponent } from 'app/shared/video-preview/video-modal.compon
 import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
 import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
 import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [ConstructorSharedLibsModule],
@@ -27,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
   entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, UmaPreviewModalComponent],
   exports: [
     MatInputModule,
+    MatAutocompleteModule,
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
     SafeHtmlPipe,

@@ -30,7 +30,7 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
   groupUmaForm = this.formbuilder.group({
     tituloAgrupador: [],
     sequenceTitleFormCtrl: new FormControl('', [
-      Validators.required
+      Validators.maxLength(50)
       // Validators.email,
     ]),
     sequenceDescriptionFormCtrl: new FormControl('', [Validators.maxLength(50)]),
@@ -95,7 +95,7 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     console.error('Error');
   }
 
-  searchUmas(): void {
+  searchAgrupadores(): void {
     // console.error('Debera buscar agrupadociones/secuencias de UMAs');
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.save' })

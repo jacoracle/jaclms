@@ -14,7 +14,6 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AgrupadorUmaService } from './agrupador-uma.service';
 import { ModuloService } from '../modulo/modulo.service';
 import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.model';
-// import { IOrdenUMA } from 'app/shared/model/uma-agrupador-orden.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { UmaPreviewModalService } from 'app/services/uma-preview-modal.service';
 import { takeUntil } from 'rxjs/operators';
@@ -38,11 +37,10 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   agrupadorObj!: IAgrupador | null;
 
   account: Account | null = null;
-  // authSubscription?: Subscription;
   subscription!: Subscription;
   private ngUnsubscribeSubject = new Subject();
   umasList: IModulo[] = new Array<IModulo>();
-  // tiraUmas: IModulo[] = new Array<IModulo>();
+  originalUmasList: IModulo[] = new Array<IModulo>();
   tiraUmas: IAgrupadorUma[] = new Array<IAgrupadorUma>();
   isReorder: boolean;
 
@@ -90,6 +88,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
         this.umaService.query().subscribe(
           (res: HttpResponse<IModulo[]>) => {
             this.umasList = Array.from(res.body!);
+            this.originalUmasList = [...this.umasList];
           },
           () => this.onQueryError()
         );
@@ -159,8 +158,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     this.subscription = this.agrupadorUmaService.update(this.tiraUmas).subscribe(
       res => {
         if (res.body) {
-          // console.error('#### Response PUT umas');
-          // console.error(res.body);
           this.tiraUmas = res.body.agrupador!.modulos!;
         }
       },
@@ -183,11 +180,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   addUmaToSequence(idx: number, orden: number): void {
     const objUmaToAdd = this.umasList[idx];
-    // console.error(objUmaToAdd);
-    // console.error('#### Agrupador Creado');
-    // console.error(this.agrupadorObj);
     const objToSave: IAgrupadorUma = this.dataToAgrupadorUma(objUmaToAdd, orden);
-    // console.error(objToSave);
     this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
   }
 
@@ -219,8 +212,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   protected onSaveSuccess(res: any): void {
     // this.router.navigate(['/uma-groups-home', res.body.modulo.id, 'module']);
-    // console.error('#### Sequencia creada (Agrupador Modulo)');
-    // console.error(res);
     this.isSaving = false;
     if (!this.isReorder) {
       this.tiraUmas.push(res);
@@ -236,17 +227,27 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     this.umaPreviewModal.open(secuence);
   }
 
-  executeSearch(): void {
-    // this.groupUmaForm.
+  resetUmas(): void {
+    this.umasList = [...this.originalUmasList];
+  }
 
+  executeSearch(): void {
     this.subscription = this.umaService
       .search(this.mapFormToSearchParams())
       .pipe(takeUntil(this.ngUnsubscribeSubject))
       .subscribe(res => {
         console.error('#### Response búsqueda: ');
         console.error(res);
+        this.umasList = [...res.body!];
+        if (this.umasList.length === 0) {
+          this.eventManager.broadcast(
+            new JhiEventWithContent('constructorApp.validationError', {
+              message: 'constructorApp.uma.home.notFound',
+              type: 'success'
+            })
+          );
+        }
       });
-    // console.error(this.mapFormToSearchParams());
   }
 
   mapFormToSearchParams(): any {

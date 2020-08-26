@@ -6,7 +6,7 @@
             <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off">
 
                 <div class="container-search-form-uma">
-
+                    <!--
                     <div class="row-search-gral">
                         <mat-form-field>
                             <input type="text" placeholder="Buscar" matInput formControlName="sessionType"
@@ -19,9 +19,10 @@
                             </mat-autocomplete>
                         </mat-form-field>
                     </div>
+                    -->
 
-                    <div class="container-field-filter">
-                        <p>Filtrar por:</p>
+                    <div class="container-field-filter mt-4">
+                        <p>Filtrar UMAS por:</p>
 
                         <div class="row-filter-uma">
                             <mat-form-field>
@@ -59,8 +60,11 @@
                 </div>
 
                 <div class="btn-search-group">
-                    <button class="main-btn" (click)="executeSearch()" type="button">
-                        Buscar Umas -
+                    <button class="main-btn mr-2" (click)="executeSearch()" type="button">
+                        Buscar
+                    </button>
+                    <button class="secondary-btn" (click)="resetUmas()" type="button">
+                        Restablecer
                     </button>
                 </div>
 
@@ -156,6 +160,3 @@
     </div>
 
 </div>
-<!-- <div class="btn-sequence">
-    <button routerLink="/uma-groups-home" class="secondary-btn">Cerrar</button>
-</div> -->
