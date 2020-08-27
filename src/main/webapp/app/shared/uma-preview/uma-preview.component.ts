@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core'; // , ElementRef, ViewChild
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SafeUrl } from '@angular/platform-browser';
+import { SafeUrl, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { ImageService } from 'app/services/image.service';
 
@@ -17,7 +17,7 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
   imgSrc: SafeUrl = '';
   subscription: Subscription;
 
-  constructor(public activeModal: NgbActiveModal, private imageService: ImageService) {
+  constructor(public activeModal: NgbActiveModal, private imageService: ImageService, private domSanitizer: DomSanitizer) {
     console.error('####   Datos recibidos del UMA: ');
     console.error(this.umaData);
 
@@ -43,5 +43,9 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
     console.error(imgPath);
     this.imageService.setImgSrc(imgPath);
     // return this.imgSrc;
+  }
+
+  transform(pathImg: string): SafeResourceUrl {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(pathImg);
   }
 }

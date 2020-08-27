@@ -54,7 +54,8 @@
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes; let i = index;">
                                 <div class="content-img-block">
-                                    <img [src]="c.contenido.contenido">
+                                    <img [src]="transform(c.contenido.contenido)"/>
+                                    <!-- <img [src]="c.contenido.contenido"> -->
                                     <!-- <jhi-constructor-image [component]="c"></jhi-constructor-image> -->
                                 </div>
                             </div>
