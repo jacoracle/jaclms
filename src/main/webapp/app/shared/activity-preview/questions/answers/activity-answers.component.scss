@@ -2,3 +2,18 @@
   width: 20px;
   height: 20px;
 }
+.row-answer {
+  .col-anw {
+    .anw-1 {
+      .form-nimbus {
+        flex-direction: row;
+
+        .input-group {
+          input {
+            height: 24px;
+          }
+        }
+      }
+    }
+  }
+}

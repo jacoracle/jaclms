@@ -2,10 +2,10 @@
     <!-- Respuestas -->
     <div class="row-answer">
         <!-- Ingresar Respuesta -->
-        <div class="" formArrayName="respuestas"
+        <div class="col-anw" formArrayName="respuestas"
              *ngFor="let answer of controlesRespuestas(indQuestion); let indAnswer = index;"
              [ngClass]="{'answer-space': indAnswer >0 }">
-            <div class="" [formGroupName]="indAnswer">
+            <div class="anw-1" [formGroupName]="indAnswer">
                 <div class="form-nimbus">
                     <div class="input-group">
                         <div class="input-group-prepend">
