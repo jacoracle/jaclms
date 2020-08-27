@@ -1,5 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core'; // , ElementRef, ViewChild
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SafeUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { ImageService } from 'app/services/image.service';
 
 @Component({
   selector: 'jhi-uma-preview-modal',
@@ -11,10 +14,16 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
   bloquesUma: any;
   componentesUma: any;
   //   @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
+  imgSrc: SafeUrl = '';
+  subscription: Subscription;
 
-  constructor(public activeModal: NgbActiveModal) {
+  constructor(public activeModal: NgbActiveModal, private imageService: ImageService) {
     console.error('####   Datos recibidos del UMA: ');
     console.error(this.umaData);
+
+    this.subscription = this.imageService.getImgSrc().subscribe(imgSrc => {
+      this.imgSrc = imgSrc;
+    });
   }
 
   ngOnInit(): void {
@@ -28,5 +37,11 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
     //     this.videoplayer.nativeElement.play();
     //   }
     // }, 1000);
+  }
+
+  setImgSrc(imgPath: string): void {
+    console.error(imgPath);
+    this.imageService.setImgSrc(imgPath);
+    // return this.imgSrc;
   }
 }

@@ -52,10 +52,10 @@
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen'">
-                            <div *ngFor="let c of obj.bloqueComponentes!.componentes">
+                            <div *ngFor="let c of obj.bloqueComponentes!.componentes; let i = index;">
                                 <div class="content-img-block">
-                                    <!-- <p>{{c.contenido.contenido}}</p> -->
                                     <img [src]="c.contenido.contenido">
+                                    <!-- <jhi-constructor-image [component]="c"></jhi-constructor-image> -->
                                 </div>
                             </div>
                             <hr>
