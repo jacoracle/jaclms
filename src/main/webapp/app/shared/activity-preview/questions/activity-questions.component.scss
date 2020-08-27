@@ -1,13 +1,4 @@
 .row-wg {
-  position: relative;
-  width: 94%;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
-
   .col-question {
     position: relative;
     width: calc(100% - 80px);

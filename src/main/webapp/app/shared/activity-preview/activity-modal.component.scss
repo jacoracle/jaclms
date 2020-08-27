@@ -223,7 +223,7 @@
   }
 }
 
-.row-wg {
+.row-apc {
   position: relative;
   width: 94%;
   height: auto;
@@ -298,21 +298,42 @@
   }
 }
 
-.form-nimbus {
-  flex-direction: row;
-}
 .cont-radio {
   width: 20px;
   height: 20px;
 }
 
-.form-nimbus .form-alert {
-  position: initial;
+// .form-nimbus .form-alert {
+//   position: initial;
+// }
+
+.content-preguntas .row-wg {
+}
+.row-answer {
+  .ng-pristine {
+    .ng-pristine {
+      .form-nimbus {
+        flex-direction: row;
+        input {
+          height: 24px !important;
+        }
+        .form-alert {
+          position: initial;
+        }
+        .input-group {
+          input {
+            height: 24px;
+          }
+        }
+      }
+    }
+  }
 }
 
-.form-nimbus input {
-  height: 24px;
-}
+// .form-nimbus input {
+//   height: 24px;
+//   background-color: red;
+// }
 
 .margintop-40 {
   margin-top: 40px;

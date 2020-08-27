@@ -3,14 +3,14 @@
          *ngFor="let pregunta of controlesPreguntas(); let indQuestion = index;" class="content-preguntas">
         <!-- <mat-divider></mat-divider> -->
         <!-- Ingresar pregunta -->
-        <div class="row-wg">
+        <div class="row-wg row-apc">
             <div class="col-question" [formGroupName]="indQuestion">
                 <mat-form-field>
                     <mat-label><label
                         for="id_question{{indQuestion}}">Pregunta {{indQuestion + 1}}
                         *</label></mat-label>
                     <input matInput [ngClass]="{'alert-input': !isValidQuestion(indQuestion)}"
-                           class="form-control"
+                           class="form-control height24"
                            formControlName="pregunta" placeholder="Haz una pregunta ..."
                            name="pregunta{{indQuestion}}"
                            id="id_question{{indQuestion}}">
