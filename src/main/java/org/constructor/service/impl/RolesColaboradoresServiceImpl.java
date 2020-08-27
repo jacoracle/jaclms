@@ -44,6 +44,7 @@ public class RolesColaboradoresServiceImpl implements RolesColaboradoresService 
      */
 	@Override
 	public RolesColaboradores save(RolesColaboradores rolColaborador) {
+		log.debug("Save rolColaborador: {}", rolColaborador);
 		return rolesColaboradoresRepository.save(rolColaborador);
 	}
 

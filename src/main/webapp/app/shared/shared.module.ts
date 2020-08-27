@@ -11,7 +11,6 @@ import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
 import { ActivityModalComponent } from 'app/shared/activity-preview/activity-modal.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -24,6 +23,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { ActivityAnswersComponent } from 'app/shared/activity-preview/questions/answers/activity-answers.component';
 import { ActivityQuestionsComponent } from 'app/shared/activity-preview/questions/activity-questions.component';
+import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -53,10 +55,13 @@ import { ActivityQuestionsComponent } from 'app/shared/activity-preview/question
     ActivityPreviewComponent,
     ActivityAnswersComponent,
     ActivityQuestionsComponent,
+    UmaPreviewModalComponent,
     HasAnyAuthorityDirective
   ],
-  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, ActivityModalComponent],
+  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, ActivityModalComponent, UmaPreviewModalComponent],
   exports: [
+    MatInputModule,
+    MatAutocompleteModule,
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
     SafeHtmlPipe,
@@ -66,7 +71,8 @@ import { ActivityQuestionsComponent } from 'app/shared/activity-preview/question
     PdfModalComponent,
     HasAnyAuthorityDirective,
     VideoModalComponent,
-    ActivityModalComponent
+    ActivityModalComponent,
+    UmaPreviewModalComponent
   ]
 })
 export class ConstructorSharedModule {}

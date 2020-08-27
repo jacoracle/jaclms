@@ -104,9 +104,11 @@
       height: 30px;
       background-color: white;
       display: flex;
+      justify-content: center;
       align-items: center;
-      padding-left: 20px;
       font-size: 14px;
+      font-weight: 600;
+      color: $blue-nimbus-dark;
     }
     .uma-item-sequence {
       // background-color: #ccc;
@@ -245,6 +247,10 @@
   align-items: center;
   justify-content: center;
   background-color: #eaedf4;
+  button {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 // container with results after to execute search
 .result-search-container {

@@ -40,6 +40,7 @@ public class ContenidoServiceImpl implements ContenidoService {
 	 */
 	@Override
 	public Contenido save(Contenido contenido) {
+		log.debug("Save Contenido: {}", contenido);
 		return contenidoRepository.save(contenido);
 	}
 

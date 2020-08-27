@@ -211,4 +211,9 @@ public class RestConstants {
 	 * Path para peticiones agrupador modulo por id
 	 */
 	public static final String PATH_AGRUPADOR_MODULO_ID = "agrupador-modulo/{id}";
+
+	/**
+	 * Path para peticiones busqueda 
+	 */
+	public static final String PATH_BUSQUEDA = "modulo-filtros";
 }

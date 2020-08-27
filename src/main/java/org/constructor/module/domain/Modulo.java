@@ -105,7 +105,7 @@ public class Modulo implements Serializable {
             name = "temas_modulo", 
             joinColumns = @JoinColumn(name = "modulo_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="temas_id", referencedColumnName = "id", nullable = false))
-	private Set<Temas>  temas  ;
+	private Set<Temas>  temas;
     
     /**
      * colaborador
@@ -379,6 +379,15 @@ public class Modulo implements Serializable {
         return id != null && id.equals(((Modulo) o).id);
     }
 
+	/**
+	 * hashCode
+	 */
+	@Override
+	   public int hashCode() {
+	        return id.hashCode();
+	    }
+	
+	
 	/**
 	 * ToString
 	 */

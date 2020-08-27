@@ -16,7 +16,7 @@ type EntityArrayResponseType = HttpResponse<IModulo[]>;
 @Injectable({ providedIn: 'root' })
 export class ModuloService {
   public resourceUrl = SERVER_API_URL + 'api/modulo';
-  // public resourceUrlNewBook = SERVER_API_URL + 'api/curso-ficha';
+  public resourceSearchUrl = SERVER_API_URL + 'api/modulo-filtros';
 
   constructor(protected http: HttpClient) {}
 
@@ -48,6 +48,16 @@ export class ModuloService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  search(umaFilters: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(umaFilters);
+    return (
+      this.http
+        // .get<IModulo[]>(this.resourceSearchUrl, { params: umaFilters, observe: 'response' })
+        .get<IModulo[]>(this.resourceSearchUrl, { params: options, observe: 'response' })
+        .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)))
+    );
   }
 
   protected convertDateFromClient(curso: IModulo): IModulo {

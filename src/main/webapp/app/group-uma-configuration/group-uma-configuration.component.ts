@@ -35,6 +35,7 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   // termina stepper
 
   isNewGroup!: boolean;
+  // received param to load group by id
   idSequenceToLoad!: number;
 
   constructor(
@@ -63,8 +64,6 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
         console.error('LOGUEADO');
       }
     });
-    // console.error('#### FORM ARRAY: ', this.formSteps);
-    // console.error('#### Agrupador Recibido con ID: ', this.idSequenceToLoad);
   }
 
   ngOnDestroy(): void {
@@ -82,13 +81,13 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   }
 
   setAgrupador(event: any): void {
-    console.error('#### Dato del Output emitido: ');
-    console.error(event);
-    this.createdGroupSequence = event;
+    this.createdGroupSequence = event.param2;
     this.isNewGroup = true;
     this.isCompleted = false;
-    if (this.createdGroupSequence) {
+    if (this.createdGroupSequence && !event.param1) {
       this.stepper.next();
+    } else if (this.createdGroupSequence && event.param1) {
+      this.router.navigate(['/uma-groups-home']);
     } else {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', {
@@ -100,8 +99,6 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   }
 
   setCreateForm(evt: any): void {
-    // console.error('#### Evento emitido para formulario de registro');
-    // console.error(evt);
     this.formSteps.removeAt(0);
     this.formSteps.push(evt);
     // this.isCompleted = this.createdGroupSequence ? true : false;
@@ -122,12 +119,29 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     return this.isNewGroup;
   }
 
-  executeSave(): void {
+  executeSave(evt: any): void {
+    evt.stopPropagation();
+    this.formSteps
+      .get([0])!
+      .get('sendRegisterForm')!
+      .setValue(true); //  hack to validate form steps
     this.umaUpdateComponente.saveSequenceGroup();
   }
 
   revertData(): void {
     this.umaUpdateComponente.revertSequenceGroup(this.createdGroupSequence.id!);
-    this.router.navigate(['/group-configuration']);
+    /*
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.agrupador.revert' })
+    );
+    
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.agrupador.revert',
+        type: 'success'
+      })
+    );
+    */
+    this.router.navigate(['/uma-groups-home']);
   }
 }

@@ -80,7 +80,10 @@ public final class ErrorConstants {
 	public static final String STATUS_MENSSAGE_INVALID =  "Invalid File.";
 	
 
-
+	/**
+	 * ERROR_FILTER
+	 */
+	public static final String ERROR_FILTER =  "No se ha encontrado información para los filtros indicados.";
 	
 	
 

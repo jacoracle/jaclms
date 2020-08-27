@@ -14,6 +14,7 @@ import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { takeUntil } from 'rxjs/operators';
+import { IWrapperModel } from 'app/shared/model/wrapper.model';
 
 @Component({
   selector: 'jhi-agrupador-uma-update',
@@ -22,7 +23,10 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   @Input() groupId!: number;
-  @Output() createdGroupEventEmit: EventEmitter<IAgrupador> = new EventEmitter<IAgrupador>();
+  // @Output() createdGroupEventEmit: EventEmitter<IAgrupador> = new EventEmitter<IAgrupador>();
+  @Output() createdGroupEventEmit: EventEmitter<IWrapperModel<boolean, IAgrupador>> = new EventEmitter<
+    IWrapperModel<boolean, IAgrupador>
+  >();
   @Output() formCreateEvent: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
   @ViewChild('chipList', { static: false }) chipList: MatChipList | undefined;
 
@@ -50,7 +54,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       // Validators.email,
     ]),
     desciptionSequenceUmas: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    searchTagsSequenceUmas: [] //  this.formbuilder.array(this.tagsBusquedaAgrupador, this.validateArrayNotEmpty)
+    searchTagsSequenceUmas: [], //  this.formbuilder.array(this.tagsBusquedaAgrupador, this.validateArrayNotEmpty)
+    sendRegisterForm: new FormControl('', [Validators.required])
   });
   // TERMINA FORMULARIO
 
@@ -118,7 +123,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     this.groupUmaForm.patchValue({
       titleSequenceUmas: data.titulo,
       desciptionSequenceUmas: data.descripcion,
-      searchTagsSequenceUmas: [] // data.etiquetas//  !.map((t: ITagAgrupador) => t.descripcion)
+      searchTagsSequenceUmas: [], // data.etiquetas//  !.map((t: ITagAgrupador) => t.descripcion)
+      sendRegisterForm: true
     });
     this.tagsBusquedaAgrupador = [...data.etiquetas!];
   }
@@ -154,10 +160,10 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       if (this.groupUmaForm.valid) {
         // this.firstClick = true;
         if (agrupador.id) {
-          console.error('##########   Deberá actualizar: ', agrupador);
-          this.subscribeToSaveResponse(this.agrupadorService.update(agrupador));
+          // console.error('##########   Deberá actualizar: ', agrupador);
+          this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
         } else {
-          console.error('##########   Deberá guardar: ', agrupador);
+          // console.error('##########   Deberá guardar: ', agrupador);
           this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
         }
       }
@@ -208,18 +214,34 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     );
   }
 
+  private subscribeToUpdateResponse(result: Observable<HttpResponse<IAgrupador>>): void {
+    result.subscribe(
+      res => {
+        this.createdGroupSequence = res.body!;
+        this.makeValid('sendRegisterForm');
+        this.createdGroupEventEmit.emit({ param1: true, param2: res.body! });
+        this.isSaving = false;
+      },
+      () => this.onSaveError()
+    );
+  }
+
   protected onSaveSuccess(res: any): void {
     // this.router.navigate(['/uma-groups-home', res.body.modulo.id, 'module']);
     // console.error('####         POST AGRUPADOR DONE');
     // console.error(res);
     this.createdGroupSequence = res.body.agrupador;
-    this.createdGroupEventEmit.emit(res.body.agrupador);
+    this.groupId = res.body.agrupador.id;
+    this.makeValid('sendRegisterForm');
+    // this.createdGroupEventEmit.emit(res.body.agrupador);
+    this.createdGroupEventEmit.emit({ param1: false, param2: res.body.agrupador });
     this.isSaving = false;
     // this.router.navigate(['/uma-groups-home']);
   }
 
   protected onSaveError(): void {
     this.isSaving = false;
+    this.makeInvalid('sendRegisterForm');
     this.createdGroupEventEmit.emit(undefined);
   }
 
