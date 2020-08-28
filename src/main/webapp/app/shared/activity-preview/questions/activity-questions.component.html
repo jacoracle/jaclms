@@ -1,4 +1,4 @@
-<form [formGroup]="activityForm">
+<form [formGroup]="activityForm" (keydown)="onKeyDown($event)">
     <div formArrayName="preguntas"
          *ngFor="let pregunta of controlesPreguntas(); let indQuestion = index;" class="content-preguntas">
         <!-- <mat-divider></mat-divider> -->
@@ -22,9 +22,9 @@
                 </div>
             </div>
             <div class="col-delete-question">
-                <button (click)="removeQuestion(indQuestion)" class="btn-circle bs-danger">
-                    <i class="icon ni-delete icon-negative"></i>
-                </button>
+                <input type="button" (click)="removeQuestion(indQuestion)" class="btn-circle bs-danger"
+                       (keydown.enter)="removeQuestion(indQuestion)"/>
+                    <!--<i class="icon ni-delete icon-negative"></i>-->
             </div>
         </div><!-- Ingresar pregunta -->
 
