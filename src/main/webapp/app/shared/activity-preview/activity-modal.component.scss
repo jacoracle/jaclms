@@ -425,18 +425,18 @@ mat-form-field {
 //   margin-top: -18px;
 // }
 
-.delete-answer {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  outline: none;
-  border: 0;
-  background-color: transparent;
-  &:active {
-    outline: none;
-    border: 0;
-  }
-}
+// .delete-answer {
+//   position: relative;
+//   width: 20px;
+//   height: 20px;
+//   outline: none;
+//   border: 0;
+//   background-color: transparent;
+//   &:active {
+//     outline: none;
+//     border: 0;
+//   }
+// }
 
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
