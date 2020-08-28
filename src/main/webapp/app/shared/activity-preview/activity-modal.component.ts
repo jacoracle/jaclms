@@ -132,4 +132,8 @@ export class ActivityModalComponent implements OnInit {
   close(): any {
     this.activeModal.close();
   }
+
+  onKeyDown(event: any): boolean {
+    return UtilActivity.onKeyDown(event);
+  }
 }

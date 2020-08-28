@@ -250,4 +250,13 @@ export default class UtilActivity {
     }
     UtilActivity.refreshAnswers(activityForm);
   }
+
+  static onKeyDown(event: any): boolean {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

@@ -3,7 +3,7 @@
 .filmstrip-c-component {
   position: relative;
   width: 100%;
-  height: calc(100vh - 460px);
+  height: calc(100vh - 240px);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -11,7 +11,7 @@
 }
 @media (max-height: 600px) {
   .filmstrip-c-component {
-    height: calc(100vh - 360px);
+    // height: calc(100vh - 360px);
   }
 }
 .c-component-title {

@@ -83,4 +83,8 @@ export class ActivityAnswersComponent {
       return false;
     }
   }
+
+  onKeyDown(event: any): boolean {
+    return UtilActivity.onKeyDown(event);
+  }
 }

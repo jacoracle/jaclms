@@ -74,4 +74,8 @@ export class ActivityQuestionsComponent {
   controlesPreguntas(): AbstractControl[] {
     return UtilActivity.controlesPreguntas(this.activityForm);
   }
+
+  onKeyDown(event: any): boolean {
+    return UtilActivity.onKeyDown(event);
+  }
 }

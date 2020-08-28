@@ -16,7 +16,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    button {
+    .btn-circle {
+      background-image: url('../../../../content/images/icn_delete_trash.svg');
+      background-position: center;
+      background-size: 22px;
+      background-repeat: no-repeat;
     }
   }
 }

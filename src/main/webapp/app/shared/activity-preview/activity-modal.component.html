@@ -10,7 +10,7 @@
         <!-- <p>*Campo obligatorio</p> -->
     </div>
   </div>
-    <form name="activityForm" role="form" novalidate [formGroup]="activityForm" class="modal-act-content">
+    <form name="activityForm" role="form" novalidate [formGroup]="activityForm" class="modal-act-content" (keydown)="onKeyDown($event)">
       <!-- Body -->
       <!--
       <div class="row-wg margintop-40">

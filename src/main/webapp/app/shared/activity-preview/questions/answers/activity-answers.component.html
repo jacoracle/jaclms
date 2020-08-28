@@ -1,4 +1,4 @@
-<form [formGroup]="groupQuestion">
+<form [formGroup]="groupQuestion" (keydown)="onKeyDown($event)">
     <!-- Respuestas -->
     <div class="row-answer">
         <!-- Ingresar Respuesta -->
@@ -40,10 +40,9 @@
                             (focusout)="refreshQuestion(indQuestion)"/>
                         <div class="input-group-prepend" *ngIf="typeQuestion !== 'verdaderoFalso'">
                             <div class="input-group-text answer-question-space">
-                                <button name="deleteQuestion" class="delete-answer"
-                                        (click)="removeAnswer(indQuestion, indAnswer)">
-                                    <i class="icon ni-delete"></i>
-                                </button>
+                                <input name="deleteQuestion" class="delete-answer" type="button"
+                                        (click)="removeAnswer(indQuestion, indAnswer)" (keydown.enter)="removeAnswer(indQuestion, indAnswer)"/>
+                                   <!-- <i class="icon ni-delete"></i>-->
                             </div>
                         </div>
                         <div *ngIf="!isValidAnswer(indQuestion, indAnswer)"
