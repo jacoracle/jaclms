@@ -16,8 +16,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivityPreviewComponent } from 'app/shared/activity-preview/activity-preview.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -33,8 +31,6 @@ import { ActivityQuestionsComponent } from 'app/shared/activity-preview/question
     MatInputModule,
     MatCheckboxModule,
     MatDividerModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     MatCardModule,
     MatDialogModule,
     MatButtonModule,

@@ -33,11 +33,13 @@ import { HomeUmaGroupsModule } from './home-uma-groups/home-uma-groups.module';
 import { AgrupadorUmaUpdateComponent } from './entities/agrupador/agrupador-uma-update.component';
 import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
 import { SecuenciaAgrupadorUpdateComponent } from './entities/agrupador/secuencia-uma-update.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     QuillModule.forRoot(),
     BrowserModule,
+    BrowserAnimationsModule,
     ConstructorSharedModule,
     ConstructorCoreModule,
     HomeModule,
