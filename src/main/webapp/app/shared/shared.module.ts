@@ -8,12 +8,13 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 import { VideoModalComponent } from 'app/shared/video-preview/video-modal.component';
 import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
-import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
+// import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UmaPreviewModule } from './uma-preview/uma-preview.module';
 
 @NgModule({
-  imports: [ConstructorSharedLibsModule],
+  imports: [ConstructorSharedLibsModule, UmaPreviewModule],
   declarations: [
     FindLanguageFromKeyPipe,
     SafeHtmlPipe,
@@ -22,13 +23,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     LoginModalComponent,
     PdfModalComponent,
     VideoModalComponent,
-    UmaPreviewModalComponent,
+    // UmaPreviewModalComponent,
     HasAnyAuthorityDirective
   ],
-  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, UmaPreviewModalComponent],
+  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent], // , UmaPreviewModalComponent],
   exports: [
     MatInputModule,
     MatAutocompleteModule,
+    UmaPreviewModule,
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
     SafeHtmlPipe,
@@ -37,8 +39,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     LoginModalComponent,
     PdfModalComponent,
     HasAnyAuthorityDirective,
-    VideoModalComponent,
-    UmaPreviewModalComponent
+    VideoModalComponent
+    // UmaPreviewModalComponent
   ]
 })
 export class ConstructorSharedModule {}

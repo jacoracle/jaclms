@@ -46,6 +46,16 @@
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'texto'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
                                 <div class="content-text-uma" [innerHtml]="c.contenido.contenido"></div>
+                                <!--
+                                <jhi-visor-text [component]="c"
+                                    
+                                    >
+                                    <!- - 
+                                        [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes!"
+                                    (updateComponent)="onUpdateComponent($event, index)"
+                                     -- >
+                                </jhi-visor-text>
+                                -->
                                 <!--{{c.contenido.contenido}}-->
                             </div>
                             <hr>
@@ -53,10 +63,17 @@
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes; let i = index;">
-                                <div class="content-img-block">
-                                    <img [src]="transform(c.contenido.contenido)"/>
+                                <div class="content-img-block" #targetImagen>
+                                    <!-- <img [src]="transform(c.contenido.contenido)"/> -->
                                     <!-- <img [src]="c.contenido.contenido"> -->
-                                    <!-- <jhi-constructor-image [component]="c"></jhi-constructor-image> -->
+                                    <jhi-content-block3 [contentBlock]="obj"
+                                        (updateMultimediaBlock)="getNothing($event)" [target]="targetImagen"
+                                        [index]="i" (updateBlock)="getOutput($event)">
+                                    </jhi-content-block3>
+                                    <!-- <jhi-constructor-image [component]="c"
+                                    (updateComponent)="getNothing($event)"
+                                    (updateMultimediaProperties)="getOutput($event)"></jhi-constructor-image> -->
+                                    <!-- <jhi-constructor-image [component]="c" (updateComponent)="getNothing($event)" (updateMultimediaProperties)="getOutput($event)"></jhi-constructor-image> -->
                                 </div>
                             </div>
                             <hr>

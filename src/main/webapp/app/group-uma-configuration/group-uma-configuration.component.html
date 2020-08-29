@@ -51,7 +51,7 @@
       <!-- this cancel is for (delete created group)-->
       <button *ngIf="isCreation()" class="secondary-btn" (click)="revertData()" matTooltip="Deshace el Agrupador creado.">Cancelar</button>
       <!-- this save is form save a new group or edit group (save group) *ngIf="!isViewDetailOrEdit()"  -->
-      <button  (click)="executeSave($event)" class="main-btn" matTooltip="Guarda y/o actualiza Agrupador.">Guardar</button>
+      <button  (click)="executeSave($event)" class="main-btn" matTooltip="Guarda y/o actualiza Agrupador.">Guardar-{{btnSaveUpdate}}</button>
       <!-- this save is for  -->
       <!-- <button *ngIf="isViewDetailOrEdit() && !isCreation()" (click)="executeSave($event)" class="main-btn">Guardar (save & update)</button> -->
       <!-- <button *ngIf="isCreation() && !isViewDetailOrEdit()" class="secondary-btn" matTooltip="Aceptar cambios y regresar al Home." routerLink="/uma-groups-home">Aceptar</button> -->

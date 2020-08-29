@@ -16,7 +16,7 @@ import { ModuloService } from '../modulo/modulo.service';
 import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { UmaPreviewModalService } from 'app/services/uma-preview-modal.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-secuencia-uma-update',
@@ -45,9 +45,10 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   isReorder: boolean;
 
   filteredTypeOpts: any;
+  filteredUmas: any;
 
   groupUmaForm = this.formbuilder.group({
-    sessionType: new FormControl('', [Validators.maxLength(30)]),
+    umaGral: [], // new FormControl('', [Validators.maxLength(30)]),
     sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
     umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
     academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
@@ -75,6 +76,17 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     this.isReorder = false;
     this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
     // console.error('#### Group UMA configuration ID Grupo recibido: ', this.idSequenceToLoad);
+
+    this.filteredUmas = this.groupUmaForm
+      .get('umaGral')!
+      .valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value.descripcion)),
+        map(title => (title ? this._filterUmasByTitle(title) : this.umasList.slice()))
+      )
+      .subscribe(umas => {
+        this.umasList = [...umas];
+      });
   }
 
   ngOnInit(): void {
@@ -116,6 +128,11 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       this.ngUnsubscribeSubject.next();
       this.ngUnsubscribeSubject.complete();
     }
+  }
+
+  private _filterUmasByTitle(value: string): IModulo[] {
+    const filterValue = value.toLowerCase();
+    return this.umasList.filter((option: IModulo) => option.titulo!.toLowerCase().includes(filterValue));
   }
 
   displayFn(mod: IModulo): string {

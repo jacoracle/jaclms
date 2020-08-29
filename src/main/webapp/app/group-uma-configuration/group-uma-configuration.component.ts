@@ -38,6 +38,8 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   // received param to load group by id
   idSequenceToLoad!: number;
 
+  btnSaveUpdate = 'Guardar';
+
   constructor(
     private eventManager: JhiEventManager,
     private accountService: AccountService,
@@ -83,6 +85,7 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   setAgrupador(event: any): void {
     this.createdGroupSequence = event.param2;
     this.isNewGroup = true;
+    this.btnSaveUpdate = 'Terminar y Salir';
     this.isCompleted = false;
     if (this.createdGroupSequence && !event.param1) {
       this.stepper.next();

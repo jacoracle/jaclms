@@ -48,4 +48,12 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
   transform(pathImg: string): SafeResourceUrl {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(pathImg);
   }
+
+  getOutput(evt: any): void {
+    console.error(evt);
+  }
+
+  getNothing(evt: any): void {
+    console.error(evt);
+  }
 }

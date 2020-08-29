@@ -56,6 +56,20 @@
             <div class="row-search-gral">
             </div>
 
+            <div class="row-search-gral">
+              <mat-form-field>
+                <input type="text" placeholder="Buscar" matInput formControlName="sessionType"
+                  [matAutocomplete]="autoInputSessionType">
+                <mat-autocomplete autoActiveFirstOption #autoInputSessionType="matAutocomplete"
+                  [displayWith]="displayFn">
+                  <!-- <mat-option *ngFor="let option of filteredTypeOpts | async" [value]="option"> -->
+                  <mat-option *ngFor="let option of modulos" [value]="option">
+                    {{option.descripcion}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
             <div class="container-field-filter">
               <p>Filtrar por:</p>
 
@@ -96,9 +110,9 @@
             <button class="secondary-btn" (click)="resetUmas()" type="button">
               Limpiar
             </button>
-              <button type="button" class="main-btn" (click)="executeSearch()">
-                Buscar
-              </button>
+            <button type="button" class="main-btn" (click)="executeSearch()">
+              Buscar
+            </button>
           </div>
 
 
@@ -109,29 +123,29 @@
 
       <!-- end search box -->
       <div class="result-search-container">
-      <div class="grid-cards">
+        <div class="grid-cards">
 
-        <div class="course-cover-br box-card" *ngFor="let modulo of modulos"
-          [routerLink]="['/constructor-layout', modulo.id, 'module']">
-          <!-- <div class="course-cover-br box-card" *ngFor="let modulo of filteredUmas | async"
+          <div class="course-cover-br box-card" *ngFor="let modulo of modulos"
+            [routerLink]="['/constructor-layout', modulo.id, 'module']">
+            <!-- <div class="course-cover-br box-card" *ngFor="let modulo of filteredUmas | async"
           [routerLink]="['/constructor-layout', modulo.id, 'module']"> -->
 
-          <div class="module-cover-br-image"></div>
+            <div class="module-cover-br-image"></div>
 
-          <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
-            <i class="icon ni-delete icon-negative"></i>
-          </div>
+            <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
+              <i class="icon ni-delete icon-negative"></i>
+            </div>
 
-          <div class="course-desc-br-row">
-            <span class="title-course-br"
-              *ngIf="modulo.titulo">{{modulo.titulo.length > 30 ? modulo.titulo.substring(0, 30) + "..." : modulo.titulo}}</span>
-            <span class="desc-course-br"
-              *ngIf="modulo.descripcion">{{modulo.descripcion.length > 30 ? modulo.descripcion.substring(0, 30) + "..." : modulo.descripcion}}</span>
+            <div class="course-desc-br-row">
+              <span class="title-course-br"
+                *ngIf="modulo.titulo">{{modulo.titulo.length > 30 ? modulo.titulo.substring(0, 30) + "..." : modulo.titulo}}</span>
+              <span class="desc-course-br"
+                *ngIf="modulo.descripcion">{{modulo.descripcion.length > 30 ? modulo.descripcion.substring(0, 30) + "..." : modulo.descripcion}}</span>
+            </div>
+
           </div>
 
         </div>
-
-      </div>
       </div>
 
 

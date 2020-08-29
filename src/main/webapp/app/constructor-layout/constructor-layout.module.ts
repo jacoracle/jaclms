@@ -29,9 +29,10 @@ import { ContentBlock8Component } from 'app/constructor/content-blocks/content-b
 import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
+import { ContentBlocksModule } from 'app/constructor/content-blocks/content-blocks.module';
 
 @NgModule({
-  imports: [QuillModule.forRoot(), ConstructorSharedModule, DragDropModule],
+  imports: [QuillModule.forRoot(), ConstructorSharedModule, DragDropModule, ContentBlocksModule],
   declarations: [
     ConstructorLayoutComponent,
     ConstructorFilmstripComponent,
@@ -39,7 +40,7 @@ import { QuillModule } from 'ngx-quill';
     ConstructorComponentContainerComponent,
     ContentBlock1Component,
     ContentBlock2Component,
-    ContentBlock3Component,
+    // ContentBlock3Component,
     ContentBlock4Component,
     ContentBlock5Component,
     ContentBlock6Component,
@@ -48,7 +49,7 @@ import { QuillModule } from 'ngx-quill';
     ContentBlock9Component,
     ConstructorTextComponent,
     VisorTextComponent,
-    ConstructorImageComponent,
+    // ConstructorImageComponent,
     ConstructorVideoComponent,
     ConstructorPdfComponent,
     ConstructorSoundComponent,

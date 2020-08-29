@@ -3,23 +3,25 @@
     <div class="sequence-uma-body">
 
         <div class="search-main-container">
-            <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off">
+            <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" >
 
                 <div class="container-search-form-uma">
-                    <!--
+
                     <div class="row-search-gral">
                         <mat-form-field>
-                            <input type="text" placeholder="Buscar" matInput formControlName="sessionType"
-                                [matAutocomplete]="autoInputSessionType">
-                            <mat-autocomplete autoActiveFirstOption #autoInputSessionType="matAutocomplete"
+                            <mat-label>Búsqueda general por título----</mat-label>
+                            <input type="text" placeholder="Buscar" matInput formControlName="umaGral"
+                                [matAutocomplete]="umaGral">
+                            <mat-autocomplete autoActiveFirstOption #umaGral="matAutocomplete"
                                 [displayWith]="displayFn">
-                                <mat-option *ngFor="let option of filteredTypeOpts | async" [value]="option">
+                                <!-- <mat-option *ngFor="let option of filteredUmas | async" [value]="option"> -->
+                                <mat-option *ngFor="let option of umasList" [value]="option">
                                     {{option.descripcion}}
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
                     </div>
-                    -->
+
 
                     <div class="container-field-filter mt-4">
                         <p>Filtrar UMAS por:</p>
@@ -60,9 +62,9 @@
                 </div>
 
                 <div class="btn-search-group">
-                  <button class="secondary-btn" (click)="resetUmas()" type="button">
-                      Limpiar
-                  </button>
+                    <button class="secondary-btn" (click)="resetUmas()" type="button">
+                        Limpiar
+                    </button>
                     <button class="main-btn" (click)="executeSearch()" type="button">
                         Buscar
                     </button>
