@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,6 +41,7 @@ public class BloqueComponentes implements Serializable {
 	
 	/** The componente. */
 	@OneToMany(mappedBy="bloqueComponentes", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OrderBy ("orden ASC")
 	private Set<Componente> componente = new HashSet<>();
 		
 	/** The tipo bloque componentes. */
