@@ -40,8 +40,9 @@
                             (focusout)="refreshQuestion(indQuestion)"/>
                         <div class="input-group-prepend" *ngIf="typeQuestion !== 'verdaderoFalso'">
                             <div class="input-group-text answer-question-space">
-                                <input name="deleteQuestion" class="delete-answer" type="button"
-                                        (click)="removeAnswer(indQuestion, indAnswer)" (keydown.enter)="removeAnswer(indQuestion, indAnswer)"/>
+                                <input name="deleteQuestion" class="delete-answer" type="button" [ngClass]="{'delete-answer-disabled': controlesRespuestas(indQuestion).length <= 1}"
+                                        (click)="removeAnswer(indQuestion, indAnswer)" (keydown.enter)="removeAnswer(indQuestion, indAnswer)"
+                                        [disabled]="controlesRespuestas(indQuestion).length <= 1"/>
                                    <!-- <i class="icon ni-delete"></i>-->
                             </div>
                         </div>

@@ -22,8 +22,8 @@
                 </div>
             </div>
             <div class="col-delete-question">
-                <input type="button" (click)="removeQuestion(indQuestion)" class="btn-circle bs-danger"
-                       (keydown.enter)="removeQuestion(indQuestion)"/>
+                <input type="button" (click)="removeQuestion(indQuestion)" class="btn-circle bs-danger"  [ngClass]="{'btn-circle-disabled': controlesPreguntas().length <= 1}"
+                       (keydown.enter)="removeQuestion(indQuestion)" [disabled]="controlesPreguntas().length <= 1"/>
                     <!--<i class="icon ni-delete icon-negative"></i>-->
             </div>
         </div><!-- Ingresar pregunta -->

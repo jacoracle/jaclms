@@ -22,5 +22,12 @@
       background-size: 22px;
       background-repeat: no-repeat;
     }
+    .btn-circle-disabled {
+      background-image: url('../../../../content/images/icn_delete_trash.svg');
+      background-color: #dddddd;
+      background-position: center;
+      background-size: 22px;
+      background-repeat: no-repeat;
+    }
   }
 }

@@ -23,6 +23,18 @@
             background-size: 23px;
             background-repeat: no-repeat;
           }
+          .delete-answer-disabled {
+            position: relative;
+            width: 25px !important;
+            height: 25px !important;
+            // background-color: silver;
+            border: none !important;
+            background-image: url('../../../../../content/images/icn_delete_trash_blue.svg');
+            background-color: #dddddd;
+            background-position: center;
+            background-size: 23px;
+            background-repeat: no-repeat;
+          }
         }
       }
     }
