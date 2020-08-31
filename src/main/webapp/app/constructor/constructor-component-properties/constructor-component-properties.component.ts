@@ -407,17 +407,19 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   createUpdateActivity(): void {
-    const indexActividad = this.actividadesInteractivas.length - 1;
-    const actividadInteractiva = this.actividadesInteractivas[indexActividad];
-    const jsonFormIn = this.jsonFormEntrada(actividadInteractiva);
+    if (this.fileFormat === 'activity') {
+      const indexActividad = this.actividadesInteractivas.length - 1;
+      const actividadInteractiva = this.actividadesInteractivas[indexActividad];
+      const jsonFormIn = this.jsonFormEntrada(actividadInteractiva);
 
-    this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
-      if (jsonFormOut) {
-        this.actividadesInteractivas[indexActividad] = this.jsonFormSalida(jsonFormOut, actividadInteractiva);
-        this.activityService.setActivityProperties(this.actividadesInteractivas);
-      }
-      this.showLoader = false;
-    });
+      this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
+        if (jsonFormOut) {
+          this.actividadesInteractivas[indexActividad] = this.jsonFormSalida(jsonFormOut, actividadInteractiva);
+          this.activityService.setActivityProperties(this.actividadesInteractivas);
+        }
+        this.showLoader = false;
+      });
+    }
   }
 
   jsonFormEntrada(actividadInteractiva: ActividadInteractiva): IActividadPregunta | undefined {
