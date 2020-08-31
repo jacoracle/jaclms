@@ -1,6 +1,7 @@
 package org.constructor.domain;
 
 import org.constructor.config.Constants;
+import org.constructor.module.domain.Agrupador;
 import org.constructor.module.domain.Modulo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -101,6 +102,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Modulo> modulo = new HashSet<>();
+    
+    // ManyToMany to agrupador relationship (JAM)
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Agrupador> agrupador = new HashSet<>();
     /**
      * Boolean activated
      */
