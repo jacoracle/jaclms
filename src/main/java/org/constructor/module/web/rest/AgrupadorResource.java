@@ -3,16 +3,18 @@
  */
 package org.constructor.module.web.rest;
 
-import java.net.URI;
 import java.io.IOException;
 
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.module.domain.Agrupador;
 import org.constructor.service.AgrupadorService;
 import org.constructor.service.dto.AgrupadorDTO;
+import org.constructor.service.dto.AgrupadorFiltroDTO;
+import org.constructor.service.dto.AgrupadorUpdate;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -85,30 +88,12 @@ public class AgrupadorResource {
 	 * @return
 	 * @throws URISyntaxException
 	 */
-	@PostMapping("/agrupadores")
-	public ResponseEntity<Agrupador> createAgrupadores(@RequestBody Agrupador agrupador) throws URISyntaxException {
-		log.debug("REST request to save Agrupador : {}", agrupador);
-
-		Agrupador result = agrupadorService.save(agrupador);
-		return ResponseEntity
-				.created(new URI("/api/agrupador/" + result.getId())).headers(HeaderUtil
-						.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-				.body(result);
-	}
-
-	/**
-	 * Post agrupador
-	 * 
-	 * @param agrupador
-	 * @return
-	 * @throws URISyntaxException
-	 */
 	@PostMapping(path = RestConstants.PATH_AGRUPADOR)
 	public ResponseEntity<AgrupadorDTO> createAgrupador(Authentication authentication, @RequestBody Agrupador agrupador)
 			throws IOException {
 		log.debug("REST request to save Agrupador : {}", agrupador);
 		if (agrupador == null) {
-			throw new BadRequestAlertException("A new module cannot is empty", ENTITY_NAME, "");
+			throw new BadRequestAlertException("A new agrupador cannot is empty", ENTITY_NAME, "");
 		}
 		log.debug("REST request to mo : {}", agrupador);
 		AgrupadorDTO result = agrupadorService.save(authentication, agrupador);
@@ -117,23 +102,24 @@ public class AgrupadorResource {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	
 	/**
 	 * Update agrupador
 	 * 
 	 * @param agrupador
 	 * @return
-	 * @throws URISyntaxException
+	 * @throws Exception
 	 */
 	@PutMapping(path = RestConstants.PATH_AGRUPADOR)
-	public ResponseEntity<Agrupador> updateAgrupador(@RequestBody Agrupador agrupador) throws URISyntaxException {
+	public ResponseEntity<Optional<Agrupador>> updateAgrupador(@RequestBody AgrupadorUpdate agrupador)
+			throws Exception {
 		log.debug("REST request to update Agrupador : {}", agrupador);
 		if (agrupador.getId() == null) {
 			throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
 		}
-		Agrupador result = agrupadorService.save(agrupador);
+
+		Optional<Agrupador> result = agrupadorService.updateAgrupador(agrupador);
 		return ResponseEntity.ok().headers(
-				HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+				HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.get().getId().toString()))
 				.body(result);
 	}
 
@@ -144,28 +130,13 @@ public class AgrupadorResource {
 	 * @return
 	 */
 	@GetMapping(path = RestConstants.PATH_AGRUPADOR)
-	public ResponseEntity<List<Agrupador>> getAllAgrupador20(Pageable pageable) {
+	public ResponseEntity<List<Agrupador>> getAllAgrupador20(Pageable pageable, Authentication authentication) {
 		log.debug("REST request to get a page of Agrupador");
-		Page<Agrupador> page = agrupadorService.findFirst20AgrupadorByOrderByIdDesc(pageable);
+		Page<Agrupador> page = agrupadorService.findFirst20AgrupadorByOrderByIdDesc(pageable, authentication);
 		HttpHeaders headers = PaginationUtil
 				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 		return ResponseEntity.ok().headers(headers).body(page.getContent());
 	}
-	
-	/**
-	 * get all 
-	 * @param pageable
-	 * @return
-	 */
-	@GetMapping(path = RestConstants.PATH_AGRUPADOR_ALL)
-	public ResponseEntity<List<Agrupador>> getAllAgrupador(Pageable pageable) {
-		log.debug("REST request to get a page of Agrupador");
-		Page<Agrupador> page = agrupadorService.findAll(pageable);
-		HttpHeaders headers = PaginationUtil
-				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-		return ResponseEntity.ok().headers(headers).body(page.getContent());
-	}
-
 
 	/**
 	 * Get by id
@@ -194,6 +165,37 @@ public class AgrupadorResource {
 		return ResponseEntity.noContent()
 				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
 				.build();
+	}
+
+	/**
+	 * 
+	 * @param authentication
+	 * @return
+	 */
+	@GetMapping(path = RestConstants.PATH_AGRUPADOR_ALL)
+	public ResponseEntity<List<Agrupador>> getAlAgrupadores(Authentication authentication) {
+		log.debug("REST request to get a page of Agrupador by User");
+		List<Agrupador> page = agrupadorService.findAllAgrupadorUserId(authentication);
+		return ResponseEntity.ok().body(page);
+	}
+
+	/**
+	 * getAgrupadorFiltro
+	 * 
+	 * @param agrup
+	 * @return
+	 * @throws Exception
+	 */
+	@GetMapping(path = RestConstants.PATH_BUSQUEDA_AGRUPADOR)
+	public Set<Agrupador> getAgrupadorByBusqueda(@RequestParam String titulo, @RequestParam String descripcion,
+			@RequestParam String etiqueta) throws Exception {
+		AgrupadorFiltroDTO agrup = new AgrupadorFiltroDTO();
+		agrup.setTitulo(titulo);
+		agrup.setDescripcion(descripcion);
+		agrup.setEtiqueta(etiqueta);
+
+		return agrupadorService.findAgrupadorByTituloByDescripcionByEtiqueta(agrup);
+
 	}
 
 }

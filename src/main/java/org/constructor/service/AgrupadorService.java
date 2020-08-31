@@ -5,9 +5,12 @@ package org.constructor.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.module.domain.Agrupador;
 import org.constructor.service.dto.AgrupadorDTO;
+import org.constructor.service.dto.AgrupadorFiltroDTO;
+import org.constructor.service.dto.AgrupadorUpdate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -41,8 +44,16 @@ public interface AgrupadorService {
      * @param pageable
      * @return
      */
-    Page<Agrupador> findFirst20AgrupadorByOrderByIdDesc(Pageable pageable);
+    Page<Agrupador> findFirst20AgrupadorByOrderByIdDesc(Pageable pageable, Authentication authentication);
 
+    
+    /**
+     * Filter by agrupador
+     * @param dto
+     * @return
+     * @throws Exception
+     */
+    Set<Agrupador> findAgrupadorByTituloByDescripcionByEtiqueta(AgrupadorFiltroDTO dto ) throws Exception ;
     /**
      * Get all the agrupador.
      *
@@ -69,6 +80,7 @@ public interface AgrupadorService {
     
 
 
+	Optional<Agrupador> updateAgrupador(AgrupadorUpdate dto) throws Exception;
     /**
      * Delete the "id" agrupador.
      *
