@@ -7,17 +7,19 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 import { VideoModalComponent } from 'app/shared/video-preview/video-modal.component';
-import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
+// import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
 // import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UmaPreviewModule } from './uma-preview/uma-preview.module';
+import { SafeHtmlModule } from './safe-html/safe-html.module';
+// import { TestModule } from './test/test.module';
 
 @NgModule({
-  imports: [ConstructorSharedLibsModule, UmaPreviewModule],
+  imports: [ConstructorSharedLibsModule, SafeHtmlModule, UmaPreviewModule],
   declarations: [
     FindLanguageFromKeyPipe,
-    SafeHtmlPipe,
+    // SafeHtmlPipe,
     AlertComponent,
     AlertErrorComponent,
     LoginModalComponent,
@@ -33,7 +35,7 @@ import { UmaPreviewModule } from './uma-preview/uma-preview.module';
     UmaPreviewModule,
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
-    SafeHtmlPipe,
+    // SafeHtmlPipe,
     AlertComponent,
     AlertErrorComponent,
     LoginModalComponent,

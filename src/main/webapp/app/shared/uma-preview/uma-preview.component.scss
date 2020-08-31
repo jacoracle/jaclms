@@ -133,7 +133,8 @@
 
 .container-componentes {
   display: flex;
-  border: solid 1px #000;
+  justify-content: center;
+  // border: solid 1px #000;
 
   .text-content-block {
     border: solid 1px red;
