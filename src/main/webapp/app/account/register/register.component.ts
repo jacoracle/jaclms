@@ -1,15 +1,15 @@
-import { Component, AfterViewInit, Renderer, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { JhiLanguageService } from 'ng-jhipster';
+import { JhiAlert, JhiAlertService, JhiEventManager, JhiEventWithContent, JhiLanguageService } from 'ng-jhipster';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared/constants/error.constants';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { RegisterService } from './register.service';
-import { JhiEventManager, JhiAlertService, JhiAlert, JhiEventWithContent } from 'ng-jhipster';
 import { CountryService } from 'app/entities/country/country.service';
 import { IPais } from 'app/shared/model/pais.model';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-register',
@@ -44,15 +44,16 @@ export class RegisterComponent implements AfterViewInit {
     private loginModalService: LoginModalService,
     private registerService: RegisterService,
     private countryService: CountryService,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private fb: FormBuilder,
     private alertService: JhiAlertService,
-    private eventManager: JhiEventManager
+    private eventManager: JhiEventManager,
+    private router: Router
   ) {}
 
   ngAfterViewInit(): void {
     if (this.login) {
-      this.renderer.invokeElementMethod(this.login.nativeElement, 'focus', []);
+      this.renderer.selectRootElement(this.login.nativeElement).scrollIntoView();
     }
     this.countryService
       .query()
@@ -107,14 +108,13 @@ export class RegisterComponent implements AfterViewInit {
       this.registerService.save(userPhoneNumber).subscribe(
         () => {
           this.success = true;
+          setTimeout(() => {
+            this.redirectHome();
+          }, 2000);
         },
         response => this.processError(response)
       );
     }
-  }
-
-  openLogin(): void {
-    this.loginModalService.open();
   }
 
   private processError(response: HttpErrorResponse): void {
@@ -140,5 +140,9 @@ export class RegisterComponent implements AfterViewInit {
 
   passwordDoNotMatch(): boolean {
     return this.registerForm.get(['password'])!.value !== this.registerForm.get(['confirmPassword'])!.value;
+  }
+
+  redirectHome(): void {
+    this.router.navigate(['']).then(() => {});
   }
 }
