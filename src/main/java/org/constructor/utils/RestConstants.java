@@ -216,4 +216,9 @@ public class RestConstants {
 	 * Path para peticiones busqueda 
 	 */
 	public static final String PATH_BUSQUEDA = "modulo-filtros";
+	
+	/**
+	 * Path para peticiones busqueda  agrupador
+	 */
+	public static final String PATH_BUSQUEDA_AGRUPADOR = "agrupador-filtros";
 }
