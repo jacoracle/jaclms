@@ -1,83 +1,73 @@
 <div class="container-preview-uma">
     <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-preview-uma" type="button"
         (click)="activeModal.dismiss('closed')"><i class="icon ni-close"></i></button>
+        <p class="modal-preview-title">Vista previa I <i class="icon whBook"></i><span>Nombre de Uma</span></p>
     <div class="modal-preview-uma-body">
         <div class="row-modal-preview-uma">
             <div class="col-form-preview">
-                <p>Preview del UMA</p>
                 <div class="content-uma">
                     <ng-container *ngFor="let obj of bloquesUma!; let idx = index;">
-                        <p>Tipo del componente:
-                            <strong>{{obj!.bloqueComponentes!.tipoBloqueComponentes.nombre}}</strong></p>
+                        <!-- <p>Tipo del componente:
+                            <strong>{{obj!.bloqueComponentes!.tipoBloqueComponentes.nombre}}</strong></p> -->
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen_texto'">
-
                             <div class="container-componentes" #targetImagenTexto>
-
                                 <jhi-content-block4 [contentBlock]="obj" [target]="targetImagenTexto" [index]="idx">
                                 </jhi-content-block4>
-
                             </div>
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'titulo'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-
+                              <div class="container-componentes">
                                 <jhi-visor-text [component]="c"
                                     [templateType]="obj.bloqueComponentes!.tipoBloqueComponentes!">
                                 </jhi-visor-text>
+                              </div>
                             </div>
-                            <hr>
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'texto'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-
+                              <div class="container-componentes">
                                 <jhi-visor-text [component]="c"
                                     [templateType]="obj.bloqueComponentes!.tipoBloqueComponentes!">
                                 </jhi-visor-text>
-
+                              </div>
                             </div>
-                            <hr>
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes; let i = index;">
-                                <div class="content-img-block" #targetImagen>
+                                <div class="container-componentes" #targetImagen>
                                     <jhi-constructor-image [component]="c"></jhi-constructor-image>
                                 </div>
                             </div>
-                            <hr>
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'pdf'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-                                <div class="content-pdf-block">
-
+                                <div class="container-componentes">
                                     <jhi-constructor-pdf [component]="c">
                                     </jhi-constructor-pdf>
-
                                 </div>
                             </div>
-                            <hr>
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'sound'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-                                <div class="content-sound-block">
+                                <div class="container-componentes">
                                     <jhi-constructor-sound [component]="c"></jhi-constructor-sound>
                                 </div>
                             </div>
-                            <hr>
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'video'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-                                <div class="content-video-block">
+                                <div class="container-componentes">
                                     <jhi-constructor-video [component]="c" class="jhi-c-video"></jhi-constructor-video>
                                 </div>
                             </div>
-                            <hr>
                         </ng-container>
 
                         <ng-container
@@ -86,7 +76,6 @@
                                 <jhi-content-block6 [contentBlock]="obj" [target]="targetIndicacionVideo" [index]="idx">
                                 </jhi-content-block6>
                             </div>
-                            <hr>
                         </ng-container>
 
                         <ng-container
@@ -95,7 +84,6 @@
                                 <jhi-content-block7 [contentBlock]="obj" [index]="idx" [target]="targetVideoEnv">
                                 </jhi-content-block7>
                             </div>
-                            <hr>
                         </ng-container>
 
                     </ng-container>
