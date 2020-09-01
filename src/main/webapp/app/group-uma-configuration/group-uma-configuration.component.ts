@@ -132,7 +132,9 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   }
 
   revertData(): void {
+    console.error('#### group-uma-configuration - 1');
     this.umaUpdateComponente.revertSequenceGroup(this.createdGroupSequence.id!);
+    console.error('#### group-uma-configuration - Last, terminó revert, viene redirect');
     /*
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.agrupador.revert' })

@@ -176,9 +176,11 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
         .delete(groupId)
         .pipe(takeUntil(this.ngUnsubscribeSubject))
         .subscribe(() => {
+          console.error('#### agrupador-uma-update - 2');
           console.error('#### Agrupador eliminado con ID: ', groupId);
         });
     }
+    console.error('#### Termina eliminación, regresa a group-uma-configuration');
   }
 
   makeInvalid(controlName: string): void {

@@ -20,7 +20,6 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 })
 export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
-  // authSubscription?: Subscription;
   subscription!: Subscription;
   private ngUnsubscribeSubject = new Subject();
   modulos: IModulo[] = new Array<IModulo>();
@@ -32,7 +31,7 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   filteredUmas: any;
 
   umaForm = this.formbuilder.group({
-    sessionType: new FormControl('', [Validators.maxLength(30)]),
+    titleSearchGral: new FormControl('', [Validators.maxLength(30)]),
     sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
     umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
     academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
@@ -49,28 +48,46 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     private eventManager: JhiEventManager
   ) {
     this.isSearching = false;
-    this.filteredUmas = this.umaForm.get('sessionType')!.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(title => (title ? this._filterUmasByTitle(title) : this.modulos.slice()))
-    );
   }
 
   ngOnInit(): void {
     this.showLoader = true;
+
+    this.umaForm
+      .get('titleSearchGral')!
+      .valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value.descripcion)),
+        map(title => (title ? this._filterUmasByTitle(title) : this.modulos.slice()))
+      )
+      .subscribe((seqs: IModulo[]) => {
+        this.isSearching = true;
+        this.modulos = [...this.checkListUmas(seqs)];
+      });
+
     this.subscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
         this.moduleService.query().subscribe(
           (res: HttpResponse<IModulo[]>) => {
             this.modulos = res.body!;
-            this.originalUmasList = [...this.modulos];
+            this.originalUmasList = this.modulos;
             this.showLoader = false;
           },
           () => this.onQueryError()
         );
       }
     });
+  }
+
+  private checkListUmas(umas: IModulo[]): IModulo[] {
+    if (this.umaForm.get('titleSearchGral')!.value !== '' && umas.length > 0) {
+      return umas;
+    } else if (this.umaForm.get('titleSearchGral')!.value === '') {
+      return this.originalUmasList;
+    } else {
+      return [];
+    }
   }
 
   isAuthenticated(): boolean {
@@ -99,6 +116,14 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     $event.stopPropagation();
     this.moduleService.delete(id).subscribe(() => {
       this.modulos.splice(this.findElementById(this.modulos, id), 1);
+      /*
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', {
+          message: 'constructorApp.agrupador.deleted',
+          type: 'success'
+        })
+      );
+      */
     });
   }
 
@@ -123,6 +148,7 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
 
   resetUmas(): void {
     this.modulos = [...this.originalUmasList];
+    this.umaForm.reset();
   }
 
   executeSearch(): void {

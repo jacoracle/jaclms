@@ -58,9 +58,10 @@
 
             <div class="row-search-gral">
               <mat-form-field>
-                <input type="text" placeholder="Buscar" matInput formControlName="sessionType"
-                  [matAutocomplete]="autoInputSessionType">
-                <mat-autocomplete autoActiveFirstOption #autoInputSessionType="matAutocomplete"
+                <mat-label>Búsqueda general por título</mat-label>
+                <input type="text" placeholder="Buscar por título" matInput formControlName="titleSearchGral"
+                  [matAutocomplete]="autoInputTitleSearch">
+                <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
                   [displayWith]="displayFn">
                   <!-- <mat-option *ngFor="let option of filteredTypeOpts | async" [value]="option"> -->
                   <mat-option *ngFor="let option of modulos" [value]="option">
