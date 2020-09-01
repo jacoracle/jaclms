@@ -174,7 +174,7 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 
 		}
 
-		agrupadorPage = agrupadorRepository.findFirst20AgrupadorByOrderByIdDesc(pageable, userName.getId());
+		agrupadorPage = agrupadorRepository.findFirst20AgrupadorByOrderByIdDesc(userName.getId());
 		for (Agrupador agrupador : agrupadorPage) {
 			agrupador.setModulos(null);
 			agrupadorList.add(agrupador);
