@@ -13,14 +13,11 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
   umaData: any;
   bloquesUma: any;
   componentesUma: any;
-  //   @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
   imgSrc: SafeUrl = '';
   subscription: Subscription;
 
   constructor(public activeModal: NgbActiveModal, private imageService: ImageService, private domSanitizer: DomSanitizer) {
-    console.error('####   Datos recibidos del UMA: ');
-    console.error(this.umaData);
-
+    // console.error('####   Datos recibidos del UMA: ');
     this.subscription = this.imageService.getImgSrc().subscribe(imgSrc => {
       this.imgSrc = imgSrc;
     });
@@ -31,13 +28,7 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
     // this.componentesUma = this.bloquesUma.bloqueComponentes
   }
 
-  ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   if (this.videoplayer) {
-    //     this.videoplayer.nativeElement.play();
-    //   }
-    // }, 1000);
-  }
+  ngAfterViewInit(): void {}
 
   setImgSrc(imgPath: string): void {
     console.error(imgPath);

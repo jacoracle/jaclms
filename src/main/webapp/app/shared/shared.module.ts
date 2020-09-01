@@ -7,13 +7,10 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 import { VideoModalComponent } from 'app/shared/video-preview/video-modal.component';
-// import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
-// import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UmaPreviewModule } from './uma-preview/uma-preview.module';
 import { SafeHtmlModule } from './safe-html/safe-html.module';
-// import { TestModule } from './test/test.module';
 
 @NgModule({
   imports: [ConstructorSharedLibsModule, SafeHtmlModule, UmaPreviewModule],
@@ -28,7 +25,7 @@ import { SafeHtmlModule } from './safe-html/safe-html.module';
     // UmaPreviewModalComponent,
     HasAnyAuthorityDirective
   ],
-  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent], // , UmaPreviewModalComponent],
+  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent],
   exports: [
     MatInputModule,
     MatAutocompleteModule,

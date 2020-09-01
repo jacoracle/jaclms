@@ -83,26 +83,26 @@
         }
 
         .content-uma {
-          border: solid 1px greenyellow;
+          // border: solid 1px greenyellow;
           width: 100%;
           max-height: 90vh;
           overflow-y: scroll;
 
           .content-text-uma {
-            background-color: lightblue;
-            color: #fff;
+            // background-color: lightblue;
+            // color: #fff;
             padding: 10px 15px;
           }
 
           .content-text-title-uma {
-            background-color: #ccc;
-            border: solid 1px yellow;
+            // background-color: #ccc;
+            // border: solid 1px yellow;
           }
 
           .content-img-block {
             align-items: center;
-            background-color: #ccc;
-            border: solid 1px lightcoral;
+            // background-color: #ccc;
+            // border: solid 1px lightcoral;
             display: flex;
             justify-content: center;
             min-height: 300px;
@@ -113,8 +113,8 @@
           .content-sound-block,
           .content-video-block {
             align-items: center;
-            background-color: #ccc;
-            border: solid 1px black;
+            // background-color: #ccc;
+            // border: solid 1px black;
             display: flex;
             justify-content: center;
             min-height: 250px;
@@ -137,30 +137,30 @@
   // border: solid 1px #000;
 
   .text-content-block {
-    border: solid 1px red;
+    // border: solid 1px red;
     padding: 10px;
     width: 50%;
   }
 
   .img-content-block {
-    border: solid 1px blue;
+    // border: solid 1px blue;
     padding: 6px;
     width: 50%;
   }
 
   .video-content-block {
-    border: solid 1px green;
+    // border: solid 1px green;
     padding: 10px;
     width: 50%;
   }
 
   .text-video-content-block {
     display: block;
-    color: salmon;
+    // color: salmon;
   }
 
   .video-indicacion-content-block {
-    border: solid 1px #ccc;
+    // border: solid 1px #ccc;
     display: inline-block;
     text-align: center;
     width: 90%;

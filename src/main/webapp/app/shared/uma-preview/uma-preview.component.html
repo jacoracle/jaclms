@@ -4,14 +4,11 @@
     <div class="modal-preview-uma-body">
         <div class="row-modal-preview-uma">
             <div class="col-form-preview">
-                <!-- <video [src]="videoSrc" width="88%" controls #vPlayer></video> -->
                 <p>Preview del UMA</p>
-                <!-- <p>{{umaData!.nivelesModulo!.nivelJerarquico!.bloquesCurso | json}}</p> -->
                 <div class="content-uma">
                     <ng-container *ngFor="let obj of bloquesUma!; let idx = index;">
                         <p>Tipo del componente:
                             <strong>{{obj!.bloqueComponentes!.tipoBloqueComponentes.nombre}}</strong></p>
-                        <!-- <p>{{obj!.bloqueComponentes.componentes | json}}</p> -->
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen_texto'">
 
@@ -20,34 +17,14 @@
                                 <jhi-content-block4 [contentBlock]="obj" [target]="targetImagenTexto" [index]="idx">
                                 </jhi-content-block4>
 
-                                <!--
-                                <ng-container *ngFor="let bc of obj.bloqueComponentes.componentes">
-
-                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'text'">
-                                        <div class="text-content-block">
-                                            <div [innerHtml]="bc.contenido.contenido"></div>
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'image'">
-                                        <div class="img-content-block">
-                                            <img [src]="bc.contenido.contenido">
-                                        </div>
-                                    </ng-container>
-
-                                </ng-container>
-                                -->
-
                             </div>
-                            <!-- termina container-componentes -->
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'titulo'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-                                <!-- <div class="content-text-title-uma" [innerHtml]="c.contenido.contenido"></div> -->
-                                <!--{{c.contenido.contenido}}-->
+
                                 <jhi-visor-text [component]="c"
                                     [templateType]="obj.bloqueComponentes!.tipoBloqueComponentes!">
-                                    <!--(updateComponent)="onUpdateComponent($event, index)"-->
                                 </jhi-visor-text>
                             </div>
                             <hr>
@@ -60,16 +37,6 @@
                                     [templateType]="obj.bloqueComponentes!.tipoBloqueComponentes!">
                                 </jhi-visor-text>
 
-                                <!-- <div class="content-text-uma" [innerHtml]="c.contenido.contenido"></div> -->
-                                <!--
-                                <jhi-visor-text [component]="c">
-                                    <!- - 
-                                        [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes!"
-                                    (updateComponent)="onUpdateComponent($event, index)"
-                                     -- >
-                                </jhi-visor-text>
-                                -->
-                                <!--{{c.contenido.contenido}}-->
                             </div>
                             <hr>
                         </ng-container>
@@ -77,14 +44,6 @@
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'imagen'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes; let i = index;">
                                 <div class="content-img-block" #targetImagen>
-                                    <!-- <img [src]="transform(c.contenido.contenido)"/> -->
-                                    <!-- <img [src]="c.contenido.contenido"> -->
-                                    <!--
-                                    <jhi-content-block3 [contentBlock]="obj"
-                                        (updateMultimediaBlock)="getNothing($event)" [target]="targetImagen" [index]="i"
-                                        (updateBlock)="getOutput($event)">
-                                    </jhi-content-block3>
-                                    -->
                                     <jhi-constructor-image [component]="c"></jhi-constructor-image>
                                 </div>
                             </div>
@@ -97,9 +56,7 @@
 
                                     <jhi-constructor-pdf [component]="c">
                                     </jhi-constructor-pdf>
-                                    <!-- <span class="material-icons">
-                                        picture_as_pdf
-                                    </span> -->
+
                                 </div>
                             </div>
                             <hr>
@@ -108,11 +65,7 @@
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'sound'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
                                 <div class="content-sound-block">
-                                    <jhi-constructor-sound [component]="c">
-                                    </jhi-constructor-sound>
-                                    <!-- <span class="material-icons">
-                                        surround_sound
-                                    </span> -->
+                                    <jhi-constructor-sound [component]="c"></jhi-constructor-sound>
                                 </div>
                             </div>
                             <hr>
@@ -121,11 +74,7 @@
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'video'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
                                 <div class="content-video-block">
-                                    <!-- <span class="material-icons">
-                                        video_library
-                                    </span> -->
-                                    <jhi-constructor-video [component]="c" class="jhi-c-video">
-                                    </jhi-constructor-video>
+                                    <jhi-constructor-video [component]="c" class="jhi-c-video"></jhi-constructor-video>
                                 </div>
                             </div>
                             <hr>
@@ -134,28 +83,8 @@
                         <ng-container
                             *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'indicacion_video'">
                             <div class="container-componentes" #targetIndicacionVideo>
-
                                 <jhi-content-block6 [contentBlock]="obj" [target]="targetIndicacionVideo" [index]="idx">
                                 </jhi-content-block6>
-                                <!--
-                                <ng-container *ngFor="let bc of obj.bloqueComponentes.componentes">
-
-                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'text'">
-                                        <div class="text-video-content-block">
-                                            <div [innerHtml]="bc.contenido.contenido"></div>
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'video'">
-                                        <div class="video-indicacion-content-block">
-                                            <span class="material-icons">
-                                                video_library
-                                            </span>
-                                        </div>
-                                    </ng-container>
-
-                                </ng-container>
-                                -->
-
                             </div>
                             <hr>
                         </ng-container>
@@ -163,33 +92,11 @@
                         <ng-container
                             *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'video_envolvente'">
                             <div class="container-componentes" #targetVideoEnv>
-
                                 <jhi-content-block7 [contentBlock]="obj" [index]="idx" [target]="targetVideoEnv">
                                 </jhi-content-block7>
-
-                                <!--
-                                <ng-container *ngFor="let bc of obj.bloqueComponentes.componentes">
-
-                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'text'">
-                                        <div class="text-content-block">
-                                            <div [innerHtml]="bc.contenido.contenido"></div>
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="bc.tipoComponente.nombre === 'video'">
-                                        <div class="video-content-block">
-                                            <span class="material-icons">
-                                                video_library
-                                            </span>
-                                        </div>
-                                    </ng-container>
-
-                                </ng-container>
-                                -->
-
                             </div>
                             <hr>
                         </ng-container>
-
 
                     </ng-container>
                 </div>

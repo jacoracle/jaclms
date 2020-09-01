@@ -9,7 +9,7 @@ export class UmaPreviewModalService {
   constructor(private modalService: NgbModal) {}
 
   open(sequence: any): void {
-    console.error('UMA Preview Modal Service: ', sequence);
+    // console.error('UMA Preview Modal Service: ', sequence);
     if (this.isOpen) {
       return;
     }

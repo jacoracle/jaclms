@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ContentBlock3Component } from './content-block3/content-block3.component';
 import { ConstructorImageComponent } from '../components/constructor-image/constructor-image.component';
 import { VisorTextComponent } from 'app/visor/components/visor-text/visor-text.component';
-// import { TestModule } from 'app/shared/test/test.module';
 import { ContentBlock4Component } from './content-block4/content-block4.component';
 import { ConstructorVideoComponent } from '../components/constructor-video/constructor-video.component';
 import { ContentBlock6Component } from './content-block6/content-block6.component';
@@ -39,40 +38,3 @@ import { SafeHtmlModule } from 'app/shared/safe-html/safe-html.module';
   ]
 })
 export class ContentBlocksModule {}
-
-/*
-
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ContentBlock3Component } from './content-block3/content-block3.component';
-import { ConstructorImageComponent } from '../components/constructor-image/constructor-image.component';
-
-
-
-@NgModule({
-  declarations: [ContentBlock3Component, ConstructorImageComponent], // VisorTextComponent,
-  imports: [
-    CommonModule
-  ],
-  exports: [ContentBlock3Component, ConstructorImageComponent] // VisorTextComponent,
-})
-export class ContentBlocksModule { }
-
-
-
-
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ContentBlock3Component } from './content-block3/content-block3.component';
-import { ConstructorImageComponent } from '../components/constructor-image/constructor-image.component';
-
-@NgModule({
-  declarations: [ContentBlock3Component, ConstructorImageComponent],
-  imports: [CommonModule],
-  exports: [ContentBlock3Component, ConstructorImageComponent]
-})
-export class ContentBlocksModule {}
-
-
-
-*/
