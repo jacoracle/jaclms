@@ -2673,7 +2673,7 @@ input[type='file'] {
         text-align: center;
         position: relative;
         width: auto;
-        max-width: 800px;
+        // max-width: 800px;
         font-family: 'Open Sans', sans-serif;
         font-size: 34px;
         font-weight: 600;
@@ -3342,6 +3342,37 @@ input[type='file'] {
 .gcc-collapse {
   jhi-constructor-component-container {
     display: none;
+  }
+}
+
+.container-componentes {
+  .final-block-row {
+    .ql-editor {
+      h1,
+      h2 {
+        text-align: center;
+      }
+    }
+  }
+
+  .block-img {
+    border: 0 !important;
+    pointer-events: none !important;
+    cursor: default !important;
+  }
+  .col-cb-text-img {
+    div {
+      .b-paragraph-text {
+        border: 0 !important;
+        pointer-events: none !important;
+        cursor: default !important;
+      }
+    }
+  }
+  .block-pdf {
+    border: 0 !important;
+    pointer-events: none !important;
+    cursor: default !important;
   }
 }
 

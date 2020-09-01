@@ -70,7 +70,7 @@
           background-image: url('../../content/images/module_icon.svg');
         }
         .whBook {
-          background-image: url('../../content/images/book_icon.svg');
+          background-image: url('../../content/images/uma_icon.svg');
         }
         h4 {
           position: relative;
@@ -444,4 +444,10 @@
   background-color: $window-body-color;
   overflow-y: auto;
   // padding-bottom: 30px;
+}
+.whModule {
+  background-image: url('../../content/images/module_icon.svg');
+}
+.whBook {
+  background-image: url('../../content/images/uma_icon.svg');
 }
