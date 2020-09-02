@@ -95,6 +95,9 @@
                     </div>
 
                     <div class="btn-search-group">
+                        <button (click)="resetSequences()" class="secondary-btn mr-3">
+                            Limpiar búsqueda
+                        </button>
                         <button (click)="searchAgrupadores()" class="main-btn" type="button">
                             Buscar
                         </button>
@@ -110,8 +113,8 @@
                 <div *ngIf="secuenciasUma!.length">
                     <!-- <p>Resultados de la búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p> -->
                     <div class="grid-cards">
-                        <!-- <div *ngFor="let sec of secuenciasUma">    NO BORRAR ESTA LINEA-->
-                        <div *ngFor="let sec of filteredSequencesUmas! | async">
+                        <div *ngFor="let sec of secuenciasUma">
+                        <!-- <div *ngFor="let sec of filteredSequencesUmas! | async"> NO BORRAR ESTA LINEA -->
                             <!-- <mat-nav-list> -->
                             <div class="box-card" [routerLink]="['/sequence-configuration', sec.id]">
                                 <div class="group-cover-br-image"></div>

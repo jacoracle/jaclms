@@ -16,7 +16,7 @@ import { ModuloService } from '../modulo/modulo.service';
 import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { UmaPreviewModalService } from 'app/services/uma-preview-modal.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-secuencia-uma-update',
@@ -43,11 +43,13 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   originalUmasList: IModulo[] = new Array<IModulo>();
   tiraUmas: IAgrupadorUma[] = new Array<IAgrupadorUma>();
   isReorder: boolean;
+  isSearching: boolean;
 
   filteredTypeOpts: any;
+  filteredUmas: any;
 
   groupUmaForm = this.formbuilder.group({
-    sessionType: new FormControl('', [Validators.maxLength(30)]),
+    umaGral: new FormControl('', [Validators.maxLength(30)]),
     sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
     umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
     academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
@@ -72,9 +74,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     // private route: ActivatedRoute,
     private router: Router
   ) {
+    this.isSearching = false;
     this.isReorder = false;
     this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
-    // console.error('#### Group UMA configuration ID Grupo recibido: ', this.idSequenceToLoad);
   }
 
   ngOnInit(): void {
@@ -82,13 +84,25 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       // console.error('#### URL Data: ', data);
     });
 
+    this.filteredUmas = this.groupUmaForm
+      .get('umaGral')!
+      .valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value.descripcion)),
+        map(title => (title ? this._filterUmasByTitle(title) : this.umasList.slice()))
+      )
+      .subscribe((umas: IModulo[]) => {
+        this.isSearching = true;
+        this.umasList = [...this.checkListUmas(umas)];
+      });
+
     this.subscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
         this.umaService.query().subscribe(
           (res: HttpResponse<IModulo[]>) => {
             this.umasList = Array.from(res.body!);
-            this.originalUmasList = [...this.umasList];
+            this.originalUmasList = this.umasList;
           },
           () => this.onQueryError()
         );
@@ -98,11 +112,8 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.ngUnsubscribeSubject))
             .subscribe(res => {
               if (res.body) {
-                // console.error('#### Response Query Agrupador con ID: ', this.idSequenceToLoad);
-                // console.error(res.body);
                 this.agrupadorObj = res.body;
                 this.tiraUmas = [...res.body.modulos!];
-                // this.updatingGradesSelected(null, false);
               }
             });
         }
@@ -118,6 +129,21 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
+  private checkListUmas(umas: IModulo[]): IModulo[] {
+    if (this.groupUmaForm.get('umaGral')!.value !== '' && umas.length > 0) {
+      return umas;
+    } else if (this.groupUmaForm.get('umaGral')!.value === '') {
+      return this.originalUmasList;
+    } else {
+      return [];
+    }
+  }
+
+  private _filterUmasByTitle(value: string): IModulo[] {
+    const filterValue = value.toLowerCase();
+    return this.umasList.filter((option: IModulo) => option.titulo!.toLowerCase().includes(filterValue));
+  }
+
   displayFn(mod: IModulo): string {
     return mod && mod.descripcion ? mod.descripcion : '';
   }
@@ -127,7 +153,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   }
 
   protected onQueryError(): void {
-    console.error('Aquí debería informar el error con un alerta en pantalla. ERROR AL CARGAR LAS UMAS');
+    console.error('ERROR AL CARGAR LAS UMAS');
   }
 
   // drag drop tira de umas
@@ -228,6 +254,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   }
 
   resetUmas(): void {
+    this.groupUmaForm.reset();
     this.umasList = [...this.originalUmasList];
   }
 
@@ -239,6 +266,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
         console.error('#### Response búsqueda: ');
         console.error(res);
         this.umasList = [...res.body!];
+
         if (this.umasList.length === 0) {
           this.eventManager.broadcast(
             new JhiEventWithContent('constructorApp.validationError', {

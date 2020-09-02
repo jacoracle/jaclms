@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.constructor.module.domain.Agrupador;
-import org.constructor.module.domain.Modulo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,7 +29,7 @@ public interface AgrupadorRepository extends JpaRepository<Agrupador, Long> {
   
 
 	@Query("SELECT a from Agrupador a JOIN FETCH  a.user ag where ag.id = :id")
-	List<Agrupador> findFirst20AgrupadorByOrderByIdDesc(Pageable pageable, @Param("id")Long id);
+	List<Agrupador> findFirst20AgrupadorByOrderByIdDesc(@Param("id")Long id);
 
     
 	
