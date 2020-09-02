@@ -9,6 +9,7 @@ import { map, startWith, takeUntil } from 'rxjs/operators';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'jhi-home-uma-groups',
@@ -38,8 +39,13 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
     private accountService: AccountService,
     private formbuilder: FormBuilder,
     private agrupadorService: AgrupadorService,
-    private eventManager: JhiEventManager
-  ) {}
+    private eventManager: JhiEventManager,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe(() => {
+      this.queryGroups();
+    });
+  }
 
   ngOnInit(): void {
     // this.filteredSequencesUmas =
@@ -60,6 +66,8 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
       .subscribe(account => {
         this.account = account;
         if (this.account) {
+          this.queryGroups();
+          /*
           this.subscription = this.agrupadorService.query().subscribe(
             (res: HttpResponse<IAgrupador[]>) => {
               this.secuenciasUma = Array.from(res.body!);
@@ -67,8 +75,22 @@ export class HomeUmaGroupsComponent implements OnInit, OnDestroy, AfterContentIn
             },
             () => this.onQueryError()
           );
+          */
         }
       });
+  }
+
+  queryGroups(): void {
+    this.subscription = this.agrupadorService
+      .query()
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(
+        (res: HttpResponse<IAgrupador[]>) => {
+          this.secuenciasUma = [...Array.from(res.body!)];
+          this.secuenciasUmaOriginal = this.secuenciasUma; //  by reference cause it's a clone from original
+        },
+        () => this.onQueryError()
+      );
   }
 
   private checkListSequences(sequences: IAgrupador[]): IAgrupador[] {
