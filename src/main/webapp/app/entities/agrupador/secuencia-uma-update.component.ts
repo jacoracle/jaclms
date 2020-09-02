@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsignaturaService } from 'app/entities/asignatura/asignatura.service';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
@@ -47,16 +47,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   filteredTypeOpts: any;
   filteredUmas: any;
-
-  groupUmaForm = this.formbuilder.group({
-    umaGral: new FormControl('', [Validators.maxLength(30)]),
-    sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
-    umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
-    academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
-    umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(30)]),
-    umaTitleFormCtrl: new FormControl('', [Validators.maxLength(30)])
-  });
-
+  groupUmaForm!: FormGroup;
   isSaving = false;
   idSequenceToLoad!: number;
 
@@ -76,6 +67,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   ) {
     this.isSearching = false;
     this.isReorder = false;
+    this.initForm();
     this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
   }
 
@@ -127,6 +119,17 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       this.ngUnsubscribeSubject.next();
       this.ngUnsubscribeSubject.complete();
     }
+  }
+
+  initForm(): void {
+    this.groupUmaForm = this.formbuilder.group({
+      umaGral: new FormControl('', [Validators.maxLength(30)]),
+      sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+      umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+      academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+      umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+      umaTitleFormCtrl: new FormControl('', [Validators.maxLength(30)])
+    });
   }
 
   private checkListUmas(umas: IModulo[]): IModulo[] {
@@ -255,6 +258,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   resetUmas(): void {
     this.groupUmaForm.reset();
+    this.initForm();
     this.umasList = [...this.originalUmasList];
   }
 

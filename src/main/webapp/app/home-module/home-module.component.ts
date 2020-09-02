@@ -9,7 +9,7 @@ import { IModulo } from 'app/shared/model/modulo.model';
 
 import { HttpResponse } from '@angular/common/http';
 import { SafeUrl } from '@angular/platform-browser';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { takeUntil, startWith, map } from 'rxjs/operators';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
@@ -27,17 +27,8 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
   showLoader = false;
   isSearching!: boolean;
-
   filteredUmas: any;
-
-  umaForm = this.formbuilder.group({
-    titleSearchGral: new FormControl('', [Validators.maxLength(30)]),
-    sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
-    umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
-    academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
-    umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(30)]),
-    umaTitleFormCtrl: new FormControl('', [Validators.maxLength(30)])
-  });
+  umaForm!: FormGroup;
 
   constructor(
     private accountService: AccountService,
@@ -48,6 +39,7 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     private eventManager: JhiEventManager
   ) {
     this.isSearching = false;
+    this.initForm();
   }
 
   ngOnInit(): void {
@@ -112,6 +104,17 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     console.error('Error');
   }
 
+  initForm(): void {
+    this.umaForm = this.formbuilder.group({
+      titleSearchGral: new FormControl('', [Validators.maxLength(30)]),
+      sessionTopicFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+      umaAreaKnowledgeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+      academicGradeFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+      umaDescriptionFormCtrl: new FormControl('', [Validators.maxLength(30)]),
+      umaTitleFormCtrl: new FormControl('', [Validators.maxLength(30)])
+    });
+  }
+
   deleteModule(id: number, $event: any): void {
     $event.stopPropagation();
     this.moduleService.delete(id).subscribe(() => {
@@ -149,6 +152,7 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   resetUmas(): void {
     this.modulos = [...this.originalUmasList];
     this.umaForm.reset();
+    this.initForm();
   }
 
   executeSearch(): void {
