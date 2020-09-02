@@ -10,7 +10,6 @@ import { ContentBlock7Component } from './content-block7/content-block7.componen
 import { ConstructorPdfComponent } from '../components/constructor-pdf/constructor-pdf.component';
 import { ConstructorSoundComponent } from '../components/constructor-sound/constructor-sound.component';
 import { SafeHtmlModule } from 'app/shared/safe-html/safe-html.module';
-// import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
 
 @NgModule({
   imports: [CommonModule, SafeHtmlModule],
