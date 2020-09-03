@@ -76,6 +76,9 @@
                   <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'sound'" #targetSound>
                      <jhi-content-block9 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)" [target]="targetSound" [index]="index"></jhi-content-block9>
                   </div>
+                  <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'actividad'" #targetInteractiveActivity>
+                    <jhi-content-block10 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)" [target]="targetInteractiveActivity" [index]="index"></jhi-content-block10>
+                 </div>
                 </div>
                 <!-- Add content -->
                 <div *ngIf="selectedBlock === index" class="row-add-content">
@@ -90,3 +93,13 @@
 
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
