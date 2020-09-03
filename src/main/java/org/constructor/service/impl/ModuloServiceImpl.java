@@ -3,6 +3,7 @@
  */
 package org.constructor.service.impl;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,6 +101,14 @@ public class ModuloServiceImpl implements ModuloService {
 
 		// Get userbyLogin
 		String usuarioNombre = authentication.getName();
+		Collection<? extends GrantedAuthority> a;
+		a = authentication.getAuthorities();
+		for (GrantedAuthority grantedAuthority : a) {
+			if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+				return moduloRepository.findAll();
+			}
+
+		}
 		user = userService.findUserByLogin(usuarioNombre);
 
 		for (User usuario : user) {
