@@ -33,31 +33,32 @@ export class ConstructorPdfComponent implements OnInit, OnDestroy {
     public fileUploadService: FileUploadService,
     private domSanitizer: DomSanitizer
   ) {
-    this.subscription = this.pdfService.getEditing().subscribe(editing => (this.editing = editing));
+    this.subscription = this.pdfService.getEditing().subscribe(editing => {
+      this.editing = editing;
+      this.pdfService.getPdfProperties().subscribe((objProperties: IContenido) => {
+        if (this.editing && this.component!.contenido!.id) {
+          this.updateComponent.emit(objProperties);
+          // Actualizar contenido de componente en base de datos
+          const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
+          this.subscription = this.contenidoService.update(contenido).subscribe(
+            data => {
+              this.component!.contenido = data.body!;
+            },
+            () => {
+              this.eventManager.broadcast(
+                new JhiEventWithContent('constructorApp.blockUpdateError', {
+                  message: 'constructorApp.curso.blockUpdate.error',
+                  type: 'danger'
+                })
+              );
+            }
+          );
+        }
+      });
+    });
     this.subscription = this.pdfService.getPdfSrc().subscribe(pdfSrc => {
       if (this.editing) {
         this.pdfSrc = pdfSrc;
-      }
-    });
-
-    this.subscription = this.pdfService.getPdfProperties().subscribe((objProperties: IContenido) => {
-      if (this.editing) {
-        this.updateComponent.emit(objProperties);
-        // Actualizar contenido de componente en base de datos
-        const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
-        this.subscription = this.contenidoService.update(contenido).subscribe(
-          data => {
-            this.component!.contenido = data.body!;
-          },
-          () => {
-            this.eventManager.broadcast(
-              new JhiEventWithContent('constructorApp.blockUpdateError', {
-                message: 'constructorApp.curso.blockUpdate.error',
-                type: 'danger'
-              })
-            );
-          }
-        );
       }
     });
   }

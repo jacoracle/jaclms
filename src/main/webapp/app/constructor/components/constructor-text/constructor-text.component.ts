@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TextService } from 'app/services/text.service';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
@@ -11,15 +11,24 @@ import Quill from 'quill';
   encapsulation: ViewEncapsulation.None
 })
 export class ConstructorTextComponent {
-  private _htmlContent = '';
-  editor: any;
+  htmlContent = '';
   placeholder =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   isTitle = false;
   templates: ITipoBloqueComponentes[] = [];
   headingSelect: any;
+  @Input() showTextEditor?: boolean;
+  @ViewChild('quill_editor', { static: false }) quill_editor: any;
 
-  constructor(private textService: TextService, private contentBlocksService: ContentBlocksService) {
+  isEventInEditor = false;
+  @ViewChild('toggleButton', { static: false }) toggleButton: any;
+  @ViewChild('menu', { static: false }) menu: any;
+  lastInnerHtml = '';
+
+  constructor(private textService: TextService, private contentBlocksService: ContentBlocksService, private renderer: Renderer2) {
+    this.lastInnerHtml = '';
+    this.htmlContent = '';
+    this.listenerApp();
     const Font = Quill.import('attributors/class/font');
     Font.whitelist = ['arial', 'times-new-roman', 'calibri', 'comic-sans-ms'];
     Quill.register(Font, true);
@@ -28,7 +37,20 @@ export class ConstructorTextComponent {
       this.templates = templates;
     });
     this.textService.getText().subscribe(text => {
-      this._htmlContent = text;
+      // eslint-disable-next-line no-debugger
+      debugger;
+      if (this.lastInnerHtml !== '' && !this.showTextEditor) {
+        const editableElements = document.querySelectorAll('[quill-editor-element]');
+        if (editableElements[0] && editableElements[0].parentNode) {
+          editableElements[0].innerHTML = this.lastInnerHtml;
+        }
+      }
+      if (this.htmlContent === '' && text !== '') {
+        this.quill_editor.quillEditor.clipboard.dangerouslyPasteHTML(text);
+      }
+      if (text !== '') {
+        this.htmlContent = text;
+      }
     });
     this.textService.getTemplateType().subscribe(templateTypeId => {
       const componente = templateTypeId.nombre;
@@ -38,45 +60,55 @@ export class ConstructorTextComponent {
     });
   }
 
-  afterCreated(quill: Quill): void {
-    this.editor = quill;
+  listenerApp(): void {
+    // eslint-disable-next-line no-debugger
+    debugger;
+
+    this.renderer.listen('window', 'click', (e: any) => {
+      this.conditionListener(e);
+    });
   }
 
-  get htmlContent(): string {
-    if (this.isTitle && this.headingSelect === undefined) {
-      if (
-        this._htmlContent !== undefined &&
-        this._htmlContent !== '' &&
-        this._htmlContent !== null &&
-        this._htmlContent !== '<h1><br></h1>'
-      ) {
-        this.editor.setSelection(this._htmlContent.length, 0);
-        return this.restoreTitle(this._htmlContent);
-      } else {
-        return '';
-      }
+  listenerNoWrite(e: any): void {
+    // eslint-disable-next-line no-debugger
+    debugger;
+    this.conditionListener(e);
+  }
+
+  conditionListener(e: any): void {
+    if (
+      e.path[0].tagName === 'P' ||
+      e.path[0].tagName === 'H1' ||
+      e.path[0].outerHTML.indexOf('<div quill-editor-toolbar="" class="ql-toolbar') !== -1
+    ) {
+      this.isEventInEditor = true;
+      this.focus(false);
     } else {
-      return this._htmlContent;
+      this.isEventInEditor = false;
+      this.focus(true);
     }
   }
 
-  @Input()
-  set htmlContent(val: string) {
+  setHtmlContent(event: any): void {
+    let val;
     if (this.isTitle && this.headingSelect === undefined) {
-      this._htmlContent = this.restoreTitle(val);
+      val = '<h1>' + event.path[0].innerText + event.key + '</h1>';
+      this.htmlContent = this.restoreTitle(val);
       this.textService.setText(this.restoreTitle(val));
     } else {
-      this._htmlContent = val;
+      val = '<p>' + event.path[0].innerText + event.key + '</p>';
+      this.htmlContent = val;
       this.textService.setText(val);
     }
   }
 
-  noWrite(): any {
+  noWrite(event: Event): void {
     if (this.isTitle && this.headingSelect === undefined) {
-      this.textService.setTextFinish(this.restoreTitle(this._htmlContent));
+      this.textService.setTextFinish(this.restoreTitle(this.htmlContent));
     } else {
-      this.textService.setTextFinish(this._htmlContent);
+      this.textService.setTextFinish(this.htmlContent);
     }
+    this.listenerNoWrite(event);
   }
 
   restoreTitle(text: string): any {
@@ -99,5 +131,39 @@ export class ConstructorTextComponent {
 
   textWithoutHtml(text: string): string {
     return text.replace(/<[^>]*>/g, '');
+  }
+
+  inactive(): void {
+    const editorContainer = document.getElementById('gcc-collapse');
+    if (editorContainer) {
+      editorContainer.classList.add('inactive');
+    }
+    this.quill_editor.enable(false);
+  }
+
+  active(): void {
+    const editorContainer = document.getElementById('gcc-collapse');
+    if (editorContainer) {
+      editorContainer.classList.remove('inactive');
+    }
+    this.quill_editor.enable(true);
+  }
+
+  focus(delet: boolean): void {
+    const editableElements = document.querySelectorAll('[quill-editor-element]');
+    if (editableElements[0] && editableElements[0].parentNode) {
+      if (editableElements[0].innerHTML !== '') {
+        this.lastInnerHtml = editableElements[0].innerHTML;
+      }
+      if (delet) {
+        editableElements[0].innerHTML = '';
+        this.textService.setText(this.htmlContent);
+        this.htmlContent = '';
+      }
+    }
+  }
+
+  isEventInEditorText(): void {
+    this.isEventInEditor = true;
   }
 }

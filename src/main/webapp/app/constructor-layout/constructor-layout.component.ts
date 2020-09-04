@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.service';
 import { ActivatedRoute } from '@angular/router';
@@ -30,8 +30,15 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
     private moduloService: ModuloService,
     private currentCourseService: CurrentCourseService,
     private currentModuleService: CurrentModuleService,
-    private colorModeService: ColorModeService
+    private colorModeService: ColorModeService,
+    private renderer: Renderer2
   ) {
+    this.renderer.listen('window', 'click', (e: any) => {
+      if (!(e.path[0].tagName === 'P' || e.path[0].tagName === 'H1' || e.path[0].className === 'ql-editor')) {
+        this.showTextEditor = false;
+      }
+    });
+
     const id = this.route.snapshot.paramMap.get('id') as any;
     this.type = this.route.snapshot.paramMap.get('type') as string;
 

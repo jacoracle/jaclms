@@ -31,17 +31,57 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
     private contenidoService: ContenidoService,
     private eventManager: JhiEventManager
   ) {
-    this.subscription = this.imageService.getEditing().subscribe(editing => (this.editing = editing));
+    this.subscription = this.imageService.getEditing().subscribe(editing => {
+      this.editing = editing;
+      this.imageService.getImageProperties().subscribe((objProperties: IContenido) => {
+        // eslint-disable-next-line no-console
+        // console.log(objProperties);
+        // eslint-disable-next-line no-console
+        console.log('b');
+        // eslint-disable-next-line no-console
+        console.log(this.editing);
+        // eslint-disable-next-line no-console
+        console.log(objProperties);
+        // eslint-disable-next-line no-console
+        console.log(this.component!.contenido!);
+        if (this.editing && this.component!.contenido!.id) {
+          this.updateComponent.emit(objProperties);
+          // Actualizar contenido de componente en base de datos
+          // eslint-disable-next-line no-console
+          console.log('c');
+          const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
+          this.subscription = this.contenidoService.update(contenido).subscribe(
+            data => {
+              this.component!.contenido = data.body!;
+            },
+            () => {
+              this.eventManager.broadcast(
+                new JhiEventWithContent('constructorApp.blockUpdateError', {
+                  message: 'constructorApp.curso.blockUpdate.error',
+                  type: 'danger'
+                })
+              );
+            }
+          );
+        }
+      });
+    });
     this.subscription = this.imageService.getImgSrc().subscribe(imgSrc => {
       if (this.editing) {
         this.imgSrc = imgSrc;
       }
     });
 
-    this.subscription = this.imageService.getImageProperties().subscribe((objProperties: IContenido) => {
+    /*    this.subscription = this.imageService.getImageProperties().subscribe((objProperties: IContenido) => {
+      // eslint-disable-next-line no-console
+      console.log(objProperties);
+      // eslint-disable-next-line no-console
+      console.log('b');
       if (this.editing) {
         this.updateComponent.emit(objProperties);
         // Actualizar contenido de componente en base de datos
+        // eslint-disable-next-line no-console
+        console.log('c');
         const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
         this.subscription = this.contenidoService.update(contenido).subscribe(
           data => {
@@ -57,7 +97,7 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
           }
         );
       }
-    });
+    });*/
   }
 
   createUpdatedContent(content: IContenido, newContent: IContenido): IContenido {

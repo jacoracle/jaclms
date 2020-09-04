@@ -82,3 +82,30 @@ Set the font-family content used for the HTML content.
 .ql-picker-label {
   overflow: hidden;
 }
+#editor-container {
+  height: 100px;
+}
+
+button {
+  margin-bottom: 10px;
+}
+
+.inactive .ql-editor {
+  padding: 0;
+  line-height: inherit;
+}
+
+.inactive .ql-editor p {
+  padding: inherit;
+  margin-bottom: 10px;
+}
+
+.inactive .ql-toolbar {
+  display: none;
+}
+
+.inactive .ql-container.ql-snow {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+}

@@ -30,7 +30,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   loadedPdfUrl = './../../../content/images/pdf_up_thumb.png';
   defaultSoundUrl = './../../../content/images/audio_thumb.png';
   loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
-  defaultActivityUrl = './../../../content/images/activity_thumb.png';
+  defaultActivityUrl = './../../../content/images/actividad.png';
   loadedFormActivity = './../../../content/images/activity_up_thumb.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
@@ -59,6 +59,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   listenAudio = false;
   viewPdf = false;
   multimediaFileProperties: Contenido = {
+    id: 0,
     nombre: '',
     peso: 0,
     extension: ''
@@ -124,6 +125,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     this.subscription = this.imageService.getImageProperties().subscribe(props => {
       // la propiedad contenido sirve para el path en caso de multimedia y para texto html en caso de componentes de texto
+      this.multimediaFileProperties.id = props.id ? props.id : 0;
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
@@ -133,6 +135,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     });
 
     this.subscription = this.videoService.getVideoProperties().subscribe(props => {
+      this.multimediaFileProperties.id = props.id ? props.id : 0;
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
@@ -142,6 +145,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     });
 
     this.subscription = this.pdfService.getPdfProperties().subscribe(props => {
+      this.multimediaFileProperties.id = props.id ? props.id : 0;
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
@@ -151,6 +155,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     });
 
     this.subscription = this.soundService.getAudioProperties().subscribe(props => {
+      this.multimediaFileProperties.id = props.id ? props.id : 0;
       this.multimediaFileProperties.nombre = props.nombre ? props.nombre : 'unknown';
       this.multimediaFileProperties.peso = props.peso ? props.peso : 0;
       this.multimediaFileProperties.pesoPrint = this.printSize(this.multimediaFileProperties.peso);
@@ -274,6 +279,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   subscriptionImage(): Subscription {
     return this.imageService.getImgSrc().subscribe(imgSrc => {
+      // eslint-disable-next-line no-console
+      console.log('a');
       this.imgSrc = imgSrc;
       this.fileFormat = 'image';
       if (this.imgSrc === '') {
@@ -303,6 +310,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id, this.type).subscribe(data => {
           this.getDataMultimediaFile(this.castObjectAsContenido(data), this.fileFormat, event.target.files[0].type, event);
           this.showLoader = false;
+          // eslint-disable-next-line no-console
+          console.log('d');
         });
       }
     }
@@ -389,14 +398,18 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.fileSize' })
     );
-    event.target.files = [];
+    if (event.target.files) {
+      event.target.files = [];
+    }
   }
 
   showErrorFileType(event: any): void {
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.fileType' })
     );
-    event.target.files = [];
+    if (event.target.files) {
+      event.target.files = [];
+    }
   }
 
   pdfPreview(): void {

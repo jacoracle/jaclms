@@ -26,13 +26,13 @@
 
             <div class="col-jhi-block" *ngFor="let block of contentBlocks; let index = index;">
                 <div (click)="selectBlock(index)" [ngClass]="{'selected-block': selectedBlock === index}"
-                     class="row-content-block">
+                     class="row-content-block" *ngIf="this.contentBlocks.length > 0">
 
                     <div *ngFor="let componente of componentes;">
                         <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == componente.nombre" #target>
                             <ndc-dynamic [ndcDynamicComponent]="componente.componente"
                                          [ndcDynamicInputs]="{contentBlock:block, target:target, index:index}"
-                                         [ndcDynamicOutputs]="{updateBlock: { handler: onUpdateBlock, args: ['$event', index] }}"></ndc-dynamic>
+                                         [ndcDynamicOutputs]="{updateBlock: { handler: onUpdateBlock('$event', index), args: ['$event', index] }}"></ndc-dynamic>
                         </div>
                     </div>
                 </div>

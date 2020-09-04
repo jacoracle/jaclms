@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { VideoService } from 'app/services/video.service';
 import { Componente } from 'app/shared/model/componente.model';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { FileUploadService } from 'app/services/file-upload.service';
-import { IContenido, Contenido } from 'app/shared/model/contenido.model';
-import { JhiEventWithContent, JhiEventManager } from 'ng-jhipster';
+import { Contenido, IContenido } from 'app/shared/model/contenido.model';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { ContenidoService } from 'app/entities/contenido/contenido.service';
 
 @Component({
@@ -33,7 +33,29 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
     public fileUploadService: FileUploadService,
     private domSanitizer: DomSanitizer
   ) {
-    this.subscription = this.videoService.getEditing().subscribe(editing => (this.editing = editing));
+    this.subscription = this.videoService.getEditing().subscribe(editing => {
+      this.editing = editing;
+      this.videoService.getVideoProperties().subscribe((objProperties: IContenido) => {
+        if (this.editing && this.component!.contenido!.id) {
+          this.updateComponent.emit(objProperties);
+          // Actualizar contenido de componente en base de datos
+          const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
+          this.subscription = this.contenidoService.update(contenido).subscribe(
+            data => {
+              this.component!.contenido = data.body!;
+            },
+            () => {
+              this.eventManager.broadcast(
+                new JhiEventWithContent('constructorApp.blockUpdateError', {
+                  message: 'constructorApp.curso.blockUpdate.error',
+                  type: 'danger'
+                })
+              );
+            }
+          );
+        }
+      });
+    });
     /*
     this.subscription = this.videoService.getVideoSrc().subscribe(videoSrc => {
       if (this.editing) {
@@ -44,27 +66,6 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
     this.subscription = this.videoService.getThumbSrc().subscribe(thumbSrc => {
       if (this.editing) {
         this.thumbSrc = thumbSrc;
-      }
-    });
-
-    this.subscription = this.videoService.getVideoProperties().subscribe((objProperties: IContenido) => {
-      if (this.editing) {
-        this.updateComponent.emit(objProperties);
-        // Actualizar contenido de componente en base de datos
-        const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
-        this.subscription = this.contenidoService.update(contenido).subscribe(
-          data => {
-            this.component!.contenido = data.body!;
-          },
-          () => {
-            this.eventManager.broadcast(
-              new JhiEventWithContent('constructorApp.blockUpdateError', {
-                message: 'constructorApp.curso.blockUpdate.error',
-                type: 'danger'
-              })
-            );
-          }
-        );
       }
     });
   }
@@ -93,8 +94,7 @@ export class ConstructorVideoComponent implements OnInit, OnDestroy {
     this.fileUploadService.getVideoThumbnailFile(path).subscribe(data => {
       this.showLoader = false;
       const videoPath = URL.createObjectURL(data.body);
-      const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
-      this.thumbSrc = objectUrl;
+      this.thumbSrc = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
     });
   }
 
