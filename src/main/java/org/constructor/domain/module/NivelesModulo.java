@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.constructor.domain;
+package org.constructor.domain.module;
 
 import java.io.Serializable;
 
@@ -14,24 +14,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
-import org.constructor.domain.module.NivelModulo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * A NivelesCurso.
+ * @author Edukai
+ *
  */
 @Entity
-@Table(name = "niveles_curso")
-public class NivelesCurso  implements Serializable{
+@Table(name = "niveles_modulo")
+public class NivelesModulo  implements Serializable{
 
 	/**
 	 * Serializable
 	 */
-	private static final long serialVersionUID = 71868642442656749L;
+	private static final long serialVersionUID = 1074572879572983190L;
 
 	/**
 	 * Long Id 
@@ -42,12 +42,12 @@ public class NivelesCurso  implements Serializable{
     private Long id;
 	
 	/**
-	 * Curso_id
+	 * modulo_id
 	 */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "modulo_id")
 	@JsonIgnore
-	@ManyToOne
-    @JoinColumn(name = "curso_id", nullable=false)
-    private Curso curso;
+    private Modulo modulo;
 	
 	/**
 	 * nivel_jerarquico_id
@@ -76,22 +76,24 @@ public class NivelesCurso  implements Serializable{
 	 * Set
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
 	/**
-	 * @return the curso
+	 * Get
+	 * @return the modulo
 	 */
-	public Curso getCurso() {
-		return curso;
+	public Modulo getModulo() {
+		return modulo;
 	}
 
 	/**
-	 * @param curso the curso to set
+	 * Set
+	 * @param modulo the modulo to set
 	 */
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setModulo(final Modulo modulo) {
+		this.modulo = modulo;
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class NivelesCurso  implements Serializable{
 	 * Set
 	 * @param nivelModulo the nivelModulo to set
 	 */
-	public void setNivelJerarquico(NivelModulo nivelModulo) {
+	public void setNivelJerarquico(final NivelModulo nivelModulo) {
 		this.nivelModulo = nivelModulo;
 	}
 
@@ -122,18 +124,17 @@ public class NivelesCurso  implements Serializable{
 	 * Set
 	 * @param ordenNivel the ordenNivel to set
 	 */
-	public void setOrdenNivel(int ordenNivel) {
+	public void setOrdenNivel(final int ordenNivel) {
 		this.ordenNivel = ordenNivel;
 	}
-	
-	/**
-	 * toString
-	 */
+
 	@Override
 	public String toString() {
-		return "NivelesCurso [id=" + id + ", id_nivel_jerarquico="
-				+ nivelModulo + ", ordenNivel=" + ordenNivel + "]";
+		return "NivelesModulo [id=" + id + ", id_nivel_jerarquico=" + nivelModulo + ", ordenNivel=" + ordenNivel + "]";
 	}
+
+
+	
 	
 	
 }

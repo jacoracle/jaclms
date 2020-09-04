@@ -1,8 +1,8 @@
 package org.constructor.domain;
 
 import org.constructor.config.Constants;
-import org.constructor.module.domain.Agrupador;
-import org.constructor.module.domain.Modulo;
+import org.constructor.domain.agrupador.Agrupador;
+import org.constructor.domain.module.Modulo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
