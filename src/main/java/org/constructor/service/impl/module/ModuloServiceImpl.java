@@ -117,13 +117,6 @@ public class ModuloServiceImpl implements ModuloService {
 		return moduloRepository.findAllModuloUserId(userName.getId());
 	}
 	
-    /**
-     * findModuloByTituloByDescripcion
-     */
-    @Override
-    public Set<Modulo> findModuloByTituloByDescripcion(ModuloFiltroDTO dto) {
-        return moduloRepository.findModuloByTituloByDescripcion(dto.getTitulo(), dto.getDescripcion());
-    }
 
 	/**
 	 * findOne
@@ -187,23 +180,28 @@ public class ModuloServiceImpl implements ModuloService {
 		}
 
 		modu = funtionFilter(dto);
-	
-
 		if (modu.getTitulo() != null && modu.getDescripcion() != null && modu.getAsignatura().equals("")
 				&& modu.getNumeroGrados().equals("") && modu.getTemas().equals("")) {
-			mod = moduloRepository.findModuloByTituloByDescripcion( dto.getDescripcion(),dto.getTitulo());
+			mod = moduloRepository.findModuloByTituloByDescripcion(dto.getTitulo(), dto.getDescripcion());
 		} else {
 
-			mod = moduloRepository.findModuloByTituloByDescripcionByNumeroGrados(
-					modu.getDescripcion(), modu.getAsignatura(), modu.getNumeroGrados(), modu.getTemas(),modu.getTitulo());
+			mod = moduloRepository.findModuloByTituloByDescripcionByNumeroGrados(modu.getTitulo(),
+					modu.getDescripcion(), modu.getAsignatura(), modu.getNumeroGrados(), modu.getTemas());
 			log.debug("modulo {}", mod);
 
 		}
 
-		return  mod;
+		return mod;
 	}
 
 
+    /**
+     * findModuloByTituloByDescripcion
+     */
+    @Override
+    public Set<Modulo> findModuloByTituloByDescripcion(ModuloFiltroDTO dto) {
+        return moduloRepository.findModuloByTituloByDescripcion(dto.getTitulo(), dto.getDescripcion());
+    }
 
 	/**
 	 * funtionFilter
