@@ -220,7 +220,5 @@ public class ModuloResource {
 	    	 mdto.setNumeroGrados(numeroGrados);
 	    	 mdto.setTemas(temas);
 	        return  moduloService.findModuloByFiltros(mdto);
-
-	    	
  	    }
 }

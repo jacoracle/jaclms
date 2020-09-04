@@ -32,21 +32,20 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
 	
 
 	
-	@Query("SELECT  mod  FROM Modulo mod   JOIN FETCH  mod.asignatura fet  JOIN FETCH  mod.numeroGrados num JOIN FETCH mod.temas te  "
-			+ "WHERE   mod.titulo LIKE %:titulo% "
+	@Query("SELECT  mod  FROM Modulo mod  JOIN FETCH  mod.asignatura fet  JOIN FETCH  mod.numeroGrados num JOIN FETCH mod.temas te  "
+			+ "WHERE mod.titulo LIKE %:titulo% "
 			+ "and  mod.descripcion LIKE  %:descripcion% "
 			+ "and fet.descripcion LIKE  %:asignatura% " 
 			+ "and num.descripcion LIKE  %:numeroGrados% and te.nombre LIKE %:temas% ") 
-	Set<Modulo> findModuloByTituloByDescripcionByNumeroGrados(
-
+	Set< Modulo> findModuloByTituloByDescripcionByNumeroGrados(
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion, 
 			 @Param("asignatura") String asignatura,
 			 @Param("numeroGrados") String numeroGrados,
 			 @Param("temas") String temas);
 
-	@Query("SELECT mo From Modulo mo   WHERE   mo.titulo LIKE %:titulo% and  mo.descripcion LIKE  %:descripcion% ")
-	Set<Modulo> findModuloByTituloByDescripcion (
+	@Query("SELECT mo From Modulo mo  WHERE mo.titulo LIKE %:titulo% and  mo.descripcion LIKE  %:descripcion% ")
+	Set< Modulo> findModuloByTituloByDescripcion (
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion);
 
