@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  Renderer2,
-  ViewChild,
-  ViewEncapsulation,
-  ViewRef
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Renderer2, ViewChild, ViewEncapsulation, ViewRef } from '@angular/core';
 import { TextService } from 'app/services/text.service';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
@@ -18,11 +9,11 @@ import { QuillEditor } from 'ngx-quill';
   selector: 'jhi-constructor-text',
   templateUrl: './constructor-text.component.html',
   styleUrls: ['./constructor-text.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
 export class ConstructorTextComponent {
-  htmlContent = '';
+  private _htmlContent = '';
+  editor: any;
   placeholder =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   isTitle = false;
@@ -30,7 +21,6 @@ export class ConstructorTextComponent {
   headingSelect: any;
   @Input() showTextEditor?: boolean;
   @ViewChild('quill_editor', { static: false }) quill_editor: any;
-  editor: any;
 
   isEventInEditor = false;
   @ViewChild('toggleButton', { static: false }) toggleButton: any;
@@ -47,10 +37,25 @@ export class ConstructorTextComponent {
     this.lastInnerHtml = '';
     this.lastInnerText = '';
     this.listenerAllApp();
-
     const Font = Quill.import('attributors/class/font');
     Font.whitelist = ['arial', 'times-new-roman', 'calibri', 'comic-sans-ms'];
     Quill.register(Font, true);
+
+    this.contentBlocksService.getTempaltes().subscribe(templates => {
+      this.templates = templates;
+    });
+    this.textService.getText().subscribe(text => {
+      if (this.lastInnerText !== '' && !this.showTextEditor) {
+        const editableElements = document.querySelectorAll('[quill-editor-element]');
+        if (editableElements[0]) {
+          editableElements[0].innerHTML = this.lastInnerHtml;
+        }
+      } else {
+        this.cdr.detectChanges();
+        this._htmlContent = text;
+        this.cursorFinal(this.textWithoutHtml(text));
+      }
+    });
 
     this.textService.getTemplateType().subscribe(templateTypeId => {
       const componentVisor = templateTypeId.nombre;
@@ -60,24 +65,30 @@ export class ConstructorTextComponent {
         this.isTitle = false;
       }
     });
-
-    this.contentBlocksService.getTempaltes().subscribe(templates => {
-      this.templates = templates;
-    });
-
-    this.textService.getText().subscribe(text => {
-      if (this.lastInnerText !== '' && !this.showTextEditor) {
-        const editableElements = document.querySelectorAll('[quill-editor-element]');
-        if (editableElements[0]) {
-          editableElements[0].innerHTML = this.lastInnerHtml;
-        }
-      } else {
-        this.cdr.detectChanges();
-        this.htmlContent = text;
-        this.cursorFinal(this.textWithoutHtml(text));
-      }
-    });
   }
+
+  afterCreated(quill: QuillEditor): void {
+    this.editor = quill;
+  }
+
+  /*  @Input()
+  get htmlContent(): string {
+    if (this.isTitle && this.headingSelect === undefined) {
+      if (
+        this._htmlContent !== undefined &&
+        this._htmlContent !== '' &&
+        this._htmlContent !== null &&
+        this._htmlContent !== '<h1><br></h1>'
+      ) {
+        this.editor.setSelection(this._htmlContent.length, 0);
+        return this.restoreTitle(this._htmlContent);
+      } else {
+        return '';
+      }
+    } else {
+      return this._htmlContent;
+    }
+  }*/
 
   cursorFinal(text: string): void {
     this.editor.setSelection(text.length, 0);
@@ -102,12 +113,12 @@ export class ConstructorTextComponent {
     if (
       e.path[0].tagName === 'P' ||
       e.path[0].tagName === 'H1' ||
-      e.path[0].outerHTML.indexOf('class="ql-toolbar') !== -1 ||
-      e.path[0].outerHTML.indexOf('class="ql-editor') !== -1 ||
-      e.path[0].outerHTML.indexOf('class="ql-container') !== -1 ||
-      e.path[0].outerHTML.indexOf('class="ql-editor') !== -1 ||
-      e.path[0].outerHTML.indexOf('class="ql-picker-label') !== -1 ||
-      e.path[0].outerHTML.indexOf('class="ql-stroke') !== -1 ||
+      e.path[0].outerHTML.indexOf('<div quill-editor-toolbar="" class="ql-toolbar') !== -1 ||
+      e.path[0].outerHTML.indexOf('<div class="ql-editor ql-blank" data-gramm="false" contenteditable="true"') !== -1 ||
+      e.path[0].outerHTML.indexOf('<div quill-editor-element="" class="ql-container ql-snow"></div>') !== -1 ||
+      e.path[0].outerHTML.indexOf('<div class="ql-editor" data-gramm="false" contenteditable="true"') !== -1 ||
+      e.path[0].outerHTML.indexOf('<span class="ql-picker-label" tabindex="0" role="button" aria-expanded="true"') !== -1 ||
+      e.path[0].outerHTML.indexOf('class="ql-stroke"') !== -1 ||
       e.path[0].outerHTML.indexOf('class="ql-picker-item') !== -1
     ) {
       this.isEventInEditor = true;
@@ -118,72 +129,6 @@ export class ConstructorTextComponent {
     }
   }
 
-  setHtmlContent(event: any): void {
-    let val;
-    if (this.isTitle && this.headingSelect === undefined) {
-      val = this.restoreTitle(this.setKey(event));
-      this.htmlContent = this.restoreTitle(this.htmlContent);
-      this.cursorFinal(this.textWithoutHtml(val));
-      this.textService.setText(this.restoreTitle(val));
-    } else {
-      val = this.setKey(event);
-      this.cursorFinal(this.textWithoutHtml(val));
-      this.textService.setText(val);
-    }
-  }
-
-  setKey(event: any): string {
-    let val = this.htmlContent;
-    if (this.htmlContent) {
-      const splitHtml = this.htmlContent.split(/<[^>]*>/g);
-      let indexReg = 0;
-      for (let i = 0; i < splitHtml.length; i++) {
-        if (splitHtml[i] !== '') {
-          indexReg = i;
-        }
-      }
-      val = val.replace(splitHtml[indexReg], splitHtml[indexReg] + event.key);
-    } else {
-      val = event.key;
-    }
-    return val;
-  }
-
-  noWrite(event: Event): void {
-    if (this.isTitle && this.headingSelect === undefined) {
-      this.textService.setTextFinish(this.restoreTitle(this.htmlContent));
-    } else {
-      this.textService.setTextFinish(this.htmlContent);
-    }
-    this.listenerNoWrite(event);
-  }
-
-  restoreTitle(text: string): any {
-    if (text) {
-      if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1><h1>')) {
-        if (this.textWithoutHtml(text).length > 0) {
-          return '<h1>' + this.textWithoutHtml(text) + '</h1>';
-        } else {
-          return '';
-        }
-      } else if (text.startsWith('<h1>')) {
-        if (this.textWithoutHtml(text).length > 0) {
-          return text;
-        } else {
-          return '';
-        }
-      } else {
-        return '<h1>' + text;
-      }
-    } else {
-      return '<h1> </h1>';
-    }
-  }
-
-  textWithoutHtml(text: string): string {
-    return text.replace(/<[^>]*>/g, '');
-  }
-
   focus(suprim: boolean): void {
     const editableElements = document.querySelectorAll('[quill-editor-element]');
     if (editableElements[0]) {
@@ -191,8 +136,8 @@ export class ConstructorTextComponent {
         const htmlElement = editableElements[0] as HTMLElement;
         this.lastInnerText = htmlElement.innerText;
         this.lastInnerHtml = htmlElement.innerHTML;
-        if (this.htmlContent !== '') {
-          this.textService.setText(this.htmlContent);
+        if (this._htmlContent !== '') {
+          this.textService.setText(this._htmlContent);
           editableElements[0].innerHTML = '';
         }
       }
@@ -203,7 +148,45 @@ export class ConstructorTextComponent {
     this.isEventInEditor = true;
   }
 
-  afterCreated(quill: QuillEditor): void {
-    this.editor = quill;
+  @Input()
+  set htmlContent(val: string) {
+    if (this.isTitle && this.headingSelect === undefined) {
+      this._htmlContent = this.restoreTitle(val);
+      this.textService.setText(this.restoreTitle(val));
+    } else {
+      this._htmlContent = val;
+      this.textService.setText(val);
+    }
+  }
+
+  noWrite(event: Event): any {
+    if (this.isTitle && this.headingSelect === undefined) {
+      this.textService.setTextFinish(this.restoreTitle(this._htmlContent));
+    } else {
+      this.textService.setTextFinish(this._htmlContent);
+    }
+    this.listenerNoWrite(event);
+  }
+
+  restoreTitle(text: string): any {
+    if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1><h1>')) {
+      if (this.textWithoutHtml(text).length > 0) {
+        return '<h1>' + this.textWithoutHtml(text) + '</h1>';
+      } else {
+        return '';
+      }
+    } else if (text.startsWith('<h1>')) {
+      if (this.textWithoutHtml(text).length > 0) {
+        return text;
+      } else {
+        return '';
+      }
+    } else {
+      return '<h1>' + text;
+    }
+  }
+
+  textWithoutHtml(text: string): string {
+    return text.replace(/<[^>]*>/g, '');
   }
 }

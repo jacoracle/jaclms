@@ -38,14 +38,13 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
         !(
           e.path[0].tagName === 'P' ||
           e.path[0].tagName === 'H1' ||
-          e.path[0].outerHTML.indexOf('class="ql-container') !== -1 ||
-          e.path[0].outerHTML.indexOf('class="ql-editor') !== -1 ||
-          e.path[0].outerHTML.indexOf('class="ql-picker-label') !== -1 ||
-          e.path[0].outerHTML.indexOf('class="ql-stroke') !== -1 ||
-          e.path[0].outerHTML.indexOf('class="ql-toolbar') !== -1 ||
-          e.path[0].outerHTML.indexOf('class="ql-editor') !== -1 ||
-          e.path[0].outerHTML.indexOf('class="ql-picker-item') !== -1 ||
-          e.path[0].outerHTML.indexOf('class="ql-stroke') !== -1
+          e.path[0].outerHTML.indexOf('<div class="ql-editor ql-blank" data-gramm="false" contenteditable="true"') !== -1 ||
+          e.path[0].outerHTML.indexOf('<div quill-editor-toolbar="" class="ql-toolbar') !== -1 ||
+          e.path[0].outerHTML.indexOf('<div quill-editor-element="" class="ql-container ql-snow"></div>') !== -1 ||
+          e.path[0].outerHTML.indexOf('<div class="ql-editor" data-gramm="false" contenteditable="true"') !== -1 ||
+          e.path[0].outerHTML.indexOf('<span class="ql-picker-label" tabindex="0" role="button" aria-expanded="true"') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-stroke"') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-picker-item') !== -1
         )
       ) {
         this.showTextEditor = false;

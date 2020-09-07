@@ -1,4 +1,4 @@
-<quill-editor [(ngModel)]="htmlContent"  #quill_editor (keypress)="setHtmlContent($event)" (focusout)="noWrite($event)" class="editor" [placeholder]="placeholder" (click)="isEventInEditorText()" (onEditorCreated)="afterCreated($event)">
+<quill-editor [(ngModel)]="_htmlContent" [(ngModel)]="htmlContent" #quill_editor (focusout)="noWrite($event)" class="editor" (click)="isEventInEditorText()"  (onEditorCreated)="afterCreated($event)" [placeholder]="placeholder">
     <div quill-editor-toolbar>
     <span class="ql-formats" [hidden]="isTitle">
       <select class="ql-align"></select>
@@ -55,5 +55,4 @@
     </span>-->
     </div>
 </quill-editor>
-
 
