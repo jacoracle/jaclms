@@ -7,7 +7,7 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 import { VideoModalComponent } from 'app/shared/video-preview/video-modal.component';
-import { SafeHtmlPipe } from 'app/shared/safe-html/safe-html.pipe';
+// PONCHO
 import { ActivityModalComponent } from 'app/shared/activity-preview/activity-modal.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,9 +21,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { ActivityAnswersComponent } from 'app/shared/activity-preview/questions/answers/activity-answers.component';
 import { ActivityQuestionsComponent } from 'app/shared/activity-preview/questions/activity-questions.component';
-import { UmaPreviewModalComponent } from './uma-preview/uma-preview.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UmaPreviewModule } from './uma-preview/uma-preview.module';
+import { SafeHtmlModule } from './safe-html/safe-html.module';
 
 @NgModule({
   imports: [
@@ -37,11 +38,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatDialogModule,
     MatButtonModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    SafeHtmlModule,
+    UmaPreviewModule
   ],
   declarations: [
     FindLanguageFromKeyPipe,
-    SafeHtmlPipe,
+    // SafeHtmlPipe,
     AlertComponent,
     AlertErrorComponent,
     LoginModalComponent,
@@ -51,16 +54,17 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ActivityPreviewComponent,
     ActivityAnswersComponent,
     ActivityQuestionsComponent,
-    UmaPreviewModalComponent,
+    // UmaPreviewModalComponent,
     HasAnyAuthorityDirective
   ],
-  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, ActivityModalComponent, UmaPreviewModalComponent],
+  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, ActivityModalComponent],
   exports: [
     MatInputModule,
     MatAutocompleteModule,
+    UmaPreviewModule,
     ConstructorSharedLibsModule,
     FindLanguageFromKeyPipe,
-    SafeHtmlPipe,
+    // SafeHtmlPipe,
     AlertComponent,
     AlertErrorComponent,
     LoginModalComponent,
@@ -68,7 +72,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     HasAnyAuthorityDirective,
     VideoModalComponent,
     ActivityModalComponent,
-    UmaPreviewModalComponent
+    // UmaPreviewModalComponent
+    VideoModalComponent
+    // UmaPreviewModalComponent
   ]
 })
 export class ConstructorSharedModule {}

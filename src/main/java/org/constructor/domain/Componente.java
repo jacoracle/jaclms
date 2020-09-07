@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import org.constructor.interactive.domain.ActividadInteractiva;
+import org.constructor.domain.interactive.ActividadInteractiva;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

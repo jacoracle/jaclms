@@ -1,5 +1,6 @@
 package org.constructor.service.dto;
 
+import org.constructor.service.dto.module.NivelModuloDTO;
 
 /**
  * The Class BloquesCursoDTO.

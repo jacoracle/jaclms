@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.constructor.domain.module.NivelModulo;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**

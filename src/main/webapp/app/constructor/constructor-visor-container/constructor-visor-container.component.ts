@@ -225,6 +225,21 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.textEditorBehaviosService.setShowTextEditor(false);
   }
 
+  onUpdateMultimediaBlock(event: Event, index: number): void {
+    if (this.contentBlocks[index]) {
+      if (this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']]) {
+        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.nombre =
+          event['multimediaProperties'].nombre;
+        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.extension =
+          event['multimediaProperties'].extension;
+        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.peso =
+          event['multimediaProperties'].peso;
+        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.contenido =
+          event['multimediaProperties'].contenido;
+      }
+    }
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<INivelJerarquico>>): void {
     result.subscribe(
       res => {

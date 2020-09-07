@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core'; // , ElementRef, ViewChild
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SafeUrl } from '@angular/platform-browser';
+import { SafeUrl, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { ImageService } from 'app/services/image.service';
 
@@ -13,14 +13,11 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
   umaData: any;
   bloquesUma: any;
   componentesUma: any;
-  //   @ViewChild('vPlayer', { static: false }) videoplayer: ElementRef | undefined;
   imgSrc: SafeUrl = '';
   subscription: Subscription;
 
-  constructor(public activeModal: NgbActiveModal, private imageService: ImageService) {
-    console.error('####   Datos recibidos del UMA: ');
-    console.error(this.umaData);
-
+  constructor(public activeModal: NgbActiveModal, private imageService: ImageService, private domSanitizer: DomSanitizer) {
+    // console.error('####   Datos recibidos del UMA: ');
     this.subscription = this.imageService.getImgSrc().subscribe(imgSrc => {
       this.imgSrc = imgSrc;
     });
@@ -31,17 +28,23 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
     // this.componentesUma = this.bloquesUma.bloqueComponentes
   }
 
-  ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   if (this.videoplayer) {
-    //     this.videoplayer.nativeElement.play();
-    //   }
-    // }, 1000);
-  }
+  ngAfterViewInit(): void {}
 
   setImgSrc(imgPath: string): void {
     console.error(imgPath);
     this.imageService.setImgSrc(imgPath);
     // return this.imgSrc;
+  }
+
+  transform(pathImg: string): SafeResourceUrl {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(pathImg);
+  }
+
+  getOutput(evt: any): void {
+    console.error(evt);
+  }
+
+  getNothing(evt: any): void {
+    console.error(evt);
   }
 }
