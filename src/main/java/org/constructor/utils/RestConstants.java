@@ -148,14 +148,17 @@ public class RestConstants {
 	public static final String TIPO_ACTIVIDAD_ID = "tipo-actividad/{id}";
 
 	/**
-	 * Path para peticiones tipo_modulo
+	 * Path para peticiones loadInteractivas
 	 */
-	public static final String PATH_TIPO_MODULO = "tipo-modulo";
-
+	public static final String PATH_LOAD_INTERACTIVAS = "loadInteractivas";
+	
 	/**
-	 * Path para peticiones tipo_modulo
+	 * Path para peticiones fileUploadInteractivas
 	 */
-	public static final String PATH_TIPO_MODULO_ID = "tipo-modulo/{id}";
+	public static final String PATH_FILE_INTERACTIVAS = "fileUploadInteractivas";
+
+
+	
 
 	// ---------------Temas--------------------
 
@@ -184,6 +187,16 @@ public class RestConstants {
 	 * Path para peticiones modulo por id
 	 */
 	public static final String PATH_MODULO_ID = "modulo/{id}";
+	
+	/**
+	 * Path para peticiones tipo_modulo
+	 */
+	public static final String PATH_TIPO_MODULO = "tipo-modulo";
+
+	/**
+	 * Path para peticiones tipo_modulo
+	 */
+	public static final String PATH_TIPO_MODULO_ID = "tipo-modulo/{id}";
 
 	// ---------------Agrupador--------------------
 
