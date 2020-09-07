@@ -1,14 +1,25 @@
-import { Component, Input, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation,
+  ViewRef
+} from '@angular/core';
 import { TextService } from 'app/services/text.service';
 import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes.model';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
 import Quill from 'quill';
+import { QuillEditor } from 'ngx-quill';
 
 @Component({
   selector: 'jhi-constructor-text',
   templateUrl: './constructor-text.component.html',
   styleUrls: ['./constructor-text.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConstructorTextComponent {
   htmlContent = '';
@@ -19,67 +30,85 @@ export class ConstructorTextComponent {
   headingSelect: any;
   @Input() showTextEditor?: boolean;
   @ViewChild('quill_editor', { static: false }) quill_editor: any;
+  editor: any;
 
   isEventInEditor = false;
   @ViewChild('toggleButton', { static: false }) toggleButton: any;
   @ViewChild('menu', { static: false }) menu: any;
   lastInnerHtml = '';
+  lastInnerText = '';
 
-  constructor(private textService: TextService, private contentBlocksService: ContentBlocksService, private renderer: Renderer2) {
+  constructor(
+    private textService: TextService,
+    private contentBlocksService: ContentBlocksService,
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
+  ) {
     this.lastInnerHtml = '';
-    this.htmlContent = '';
-    this.listenerApp();
+    this.lastInnerText = '';
+    this.listenerAllApp();
+
     const Font = Quill.import('attributors/class/font');
     Font.whitelist = ['arial', 'times-new-roman', 'calibri', 'comic-sans-ms'];
     Quill.register(Font, true);
 
+    this.textService.getTemplateType().subscribe(templateTypeId => {
+      const componentVisor = templateTypeId.nombre;
+      if (componentVisor === 'titulo' || componentVisor === 'actividad') {
+        this.isTitle = true;
+      } else if (componentVisor === 'texto') {
+        this.isTitle = false;
+      }
+    });
+
     this.contentBlocksService.getTempaltes().subscribe(templates => {
       this.templates = templates;
     });
+
     this.textService.getText().subscribe(text => {
-      // eslint-disable-next-line no-debugger
-      debugger;
-      if (this.lastInnerHtml !== '' && !this.showTextEditor) {
+      if (this.lastInnerText !== '' && !this.showTextEditor) {
         const editableElements = document.querySelectorAll('[quill-editor-element]');
-        if (editableElements[0] && editableElements[0].parentNode) {
+        if (editableElements[0]) {
           editableElements[0].innerHTML = this.lastInnerHtml;
         }
-      }
-      if (this.htmlContent === '' && text !== '') {
-        this.quill_editor.quillEditor.clipboard.dangerouslyPasteHTML(text);
-      }
-      if (text !== '') {
+      } else {
+        this.cdr.detectChanges();
         this.htmlContent = text;
-      }
-    });
-    this.textService.getTemplateType().subscribe(templateTypeId => {
-      const componente = templateTypeId.nombre;
-      if (componente === 'titulo' || componente === 'actividad') {
-        this.isTitle = true;
+        this.cursorFinal(this.textWithoutHtml(text));
       }
     });
   }
 
-  listenerApp(): void {
-    // eslint-disable-next-line no-debugger
-    debugger;
+  cursorFinal(text: string): void {
+    this.editor.setSelection(text.length, 0);
+  }
 
+  listenerAllApp(): void {
     this.renderer.listen('window', 'click', (e: any) => {
       this.conditionListener(e);
     });
   }
 
   listenerNoWrite(e: any): void {
-    // eslint-disable-next-line no-debugger
-    debugger;
     this.conditionListener(e);
   }
 
   conditionListener(e: any): void {
+    setTimeout(() => {
+      if (this.cdr && !(this.cdr as ViewRef).destroyed) {
+        this.cdr.detectChanges();
+      }
+    });
     if (
       e.path[0].tagName === 'P' ||
       e.path[0].tagName === 'H1' ||
-      e.path[0].outerHTML.indexOf('<div quill-editor-toolbar="" class="ql-toolbar') !== -1
+      e.path[0].outerHTML.indexOf('class="ql-toolbar') !== -1 ||
+      e.path[0].outerHTML.indexOf('class="ql-editor') !== -1 ||
+      e.path[0].outerHTML.indexOf('class="ql-container') !== -1 ||
+      e.path[0].outerHTML.indexOf('class="ql-editor') !== -1 ||
+      e.path[0].outerHTML.indexOf('class="ql-picker-label') !== -1 ||
+      e.path[0].outerHTML.indexOf('class="ql-stroke') !== -1 ||
+      e.path[0].outerHTML.indexOf('class="ql-picker-item') !== -1
     ) {
       this.isEventInEditor = true;
       this.focus(false);
@@ -92,14 +121,32 @@ export class ConstructorTextComponent {
   setHtmlContent(event: any): void {
     let val;
     if (this.isTitle && this.headingSelect === undefined) {
-      val = '<h1>' + event.path[0].innerText + event.key + '</h1>';
-      this.htmlContent = this.restoreTitle(val);
+      val = this.restoreTitle(this.setKey(event));
+      this.htmlContent = this.restoreTitle(this.htmlContent);
+      this.cursorFinal(this.textWithoutHtml(val));
       this.textService.setText(this.restoreTitle(val));
     } else {
-      val = '<p>' + event.path[0].innerText + event.key + '</p>';
-      this.htmlContent = val;
+      val = this.setKey(event);
+      this.cursorFinal(this.textWithoutHtml(val));
       this.textService.setText(val);
     }
+  }
+
+  setKey(event: any): string {
+    let val = this.htmlContent;
+    if (this.htmlContent) {
+      const splitHtml = this.htmlContent.split(/<[^>]*>/g);
+      let indexReg = 0;
+      for (let i = 0; i < splitHtml.length; i++) {
+        if (splitHtml[i] !== '') {
+          indexReg = i;
+        }
+      }
+      val = val.replace(splitHtml[indexReg], splitHtml[indexReg] + event.key);
+    } else {
+      val = event.key;
+    }
+    return val;
   }
 
   noWrite(event: Event): void {
@@ -112,20 +159,24 @@ export class ConstructorTextComponent {
   }
 
   restoreTitle(text: string): any {
-    if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1><h1>')) {
-      if (this.textWithoutHtml(text).length > 0) {
-        return '<h1>' + this.textWithoutHtml(text) + '</h1>';
+    if (text) {
+      if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1><h1>')) {
+        if (this.textWithoutHtml(text).length > 0) {
+          return '<h1>' + this.textWithoutHtml(text) + '</h1>';
+        } else {
+          return '';
+        }
+      } else if (text.startsWith('<h1>')) {
+        if (this.textWithoutHtml(text).length > 0) {
+          return text;
+        } else {
+          return '';
+        }
       } else {
-        return '';
-      }
-    } else if (text.startsWith('<h1>')) {
-      if (this.textWithoutHtml(text).length > 0) {
-        return text;
-      } else {
-        return '';
+        return '<h1>' + text;
       }
     } else {
-      return '<h1>' + text;
+      return '<h1> </h1>';
     }
   }
 
@@ -133,37 +184,26 @@ export class ConstructorTextComponent {
     return text.replace(/<[^>]*>/g, '');
   }
 
-  inactive(): void {
-    const editorContainer = document.getElementById('gcc-collapse');
-    if (editorContainer) {
-      editorContainer.classList.add('inactive');
-    }
-    this.quill_editor.enable(false);
-  }
-
-  active(): void {
-    const editorContainer = document.getElementById('gcc-collapse');
-    if (editorContainer) {
-      editorContainer.classList.remove('inactive');
-    }
-    this.quill_editor.enable(true);
-  }
-
-  focus(delet: boolean): void {
+  focus(suprim: boolean): void {
     const editableElements = document.querySelectorAll('[quill-editor-element]');
-    if (editableElements[0] && editableElements[0].parentNode) {
-      if (editableElements[0].innerHTML !== '') {
-        this.lastInnerHtml = editableElements[0].innerHTML;
-      }
-      if (delet) {
-        editableElements[0].innerHTML = '';
-        this.textService.setText(this.htmlContent);
-        this.htmlContent = '';
+    if (editableElements[0]) {
+      if (suprim && this.isEventInEditor) {
+        const htmlElement = editableElements[0] as HTMLElement;
+        this.lastInnerText = htmlElement.innerText;
+        this.lastInnerHtml = htmlElement.innerHTML;
+        if (this.htmlContent !== '') {
+          this.textService.setText(this.htmlContent);
+          editableElements[0].innerHTML = '';
+        }
       }
     }
   }
 
   isEventInEditorText(): void {
     this.isEventInEditor = true;
+  }
+
+  afterCreated(quill: QuillEditor): void {
+    this.editor = quill;
   }
 }

@@ -34,7 +34,20 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
     private renderer: Renderer2
   ) {
     this.renderer.listen('window', 'click', (e: any) => {
-      if (!(e.path[0].tagName === 'P' || e.path[0].tagName === 'H1' || e.path[0].className === 'ql-editor')) {
+      if (
+        !(
+          e.path[0].tagName === 'P' ||
+          e.path[0].tagName === 'H1' ||
+          e.path[0].outerHTML.indexOf('class="ql-container') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-editor') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-picker-label') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-stroke') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-toolbar') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-editor') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-picker-item') !== -1 ||
+          e.path[0].outerHTML.indexOf('class="ql-stroke') !== -1
+        )
+      ) {
         this.showTextEditor = false;
       }
     });

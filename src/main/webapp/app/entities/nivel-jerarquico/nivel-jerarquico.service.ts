@@ -15,8 +15,6 @@ export class NivelJerarquicoService {
   constructor(protected http: HttpClient) {}
 
   create(nivelJerarquico: INivelJerarquico, type: string | undefined): Observable<EntityResponseType> {
-    // eslint-disable-next-line no-debugger
-    debugger;
     let url;
     if (type && type === 'course') {
       url = this.resourceUrlCourse;

@@ -130,8 +130,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
           this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
           // Guardar nivel nuevo incluyendo primer bloquesCurso creado
           if (this.nivel.nivelId) {
-            // eslint-disable-next-line no-debugger
-            debugger;
             this.subscription = this.bloquesCursoService
               .update(this.contentBlocks)
               .pipe(takeUntil(this.ngUnsubscribe))

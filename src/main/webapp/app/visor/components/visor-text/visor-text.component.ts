@@ -35,40 +35,41 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
   ) {
     this.subscription = this.textService.getEditing().subscribe(editing => {
       this.editing = editing;
-    });
-    this.subscription = this.textService.getTextFinish().subscribe(textFinish => {
-      if (this.editing) {
-        this.component!.contenido!.contenido = this.htmlContent;
-        // Actualizar contenido de componente en base de datos
-        if (textFinish === this.text && textFinish !== '') {
-          const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
-          if (contenido.contenido) {
-            if (contenido.contenido.length <= 2000) {
-              this.subscription = this.contenidoService.update(contenido).subscribe(
-                data => {
-                  this.component!.contenido = data.body!;
-                },
-                () => {
-                  this.eventManager.broadcast(
-                    new JhiEventWithContent('constructorApp.httpError', {
-                      message: 'constructorApp.curso.blockUpdate.error',
-                      type: 'danger'
-                    })
-                  );
-                }
-              );
-            } else {
-              this.eventManager.broadcast(
-                new JhiEventWithContent('constructorApp.validationError', {
-                  message: 'constructorApp.contenido.limit.error',
-                  type: 'danger'
-                })
-              );
+      this.textService.getTextFinish().subscribe(textFinish => {
+        if (this.editing && this.component!.contenido!.id) {
+          this.component!.contenido!.contenido = this.htmlContent;
+          // Actualizar contenido de componente en base de datos
+          if (textFinish === this.text && textFinish !== '') {
+            const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
+            if (contenido.contenido) {
+              if (contenido.contenido.length <= 2000) {
+                this.subscription = this.contenidoService.update(contenido).subscribe(
+                  data => {
+                    this.component!.contenido = data.body!;
+                  },
+                  () => {
+                    this.eventManager.broadcast(
+                      new JhiEventWithContent('constructorApp.httpError', {
+                        message: 'constructorApp.curso.blockUpdate.error',
+                        type: 'danger'
+                      })
+                    );
+                  }
+                );
+              } else {
+                this.eventManager.broadcast(
+                  new JhiEventWithContent('constructorApp.validationError', {
+                    message: 'constructorApp.contenido.limit.error',
+                    type: 'danger'
+                  })
+                );
+              }
             }
           }
         }
-      }
+      });
     });
+
     this.textService.getText().subscribe(text => {
       this.text = text;
       if (this.editing) {
@@ -96,12 +97,12 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   editText(): void {
+    this.textEditorBehaviosService.setShowTextEditor(true);
     this.textService.setEditing(false);
     this.editing = true;
-    this.textService.setText(this.htmlContent);
     this.textService.setTemplateType(this.templateType);
-    this.textEditorBehaviosService.setShowTextEditor(true);
     this.navigationControlsService.setOpenProperties(false);
+    this.textService.setText(this.htmlContent);
     // this.navigationControlsService.setOpenTemplateGallery(true);
   }
 }
