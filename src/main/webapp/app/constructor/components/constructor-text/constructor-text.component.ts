@@ -53,7 +53,10 @@ export class ConstructorTextComponent {
       } else {
         this.cdr.detectChanges();
         this._htmlContent = text;
-        this.cursorFinal(this.textWithoutHtml(text));
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.editor.setSelection(this.textWithoutHtml(this._htmlContent).length + 1, 0);
+        }, 0);
       }
     });
 
@@ -89,10 +92,6 @@ export class ConstructorTextComponent {
       return this._htmlContent;
     }
   }*/
-
-  cursorFinal(text: string): void {
-    this.editor.setSelection(text.length, 0);
-  }
 
   listenerAllApp(): void {
     this.renderer.listen('window', 'click', (e: any) => {
