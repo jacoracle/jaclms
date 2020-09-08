@@ -5,7 +5,6 @@ package org.constructor.service.module;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.constructor.domain.module.Modulo;
 import org.constructor.service.dto.module.ModuloDTO;
@@ -53,16 +52,9 @@ public interface ModuloService {
      * @return
      * @throws Exception
      */
-    Set<Modulo>  findModuloByFiltros(ModuloFiltroDTO dto) throws Exception ;
+    List<Modulo>  findModuloByFiltros(ModuloFiltroDTO dto, Authentication authentication) throws Exception ;
 
-    /**
-     * findModuloByTituloByDescripcion
-     * @param titulo
-     * @param descripcion
-     * @return
-     */
-   Set<Modulo>  findModuloByTituloByDescripcion ( ModuloFiltroDTO dto);
-
+ 
     /**
      * findAllModuloUserId
      * @param authentication

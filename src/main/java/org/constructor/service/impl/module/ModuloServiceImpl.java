@@ -3,6 +3,7 @@
  */
 package org.constructor.service.impl.module;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -171,9 +172,41 @@ public class ModuloServiceImpl implements ModuloService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Modulo> findModuloByFiltros(ModuloFiltroDTO dto) throws Exception {
+	public List<Modulo> findModuloByFiltros(ModuloFiltroDTO dto, Authentication authentication) throws Exception {
 		ModuloFiltroDTO modu = new ModuloFiltroDTO();
-		Set<Modulo> mod = new HashSet<>();
+		List<Modulo> mod = new ArrayList<>();
+		User userName = new User();
+		Set<User> user = new HashSet<>();
+		String usuarioNombre = authentication.getName();
+		Collection<? extends GrantedAuthority> a;
+		a = authentication.getAuthorities();
+		for (GrantedAuthority grantedAuthority : a) {
+			if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+				
+				modu = funtionFilter(dto);
+				if (modu.getTitulo() != null && modu.getDescripcion() != null && modu.getAsignatura().equals("")
+						&& modu.getNumeroGrados().equals("") && modu.getTemas().equals("")) {
+					mod = moduloRepository.findModuloByAdminDescripction( dto.getTitulo(), dto.getDescripcion());
+					log.debug("modulo if  admin {}", mod);
+
+				} else {
+
+					mod = moduloRepository.findModuloByAdmin(modu.getTitulo(),
+							modu.getDescripcion(), modu.getAsignatura(), modu.getNumeroGrados(), modu.getTemas());
+					log.debug("modulo els admin {}", mod);
+
+				}
+				return mod;
+			}
+
+		}
+		user = userService.findUserByLogin(usuarioNombre);
+
+		for (User usuario : user) {
+			userName = usuario;
+
+		}
+		
 		if (dto.getTitulo() == null && dto.getDescripcion() == null && dto.getAsignatura() == null
 				&& dto.getNumeroGrados() == null && dto.getTemas() == null) {
 			throw new Exception(ErrorConstants.ERROR_FILTER);
@@ -182,33 +215,27 @@ public class ModuloServiceImpl implements ModuloService {
 		modu = funtionFilter(dto);
 		if (modu.getTitulo() != null && modu.getDescripcion() != null && modu.getAsignatura().equals("")
 				&& modu.getNumeroGrados().equals("") && modu.getTemas().equals("")) {
-			mod = moduloRepository.findModuloByTituloByDescripcion(dto.getTitulo(), dto.getDescripcion());
+			mod = moduloRepository.findModuloByTituloByDescripcion(userName.getId(), dto.getTitulo(), dto.getDescripcion());
+			log.debug("modulo if  {}", mod);
 		} else {
 
-			mod = moduloRepository.findModuloByTituloByDescripcionByNumeroGrados(modu.getTitulo(),
+			mod = moduloRepository.findModuloByTituloByDescripcionByNumeroGrados(userName.getId(), modu.getTitulo(),
 					modu.getDescripcion(), modu.getAsignatura(), modu.getNumeroGrados(), modu.getTemas());
-			log.debug("modulo {}", mod);
+			log.debug("modulo else normal {}", mod);
+			
 
 		}
 
-		return mod;
+		return  mod;
 	}
 
 
-    /**
-     * findModuloByTituloByDescripcion
-     */
-    @Override
-    public Set<Modulo> findModuloByTituloByDescripcion(ModuloFiltroDTO dto) {
-        return moduloRepository.findModuloByTituloByDescripcion(dto.getTitulo(), dto.getDescripcion());
-    }
-
+ 
 	/**
 	 * funtionFilter
 	 * @param dto
 	 * @return
 	 */
-	@SuppressWarnings("unused")
 	private ModuloFiltroDTO funtionFilter(ModuloFiltroDTO dto) {
 
 		if (dto.getTitulo() == null) {

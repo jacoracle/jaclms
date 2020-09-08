@@ -32,20 +32,43 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
 	
 
 	
-	@Query("SELECT  mod  FROM Modulo mod  JOIN FETCH  mod.asignatura fet  JOIN FETCH  mod.numeroGrados num JOIN FETCH mod.temas te  "
-			+ "WHERE mod.titulo LIKE %:titulo% "
+	@Query("SELECT  mod  FROM Modulo  mod JOIN FETCH mod.user usr JOIN FETCH  mod.asignatura fet  JOIN FETCH  mod.numeroGrados num  JOIN FETCH  num.gradoAcademico grad JOIN FETCH mod.temas te  "
+			+ "WHERE usr.id = :id and "
+			+ "mod.titulo LIKE %:titulo% "
 			+ "and  mod.descripcion LIKE  %:descripcion% "
 			+ "and fet.descripcion LIKE  %:asignatura% " 
-			+ "and num.descripcion LIKE  %:numeroGrados% and te.nombre LIKE %:temas% ") 
-	Set< Modulo> findModuloByTituloByDescripcionByNumeroGrados(
+			+ "and grad.descripcion LIKE %:numeroGrados% "
+			+ "and te.nombre LIKE %:temas% ") 
+	List< Modulo> findModuloByTituloByDescripcionByNumeroGrados(
+			 @Param("id")Long id,
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion, 
 			 @Param("asignatura") String asignatura,
 			 @Param("numeroGrados") String numeroGrados,
 			 @Param("temas") String temas);
 
-	@Query("SELECT mo From Modulo mo  WHERE mo.titulo LIKE %:titulo% and  mo.descripcion LIKE  %:descripcion% ")
-	Set< Modulo> findModuloByTituloByDescripcion (
+	@Query("SELECT mo From Modulo mo  JOIN FETCH mo.user  use WHERE use.id = :id and mo.titulo LIKE %:titulo% and  mo.descripcion LIKE  %:descripcion% ")
+	List< Modulo> findModuloByTituloByDescripcion (
+			 @Param("id")Long id,
+			 @Param("titulo") String titulo,
+			 @Param("descripcion") String descripcion);
+
+	
+	@Query("SELECT  mod  FROM Modulo mod  JOIN FETCH  mod.asignatura fet  JOIN FETCH  mod.numeroGrados num JOIN FETCH num.gradoAcademico grad  JOIN FETCH mod.temas te  "
+			+ "WHERE mod.titulo LIKE %:titulo% "
+			+ "and  mod.descripcion LIKE  %:descripcion% "
+			+ "and fet.descripcion LIKE  %:asignatura% " 
+			+ "and grad.descripcion LIKE %:numeroGrados% and te.nombre LIKE %:temas% ") 
+	List< Modulo> findModuloByAdmin(	
+			 @Param("titulo") String titulo,
+			 @Param("descripcion") String descripcion, 
+			 @Param("asignatura") String asignatura,
+			 @Param("numeroGrados") String numeroGrados,
+			 @Param("temas") String temas);
+	
+	
+	@Query("SELECT mo From Modulo mo  WHERE  mo.titulo LIKE %:titulo% and  mo.descripcion LIKE  %:descripcion% ")
+	List< Modulo> findModuloByAdminDescripction (
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion);
 
