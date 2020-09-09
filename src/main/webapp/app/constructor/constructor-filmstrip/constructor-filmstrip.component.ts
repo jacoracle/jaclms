@@ -17,6 +17,7 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterCo
   contentBlocks: any;
   subscription: Subscription;
   templates: ITipoBloqueComponentes[] = [];
+  contentBlocksComplete = false;
 
   constructor(
     private contentBlocksService: ContentBlocksService,
@@ -36,6 +37,10 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterCo
     this.subscription = this.contentBlocksService.getSelectedBlockIndex().subscribe(selectedBlockIndex => {
       this.selectedContentBlockIndex = selectedBlockIndex;
     });
+    // Obtener contentBlocksComplete actualizados de filmStrip
+    this.subscription = this.contentBlocksService
+      .getContentBlocksComplete()
+      .subscribe(contentBlocksComplete => (this.contentBlocksComplete = contentBlocksComplete));
   }
 
   ngOnInit(): void {
@@ -76,6 +81,7 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterCo
       res => {
         if (res.body) {
           this.contentBlocks = res.body;
+          this.contentBlocksService.setcontentBlocksComplete(false);
           this.contentBlocksService.setContentBlocks(this.contentBlocks);
         }
       },

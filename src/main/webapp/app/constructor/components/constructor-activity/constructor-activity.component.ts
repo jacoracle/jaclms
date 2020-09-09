@@ -30,44 +30,42 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
     private eventManager: JhiEventManager,
     public navigationControlsService: NavigationControlsService
   ) {
-    this.subscription = this.activityService.getEditing().subscribe(editing => {
-      this.editing = editing;
-      this.activityService.getActivityProperties().subscribe((objProperties: IActividadInteractiva[]) => {
-        if (this.component!.actividadesInteractivas) {
-          const indexActividad = this.component!.actividadesInteractivas.length - 1;
-          if (indexActividad !== undefined) {
-            this.contenidoActividad = this.component!.actividadesInteractivas[indexActividad].contenido;
-            if (this.editing && this.component!.actividadesInteractivas[indexActividad].id) {
-              this.updateComponent.emit(objProperties);
-              // Actualizar contenido de componente en base de datos
-              const contenidoActividad = this.createUpdatedActividad(
-                this.component!.actividadesInteractivas[indexActividad],
-                objProperties[indexActividad]
-              );
-              this.subscription = this.contenidoActividadService.update(contenidoActividad).subscribe(
-                data => {
-                  this.component!.actividadesInteractivas![indexActividad] = data.body!;
-                },
-                () => {
-                  this.eventManager.broadcast(
-                    new JhiEventWithContent('constructorApp.blockUpdateError', {
-                      message: 'constructorApp.curso.blockUpdate.error',
-                      type: 'danger'
-                    })
-                  );
-                }
-              );
-            }
+    this.subscription = this.activityService.getEditing().subscribe(editing => (this.editing = editing));
+
+    this.subscription = this.activityService.getEditing().subscribe((editing: boolean) => {
+      if (this.editing) {
+        this.editing = editing;
+      }
+    });
+
+    this.subscription = this.activityService.getActivityProperties().subscribe((objProperties: IActividadInteractiva[]) => {
+      if (this.component!.actividadesInteractivas) {
+        const indexActividad = this.component!.actividadesInteractivas.length - 1;
+        if (indexActividad !== undefined) {
+          if (this.editing && this.component!.actividadesInteractivas[indexActividad].id) {
+            this.updateComponent.emit(objProperties);
+            // Actualizar contenido de componente en base de datos
+            const contenidoActividad = this.createUpdatedActividad(
+              this.component!.actividadesInteractivas[indexActividad],
+              objProperties[indexActividad]
+            );
+            this.subscription = this.contenidoActividadService.update(contenidoActividad).subscribe(
+              data => {
+                this.component!.actividadesInteractivas![indexActividad] = data.body!;
+              },
+              () => {
+                this.eventManager.broadcast(
+                  new JhiEventWithContent('constructorApp.blockUpdateError', {
+                    message: 'constructorApp.curso.blockUpdate.error',
+                    type: 'danger'
+                  })
+                );
+              }
+            );
           }
         }
-      });
+      }
     });
-    /*
-        this.subscription = this.activityService.getActivitySrc().subscribe(activitySrc => {
-          if (this.editing) {
-            this.activitySrc = activitySrc;
-          }
-        });*/
   }
 
   createUpdatedActividad(content: ActividadInteractiva, newContent: ActividadInteractiva): IActividadInteractiva {
