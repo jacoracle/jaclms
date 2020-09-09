@@ -5,58 +5,102 @@
         <jhi-alert-error></jhi-alert-error>
     </div>
     <div class="visor-component-artboard"
-         [ngClass]="{'v-desktop': visorSize === 'desktop','v-tablet': visorSize === 'tablet','v-smartphone': visorSize === 'smartphone'}">
+        [ngClass]="{'v-desktop': visorSize === 'desktop','v-tablet': visorSize === 'tablet','v-smartphone': visorSize === 'smartphone'}">
         <div class="artboard-delete">
             <i class="icon ni-delete icon-negative"></i>
         </div>
         <div class="artboard-name"><span>Name</span></div>
 
+        <div class="row-visor-container">
 
-        <div [hidden]="!showLoader" class="loader-layout">
-            <div class="loader2"></div>
-        </div>
-
-        <div *ngIf="!contentBlocks.length" class="row-add-content">
-            <button class="main-btn" (click)="addNewBlock()" [disabled]="!contentBlocksComplete">
-                <i class="icon ni-add"></i>
-                Agregar bloque de contenido
-            </button>
-        </div>
-
-        <div class="col-jhi-block" *ngFor="let block of contentBlocks; let index = index;">
-            <div (click)="selectBlock(index)" [ngClass]="{'selected-block': selectedBlock === index}"
-                 class="row-content-block" *ngIf="this.contentBlocks.length > 0 && contentBlocksComplete">
-
-                <div *ngFor="let componente of componentes;">
-                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == componente.nombre" #target>
-                        <ndc-dynamic [ndcDynamicComponent]="componente.componente"
-                                     [ndcDynamicInputs]="{contentBlock:block, target:target, index:index}"
-                                     [ndcDynamicOutputs]="{updateBlock: { handler: onUpdateBlock('$event', index), args: ['$event', index] }}"></ndc-dynamic>
-                    </div>
-                </div>
+            <div [hidden]="!showLoader" class="loader-layout">
+                <div class="loader2"></div>
             </div>
 
-            <div *ngIf="selectedBlock === index" class="row-add-content">
-                <button class="main-btn" (click)="addNewBlock()" [disabled]="!contentBlocksComplete">
+            <div *ngIf="!contentBlocks.length" class="row-add-content">
+                <button class="main-btn" (click)="addNewBlock()" [disabled]="">
                     <i class="icon ni-add"></i>
                     Agregar bloque de contenido
                 </button>
             </div>
+
+            <div class="col-jhi-block" *ngFor="let block of contentBlocks; let index = index;">
+                <div (click)="selectBlock(index)" [ngClass]="{'selected-block': selectedBlock === index}"
+                    class="row-content-block">
+                    <div *ngFor="let componente of componentes;">
+                        <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == componente.nombre" #target>
+                            <ndc-dynamic [ndcDynamicComponent]="componente.componente"
+                                [ndcDynamicInputs]="{contentBlock:block, target:target, index:index}"
+                                [ndcDynamicOutputs]="{updateBlock: { handler: onUpdateBlock, args: ['$event', index] }}">
+                            </ndc-dynamic>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="selectedBlock === index" class="row-add-content">
+                    <button class="main-btn" (click)="addNewBlock()" [disabled]="">
+                        <i class="icon ni-add"></i>
+                        Agregar bloque de contenido
+                    </button>
+                </div>
+            </div>
+
+            <!--
+            <div class="col-jhi-block" *ngFor="let block of contentBlocks; let index = index;">
+                <div (click)="selectBlock(index)" [ngClass]="{'selected-block': selectedBlock === index}"
+                    class="row-content-block">
+
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'titulo'" #targetTitulo>
+                        <jhi-content-block1 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"
+                            [target]="targetTitulo" [index]="index"></jhi-content-block1>
+                    </div>
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'texto'" #targetTexto>
+                        <jhi-content-block2 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"
+                            [target]="targetTexto" [index]="index"></jhi-content-block2>
+                    </div>
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'imagen'" #targetImagen>
+                        <jhi-content-block3 [contentBlock]="block"
+                            (updateMultimediaBlock)="onUpdateMultimediaBlock($event, index)" [target]="targetImagen"
+                            [index]="index" (updateBlock)="onUpdateBlock($event, index)"></jhi-content-block3>
+                    </div>
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'imagen_texto'"
+                        #targetImagenTexto>
+                        <jhi-content-block4 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"
+                            [target]="targetImagenTexto" [index]="index"></jhi-content-block4>
+                    </div>
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'video'" #targetVideo>
+                        <jhi-content-block5 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"
+                            [target]="targetVideo" [index]="index"></jhi-content-block5>
+                    </div>
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'indicacion_video'"
+                        #targetIndicacionVideo>
+                        <jhi-content-block6 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"
+                            [target]="targetIndicacionVideo" [index]="index"></jhi-content-block6>
+                    </div>
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'video_envolvente'"
+                        #targetVideoEnv>
+                        <jhi-content-block7 (updateBlock)="onUpdateBlock($event, index)" [contentBlock]="block"
+                            [index]="index" [target]="targetVideoEnv"></jhi-content-block7>
+                    </div>
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'pdf'" #targetPdf>
+                        <jhi-content-block8 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"
+                            [target]="targetPdf" [index]="index"></jhi-content-block8>
+                    </div>
+                    <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == 'sound'" #targetSound>
+                        <jhi-content-block9 [contentBlock]="block" (updateBlock)="onUpdateBlock($event, index)"
+                            [target]="targetSound" [index]="index"></jhi-content-block9>
+                    </div>
+                </div>
+                <div *ngIf="selectedBlock === index" class="row-add-content">
+                    <button class="main-btn" (click)="addNewBlock()">
+                        <i class="icon ni-add"></i>
+                        Agregar bloque de contenido
+                    </button>
+                </div>
+            </div>
+            -->
+
         </div>
 
-        <div [hidden]="contentBlocksComplete" class="loader-cp">
-            <!-- Doing something -->
-            <span class="loader"></span>
-        </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
