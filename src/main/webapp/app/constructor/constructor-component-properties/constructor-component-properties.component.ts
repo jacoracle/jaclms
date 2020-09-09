@@ -417,7 +417,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       const actividadInteractiva = this.actividadesInteractivas[indexActividad];
       const jsonFormIn = this.jsonFormEntrada(actividadInteractiva);
 
-      this.activityModalService.open(this.id, jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
+      this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
         if (jsonFormOut) {
           this.actividadesInteractivas[indexActividad] = this.jsonFormSalida(jsonFormOut, actividadInteractiva);
           this.activityService.setActivityProperties(this.actividadesInteractivas);
