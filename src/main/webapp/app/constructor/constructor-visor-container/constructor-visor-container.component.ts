@@ -121,6 +121,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(selectedBlock => {
         if (selectedBlock !== undefined) {
+          this.showLoader = true;
           if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
             this.selectedBlock = 0;
           }
@@ -138,6 +139,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
                   if (res.body) {
                     this.contentBlocks = res.body;
                     this.contentBlocksService.setContentBlocks(this.contentBlocks);
+                    this.showLoader = false;
                   }
                 },
                 () => {
@@ -188,7 +190,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   // Actualizar bloque contenido de componente
-  onUpdateBlock($event: any, index: number): void {
+  onUpdateBlock($event: Event, index: number): void {
     if (this.contentBlocks[index]) {
       if (this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']]) {
         switch ($event['type']) {
@@ -243,11 +245,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<INivelJerarquico>>): void {
     result.subscribe(
       res => {
-        this.showLoader = false;
+        // this.showLoader = false;
         this.onSaveSuccess(res);
       },
       () => {
-        this.showLoader = false;
+        // this.showLoader = false;
         this.onSaveError();
       }
     );
@@ -265,12 +267,14 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.contentBlocks = [];
     this.contentBlocks = res.body.bloquesCurso;
     this.contentBlocksService.setContentBlocks(this.contentBlocks);
+    this.showLoader = false;
     this.navigationControlsService.setOpenTemplateGallery(false);
     this.navigationControlsService.setOpenProperties(false);
   }
 
   protected onSaveError(): void {
     this.error = true;
+    this.showLoader = false;
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', {
         message: 'constructorApp.curso.nivelJerarquico.error',
