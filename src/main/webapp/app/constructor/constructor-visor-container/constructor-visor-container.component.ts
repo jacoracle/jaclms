@@ -43,6 +43,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   _curso: any;
   _modulo: any;
   @Input() type?: string;
+  contentBlocksComplete = true;
 
   componentes = [
     { nombre: 'titulo', componente: ContentBlock1Component },
@@ -70,6 +71,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
         this.contentBlocks = [];
         this.contentBlocks = this.nivel.bloquesCurso!;
         this.nivel.nivelId = this._curso.nivelesCurso[0].nivelJerarquico.id;
+        this.contentBlocksComplete = false;
         this.contentBlocksService.setContentBlocks(this.contentBlocks);
       }
     }
@@ -92,6 +94,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
         this.contentBlocks = [];
         this.contentBlocks = this.nivel.bloquesCurso!;
         this.nivel.nivelId = this._modulo.nivelesModulo.nivelJerarquico.id;
+        this.contentBlocksComplete = false;
         this.contentBlocksService.setContentBlocks(this.contentBlocks);
       }
     }
@@ -120,6 +123,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       .getSelectedBlock()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(selectedBlock => {
+        this.contentBlocksComplete = false;
         if (selectedBlock !== undefined) {
           if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
             this.selectedBlock = 0;
@@ -127,6 +131,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
           this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
           this.updateBlocksOrder();
           this.contentBlocksService.setContentBlocks(this.contentBlocks);
+          this.contentBlocksComplete = false;
           this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
           // Guardar nivel nuevo incluyendo primer bloquesCurso creado
           if (this.nivel.nivelId) {
@@ -137,6 +142,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
                 res => {
                   if (res.body) {
                     this.contentBlocks = res.body;
+                    this.contentBlocksComplete = false;
                     this.contentBlocksService.setContentBlocks(this.contentBlocks);
                   }
                 },
@@ -174,8 +180,17 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       .subscribe(selectedBlockIndex => {
         this.selectedBlock = selectedBlockIndex;
       });
+
     // Obtener bloquies actualizados de filmStrip
-    this.subscription = this.contentBlocksService.getContentBlocks().subscribe(contentBlocks => (this.contentBlocks = contentBlocks));
+    this.subscription = this.contentBlocksService.getContentBlocks().subscribe(contentBlocks => {
+      this.contentBlocks = contentBlocks;
+      if (contentBlocks.length > 1) {
+        this.contentBlocksComplete = contentBlocks[contentBlocks.length - 1].id !== undefined;
+      } else {
+        this.contentBlocksComplete = true;
+      }
+      this.contentBlocksService.setcontentBlocksComplete(this.contentBlocksComplete);
+    });
   }
 
   /**
@@ -189,23 +204,28 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
 
   // Actualizar bloque contenido de componente
   onUpdateBlock($event: any, index: number): void {
-    if (this.contentBlocks[index]) {
-      if (this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']]) {
-        switch ($event['type']) {
-          // Actualizar componente con HTML en string desde textComponent
-          case 'text': {
-            this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']].contenido!.contenido = $event['newValue'];
-            break;
-          }
-          // Actualizar componente con path de la imagen seleccionada
-          case 'image': {
-            this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']].contenido!.contenido = $event['newValue'];
-            break;
-          }
-          // Actualizar componente con path del video seleccionado
-          case 'video': {
-            this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']].contenido!.contenido = $event['newValue'];
-            break;
+    if (this.contentBlocksComplete) {
+      if (this.contentBlocks[index]) {
+        if (this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']]) {
+          switch ($event['type']) {
+            // Actualizar componente con HTML en string desde textComponent
+            case 'text': {
+              this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']].contenido!.contenido =
+                $event['newValue'];
+              break;
+            }
+            // Actualizar componente con path de la imagen seleccionada
+            case 'image': {
+              this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']].contenido!.contenido =
+                $event['newValue'];
+              break;
+            }
+            // Actualizar componente con path del video seleccionado
+            case 'video': {
+              this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']].contenido!.contenido =
+                $event['newValue'];
+              break;
+            }
           }
         }
       }
@@ -228,14 +248,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   onUpdateMultimediaBlock(event: Event, index: number): void {
     if (this.contentBlocks[index]) {
       if (this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']]) {
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.nombre =
-          event['multimediaProperties'].nombre;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.extension =
-          event['multimediaProperties'].extension;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.peso =
-          event['multimediaProperties'].peso;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.contenido =
-          event['multimediaProperties'].contenido;
+        const queryContenido = this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!;
+        queryContenido.nombre = event['multimediaProperties'].nombre;
+        queryContenido.extension = event['multimediaProperties'].extension;
+        queryContenido.peso = event['multimediaProperties'].peso;
+        queryContenido.contenido = event['multimediaProperties'].contenido;
       }
     }
   }
@@ -264,6 +281,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.nivel = res.body;
     this.contentBlocks = [];
     this.contentBlocks = res.body.bloquesCurso;
+    this.contentBlocksComplete = false;
     this.contentBlocksService.setContentBlocks(this.contentBlocks);
     this.navigationControlsService.setOpenTemplateGallery(false);
     this.navigationControlsService.setOpenProperties(false);
@@ -381,12 +399,14 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
                   // Actualización satisfactoria
                   if (res.body) {
                     this.contentBlocks = res.body;
+                    this.contentBlocksComplete = false;
                     this.contentBlocksService.setContentBlocks(this.contentBlocks);
                   }
                 },
                 () => {
                   // Error al actualizar
                   this.contentBlocks = backup;
+                  this.contentBlocksComplete = false;
                   this.contentBlocksService.setContentBlocks(this.contentBlocks);
                   this.eventManager.broadcast(
                     new JhiEventWithContent('constructorApp.blockUpdateError', {

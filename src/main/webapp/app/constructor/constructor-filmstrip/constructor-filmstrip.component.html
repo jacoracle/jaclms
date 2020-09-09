@@ -10,7 +10,7 @@
   </div>
   <!-- End Header -->
   <div class="c-component-content">
-    <div class="row-c-component-c" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="row-c-component-c" cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="this.contentBlocksComplete">
 
       <div class="row-artboard-filmstrip" *ngFor="let contentBlock of contentBlocks; let index = index" cdkDrag>
         <div class="row-drag-ud">

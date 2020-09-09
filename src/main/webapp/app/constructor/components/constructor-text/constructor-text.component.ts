@@ -62,10 +62,14 @@ export class ConstructorTextComponent {
 
     this.textService.getTemplateType().subscribe(templateTypeId => {
       const componentVisor = templateTypeId.nombre;
-      if (componentVisor === 'titulo' || componentVisor === 'actividad') {
-        this.isTitle = true;
-      } else if (componentVisor === 'texto') {
-        this.isTitle = false;
+      switch (componentVisor) {
+        case 'titulo':
+        case 'actividad':
+          this.isTitle = true;
+          break;
+        default:
+          this.isTitle = false;
+          break;
       }
     });
   }

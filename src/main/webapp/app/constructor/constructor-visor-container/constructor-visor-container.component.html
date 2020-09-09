@@ -17,7 +17,7 @@
         </div>
 
         <div *ngIf="!contentBlocks.length" class="row-add-content">
-            <button class="main-btn" (click)="addNewBlock()" [disabled]="">
+            <button class="main-btn" (click)="addNewBlock()" [disabled]="!contentBlocksComplete">
                 <i class="icon ni-add"></i>
                 Agregar bloque de contenido
             </button>
@@ -25,7 +25,7 @@
 
         <div class="col-jhi-block" *ngFor="let block of contentBlocks; let index = index;">
             <div (click)="selectBlock(index)" [ngClass]="{'selected-block': selectedBlock === index}"
-                 class="row-content-block" *ngIf="this.contentBlocks.length > 0">
+                 class="row-content-block" *ngIf="this.contentBlocks.length > 0 && contentBlocksComplete">
 
                 <div *ngFor="let componente of componentes;">
                     <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == componente.nombre" #target>
@@ -37,14 +37,17 @@
             </div>
 
             <div *ngIf="selectedBlock === index" class="row-add-content">
-                <button class="main-btn" (click)="addNewBlock()" [disabled]="">
+                <button class="main-btn" (click)="addNewBlock()" [disabled]="!contentBlocksComplete">
                     <i class="icon ni-add"></i>
                     Agregar bloque de contenido
                 </button>
             </div>
         </div>
 
-
+        <div [hidden]="contentBlocksComplete" class="loader-cp">
+            <!-- Doing something -->
+            <span class="loader"></span>
+        </div>
     </div>
 </div>
 
