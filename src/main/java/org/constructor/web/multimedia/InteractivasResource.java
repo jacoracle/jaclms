@@ -81,8 +81,9 @@ public class InteractivasResource {
 	public ResponseEntity<VideoResponse>  uploadFileInteractivas( @RequestParam("file") MultipartFile file, @RequestParam("id") String id) {
 		VideoResponse<?> vr = new VideoResponse<Object>();
 		MultimediaDTO multimediaDTO = new MultimediaDTO();
+		String carpeta = "actividades";
 		multimediaDTO.setFile(file);
-		multimediaDTO.setId(id);
+		multimediaDTO.setId(id + File.separator+ carpeta );
 		log.debug("Upload File: {}", id); 
 		
 			if (file.isEmpty()) {
