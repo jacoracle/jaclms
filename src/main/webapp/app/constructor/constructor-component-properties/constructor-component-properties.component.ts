@@ -279,8 +279,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   subscriptionImage(): Subscription {
     return this.imageService.getImgSrc().subscribe(imgSrc => {
-      // eslint-disable-next-line no-console
-      console.log('a');
       this.imgSrc = imgSrc;
       this.fileFormat = 'image';
       if (this.imgSrc === '') {
@@ -308,10 +306,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.selectedFiles = event.target.files;
         this.showLoader = true;
         this.fileUploadService.pushFileStorage(this.selectedFiles[0], this.id, this.type).subscribe(data => {
-          this.getDataMultimediaFile(this.castObjectAsContenido(data), this.fileFormat, event.target.files[0].type, event);
+          this.validateCalledToService(this.castObjectAsContenido(data), this.fileFormat, event.target.files[0].type, event);
           this.showLoader = false;
-          // eslint-disable-next-line no-console
-          console.log('d');
         });
       }
     }
@@ -330,11 +326,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     };
   }
 
-  getDataMultimediaFile(data: IContenido, fileFormat: string, fileType: string, event: any): void {
-    this.validateCalledToService(fileFormat, data, fileType, event);
-  }
-
-  validateCalledToService(fileFormat: string, obj: IContenido, fileType: string, event: any): void {
+  validateCalledToService(obj: IContenido, fileFormat: string, fileType: string, event: any): void {
     if (fileFormat === 'image' && this.imageFileTypes.includes(fileType)) {
       this.fileUploadService.getImage(obj.contenido!);
       this.imageService.setImageProperties(obj);
@@ -399,7 +391,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.fileSize' })
     );
     if (event.target.files) {
-      event.target.files = [];
+      event.target.files = new DataTransfer().files;
     }
   }
 
@@ -408,7 +400,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.fileType' })
     );
     if (event.target.files) {
-      event.target.files = [];
+      event.target.files = new DataTransfer().files;
     }
   }
 

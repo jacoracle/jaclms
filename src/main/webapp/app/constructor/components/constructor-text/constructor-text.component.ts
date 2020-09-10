@@ -53,16 +53,23 @@ export class ConstructorTextComponent {
       } else {
         this.cdr.detectChanges();
         this._htmlContent = text;
-        this.cursorFinal(this.textWithoutHtml(text));
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.editor.setSelection(this.textWithoutHtml(this._htmlContent).length + 1, 0);
+        }, 0);
       }
     });
 
     this.textService.getTemplateType().subscribe(templateTypeId => {
       const componentVisor = templateTypeId.nombre;
-      if (componentVisor === 'titulo' || componentVisor === 'actividad') {
-        this.isTitle = true;
-      } else if (componentVisor === 'texto') {
-        this.isTitle = false;
+      switch (componentVisor) {
+        case 'titulo':
+        case 'actividad':
+          this.isTitle = true;
+          break;
+        default:
+          this.isTitle = false;
+          break;
       }
     });
   }
@@ -89,10 +96,6 @@ export class ConstructorTextComponent {
       return this._htmlContent;
     }
   }*/
-
-  cursorFinal(text: string): void {
-    this.editor.setSelection(text.length, 0);
-  }
 
   listenerAllApp(): void {
     this.renderer.listen('window', 'click', (e: any) => {

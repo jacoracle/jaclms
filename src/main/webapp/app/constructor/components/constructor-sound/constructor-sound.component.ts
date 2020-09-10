@@ -33,28 +33,27 @@ export class ConstructorSoundComponent implements OnInit, OnDestroy {
     public fileUploadService: FileUploadService,
     private domSanitizer: DomSanitizer
   ) {
-    this.subscription = this.soundService.getEditing().subscribe(editing => {
-      this.editing = editing;
-      this.soundService.getAudioProperties().subscribe((objProperties: IContenido) => {
-        if (this.editing && this.component!.contenido!.id) {
-          this.updateComponent.emit(objProperties);
-          // Actualizar contenido de componente en base de datos
-          const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
-          this.subscription = this.contenidoService.update(contenido).subscribe(
-            data => {
-              this.component!.contenido = data.body!;
-            },
-            () => {
-              this.eventManager.broadcast(
-                new JhiEventWithContent('constructorApp.blockUpdateError', {
-                  message: 'constructorApp.curso.blockUpdate.error',
-                  type: 'danger'
-                })
-              );
-            }
-          );
-        }
-      });
+    this.subscription = this.soundService.getEditing().subscribe(editing => (this.editing = editing));
+
+    this.subscription = this.soundService.getAudioProperties().subscribe((objProperties: IContenido) => {
+      if (this.editing && this.component!.contenido!.id) {
+        this.updateComponent.emit(objProperties);
+        // Actualizar contenido de componente en base de datos
+        const contenido = this.createUpdatedContent(this.component!.contenido!, objProperties);
+        this.subscription = this.contenidoService.update(contenido).subscribe(
+          data => {
+            this.component!.contenido = data.body!;
+          },
+          () => {
+            this.eventManager.broadcast(
+              new JhiEventWithContent('constructorApp.blockUpdateError', {
+                message: 'constructorApp.curso.blockUpdate.error',
+                type: 'danger'
+              })
+            );
+          }
+        );
+      }
     });
     this.subscription = this.soundService.getSoundSrc().subscribe(pdfSrc => {
       if (this.editing) {
