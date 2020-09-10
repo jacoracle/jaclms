@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.domain.module.Modulo;
 import org.constructor.service.dto.module.ModuloDTO;
@@ -211,7 +212,7 @@ public class ModuloResource {
 	    * @throws Exception
 	    */
 	    @GetMapping(path = RestConstants.PATH_BUSQUEDA)	   
-	    public List<Modulo> getModuloByBusqueda(Authentication authentication,@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String asignatura, @RequestParam String numeroGrados, @RequestParam String temas) throws Exception {   
+	    public Set<Modulo> getModuloByBusqueda(Authentication authentication,@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String asignatura, @RequestParam String numeroGrados, @RequestParam String temas) throws Exception {   
 	    	 ModuloFiltroDTO mdto = new ModuloFiltroDTO();
 	    	 mdto.setTitulo(titulo);
 	    	 mdto.setDescripcion(descripcion);

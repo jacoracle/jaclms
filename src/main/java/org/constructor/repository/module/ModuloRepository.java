@@ -39,7 +39,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
 			+ "and fet.descripcion LIKE  %:asignatura% " 
 			+ "and grad.descripcion LIKE %:numeroGrados% "
 			+ "and te.nombre LIKE %:temas% ") 
-	List< Modulo> findModuloByTituloByDescripcionByNumeroGrados(
+	Set< Modulo> findModuloByTituloByDescripcionByNumeroGrados(
 			 @Param("id")Long id,
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion, 
@@ -48,7 +48,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
 			 @Param("temas") String temas);
 
 	@Query("SELECT mo From Modulo mo  JOIN FETCH mo.user  use WHERE use.id = :id and mo.titulo LIKE %:titulo% and  mo.descripcion LIKE  %:descripcion% ")
-	List< Modulo> findModuloByTituloByDescripcion (
+	Set< Modulo> findModuloByTituloByDescripcion (
 			 @Param("id")Long id,
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion);
@@ -59,7 +59,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
 			+ "and  mod.descripcion LIKE  %:descripcion% "
 			+ "and fet.descripcion LIKE  %:asignatura% " 
 			+ "and grad.descripcion LIKE %:numeroGrados% and te.nombre LIKE %:temas% ") 
-	List< Modulo> findModuloByAdmin(	
+	Set< Modulo> findModuloByAdmin(	
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion, 
 			 @Param("asignatura") String asignatura,
@@ -68,7 +68,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
 	
 	
 	@Query("SELECT mo From Modulo mo  WHERE  mo.titulo LIKE %:titulo% and  mo.descripcion LIKE  %:descripcion% ")
-	List< Modulo> findModuloByAdminDescripction (
+	Set< Modulo> findModuloByAdminDescripction (
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion);
 

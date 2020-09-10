@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.constructor.domain.User;
 import org.constructor.domain.module.Modulo;
@@ -172,9 +173,10 @@ public class ModuloServiceImpl implements ModuloService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Modulo> findModuloByFiltros(ModuloFiltroDTO dto, Authentication authentication) throws Exception {
+	public Set<Modulo> findModuloByFiltros(ModuloFiltroDTO dto, Authentication authentication) throws Exception {
 		ModuloFiltroDTO modu = new ModuloFiltroDTO();
-		List<Modulo> mod = new ArrayList<>();
+		Set<Modulo> mod = new HashSet<>();
+	
 		User userName = new User();
 		Set<User> user = new HashSet<>();
 		String usuarioNombre = authentication.getName();
@@ -186,7 +188,7 @@ public class ModuloServiceImpl implements ModuloService {
 				modu = funtionFilter(dto);
 				if (modu.getTitulo() != null && modu.getDescripcion() != null && modu.getAsignatura().equals("")
 						&& modu.getNumeroGrados().equals("") && modu.getTemas().equals("")) {
-					mod = moduloRepository.findModuloByAdminDescripction( dto.getTitulo(), dto.getDescripcion());
+					mod =  moduloRepository.findModuloByAdminDescripction( dto.getTitulo(), dto.getDescripcion());
 					log.debug("modulo if  admin {}", mod);
 
 				} else {

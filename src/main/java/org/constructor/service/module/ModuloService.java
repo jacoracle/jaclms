@@ -5,6 +5,7 @@ package org.constructor.service.module;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.domain.module.Modulo;
 import org.constructor.service.dto.module.ModuloDTO;
@@ -52,7 +53,7 @@ public interface ModuloService {
      * @return
      * @throws Exception
      */
-    List<Modulo>  findModuloByFiltros(ModuloFiltroDTO dto, Authentication authentication) throws Exception ;
+    Set<Modulo>  findModuloByFiltros(ModuloFiltroDTO dto, Authentication authentication) throws Exception ;
 
  
     /**
