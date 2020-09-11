@@ -147,10 +147,6 @@ public class RestConstants {
 	 */
 	public static final String TIPO_ACTIVIDAD_ID = "tipo-actividad/{id}";
 
-	/**
-	 * Path para peticiones loadInteractivas
-	 */
-	public static final String PATH_LOAD_INTERACTIVAS = "loadInteractivas";
 	
 	/**
 	 * Path para peticiones fileUploadInteractivas

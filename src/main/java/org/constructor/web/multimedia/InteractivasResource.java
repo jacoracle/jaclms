@@ -4,11 +4,9 @@
 package org.constructor.web.multimedia;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+
 
 import org.constructor.multimedia.response.VideoResponse;
-import org.constructor.security.AuthoritiesConstants;
 import org.constructor.service.dto.MultimediaDTO;
 import org.constructor.service.multimedia.MultimediaService;
 import org.constructor.utils.RestConstants;
@@ -17,11 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,53 +106,5 @@ public class InteractivasResource {
 	  return  new ResponseEntity<>(vr,HttpStatus.OK);
 	}
 	
-    /**
-     * method Get  loadDocs
-     * @param nameDocs
-     * @return
-     */
-    @RequestMapping(path = RestConstants.PATH_LOAD_INTERACTIVAS, method = RequestMethod.GET, produces = "audio/mpeg" )
-    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
-    public ResponseEntity<byte[]> loadInteractivas(@RequestParam("file") String nameInteractivas) throws IOException {
-        StringBuilder builder = new StringBuilder();
-        
-    	if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8")
-		           || osNameMatch.equals("windows 7"))
-
-		{
-			String raiz = System.getProperty("user.home");
-			builder.append(raiz).append(win);
-		}
-
-		else {
-			builder.append(lin);
-		}
-        HttpHeaders headers = new HttpHeaders();
-        log.debug("*************Nimbus docs Request*************");
-        log.debug("******* Path:  {}***** ", builder);
-        byte[] fileArray = new byte[1];
-        File file = new File(builder.append(nameInteractivas).toString());
-
-        if(!file.exists()) {
-            fileArray[0] = 0;
-            log.debug("******* Path not found***** ");
-    		headers.setContentType(MediaType.IMAGE_PNG);
-			return new ResponseEntity<byte[]>(fileArray,HttpStatus.BAD_REQUEST);
-        }
-        log.debug("********Load interactivas  ******: {}", file);
-        fileArray = new byte[(int) file.length()];
-
-        try {
-            FileInputStream read = new FileInputStream(file);
-            log.debug("******* Reading File: {} ****", nameInteractivas);
-            read.read(fileArray);
-            read.close();
-            log.debug("******* Sending File: {} ****", nameInteractivas);
-            return new ResponseEntity<>(fileArray,headers,HttpStatus.OK);
-
-        }catch(IOException ex){
-            return new ResponseEntity<>(fileArray,HttpStatus.BAD_REQUEST);
-        }
-
-    }
+   
 }
