@@ -37,6 +37,11 @@ public class RestConstants {
 	 * Path para peticiones file
 	 */
 	public static final String PATH_FILE = "file";
+	
+	/**
+	 * Path para peticiones fileInteractivas
+	 */
+	public static final String PATH_DELETE_FILE = "fileInteractivas";
 
 	// ---------------Video--------------------
 

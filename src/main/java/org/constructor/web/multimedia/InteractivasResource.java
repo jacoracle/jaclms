@@ -4,10 +4,12 @@
 package org.constructor.web.multimedia;
 
 import java.io.File;
-
+import java.io.IOException;
+import java.util.List;
 
 import org.constructor.multimedia.response.VideoResponse;
 import org.constructor.service.dto.MultimediaDTO;
+import org.constructor.service.multimedia.InteractivasService;
 import org.constructor.service.multimedia.MultimediaService;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.ErrorConstants;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,6 +59,9 @@ public class InteractivasResource {
 	 */
 	@Autowired
     private MultimediaService multimediaService;
+	
+	@Autowired
+	private InteractivasService interactivasService;
 	/**
 	 * osNameMatch
 	 */ 
@@ -105,6 +111,31 @@ public class InteractivasResource {
 		}
 	  return  new ResponseEntity<>(vr,HttpStatus.OK);
 	}
+	
+	
+
+	/**
+	 * deleteFileInteractivas 
+	 * @param file
+	 * @return
+	 * @throws IOException 
+	 */
+	@DeleteMapping(path = RestConstants.PATH_DELETE_FILE,  produces = "application/json")
+	public ResponseEntity<String> deleteFileInteractivas(@RequestParam("file") List<String> pathfile) throws IOException {
+		
+		log.debug("*************************   deleteFile  *******************");
+		
+		log.debug("Path : {}", pathfile);
+		Boolean  response = true;
+
+		response = interactivasService.deleteFileInteractivas(pathfile);
+
+		if (response) {
+			return new ResponseEntity<>("file removed successfully", HttpStatus.NO_CONTENT);
+		}
+		
+			return new ResponseEntity<>("Delete Failed", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	
    
 }
