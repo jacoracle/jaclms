@@ -190,14 +190,14 @@ public class AgrupadorResource {
 	 * @throws Exception
 	 */
 	@GetMapping(path = RestConstants.PATH_BUSQUEDA_AGRUPADOR)
-	public Set<Agrupador> getAgrupadorByBusqueda(@RequestParam String titulo, @RequestParam String descripcion,
+	public Set<Agrupador> getAgrupadorByBusqueda(Authentication authentication,@RequestParam String titulo, @RequestParam String descripcion,
 			@RequestParam String etiqueta) throws Exception {
 		AgrupadorFiltroDTO agrup = new AgrupadorFiltroDTO();
 		agrup.setTitulo(titulo);
 		agrup.setDescripcion(descripcion);
 		agrup.setEtiqueta(etiqueta);
 
-		return agrupadorService.findAgrupadorByTituloByDescripcionByEtiqueta(agrup);
+		return agrupadorService.findAgrupadorByTituloByDescripcionByEtiqueta(agrup, authentication);
 
 	}
 

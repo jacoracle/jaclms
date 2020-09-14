@@ -186,20 +186,51 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 	 * Filter by Agrupador
 	 */
 	@Override
-	public Set<Agrupador> findAgrupadorByTituloByDescripcionByEtiqueta(AgrupadorFiltroDTO dto) throws Exception {
+	public Set<Agrupador> findAgrupadorByTituloByDescripcionByEtiqueta(AgrupadorFiltroDTO dto,Authentication authentication) throws Exception {
 
 		AgrupadorFiltroDTO agru = new AgrupadorFiltroDTO();
 		Set<Agrupador> ag = new HashSet<>();
+		
+		User userName = new User();
+		Set<User> user = new HashSet<>();
+		String usuarioNombre = authentication.getName();
+		Collection<? extends GrantedAuthority> a;
+		a = authentication.getAuthorities();
+		for (GrantedAuthority grantedAuthority : a) {
+			if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+			
+				agru = funtionFilterAgrupador(dto);
+
+				if (agru.getTitulo() != null && agru.getDescripcion() != null && agru.getEtiqueta().equals("")) {
+					ag = agrupadorRepository.findAgrupadorByTituloByDescripcionAdmin( dto.getTitulo(), dto.getDescripcion());
+				} else {
+
+					ag = agrupadorRepository.findAgrupadorAdmin(agru.getTitulo(),
+							agru.getDescripcion(), agru.getEtiqueta());
+					log.debug("Agrupador filtro {}", ag);
+
+				}
+
+				return ag;
+			}
+		}
+			
+			user = userService.findUserByLogin(usuarioNombre);
+
+			for (User usuario : user) {
+				userName = usuario;
+
+			}	
 		if (dto.getTitulo() == null && dto.getDescripcion() == null && dto.getEtiqueta() == null) {
 			throw new Exception(ErrorConstants.ERROR_FILTER);
 		}
 		agru = funtionFilterAgrupador(dto);
 
 		if (agru.getTitulo() != null && agru.getDescripcion() != null && agru.getEtiqueta().equals("")) {
-			ag = agrupadorRepository.findAgrupadorByTituloByDescripcion(dto.getTitulo(), dto.getDescripcion());
+			ag = agrupadorRepository.findAgrupadorByTituloByDescripcion(userName.getId(), dto.getTitulo(), dto.getDescripcion());
 		} else {
 
-			ag = agrupadorRepository.findAgrupadorByTituloByDescripcionByEtiqueta(agru.getTitulo(),
+			ag = agrupadorRepository.findAgrupadorByTituloByDescripcionByEtiqueta(userName.getId(),agru.getTitulo(),
 					agru.getDescripcion(), agru.getEtiqueta());
 			log.debug("Agrupador filtro {}", ag);
 

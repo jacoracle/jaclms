@@ -53,7 +53,7 @@ public interface AgrupadorService {
      * @return
      * @throws Exception
      */
-    Set<Agrupador> findAgrupadorByTituloByDescripcionByEtiqueta(AgrupadorFiltroDTO dto ) throws Exception ;
+    Set<Agrupador> findAgrupadorByTituloByDescripcionByEtiqueta(AgrupadorFiltroDTO dto, Authentication authentication) throws Exception ;
     /**
      * Get all the agrupador.
      *
