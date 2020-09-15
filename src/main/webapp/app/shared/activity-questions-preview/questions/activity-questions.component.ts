@@ -50,7 +50,7 @@ export class ActivityQuestionsComponent {
 
       UtilActivityQuestions.refreshForm(this.activityForm);
       if (controlesPreguntas.length < 10) {
-        controlesPreguntas.push(UtilActivityQuestions.formGroupVacioPregunta(this.formBuilder, this.typeQuestion));
+        controlesPreguntas.push(UtilActivityQuestions.formGroupVacioPregunta(this.formBuilder));
       }
 
       for (let i = 0; i < controlesPreguntas.length; i++) {
