@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -8,16 +9,10 @@ import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.mod
 export class ActivityService {
   private editing = new Subject<boolean>();
   private activityProperties = new Subject<ActividadInteractiva[]>();
+  private typeQuestion = new Subject<string>();
+  private imgSrc = new Subject<SafeUrl>();
 
   constructor() {}
-
-  /*  setActivitySrc(activitySrc: SafeUrl): void {
-    this.activitySrc.next(activitySrc);
-  }
-
-  getActivitySrc(): Observable<SafeUrl> {
-    return this.activitySrc.asObservable();
-  }*/
 
   setEditing(editing: boolean): void {
     this.editing.next(editing);
@@ -39,5 +34,18 @@ export class ActivityService {
    */
   getActivityProperties(): Observable<ActividadInteractiva[]> {
     return this.activityProperties.asObservable();
+  }
+
+  /**
+   * @param typeQuestion object with values type question text or media
+   */
+  setTypeQuestion(typeQuestion: string): void {
+    this.typeQuestion.next(typeQuestion);
+  }
+  /**
+   * get properties from type question
+   */
+  getTypeQuestion(): Observable<string> {
+    return this.typeQuestion.asObservable();
   }
 }

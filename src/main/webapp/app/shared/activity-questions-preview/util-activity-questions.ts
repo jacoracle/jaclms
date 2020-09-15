@@ -2,8 +2,10 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { OpcionPreguntas } from 'app/shared/model/enumerations/tipo-actividad.model';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { cantidadAtributos } from 'app/shared/util/util';
+import { FileUploadInteractivasService } from 'app/services/file-upload-interactivas.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
-export default class UtilActivity {
+export default class UtilActivityQuestions {
   static arrayFormGroupPreguntas(jsonForm: IActividadPregunta | undefined, formBuilder: FormBuilder): FormArray {
     const preguntas = formBuilder.array([]);
     if (jsonForm && cantidadAtributos(jsonForm) > 0) {
@@ -12,7 +14,7 @@ export default class UtilActivity {
           new FormGroup({
             pregunta: new FormControl(jsonForm.preguntas[i].pregunta, [Validators.required, Validators.maxLength(50)]),
             tipoPregunta: new FormControl(jsonForm.preguntas[i].tipoPregunta, [Validators.required]),
-            respuestas: UtilActivity.arrayFormGroupRespuestas(jsonForm, i, formBuilder),
+            respuestas: UtilActivityQuestions.arrayFormGroupRespuestas(jsonForm, i, formBuilder),
             calificada: new FormControl(jsonForm.preguntas[i].calificada, [Validators.required]),
             marcada: new FormControl(jsonForm.preguntas[i].marcada, [Validators.required]),
             correcta: new FormControl(jsonForm.preguntas[i].correcta, [Validators.required])
@@ -20,7 +22,7 @@ export default class UtilActivity {
         );
       }
     } else {
-      preguntas.push(UtilActivity.formGroupVacioPregunta(formBuilder));
+      preguntas.push(UtilActivityQuestions.formGroupVacioPregunta(formBuilder));
     }
     return preguntas;
   }
@@ -29,7 +31,7 @@ export default class UtilActivity {
     return new FormGroup({
       pregunta: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       tipoPregunta: new FormControl(OpcionPreguntas.unica, [Validators.required]),
-      respuestas: UtilActivity.arrayFormGroupRespuestas(undefined, 0, formBuilder),
+      respuestas: UtilActivityQuestions.arrayFormGroupRespuestas(undefined, 0, formBuilder),
       calificada: new FormControl(false, [Validators.required]),
       marcada: new FormControl(false, [Validators.required]),
       correcta: new FormControl(false, [Validators.required])
@@ -48,18 +50,24 @@ export default class UtilActivity {
               respuesta: new FormControl(
                 {
                   value: respuestasJson[i].respuesta,
-                  disabled: jsonForm.tipoActividad.opcion === 'verdaderoFalso'
+                  disabled:
+                    jsonForm.tipoActividad.opcion === 'verdaderoFalso' ||
+                    jsonForm.tipoActividad.opcion === 'imagen_unica' ||
+                    jsonForm.tipoActividad.opcion === 'imagen_multiple'
                 },
                 [Validators.required, Validators.maxLength(50)]
               ),
               correcta: new FormControl(respuestasJson[i].correcta, [Validators.required]),
-              seleccionada: new FormControl(respuestasJson[i].seleccionada, [Validators.required])
+              seleccionada: new FormControl(respuestasJson[i].seleccionada, [Validators.required]),
+              path: new FormControl(respuestasJson[i].path),
+              safeUrl: new FormControl(),
+              loadedSafeUrl: new FormControl(false)
             })
           );
         }
       }
     } else {
-      respuestas.push(UtilActivity.formGroupVacioRespuesta(true));
+      respuestas.push(UtilActivityQuestions.formGroupVacioRespuesta(true));
     }
     return respuestas;
   }
@@ -68,7 +76,10 @@ export default class UtilActivity {
     return new FormGroup({
       respuesta: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       correcta: new FormControl(esPrimer, [Validators.required]),
-      seleccionada: new FormControl(false, [Validators.required])
+      seleccionada: new FormControl(false, [Validators.required]),
+      path: new FormControl(''),
+      safeUrl: new FormControl(''),
+      loadedSafeUrl: new FormControl(false)
     });
   }
 
@@ -81,7 +92,7 @@ export default class UtilActivity {
   }
 
   static respuestas(activityForm: FormGroup, indQuestion: number): FormArray | undefined {
-    const preguntas = UtilActivity.preguntas(activityForm);
+    const preguntas = UtilActivityQuestions.preguntas(activityForm);
     if (preguntas) {
       return preguntas.controls[indQuestion].get('respuestas') as FormArray;
     } else {
@@ -90,21 +101,21 @@ export default class UtilActivity {
   }
 
   static verdaderoFalso(activityForm: FormGroup, indQuestion: number): void {
-    const controlesRespuestas = UtilActivity.controlesRespuestas(activityForm, indQuestion);
+    const controlesRespuestas = UtilActivityQuestions.controlesRespuestas(activityForm, indQuestion);
     const cantidadRespuestas = controlesRespuestas.length;
     if (cantidadRespuestas > 2) {
       const cantidadEliminar = cantidadRespuestas - 2;
       controlesRespuestas.splice(2, cantidadEliminar);
     } else if (cantidadRespuestas === 1) {
-      controlesRespuestas.push(UtilActivity.formGroupVacioRespuesta(false));
+      controlesRespuestas.push(UtilActivityQuestions.formGroupVacioRespuesta(false));
     }
-    const campoVerdadero = UtilActivity.campoRespuesta(activityForm, indQuestion, 0, 'respuesta');
+    const campoVerdadero = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, 0, 'respuesta');
     if (campoVerdadero) {
       campoVerdadero.setValue('verdadero');
       campoVerdadero.disable();
     }
 
-    const campoFalso = UtilActivity.campoRespuesta(activityForm, indQuestion, 1, 'respuesta');
+    const campoFalso = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, 1, 'respuesta');
     if (campoFalso) {
       campoFalso.setValue('falso');
       campoFalso.disable();
@@ -112,7 +123,7 @@ export default class UtilActivity {
   }
 
   static controlesPreguntas(activityForm: FormGroup): AbstractControl[] {
-    const preguntas = UtilActivity.preguntas(activityForm);
+    const preguntas = UtilActivityQuestions.preguntas(activityForm);
     if (preguntas) {
       const controlesPreguntas = preguntas.controls;
       if (controlesPreguntas) {
@@ -126,7 +137,7 @@ export default class UtilActivity {
   }
 
   static controlesRespuestas(activityForm: FormGroup, indQuestion: number): AbstractControl[] {
-    const respuestas = UtilActivity.respuestas(activityForm, indQuestion);
+    const respuestas = UtilActivityQuestions.respuestas(activityForm, indQuestion);
     if (respuestas) {
       const controlesRespuestas = respuestas.controls;
       if (controlesRespuestas) {
@@ -140,7 +151,7 @@ export default class UtilActivity {
   }
 
   static controlPregunta(activityForm: FormGroup, indQuestion: number): AbstractControl | null | undefined {
-    const preguntas = UtilActivity.preguntas(activityForm);
+    const preguntas = UtilActivityQuestions.preguntas(activityForm);
     if (preguntas) {
       const controlesPreguntas = preguntas.controls;
       let controlPregunta;
@@ -156,7 +167,7 @@ export default class UtilActivity {
   static controlRespuesta(activityForm: FormGroup, indQuestion: number, indAnswer: number): AbstractControl | null | undefined {
     let controlesRespuestas;
     let controlRespuesta;
-    const respuestas = UtilActivity.respuestas(activityForm, indQuestion);
+    const respuestas = UtilActivityQuestions.respuestas(activityForm, indQuestion);
     if (respuestas) {
       controlesRespuestas = respuestas.controls;
       if (controlesRespuestas) {
@@ -176,7 +187,7 @@ export default class UtilActivity {
     indAnswer: number,
     nombreCampo: string
   ): AbstractControl | null | undefined {
-    const controlRespuesta = UtilActivity.controlRespuesta(activityForm, indQuestion, indAnswer);
+    const controlRespuesta = UtilActivityQuestions.controlRespuesta(activityForm, indQuestion, indAnswer);
     let campo;
     if (controlRespuesta) {
       campo = controlRespuesta.get(nombreCampo);
@@ -185,31 +196,31 @@ export default class UtilActivity {
   }
 
   static refreshQuestion(activityForm: FormGroup, indQuestion: number): void {
-    const controlPregunta = UtilActivity.controlPregunta(activityForm, indQuestion);
+    const controlPregunta = UtilActivityQuestions.controlPregunta(activityForm, indQuestion);
     if (controlPregunta) {
       controlPregunta.updateValueAndValidity({ onlySelf: true, emitEvent: true });
     }
   }
 
   static refreshAnswersQuestion(activityForm: FormGroup, indQuestion: number): void {
-    const respuestas = UtilActivity.respuestas(activityForm, indQuestion);
+    const respuestas = UtilActivityQuestions.respuestas(activityForm, indQuestion);
     if (respuestas) {
       respuestas.updateValueAndValidity({ onlySelf: true, emitEvent: true });
     }
   }
 
   static refreshAnswers(activityForm: FormGroup): void {
-    const preguntas = UtilActivity.preguntas(activityForm);
+    const preguntas = UtilActivityQuestions.preguntas(activityForm);
     if (preguntas) {
       for (let i = 0; i < preguntas.length; i++) {
         preguntas.updateValueAndValidity({ onlySelf: true, emitEvent: true });
-        UtilActivity.refreshQuestions(activityForm);
+        UtilActivityQuestions.refreshQuestions(activityForm);
       }
     }
   }
 
   static refreshQuestions(activityForm: FormGroup): void {
-    const preguntas = UtilActivity.preguntas(activityForm);
+    const preguntas = UtilActivityQuestions.preguntas(activityForm);
     if (preguntas) {
       preguntas.updateValueAndValidity({ onlySelf: true, emitEvent: true });
     }
@@ -217,7 +228,7 @@ export default class UtilActivity {
 
   static refreshForm(activityForm: FormGroup): void {
     let evaluable;
-    UtilActivity.refreshAnswers(activityForm);
+    UtilActivityQuestions.refreshAnswers(activityForm);
     if (activityForm) {
       evaluable = activityForm.get('evaluable');
       if (evaluable) {
@@ -228,18 +239,18 @@ export default class UtilActivity {
   }
 
   static onRadioChange(activityForm: FormGroup, indQuestion: number, indAnswer: number): void {
-    const cantidadRespuestas = UtilActivity.controlesRespuestas(activityForm, indQuestion).length;
+    const cantidadRespuestas = UtilActivityQuestions.controlesRespuestas(activityForm, indQuestion).length;
     let respuestasPorNegar;
     let respuestaPorAfirmar;
-    UtilActivity.refreshAnswers(activityForm);
+    UtilActivityQuestions.refreshAnswers(activityForm);
     for (let i = 0; i < cantidadRespuestas; i++) {
       if (i !== indAnswer) {
-        respuestasPorNegar = UtilActivity.campoRespuesta(activityForm, indQuestion, i, 'correcta');
+        respuestasPorNegar = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, i, 'correcta');
         if (respuestasPorNegar) {
           respuestasPorNegar.setValue(false);
         }
       } else {
-        respuestaPorAfirmar = UtilActivity.campoRespuesta(activityForm, indQuestion, i, 'correcta');
+        respuestaPorAfirmar = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, i, 'correcta');
         if (respuestaPorAfirmar) {
           if (respuestaPorAfirmar.value === false) {
             respuestaPorAfirmar.setValue(true);
@@ -248,7 +259,7 @@ export default class UtilActivity {
         }
       }
     }
-    UtilActivity.refreshAnswers(activityForm);
+    UtilActivityQuestions.refreshAnswers(activityForm);
   }
 
   static onKeyDown(event: any): boolean {
@@ -257,6 +268,51 @@ export default class UtilActivity {
       return false;
     } else {
       return true;
+    }
+  }
+
+  static imagen(activityForm: FormGroup, indQuestion: number, emptyValue: boolean): void {
+    const cantidadRespuestas = UtilActivityQuestions.controlesRespuestas(activityForm, indQuestion).length;
+    let respuesta;
+    for (let i = 0; i < cantidadRespuestas; i++) {
+      respuesta = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, i, 'respuesta');
+      if (respuesta) {
+        if (emptyValue) {
+          respuesta.setValue('');
+        }
+        respuesta.disable();
+      }
+    }
+    UtilActivityQuestions.refreshAnswers(activityForm);
+  }
+
+  static getImage(
+    activityForm: FormGroup,
+    path: string,
+    indQuestion: number,
+    indAnswer: number,
+    fileUploadInteractivas: FileUploadInteractivasService,
+    domSanitizer: DomSanitizer
+  ): void {
+    const campoSafeUrl = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, indAnswer, 'safeUrl');
+    const loadedSafeUrl = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, indAnswer, 'loadedSafeUrl');
+    if (campoSafeUrl && loadedSafeUrl && path !== '' && (campoSafeUrl.value == null || campoSafeUrl.value === '') && !loadedSafeUrl.value) {
+      loadedSafeUrl.setValue(true);
+      fileUploadInteractivas
+        .getImage(path)
+        .pipe()
+        .subscribe((value: string) => {
+          campoSafeUrl.setValue(domSanitizer.bypassSecurityTrustUrl(value));
+          setTimeout(() => {
+            const inputQuestion = document.getElementById('id_question' + indQuestion);
+            if (inputQuestion) {
+              inputQuestion.focus();
+              // this.showLoader = false;
+              this.refreshQuestion(activityForm, indQuestion);
+              UtilActivityQuestions.refreshForm(activityForm);
+            }
+          }, 500);
+        });
     }
   }
 }

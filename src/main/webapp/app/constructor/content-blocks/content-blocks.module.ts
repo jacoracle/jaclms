@@ -10,7 +10,7 @@ import { ContentBlock7Component } from './content-block7/content-block7.componen
 import { ConstructorPdfComponent } from '../components/constructor-pdf/constructor-pdf.component';
 import { ConstructorSoundComponent } from '../components/constructor-sound/constructor-sound.component';
 import { SafeHtmlModule } from 'app/shared/safe-html/safe-html.module';
-
+import { ConstructorActivityComponent } from 'app/constructor/components/constructor-activity/constructor-activity.component';
 @NgModule({
   imports: [CommonModule, SafeHtmlModule],
   declarations: [
@@ -22,7 +22,8 @@ import { SafeHtmlModule } from 'app/shared/safe-html/safe-html.module';
     ContentBlock7Component,
     ConstructorImageComponent,
     ConstructorPdfComponent,
-    ConstructorSoundComponent
+    ConstructorSoundComponent,
+    ConstructorActivityComponent
   ],
   exports: [
     ContentBlock3Component,
@@ -33,7 +34,8 @@ import { SafeHtmlModule } from 'app/shared/safe-html/safe-html.module';
     ContentBlock7Component,
     ConstructorImageComponent,
     ConstructorPdfComponent,
-    ConstructorSoundComponent
+    ConstructorSoundComponent,
+    ConstructorActivityComponent
   ]
 })
 export class ContentBlocksModule {}

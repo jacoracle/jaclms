@@ -1,0 +1,25 @@
+<mat-list *ngFor="let pregunta of preguntas(); let indQuestion = index;" class="mat-test">
+    <mat-divider></mat-divider>
+    <mat-list-item class="style-question">
+        <span class="qNumber" id="question_preview{{indQuestion}}">{{indQuestion + 1}}</span>{{pregunta.pregunta}}
+    </mat-list-item>
+
+    <div *ngIf="typeQuestion == 'unica' || typeQuestion == 'multiple' || typeQuestion == 'verdaderoFalso'">
+        <mat-list role="list" *ngFor="let respuesta of respuestas(indQuestion);" class="style-answer">
+            <mat-list-item role="listitem" [ngClass]="{'rojita': respuesta.correcta}">{{respuesta.respuesta}}</mat-list-item>
+        </mat-list>
+    </div>
+
+    <div *ngIf="typeQuestion == 'imagen_unica' || typeQuestion == 'imagen_multiple' ">
+        <mat-grid-list cols="2" rowHeight="200px">
+
+            <mat-grid-tile role="list" *ngFor="let respuesta of respuestas(indQuestion); let indAnswer = index;" class="style-answer">
+                <div id="blah" class="hidden" [attr.init]="getImage(respuesta.path, indQuestion, indAnswer)"
+                     [attr.repeat]="getImage(respuesta.path, indQuestion, indAnswer)"></div>
+                <img [src]="respuesta.safeUrl" alt="" class="cover-upload-imgage caja"
+                     [ngClass]="{'border-success': respuesta.correcta , 'border-danger': !respuesta.correcta}">
+            </mat-grid-tile>
+
+        </mat-grid-list>
+    </div>
+</mat-list>

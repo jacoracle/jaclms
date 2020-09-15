@@ -1,7 +1,5 @@
 <div class="properties-c-component">
-
     <!-- Header -->
-
     <div class="c-component-title">
         <div class="cct-link">
             <i class="icon ni-arrow"></i>
@@ -33,42 +31,38 @@
                     <div *ngIf="fileFormat === 'video'" [ngClass]="{'test-video': thumbSrc !== ''}">
                         <!-- <video [src]="videoSrc" width="100%" controls #vPlayer></video>-->
                         <img [src]="defaultVideoUrl" alt="" class="cover-upload-video" *ngIf="thumbSrc === ''">
-                        <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''"><i
-                            class="icon ni-play"></i></span>
-                        <img [src]="thumbSrc" alt="" class="cover-upload-video-test"
-                             *ngIf="multimediaFileProperties.contenido !== 'unknown'">
+                        <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''">
+                            <i class="icon ni-play"></i>
+                        </span>
+                        <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
                     </div>
                     <div *ngIf="fileFormat === 'pdf'" class="test-pdf">
                         <!-- Pdf -->
-                        <img [src]="defaultPdfUrl" alt="" class="cover-upload-img"
-                             *ngIf="multimediaFileProperties.contenido === 'unknown'">
-                        <span class="play-icon-test" (click)="pdfPreview()"
-                              *ngIf="multimediaFileProperties.contenido !== 'unknown'"><i
-                            class="icon ni-view"></i></span>
-                        <img [src]="loadedPdfUrl" alt="" class="cover-upload-img"
-                             *ngIf="multimediaFileProperties.contenido !== 'unknown'">
+                        <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
+                        <span class="play-icon-test" (click)="pdfPreview()" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
+                            <i class="icon ni-view"></i>
+                        </span>
+                        <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
                     </div>
                     <div *ngIf="fileFormat === 'sound'" class="test-audio">
                         <!-- Audio -->
-                        <img [src]="defaultSoundUrl" alt="" class="cover-upload-img"
-                             *ngIf="multimediaFileProperties.contenido === 'unknown'">
-                        <span class="play-icon-test" (click)="loadSound()"
-                              *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio"><i
-                            class="icon ni-play"></i></span>
-                        <img [src]="loadedSoundUrl" alt="" class="cover-upload-img"
-                             *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
-                        <audio [src]="soundSrc" controls controlsList="nodownload" #sPlayer
-                               *ngIf="soundSrc !== '' && listenAudio" class="audioPlayer"></audio>
+                        <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
+                        <span class="play-icon-test" (click)="loadSound()" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
+                            <i class="icon ni-play"></i>
+                        </span>
+                        <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
+                        <audio [src]="soundSrc" controls controlsList="nodownload" #sPlayer *ngIf="soundSrc !== '' && listenAudio" class="audioPlayer"></audio>
                     </div>
-                    <div *ngIf="fileFormat === 'activity'" class="test-pdf">
+                    <div *ngIf="fileFormat  === 'activity_question_text' || fileFormat === 'activity_question_media'"
+                         class="test-pdf">
                         <!-- Activity -->
-                        <img [src]="defaultActivityUrl" alt="" class="cover-upload-img"
-                             *ngIf="actividadProperties.id === 0">
-                        <span class="play-icon-test" (click)="createUpdateActivity()"
-                              *ngIf=" this.actividadProperties.contenido !== 'unknown'"><i
-                            class="icon ni-view"></i></span>
-                        <img [src]="loadedFormActivity" alt="" class="cover-upload-img"
-                             *ngIf="actividadProperties.id !== 0 ">
+                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id === 0 && fileFormat  === 'activity_question_text'">
+                        <img [src]="defaultQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id === 0 && fileFormat  === 'activity_question_media'">
+                        <span class="play-icon-test" (click)="createUpdateActivity()" *ngIf=" this.actividadProperties.contenido !== 'unknown'">
+                            <i class="icon ni-view"></i>
+                        </span>
+                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id !== 0 && fileFormat  === 'activity_question_text'">
+                        <img [src]="loadedQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id !== 0 && fileFormat  === 'activity_question_media'">
                     </div>
                     <div [hidden]="!showLoader" class="loader-cp">
                         <!-- Doing something -->
@@ -77,21 +71,21 @@
                 </div>
 
                 <div class="row-sidebar-up-image-btn">
-                    <button (click)="delete()" class="secondary-btn text-transform-none"
-                            *ngIf="multimediaFileProperties.contenido !== 'unknown' &&
-                   this.actividadProperties.contenido !== 'unknown' ">Eliminar
+                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown' ">
+                        Eliminar
                     </button>
-                    <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="fileFormat !== 'activity'">
+                    <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="fileFormat !== 'activity_question_text' && fileFormat !== 'activity_question_media'">
                         <span>Subir</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
-                    <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="fileFormat === 'activity'">
-                        <span >Actividad</span>
+                    <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="fileFormat  === 'activity_question_text' || fileFormat === 'activity_question_media'">
+                        <span>Actividad</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
                 </div>
 
-                <div class="properties-file" *ngIf="fileFormat !== 'activity'">
+                <div class="properties-file"
+                     *ngIf="fileFormat !== 'activity_question_text' && fileFormat !== 'activity_question_media'">
                     <h6>Información</h6>
                     <div class="pf-item">
                         <label for="filename">Nombre:</label>
@@ -108,13 +102,9 @@
                         <input type="text" class="" [(ngModel)]="multimediaFileProperties.extension" name="filext"
                                id="filext" disabled>
                     </div>
-
                 </div>
-
             </div>
             <!-- Subir archivo -->
-
         </div>
     </div>
-
 </div>

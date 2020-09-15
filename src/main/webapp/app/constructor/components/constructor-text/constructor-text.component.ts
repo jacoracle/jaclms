@@ -64,7 +64,8 @@ export class ConstructorTextComponent {
       const componentVisor = templateTypeId.nombre;
       switch (componentVisor) {
         case 'titulo':
-        case 'actividad':
+        case 'activity_question_text':
+        case 'activity_question_media':
           this.isTitle = true;
           break;
         default:

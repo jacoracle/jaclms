@@ -12,12 +12,11 @@ import { SoundService } from 'app/services/sound.service';
 import { VideoModalService } from 'app/services/video-modal.service';
 import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { CurrentModuleService } from 'app/services/current-module.service';
-import { ActivityService } from 'app/services/activity.service';
-import { ActivityModalService } from 'app/services/activity-modal.service';
+import { ActivityQuestionsModalService } from 'app/services/activity-questions-modal.service';
 import { ActividadInteractiva, ContenidoActividad } from 'app/shared/model/actividad-interactiva.model';
 import { cantidadAtributos } from 'app/shared/util/util';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
-
+import { ActivityService } from 'app/services/activity.service';
 @Component({
   selector: 'jhi-constructor-component-properties',
   templateUrl: './constructor-component-properties.component.html',
@@ -30,8 +29,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   loadedPdfUrl = './../../../content/images/pdf_up_thumb.png';
   defaultSoundUrl = './../../../content/images/audio_thumb.png';
   loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
-  defaultActivityUrl = './../../../content/images/actividad.png';
-  loadedFormActivity = './../../../content/images/activity_up_thumb.png';
+  defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
+  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
+  loadedQuestionsTextUrl = './../../../content/images/activity_up_thumb.png';
+  loadedQuestionsMediaUrl = './../../../content/images/ab11.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
 
@@ -41,7 +42,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   thumbSrc: SafeUrl = '';
   pdfSrc: SafeUrl = '';
   soundSrc: SafeUrl = '';
-  activitySrc: SafeUrl = '';
   contenidoProperties: IContenido = {
     contenido: '',
     nombre: '',
@@ -87,7 +87,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     public currentModuleService: CurrentModuleService,
     private pdfModalService: PdfModalService,
     private videoModalService: VideoModalService,
-    private activityModalService: ActivityModalService
+    private activityModalService: ActivityQuestionsModalService
   ) {
     // Recibe el src de la imagen a mostrar
     this.subscription = this.subscriptionImage();
@@ -104,8 +104,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     // Recibe el src del thumbnail (imagen) del video a mostrar como preview
     this.subscription = this.subscriptionVideoThumb();
 
-    // Formulario de la actividad a mostrar como preview
-    this.subscription = this.subscriptionActivity();
+    // Formulario de la actividad de preguntas a mostrar como preview
+    this.subscription = this.subscriptionActivityQuestions();
 
     this.type = this.currentCourseService.getType() !== '' ? this.currentCourseService.getType() : this.currentModuleService.getType();
     if (this.type === 'course') {
@@ -262,21 +262,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     });
   }
 
-  subscriptionActivity(): Subscription {
-    return this.activityService.getActivityProperties().subscribe(actividadesInteractivas => {
-      this.actividadesInteractivas = actividadesInteractivas;
-      this.fileFormat = 'activity';
-      if (this.activitySrc === '') {
-        // this.fileInput.nativeElement.value = '';
-      } else {
-        /* this.showLoader = true;
-        this.activityModalService.open();
-        this.showLoader = false;*/
-      }
-      this.showLoader = false;
-    });
-  }
-
   subscriptionImage(): Subscription {
     return this.imageService.getImgSrc().subscribe(imgSrc => {
       this.imgSrc = imgSrc;
@@ -286,6 +271,22 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       }
       this.showLoader = false;
     });
+  }
+
+  subscriptionActivityQuestions(): Subscription {
+    let typeQuestion = '';
+    let subscription: any;
+    this.activityService.getTypeQuestion().subscribe(type => {
+      typeQuestion = type;
+    });
+    setTimeout(() => {
+      subscription = this.activityService.getActivityProperties().subscribe((actividadesInteractivas: ActividadInteractiva[]) => {
+        this.actividadesInteractivas = actividadesInteractivas;
+        this.fileFormat = typeQuestion;
+        this.showLoader = false;
+      });
+    }, 500);
+    return subscription;
   }
 
   /*
@@ -344,23 +345,30 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   delete(): void {
     this.fileUploadService.deleteFile(this.multimediaFileProperties.contenido!).subscribe(() => {
-      if (this.fileFormat === 'image') {
-        this.setImageUrl('');
-        this.fileInput.nativeElement.value = '';
-      } else if (this.fileFormat === 'video') {
-        this.setVideoUrl('');
-        this.fileInput.nativeElement.value = '';
-      } else if (this.fileFormat === 'pdf') {
-        this.setPdfUrl('');
-        this.fileInput.nativeElement.value = '';
-      } else if (this.fileFormat === 'sound') {
-        this.setSoundUrl('');
-        this.fileInput.nativeElement.value = '';
-      } else if (this.fileFormat === 'activity') {
-        this.deleteActivity();
-      } else {
-        this.showErrorFileType('');
-        return;
+      switch (this.fileFormat) {
+        case 'image':
+          this.setImageUrl('');
+          this.fileInput.nativeElement.value = '';
+          break;
+        case 'video':
+          this.setVideoUrl('');
+          this.fileInput.nativeElement.value = '';
+          break;
+        case 'pdf':
+          this.setPdfUrl('');
+          this.fileInput.nativeElement.value = '';
+          break;
+        case 'sound':
+          this.setSoundUrl('');
+          this.fileInput.nativeElement.value = '';
+          break;
+        case 'activity_question_text':
+        case 'activity_question_multimedia':
+          this.deleteActivity();
+          break;
+        default:
+          this.showErrorFileType('');
+          return;
       }
     });
   }
@@ -412,12 +420,12 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   createUpdateActivity(): void {
-    if (this.fileFormat === 'activity') {
+    if (this.fileFormat === 'activity_question_text' || this.fileFormat === 'activity_question_media') {
       const indexActividad = this.actividadesInteractivas.length - 1;
       const actividadInteractiva = this.actividadesInteractivas[indexActividad];
       const jsonFormIn = this.jsonFormEntrada(actividadInteractiva);
 
-      this.activityModalService.open(jsonFormIn).result.then((jsonFormOut: IActividadPregunta) => {
+      this.activityModalService.open(this.id, jsonFormIn, this.fileFormat).result.then((jsonFormOut: IActividadPregunta) => {
         if (jsonFormOut) {
           this.actividadesInteractivas[indexActividad] = this.jsonFormSalida(jsonFormOut, actividadInteractiva);
           this.activityService.setActivityProperties(this.actividadesInteractivas);
@@ -442,6 +450,18 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         ) {
           jsonFormIn.tipoActividad.subtipo = 'texto';
           jsonFormIn.tipoActividad.opcion = 'verdaderoFalso';
+        } else if (
+          actividadInteractiva.tipoActividadInteractiva.opcion === 'unica' &&
+          actividadInteractiva.tipoActividadInteractiva.subtipo === 'imagen'
+        ) {
+          jsonFormIn.tipoActividad.subtipo = 'imagen';
+          jsonFormIn.tipoActividad.opcion = 'imagen_unica';
+        } else if (
+          actividadInteractiva.tipoActividadInteractiva.opcion === 'multiple' &&
+          actividadInteractiva.tipoActividadInteractiva.subtipo === 'imagen'
+        ) {
+          jsonFormIn.tipoActividad.subtipo = 'imagen';
+          jsonFormIn.tipoActividad.opcion = 'imagen_multiple';
         }
       }
     }
@@ -451,15 +471,34 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   jsonFormSalida(jsonFormOut: IActividadPregunta, actividadInteractiva: ActividadInteractiva): ActividadInteractiva {
     this.showLoader = true;
     if (actividadInteractiva && jsonFormOut && cantidadAtributos(jsonFormOut) > 0) {
-      if (jsonFormOut.tipoActividad.opcion === 'verdaderoFalso') {
-        jsonFormOut.tipoActividad.opcion = 'unica';
-        jsonFormOut.tipoActividad.subtipo = 'verdaderoFalso';
+      switch (jsonFormOut.tipoActividad.opcion) {
+        case 'unica':
+          jsonFormOut.tipoActividad.opcion = 'unica';
+          jsonFormOut.tipoActividad.subtipo = 'texto';
+          break;
+        case 'multiple':
+          jsonFormOut.tipoActividad.opcion = 'multiple';
+          jsonFormOut.tipoActividad.subtipo = 'texto';
+          break;
+        case 'verdaderoFalso':
+          jsonFormOut.tipoActividad.opcion = 'unica';
+          jsonFormOut.tipoActividad.subtipo = 'verdaderoFalso';
+          break;
+        case 'imagen_unica':
+          jsonFormOut.tipoActividad.opcion = 'unica';
+          jsonFormOut.tipoActividad.subtipo = 'imagen';
+          break;
+        case 'imagen_multiple':
+          jsonFormOut.tipoActividad.opcion = 'multiple';
+          jsonFormOut.tipoActividad.subtipo = 'imagen';
+          break;
       }
+
       actividadInteractiva.tipoActividadInteractiva = jsonFormOut.tipoActividad;
       actividadInteractiva.evaluable = jsonFormOut.evaluable;
       if (cantidadAtributos(actividadInteractiva.tipoActividadInteractiva) > 0) {
-        delete jsonFormOut.tipoActividad;
-        delete jsonFormOut.evaluable;
+        // delete jsonFormOut.tipoActividad;
+        // delete jsonFormOut.evaluable;
         actividadInteractiva.contenido = new ContenidoActividad();
         Object.assign(actividadInteractiva.contenido, jsonFormOut);
       }

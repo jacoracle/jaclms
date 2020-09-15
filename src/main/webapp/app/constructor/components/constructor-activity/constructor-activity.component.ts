@@ -15,12 +15,15 @@ import { ContenidoActividadService } from 'app/entities/contenido/contenido-acti
   styleUrls: ['./constructor-activity.component.scss']
 })
 export class ConstructorActivityComponent implements OnInit, OnDestroy {
-  defaultActivityUrl: SafeUrl = './../../../../content/images/actividad.png';
-  loadedActivityUrl: SafeUrl = './../../../../content/images/actividad_up.png';
+  defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
+  loadedQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad_up.png';
+  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
+  loadedQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11_up.png';
   contenidoActividad?: ContenidoActividad;
   editing = false;
   subscription: Subscription;
   @Input() component?: Componente;
+  @Input() typeQuestion = '';
   @Output() updateComponent = new EventEmitter();
   showLoader = false;
 
@@ -87,6 +90,7 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
   selectActivity(): void {
     this.activityService.setEditing(false);
     // this.activityService.setActivitySrc(this.activitySrc);
+    this.activityService.setTypeQuestion(this.typeQuestion);
     this.activityService.setActivityProperties(this.component!.actividadesInteractivas!);
     this.editing = true;
     this.navigationControlsService.setOpenProperties(true);

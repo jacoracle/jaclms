@@ -1,0 +1,77 @@
+<!--
+  ~ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+  ~
+  ~
+  -->
+
+<div class="modal-activity-container">
+  <div class="modal-act-header">
+    <div class="row-mah">
+      <div class="nimbus-imagotype"></div>
+      <h2 id="jhi-curso-heading">Actividad interactiva</h2>
+      <h3>I  </h3>
+      <div class="alert-course-configuration">
+          <jhi-alert-error></jhi-alert-error>
+      </div>
+        <!-- <p>*Campo obligatorio</p> -->
+    </div>
+  </div>
+    <form name="activityForm" role="form" novalidate [formGroup]="activityForm" class="modal-act-content" (keydown)="onKeyDown($event)">
+      <!-- Body -->
+      <!--
+      <div class="row-wg margintop-40">
+          <div class="col-question">
+              <pre> {{ activityForm.getRawValue() | json }}</pre>
+          </div>
+      </div>-->
+      <mat-drawer-container class="modal-act-body">
+        <!-- Work area -->
+          <mat-drawer-content class="mat-drawer-content">
+            <div class="header-mdc">
+              <div class="type-q">
+                <label>Selecciona el tipo de respuesta:</label>
+                <div class="col-type-question" formGroupName="tipoActividad">
+                    <mat-radio-group aria-label="Select an option" formControlName="opcion"
+                                     name="opcion">
+
+                        <mat-radio-button value="imagen_unica" id="type_question4" class="question-radio mat-radio-no-margin"
+                                          (change)="onOpcionChange($event)">
+                            Imagen Unica
+                        </mat-radio-button>
+
+                        <mat-radio-button value="imagen_multiple" id="type_question5" class="question-radio"
+                                          (change)="onOpcionChange($event)">
+                            Imagen Multiple
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+              </div>
+              <div class="type-q-evaluable">
+                <div class="col-type-question">
+                    <label>Evaluable:</label>
+                  <mat-checkbox mat-raised-button id="evaluable" formControlName="evaluable"></mat-checkbox>
+                </div>
+              </div>
+            </div>
+
+              <jhi-activity-questions [activityForm]="activityForm" [submitted]="submitted"
+                                      [typeQuestion]="typeQuestion()" [id]="id" [filesAnswersDelete]="filesAnswersDelete">
+              </jhi-activity-questions>
+
+          </mat-drawer-content>
+          <!-- Preview -->
+          <mat-drawer mode="side" opened class="mat-drawer-preview">
+              <jhi-activity-preview [jsonForm]="activityForm.getRawValue()" [activityForm]="activityForm"
+                                    [typeQuestion]="typeQuestion()"></jhi-activity-preview>
+          </mat-drawer>
+      </mat-drawer-container>
+      <!-- End body -->
+      <!-- Footer -->
+      <div class="modal-act-footer">
+        <button (click)="close()" class="secondary-btn">Cancelar</button>
+        <button type="button" (click)="onSubmit()" class="main-btn">Crear Actividad</button>
+      </div>
+      <!-- End Footer -->
+    </form>
+    <!-- End Content body -->
+</div>
