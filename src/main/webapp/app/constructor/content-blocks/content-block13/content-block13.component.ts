@@ -23,8 +23,8 @@ export class ContentBlock13Component implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
     if (this.contentBlock) {
-      const componentes = this.contentBlock.bloqueComponentes!.componentes || [];
-      this.componentes = [...componentes];
+      const elements = this.contentBlock.bloqueComponentes!.componentes || [];
+      this.componentes = [...elements];
     }
     console.error(this.contentBlock);
   }
