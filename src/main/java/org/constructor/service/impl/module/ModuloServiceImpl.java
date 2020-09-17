@@ -3,13 +3,11 @@
  */
 package org.constructor.service.impl.module;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.constructor.domain.User;
 import org.constructor.domain.module.Modulo;
