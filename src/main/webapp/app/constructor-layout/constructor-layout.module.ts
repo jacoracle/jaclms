@@ -30,6 +30,10 @@ import { ContentBlock3Component } from 'app/constructor/content-blocks/content-b
 import { ContentBlock4Component } from 'app/constructor/content-blocks/content-block4/content-block4.component';
 import { ContentBlock7Component } from 'app/constructor/content-blocks/content-block7/content-block7.component';
 import { ContentBlock6Component } from 'app/constructor/content-blocks/content-block6/content-block6.component';
+// import { ContentBlock11Component } from 'app/constructor/content-blocks/content-block11/content-block11.component';
+import { ContentBlock12Component } from 'app/constructor/content-blocks/content-block12/content-block12.component';
+import { ContentBlock13Component } from 'app/constructor/content-blocks/content-block13/content-block13.component';
+import { ContentBlock14Component } from 'app/constructor/content-blocks/content-block14/content-block14.component';
 
 @NgModule({
   imports: [
@@ -48,7 +52,11 @@ import { ContentBlock6Component } from 'app/constructor/content-blocks/content-b
       ContentBlock7Component,
       ContentBlock8Component,
       ContentBlock9Component,
-      ContentBlock10Component
+      ContentBlock10Component,
+      // ContentBlock11Component,
+      ContentBlock12Component,
+      ContentBlock13Component,
+      ContentBlock14Component
     ])
   ],
   declarations: [

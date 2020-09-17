@@ -1,7 +1,7 @@
 <div class="container-preview-uma">
     <button aria-label="Close" data-dismiss="modal" class="btn-close-modal-preview-uma" type="button"
         (click)="activeModal.dismiss('closed')"><i class="icon ni-close"></i></button>
-        <p class="modal-preview-title">Vista previa I <i class="icon whBook"></i><span>{{umaData!.titulo!}}</span></p>
+    <p class="modal-preview-title">Vista previa I <i class="icon whBook"></i><span>{{umaData!.titulo!}}</span></p>
     <div class="modal-preview-uma-body">
         <div class="row-modal-preview-uma">
             <div class="col-form-preview">
@@ -19,21 +19,21 @@
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'titulo'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-                              <div class="container-componentes">
-                                <jhi-visor-text [component]="c"
-                                    [templateType]="obj.bloqueComponentes!.tipoBloqueComponentes!">
-                                </jhi-visor-text>
-                              </div>
+                                <div class="container-componentes">
+                                    <jhi-visor-text [component]="c"
+                                        [templateType]="obj.bloqueComponentes!.tipoBloqueComponentes!">
+                                    </jhi-visor-text>
+                                </div>
                             </div>
                         </ng-container>
 
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'texto'">
                             <div *ngFor="let c of obj.bloqueComponentes!.componentes">
-                              <div class="container-componentes">
-                                <jhi-visor-text [component]="c"
-                                    [templateType]="obj.bloqueComponentes!.tipoBloqueComponentes!">
-                                </jhi-visor-text>
-                              </div>
+                                <div class="container-componentes">
+                                    <jhi-visor-text [component]="c"
+                                        [templateType]="obj.bloqueComponentes!.tipoBloqueComponentes!">
+                                    </jhi-visor-text>
+                                </div>
                             </div>
                         </ng-container>
 
@@ -83,6 +83,13 @@
                             <div class="container-componentes" #targetVideoEnv>
                                 <jhi-content-block7 [contentBlock]="obj" [index]="idx" [target]="targetVideoEnv">
                                 </jhi-content-block7>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'cabecera'">
+                            <div class="container-componentes" #targetImagen>
+                                <jhi-content-block12 [contentBlock]="obj" [index]="idx" [target]="targetImagen">
+                                </jhi-content-block12>
                             </div>
                         </ng-container>
 

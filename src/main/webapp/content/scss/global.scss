@@ -2659,6 +2659,7 @@ input[type='file'] {
   .final-block-row {
     position: relative;
     width: 100%;
+    z-index: 99999;
     div {
       text-align: center;
       position: relative;
@@ -2687,6 +2688,7 @@ input[type='file'] {
   position: relative;
   width: 100%;
   height: auto;
+  z-index: 99999;
 }
 
 // Block 2 -Paragraph text

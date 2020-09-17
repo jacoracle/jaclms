@@ -1,0 +1,34 @@
+<!-- Bloque de contenido: Header imagen con texto corto centrado-->
+<div class="constructor-container-header"
+    *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
+
+    <ng-container *ngFor="let component of contentBlock.bloqueComponentes.componentes; let index = index;">
+
+        <div *ngIf="component.tipoComponente.nombre === 'image'" class="block-header-img">
+            <jhi-constructor-image [component]="component"
+                [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
+                (updateComponent)="onUpdateComponent($event, index)">
+            </jhi-constructor-image>
+        </div>
+        <ng-container *ngIf="component.tipoComponente.nombre === 'text'">
+            <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes" class="block-header-txt">
+                <jhi-visor-text [component]="component"
+                    [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
+                    (updateComponent)="onUpdateComponent($event, index)">
+                </jhi-visor-text>
+            </div>
+        </ng-container>
+
+    </ng-container>
+
+</div>
+
+<!-- <div class="container-header"
+    *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
+    <div class="container-header-img">
+        <ng-container *ngFor="let component of contentBlock.bloqueComponentes.componentes; let index = index;">
+            <jhi-constructor-header [component]="component" (updateComponent)="onUpdateComponent($event, index)">
+            </jhi-constructor-header>
+        </ng-container>
+    </div>
+</div> -->

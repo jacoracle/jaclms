@@ -27,6 +27,10 @@ import { ContentBlock8Component } from 'app/constructor/content-blocks/content-b
 import { ContentBlock9Component } from 'app/constructor/content-blocks/content-block9/content-block9.component';
 import { ContentBlock10Component } from 'app/constructor/content-blocks/content-block10/content-block10.component';
 import { ActividadInteractiva, ContenidoActividad, IActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
+// import { ContentBlock11Component } from '../content-blocks/content-block11/content-block11.component';
+import { ContentBlock12Component } from '../content-blocks/content-block12/content-block12.component';
+import { ContentBlock13Component } from '../content-blocks/content-block13/content-block13.component';
+import { ContentBlock14Component } from '../content-blocks/content-block14/content-block14.component';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -54,7 +58,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     { nombre: 'video_envolvente', componente: ContentBlock7Component },
     { nombre: 'pdf', componente: ContentBlock8Component },
     { nombre: 'sound', componente: ContentBlock9Component },
-    { nombre: 'actividad', componente: ContentBlock10Component }
+    { nombre: 'actividad', componente: ContentBlock10Component },
+    // { nombre: 'cabecera', componente: ContentBlock11Component },
+    { nombre: 'cabecera', componente: ContentBlock12Component },
+    { nombre: 'colapsable', componente: ContentBlock13Component },
+    { nombre: 'tip', componente: ContentBlock14Component }
   ];
 
   @Input()

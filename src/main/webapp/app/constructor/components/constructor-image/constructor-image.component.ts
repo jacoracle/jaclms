@@ -8,6 +8,7 @@ import { FileUploadService } from 'app/services/file-upload.service';
 import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { ContenidoService } from 'app/entities/contenido/contenido.service';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { TipoBloqueComponentes } from '../../../shared/model/tipo-bloque-componentes.model';
 
 @Component({
   selector: 'jhi-constructor-image',
@@ -20,8 +21,11 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
   editing = false;
   subscription: Subscription;
   @Input() component?: Componente;
+  @Input() templateType!: TipoBloqueComponentes;
   @Output() updateComponent = new EventEmitter();
   showLoader = false;
+  isTextImageBlock = true;
+  private BLOCK_HEADER_NAME = 'cabecera';
 
   constructor(
     public imageService: ImageService,
@@ -96,5 +100,16 @@ export class ConstructorImageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  isImageTypeHeaderBlock(): boolean {
+    if (this.templateType) {
+      return this.templateType.nombre === this.BLOCK_HEADER_NAME;
+    }
+    return false;
+  }
+
+  getTypeBlock(): string {
+    return this.templateType.nombre || '';
   }
 }

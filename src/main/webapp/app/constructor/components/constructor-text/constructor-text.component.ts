@@ -67,6 +67,9 @@ export class ConstructorTextComponent {
         case 'actividad':
           this.isTitle = true;
           break;
+        case 'cabecera':
+          this.isTitle = true;
+          break;
         default:
           this.isTitle = false;
           break;

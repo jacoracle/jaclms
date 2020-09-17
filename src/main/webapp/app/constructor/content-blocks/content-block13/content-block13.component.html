@@ -1,0 +1,27 @@
+<div>
+    <mat-accordion>
+
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <jhi-visor-text [component]="componentes[0]"
+                        [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
+                        (updateComponent)="onUpdateComponent($event, index)">
+                    </jhi-visor-text>
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{panelOpenState ? 'open' : 'closed'}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div>
+
+                <div class="block-header-txt">
+                    <jhi-visor-text [component]="componentes[1]"
+                        [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
+                        (updateComponent)="onUpdateComponent($event, index)">
+                    </jhi-visor-text>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
