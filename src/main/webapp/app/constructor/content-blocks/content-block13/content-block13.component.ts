@@ -16,6 +16,7 @@ export class ContentBlock13Component implements OnInit, AfterContentInit {
   @Input() target?: HTMLElement;
   @Input() index?: number;
   newTarget: ITargetScroll[] = [];
+  panelOpenState = false;
 
   componentes: IComponente[] = [];
 

@@ -4,10 +4,12 @@
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <jhi-visor-text [component]="componentes[0]"
-                        [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
-                        (updateComponent)="onUpdateComponent($event, index)">
-                    </jhi-visor-text>
+                    <ng-container *ngIf="componentes[0]">
+                        <jhi-visor-text [component]="componentes[0]!"
+                            [templateType]="contentBlock!.bloqueComponentes!.tipoBloqueComponentes!"
+                            (updateComponent)="onUpdateComponent($event, 0)">
+                        </jhi-visor-text>
+                    </ng-container>
                 </mat-panel-title>
                 <mat-panel-description>
                     {{panelOpenState ? 'open' : 'closed'}}
@@ -16,10 +18,12 @@
             <div>
 
                 <div class="block-header-txt">
-                    <jhi-visor-text [component]="componentes[1]"
-                        [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
-                        (updateComponent)="onUpdateComponent($event, index)">
-                    </jhi-visor-text>
+                    <ng-container *ngIf="componentes[0]">
+                        <jhi-visor-text [component]="componentes[1]!"
+                            [templateType]="contentBlock!.bloqueComponentes!.tipoBloqueComponentes!"
+                            (updateComponent)="onUpdateComponent($event, 1)">
+                        </jhi-visor-text>
+                    </ng-container>
                 </div>
             </div>
         </mat-expansion-panel>
