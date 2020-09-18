@@ -17,7 +17,7 @@ public class BloquesCursoDTO {
 	private Long orden;
 	
 	/** The mostrar. */
-	private Long mostrar;
+	private Boolean visible;
 	
 	/** The indicador original. */
 	private Long indicadorOriginal;
@@ -83,21 +83,21 @@ public class BloquesCursoDTO {
 	}
 
 	/**
-	 * Gets the mostrar.
+	 * Gets the visible.
 	 *
-	 * @return the mostrar
+	 * @return the visible
 	 */
-	public Long getMostrar() {
-		return mostrar;
+	public Boolean getVisible() {
+		return visible;
 	}
 
 	/**
-	 * Sets the mostrar.
+	 * Sets the visible.
 	 *
-	 * @param mostrar the mostrar to set
+	 * @param visible the new visible
 	 */
-	public void setMostrar(Long mostrar) {
-		this.mostrar = mostrar;
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
 	}
 
 	/**
@@ -155,8 +155,8 @@ public class BloquesCursoDTO {
 	@Override
 	public String toString() {
 		return "BloquesCursoDTO [id=" + id + ", bloqueComponentes=" + bloqueComponentes + ", orden=" + orden
-				+ ", mostrar=" + mostrar + ", indicadorOriginal=" + indicadorOriginal + ", autor=" + autor
-				+ ", nivelJerarquicoDTO=" + nivelJerarquico + "]";
+				+ ", visible=" + visible + ", indicadorOriginal=" + indicadorOriginal + ", autor=" + autor
+				+ ", nivelJerarquico=" + nivelJerarquico + "]";
 	}
 
 }

@@ -43,8 +43,8 @@ public class BloquesCurso  implements Serializable {
 	private Long orden;
 	
 	/** The mostrar. */
-	@Column(name = "mostrar")
-	private Long mostrar;
+	@Column(name = "visible")
+	private Boolean visible;
 	
 	/** The indicador original. */
 	@Column(name = "indicador_original")
@@ -69,11 +69,11 @@ public class BloquesCurso  implements Serializable {
 	 * @param mostrar the mostrar
 	 * @param indicadorOriginal the indicador original
 	 */
-	public BloquesCurso(Long id, Long orden, Long mostrar, Long indicadorOriginal) {
+	public BloquesCurso(Long id, Long orden, Boolean visible, Long indicadorOriginal) {
 		super();
 		this.id = id;
 		this.orden = orden;
-		this.mostrar = mostrar;
+		this.visible = visible;
 		this.indicadorOriginal = indicadorOriginal;
 	}
 	
@@ -123,21 +123,21 @@ public class BloquesCurso  implements Serializable {
 	}
 
 	/**
-	 * Gets the mostrar.
+	 * Gets the visible.
 	 *
-	 * @return the mostrar
+	 * @return the visible
 	 */
-	public Long getMostrar() {
-		return mostrar;
+	public Boolean getVisible() {
+		return visible;
 	}
 
 	/**
-	 * Sets the mostrar.
+	 * Sets the visible.
 	 *
-	 * @param mostrar the mostrar to set
+	 * @param visible the new visible
 	 */
-	public void setMostrar(Long mostrar) {
-		this.mostrar = mostrar;
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
 	}
 
 	/**
@@ -192,8 +192,8 @@ public class BloquesCurso  implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BloquesCurso [id=" + id + ", orden=" + orden + ", mostrar=" + mostrar + ", indicadorOriginal="
-				+ indicadorOriginal + ", bloqueComponentes=" + bloqueComponentes + "]";
+		return "BloquesCurso [id=" + id + ", orden=" + orden + ", visible=" + visible + ", indicadorOriginal="
+				+ indicadorOriginal + ", nivelModulo=" + nivelModulo + ", bloqueComponentes=" + bloqueComponentes + "]";
 	}
 
 
