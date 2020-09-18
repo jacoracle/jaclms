@@ -1,5 +1,5 @@
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { OpcionPreguntas } from 'app/shared/model/enumerations/tipo-actividad.model';
+import { OpcionPreguntas, SubTipoActividad } from 'app/shared/model/enumerations/tipo-actividad.model';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { cantidadAtributos } from 'app/shared/util/util';
 import { FileUploadInteractivasService } from 'app/services/file-upload-interactivas.service';
@@ -52,8 +52,8 @@ export default class UtilActivityQuestions {
                   value: respuestasJson[i].respuesta,
                   disabled:
                     jsonForm.tipoActividad.opcion === 'verdaderoFalso' ||
-                    jsonForm.tipoActividad.opcion === 'imagen_unica' ||
-                    jsonForm.tipoActividad.opcion === 'imagen_multiple'
+                    jsonForm.tipoActividad.opcion === SubTipoActividad.imagen + '_' + OpcionPreguntas.unica ||
+                    jsonForm.tipoActividad.opcion === SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple
                 },
                 [Validators.required, Validators.maxLength(50)]
               ),
@@ -97,6 +97,39 @@ export default class UtilActivityQuestions {
       }
     }
     return tipoPregunta;
+  }
+
+  static onOpcionChange(activityForm: FormGroup, event: any, ultimaOpcion: string): string {
+    const controlesPreguntas = UtilActivityQuestions.controlesPreguntas(activityForm);
+    let campoPregunta;
+    for (let i = 0; i < controlesPreguntas.length; i++) {
+      campoPregunta = controlesPreguntas[i].get('tipoPregunta');
+      if (campoPregunta) {
+        campoPregunta.setValue(event.value);
+      }
+
+      if (event.value === 'verdaderoFalso') {
+        UtilActivityQuestions.verdaderoFalso(activityForm, i);
+      } else {
+        if (this.isMediaImage(event.value)) {
+          UtilActivityQuestions.media(activityForm, i, this.isNotMediaImage(ultimaOpcion));
+        }
+
+        if (this.isMediaAudio(event.value)) {
+          UtilActivityQuestions.media(activityForm, i, this.isNotMediaAudio(ultimaOpcion));
+        }
+      }
+
+      if (ultimaOpcion === 'verdaderoFalso') {
+        UtilActivityQuestions.vaciaActivaInputsBoolean(activityForm, i, this.isTextWithOutTrueFalse(event.value));
+      } else {
+        if (this.isMutimedia(ultimaOpcion) && this.isTextWithOutTrueFalse(event.value)) {
+          UtilActivityQuestions.vaciaActivaInputs(activityForm, i);
+        }
+      }
+      UtilActivityQuestions.onRadioChange(activityForm, i, 0);
+    }
+    return event.value;
   }
 
   static preguntas(activityForm: FormGroup): FormArray | undefined {
@@ -402,37 +435,56 @@ export default class UtilActivityQuestions {
 
   static isUnic(typeQuestion: string): boolean {
     return (
-      typeQuestion === 'unica' || typeQuestion === 'imagen_unica' || typeQuestion === 'audio_unica' || typeQuestion === 'verdaderoFalso'
+      typeQuestion === 'unica' ||
+      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.unica ||
+      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.unica ||
+      typeQuestion === 'verdaderoFalso'
     );
   }
 
   static isMultiple(typeQuestion: string): boolean {
-    return typeQuestion === 'multiple' || typeQuestion === 'imagen_multiple' || typeQuestion === 'audio_multiple';
+    return (
+      typeQuestion === 'multiple' ||
+      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple ||
+      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
+    );
   }
 
   static isMutimedia(typeQuestion: string): boolean {
     return (
-      typeQuestion === 'imagen_unica' ||
-      typeQuestion === 'imagen_multiple' ||
-      typeQuestion === 'audio_unica' ||
-      typeQuestion === 'audio_multiple'
+      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.unica ||
+      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple ||
+      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.unica ||
+      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
     );
   }
 
   static isMediaAudio(typeQuestion: string): boolean {
-    return typeQuestion === 'audio_unica' || typeQuestion === 'audio_multiple';
+    return (
+      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.unica ||
+      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
+    );
   }
 
   static isNotMediaAudio(typeQuestion: string): boolean {
-    return typeQuestion !== 'audio_unica' && typeQuestion !== 'audio_multiple';
+    return (
+      typeQuestion !== SubTipoActividad.audio + '_' + OpcionPreguntas.unica &&
+      typeQuestion !== SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
+    );
   }
 
   static isMediaImage(typeQuestion: string): boolean {
-    return typeQuestion === 'imagen_unica' || typeQuestion === 'imagen_multiple';
+    return (
+      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.unica ||
+      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple
+    );
   }
 
   static isNotMediaImage(typeQuestion: string): boolean {
-    return typeQuestion !== 'imagen_unica' && typeQuestion !== 'imagen_multiple';
+    return (
+      typeQuestion !== SubTipoActividad.imagen + '_' + OpcionPreguntas.unica &&
+      typeQuestion !== SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple
+    );
   }
 
   static isText(typeQuestion: string): boolean {
@@ -441,11 +493,11 @@ export default class UtilActivityQuestions {
 
   static isTextWithOutTrueFalse(typeQuestion: string): boolean {
     return (
-      typeQuestion !== 'imagen_unica' &&
-      typeQuestion !== 'imagen_multiple' &&
+      typeQuestion !== SubTipoActividad.imagen + '_' + OpcionPreguntas.unica &&
+      typeQuestion !== SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple &&
       typeQuestion !== 'verdaderoFalso' &&
-      typeQuestion !== 'audio_unica' &&
-      typeQuestion !== 'audio_multiple'
+      typeQuestion !== SubTipoActividad.audio + '_' + OpcionPreguntas.unica &&
+      typeQuestion !== SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
     );
   }
 }

@@ -70,41 +70,7 @@ export class ActivityFormMediaModalComponent implements OnInit {
   }
 
   onOpcionChange(event: any): void {
-    const controlesPreguntas = UtilActivityQuestions.controlesPreguntas(this.activityForm);
-    let campoPregunta;
-    for (let i = 0; i < controlesPreguntas.length; i++) {
-      campoPregunta = controlesPreguntas[i].get('tipoPregunta');
-      if (campoPregunta) {
-        campoPregunta.setValue(event.value);
-      }
-
-      if (event.value === 'verdaderoFalso') {
-        UtilActivityQuestions.verdaderoFalso(this.activityForm, i);
-      } else {
-        if (this.isMediaImage(event.value)) {
-          UtilActivityQuestions.media(this.activityForm, i, this.isNotMediaImage(this.ultimaOpcion));
-        }
-
-        if (this.isMediaAudio(event.value)) {
-          UtilActivityQuestions.media(this.activityForm, i, this.isNotMediaAudio(this.ultimaOpcion));
-        }
-      }
-
-      if (this.ultimaOpcion === 'verdaderoFalso') {
-        UtilActivityQuestions.vaciaActivaInputsBoolean(this.activityForm, i, this.isTextWithOutTrueFalse(event.value));
-      } else {
-        if (this.isMutimedia(this.ultimaOpcion) && this.isTextWithOutTrueFalse(event.value)) {
-          UtilActivityQuestions.vaciaActivaInputs(this.activityForm, i);
-        }
-      }
-
-      this.onRadioChange(i, 0);
-    }
-    this.ultimaOpcion = event.value;
-  }
-
-  onRadioChange(indQuestion: number, indAnswer: number): void {
-    UtilActivityQuestions.onRadioChange(this.activityForm, indQuestion, indAnswer);
+    this.ultimaOpcion = UtilActivityQuestions.onOpcionChange(this.activityForm, event, this.ultimaOpcion);
   }
 
   onSubmit(): any {
@@ -141,23 +107,11 @@ export class ActivityFormMediaModalComponent implements OnInit {
     return UtilActivityQuestions.isMediaImage(typeQuestion);
   }
 
-  isNotMediaImage(typeQuestion: string): boolean {
-    return UtilActivityQuestions.isNotMediaImage(typeQuestion);
-  }
-
   isMediaAudio(typeQuestion: string): boolean {
     return UtilActivityQuestions.isMediaAudio(typeQuestion);
   }
 
-  isNotMediaAudio(typeQuestion: string): boolean {
-    return UtilActivityQuestions.isNotMediaAudio(typeQuestion);
-  }
-
   isMutimedia(typeQuestion: string): boolean {
     return UtilActivityQuestions.isMutimedia(typeQuestion);
-  }
-
-  isTextWithOutTrueFalse(typeQuestion: string): boolean {
-    return UtilActivityQuestions.isTextWithOutTrueFalse(typeQuestion);
   }
 }
