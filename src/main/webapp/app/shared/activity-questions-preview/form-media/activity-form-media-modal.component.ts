@@ -23,6 +23,7 @@ export class ActivityFormMediaModalComponent implements OnInit {
   typeActivityQuestions = '';
   ultimaOpcion = '';
   filesAnswersDelete = [];
+  opcionIn = '';
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -42,6 +43,7 @@ export class ActivityFormMediaModalComponent implements OnInit {
     if (jsonForm && cantidadAtributos(jsonForm) > 0) {
       if (jsonForm.tipoActividad.opcion != null) {
         this.ultimaOpcion = jsonForm.tipoActividad.opcion;
+        this.opcionIn = jsonForm.tipoActividad.opcion;
       }
       return this.formBuilder.group({
         tipoActividad: this.formBuilder.group({

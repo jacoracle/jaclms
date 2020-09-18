@@ -21,6 +21,7 @@ export class ActivityFormTextModalComponent implements OnInit {
   typeActivityQuestions = '';
   activityForm = this.formGroupActivity(this.jsonFormIn);
   ultimaOpcion = '';
+  opcionIn = '';
 
   constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder, private eventManager: JhiEventManager) {}
 
@@ -35,6 +36,7 @@ export class ActivityFormTextModalComponent implements OnInit {
     if (jsonForm && cantidadAtributos(jsonForm) > 0) {
       if (jsonForm.tipoActividad.opcion != null) {
         this.ultimaOpcion = jsonForm.tipoActividad.opcion;
+        this.opcionIn = jsonForm.tipoActividad.opcion;
       }
       return this.formBuilder.group({
         tipoActividad: this.formBuilder.group({
