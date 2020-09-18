@@ -122,7 +122,8 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 			BloquesCurso bloquesCurso = new BloquesCurso();
 			BloqueComponentes bloqueComponentes = new BloqueComponentes();
 			bloquesCurso.setIndicadorOriginal(bloquesCursoDTO.getIndicadorOriginal());
-			bloquesCurso.setVisible(bloquesCursoDTO.getVisible());
+			bloquesCurso.setVisible(false);
+			log.debug("Guardndo visible: {}", bloquesCurso.getVisible());
 			bloquesCurso.setNivelModulo(nivelModulo);
 			bloquesCurso.setOrden(bloquesCursoDTO.getOrden());
 			
@@ -334,7 +335,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 			BloquesCurso bloquesCurso = new BloquesCurso();
 			BloqueComponentes bloqueComponentes = new BloqueComponentes();
 			bloquesCurso.setIndicadorOriginal(bloquesCursoDTO.getIndicadorOriginal());
-			bloquesCurso.setVisible(bloquesCursoDTO.getVisible());
+			bloquesCurso.setVisible(false);
 			bloquesCurso.setNivelModulo(nivelJerarquicoMo);
 			bloquesCurso.setOrden(bloquesCursoDTO.getOrden());
 			

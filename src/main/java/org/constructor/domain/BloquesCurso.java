@@ -43,7 +43,7 @@ public class BloquesCurso  implements Serializable {
 	private Long orden;
 	
 	/** The mostrar. */
-	@Column(name = "visible")
+	@Column(name = "visible", columnDefinition = "boolean default false")
 	private Boolean visible;
 	
 	/** The indicador original. */

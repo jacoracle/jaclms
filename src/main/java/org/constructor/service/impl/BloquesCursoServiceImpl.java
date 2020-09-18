@@ -144,7 +144,7 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 				Optional<NivelModulo> nivelModulo = nivelModuloRepository.findById(bloqueCursoDTO.getNivelJerarquico().getNivelId());
 				
 				newBloquesCurso.setIndicadorOriginal(bloqueCursoDTO.getIndicadorOriginal());
-				newBloquesCurso.setVisible(bloqueCursoDTO.getVisible());
+				newBloquesCurso.setVisible(false);
 				newBloquesCurso.setNivelModulo(nivelModulo.orElse(null));
 				newBloquesCurso.setOrden(bloqueCursoDTO.getOrden());
 				
