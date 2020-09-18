@@ -297,7 +297,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       id: undefined,
       bloqueComponentes: this.createContentBlock(selectedTemplate),
       orden: this.determineNewBlockOrder(),
-      mostrar: 1,
+      visible: 1,
       indicadorOriginal: 1,
       nivelJerarquico: this.asignCurrentLevel()
     };

@@ -49,7 +49,7 @@ export class ConstructorComponentPropertiesBlockComponent implements OnInit, OnD
   };
 
   updateBlockVisibilty(): void {
-    console.error('Cambio toogle, ahora es visible para: ', !this.dataBlock.mostrar ? 'Alumno' : 'Profesor');
+    console.error('Cambio toogle, ahora es visible para: ', !this.dataBlock.visible ? 'Alumno' : 'Profesor');
     this.updateBlock();
   }
 
