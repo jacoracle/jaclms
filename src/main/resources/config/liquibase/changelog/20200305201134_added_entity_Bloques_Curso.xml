@@ -25,7 +25,8 @@
   			<column name="orden" type="bigint">
                 <constraints  nullable="false"/>
             </column>	
-           <column name="mostrar" type="bigint">
+           <column name="visible" type="boolean" 
+           			defaultValueBoolean="false">
                 <constraints  nullable="false"/>
             </column>	
             <column name="indicador_original" type="bigint">

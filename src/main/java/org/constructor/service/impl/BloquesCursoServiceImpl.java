@@ -144,7 +144,7 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 				Optional<NivelModulo> nivelModulo = nivelModuloRepository.findById(bloqueCursoDTO.getNivelJerarquico().getNivelId());
 				
 				newBloquesCurso.setIndicadorOriginal(bloqueCursoDTO.getIndicadorOriginal());
-				newBloquesCurso.setMostrar(bloqueCursoDTO.getMostrar());
+				newBloquesCurso.setVisible(false);
 				newBloquesCurso.setNivelModulo(nivelModulo.orElse(null));
 				newBloquesCurso.setOrden(bloqueCursoDTO.getOrden());
 				
@@ -193,7 +193,7 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 				 Optional.of(bloquesCursoRepository.findById(bloqueCursoDTO.getId())).filter(Optional::isPresent)
 						.map(Optional::get).map(bloque -> {
 							bloque.setOrden(bloqueCursoDTO.getOrden());
-							bloque.setMostrar(bloqueCursoDTO.getMostrar());
+							bloque.setVisible(bloqueCursoDTO.getVisible());
 							bloque.setIndicadorOriginal(bloqueCursoDTO.getIndicadorOriginal());
 							listBloquesCurso.add(bloque);
 							return bloque;
