@@ -83,6 +83,22 @@ export default class UtilActivityQuestions {
     });
   }
 
+  static typeQuestion(activityForm: FormGroup): string {
+    let campoOpcion;
+    let tipoPregunta;
+    let controlTipoActividad;
+    if (activityForm) {
+      controlTipoActividad = activityForm.controls['tipoActividad'];
+      if (controlTipoActividad) {
+        campoOpcion = controlTipoActividad.get('opcion');
+        if (campoOpcion) {
+          tipoPregunta = campoOpcion.value;
+        }
+      }
+    }
+    return tipoPregunta;
+  }
+
   static preguntas(activityForm: FormGroup): FormArray | undefined {
     if (activityForm) {
       return activityForm.get('preguntas') as FormArray;
@@ -98,6 +114,19 @@ export default class UtilActivityQuestions {
     } else {
       return undefined;
     }
+  }
+
+  static vaciaActivaInputs(activityForm: FormGroup, indQuestion: number): void {
+    const cantidadRespuestas = UtilActivityQuestions.controlesRespuestas(activityForm, indQuestion).length;
+    let respuesta;
+    for (let i = 0; i < cantidadRespuestas; i++) {
+      respuesta = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, i, 'respuesta');
+      if (respuesta) {
+        respuesta.setValue('');
+        respuesta.enable();
+      }
+    }
+    UtilActivityQuestions.refreshAnswers(activityForm);
   }
 
   static verdaderoFalso(activityForm: FormGroup, indQuestion: number): void {
@@ -119,6 +148,24 @@ export default class UtilActivityQuestions {
     if (campoFalso) {
       campoFalso.setValue('falso');
       campoFalso.disable();
+    }
+  }
+
+  static vaciaActivaInputsBoolean(activityForm: FormGroup, indQuestion: number, activa: boolean): void {
+    const campoVerdadero = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, 0, 'respuesta');
+    if (campoVerdadero) {
+      campoVerdadero.setValue('');
+      if (activa) {
+        campoVerdadero.enable();
+      }
+    }
+
+    const campoFalso = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, 1, 'respuesta');
+    if (campoFalso) {
+      campoFalso.setValue('');
+      if (activa) {
+        campoFalso.enable();
+      }
     }
   }
 
@@ -271,14 +318,20 @@ export default class UtilActivityQuestions {
     }
   }
 
-  static imagen(activityForm: FormGroup, indQuestion: number, emptyValue: boolean): void {
+  static media(activityForm: FormGroup, indQuestion: number, emptyValue: boolean): void {
     const cantidadRespuestas = UtilActivityQuestions.controlesRespuestas(activityForm, indQuestion).length;
-    let respuesta;
+    let respuesta, safeUrl, path, loadedSafeUrl;
     for (let i = 0; i < cantidadRespuestas; i++) {
       respuesta = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, i, 'respuesta');
-      if (respuesta) {
+      safeUrl = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, i, 'safeUrl');
+      path = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, i, 'path');
+      loadedSafeUrl = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, i, 'loadedSafeUrl');
+      if (respuesta && safeUrl && path && loadedSafeUrl) {
         if (emptyValue) {
           respuesta.setValue('');
+          safeUrl.setValue('');
+          path.setValue('');
+          loadedSafeUrl.setValue('');
         }
         respuesta.disable();
       }
@@ -302,17 +355,97 @@ export default class UtilActivityQuestions {
         .getImage(path)
         .pipe()
         .subscribe((value: string) => {
-          campoSafeUrl.setValue(domSanitizer.bypassSecurityTrustUrl(value));
-          setTimeout(() => {
-            const inputQuestion = document.getElementById('id_question' + indQuestion);
-            if (inputQuestion) {
-              inputQuestion.focus();
-              // this.showLoader = false;
-              this.refreshQuestion(activityForm, indQuestion);
-              UtilActivityQuestions.refreshForm(activityForm);
-            }
-          }, 500);
+          this.setCampoSafeUrl(campoSafeUrl, domSanitizer, value, indQuestion, activityForm);
         });
     }
+  }
+
+  static getAudio(
+    activityForm: FormGroup,
+    path: string,
+    indQuestion: number,
+    indAnswer: number,
+    fileUploadInteractivas: FileUploadInteractivasService,
+    domSanitizer: DomSanitizer
+  ): void {
+    const campoSafeUrl = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, indAnswer, 'safeUrl');
+    const loadedSafeUrl = UtilActivityQuestions.campoRespuesta(activityForm, indQuestion, indAnswer, 'loadedSafeUrl');
+    if (campoSafeUrl && loadedSafeUrl && path !== '' && (campoSafeUrl.value == null || campoSafeUrl.value === '') && !loadedSafeUrl.value) {
+      loadedSafeUrl.setValue(true);
+      fileUploadInteractivas
+        .getSound(path)
+        .pipe()
+        .subscribe((value: string) => {
+          this.setCampoSafeUrl(campoSafeUrl, domSanitizer, value, indQuestion, activityForm);
+        });
+    }
+  }
+
+  static setCampoSafeUrl(
+    campoSafeUrl: AbstractControl,
+    domSanitizer: DomSanitizer,
+    value: string,
+    indQuestion: number,
+    activityForm: FormGroup
+  ): void {
+    campoSafeUrl.setValue(domSanitizer.bypassSecurityTrustUrl(value));
+    setTimeout(() => {
+      const inputQuestion = document.getElementById('id_question' + indQuestion);
+      if (inputQuestion) {
+        inputQuestion.focus();
+        // this.showLoader = false;
+        this.refreshQuestion(activityForm, indQuestion);
+        UtilActivityQuestions.refreshForm(activityForm);
+      }
+    }, 500);
+  }
+
+  static isUnic(typeQuestion: string): boolean {
+    return (
+      typeQuestion === 'unica' || typeQuestion === 'imagen_unica' || typeQuestion === 'audio_unica' || typeQuestion === 'verdaderoFalso'
+    );
+  }
+
+  static isMultiple(typeQuestion: string): boolean {
+    return typeQuestion === 'multiple' || typeQuestion === 'imagen_multiple' || typeQuestion === 'audio_multiple';
+  }
+
+  static isMutimedia(typeQuestion: string): boolean {
+    return (
+      typeQuestion === 'imagen_unica' ||
+      typeQuestion === 'imagen_multiple' ||
+      typeQuestion === 'audio_unica' ||
+      typeQuestion === 'audio_multiple'
+    );
+  }
+
+  static isMediaAudio(typeQuestion: string): boolean {
+    return typeQuestion === 'audio_unica' || typeQuestion === 'audio_multiple';
+  }
+
+  static isNotMediaAudio(typeQuestion: string): boolean {
+    return typeQuestion !== 'audio_unica' && typeQuestion !== 'audio_multiple';
+  }
+
+  static isMediaImage(typeQuestion: string): boolean {
+    return typeQuestion === 'imagen_unica' || typeQuestion === 'imagen_multiple';
+  }
+
+  static isNotMediaImage(typeQuestion: string): boolean {
+    return typeQuestion !== 'imagen_unica' && typeQuestion !== 'imagen_multiple';
+  }
+
+  static isText(typeQuestion: string): boolean {
+    return typeQuestion === 'unica' || typeQuestion === 'multiple' || typeQuestion === 'verdaderoFalso';
+  }
+
+  static isTextWithOutTrueFalse(typeQuestion: string): boolean {
+    return (
+      typeQuestion !== 'imagen_unica' &&
+      typeQuestion !== 'imagen_multiple' &&
+      typeQuestion !== 'verdaderoFalso' &&
+      typeQuestion !== 'audio_unica' &&
+      typeQuestion !== 'audio_multiple'
+    );
   }
 }

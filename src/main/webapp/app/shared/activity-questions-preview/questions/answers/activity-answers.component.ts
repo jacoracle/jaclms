@@ -37,10 +37,9 @@ export class ActivityAnswersComponent {
   @ViewChild('fileInput', { static: false }) fileInput: any;
   maxImageSize = 5120000;
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'audio/mpeg'];
-  imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
   selectedFiles = [];
   showLoader = false;
-  fileFormat = '';
+  imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
 
   constructor(
     public eventManager: JhiEventManager,
@@ -93,12 +92,7 @@ export class ActivityAnswersComponent {
       correctaEliminar = UtilActivityQuestions.campoRespuesta(this.activityForm, indQuestion, indAnswer, 'correcta');
       controlesRespuestas.splice(indAnswer, 1);
       correctaPorSeleccionar = UtilActivityQuestions.campoRespuesta(this.activityForm, indQuestion, 0, 'correcta');
-      if (
-        correctaEliminar &&
-        correctaPorSeleccionar &&
-        correctaEliminar.value === true &&
-        (this.typeQuestion === 'unica' || this.typeQuestion === 'imagen_unica')
-      ) {
+      if (correctaEliminar && correctaPorSeleccionar && correctaEliminar.value === true && this.isUnic()) {
         correctaPorSeleccionar.setValue(true);
       }
     }
@@ -155,19 +149,11 @@ export class ActivityAnswersComponent {
         this.showErrorFileType(event);
         return;
       } else {
-        this.fileFormat = 'image';
         this.selectedFiles = event.target.files;
         this.showLoader = true;
         this.fileUploadInteractivas.pushFileStorage(this.selectedFiles[0], this.id).subscribe(
           (data: any) => {
-            this.validateCalledToService(
-              this.castObjectAsContenido(data),
-              this.fileFormat,
-              event.target.files[0].type,
-              event,
-              indQuestion,
-              indAnswer
-            );
+            this.validateCalledToService(this.castObjectAsContenido(data), event.target.files[0].type, event, indQuestion, indAnswer);
           },
           error => {
             this.showErrorFileType(error);
@@ -198,17 +184,23 @@ export class ActivityAnswersComponent {
     };
   }
 
-  validateCalledToService(obj: IContenido, fileFormat: string, fileType: string, event: any, indQuestion: number, indAnswer: number): void {
+  validateCalledToService(obj: IContenido, fileType: string, event: any, indQuestion: number, indAnswer: number): void {
     const campoSafeUrl = UtilActivityQuestions.campoRespuesta(this.activityForm, indQuestion, indAnswer, 'safeUrl');
     const loadedSafeUrl = UtilActivityQuestions.campoRespuesta(this.activityForm, indQuestion, indAnswer, 'loadedSafeUrl');
-    if (fileFormat === 'image' && this.imageFileTypes.includes(fileType) && campoSafeUrl && loadedSafeUrl) {
+    if (
+      ((this.isMediaImage() && this.imageFileTypes.includes(fileType)) || (this.isMediaAudio() && fileType === 'audio/mpeg')) &&
+      campoSafeUrl &&
+      loadedSafeUrl
+    ) {
       this.valorCampoRespuesta(obj.nombre!, indQuestion, indAnswer);
       this.valorCampoPath(obj.contenido!, indQuestion, indAnswer);
       campoSafeUrl.setValue('');
       loadedSafeUrl.setValue(false);
-      this.getImage(obj.contenido!, indQuestion, indAnswer);
-    } else if (fileFormat === 'sound' && fileType === 'audio/mpeg') {
-      // this.soundService.setAudioProperties(obj);
+      if (this.isMediaImage()) {
+        this.getImage(obj.contenido!, indQuestion, indAnswer);
+      } else {
+        this.getAudio(obj.contenido!, indQuestion, indAnswer);
+      }
     } else {
       this.showErrorFileType(event);
     }
@@ -216,6 +208,10 @@ export class ActivityAnswersComponent {
 
   getImage(path: string, indQuestion: number, indAnswer: number): void {
     UtilActivityQuestions.getImage(this.activityForm, path, indQuestion, indAnswer, this.fileUploadInteractivas, this.domSanitizer);
+  }
+
+  getAudio(path: string, indQuestion: number, indAnswer: number): void {
+    UtilActivityQuestions.getAudio(this.activityForm, path, indQuestion, indAnswer, this.fileUploadInteractivas, this.domSanitizer);
   }
 
   showErrorFileSize(event: any): void {
@@ -233,6 +229,26 @@ export class ActivityAnswersComponent {
   }
 
   noWriteMedia(): boolean {
-    return !(this.typeQuestion === 'imagen_unica' || this.typeQuestion === 'imagen_multiple');
+    return !this.isMutimedia();
+  }
+
+  isUnic(): boolean {
+    return UtilActivityQuestions.isUnic(this.typeQuestion);
+  }
+
+  isMultiple(): boolean {
+    return UtilActivityQuestions.isMultiple(this.typeQuestion);
+  }
+
+  isMutimedia(): boolean {
+    return UtilActivityQuestions.isMutimedia(this.typeQuestion);
+  }
+
+  isMediaAudio(): boolean {
+    return UtilActivityQuestions.isMediaAudio(this.typeQuestion);
+  }
+
+  isMediaImage(): boolean {
+    return UtilActivityQuestions.isMediaImage(this.typeQuestion);
   }
 }

@@ -75,11 +75,11 @@ export class FileUploadInteractivasService {
     );
   }
 
-  public getSound(path: string): void {
-    this.getSoundFile(path).subscribe(data => {
-      const soundPath = URL.createObjectURL(data.body);
-      const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(soundPath);
-      this.soundService.setSoundSrc(objectUrl);
-    });
+  public getSound(path: string): Observable<string> {
+    return this.getSoundFile(path).pipe(
+      map(data => {
+        return URL.createObjectURL(data.body);
+      })
+    );
   }
 }

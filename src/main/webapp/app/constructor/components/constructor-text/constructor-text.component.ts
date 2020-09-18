@@ -175,8 +175,6 @@ export class ConstructorTextComponent {
   }
 
   restoreTitle(text: string): any {
-    // eslint-disable-next-line no-debugger
-    debugger;
     if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1><h1>')) {
       if (this.textWithoutHtml(text).length > 0) {
         return '<h1>' + this.textWithoutHtml(text) + '</h1>';

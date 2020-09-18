@@ -4,22 +4,31 @@
         <span class="qNumber" id="question_preview{{indQuestion}}">{{indQuestion + 1}}</span>{{pregunta.pregunta}}
     </mat-list-item>
 
-    <div *ngIf="typeQuestion == 'unica' || typeQuestion == 'multiple' || typeQuestion == 'verdaderoFalso'">
+    <div *ngIf="isText()">
         <mat-list role="list" *ngFor="let respuesta of respuestas(indQuestion);" class="style-answer">
             <mat-list-item role="listitem" [ngClass]="{'rojita': respuesta.correcta}">{{respuesta.respuesta}}</mat-list-item>
         </mat-list>
     </div>
 
-    <div *ngIf="typeQuestion == 'imagen_unica' || typeQuestion == 'imagen_multiple' ">
+    <div *ngIf="isMediaImage() ">
         <mat-grid-list cols="2" rowHeight="200px">
-
             <mat-grid-tile role="list" *ngFor="let respuesta of respuestas(indQuestion); let indAnswer = index;" class="style-answer">
-                <div id="blah" class="hidden" [attr.init]="getImage(respuesta.path, indQuestion, indAnswer)"
-                     [attr.repeat]="getImage(respuesta.path, indQuestion, indAnswer)"></div>
-                <img [src]="respuesta.safeUrl" alt="" class="cover-upload-imgage caja"
+                <div class="hidden" [attr.init]="getImage(respuesta.path, indQuestion, indAnswer)"></div>
+                <img [src]="respuesta.safeUrl" alt="" class="cover-upload-imgage caja" *ngIf="respuesta.safeUrl"
                      [ngClass]="{'border-success': respuesta.correcta , 'border-danger': !respuesta.correcta}">
             </mat-grid-tile>
 
+        </mat-grid-list>
+    </div>
+
+    <div *ngIf="isMediaAudio()">
+        <mat-grid-list cols="2" rowHeight="130px">
+            <mat-grid-tile role="list" *ngFor="let respuesta of respuestas(indQuestion); let indAnswer = index;" class="style-answer">
+                <div class="hidden" [attr.init]="getAudio(respuesta.path, indQuestion, indAnswer)"></div>
+                <span class="letra-audio">{{respuesta.respuesta}}</span>
+                <audio [src]="respuesta.safeUrl" controls controlsList="nodownload" *ngIf="respuesta.safeUrl" class="audioPlayer"
+                           [ngClass]="{'box-success': respuesta.correcta , 'box-danger': !respuesta.correcta}"></audio>
+            </mat-grid-tile>
         </mat-grid-list>
     </div>
 </mat-list>

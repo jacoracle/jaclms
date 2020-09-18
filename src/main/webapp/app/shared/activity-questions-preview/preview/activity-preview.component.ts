@@ -47,8 +47,24 @@ export class ActivityPreviewComponent {
     UtilActivityQuestions.getImage(this.activityForm, path, indQuestion, indAnswer, this.fileUploadInteractivas, this.domSanitizer);
   }
 
+  getAudio(path: string, indQuestion: number, indAnswer: number): void {
+    UtilActivityQuestions.getAudio(this.activityForm, path, indQuestion, indAnswer, this.fileUploadInteractivas, this.domSanitizer);
+  }
+
   refreshQuestion(indQuestion: number): void {
     UtilActivityQuestions.refreshAnswersQuestion(this.activityForm, indQuestion);
     UtilActivityQuestions.refreshQuestion(this.activityForm, indQuestion);
+  }
+
+  isMediaAudio(): boolean {
+    return UtilActivityQuestions.isMediaAudio(this.typeQuestion);
+  }
+
+  isMediaImage(): boolean {
+    return UtilActivityQuestions.isMediaImage(this.typeQuestion);
+  }
+
+  isText(): boolean {
+    return UtilActivityQuestions.isText(this.typeQuestion);
   }
 }
