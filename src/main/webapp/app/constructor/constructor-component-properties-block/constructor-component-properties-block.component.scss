@@ -1,0 +1,15 @@
+.properties-block-component {
+  // border: solid 1px red;
+  padding: 10px;
+  font-size: 12px;
+  color: #1a3d82;
+
+  .properties-block {
+    font-size: 12px;
+    // border: dotted 1px yellow;
+    .pb-item {
+      // border: dotted 1px #CCC;
+      padding: 10px;
+    }
+  }
+}

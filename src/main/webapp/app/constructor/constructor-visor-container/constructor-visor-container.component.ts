@@ -433,9 +433,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.addNewBlock();
   }
 
-  selectBlock(index: number): void {
+  selectBlock(index: number, blockId: number): void {
     this.selectedBlock = index;
+    this.contentBlocksService.setSelectedBlockId(blockId);
     this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
+    this.navigationControlsService.setOpenProperties(true);
   }
 
   addNewBlock(): void {

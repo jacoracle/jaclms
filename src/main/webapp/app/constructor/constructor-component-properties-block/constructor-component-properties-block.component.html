@@ -1,0 +1,47 @@
+<div class="properties-block-component">
+
+    <!-- Header -- >
+    <div class="c-component-title">
+        <div class="cct-link">
+            <i class="icon ni-arrow"></i>
+            <p>Propiedades</p>
+        </div>
+        <i class="icon ni-menudots"></i>
+    </div>
+    -->
+    <!-- <div class="c-component-content"> -->
+    <!-- <div class="row-c-component-c"> -->
+
+    <!-- <div class="cover-upload-c"> -->
+    <p>Propiedades del bloque</p>
+
+    <div class="properties-block">
+        <div class="pb-item">
+            <label for="name">Nombre de la plantilla:</label>
+            <input type="text" class="" [(ngModel)]="name" name="name" id="name" disabled>
+        </div>
+        <div class="pb-item">
+            <label for="filesize">Componentes:</label>
+            <div>
+                <ul>
+                    <li>Bloque de texto</li>
+                    <li>Bloque de imagen</li>
+                </ul>
+            </div>
+        </div>
+        <div class="pb-item">
+            <label for="asignBlockType">Bloque para Alumno o Profesor:</label>
+            <mat-slide-toggle id="asignBlockType" name="asignBlockType" (change)="updateBlockVisibilty()" [(ngModel)]="dataBlock.mostrar">
+                {{dataBlock.mostrar ? 'Profesor' : 'Alumno'}}</mat-slide-toggle>
+            <!-- <mat-slide-toggle id="asignBlockType" name="asignBlockType" [(ngModel)]="isChecked">
+                {{isChecked ? 'Profesor' : 'Alumno'}}</mat-slide-toggle> -->
+        </div>
+
+    </div>
+
+    <!-- </div> -->
+
+    <!-- </div> -->
+    <!-- </div> -->
+
+</div>

@@ -34,6 +34,8 @@ import { ContentBlock6Component } from 'app/constructor/content-blocks/content-b
 import { ContentBlock12Component } from 'app/constructor/content-blocks/content-block12/content-block12.component';
 import { ContentBlock13Component } from 'app/constructor/content-blocks/content-block13/content-block13.component';
 import { ContentBlock14Component } from 'app/constructor/content-blocks/content-block14/content-block14.component';
+import { ConstructorComponentPropertiesBlockComponent } from 'app/constructor/constructor-component-properties-block/constructor-component-properties-block.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -41,6 +43,7 @@ import { ContentBlock14Component } from 'app/constructor/content-blocks/content-
     ConstructorSharedModule,
     SafeHtmlModule,
     DragDropModule,
+    MatSlideToggleModule,
     ContentBlocksModule,
     DynamicModule.withComponents([
       ContentBlock1Component,
@@ -92,7 +95,8 @@ import { ContentBlock14Component } from 'app/constructor/content-blocks/content-
     TemplateGalleryComponent,
     ConstructorHierarchicalStructureComponent,
     ConstructorBookInformationComponent,
-    ConstructorComponentPropertiesComponent
+    ConstructorComponentPropertiesComponent,
+    ConstructorComponentPropertiesBlockComponent
   ],
   exports: [
     TopBarComponent,
