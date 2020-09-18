@@ -122,7 +122,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 			BloquesCurso bloquesCurso = new BloquesCurso();
 			BloqueComponentes bloqueComponentes = new BloqueComponentes();
 			bloquesCurso.setIndicadorOriginal(bloquesCursoDTO.getIndicadorOriginal());
-			bloquesCurso.setMostrar(bloquesCursoDTO.getMostrar());
+			bloquesCurso.setVisible(bloquesCursoDTO.getVisible());
 			bloquesCurso.setNivelModulo(nivelModulo);
 			bloquesCurso.setOrden(bloquesCursoDTO.getOrden());
 			
@@ -214,7 +214,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 		            				BloquesCurso bloquesCurso = new BloquesCurso();
 		            				BloqueComponentes bloqueComponentes = new BloqueComponentes();
 		            				bloquesCurso.setIndicadorOriginal(bloqueCursoDTO.getIndicadorOriginal());
-		            				bloquesCurso.setMostrar(bloqueCursoDTO.getMostrar());
+		            				bloquesCurso.setVisible(bloqueCursoDTO.getVisible());
 		            				bloquesCurso.setOrden(bloqueCursoDTO.getOrden());
 		            				bloquesCurso.setNivelModulo(nivel);
 		            				
@@ -334,7 +334,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 			BloquesCurso bloquesCurso = new BloquesCurso();
 			BloqueComponentes bloqueComponentes = new BloqueComponentes();
 			bloquesCurso.setIndicadorOriginal(bloquesCursoDTO.getIndicadorOriginal());
-			bloquesCurso.setMostrar(bloquesCursoDTO.getMostrar());
+			bloquesCurso.setVisible(bloquesCursoDTO.getVisible());
 			bloquesCurso.setNivelModulo(nivelJerarquicoMo);
 			bloquesCurso.setOrden(bloquesCursoDTO.getOrden());
 			
@@ -441,7 +441,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 	            				BloquesCurso bloquesCurso = new BloquesCurso();
 	            				BloqueComponentes bloqueComponentes = new BloqueComponentes();
 	            				bloquesCurso.setIndicadorOriginal(bloqueCursoDTO.getIndicadorOriginal());
-	            				bloquesCurso.setMostrar(bloqueCursoDTO.getMostrar());
+	            				bloquesCurso.setVisible(bloqueCursoDTO.getVisible());
 	            				bloquesCurso.setOrden(bloqueCursoDTO.getOrden());
 	            				bloquesCurso.setNivelModulo(nivel);
 	            				
