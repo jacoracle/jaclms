@@ -53,10 +53,12 @@ export class ConstructorTextComponent {
       } else {
         this.cdr.detectChanges();
         this._htmlContent = text;
-        this.cdr.detectChanges();
-        setTimeout(() => {
-          this.editor.setSelection(this.textWithoutHtml(this._htmlContent).length + 1, 0);
-        }, 0);
+        if (this.isTitle && this.headingSelect === undefined && this.textWithoutHtml(this._htmlContent).length === 1) {
+          this.cdr.detectChanges();
+          setTimeout(() => {
+            this.editor.setSelection(this.textWithoutHtml(this._htmlContent).length + 1, 0);
+          }, 0);
+        }
       }
     });
 
@@ -64,7 +66,8 @@ export class ConstructorTextComponent {
       const componentVisor = templateTypeId.nombre;
       switch (componentVisor) {
         case 'titulo':
-        case 'actividad':
+        case 'activity_question_text':
+        case 'activity_question_media':
           this.isTitle = true;
           break;
         default:

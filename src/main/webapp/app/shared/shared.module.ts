@@ -7,8 +7,7 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { PdfModalComponent } from 'app/shared/pdf-preview/pdf-modal.component';
 import { VideoModalComponent } from 'app/shared/video-preview/video-modal.component';
-// PONCHO
-import { ActivityModalComponent } from 'app/shared/activity-preview/activity-modal.component';
+import { ActivityFormTextModalComponent } from 'app/shared/activity-questions-preview/form-text/activity-form-text-modal.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -16,15 +15,18 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivityPreviewComponent } from 'app/shared/activity-preview/activity-preview.component';
+import { ActivityPreviewComponent } from 'app/shared/activity-questions-preview/preview/activity-preview.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { ActivityAnswersComponent } from 'app/shared/activity-preview/questions/answers/activity-answers.component';
-import { ActivityQuestionsComponent } from 'app/shared/activity-preview/questions/activity-questions.component';
+import { ActivityAnswersComponent } from 'app/shared/activity-questions-preview/questions/answers/activity-answers.component';
+import { ActivityQuestionsComponent } from 'app/shared/activity-questions-preview/questions/activity-questions.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UmaPreviewModule } from './uma-preview/uma-preview.module';
 import { SafeHtmlModule } from './safe-html/safe-html.module';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ActivityFormMediaModalComponent } from 'app/shared/activity-questions-preview/form-media/activity-form-media-modal.component';
+import { SafeUrlModule } from 'app/shared/safe-url/safe-url.module';
 
 @NgModule({
   imports: [
@@ -40,7 +42,9 @@ import { SafeHtmlModule } from './safe-html/safe-html.module';
     MatSidenavModule,
     MatListModule,
     SafeHtmlModule,
-    UmaPreviewModule
+    UmaPreviewModule,
+    MatGridListModule,
+    SafeUrlModule
   ],
   declarations: [
     FindLanguageFromKeyPipe,
@@ -50,14 +54,21 @@ import { SafeHtmlModule } from './safe-html/safe-html.module';
     LoginModalComponent,
     PdfModalComponent,
     VideoModalComponent,
-    ActivityModalComponent,
+    ActivityFormTextModalComponent,
+    ActivityFormMediaModalComponent,
     ActivityPreviewComponent,
     ActivityAnswersComponent,
     ActivityQuestionsComponent,
     // UmaPreviewModalComponent,
     HasAnyAuthorityDirective
   ],
-  entryComponents: [LoginModalComponent, PdfModalComponent, VideoModalComponent, ActivityModalComponent],
+  entryComponents: [
+    LoginModalComponent,
+    PdfModalComponent,
+    VideoModalComponent,
+    ActivityFormTextModalComponent,
+    ActivityFormMediaModalComponent
+  ],
   exports: [
     MatInputModule,
     MatAutocompleteModule,
@@ -71,7 +82,8 @@ import { SafeHtmlModule } from './safe-html/safe-html.module';
     PdfModalComponent,
     HasAnyAuthorityDirective,
     VideoModalComponent,
-    ActivityModalComponent,
+    ActivityFormTextModalComponent,
+    ActivityFormMediaModalComponent,
     // UmaPreviewModalComponent
     VideoModalComponent
     // UmaPreviewModalComponent

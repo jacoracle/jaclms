@@ -1,4 +1,4 @@
-<form [formGroup]="groupQuestion" (keydown)="onKeyDown($event)">
+<form [formGroup]="groupQuestion" (keydown)="onKeyDown($event)" autocomplete="off">
     <!-- Respuestas -->
     <div class="row-answer">
         <!-- Ingresar Respuesta -->
@@ -9,11 +9,11 @@
                 <div class="form-nimbus">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <div class="input-group-text answer-question-space">
+                            <div class="input-group-text answer-question-space group-input-type">
                                 <mat-radio-group formControlName="correcta" class="cont-radio"
                                                  name="correcta{{indQuestion}}">
                                     <mat-radio-button class="answer-radio"
-                                                      *ngIf="typeQuestion === 'unica' || typeQuestion==='verdaderoFalso'"
+                                                      *ngIf="isUnic()"
                                                       [value]="true"
                                                       [checked]="this.campoRespuestaCorrecta(indQuestion, indAnswer)"
                                                       (change)="onRadioChange(indQuestion, indAnswer)"
@@ -23,7 +23,7 @@
 
                                 <mat-checkbox class="answer-radio"
                                               id="id_type2_question{{indQuestion}}_answer{{indAnswer}}"
-                                              *ngIf="typeQuestion === 'multiple'"
+                                              *ngIf="isMultiple()"
                                               formControlName="correcta"
                                               (change)="onCheckChange()">
                                 </mat-checkbox>
@@ -31,19 +31,27 @@
                         </div>
                         <label for="id_answer{{indAnswer}}_question{{indQuestion}}"></label>
                         <input
-                            [ngClass]="{'alert-input': !isValidAnswer(indQuestion, indAnswer)}"
+                            [ngClass]="{'alert-input': !isValidAnswer(indQuestion, indAnswer), 'disabled-input':isMutimedia()}"
                             maxlength="50" type="text"
-                            class="form-control answer-question-space"
+                            class="form-control answer-question-space no-border-right"
                             name="respuesta{{indAnswer}}"
                             id="id_answer{{indAnswer}}_question{{indQuestion}}"
                             formControlName="respuesta" placeholder="Respuesta..."
-                            (focusout)="refreshQuestion(indQuestion)"/>
+                            (focusout)="refreshQuestion(indQuestion)" (keypress)="noWriteMedia()"/>
+                        <div class="input-group-prepend" *ngIf="isMutimedia()">
+                            <label for="loadImage{{indAnswer}}_question{{indQuestion}}"></label>
+                            <div class="input-group-text answer-question-space no-border-radius" [ngClass]="{'input-hover': false}">
+                                <input type="button" name="loadImage" id="loadImage{{indAnswer}}_question{{indQuestion}}"
+                                       [ngClass]="{'load-image':  isMediaImage(), 'load-audio': isMediaAudio()}"
+                                       (click)="fileInput.click()" (keydown.enter)="selectFile($event, indQuestion, indAnswer)"/>
+                                    <input #fileInput type="file" (change)="selectFile($event, indQuestion, indAnswer)" style="display:none;"/>
+                            </div>
+                        </div>
                         <div class="input-group-prepend" *ngIf="typeQuestion !== 'verdaderoFalso'">
                             <div class="input-group-text answer-question-space">
                                 <input name="deleteQuestion" class="delete-answer" type="button" [ngClass]="{'delete-answer-disabled': controlesRespuestas(indQuestion).length <= 1}"
                                         (click)="removeAnswer(indQuestion, indAnswer)" (keydown.enter)="removeAnswer(indQuestion, indAnswer)"
                                         [disabled]="controlesRespuestas(indQuestion).length <= 1"/>
-                                   <!-- <i class="icon ni-delete"></i>-->
                             </div>
                         </div>
                         <div *ngIf="!isValidAnswer(indQuestion, indAnswer)"

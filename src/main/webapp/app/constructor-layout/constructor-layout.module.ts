@@ -21,7 +21,6 @@ import { ContentBlock9Component } from 'app/constructor/content-blocks/content-b
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 // import { DynamicModule } from 'ng-dynamic-component';
-import { ConstructorActivityComponent } from 'app/constructor/components/constructor-activity/constructor-activity.component';
 import { ContentBlocksModule } from 'app/constructor/content-blocks/content-blocks.module';
 import { SafeHtmlModule } from 'app/shared/safe-html/safe-html.module';
 import { ContentBlock10Component } from 'app/constructor/content-blocks/content-block10/content-block10.component';
@@ -30,6 +29,7 @@ import { ContentBlock3Component } from 'app/constructor/content-blocks/content-b
 import { ContentBlock4Component } from 'app/constructor/content-blocks/content-block4/content-block4.component';
 import { ContentBlock7Component } from 'app/constructor/content-blocks/content-block7/content-block7.component';
 import { ContentBlock6Component } from 'app/constructor/content-blocks/content-block6/content-block6.component';
+import { ContentBlock11Component } from 'app/constructor/content-blocks/content-block11/content-block11.component';
 
 @NgModule({
   imports: [
@@ -48,7 +48,8 @@ import { ContentBlock6Component } from 'app/constructor/content-blocks/content-b
       ContentBlock7Component,
       ContentBlock8Component,
       ContentBlock9Component,
-      ContentBlock10Component
+      ContentBlock10Component,
+      ContentBlock11Component
     ])
   ],
   declarations: [
@@ -66,13 +67,13 @@ import { ContentBlock6Component } from 'app/constructor/content-blocks/content-b
     ContentBlock8Component,
     ContentBlock9Component,
     ContentBlock10Component,
+    ContentBlock11Component,
     ConstructorTextComponent,
     // VisorTextComponent,
     // ConstructorImageComponent,
     // ConstructorVideoComponent,
     // ConstructorPdfComponent,
     // ConstructorSoundComponent,
-    ConstructorActivityComponent,
     // VisorTextComponent,
     // ConstructorImageComponent,
     // ConstructorVideoComponent,
