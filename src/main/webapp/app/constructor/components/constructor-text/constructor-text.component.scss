@@ -109,3 +109,17 @@ Set the font-family content used for the HTML content.
   font-family: inherit;
   font-size: inherit;
 }
+
+// Bloque de contenido 12
+.block-header-txt {
+  .final-block-row {
+    .ql-editor {
+      h1 {
+        text-align: center;
+        font-size: 50px;
+        span {
+        }
+      }
+    }
+  }
+}

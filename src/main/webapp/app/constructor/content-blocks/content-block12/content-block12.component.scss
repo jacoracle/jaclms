@@ -1,24 +1,32 @@
+@import '../../../../content/scss/variables.scss';
 .constructor-container-header {
-  // border: solic 1px red;
   position: relative;
-
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .block-header-img {
-    // border   : solid 1px red;
-    // height: 250px;
-    width: 100%;
-    // .block-img {
-    //     border: solid 1px green !important;
-    //     width: 100%;
-    // }
-  }
-
-  .block-header-txt {
-    border: dotted 1px #ccc;
     position: absolute;
-    top: 70%;
-    width: 60%;
-    left: 50%;
-    margin-left: -30%;
-    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 2;
+  }
+  .block-header-txt {
+    position: relative;
+    width: 80%;
+    height: auto;
+    z-index: 3;
+    border: 1px dashed $blue-nimbus-light;
+    transition: 0.3s;
+    &:hover {
+      border: 1px solid $blue-nimbus-dark;
+    }
   }
 }
