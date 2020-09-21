@@ -28,7 +28,7 @@ export class ConstructorComponentPropertiesBlockComponent implements OnInit, OnD
       .getSelectedBlockId()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(id => {
-        console.error('SelectedBlockId: ', id);
+        // console.error('SelectedBlockId: ', id);
         this.getDataSelectedBlock(id).then(data => {
           if (data) {
             this.dataBlock = data;
@@ -48,7 +48,7 @@ export class ConstructorComponentPropertiesBlockComponent implements OnInit, OnD
   }
 
   ngOnInit(): void {
-    console.error('##### DATA: ', this.dataBlock);
+    // console.error('##### DATA: ', this.dataBlock);
   }
 
   getDataSelectedBlock = async (blockId: number): Promise<IBloquesCurso | undefined> => {
