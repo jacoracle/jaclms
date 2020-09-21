@@ -86,9 +86,9 @@ Set the font-family content used for the HTML content.
   height: 100px;
 }
 
-button {
-  margin-bottom: 10px;
-}
+// button {
+//   margin-bottom: 10px;
+// }
 
 .inactive .ql-editor {
   padding: 0;
@@ -108,4 +108,18 @@ button {
   border: none;
   font-family: inherit;
   font-size: inherit;
+}
+
+// Bloque de contenido 12
+.block-header-txt {
+  .final-block-row {
+    .ql-editor {
+      h1 {
+        text-align: center;
+        font-size: 50px;
+        span {
+        }
+      }
+    }
+  }
 }

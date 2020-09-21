@@ -19,6 +19,9 @@
   			<column name="nombre_bloque_componentes" type="varchar(50)">
                 <constraints nullable="true" />
             </column>
+            <column name="descripcion" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
             <column name="icon_path" type="varchar(100)">
                 <constraints nullable="true" />
             </column>
