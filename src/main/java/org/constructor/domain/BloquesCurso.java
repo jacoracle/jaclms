@@ -190,11 +190,7 @@ public class BloquesCurso  implements Serializable {
 		this.bloqueComponentes = bloqueComponentes;
 	}
 
-	@Override
-	public String toString() {
-		return "BloquesCurso [id=" + id + ", orden=" + orden + ", visible=" + visible + ", indicadorOriginal="
-				+ indicadorOriginal + ", nivelModulo=" + nivelModulo + ", bloqueComponentes=" + bloqueComponentes + "]";
-	}
+	
 
 
 }

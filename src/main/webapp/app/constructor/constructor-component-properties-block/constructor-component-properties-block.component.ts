@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BloquesCursoService } from 'app/entities/bloques_curso/bloques_curso.service';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
 import { IBloquesCurso } from 'app/shared/model/bloques-curso.model';
+import { Componente } from 'app/shared/model/componente.model';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BloquesCurso } from '../../shared/model/bloques-curso.model';
@@ -17,6 +18,8 @@ export class ConstructorComponentPropertiesBlockComponent implements OnInit, OnD
   name = '';
   isChecked = false;
   dataBlock: IBloquesCurso = new BloquesCurso();
+  nameSelectedBlock = '';
+  componentes: Componente[] = [];
 
   constructor(private contentBlocksService: ContentBlocksService, private bloquesService: BloquesCursoService) {
     // .b-title-text .final-block-row div pedo con alineado de título en header, este funciona en título normal
@@ -25,9 +28,13 @@ export class ConstructorComponentPropertiesBlockComponent implements OnInit, OnD
       .getSelectedBlockId()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(id => {
-        console.error('SelectedBlockId: ', id);
+        // console.error('SelectedBlockId: ', id);
         this.getDataSelectedBlock(id).then(data => {
-          if (data) this.dataBlock = data;
+          if (data) {
+            this.dataBlock = data;
+            this.nameSelectedBlock = this.dataBlock.bloqueComponentes!.tipoBloqueComponentes!.nombre || '';
+            this.componentes = this.dataBlock.bloqueComponentes!.componentes || [];
+          }
         });
       });
   }
@@ -40,7 +47,9 @@ export class ConstructorComponentPropertiesBlockComponent implements OnInit, OnD
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.error('##### DATA: ', this.dataBlock);
+  }
 
   getDataSelectedBlock = async (blockId: number): Promise<IBloquesCurso | undefined> => {
     // const data = await this.bloquesService.find(blockId).toPromise();

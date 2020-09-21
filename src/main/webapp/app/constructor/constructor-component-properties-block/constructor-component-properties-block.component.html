@@ -5,12 +5,14 @@
     <div class="properties-block">
         <div class="pb-item">
             <label for="name">Nombre de la plantilla:</label>
-            <input type="text" [(ngModel)]="dataBlock!.bloqueComponentes!.tipoBloqueComponentes!.nombre" name="name" id="name" disabled>
+            <!-- dataBlock!.bloqueComponentes!.tipoBloqueComponentes!.nombre -->
+            <input type="text" [(ngModel)]="nameSelectedBlock" name="name"
+                id="name" disabled>
         </div>
         <div class="pb-item">
             <label for="filesize">Componentes:</label>
             <div>
-                <ul *ngFor="let c of dataBlock!.bloqueComponentes!.componentes">
+                <ul *ngFor="let c of componentes">
                     <li>{{c.tipoComponente.nombre}}</li>
                 </ul>
             </div>
