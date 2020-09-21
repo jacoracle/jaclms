@@ -12,12 +12,6 @@
               </a>
               <!-- Dropdown Menu -->
               <div class="dropdown-menu dd-tool" ngbDropdownMenu aria-labelledby="nav-tool-file">
-                  <!--
-                  <a class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); save();">
-                    <i class="icon ni-save"></i>
-                    <p>Guardar</p>
-                  </a>
-                  -->
                   <a class="dropdown-item a-dd-tool" routerLinkActive="active" (click)="collapseNavbar();redirectHome();">
                     <i class="icon ni-close"></i>
                     <p>Cerrar</p>
@@ -29,12 +23,6 @@
             <i class="icon ni-settings"></i>
             <div class="nb-text">Configurar</div>
           </div>
-          <div class="nb-icon-tool">
-            <i class="icon ni-template"></i>
-            <div class="nb-text">Bloques</div>
-          </div>
-        </div>
-        <div class="layout-breadcrumbs">
         </div>
 
         <div class="nbm-i2-set-2">
@@ -47,16 +35,6 @@
               </a>
               <!-- Dropdown Menu -->
               <div class="dropdown-menu dd-tool" ngbDropdownMenu aria-labelledby="nav-tool-mode">
-                <!--
-                <a class="dropdown-item a-dd-tool active-a-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar()">
-                  <i class="icon ni-light"></i>
-                  <p>Lightmode</p>
-                </a>
-                <a class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar()">
-                  <i class="icon ni-dark"></i>
-                  <p>Dark mode</p>
-                </a>
-                -->
                 <a *ngFor="let colorMode of colorModes" class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); selectColorMode(colorMode);">
                   <i class="icon" [ngClass]="colorMode.class"></i>
                   <p>{{colorMode.text}}</p>
@@ -72,21 +50,6 @@
                 <div class="nb-text">{{selectedSizeMenu.text}}</div>
               </a>
               <div class="dropdown-menu dd-tool" ngbDropdownMenu aria-labelledby="nav-tool-screen">
-                <!-- <a class="dropdown-item a-dd-tool active-a-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); changeVisorSize('desktop')"> -->
-                  <!--
-                  <a class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); changeVisorSize('desktop')">
-                    <i class="icon ni-desktop"></i>
-                    <p>Desktop</p>
-                  </a>
-                  <a class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); changeVisorSize('tablet')">
-                    <i class="icon ni-tablet"></i>
-                    <p>Tablet</p>
-                  </a>
-                  <a class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); changeVisorSize('smartphone')">
-                    <i class="icon ni-smartphone"></i>
-                    <p>Smartphone</p>
-                  </a>
-                  -->
                   <a *ngFor="let sizeMenu of sizeMenus" class="dropdown-item a-dd-tool" routerLink="#" routerLinkActive="active" (click)="collapseNavbar(); changeVisorSize(sizeMenu.value); selectedSizeMenu=sizeMenu;">
                     <i class="icon" [ngClass]="sizeMenu.class"></i>
                     <p>{{sizeMenu.text}}</p>
@@ -97,10 +60,6 @@
           <div class="nb-icon-tool nb-disabled">
             <i class="icon ni-view"></i>
             <div class="nb-text">Preview</div>
-          </div>
-          <div class="nb-icon-tool nb-disabled">
-            <i class="icon ni-upload"></i>
-            <div class="nb-text">Publicar</div>
           </div>
         </div>
 

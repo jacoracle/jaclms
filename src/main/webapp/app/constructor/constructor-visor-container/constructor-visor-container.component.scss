@@ -8,7 +8,7 @@
   height: 100%;
   background-color: $background-workspace;
   overflow-y: scroll;
-  padding-top: 35px;
+  padding-top: 30px;
   padding-bottom: 30px;
 }
 .visor-component-artboard {
@@ -17,10 +17,10 @@
   height: auto;
   min-height: 40px;
   background-color: $color-workspace;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.12);
+  box-shadow: $shadow;
   padding: 12px;
   margin: 0 auto;
-  border-radius: 6px 0 6px 6px;
+  border-radius: $border-mini;
 
   .artboard-delete {
     position: absolute;
