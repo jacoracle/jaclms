@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+// TODO: Auto-generated Javadoc
 /**
  * A TipoBloqueComponentes.
  */
@@ -37,6 +38,9 @@ public class TipoBloqueComponentes implements Serializable {
 	/** The nombre. */
 	@Column(name = "nombre_bloque_componentes")
     private String nombre;
+	
+	/** The descripcion. */
+	private String descripcion;
 	
 	/** The icon path. */
 	@Column(name = "icon_path")
@@ -97,6 +101,24 @@ public class TipoBloqueComponentes implements Serializable {
 	}
 
 	/**
+	 * Gets the descripcion.
+	 *
+	 * @return the descripcion
+	 */
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	/**
+	 * Sets the descripcion.
+	 *
+	 * @param descripcion the new descripcion
+	 */
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	/**
 	 * Gets the icon path.
 	 *
 	 * @return the icon path
@@ -107,6 +129,8 @@ public class TipoBloqueComponentes implements Serializable {
 	
 	
 	/**
+	 * Gets the tipos bloques componentes.
+	 *
 	 * @return the tiposBloquesComponentes
 	 */
 	public Set<TiposBloquesComponentes> getTiposBloquesComponentes() {
@@ -114,6 +138,8 @@ public class TipoBloqueComponentes implements Serializable {
 	}
 
 	/**
+	 * Sets the tipos bloques componentes.
+	 *
 	 * @param tiposBloquesComponentes the tiposBloquesComponentes to set
 	 */
 	public void setTiposBloquesComponentes(Set<TiposBloquesComponentes> tiposBloquesComponentes) {
@@ -157,12 +183,16 @@ public class TipoBloqueComponentes implements Serializable {
 	public Set<BloqueComponentes> getBloqueComponentes() {
 		return bloqueComponentes;
 	}
-	
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
-		return "TipoBloqueComponentes [id=" + id + ", nombre=" + nombre + ", iconPath=" + iconPath + ", tags=" + tags
-				+ ", tiposBloquesComponentes=" + tiposBloquesComponentes + "]";
+		return "TipoBloqueComponentes [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", iconPath="
+				+ iconPath + ", tags=" + tags + ", tiposBloquesComponentes=" + tiposBloquesComponentes + "]";
 	}
 	
 }
