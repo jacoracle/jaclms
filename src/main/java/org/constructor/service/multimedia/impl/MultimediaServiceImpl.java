@@ -245,7 +245,6 @@ public class MultimediaServiceImpl implements MultimediaService {
 		MultimediaResponse multimediaResponse = new MultimediaResponse();
 		String status = "";
 		String filePath = "";
-        String response = "";
 		
 		log.debug("*************************   deleteCourseCover *******************");
 		

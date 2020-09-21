@@ -23,4 +23,6 @@ export class Respuestas {
   public respuesta?: string;
   public correcta?: boolean;
   public seleccionada?: boolean;
+  public path?: string;
+  public safeUrl?: string;
 }

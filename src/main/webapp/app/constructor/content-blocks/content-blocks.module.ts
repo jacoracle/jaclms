@@ -18,6 +18,7 @@ import { ContentBlock14Component } from './content-block14/content-block14.compo
 // import { ConstructorColapsableComponent } from '../components/constructor-colapsable/constructor-colapsable.component';
 // import { ConstructorTipComponent } from '../components/constructor-tip/constructor-tip.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ConstructorActivityComponent } from 'app/constructor/components/constructor-activity/constructor-activity.component';
 
 @NgModule({
   imports: [CommonModule, SafeHtmlModule, MatExpansionModule],
@@ -34,7 +35,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     // ContentBlock11Component,
     ContentBlock12Component,
     ContentBlock13Component,
-    ContentBlock14Component
+    ContentBlock14Component,
+    ConstructorActivityComponent
   ],
   exports: [
     MatExpansionModule,
@@ -50,7 +52,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     // ContentBlock11Component,
     ContentBlock12Component,
     ContentBlock13Component,
-    ContentBlock14Component
+    ContentBlock14Component,
+    ConstructorActivityComponent
   ]
 })
 export class ContentBlocksModule {}

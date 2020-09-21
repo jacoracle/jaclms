@@ -31,3 +31,30 @@
   margin-right: 6px;
   font-size: 14px;
 }
+
+.cover-upload-imgage {
+  object-fit: cover;
+  width: 96%;
+  height: 96%;
+}
+
+.caja {
+  border: 4px solid #000;
+}
+
+.border-danger {
+  border-color: #dc3545 !important;
+}
+
+.box-success {
+  box-shadow: 15px 15px 20px rgba(40, 167, 69);
+  transform: scale(1.05);
+}
+.box-danger {
+  box-shadow: 15px 15px 20px rgba(220, 63, 69);
+  transform: scale(1.05);
+}
+
+.letra-audio {
+  font-size: 10px;
+}
