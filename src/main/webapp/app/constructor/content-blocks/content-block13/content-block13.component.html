@@ -1,8 +1,7 @@
-<div>
+<div class="container-accordion">
     <mat-accordion>
-
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'100px'">
                 <mat-panel-title>
                     <ng-container *ngIf="componentes[0]">
                         <jhi-visor-text [component]="componentes[0]!"
@@ -11,11 +10,11 @@
                         </jhi-visor-text>
                     </ng-container>
                 </mat-panel-title>
-                <mat-panel-description>
+                <!-- <mat-panel-description>
                     {{panelOpenState ? 'open' : 'closed'}}
-                </mat-panel-description>
+                </mat-panel-description> -->
             </mat-expansion-panel-header>
-            <div>
+            <div class="accordion-text">
 
                 <div class="block-header-txt">
                     <ng-container *ngIf="componentes[0]">

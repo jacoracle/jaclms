@@ -517,7 +517,7 @@ jhi-login-modal {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
+  // box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
   // border-radius: 18px;
   border-radius: 14px;
   background-color: $main-btn-color;
@@ -534,7 +534,7 @@ jhi-login-modal {
 }
 .main-btn.btn-color-1 {
   background-image: linear-gradient(to right, #00ceff, #00b1ff, #00b1ff, #0083c5);
-  box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
+  // box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
 }
 .main-btn.disabled,
 .main-btn:disabled {
@@ -562,7 +562,7 @@ jhi-login-modal {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
+  // box-shadow: 0 20px 30px rgba(16, 18, 51, 0.1), 0 6px 18px rgba(16, 18, 51, 0.12);
 
   &:hover {
     background-color: $secondary-btn-hover;
@@ -3430,6 +3430,67 @@ input[type='file'] {
     border: 0 !important;
     pointer-events: none !important;
     cursor: default !important;
+  }
+}
+// Accordion Bloque de contenido 13
+.mat-expansion-panel {
+  box-shadow: 0 !important;
+  border-radius: 6px !important;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: 0 !important;
+}
+.mat-expansion-indicator {
+  position: absolute;
+  background-color: white;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.mat-expansion-indicator::after,
+.mat-expansion-panel-header-description {
+  color: $blue-nimbus-dark;
+}
+.mat-expansion-panel-header-title {
+  display: flex;
+  flex-grow: 0 !important;
+  margin-right: 0 !important;
+  position: relative;
+  width: 96%;
+  height: auto;
+  border: 1px dashed $blue-nimbus-light;
+  transition: 0.3s;
+  &:hover {
+    border: 1px solid $blue-nimbus-light;
+  }
+}
+.mat-expansion-panel-content {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.container-accordion {
+  position: relative;
+  width: 100%;
+  height: auto;
+  .mat-accordion {
+  }
+}
+.accordion-text {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border: 1px dashed $blue-nimbus-light;
+  transition: 0.3s;
+  &:hover {
+    border: 1px solid $blue-nimbus-light;
   }
 }
 
