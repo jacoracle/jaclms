@@ -10,6 +10,7 @@ export class TextService {
   private textFinish = new Subject<string>();
   private editing = new Subject<boolean>();
   private templateTypeId = new Subject<ITipoBloqueComponentes>();
+  private selecText = new Subject<boolean>();
 
   constructor() {}
 
@@ -27,6 +28,14 @@ export class TextService {
 
   setTextFinish(value: string): void {
     this.textFinish.next(value);
+  }
+
+  getSelectText(): Observable<boolean> {
+    return this.selecText.asObservable();
+  }
+
+  setSelectText(value: boolean): void {
+    this.selecText.next(value);
   }
 
   getEditing(): Observable<boolean> {

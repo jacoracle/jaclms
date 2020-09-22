@@ -20,7 +20,8 @@
 
             <!-- Subir archivo -->
             <div class="cover-upload-c">
-                <h6>Subir archivo</h6>
+                <h6 *ngIf="isNotTextActivity()">Subir archivo</h6>
+                <h6 *ngIf="isActivity()">Gestión Actividad</h6>
 
                 <div class="row-up-image-area">
                     <div *ngIf="fileFormat === 'image'">
@@ -69,23 +70,21 @@
                         <span class="loader"></span>
                     </div>
                 </div>
-
                 <div class="row-sidebar-up-image-btn">
-                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown' ">
+                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown' && fileFormat !== 'text'">
                         Eliminar
                     </button>
-                    <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="fileFormat !== 'activity_question_text' && fileFormat !== 'activity_question_media'">
+                    <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="isNotTextActivity()">
                         <span>Subir</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
-                    <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="fileFormat  === 'activity_question_text' || fileFormat === 'activity_question_media'">
+                    <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="isActivity()">
                         <span>Actividad</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
                 </div>
 
-                <div class="properties-file"
-                     *ngIf="fileFormat !== 'activity_question_text' && fileFormat !== 'activity_question_media'">
+                <div class="properties-file" *ngIf="isNotTextActivity()">
                     <h6>Información</h6>
                     <div class="pf-item">
                         <label for="filename">Nombre:</label>

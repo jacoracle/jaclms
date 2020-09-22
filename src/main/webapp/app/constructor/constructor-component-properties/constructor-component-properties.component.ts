@@ -17,6 +17,7 @@ import { ActividadInteractiva, ContenidoActividad } from 'app/shared/model/activ
 import { cantidadAtributos } from 'app/shared/util/util';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { ActivityService } from 'app/services/activity.service';
+import { TextService } from 'app/services/text.service';
 @Component({
   selector: 'jhi-constructor-component-properties',
   templateUrl: './constructor-component-properties.component.html',
@@ -87,8 +88,12 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     public currentModuleService: CurrentModuleService,
     private pdfModalService: PdfModalService,
     private videoModalService: VideoModalService,
-    private activityModalService: ActivityQuestionsModalService
+    private activityModalService: ActivityQuestionsModalService,
+    private textService: TextService
   ) {
+    // Recibe el texto cuando dejo de escribir
+    this.subscription = this.subscriptionText();
+
     // Recibe el src de la imagen a mostrar
     this.subscription = this.subscriptionImage();
 
@@ -196,6 +201,12 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   convertBytesToKilobytes(byteSize: number): number {
     return parseFloat((byteSize / this._KIL24).toFixed(2));
+  }
+
+  subscriptionText(): Subscription {
+    return this.textService.getSelectText().subscribe(() => {
+      this.fileFormat = 'text';
+    });
   }
 
   subscriptionVideoThumb(): Subscription {
@@ -532,5 +543,13 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     if (this.multimediaFileProperties.contenido != null) {
       this.fileUploadService.getVideo(this.multimediaFileProperties.contenido);
     }
+  }
+
+  isNotTextActivity(): boolean {
+    return this.fileFormat !== 'activity_question_text' && this.fileFormat !== 'activity_question_media' && this.fileFormat !== 'text';
+  }
+
+  isActivity(): boolean {
+    return this.fileFormat === 'activity_question_text' || this.fileFormat === 'activity_question_media';
   }
 }
