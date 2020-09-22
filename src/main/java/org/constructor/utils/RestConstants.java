@@ -37,6 +37,11 @@ public class RestConstants {
 	 * Path para peticiones file
 	 */
 	public static final String PATH_FILE = "file";
+	
+	/**
+	 * Path para peticiones fileInteractivas
+	 */
+	public static final String PATH_DELETE_FILE = "fileInteractivas";
 
 	// ---------------Video--------------------
 
@@ -147,10 +152,6 @@ public class RestConstants {
 	 */
 	public static final String TIPO_ACTIVIDAD_ID = "tipo-actividad/{id}";
 
-	/**
-	 * Path para peticiones loadInteractivas
-	 */
-	public static final String PATH_LOAD_INTERACTIVAS = "loadInteractivas";
 	
 	/**
 	 * Path para peticiones fileUploadInteractivas

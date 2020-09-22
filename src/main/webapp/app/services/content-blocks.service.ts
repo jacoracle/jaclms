@@ -18,6 +18,7 @@ export class ContentBlocksService {
   selectedBlockIndex = new Subject<number>();
   target = new Subject<ITargetScroll[]>();
   contentBlocksComplete = new Subject<boolean>();
+  selectedBlockId = new Subject<number>();
 
   constructor() {}
 
@@ -78,5 +79,13 @@ export class ContentBlocksService {
 
   setTarget(target: ITargetScroll[]): void {
     this.target.next(target);
+  }
+
+  getSelectedBlockId(): Observable<number> {
+    return this.selectedBlockId;
+  }
+
+  setSelectedBlockId(id: number): void {
+    this.selectedBlockId.next(id);
   }
 }

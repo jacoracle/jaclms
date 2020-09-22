@@ -12,13 +12,24 @@ img.block-img {
   }
 }
 
+// Bloque 12
+img.block-header {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border: 1px dashed $blue-nimbus-light;
+  transition: 0.3s;
+  &:hover {
+    border: 1px solid $blue-nimbus-dark;
+  }
+}
+
 // Loader
 .loader-img {
   position: absolute;
   width: 100%;
   max-width: 980px;
   height: 100%;
-  // background-color: rgba(26, 61, 130, 0.6);
   background-color: rgba(255, 255, 255, 0.7);
   z-index: 3;
   display: flex;

@@ -96,6 +96,10 @@ export class VisorTextComponent implements OnDestroy, AfterViewInit, OnInit {
     // this.subscription.unsubscribe();
   }
 
+  selectText(): void {
+    this.textService.setSelectText(true);
+  }
+
   editText(): void {
     this.textEditorBehaviosService.setShowTextEditor(true);
     this.textService.setEditing(false);

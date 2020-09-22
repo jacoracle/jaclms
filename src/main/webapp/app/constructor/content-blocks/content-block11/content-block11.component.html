@@ -1,0 +1,22 @@
+<!-- Bloque de contenido: Texto con imagen-->
+<div class="col-cb-text-img" *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
+
+    <div *ngFor="let component of orderTextActivity(contentBlock.bloqueComponentes.componentes); let index = index;">
+        <div *ngIf="component.tipoComponente.nombre === 'text'">
+            <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes">
+                <jhi-visor-text
+                    [component]="component"
+                    [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
+                    (updateComponent)="onUpdateComponent($event, index)">
+                </jhi-visor-text>
+            </div>
+        </div>
+        <div *ngIf="component.tipoComponente.nombre === 'activity'">
+            <jhi-constructor-activity
+                [component]="component"
+                [typeQuestion]="'activity_question_media'"
+                (updateComponent)="onUpdateComponent($event, index)">
+            </jhi-constructor-activity>
+        </div>
+    </div>
+</div>

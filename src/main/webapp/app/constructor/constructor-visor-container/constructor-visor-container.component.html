@@ -6,13 +6,7 @@
     </div>
     <div class="visor-component-artboard"
         [ngClass]="{'v-desktop': visorSize === 'desktop','v-tablet': visorSize === 'tablet','v-smartphone': visorSize === 'smartphone'}">
-        <div class="artboard-delete">
-
-        </div>
-        <div class="artboard-name"></div>
-
         <div class="row-visor-container">
-
             <div [hidden]="!showLoader" class="loader-layout">
                 <div class="loader2"></div>
             </div>
@@ -25,7 +19,7 @@
             </div>
 
             <div class="col-jhi-block" *ngFor="let block of contentBlocks; let index = index;">
-                <div (click)="selectBlock(index)" [ngClass]="{'selected-block': selectedBlock === index}"
+                <div (click)="selectBlock(index, block.id)" [ngClass]="{'selected-block': selectedBlock === index}"
                     class="row-content-block">
                     <div *ngFor="let componente of componentes;">
                         <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == componente.nombre" #target>

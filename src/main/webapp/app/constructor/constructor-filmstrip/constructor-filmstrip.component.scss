@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  // border-bottom: 1px solid $border-component;
 }
 @media (max-height: 600px) {
   .filmstrip-c-component {
@@ -40,7 +39,7 @@
       position: relative;
       width: auto;
       height: auto;
-      font-size: 12px;
+      font-size: $tx-size-title-lc;
       cursor: default;
     }
   }
@@ -80,11 +79,12 @@
   justify-content: flex-start;
   align-items: center;
   z-index: 1;
-  border: 1px solid $window-divider-color;
+  border: 1px solid $input-border-light;
   margin-bottom: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
   transition: 0.3s;
+  border-radius: $border-mini;
   cursor: move;
   cursor: grab;
   cursor: -moz-grab;
@@ -93,13 +93,13 @@
     border: 1px solid $blue-nimbus-dark;
   }
   &:active {
-    animation: shake 1.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    animation: shake 2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
     transform: translate3d(0, 0, 0);
   }
 
   .row-drag-ud {
     position: relative;
-    width: 25px;
+    width: 20px;
     height: 75px;
     display: flex;
     justify-content: center;
@@ -118,15 +118,15 @@
     width: 100px;
     height: 70px;
     background-color: white;
-    border-radius: 4px;
-    border: 2px solid $border-component;
+    border-radius: $border-mini;
+    border: 1px solid $border-component;
     background-position: center;
     background-repeat: no-repeat;
     transition: 0.3s;
     background-size: 50px;
     cursor: pointer;
     &:hover {
-      border: 2px solid $border-component-hover;
+      border: 1px solid $border-component-hover;
     }
     &:hover + .ab-mini-desc p:nth-child(1) {
       color: #212342;
@@ -137,36 +137,37 @@
   }
   .ab-mini-desc {
     position: relative;
-    width: 90px;
+    width: 100px;
     height: 70px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     margin-left: 10px;
-    p {
-      font-size: 11px;
+    .ab-m-title {
       position: relative;
-      width: 100%;
+      width: 90%;
       height: auto;
+      font-size: $tx-size-s;
       cursor: pointer;
       transition: 0.4s;
       line-height: 16px;
+      margin-top: 8px;
+      top: 6px;
     }
     .delete-ab {
-      position: relative;
-      width: 100%;
+      position: absolute;
+      width: 90%;
       height: auto;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       cursor: pointer;
-      margin-bottom: 20px;
+      bottom: 6px;
 
       p {
         position: relative;
         width: auto;
         height: auto;
-        font-size: 10px;
+        font-size: $tx-size-xs;
         font-weight: 600;
         margin-left: 4px;
         cursor: pointer;
@@ -181,37 +182,17 @@
   90% {
     transform: translate3d(-1px, 0, 0);
   }
-
   20%,
   80% {
-    transform: translate3d(2px, 0, 0);
+    transform: translate3d(1px, 0, 0);
   }
-
   30%,
   50%,
   70% {
-    transform: translate3d(-2px, 0, 0);
+    transform: translate3d(-1px, 0, 0);
   }
-
   40%,
   60% {
-    transform: translate3d(2px, 0, 0);
+    transform: translate3d(1px, 0, 0);
   }
-}
-
-.ab-mini-1 {
-  background-image: url('../../../content/images/ab1.png');
-}
-.ab-mini-2 {
-  background-image: url('../../../content/images/ab2.png');
-}
-.ab-mini-3 {
-  background-image: url('../../../content/images/ab3.png');
-}
-.ab-mini-4 {
-  background-image: url('../../../content/images/ab4.png');
-}
-.ab-mini-new {
-  background-image: url('../../../content/images/icn_add_mini2.svg');
-  background-size: 30%;
 }

@@ -1,0 +1,29 @@
+<div class="properties-block-component">
+
+    <p>Propiedades del bloque</p>
+
+    <div class="properties-block">
+        <div class="pb-item">
+            <label for="name">Nombre de la plantilla:</label>
+            <!-- dataBlock!.bloqueComponentes!.tipoBloqueComponentes!.nombre -->
+            <input type="text" [(ngModel)]="nameSelectedBlock" name="name"
+                id="name" disabled>
+        </div>
+        <div class="pb-item">
+            <label for="filesize">Componentes:</label>
+            <div>
+                <ul *ngFor="let c of componentes">
+                    <li>{{c.tipoComponente.nombre}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="pb-item">
+            <label for="asignBlockType">Bloque para Alumno o Profesor:</label>
+            <mat-slide-toggle id="asignBlockType" name="asignBlockType" (change)="updateBlockVisibilty()"
+                [(ngModel)]="dataBlock.visible">
+                {{dataBlock.visible ? 'Profesor' : 'Alumno'}}</mat-slide-toggle>
+        </div>
+
+    </div>
+
+</div>

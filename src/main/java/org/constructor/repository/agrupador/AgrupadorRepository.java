@@ -33,11 +33,31 @@ public interface AgrupadorRepository extends JpaRepository<Agrupador, Long> {
 
     
 	
+	@Query("SELECT  agru  FROM Agrupador agru JOIN FETCH agru.user usr Join fetch agru.etiquetas eti    "
+			+ "WHERE usr.id = :id and "
+			+ "agru.titulo LIKE %:titulo% "
+			+ "and  agru.descripcion LIKE  %:descripcion% "
+			+ "and  eti.descripcion LIKE  %:etiqueta%")
+	Set<Agrupador> findAgrupadorByTituloByDescripcionByEtiqueta(
+			 @Param("id")Long id,
+			 @Param("titulo") String titulo,
+			 @Param("descripcion") String descripcion, 
+			 @Param("etiqueta") String etiqueta); 
+
+
+	@Query("SELECT  agru  FROM Agrupador agru JOIN FETCH agru.user  use  "
+			+ "WHERE use.id = :id and  agru.titulo LIKE %:titulo% "
+			+ "and  agru.descripcion LIKE  %:descripcion% ")
+	Set<Agrupador> findAgrupadorByTituloByDescripcion(
+			 @Param("id")Long id,
+			 @Param("titulo") String titulo,
+			 @Param("descripcion") String descripcion );
+	
 	@Query("SELECT  agru  FROM Agrupador agru Join fetch agru.etiquetas eti    "
 			+ "WHERE agru.titulo LIKE %:titulo% "
 			+ "and  agru.descripcion LIKE  %:descripcion% "
 			+ "and  eti.descripcion LIKE  %:etiqueta%")
-	Set<Agrupador> findAgrupadorByTituloByDescripcionByEtiqueta(
+	Set<Agrupador> findAgrupadorAdmin(
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion, 
 			 @Param("etiqueta") String etiqueta); 
@@ -46,9 +66,10 @@ public interface AgrupadorRepository extends JpaRepository<Agrupador, Long> {
 	@Query("SELECT  agru  FROM Agrupador agru     "
 			+ "WHERE agru.titulo LIKE %:titulo% "
 			+ "and  agru.descripcion LIKE  %:descripcion% ")
-	Set<Agrupador> findAgrupadorByTituloByDescripcion(
+	Set<Agrupador> findAgrupadorByTituloByDescripcionAdmin(
 			 @Param("titulo") String titulo,
 			 @Param("descripcion") String descripcion );
+
 
 
 }

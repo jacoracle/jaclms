@@ -1,4 +1,10 @@
-@import '../../../content/scss/variables.scss';
+/*!
+ * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+ *
+ *
+ */
+
+@import 'src/main/webapp/content/scss/variables';
 
 .modal-activity-container {
   position: relative;
@@ -53,7 +59,7 @@
           z-index: 2;
           width: 100%;
           height: auto;
-          min-height: 90px;
+          min-height: 120px;
           background-color: $window-divider-color;
           display: flex;
           align-items: center;
@@ -164,7 +170,7 @@
     position: relative;
     width: 50px;
     height: 50px;
-    background-image: url('../../../content/images/logo_register.svg');
+    //background-image: url('src/main/webapp/content/images/logo_register.svg');
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -378,10 +384,36 @@ mat-form-field {
 .answer-question-space {
   margin-top: 20px;
   box-sizing: unset;
-  width: 16px;
+  width: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.group-input-type {
+  width: 20px !important;
+}
+
+.no-border-radius {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-left: white !important;
+}
+
+.no-border-radius {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-left: white !important;
+}
+
+.input-hover {
+  border-bottom: #a4b9e2 !important;
+  border-top: #a4b9e2 !important;
+  border-right: #a4b9e2 !important;
+}
+
+.no-border-right {
+  border-right: white !important;
 }
 
 .input-group > .input-group-append > .btn,
@@ -392,7 +424,7 @@ mat-form-field {
 .input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {
   border-top-right-radius: 14px;
   border-bottom-right-radius: 14px;
-  width: 100%;
+  // width: 100%;
   height: 24px;
   background-color: white;
   border: 2px solid #dee6f4;
@@ -440,6 +472,10 @@ mat-form-field {
 
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
+}
+
+.mat-radio-no-margin {
+  margin-left: 0 !important;
 }
 
 .nowrap {

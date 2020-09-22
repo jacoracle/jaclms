@@ -1,6 +1,8 @@
-<img class="block-img" [src]="imgSrc" (click)="selectImage()" *ngIf="imgSrc != ''">
-<img class="block-img" [src]="defaultImageUrl" (click)="selectImage()" *ngIf="imgSrc == ''">
-<!-- <div [hidden]="!showLoader">Cargando</div> -->
+<!-- class="block-img" -->
+<img [ngClass]="{'block-img': !isImageTypeHeaderBlock(), 'block-header': isImageTypeHeaderBlock() }" [src]="imgSrc"
+  (click)="selectImage()" *ngIf="imgSrc != ''">
+<img [ngClass]="{'block-img': !isImageTypeHeaderBlock(), 'block-header': isImageTypeHeaderBlock() }"
+  [src]="defaultImageUrl" (click)="selectImage()" *ngIf="imgSrc == ''">
 <div [hidden]="!showLoader" class="loader-img">
   <div class="loader2"></div>
 </div>
