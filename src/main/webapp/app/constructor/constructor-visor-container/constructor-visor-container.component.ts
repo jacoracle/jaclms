@@ -133,6 +133,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(selectedBlock => {
         if (selectedBlock !== undefined) {
+          this.showLoader = true;
           if (this.contentBlocks.length <= 1 || this.selectedBlock === 0) {
             this.selectedBlock = 0;
           }

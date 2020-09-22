@@ -6,6 +6,7 @@
       <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes">
           <jhi-visor-text
             [component]="component"
+            [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes!"
             (updateComponent)="onUpdateComponent($event, index)">
           </jhi-visor-text>
       </div>
