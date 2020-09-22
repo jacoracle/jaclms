@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="row-sidebar-up-image-btn">
-                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown' && fileFormat !== 'text'">
+                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="(multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown') && fileFormat !== 'text'">
                         Eliminar
                     </button>
                     <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="isNotTextActivity()">
