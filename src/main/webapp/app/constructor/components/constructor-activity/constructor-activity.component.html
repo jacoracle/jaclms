@@ -1,8 +1,13 @@
-<!--
-<video class="block-video-file" [src]="videoSrc" (click)="selectVideo()" *ngIf="videoSrc != ''"></video>
--->
-<img class="img-actividad" [src]="defaultActivityUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) == 0">
-<img class="img-actividad" [src]="loadedActivityUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) > 0">
+<div *ngIf="typeQuestion== 'activity_question_text'">
+    <img class="img-actividad" [src]="defaultQuestionsTextUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) == 0">
+    <img class="img-actividad" [src]="loadedQuestionsTextUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) > 0">
+</div>
+
+<div *ngIf="typeQuestion== 'activity_question_media'">
+    <img class="img-actividad" [src]="defaultQuestionsMediaUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) == 0">
+    <img class="img-actividad" [src]="loadedQuestionsMediaUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) > 0">
+</div>
+
 <!-- <div [hidden]="!showLoader">Cargando</div> -->
 <div [hidden]="!showLoader" class="loader-actividad">
   <div class="loader2"></div>

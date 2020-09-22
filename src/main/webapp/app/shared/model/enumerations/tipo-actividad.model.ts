@@ -6,7 +6,7 @@ export const enum SubTipoActividad {
   texto = 'texto',
   imagen = 'imagen',
   audio = 'audio',
-  falsoVerdadero = 'falsoVerdadero'
+  verdaderoFalso = 'verdaderoFalso'
 }
 
 export const enum OpcionPreguntas {

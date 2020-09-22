@@ -35,8 +35,35 @@
             background-size: 23px;
             background-repeat: no-repeat;
           }
+          .load-image {
+            position: relative;
+            width: 30px !important;
+            height: 25px !important;
+            // background-color: silver;
+            border: none !important;
+            background-image: url('../../../../../content/images/upload_image.png');
+            background-position: center;
+            background-size: 23px;
+            background-repeat: no-repeat;
+          }
+          .load-audio {
+            position: relative;
+            width: 30px !important;
+            height: 25px !important;
+            // background-color: silver;
+            border: none !important;
+            background-image: url('../../../../../content/images/sound_upload.png');
+            background-position: center;
+            background-size: 23px;
+            background-repeat: no-repeat;
+          }
         }
       }
     }
   }
+}
+
+.disabled-input {
+  background-color: #e9ecef !important;
+  opacity: 1 !important;
 }

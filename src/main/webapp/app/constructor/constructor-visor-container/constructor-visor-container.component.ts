@@ -31,6 +31,7 @@ import { ActividadInteractiva, ContenidoActividad, IActividadInteractiva } from 
 import { ContentBlock12Component } from '../content-blocks/content-block12/content-block12.component';
 import { ContentBlock13Component } from '../content-blocks/content-block13/content-block13.component';
 import { ContentBlock14Component } from '../content-blocks/content-block14/content-block14.component';
+import { ContentBlock11Component } from 'app/constructor/content-blocks/content-block11/content-block11.component';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -47,6 +48,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   _curso: any;
   _modulo: any;
   @Input() type?: string;
+  // contentBlocksComplete = true;
 
   componentes = [
     { nombre: 'titulo', componente: ContentBlock1Component },
@@ -62,7 +64,9 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     // { nombre: 'cabecera', componente: ContentBlock11Component },
     { nombre: 'cabecera', componente: ContentBlock12Component },
     { nombre: 'colapsable', componente: ContentBlock13Component },
-    { nombre: 'tip', componente: ContentBlock14Component }
+    { nombre: 'tip', componente: ContentBlock14Component },
+    { nombre: 'activity_question_text', componente: ContentBlock10Component },
+    { nombre: 'activity_question_media', componente: ContentBlock11Component }
   ];
 
   @Input()
@@ -184,8 +188,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       .subscribe(selectedBlockIndex => {
         this.selectedBlock = selectedBlockIndex;
       });
-    // Obtener bloquies actualizados de filmStrip
-    this.subscription = this.contentBlocksService.getContentBlocks().subscribe(contentBlocks => (this.contentBlocks = contentBlocks));
+
+    // Obtener bloques actualizados de filmStrip
+    this.subscription = this.contentBlocksService.getContentBlocks().subscribe(contentBlocks => {
+      this.contentBlocks = contentBlocks;
+    });
   }
 
   /**
@@ -198,7 +205,7 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   }
 
   // Actualizar bloque contenido de componente
-  onUpdateBlock($event: Event, index: number): void {
+  onUpdateBlock($event: any, index: number): void {
     if (this.contentBlocks[index]) {
       if (this.contentBlocks[index]!.bloqueComponentes!.componentes![$event['componentIndex']]) {
         switch ($event['type']) {
@@ -238,14 +245,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   onUpdateMultimediaBlock(event: Event, index: number): void {
     if (this.contentBlocks[index]) {
       if (this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']]) {
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.nombre =
-          event['multimediaProperties'].nombre;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.extension =
-          event['multimediaProperties'].extension;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.peso =
-          event['multimediaProperties'].peso;
-        this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!.contenido =
-          event['multimediaProperties'].contenido;
+        const queryContenido = this.contentBlocks[index]!.bloqueComponentes!.componentes![event['componentIndex']].contenido!;
+        queryContenido.nombre = event['multimediaProperties'].nombre;
+        queryContenido.extension = event['multimediaProperties'].extension;
+        queryContenido.peso = event['multimediaProperties'].peso;
+        queryContenido.contenido = event['multimediaProperties'].contenido;
       }
     }
   }
@@ -282,7 +286,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
 
   protected onSaveError(): void {
     this.error = true;
-    this.showLoader = false;
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', {
         message: 'constructorApp.curso.nivelJerarquico.error',
