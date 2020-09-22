@@ -51,7 +51,7 @@ export class ConstructorTextComponent {
           editableElements[0].innerHTML = this.lastInnerHtml;
         }
       } else {
-        this.cdr.detectChanges();
+        // this.cdr.detectChanges();
         this._htmlContent = text;
         if (this.isTitle && this.headingSelect === undefined && this.textWithoutHtml(this._htmlContent).length === 1) {
           this.cdr.detectChanges();
@@ -68,8 +68,6 @@ export class ConstructorTextComponent {
         case 'titulo':
         case 'activity_question_text':
         case 'activity_question_media':
-          this.isTitle = true;
-          break;
         case 'cabecera':
           this.isTitle = true;
           break;

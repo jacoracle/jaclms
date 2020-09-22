@@ -213,7 +213,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     return this.videoService.getThumbSrc().subscribe(thumbSrc => {
       this.thumbSrc = thumbSrc;
       this.fileFormat = 'video';
-      if (this.thumbSrc === '') {
+      if (this.thumbSrc === '' && this.fileInput) {
         this.fileInput.nativeElement.value = '';
       }
       this.showLoader = false;
@@ -224,7 +224,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     return this.soundService.getSoundSrc().subscribe(soundSrc => {
       this.soundSrc = soundSrc;
       this.fileFormat = 'sound';
-      if (this.soundSrc === '') {
+      if (this.soundSrc === '' && this.fileInput) {
         this.fileInput.nativeElement.value = '';
       } else {
         if (this.multimediaFileProperties.contenido !== undefined && this.listenAudio) {
@@ -244,7 +244,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     return this.pdfService.getPdfSrc().subscribe(pdfSrc => {
       this.pdfSrc = pdfSrc;
       this.fileFormat = 'pdf';
-      if (this.pdfSrc === '') {
+      if (this.pdfSrc === '' && this.fileInput) {
         this.fileInput.nativeElement.value = '';
       } else {
         if (this.multimediaFileProperties.contenido !== undefined && this.viewPdf) {
@@ -262,7 +262,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     return this.videoService.getVideoSrc().subscribe(videoSrc => {
       this.videoSrc = videoSrc;
       this.fileFormat = 'video';
-      if (this.videoSrc === '') {
+      if (this.videoSrc === '' && this.fileInput) {
         this.fileInput.nativeElement.value = '';
       } else {
         this.showLoader = true;
@@ -277,7 +277,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     return this.imageService.getImgSrc().subscribe(imgSrc => {
       this.imgSrc = imgSrc;
       this.fileFormat = 'image';
-      if (this.imgSrc === '') {
+      if (this.imgSrc === '' && this.fileInput) {
         this.fileInput.nativeElement.value = '';
       }
       this.showLoader = false;
