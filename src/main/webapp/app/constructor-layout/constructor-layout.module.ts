@@ -36,6 +36,8 @@ import { ContentBlock14Component } from 'app/constructor/content-blocks/content-
 import { ConstructorComponentPropertiesBlockComponent } from 'app/constructor/constructor-component-properties-block/constructor-component-properties-block.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ContentBlock11Component } from 'app/constructor/content-blocks/content-block11/content-block11.component';
+import { ContentBlock17Component } from 'app/constructor/content-blocks/content-block17/content-block17.component';
+import { ContentBlock18Component } from 'app/constructor/content-blocks/content-block18/content-block18.component';
 
 @NgModule({
   imports: [
@@ -60,6 +62,8 @@ import { ContentBlock11Component } from 'app/constructor/content-blocks/content-
       ContentBlock12Component,
       ContentBlock13Component,
       ContentBlock14Component,
+      ContentBlock17Component,
+      ContentBlock18Component,
       ContentBlock11Component
     ])
   ],

@@ -4,11 +4,11 @@ import { BloquesCurso } from 'app/shared/model/bloques-curso.model';
 import { ITargetScroll, TargetScroll } from 'app/shared/model/target-scroll.model';
 
 @Component({
-  selector: 'jhi-content-block12',
-  templateUrl: './content-block12.component.html',
-  styleUrls: ['./content-block12.component.scss']
+  selector: 'jhi-content-block17',
+  templateUrl: './content-block17.component.html',
+  styleUrls: ['./content-block17.component.scss']
 })
-export class ContentBlock12Component implements OnInit, AfterContentInit {
+export class ContentBlock17Component implements OnInit, AfterContentInit {
   imgSrc = './../../../../content/images/cover_upload.png';
   @Input() contentBlock?: BloquesCurso;
   @Output() updateBlock = new EventEmitter();

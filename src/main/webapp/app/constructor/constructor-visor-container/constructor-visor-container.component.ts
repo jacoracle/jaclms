@@ -32,6 +32,8 @@ import { ContentBlock12Component } from '../content-blocks/content-block12/conte
 import { ContentBlock13Component } from '../content-blocks/content-block13/content-block13.component';
 import { ContentBlock14Component } from '../content-blocks/content-block14/content-block14.component';
 import { ContentBlock11Component } from 'app/constructor/content-blocks/content-block11/content-block11.component';
+import { ContentBlock17Component } from '../content-blocks/content-block17/content-block17.component';
+import { ContentBlock18Component } from '../content-blocks/content-block18/content-block18.component';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -66,7 +68,9 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     { nombre: 'colapsable', componente: ContentBlock13Component },
     { nombre: 'tip', componente: ContentBlock14Component },
     { nombre: 'activity_question_text', componente: ContentBlock10Component },
-    { nombre: 'activity_question_media', componente: ContentBlock11Component }
+    { nombre: 'activity_question_media', componente: ContentBlock11Component },
+    { nombre: 'indicador', componente: ContentBlock17Component },
+    { nombre: 'numeracion_actividad', componente: ContentBlock18Component }
   ];
 
   @Input()
