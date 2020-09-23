@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { OpcionPreguntas, SubTipoActividad, TipoActividad } from 'app/shared/model/enumerations/tipo-actividad.model';
+import { SubTipoActividad, TipoActividad } from 'app/shared/model/enumerations/tipo-actividad.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { cantidadAtributos } from 'app/shared/util/util';
@@ -39,6 +39,23 @@ export class ActivityFormMediaModalComponent implements OnInit {
     }
   }
 
+  isValidOpcion(): boolean {
+    let campoOpcion;
+    const controlTipoActividad = this.activityForm.controls['tipoActividad'];
+    if (this.submitted) {
+      if (controlTipoActividad) {
+        campoOpcion = controlTipoActividad.get('opcion');
+        if (campoOpcion) {
+          return campoOpcion.status === 'VALID';
+        }
+        return false;
+      }
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   formGroupActivity(jsonForm: IActividadPregunta | undefined): FormGroup {
     if (jsonForm && cantidadAtributos(jsonForm) > 0) {
       if (jsonForm.tipoActividad.opcion != null) {
@@ -57,9 +74,9 @@ export class ActivityFormMediaModalComponent implements OnInit {
     } else {
       return this.formBuilder.group({
         tipoActividad: this.formBuilder.group({
-          tipoActividad: new FormControl(TipoActividad.pregunta, [Validators.required]),
+          tipoActividad: new FormControl(TipoActividad.preguntaTexto, [Validators.required]),
           subtipo: new FormControl(SubTipoActividad.imagen, [Validators.required]),
-          opcion: new FormControl(SubTipoActividad.imagen + '_' + OpcionPreguntas.unica, [Validators.required])
+          opcion: new FormControl('', [Validators.required])
         }),
         evaluable: new FormControl(false, [Validators.required]),
         preguntas: UtilActivityQuestions.arrayFormGroupPreguntas(jsonForm, this.formBuilder)
@@ -73,6 +90,7 @@ export class ActivityFormMediaModalComponent implements OnInit {
 
   onOpcionChange(event: any): void {
     this.ultimaOpcion = UtilActivityQuestions.onOpcionChange(this.activityForm, event, this.ultimaOpcion);
+    this.opcionIn = this.ultimaOpcion;
   }
 
   onSubmit(): any {

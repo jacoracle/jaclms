@@ -14,12 +14,12 @@
                            formControlName="pregunta" placeholder="Haz una pregunta ..."
                            name="pregunta{{indQuestion}}"
                            id="id_question{{indQuestion}}">
-                </mat-form-field>
-                <div class="form-nimbus">
-                    <div *ngIf="!isValidQuestion(indQuestion)" class="form-alert">
-                        <p>Mensaje de corrección</p>
+                    <div class="form-nimbus">
+                        <div *ngIf="!isValidQuestion(indQuestion)" class="form-alert">
+                            <p>Longitud entre 1 y 100 caracteres, validar sus respuestas</p>
+                        </div>
                     </div>
-                </div>
+                </mat-form-field>
             </div>
             <div class="col-delete-question">
                 <input type="button" (click)="removeQuestion(indQuestion)" class="btn-circle bs-danger"  [ngClass]="{'btn-circle-disabled': controlesPreguntas().length <= 1}"

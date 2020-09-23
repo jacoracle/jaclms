@@ -32,8 +32,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
   defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
   defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
+  defaultQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15.png';
   loadedQuestionsTextUrl = './../../../content/images/activity_up_thumb.png';
   loadedQuestionsMediaUrl = './../../../content/images/ab11.png';
+  loadedQuestionsAudioTextUrl = './../../../content/images/ab15.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
 
@@ -431,7 +433,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   createUpdateActivity(): void {
-    if (this.fileFormat === 'activity_question_text' || this.fileFormat === 'activity_question_media') {
+    if (this.isActivity()) {
       const indexActividad = this.actividadesInteractivas.length - 1;
       const actividadInteractiva = this.actividadesInteractivas[indexActividad];
       const jsonFormIn = this.jsonFormEntrada(actividadInteractiva);
@@ -473,6 +475,18 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         ) {
           jsonFormIn.tipoActividad.subtipo = 'imagen';
           jsonFormIn.tipoActividad.opcion = 'imagen_multiple';
+        } else if (
+          actividadInteractiva.tipoActividadInteractiva.opcion === 'unica' &&
+          actividadInteractiva.tipoActividadInteractiva.subtipo === 'audio'
+        ) {
+          jsonFormIn.tipoActividad.subtipo = 'audio';
+          jsonFormIn.tipoActividad.opcion = 'audio_unica';
+        } else if (
+          actividadInteractiva.tipoActividadInteractiva.opcion === 'multiple' &&
+          actividadInteractiva.tipoActividadInteractiva.subtipo === 'audio'
+        ) {
+          jsonFormIn.tipoActividad.subtipo = 'audio';
+          jsonFormIn.tipoActividad.opcion = 'audio_multiple';
         }
       }
     }
@@ -502,6 +516,14 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         case 'imagen_multiple':
           jsonFormOut.tipoActividad.opcion = 'multiple';
           jsonFormOut.tipoActividad.subtipo = 'imagen';
+          break;
+        case 'audio_unica':
+          jsonFormOut.tipoActividad.opcion = 'unica';
+          jsonFormOut.tipoActividad.subtipo = 'audio';
+          break;
+        case 'audio_multiple':
+          jsonFormOut.tipoActividad.opcion = 'multiple';
+          jsonFormOut.tipoActividad.subtipo = 'audio';
           break;
       }
 
@@ -546,10 +568,19 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   isNotTextActivity(): boolean {
-    return this.fileFormat !== 'activity_question_text' && this.fileFormat !== 'activity_question_media' && this.fileFormat !== 'text';
+    return (
+      this.fileFormat !== 'activity_question_text' &&
+      this.fileFormat !== 'activity_question_media' &&
+      this.fileFormat !== 'activity_question_audio_text' &&
+      this.fileFormat !== 'text'
+    );
   }
 
   isActivity(): boolean {
-    return this.fileFormat === 'activity_question_text' || this.fileFormat === 'activity_question_media';
+    return (
+      this.fileFormat === 'activity_question_text' ||
+      this.fileFormat === 'activity_question_media' ||
+      this.fileFormat === 'activity_question_audio_text'
+    );
   }
 }

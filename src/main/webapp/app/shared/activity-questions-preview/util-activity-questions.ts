@@ -12,7 +12,7 @@ export default class UtilActivityQuestions {
       for (let i = 0; i < jsonForm.preguntas.length; i++) {
         preguntas.push(
           new FormGroup({
-            pregunta: new FormControl(jsonForm.preguntas[i].pregunta, [Validators.required, Validators.maxLength(50)]),
+            pregunta: new FormControl(jsonForm.preguntas[i].pregunta, [Validators.required, Validators.maxLength(100)]),
             tipoPregunta: new FormControl(jsonForm.preguntas[i].tipoPregunta, [Validators.required]),
             respuestas: UtilActivityQuestions.arrayFormGroupRespuestas(jsonForm, i, formBuilder),
             calificada: new FormControl(jsonForm.preguntas[i].calificada, [Validators.required]),
@@ -29,7 +29,7 @@ export default class UtilActivityQuestions {
 
   static formGroupVacioPregunta(formBuilder: FormBuilder): FormGroup {
     return new FormGroup({
-      pregunta: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      pregunta: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       tipoPregunta: new FormControl(OpcionPreguntas.unica, [Validators.required]),
       respuestas: UtilActivityQuestions.arrayFormGroupRespuestas(undefined, 0, formBuilder),
       calificada: new FormControl(false, [Validators.required]),

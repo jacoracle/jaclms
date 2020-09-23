@@ -25,26 +25,32 @@
                 <div class="header-mdc">
                     <div class="type-q">
                         <label>Selecciona el tipo de respuesta:</label>
-                        <div class="col-type-question" formGroupName="tipoActividad">
+                        <div class="col-type-question" formGroupName="tipoActividad"
+                             [ngClass]="{'ng-untouched ng-pristine ng-invalid alert-input': !isValidOpcion()}">
                             <mat-radio-group aria-label="Select an option" formControlName="opcion"
                                              name="opcion">
                                 <mat-radio-button value="unica" id="type_question"
                                                   class="question-radio" (change)="onOpcionChange($event)"
-                                                  [disabled]="opcionIn != '' && opcionIn!='unica'">
+                                                  [hidden]="opcionIn != '' && opcionIn!='unica'">
                                     Única
                                 </mat-radio-button>
                                 <mat-radio-button value="multiple" id="type_question2"
                                                   class="question-radio" (change)="onOpcionChange($event)"
-                                                  [disabled]="opcionIn != '' && opcionIn!='multiple'">
+                                                  [hidden]="opcionIn != '' && opcionIn!='multiple'">
                                     Múltiple
                                 </mat-radio-button>
                                 <mat-radio-button value="verdaderoFalso" id="type_question3" class="question-radio"
                                                   (change)="onOpcionChange($event)"
-                                                  [disabled]="opcionIn != '' && opcionIn!='verdaderoFalso'">
+                                                  [hidden]="opcionIn != '' && opcionIn!='verdaderoFalso'">
                                     Verdadero Falso
                                 </mat-radio-button>
 
                             </mat-radio-group>
+                        </div>
+                        <div class="form-nimbus">
+                            <div *ngIf="!isValidOpcion()" class="form-alert">
+                                <p>Es obligatorio seleccionar una opción</p>
+                            </div>
                         </div>
                     </div>
                     <div class="type-q-evaluable">
