@@ -123,7 +123,9 @@ export class ConstructorTextComponent {
       e.path[0].tagName === 'UL' ||
       e.path[0].tagName === 'OL' ||
       e.path[0].tagName === 'LI' ||
-      e.path[0].tagName === 'span' ||
+      e.path[0].tagName === 'SPAN' ||
+      e.path[0].tagName === 'EM' ||
+      e.path[0].tagName === 'U' ||
       e.path[0].outerHTML.indexOf('<div quill-editor-toolbar="" class="ql-toolbar') !== -1 ||
       e.path[0].outerHTML.indexOf('<div class="ql-editor ql-blank" data-gramm="false" contenteditable="true"') !== -1 ||
       e.path[0].outerHTML.indexOf('<div quill-editor-element="" class="ql-container ql-snow"></div>') !== -1 ||

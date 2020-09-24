@@ -2,10 +2,10 @@
   "constructorApp": {
     "activityForm": {
       "closeModal": {
-        "success": "El formulario es correcto"
+        "success": "El formulario es correcto y se guardó exitosamente"
       },
       "invalidForm": {
-        "error": "El formulario es incorrecto"
+        "error": "El formulario es incorrecto, favor de validar todos los campos"
       }
     }
   }
