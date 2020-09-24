@@ -19,6 +19,9 @@ import { ContentBlock14Component } from './content-block14/content-block14.compo
 // import { ConstructorTipComponent } from '../components/constructor-tip/constructor-tip.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ConstructorActivityComponent } from 'app/constructor/components/constructor-activity/constructor-activity.component';
+import { ContentBlock17Component } from './content-block17/content-block17.component';
+import { ConstructorActivityNumerationComponent } from '../components/constructor-activity-numeration/constructor-activity-numeration.component';
+import { ContentBlock18Component } from './content-block18/content-block18.component';
 
 @NgModule({
   imports: [CommonModule, SafeHtmlModule, MatExpansionModule],
@@ -32,11 +35,14 @@ import { ConstructorActivityComponent } from 'app/constructor/components/constru
     ConstructorImageComponent,
     ConstructorPdfComponent,
     ConstructorSoundComponent,
+    ConstructorActivityNumerationComponent,
     // ContentBlock11Component,
     ContentBlock12Component,
     ContentBlock13Component,
     ContentBlock14Component,
-    ConstructorActivityComponent
+    ConstructorActivityComponent,
+    ContentBlock17Component,
+    ContentBlock18Component
   ],
   exports: [
     MatExpansionModule,
@@ -49,11 +55,14 @@ import { ConstructorActivityComponent } from 'app/constructor/components/constru
     ConstructorImageComponent,
     ConstructorPdfComponent,
     ConstructorSoundComponent,
+    ConstructorActivityNumerationComponent,
     // ContentBlock11Component,
     ContentBlock12Component,
     ContentBlock13Component,
     ContentBlock14Component,
-    ConstructorActivityComponent
+    ConstructorActivityComponent,
+    ContentBlock17Component,
+    ContentBlock18Component
   ]
 })
 export class ContentBlocksModule {}

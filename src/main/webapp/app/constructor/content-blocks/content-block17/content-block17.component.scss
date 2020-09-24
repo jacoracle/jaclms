@@ -1,0 +1,20 @@
+.constructor-container-indicator {
+  display: flex;
+  justify-content: center;
+
+  div.block-indicator-img {
+    // border: solid 1px black;
+  }
+
+  div.block-indicator-img:nth-child(1) {
+    // height: 120px;
+    height: auto;
+    width: 120px;
+  }
+
+  .block-indicator-txt {
+    align-self: center;
+    display: flex;
+    width: auto;
+  }
+}

@@ -26,7 +26,7 @@
     <include file="config/liquibase/changelog/20200305201125_added_entity_Modalidad.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201126_added_entity_Version.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201127_added_entity_Country.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20200305201128_added_entity_Nivel_Jerarquico.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200305201128_added_entity_Nivel_Modulo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201129_added_entity_Tipo_Bloque_Componentes.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201130_added_entity_Tipo_Componente.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201131_added_entity_Bloque_Componentes.xml" relativeToChangelogFile="false"/>
