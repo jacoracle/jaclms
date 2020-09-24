@@ -58,11 +58,24 @@ $input-border-light: lighten($input-border-focus, 35%);
 $input-border-hover: lighten($input-border-focus, 20%);
 // Window
 $window-header-color: white;
-$window-body-color: #f9f9f9;
+// $window-body-color: #f9f9f9;
+$light-color-1: white;
+$light-color-2: #f9f9f9;
+$window-body-color: white;
 $window-footer-color: white;
 $window-divider-color: #e7e8ed;
 $footer-bg-color: #f4f5f7;
 $border-component: gainsboro;
+
+// Light
+$border-light: #e1e4e8;
+$input-light: #f6f8fa;
+
+$border-radius-8: 8px;
+$border-radius-10: 10px;
+$border-radius-14: 14px;
+$border-radius-18: 18px;
+
 // Layout
 // $border-component: #a9bec7;
 $border-component: #d5d5d5;

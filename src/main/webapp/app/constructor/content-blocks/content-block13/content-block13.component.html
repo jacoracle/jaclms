@@ -1,7 +1,7 @@
 <div class="container-accordion">
     <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'100px'">
+            <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'100px'" class="disable_ripple">
                 <mat-panel-title>
                     <ng-container *ngIf="componentes[0]">
                         <jhi-visor-text [component]="componentes[0]!"
