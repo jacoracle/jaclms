@@ -77,7 +77,7 @@ public class NivelModuloResource {
 	     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new nivelJerarquico, or with status {@code 400 (Bad Request)} if the nivelJerarquico has already an ID.
 	     * @throws Exception 
 	     */
-	    @PostMapping("curso/nivel-jerarquico")
+	    @PostMapping("curso/nivel-modulo")
 	    public ResponseEntity<NivelJerarquicoResponse> createNivelJerarquico(@RequestBody NivelModuloDTO nivelModuloDTO) throws Exception {
 	        log.debug("REST request to save NivelModulo : {}", nivelModuloDTO);
 	        if (nivelModuloDTO == null) {
@@ -100,7 +100,7 @@ public class NivelModuloResource {
 	     * or with status {@code 500 (Internal Server Error)} if the nivelJerarquico couldn't be updated.
 	     * @throws Exception 
 	     */
-	    @PutMapping("curso/nivel-jerarquico")
+	    @PutMapping("curso/nivel-modulo")
 	    public ResponseEntity<NivelJerarquicoResponse> updateNivelJerarquico(@RequestBody NivelModuloDTO nivelModuloDTO) throws Exception {
 	        log.debug("REST request to update nivelJerarquico : {}", nivelModuloDTO);
 	        if (nivelModuloDTO == null) {
@@ -120,7 +120,7 @@ public class NivelModuloResource {
 	     * @param id the id of the nivelJerarquico to retrieve.
 	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the nivelJerarquico, or with status {@code 404 (Not Found)}.
 	     */
-	    @GetMapping("curso/nivel-jerarquico/{id}")
+	    @GetMapping("curso/nivel-modulo/{id}")
 	    public ResponseEntity<NivelJerarquicoResponse> getNivelJerarquico(@PathVariable Long id) {
 	        log.debug("REST request to get NivelModulo : {}", id);
 	        NivelJerarquicoResponse nivelJerarquico = nivelModuloService.findOneCurso(id);
@@ -134,7 +134,7 @@ public class NivelModuloResource {
 	     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new nivelJerarquico, or with status {@code 400 (Bad Request)} if the nivelJerarquico has already an ID.
 	     * @throws Exception 
 	     */
-	    @PostMapping("modulo/nivel-jerarquico")
+	    @PostMapping("modulo/nivel-modulo")
 	    public ResponseEntity<NivelJerarquicoModuloResponse> createNivelJerarquicoModulo(@RequestBody NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception {
 	        log.debug("REST request to save NivelJerarquicoModulo : {}", nivelJerarquicoModulo);
 	        if (nivelJerarquicoModulo == null) {
@@ -155,7 +155,7 @@ public class NivelModuloResource {
 	     * @return
 	     * @throws Exception
 	     */
-	    @PutMapping("modulo/nivel-jerarquico")
+	    @PutMapping("modulo/nivel-modulo")
 	    public ResponseEntity<NivelJerarquicoModuloResponse> updateNivelJerarquicoModulo(@RequestBody NivelJerarquicoModuloDTO nivelJerarquicoModulo) throws Exception {
 	        log.debug("REST request to update nivelJerarquicoModulo : {}", nivelJerarquicoModulo);
 	        if (nivelJerarquicoModulo == null) {
@@ -175,7 +175,7 @@ public class NivelModuloResource {
 	     * @param id
 	     * @return
 	     */
-	    @GetMapping("modulo/nivel-jerarquico/{id}")
+	    @GetMapping("modulo/nivel-modulo/{id}")
 	    public ResponseEntity<NivelJerarquicoModuloResponse> getNivelJerarquicoModule(@PathVariable Long id) {
 	        log.debug("REST request to get NivelModulo : {}", id);
 	        NivelJerarquicoModuloResponse nivelJerarquico = nivelModuloService.findOneModulo(id);
@@ -191,7 +191,7 @@ public class NivelModuloResource {
 
 	     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of nivelJerarquico in body.
 	     */
-	    @GetMapping("/nivel-jerarquico")
+	    @GetMapping("/nivel-modulo")
 	    public ResponseEntity<List<NivelModulo>> getAllNivelJerarquico(Pageable pageable) {
 	        log.debug("REST request to get a page of NivelModulo");
 	        Page<NivelModulo> page = nivelModuloService.findAll(pageable);
@@ -207,7 +207,7 @@ public class NivelModuloResource {
 	     * @param id the id of the nivelJerarquico to delete.
 	     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
 	     */
-	    @DeleteMapping("/nivel-jerarquico/{id}")
+	    @DeleteMapping("/nivel-modulo/{id}")
 	    public ResponseEntity<Void> deleteNivelJerarquico(@PathVariable Long id) {
 	        log.debug("REST request to delete NivelModulo : {}", id);
 	        nivelModuloService.delete(id);
