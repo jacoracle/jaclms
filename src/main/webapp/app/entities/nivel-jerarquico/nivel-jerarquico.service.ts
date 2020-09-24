@@ -9,8 +9,8 @@ type EntityResponseType = HttpResponse<INivelJerarquico>;
 
 @Injectable({ providedIn: 'root' })
 export class NivelJerarquicoService {
-  public resourceUrlCourse = SERVER_API_URL + 'api/curso/nivel-jerarquico';
-  public resourceUrlModule = SERVER_API_URL + 'api/modulo/nivel-jerarquico';
+  public resourceUrlCourse = SERVER_API_URL + 'api/curso/nivel-modulo';
+  public resourceUrlModule = SERVER_API_URL + 'api/modulo/nivel-modulo';
 
   constructor(protected http: HttpClient) {}
 
