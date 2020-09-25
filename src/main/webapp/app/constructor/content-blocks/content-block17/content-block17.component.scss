@@ -6,7 +6,15 @@
   height: 80px;
   display: flex;
   justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  .line-indicator {
+    position: absolute;
+    width: calc(100% - 300px);
+    height: 2px;
+    background-color: $input-border-light;
+    left: 0;
+  }
   .block-indicator-img {
     position: relative;
     width: 70px;
@@ -19,7 +27,8 @@
   .block-indicator-txt {
     position: relative;
     width: auto;
-    max-width: 40%;
+    min-width: 140px;
+    max-width: 200px;
     height: auto;
     max-height: 60px;
     border: 1px dashed $blue-nimbus-light;
@@ -28,6 +37,14 @@
     overflow: auto;
     &:hover {
       border: 1px solid $blue-nimbus-light;
+    }
+    .underline-indicator {
+      position: absolute;
+      width: 50px;
+      height: 4px;
+      bottom: 0;
+      left: 0;
+      background-color: #deca16;
     }
   }
 }
