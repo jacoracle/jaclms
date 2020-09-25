@@ -126,6 +126,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       titleSequenceUmas: data.titulo,
       desciptionSequenceUmas: data.descripcion,
       searchTagsSequenceUmas: [], // data.etiquetas//  !.map((t: ITagAgrupador) => t.descripcion)
+      durationSequence: data.duracion,
       sendRegisterForm: true
     });
     this.tagsBusquedaAgrupador = [...data.etiquetas!];
@@ -200,6 +201,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       descripcion: this.groupUmaForm.get(['desciptionSequenceUmas'])!.value,
       etiquetas: this.tagsBusquedaAgrupador,
       id: this.getGroupIdFromInputReceived(), //  0, //  this.groupUmaForm.get(['id'])!.value,
+      duracion: this.groupUmaForm.get('durationSequence')!.value,
       fechaFin: '',
       fechaInicio: '',
       modulos: []
