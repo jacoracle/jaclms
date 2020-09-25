@@ -54,12 +54,14 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       // Validators.email,
     ]),
     desciptionSequenceUmas: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    durationSequence: new FormControl([]),
     searchTagsSequenceUmas: [], //  this.formbuilder.array(this.tagsBusquedaAgrupador, this.validateArrayNotEmpty)
     sendRegisterForm: new FormControl('', [Validators.required])
   });
   // TERMINA FORMULARIO
 
   secuenciasUma: IAgrupador[] = new Array<IAgrupador>();
+  durationValuesList: number[] = [0, 15, 30, 45, 60];
 
   constructor(
     private accountService: AccountService,
