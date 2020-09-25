@@ -57,13 +57,13 @@
                     <div *ngIf="fileFormat  === 'activity_question_text' || fileFormat === 'activity_question_media'"
                          class="test-pdf">
                         <!-- Activity -->
-                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id === 0 && fileFormat  === 'activity_question_text'">
-                        <img [src]="defaultQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id === 0 && fileFormat  === 'activity_question_media'">
-                        <span class="play-icon-test" (click)="createUpdateActivity()" *ngIf=" this.actividadProperties.contenido !== 'unknown'">
+                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido === 'unknown' && fileFormat  === 'activity_question_text'">
+                        <img [src]="defaultQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido === 'unknown' && fileFormat  === 'activity_question_media'">
+                        <span class="play-icon-test" (click)="createUpdateActivity()" *ngIf=" actividadProperties.contenido !== 'unknown'">
                             <i class="icon ni-view"></i>
                         </span>
-                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id !== 0 && fileFormat  === 'activity_question_text'">
-                        <img [src]="loadedQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id !== 0 && fileFormat  === 'activity_question_media'">
+                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && fileFormat  === 'activity_question_text'">
+                        <img [src]="loadedQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && fileFormat  === 'activity_question_media'">
                     </div>
                     <div [hidden]="!showLoader" class="loader-cp">
                         <!-- Doing something -->

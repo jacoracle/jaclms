@@ -430,7 +430,7 @@ export default class UtilActivityQuestions {
         this.refreshQuestion(activityForm, indQuestion);
         UtilActivityQuestions.refreshForm(activityForm);
       }
-    }, 500);
+    }, 1000);
   }
 
   static isUnic(typeQuestion: string): boolean {

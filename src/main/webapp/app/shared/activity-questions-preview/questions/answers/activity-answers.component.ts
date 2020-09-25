@@ -166,7 +166,7 @@ export class ActivityAnswersComponent {
             this.showLoader = false;
             this.refreshQuestion(indQuestion);
           }
-        }, 1000);
+        }, 1500);
       }
     }
   }

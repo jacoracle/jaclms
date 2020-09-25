@@ -33,8 +33,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
   defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
   defaultQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15.png';
-  loadedQuestionsTextUrl = './../../../content/images/activity_up_thumb.png';
-  loadedQuestionsMediaUrl = './../../../content/images/ab11.png';
+  loadedQuestionsTextUrl = './../../../content/images/actividad_up.png';
+  loadedQuestionsMediaUrl = './../../../content/images/ab11_up.png';
   loadedQuestionsAudioTextUrl = './../../../content/images/ab15.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
@@ -179,6 +179,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.actividadProperties.contenido =
           cantidadAtributos(actividadInteractiva.contenido) > 0 ? actividadInteractiva.contenido : 'unknown';
         this.actividadProperties.id = actividadInteractiva.id ? actividadInteractiva.id : 0;
+        // eslint-disable-next-line no-console
+        console.log(this.actividadProperties);
       }
     });
   }
