@@ -55,6 +55,7 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
             this.subscription = this.contenidoActividadService.update(contenidoActividad).subscribe(
               data => {
                 this.component!.actividadesInteractivas![indexActividad] = data.body!;
+                this.contenidoActividad = this.component!.actividadesInteractivas![indexActividad].contenido;
               },
               () => {
                 this.eventManager.broadcast(
