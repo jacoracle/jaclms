@@ -270,10 +270,9 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 	public Optional<Agrupador> updateAgrupador(AgrupadorUpdateDTO dto) throws Exception {
 		return Optional.of(agrupadorRepository.findById(dto.getId())).filter(Optional::isPresent).map(Optional::get)
 				.map(agrupador -> {
-					agrupador.setId(dto.getId());
 					agrupador.setTitulo(dto.getTitulo());
 					agrupador.setDescripcion(dto.getDescripcion());
-
+					agrupador.setDuracion(dto.getDuracion());
 					agrupador.getEtiquetas().clear();
 
 					Set<Etiqueta> listEtiquetas = new HashSet<>();
