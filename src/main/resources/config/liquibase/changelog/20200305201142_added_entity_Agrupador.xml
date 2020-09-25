@@ -23,6 +23,9 @@
             <column name="descripcion" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="duracion" type="int">
+                <constraints nullable="true" />
+            </column>
             <column name="fecha_inicio" type="date">
                 <constraints nullable="true" />
             </column>
