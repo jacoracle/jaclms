@@ -10,6 +10,7 @@ export interface IAgrupador {
   fechaFinSys?: Moment;
   fechaInicio?: string; //    verificar el tipo y si se queda o se quita
   fechaInicioSys?: Moment;
+  duracion?: number;
   modulos?: any[]; //    este sera de tipo AgrupadorModulo
 }
 
@@ -23,6 +24,7 @@ export class Agrupador implements IAgrupador {
     public fechaFinSys?: Moment,
     public fechaInicio?: string,
     public fechaInicioSys?: Moment,
+    public duracion?: number,
     public modulos?: any[]
   ) {}
 }
