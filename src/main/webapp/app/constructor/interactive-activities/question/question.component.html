@@ -3,28 +3,43 @@
         background-color: white;
     }
 </style>
-<div class="fondo">
-    <!-- Nombre -->
-    <span>Nombre de la actividad:</span>
-    <input type="text">
-    <!-- Nombre -->
-    <!-- Evaluable -->
-    <!-- Evaluable -->
-    <!-- Pregunta -->
-        <!-- Indicación/Pregunta -->
-        <!-- Indicación/Pregunta -->
-        <!-- Recurso -->
-        <!-- Recurso -->
-        <!-- Tipo de pregunta -->
-        <!-- Tipo de pregunta -->
-        <!-- Tipo de respuestas -->
-        <!-- Tipo de respuestas -->    
-        <!-- Respuesta -->
-            <!-- Correcta -->
-            <!-- Correcta -->
-            <!-- Respuesta/URL de recurso -->
-            <!-- Respuesta/URL de recurso -->
-        <!-- Respuesta -->
-    <!-- Pregunta -->
+
+<div class="modal-activity-container">
+    <div class="modal-act-header">
+        <div class="row-mah">
+            <div class="nimbus-imagotype"></div>
+            <h2 id="jhi-curso-heading">Actividad interactiva</h2>
+
+            <div class="fondo">
+                <!-- Nombre -->
+                <span>Nombre de la actividad:</span>
+                <input type="text">
+                <!-- Nombre -->
+                <!-- Evaluable -->
+                <!-- Evaluable -->
+                <!-- Pregunta -->
+                    <!-- Indicación/Pregunta -->
+                    <!-- Indicación/Pregunta -->
+                    <!-- Recurso -->
+                    <!-- Recurso -->
+                    <!-- Tipo de pregunta -->
+                    <!-- Tipo de pregunta -->
+                    <!-- Tipo de respuestas -->
+                    <!-- Tipo de respuestas -->    
+                    <!-- Respuesta -->
+                        <!-- Correcta -->
+                        <!-- Correcta -->
+                        <!-- Respuesta/URL de recurso -->
+                        <!-- Respuesta/URL de recurso -->
+                    <!-- Respuesta -->
+                <!-- Pregunta -->
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-act-footer">
+        <button (click)="close()" class="secondary-btn">Cancelar</button>
+        <button type="button" (click)="save()" class="main-btn">Crear Actividad</button>
+    </div>
 </div>
 

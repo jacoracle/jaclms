@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 import { Preguntas, Respuestas } from './../../../shared/model/actividad-pregunta.model';
+import { ActivityService } from 'app/services/activity.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'jhi-question',
@@ -18,7 +20,7 @@ export class QuestionComponent implements OnInit {
     return this._activity!;
   }
 
-  constructor() {}
+  constructor(private activitiService: ActivityService, public activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {}
 
@@ -43,5 +45,14 @@ export class QuestionComponent implements OnInit {
       seleccionada: false,
       path: ''
     };
+  }
+
+  save(): void {
+    this.activity.nombre = 'Test';
+    this.activitiService.setActivity(this.activity);
+  }
+
+  close(): any {
+    this.activeModal.close();
   }
 }

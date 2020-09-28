@@ -365,7 +365,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
         contenido: this.createContenidoActividad(),
         evaluable: null,
         intentos: null,
-        gamificacion: null
+        gamificacion: null,
+        nombre: ''
       });
       return actividad;
     } else {
