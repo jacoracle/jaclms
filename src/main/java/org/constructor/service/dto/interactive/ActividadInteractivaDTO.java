@@ -17,6 +17,9 @@ public class ActividadInteractivaDTO {
 	 */
 
 	private Long id;
+	
+	/** The nombre. */
+	private String nombre;
 
 	/**
 	 * Json contenido
@@ -53,10 +56,21 @@ public class ActividadInteractivaDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
-
 	
+
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	/**
 	 * @return the contenido
@@ -130,14 +144,17 @@ public class ActividadInteractivaDTO {
 		this.tipoActividadInteractiva = tipoActividadInteractiva;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
-		return "ActividadInteractivaDTO [id=" + id + ", contenido=" + contenido + ", evaluable=" + evaluable
-				+ ", intentos=" + intentos + ", gamificacion=" + gamificacion + "]";
+		return "ActividadInteractivaDTO [id=" + id + ", nombre=" + nombre + ", contenido=" + contenido + ", evaluable="
+				+ evaluable + ", intentos=" + intentos + ", gamificacion=" + gamificacion
+				+ ", tipoActividadInteractiva=" + tipoActividadInteractiva + "]";
 	}
-	
-	
-	
 	
 	
 }
