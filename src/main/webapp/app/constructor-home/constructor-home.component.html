@@ -25,30 +25,39 @@
     <div class="window-br-body">
       <div class="row-new-home">
         <div class="home-element" (click)="redirectUMAs();">
-          <div class="he-img heimg1"></div>
-          <div class="he-text">
-            <h4> <div class="he-i he-icon-1"></div> Constructor de UMAs</h4>
-            <div class="divider-he"></div>
-            <p>Crea y edita UMAs (unidad mínima de aprendizaje).</p>
+          <div class="he-img heimg1">
+            <div class="home-image-step"></div>
           </div>
-          <!-- <button (click)="redirectUMAs();" class="secondary-btn">Seleccionar</button> -->
+          <div class="he-text">
+            <h4> <div class="he-i he-icon-1"></div> Constructor de UMA</h4>
+            <div class="divider-he"></div>
+            <p>Crea y edita UMA (Unidad Mínima de Aprendizaje).</p>
+          </div>
+          <button (click)="redirectUMAs();" class="main-btn">Seleccionar</button>
         </div>
 
         <div class="home-element" (click)="redirectGroupUMA();">
-          <div class="he-img heimg2"></div>
-          <div class="he-text">
-            <h4> <div class="he-i he-icon-1"></div> Agrupador de UMAs</h4>
-            <div class="divider-he"></div>
-            <p>Crea y edita secuencias de UMAs y grupos.</p>
+          <div class="indicator-step"><div class="icon-step-w"></div></div>
+          <div class="he-img heimg2">
+            <div class="home-image-step"></div>
           </div>
+          <div class="he-text">
+            <h4> <div class="he-i he-icon-1"></div> Agrupador de UMA</h4>
+            <div class="divider-he"></div>
+            <p>Crea y edita secuencias de UMA y Agrupadores.</p>
+          </div>
+          <button (click)="redirectGroupUMA();" class="main-btn">Seleccionar</button>
         </div>
         <div class="home-element" (click)="redirectLearningPath();">
-          <div class="he-img heimg3"></div>
+          <div class="he-img heimg3">
+            <div class="home-image-step"></div>
+          </div>
           <div class="he-text">
             <h4> <div class="he-i he-icon-1"></div> Rutas de aprendizaje</h4>
             <div class="divider-he"></div>
-            <p>Agrega grupos de UMAs para crear rutas de aprendizaje.</p>
+            <p>Agrega agrupadores de UMA para crear rutas de aprendizaje.</p>
           </div>
+          <button (click)="redirectLearningPath();" class="main-btn">Seleccionar</button>
         </div>
       </div>
 
