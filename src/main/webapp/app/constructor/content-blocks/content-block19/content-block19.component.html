@@ -1,0 +1,9 @@
+<!-- Bloque de contenido: Pregunta -->
+Bloque 19
+<div class="col-cb-text-img" *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
+    <div *ngFor="let component of contentBlock.bloqueComponentes.componentes; let index = index;">
+        <div *ngIf="component.tipoComponente.nombre === 'activity'">
+            <jhi-constructor-question [component]="component"></jhi-constructor-question>
+        </div>
+    </div>
+</div>

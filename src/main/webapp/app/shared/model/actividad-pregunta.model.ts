@@ -17,6 +17,7 @@ export class Preguntas {
   public calificada?: boolean;
   public marcada?: boolean;
   public correcta?: boolean;
+  public tipoRespuestas?: string;
 }
 
 export class Respuestas {

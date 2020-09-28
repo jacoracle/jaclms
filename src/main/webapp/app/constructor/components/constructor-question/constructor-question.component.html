@@ -1,0 +1,8 @@
+<div (click)="selectActivity()">
+    <div *ngIf="this._component.actividadesInteractivas![0].tipoActividadInteractiva.contenido === ''"> 
+        <img [src]="emptyActivityImg" alt="">
+    </div>
+    <div *ngIf="this._component.actividadesInteractivas![0].tipoActividadInteractiva.contenido !== ''">
+        <img [src]="activityImg" alt="">
+    </div>
+</div>

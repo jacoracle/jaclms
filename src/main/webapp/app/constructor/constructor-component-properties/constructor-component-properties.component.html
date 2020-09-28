@@ -65,6 +65,14 @@
                         <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id !== 0 && fileFormat  === 'activity_question_text'">
                         <img [src]="loadedQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.id !== 0 && fileFormat  === 'activity_question_media'">
                     </div>
+                    <div *ngIf="fileFormat  === 'pregunta_texto'" class="test-pdf">
+                        <!-- Activity (temp) -->
+                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity.contenido === {}">
+                        <span class="play-icon-test" (click)="openActivityModal()">
+                            <i class="icon ni-view"></i>
+                        </span>
+                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity.contenido !== {}">
+                    </div>
                     <div [hidden]="!showLoader" class="loader-cp">
                         <!-- Doing something -->
                         <span class="loader"></span>

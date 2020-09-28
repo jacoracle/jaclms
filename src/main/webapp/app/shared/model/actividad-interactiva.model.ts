@@ -5,6 +5,7 @@ export interface IActividadInteractiva {
   intentos?: number | null;
   gamificacion?: number | null;
   tipoActividadInteractiva?: TipoActividad;
+  nombre?: string;
 }
 
 export class ActividadInteractiva implements IActividadInteractiva {
@@ -14,7 +15,8 @@ export class ActividadInteractiva implements IActividadInteractiva {
     public evaluable?: boolean | null,
     public intentos?: number | null,
     public gamificacion?: number | null,
-    public tipoActividadInteractiva?: TipoActividad
+    public tipoActividadInteractiva?: TipoActividad,
+    public nombre?: string
   ) {}
 }
 

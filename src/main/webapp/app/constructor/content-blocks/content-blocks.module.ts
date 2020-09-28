@@ -22,6 +22,7 @@ import { ConstructorActivityComponent } from 'app/constructor/components/constru
 import { ContentBlock17Component } from './content-block17/content-block17.component';
 import { ConstructorActivityNumerationComponent } from '../components/constructor-activity-numeration/constructor-activity-numeration.component';
 import { ContentBlock18Component } from './content-block18/content-block18.component';
+import { ConstructorQuestionComponent } from '../components/constructor-question/constructor-question.component';
 
 @NgModule({
   imports: [CommonModule, SafeHtmlModule, MatExpansionModule],
@@ -36,6 +37,7 @@ import { ContentBlock18Component } from './content-block18/content-block18.compo
     ConstructorPdfComponent,
     ConstructorSoundComponent,
     ConstructorActivityNumerationComponent,
+    ConstructorQuestionComponent,
     // ContentBlock11Component,
     ContentBlock12Component,
     ContentBlock13Component,
@@ -56,6 +58,7 @@ import { ContentBlock18Component } from './content-block18/content-block18.compo
     ConstructorPdfComponent,
     ConstructorSoundComponent,
     ConstructorActivityNumerationComponent,
+    ConstructorQuestionComponent,
     // ContentBlock11Component,
     ContentBlock12Component,
     ContentBlock13Component,

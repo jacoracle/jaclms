@@ -13,11 +13,12 @@ import { VideoModalService } from 'app/services/video-modal.service';
 import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { CurrentModuleService } from 'app/services/current-module.service';
 import { ActivityQuestionsModalService } from 'app/services/activity-questions-modal.service';
-import { ActividadInteractiva, ContenidoActividad } from 'app/shared/model/actividad-interactiva.model';
+import { ActividadInteractiva, ContenidoActividad, IActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 import { cantidadAtributos } from 'app/shared/util/util';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { ActivityService } from 'app/services/activity.service';
 import { TextService } from 'app/services/text.service';
+import { ActivityModalService as InteractiveActivityModal } from 'app/services/activity-modal.service';
 @Component({
   selector: 'jhi-constructor-component-properties',
   templateUrl: './constructor-component-properties.component.html',
@@ -78,6 +79,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   private _MIL24 = 1024000;
   private _KIL24 = 1024;
 
+  activity?: IActividadInteractiva;
+
   constructor(
     public imageService: ImageService,
     public videoService: VideoService,
@@ -91,6 +94,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     private pdfModalService: PdfModalService,
     private videoModalService: VideoModalService,
     private activityModalService: ActivityQuestionsModalService,
+    private interactiveActivityModal: InteractiveActivityModal,
     private textService: TextService
   ) {
     // Recibe el texto cuando dejo de escribir
@@ -113,6 +117,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     // Formulario de la actividad de preguntas a mostrar como preview
     this.subscription = this.subscriptionActivityQuestions();
+
+    this.subscription = this.questionSubscription();
 
     this.type = this.currentCourseService.getType() !== '' ? this.currentCourseService.getType() : this.currentModuleService.getType();
     if (this.type === 'course') {
@@ -302,6 +308,18 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     return subscription;
   }
 
+  questionSubscription(): Subscription {
+    const subscription = this.activityService.getActivity().subscribe(activity => {
+      console.error('Se recibe actividad en Propiedades.');
+      this.activity = activity;
+      if (activity.tipoActividadInteractiva && activity.tipoActividadInteractiva.tipoActividad) {
+        this.fileFormat = activity.tipoActividadInteractiva.tipoActividad;
+      }
+      console.error(activity);
+    });
+    return subscription;
+  }
+
   /*
    * Recibe archivo seleccionado, valida tamaño y tipo, y sube el archivo a servidor. Obtiene src necesario para mostrar en componente y en propiedades.
    * @param event  Evento con archivo seleccionado.
@@ -445,6 +463,13 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         }
         this.showLoader = false;
       });
+    }
+  }
+
+  openActivityModal(): void {
+    console.error(this.activity);
+    if (this.activity) {
+      this.interactiveActivityModal.open(this.activity);
     }
   }
 

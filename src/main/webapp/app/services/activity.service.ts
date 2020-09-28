@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
+import { ActividadInteractiva, IActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 import { SafeUrl } from '@angular/platform-browser';
 
 @Injectable({
@@ -11,6 +11,8 @@ export class ActivityService {
   private activityProperties = new Subject<ActividadInteractiva[]>();
   private typeQuestion = new Subject<string>();
   private imgSrc = new Subject<SafeUrl>();
+
+  private activity = new Subject<IActividadInteractiva>();
 
   constructor() {}
 
@@ -47,5 +49,13 @@ export class ActivityService {
    */
   getTypeQuestion(): Observable<string> {
     return this.typeQuestion.asObservable();
+  }
+
+  setActivity(activity: IActividadInteractiva): void {
+    this.activity.next(activity);
+  }
+
+  getActivity(): Observable<IActividadInteractiva> {
+    return this.activity.asObservable();
   }
 }

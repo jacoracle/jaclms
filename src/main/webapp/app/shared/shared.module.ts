@@ -27,6 +27,7 @@ import { SafeHtmlModule } from './safe-html/safe-html.module';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ActivityFormMediaModalComponent } from 'app/shared/activity-questions-preview/form-media/activity-form-media-modal.component';
 import { SafeUrlModule } from 'app/shared/safe-url/safe-url.module';
+import { InteractiveActivitiesModule } from './../constructor/interactive-activities/interactive-activities.module';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { SafeUrlModule } from 'app/shared/safe-url/safe-url.module';
     SafeHtmlModule,
     UmaPreviewModule,
     MatGridListModule,
-    SafeUrlModule
+    SafeUrlModule,
+    InteractiveActivitiesModule
   ],
   declarations: [
     FindLanguageFromKeyPipe,
