@@ -145,11 +145,13 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 		log.debug("Request to save agrupador : {}", agrupadorDTO);
 		AgrupadorDTO agrup = new AgrupadorDTO();
 		Agrupador agrupador = new Agrupador();
-		
+		agrupador.setTitulo(agrupadorDTO.getTitulo());
 		agrupador.setDescripcion(agrupadorDTO.getDescripcion());
 		agrupador.setDuracion(agrupadorDTO.getDuracion());
+		agrupador.setFechaInicio(agrupadorDTO.getFechaInicio());
+		agrupador.setFechaFin(agrupadorDTO.getFechaFin());
 		agrupador.setEtiquetas(agrupadorDTO.getEtiquetas());
-		agrupador.setTitulo(agrupadorDTO.getTitulo());
+		
 		
 		String usuarioNombre = authentication.getName();
 		Set<User> user = userService.findUserByLogin(usuarioNombre);
