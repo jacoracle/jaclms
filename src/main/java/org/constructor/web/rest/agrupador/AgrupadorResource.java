@@ -93,17 +93,20 @@ public class AgrupadorResource {
 	 * @throws URISyntaxException
 	 */
 	@PostMapping(path = RestConstants.PATH_AGRUPADOR)
-	public ResponseEntity<AgrupadorDTO> createAgrupador(Authentication authentication, @RequestBody DTOAgrupador agrupadorDTO)
+	public ResponseEntity<Agrupador> createAgrupador(Authentication authentication, @RequestBody DTOAgrupador agrupadorDTO)
 			throws IOException {
 		log.debug("REST request to save Agrupador : {}", agrupadorDTO);
 		if (agrupadorDTO == null) {
 			throw new BadRequestAlertException("A new agrupador cannot is empty", ENTITY_NAME, "");
 		}
-		log.debug("REST request to mo : {}", agrupadorDTO);
+		log.debug("REST request to agru: {}", agrupadorDTO);
+		
 		AgrupadorDTO result = agrupadorService.save(authentication, agrupadorDTO);
+		  Optional<Agrupador> agrupador  = agrupadorService.findOne(result.getAgrupador().getId());
+		
 		log.debug("result : {}", result);
 
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<>(agrupador.get(), HttpStatus.OK);
 	}
 
 	/**

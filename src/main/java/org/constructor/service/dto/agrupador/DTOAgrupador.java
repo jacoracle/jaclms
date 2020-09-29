@@ -4,35 +4,57 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.constructor.domain.User;
 import org.constructor.domain.agrupador.Etiqueta;
 
+
+/**
+ * 
+ * @author Edukai
+ *
+ */
 public class DTOAgrupador {
 	
-	
+	/**
+	 * id long
+	 */
 	private Long id;
 	
-	
+	/**
+	 * String
+	 */
     private String titulo;
     
-   
+   /**
+    * String
+    */
     private String descripcion;
     
-   
+   /**
+    * Int
+    */
     private int duracion;
     
-   
+   /**
+    * LocalDateTime
+    */
     private LocalDateTime fechaInicio;
     
-    
+    /**
+     * LocalDateTime
+     */
     private LocalDateTime fechaFin;
      
-    
+    /**
+     * Set etiquetas
+     */
     private Set<Etiqueta> etiquetas = new HashSet<>();
     
+    /**
+     * Set modulos
+     */
     private Set<AgrupadorModuloDTO> modulos = new HashSet<>();
     
-    private Set<User> user = new HashSet<>();
+  
 
 	/**
 	 * @return the id
@@ -146,30 +168,13 @@ public class DTOAgrupador {
 		this.modulos = modulos;
 	}
 
-	/**
-	 * @return the user
-	 */
-	public Set<User> getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(Set<User> user) {
-		this.user = user;
-	}
-
-	/**
-	 * To string.
-	 *
-	 * @return the string
-	 */
 	@Override
 	public String toString() {
 		return "DTOAgrupador [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", duracion="
 				+ duracion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", etiquetas=" + etiquetas
-				+ ", modulos=" + modulos + ", user=" + user + "]";
+				+ ", modulos=" + modulos + "]";
 	}
+
+
 
 }

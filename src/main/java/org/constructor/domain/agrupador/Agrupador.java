@@ -307,16 +307,18 @@ public class Agrupador  implements Serializable{
 	 * @return the int
 	 */
 	@Override
-
+ 
 	   public int hashCode() {
 	        return id.hashCode();
 	    }
 
+	/**
+	 * ToString 
+	 */
 	@Override
 	public String toString() {
 		return "Agrupador [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", duracion=" + duracion
-				+ ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", etiquetas=" + etiquetas + ", modulos="
-				+ modulos + ", user=" + user + "]";
+				+ ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", etiquetas="  + "]";
 	}
 
     

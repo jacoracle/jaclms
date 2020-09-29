@@ -160,8 +160,7 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 		agrupadorRepository.save(agrupador);
 		
 		agrupadorDTO.getModulos().forEach(moduloDTO -> {
-			 
-			Optional<Modulo> modulo  = moduloRepository.findById(moduloDTO.getId());
+			Optional<Modulo> modulo  = moduloRepository.findById(moduloDTO.getModulo().getId());
 			AgrupadorModulo agrupadorModulo = new AgrupadorModulo();
 			
 			agrupadorModulo.setModulo(modulo.get());
@@ -182,7 +181,7 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 	}
 
 	/**
-	 * Get service for the last 10
+	 * Get service for the last 20
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -202,7 +201,6 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 			}
 
 		}
-		log.debug("agrupador userrrrrr {}", a);
 		user = userService.findUserByLogin(usuarioNombre);
 
 		for (User usuario : user) {

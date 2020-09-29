@@ -47,18 +47,13 @@ public class AgrupadorModulo implements Serializable {
 	@Column(name = "orden")
 	private Long orden;
 	
-	
 	/**
 	 * modulo_id
 	 */
-	
 	@ManyToOne
     @JoinColumn(name = "modulo_id", nullable=false)
     private Modulo modulo;
 	
-	
-	
-
 	/**
 	 * agrupador_id
 	 */
@@ -66,6 +61,7 @@ public class AgrupadorModulo implements Serializable {
 	@ManyToOne
     @JoinColumn(name = "agrupador_id", nullable=false)
     @JsonBackReference
+    
     private Agrupador agrupador;
 
 	/**
