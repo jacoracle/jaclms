@@ -11,7 +11,7 @@ export class ActivityModalService {
 
   constructor(private modalService: NgbModal) {}
 
-  open(activity: IActividadInteractiva): void {
+  open(activity: IActividadInteractiva, id: number): void {
     console.error(activity);
     let modalRef;
     if (!this.isOpen) {
@@ -22,6 +22,7 @@ export class ActivityModalService {
         modalRef = this.modalService.open(QuestionComponent);
       }
       modalRef.componentInstance.activity = activity;
+      modalRef.componentInstance.id = id;
       modalRef.result.finally(() => {
         this.isOpen = false;
       });

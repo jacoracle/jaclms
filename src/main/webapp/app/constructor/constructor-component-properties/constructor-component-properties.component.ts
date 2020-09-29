@@ -257,7 +257,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       } else {
         if (this.multimediaFileProperties.contenido !== undefined && this.viewPdf) {
           this.showLoader = true;
-          this.pdfModalService.open(this.pdfSrc);
+          this.pdfModalService.open(this.pdfSrc, this.id);
           this.viewPdf = false;
           this.showLoader = false;
         }
@@ -469,7 +469,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   openActivityModal(): void {
     console.error(this.activity);
     if (this.activity) {
-      this.interactiveActivityModal.open(this.activity);
+      this.interactiveActivityModal.open(this.activity, this.id);
     }
   }
 

@@ -5,6 +5,9 @@
 </style>
 
 <div class="modal-activity-container">
+    <div *ngIf="showLoader">
+        CARGANDO...
+    </div>
     <div class="modal-act-header">
         <div class="row-mah">
             <div class="nimbus-imagotype"></div>
@@ -13,25 +16,68 @@
             <div class="fondo">
                 <!-- Nombre -->
                 <span>Nombre de la actividad:</span>
-                <input type="text">
+                <input type="text" [(ngModel)]="activity.nombre">
                 <!-- Nombre -->
                 <!-- Evaluable -->
+                <input type="checkbox" [(ngModel)]="activity.contenido.evaluable">
+                <span>Evaluable</span>
                 <!-- Evaluable -->
                 <!-- Pregunta -->
+                <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;">
                     <!-- Indicación/Pregunta -->
+                    <span>Pregunta</span>
+                    <input type="text" [(ngModel)]="pregunta.pregunta">
                     <!-- Indicación/Pregunta -->
                     <!-- Recurso -->
+                    <span>Recurso</span>
+                    <select name="" id="" [(ngModel)]="pregunta.tipoRecurso">
+                        <option value=""></option>
+                        <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
+                    </select>
+                    <button type="button" class="main-btn" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()">
+                        <span>Subir</span>
+                        <input #resourceInput type="file" (change)="selectFile($event, pregunta)" style="display:none;"/>
+                    </button>
+                    <img [src]="pregunta.safeUrl" *ngIf="(pregunta.tipoRecurso === 'Imagen' || pregunta.tipoRecurso === 'Video') && pregunta.safeUrl && pregunta.safeUrl !== ''">
+                    <audio src="" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.path !== ''"></audio>
                     <!-- Recurso -->
                     <!-- Tipo de pregunta -->
+                    <select name="" id="" [(ngModel)]="pregunta.tipoPregunta">
+                        <option value=""></option>
+                        <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
+                    </select>
                     <!-- Tipo de pregunta -->
                     <!-- Tipo de respuestas -->
-                    <!-- Tipo de respuestas -->    
+                    <select name="" id="" [(ngModel)]="pregunta.tipoRespuestas">
+                        <option value=""></option>
+                        <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
+                    </select>
+                    <!-- Tipo de respuestas -->
+                    <!-- Eliminar pregunta -->
+                    <button (click)="deleteQuestion(questionIndex);">Eliminar pregunta</button>
+                    <!-- Eliminar pregunta -->    
                     <!-- Respuesta -->
+                    <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;">
                         <!-- Correcta -->
+                        <input type="checkBox" [(ngModel)]="respuesta.correcta">
                         <!-- Correcta -->
+                        <!-- Respuesta -->
+                        <input type="text" [(ngModel)]="respuesta.respuesta" *ngIf="pregunta.tipoRespuestas === 'Texto'">
+                        <!-- Respuesta -->
                         <!-- Respuesta/URL de recurso -->
+                        <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
+                        <audio src="" *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.path !== ''"></audio>
+                        <button type="button" class="main-btn" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()">
+                            <span>Subir</span>
+                            <input #fileInput type="file" (change)="selectFile($event, respuesta)" style="display:none;"/>
+                        </button>
+                        <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1">Eliminar respuesta</button>
                         <!-- Respuesta/URL de recurso -->
+                    </div>
+                    <button (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4">Agregar respuesta</button>
                     <!-- Respuesta -->
+                </div>
+                <button (click)="addQuestion()">Agregar pregunta</button>
                 <!-- Pregunta -->
             </div>
 
@@ -39,7 +85,7 @@
     </div>
     <div class="modal-act-footer">
         <button (click)="close()" class="secondary-btn">Cancelar</button>
-        <button type="button" (click)="save()" class="main-btn">Crear Actividad</button>
+        <button type="button" (click)="save()" class="main-btn">Guardar</button>
     </div>
 </div>
 
