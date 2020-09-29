@@ -11,6 +11,7 @@ import { MatHorizontalStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgrupadorUmaUpdateComponent } from 'app/entities/agrupador/agrupador-uma-update.component';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { SecuenciaAgrupadorUpdateComponent } from '../entities/agrupador/secuencia-uma-update.component';
 
 @Component({
   selector: 'jhi-group-uma-configuration',
@@ -18,7 +19,8 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
   styleUrls: ['./group-uma-configuration.component.scss']
 })
 export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
-  @ViewChild(AgrupadorUmaUpdateComponent, { static: false }) umaUpdateComponente!: AgrupadorUmaUpdateComponent;
+  @ViewChild(AgrupadorUmaUpdateComponent, { static: false }) umaUpdateComponent!: AgrupadorUmaUpdateComponent;
+  @ViewChild(SecuenciaAgrupadorUpdateComponent, { static: false }) secuenciaUpdateComponent!: SecuenciaAgrupadorUpdateComponent;
   @ViewChild(MatHorizontalStepper, { static: false }) stepper!: MatHorizontalStepper;
   isSaving = false;
   authSubscription?: Subscription;
@@ -83,6 +85,24 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   }
 
   setAgrupador(event: any): void {
+    if (event) {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', {
+          message: 'constructorApp.agrupador.created',
+          type: 'success'
+        })
+      );
+      this.router.navigate(['/uma-groups-home']);
+    } else {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', {
+          message: 'constructorApp.agrupador.validations.saveError',
+          type: 'danger'
+        })
+      );
+    }
+
+    /* lo comente por ajuste de tabs
     this.createdGroupSequence = event.param2;
     this.isNewGroup = true;
     this.btnSaveUpdate = 'Terminar y Salir';
@@ -99,6 +119,7 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
         })
       );
     }
+    */
   }
 
   setCreateForm(evt: any): void {
@@ -124,16 +145,30 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
 
   executeSave(evt: any): void {
     evt.stopPropagation();
+    /*
     this.formSteps
       .get([0])!
       .get('sendRegisterForm')!
       .setValue(true); //  hack to validate form steps
-    this.umaUpdateComponente.saveSequenceGroup();
+    */
+    // if (this.secuenciaUpdateComponent.getSizeSecuenciaUmas() > 0) {
+    this.umaUpdateComponent.saveSequenceGroup();
+    /*
+    } else {
+
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', {
+          message: 'constructorApp.agrupador.validations.formErrorSequence',
+          type: 'danger'
+        })
+      );
+    }
+    */
   }
 
   revertData(): void {
     console.error('#### group-uma-configuration - 1');
-    this.umaUpdateComponente.revertSequenceGroup(this.createdGroupSequence.id!);
+    this.umaUpdateComponent.revertSequenceGroup(this.createdGroupSequence.id!);
     console.error('#### group-uma-configuration - Last, terminó revert, viene redirect');
     /*
     this.eventManager.broadcast(

@@ -21,6 +21,8 @@
       },
       "validations": {
         "formError": "Por favor revisa la información y vuelve a intentarlo.",
+        "formErrorTitle": "Se requiere el título del agrupador, por favor, verifica el formulario.",
+        "formErrorSequence": "Se requiere mínimo una UMA para el agrupador.",
         "fileSize": "El archivo debe pesar menos de 5MB.",
         "fileType": "Tipo de archivo no permitido.",
         "dates": "La fecha de creación no puede ser posterior a la fecha de publicación.",

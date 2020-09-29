@@ -17,6 +17,7 @@ import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.mode
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { UmaPreviewModalService } from 'app/services/uma-preview-modal.service';
 import { takeUntil, startWith, map } from 'rxjs/operators';
+import { AgrupadorConfigService } from 'app/services/agrupador-config.service';
 
 @Component({
   selector: 'jhi-secuencia-uma-update',
@@ -54,6 +55,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   constructor(
     private formbuilder: FormBuilder,
     private accountService: AccountService,
+    private agrupadorConfigService: AgrupadorConfigService,
     protected agrupadorService: AgrupadorService,
     protected umaService: ModuloService,
     protected agrupadorUmaService: AgrupadorUmaService,
@@ -161,13 +163,16 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   // drag drop tira de umas
   drop(event: CdkDragDrop<any[]>): void {
+    /*
     const objExiste = event.container.data.find((au: IAgrupadorUma) => {
       return au.modulo!.id === event.previousContainer.data[event.previousIndex].id;
     });
-
+    
     if (objExiste) {
       return;
-    } else if (event.previousContainer === event.container) {
+    } else */ if (
+      event.previousContainer === event.container
+    ) {
       this.isReorder = true;
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updateUmasOrder();
@@ -177,6 +182,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       //  transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       this.addUmaToSequence(event.previousIndex, event.currentIndex);
+      // debo quitar el de arriba y agregar a un array.push({ idUma: n, orden: n })
     }
   }
 
@@ -189,8 +195,10 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
         if (res.body) {
           this.tiraUmas = res.body.agrupador!.modulos!;
         }
+        this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
       },
       () => {
+        this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
         this.eventManager.broadcast(
           new JhiEventWithContent('constructorApp.tiraUpdate', {
             message: 'constructorApp.tiraUpdate.error',
@@ -210,10 +218,12 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   addUmaToSequence(idx: number, orden: number): void {
     const objUmaToAdd = this.umasList[idx];
     const objToSave: IAgrupadorUma = this.dataToAgrupadorUma(objUmaToAdd, orden);
-    this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
+    this.tiraUmas.push(objToSave);
+    this.agrupadorConfigService.setUmasAddedEvent(this.tiraUmas);
+    // this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
   }
 
-  private dataToAgrupadorUma(objUmaToAdd: any, ordenn: number): IAgrupadorUma {
+  private dataToAgrupadorUma(objUmaToAdd: IModulo, ordenn: number): IAgrupadorUma {
     return {
       ...new AgrupadorUma(),
       id: 0,
@@ -245,10 +255,12 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     if (!this.isReorder) {
       this.tiraUmas.push(res);
     }
+    this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
     // this.router.navigate(['/uma-groups-home']);
   }
 
   protected onSaveError(): void {
+    this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
     this.isSaving = false;
   }
 
@@ -290,5 +302,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       temas: this.groupUmaForm.get('sessionTopicFormCtrl')!.value,
       titulo: this.groupUmaForm.get('umaTitleFormCtrl')!.value
     };
+  }
+
+  getSizeSecuenciaUmas(): number {
+    return this.tiraUmas.length;
   }
 }

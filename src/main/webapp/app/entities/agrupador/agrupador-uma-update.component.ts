@@ -15,6 +15,8 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { takeUntil } from 'rxjs/operators';
 import { IWrapperModel } from 'app/shared/model/wrapper.model';
+import { AgrupadorConfigService } from '../../services/agrupador-config.service';
+import { IAgrupadorUma } from '../../shared/model/agrupador-uma.model';
 
 @Component({
   selector: 'jhi-agrupador-uma-update',
@@ -46,6 +48,9 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   // termina chips
 
+  isSequenceValid = false;
+  umasListGroup: IAgrupadorUma[] = [];
+
   // FORMULARIO
   matcher = new ErrorStateMatcherUtil();
   groupUmaForm = this.formbuilder.group({
@@ -53,10 +58,10 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       Validators.required
       // Validators.email,
     ]),
-    desciptionSequenceUmas: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    desciptionSequenceUmas: new FormControl(''), //  [Validators.required, Validators.maxLength(50)]
     durationSequence: new FormControl([]),
     searchTagsSequenceUmas: [], //  this.formbuilder.array(this.tagsBusquedaAgrupador, this.validateArrayNotEmpty)
-    sendRegisterForm: new FormControl('', [Validators.required])
+    sendRegisterForm: new FormControl('') // , [Validators.required]
   });
   // TERMINA FORMULARIO
 
@@ -64,6 +69,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   durationValuesList: number[] = [0, 15, 30, 45, 60];
 
   constructor(
+    private agrupadorConfigService: AgrupadorConfigService,
     private accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     private formbuilder: FormBuilder,
@@ -74,7 +80,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     // console.error('#### agrupador-uma-update Agrupador recibido con ID: ', this.groupId);
     this.groupUmaForm.statusChanges.subscribe(() => {
       // console.error('#### Estado del formulario de registro de agrupador: ', val);
-      this.formCreateEvent.emit(this.groupUmaForm);
+      // this.formCreateEvent.emit(this.groupUmaForm);//  lo comente porque ya no se usa el stepper
     });
   }
 
@@ -91,6 +97,21 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
         if (this.account && this.groupId) {
           this.loadDataAgrupador();
         }
+      });
+
+    this.subscription = this.agrupadorConfigService
+      .getValidationUmaGroups()
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(res => {
+        this.isSequenceValid = res;
+      });
+
+    this.subscription = this.agrupadorConfigService
+      .getUmasAddedEvent()
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(res => {
+        console.error('Add UMA to Agrupador: ', res);
+        this.umasListGroup = [...res];
       });
 
     // console.error('#### Consultar datos de Agrupador: ', this.groupId);
@@ -133,44 +154,60 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   }
 
   saveSequenceGroup(): void {
+    // if (this.groupUmaForm.valid) {
+    // this.isCompleted = true;
+    this.isSaving = true;
+    const agrupador: IAgrupador = this.mapFormDataToAgrupador();
+    // console.error('Deberá guardar');
+    // console.error(agrupador);
+
+    if (!agrupador.titulo) {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
+      );
+      this.makeInvalid('titulo');
+    }
+    if (agrupador.titulo && agrupador.titulo.length > 50) {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
+      );
+      this.makeInvalid('titulo');
+    }
+
+    if (agrupador.descripcion && agrupador.descripcion.length > 50) {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
+      );
+      this.makeInvalid('descripcion');
+    }
+
+    if (!this.umasListGroup.length) {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', {
+          message: 'constructorApp.agrupador.validations.formErrorSequence',
+          type: 'danger'
+        })
+      );
+      return;
+    }
+
     if (this.groupUmaForm.valid) {
-      // this.isCompleted = true;
-      this.isSaving = true;
-      const agrupador: IAgrupador = this.mapFormDataToAgrupador();
-      // console.error('Deberá guardar');
-      // console.error(agrupador);
-
-      if (!agrupador.titulo) {
-        this.eventManager.broadcast(
-          new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
-        );
-        this.makeInvalid('titulo');
-      }
-      if (agrupador.titulo && agrupador.titulo.length > 50) {
-        this.eventManager.broadcast(
-          new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
-        );
-        this.makeInvalid('titulo');
-      }
-
-      if (agrupador.descripcion && agrupador.descripcion.length > 50) {
-        this.eventManager.broadcast(
-          new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
-        );
-        this.makeInvalid('descripcion');
-      }
-
-      if (this.groupUmaForm.valid) {
-        // this.firstClick = true;
-        if (agrupador.id) {
-          // console.error('##########   Deberá actualizar: ', agrupador);
-          this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
-        } else {
-          // console.error('##########   Deberá guardar: ', agrupador);
-          this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
-        }
+      // this.firstClick = true;
+      if (agrupador.id) {
+        console.error('##########   Deberá actualizar: ', agrupador);
+        this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
+      } else {
+        console.error('##########   Deberá guardar: ', agrupador);
+        this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
       }
     }
+    /*
+    } else {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
+      );
+    }
+    */
   }
 
   revertSequenceGroup(groupId: number): void {
@@ -204,7 +241,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       duracion: this.groupUmaForm.get('durationSequence')!.value,
       fechaFin: '',
       fechaInicio: '',
-      modulos: []
+      modulos: this.umasListGroup // []
       // tiposModulos: this.tiposModuloComponent.getModuleTypes()
     };
   }

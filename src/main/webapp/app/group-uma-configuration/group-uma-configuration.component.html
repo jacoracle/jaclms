@@ -17,27 +17,39 @@
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
         <div class="container-stepper-group">
+
+
+          <mat-tab-group mat-align-tabs="center">
+            <mat-tab label="Configuración general Agrupador">
+              <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
+                (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
+            </mat-tab>
+            <mat-tab label="Secuencia de UMAS Agrupador">
+              <jhi-secuencia-uma-update [createdGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
+            </mat-tab>
+            <!-- <mat-tab label="Third">Content 3</mat-tab> -->
+          </mat-tab-group>
+
+
+          <!--
+
           <mat-horizontal-stepper [linear]="!isCompleted" #stepper class="stepper-n-content">
 
             <mat-step [stepControl]="formSteps?.get([0])" editable="isStepEditable">
-
               <ng-template matStepLabel>Registro de Grupo de UMAS</ng-template>
               <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
                 (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
-
             </mat-step>
 
             <mat-step>
-              <!--[stepControl]="secondFormGroup"-->
-
               <ng-template matStepLabel>Crear secuencia del Grupo</ng-template>
-              <!-- componente que contiene contenido de paso 2 para crear la secuencia/agrupación de umas una vez generado el Grupo -->
               <jhi-secuencia-uma-update [createdGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
-
             </mat-step>
 
           </mat-horizontal-stepper>
-          
+
+          -->
+
         </div>
       </div>
 
@@ -47,11 +59,14 @@
     <!-- Footer -->
     <div class="window-br-footer">
       <!-- this cancel is for (back home)-->
-      <button *ngIf="!isCreation()" routerLink="/uma-groups-home" matTooltip="Regresar al Home." class="secondary-btn">Cancelar</button>
+      <button *ngIf="!isCreation()" routerLink="/uma-groups-home" matTooltip="Regresar al Home."
+        class="secondary-btn">Cancelar</button>
       <!-- this cancel is for (delete created group)-->
-      <button *ngIf="isCreation()" class="secondary-btn" (click)="revertData()" matTooltip="Deshace el Agrupador creado.">Cancelar</button>
+      <button *ngIf="isCreation()" class="secondary-btn" (click)="revertData()"
+        matTooltip="Deshace el Agrupador creado.">Cancelar</button>
       <!-- this save is form save a new group or edit group (save group) *ngIf="!isViewDetailOrEdit()"  -->
-      <button  (click)="executeSave($event)" class="main-btn" matTooltip="Guarda y/o actualiza Agrupador.">Guardar</button>
+      <button (click)="executeSave($event)" class="main-btn"
+        matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">Guardar</button>
       <!-- this save is for  -->
       <!-- <button *ngIf="isViewDetailOrEdit() && !isCreation()" (click)="executeSave($event)" class="main-btn">Guardar (save & update)</button> -->
       <!-- <button *ngIf="isCreation() && !isViewDetailOrEdit()" class="secondary-btn" matTooltip="Aceptar cambios y regresar al Home." routerLink="/uma-groups-home">Aceptar</button> -->
