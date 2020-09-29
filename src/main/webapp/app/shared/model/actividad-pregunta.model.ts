@@ -17,6 +17,8 @@ export class Preguntas {
   public calificada?: boolean;
   public marcada?: boolean;
   public correcta?: boolean;
+  public path?: string;
+  public safeUrl?: string;
 }
 
 export class Respuestas {

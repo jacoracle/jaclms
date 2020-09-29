@@ -18,6 +18,7 @@ import { cantidadAtributos } from 'app/shared/util/util';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { ActivityService } from 'app/services/activity.service';
 import { TextService } from 'app/services/text.service';
+
 @Component({
   selector: 'jhi-constructor-component-properties',
   templateUrl: './constructor-component-properties.component.html',
@@ -33,9 +34,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
   defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
   defaultQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15.png';
+  defaultQuestionsAudioMediaUrl: SafeUrl = './../../../../content/images/ab16.png';
   loadedQuestionsTextUrl = './../../../content/images/actividad_up.png';
   loadedQuestionsMediaUrl = './../../../content/images/ab11_up.png';
-  loadedQuestionsAudioTextUrl = './../../../content/images/ab15.png';
+  loadedQuestionsAudioTextUrl = './../../../content/images/ab15_up.png';
+  loadedQuestionsAudioMediaUrl = './../../../content/images/ab16_up.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
 
@@ -179,8 +182,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.actividadProperties.contenido =
           cantidadAtributos(actividadInteractiva.contenido) > 0 ? actividadInteractiva.contenido : 'unknown';
         this.actividadProperties.id = actividadInteractiva.id ? actividadInteractiva.id : 0;
-        // eslint-disable-next-line no-console
-        console.log(this.actividadProperties);
       }
     });
   }
@@ -457,40 +458,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       if (typeof actividadInteractiva.evaluable === 'boolean') {
         jsonFormIn.evaluable = actividadInteractiva.evaluable;
       }
-      if (actividadInteractiva.tipoActividadInteractiva) {
-        jsonFormIn.tipoActividad = actividadInteractiva.tipoActividadInteractiva;
-        if (
-          actividadInteractiva.tipoActividadInteractiva.opcion === 'unica' &&
-          actividadInteractiva.tipoActividadInteractiva.subtipo === 'verdaderoFalso'
-        ) {
-          jsonFormIn.tipoActividad.subtipo = 'texto';
-          jsonFormIn.tipoActividad.opcion = 'verdaderoFalso';
-        } else if (
-          actividadInteractiva.tipoActividadInteractiva.opcion === 'unica' &&
-          actividadInteractiva.tipoActividadInteractiva.subtipo === 'imagen'
-        ) {
-          jsonFormIn.tipoActividad.subtipo = 'imagen';
-          jsonFormIn.tipoActividad.opcion = 'imagen_unica';
-        } else if (
-          actividadInteractiva.tipoActividadInteractiva.opcion === 'multiple' &&
-          actividadInteractiva.tipoActividadInteractiva.subtipo === 'imagen'
-        ) {
-          jsonFormIn.tipoActividad.subtipo = 'imagen';
-          jsonFormIn.tipoActividad.opcion = 'imagen_multiple';
-        } else if (
-          actividadInteractiva.tipoActividadInteractiva.opcion === 'unica' &&
-          actividadInteractiva.tipoActividadInteractiva.subtipo === 'audio'
-        ) {
-          jsonFormIn.tipoActividad.subtipo = 'audio';
-          jsonFormIn.tipoActividad.opcion = 'audio_unica';
-        } else if (
-          actividadInteractiva.tipoActividadInteractiva.opcion === 'multiple' &&
-          actividadInteractiva.tipoActividadInteractiva.subtipo === 'audio'
-        ) {
-          jsonFormIn.tipoActividad.subtipo = 'audio';
-          jsonFormIn.tipoActividad.opcion = 'audio_multiple';
-        }
-      }
     }
     return jsonFormIn;
   }
@@ -498,37 +465,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   jsonFormSalida(jsonFormOut: IActividadPregunta, actividadInteractiva: ActividadInteractiva): ActividadInteractiva {
     this.showLoader = true;
     if (actividadInteractiva && jsonFormOut && cantidadAtributos(jsonFormOut) > 0) {
-      switch (jsonFormOut.tipoActividad.opcion) {
-        case 'unica':
-          jsonFormOut.tipoActividad.opcion = 'unica';
-          jsonFormOut.tipoActividad.subtipo = 'texto';
-          break;
-        case 'multiple':
-          jsonFormOut.tipoActividad.opcion = 'multiple';
-          jsonFormOut.tipoActividad.subtipo = 'texto';
-          break;
-        case 'verdaderoFalso':
-          jsonFormOut.tipoActividad.opcion = 'unica';
-          jsonFormOut.tipoActividad.subtipo = 'verdaderoFalso';
-          break;
-        case 'imagen_unica':
-          jsonFormOut.tipoActividad.opcion = 'unica';
-          jsonFormOut.tipoActividad.subtipo = 'imagen';
-          break;
-        case 'imagen_multiple':
-          jsonFormOut.tipoActividad.opcion = 'multiple';
-          jsonFormOut.tipoActividad.subtipo = 'imagen';
-          break;
-        case 'audio_unica':
-          jsonFormOut.tipoActividad.opcion = 'unica';
-          jsonFormOut.tipoActividad.subtipo = 'audio';
-          break;
-        case 'audio_multiple':
-          jsonFormOut.tipoActividad.opcion = 'multiple';
-          jsonFormOut.tipoActividad.subtipo = 'audio';
-          break;
-      }
-
       actividadInteractiva.tipoActividadInteractiva = jsonFormOut.tipoActividad;
       actividadInteractiva.evaluable = jsonFormOut.evaluable;
       if (cantidadAtributos(actividadInteractiva.tipoActividadInteractiva) > 0) {
@@ -574,6 +510,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileFormat !== 'activity_question_text' &&
       this.fileFormat !== 'activity_question_media' &&
       this.fileFormat !== 'activity_question_audio_text' &&
+      this.fileFormat !== 'activity_question_audio_media' &&
       this.fileFormat !== 'text'
     );
   }
@@ -582,7 +519,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     return (
       this.fileFormat === 'activity_question_text' ||
       this.fileFormat === 'activity_question_media' ||
-      this.fileFormat === 'activity_question_audio_text'
+      this.fileFormat === 'activity_question_audio_text' ||
+      this.fileFormat === 'activity_question_audio_media'
     );
   }
 }

@@ -11,7 +11,7 @@
         </div>
     </div>
     <form name="activityForm" role="form" novalidate [formGroup]="activityForm" class="modal-act-content"
-          (keydown)="onKeyDown($event)">
+        (keydown)="onKeyDown($event)">
         <!-- Body -->
         <!--
         <div class="row-wg margintop-40">
@@ -26,22 +26,22 @@
                     <div class="type-q">
                         <label>Selecciona el tipo de respuesta:</label>
                         <div class="col-type-question" formGroupName="tipoActividad"
-                             [ngClass]="{'ng-untouched ng-pristine ng-invalid alert-input': !isValidOpcion()}">
-                            <mat-radio-group aria-label="Select an option" formControlName="opcion"
-                                             name="opcion">
-                                <mat-radio-button value="unica" id="type_question"
-                                                  class="question-radio" (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn != '' && opcionIn!='unica'">
+                            [ngClass]="{'ng-untouched ng-pristine ng-invalid alert-input': !isValidOpcion()}">
+                            <mat-radio-group aria-label="Select an option" formControlName="opcionConcatenada"
+                                name="opcionConcatenada">
+                                <mat-radio-button value="{{PREG_TEXTO_RESP_UNICA_TEXTO}}" id="type_question"
+                                    class="question-radio" (change)="onOpcionChange($event)"
+                                    [hidden]="opcionIn != '' && opcionIn!=PREG_TEXTO_RESP_UNICA_TEXTO">
                                     Única
                                 </mat-radio-button>
-                                <mat-radio-button value="multiple" id="type_question2"
-                                                  class="question-radio" (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn != '' && opcionIn!='multiple'">
+                                <mat-radio-button value="{{PREG_TEXTO_RESP_MULTIPLE_TEXTO}}" id="type_question2"
+                                    class="question-radio" (change)="onOpcionChange($event)"
+                                    [hidden]="opcionIn != '' && opcionIn!=PREG_TEXTO_RESP_MULTIPLE_TEXTO">
                                     Múltiple
                                 </mat-radio-button>
-                                <mat-radio-button value="verdaderoFalso" id="type_question3" class="question-radio"
-                                                  (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn != '' && opcionIn!='verdaderoFalso'">
+                                <mat-radio-button value="{{PREG_TEXTO_RESP_BOOLEAN_TEXTO}}" id="type_question3"
+                                    class="question-radio" (change)="onOpcionChange($event)"
+                                    [hidden]="opcionIn != '' && opcionIn!=PREG_TEXTO_RESP_BOOLEAN_TEXTO">
                                     Verdadero Falso
                                 </mat-radio-button>
 
@@ -62,14 +62,14 @@
                 </div>
 
                 <jhi-activity-questions [activityForm]="activityForm" [submitted]="submitted"
-                                        [typeQuestion]="typeQuestion()" [id]="id">
+                    [typeQuestion]="typeQuestion()" [id]="id">
                 </jhi-activity-questions>
 
             </mat-drawer-content>
             <!-- Preview -->
             <mat-drawer mode="side" opened class="mat-drawer-preview">
                 <jhi-activity-preview [jsonForm]="activityForm.getRawValue()" [activityForm]="activityForm"
-                                      [typeQuestion]="typeQuestion()"></jhi-activity-preview>
+                    [typeQuestion]="typeQuestion()"></jhi-activity-preview>
             </mat-drawer>
         </mat-drawer-container>
         <!-- End body -->

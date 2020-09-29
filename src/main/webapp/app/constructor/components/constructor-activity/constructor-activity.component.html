@@ -8,6 +8,16 @@
     <img class="img-actividad" [src]="loadedQuestionsMediaUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) > 0">
 </div>
 
+<div *ngIf="typeQuestion== 'activity_question_audio_text'">
+    <img class="img-actividad" [src]="defaultQuestionsAudioTextUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) == 0">
+    <img class="img-actividad" [src]="loadedQuestionsAudioTextUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) > 0">
+</div>
+
+<div *ngIf="typeQuestion== 'activity_question_audio_media'">
+    <img class="img-actividad" [src]="defaultQuestionsAudioMediaUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) == 0">
+    <img class="img-actividad" [src]="loadedQuestionsAudioMediaUrl" (click)="selectActivity()" *ngIf="cantidadAtributos(contenidoActividad) > 0">
+</div>
+
 <!-- <div [hidden]="!showLoader">Cargando</div> -->
 <div [hidden]="!showLoader" class="loader-actividad">
   <div class="loader2"></div>
