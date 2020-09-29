@@ -7,15 +7,14 @@
         <jhi-alert-error></jhi-alert-error>
       </div>
       <div class="r1">
-        <div class="logo-create"></div>
+        <div class="logo-home-mini"></div>
       </div>
       <div class="r2">
-        <div class="windowHeader-title"><i class="icon whBook"></i>
-          <h4>UMA (Unidad Mínima de Aprendizaje)</h4>
+        <div class="windowHeader-title">
+          <!-- <div class="icon-step-header"></div> -->
+          <h4>Constructor de UMA</h4>
         </div>
         <div class="c1">
-          <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
-          <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
         </div>
       </div>
     </div>
@@ -25,9 +24,48 @@
     </div>
 
     <div class="window-br-body-topbar recent-modules">
-      <div class="line-gradient"></div>
+      <div class="line-gradient lg-step1"></div>
       <div class="row-wbr-bt" *ngIf="modulos.length || isSearching">
         <p>Tus UMA recientes ( {{modulos.length}} )</p>
+
+        <form name="umaForm" role="form" [formGroup]="umaForm" autocomplete="off" class="form-uma-search">
+
+            <!-- <div class="row-search-uma">
+              <mat-form-field>
+                <mat-label>Búsqueda general por título</mat-label>
+                <input type="text" placeholder="indicio del posible título" matInput formControlName="titleSearchGral"
+                  [matAutocomplete]="autoInputTitleSearch">
+                <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
+                  [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of modulos" [value]="option">
+                    {{option.descripcion}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div> -->
+
+              <mat-form-field appearance="outline">
+                <mat-label>Buscar</mat-label>
+                <input type="text" placeholder="" matInput formControlName="titleSearchGral"
+                  [matAutocomplete]="autoInputTitleSearch">
+                <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
+                  [displayWith]="displayFn">
+                  <!-- <mat-option *ngFor="let option of modulos" [value]="option">
+                    {{option.descripcion}}
+                  </mat-option> -->
+                </mat-autocomplete>
+              </mat-form-field>
+
+            <!-- <input type="text"
+                   placeholder="Buscar..."
+                   [formControl]="control"
+                   matInput formControlName="titleSearchGral"
+                   [matAutocomplete]="autoInputTitleSearch">
+            <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete">
+            </mat-autocomplete> -->
+
+        </form>
+
       </div>
     </div>
 
@@ -48,90 +86,16 @@
     <!-- Window content Module -->
     <div class="window-br-body" *ngIf="modulos.length || isSearching">
 
-      <!-- search box -->
-
-      <div class="search-main-container">
-        <form name="umaForm" role="form" [formGroup]="umaForm" autocomplete="off">
-          <div class="container-search-form-uma">
-            <div class="row-search-gral">
-            </div>
-
-            <div class="row-search-gral">
-              <mat-form-field>
-                <mat-label>Búsqueda general por título</mat-label>
-                <input type="text" placeholder="indicio del posible título" matInput formControlName="titleSearchGral"
-                  [matAutocomplete]="autoInputTitleSearch">
-                <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
-                  [displayWith]="displayFn">
-                  <!-- <mat-option *ngFor="let option of filteredTypeOpts | async" [value]="option"> -->
-                  <mat-option *ngFor="let option of modulos" [value]="option">
-                    {{option.descripcion}}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-            </div>
-
-            <div class="container-field-filter">
-              <p>Filtrar por:</p>
-
-              <div class="row-filter-uma">
-                <mat-form-field>
-                  <mat-label>Título de la UMA</mat-label>
-                  <input matInput formControlName="umaTitleFormCtrl" placeholder="filtrar por título del UMA">
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Descripción UMA</mat-label>
-                  <input matInput formControlName="umaDescriptionFormCtrl" placeholder="filtrar por descripción">
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Área de conocimiento</mat-label>
-                  <input type="text" placeholder="indicio de del área de conocimiento" matInput
-                    formControlName="umaAreaKnowledgeFormCtrl">
-                </mat-form-field>
-              </div>
-
-              <div class="row-filter-uma">
-                <mat-form-field>
-                  <mat-label>Nivel Académico</mat-label>
-                  <input type="text" placeholder="filtrar por nivel académico" matInput
-                    formControlName="academicGradeFormCtrl">
-                </mat-form-field>
-
-                <mat-form-field>
-                  <mat-label>Tema del UMA</mat-label>
-                  <input type="text" placeholder="filtrar por tema" matInput formControlName="sessionTopicFormCtrl">
-                </mat-form-field>
-              </div>
-            </div>
-
-          </div>
-
-
-          <div class="btn-search-group">
-            <button class="secondary-btn" (click)="resetUmas()" type="button">
-              Limpiar
-            </button>
-            <button type="button" class="main-btn" (click)="executeSearch()">
-              Buscar
-            </button>
-          </div>
-
-
-
-        </form>
-
-      </div>
-
       <!-- end search box -->
       <div class="result-search-container">
         <div class="grid-cards">
 
-          <div class="course-cover-br box-card" *ngFor="let modulo of modulos"
+          <div class="box-card" *ngFor="let modulo of modulos"
             [routerLink]="['/constructor-layout', modulo.id, 'module']">
             <!-- <div class="course-cover-br box-card" *ngFor="let modulo of filteredUmas | async"
           [routerLink]="['/constructor-layout', modulo.id, 'module']"> -->
 
-            <div class="module-cover-br-image"></div>
+            <div class="module-cover-br-image"><span></span></div>
 
             <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
               <i class="icon ni-delete icon-negative"></i>
@@ -154,7 +118,7 @@
 
     <div class="window-br-footer">
       <button routerLink="/" class="secondary-btn">Regresar</button>
-      <button routerLink="/uma-configuration" class="main-btn">Crear UMA</button>
+      <button routerLink="/uma-configuration" class="main-btn">Nueva UMA</button>
     </div>
 
   </div>

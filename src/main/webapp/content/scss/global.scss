@@ -763,6 +763,7 @@ input::-webkit-input-placeholder {
 .row-form-window-c {
   position: relative;
   width: 95%;
+  max-width: 1260px;
   height: auto;
   @include smartphone {
     width: 88%;

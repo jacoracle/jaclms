@@ -4,7 +4,6 @@
   top: 75px;
   z-index: 99999;
 }
-
 // container search fields
 .search-main-container {
   position: fixed;
@@ -27,7 +26,6 @@
       align-items: center;
       overflow-y: auto;
 
-      // box general search
       .row-search-gral {
         position: relative;
         width: 85%;
@@ -72,12 +70,8 @@
           }
         }
       }
-
-      // close container-field-filter
     }
   }
-
-  // close container-search-form-uma
 }
 .btn-search-group {
   position: relative;
@@ -97,17 +91,14 @@
 // container with results after to execute search
 .result-search-container {
   position: relative;
-  width: calc(100% - 300px);
+  width: 100%;
   height: auto;
-  left: 300px;
-  // background-color: blue;
 
   .group-cover-panel {
     position: relative;
     width: 200px;
     height: auto;
     max-height: 250px;
-    // overflow-y: auto;
     margin-left: 14px;
     margin-right: 14px;
     margin-top: 16px;
@@ -116,7 +107,6 @@
     flex-direction: column;
     justify-content: flex-start;
     cursor: pointer !important;
-    background-color: red;
 
     .title-panel {
       font-size: 14px;
@@ -130,9 +120,8 @@
       position: relative;
 
       .delete-group {
-        // border: solid 1px green;
         bottom: 8px;
-        position: sticky; //  absolute;
+        position: sticky;
         right: 10px;
         width: 30px;
         height: 30px;
