@@ -2,6 +2,13 @@
     .fondo {
         background-color: white;
     }
+    .temp {
+        display: none;
+    }
+    img {
+        width: 100px;
+        height: 100px;
+    }
 </style>
 
 <div class="modal-activity-container">
@@ -15,25 +22,40 @@
 
             <div class="fondo">
                 <!-- Nombre -->
-                <span>Nombre de la actividad:</span>
-                <input type="text" [(ngModel)]="activity.nombre">
+
+<!-- No eliminar -->
+<input type="text" [(ngModel)]="activity.nombre" class="temp">
+<!-- No eliminar -->
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput [(ngModel)]="activity.nombre">
+                </mat-form-field>
                 <!-- Nombre -->
                 <!-- Evaluable -->
                 <input type="checkbox" [(ngModel)]="activity.contenido.evaluable">
                 <span>Evaluable</span>
+
+                <mat-checkbox [(ngModel)]="activity.contenido.evaluable">Evaluable</mat-checkbox>
+
+                
                 <!-- Evaluable -->
                 <!-- Pregunta -->
                 <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;">
                     <!-- Indicación/Pregunta -->
-                    <span>Pregunta</span>
-                    <input type="text" [(ngModel)]="pregunta.pregunta">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Pregunta</mat-label>
+                        <input matInput [(ngModel)]="pregunta.pregunta">
+                    </mat-form-field>
                     <!-- Indicación/Pregunta -->
                     <!-- Recurso -->
-                    <span>Recurso</span>
-                    <select name="" id="" [(ngModel)]="pregunta.tipoRecurso">
-                        <option value=""></option>
-                        <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
-                    </select>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Recurso</mat-label>
+                        <select matNativeControl required [(ngModel)]="pregunta.tipoRecurso">
+                            <option value=""></option>
+                            <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
+                        </select>
+                    </mat-form-field>
                     <button type="button" class="main-btn" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()">
                         <span>Subir</span>
                         <input #resourceInput type="file" (change)="selectFile($event, pregunta)" style="display:none;"/>
@@ -42,16 +64,22 @@
                     <audio src="" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.path !== ''"></audio>
                     <!-- Recurso -->
                     <!-- Tipo de pregunta -->
-                    <select name="" id="" [(ngModel)]="pregunta.tipoPregunta">
-                        <option value=""></option>
-                        <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
-                    </select>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Recurso</mat-label>
+                        <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta">
+                            <option value=""></option>
+                            <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
+                        </select>
+                    </mat-form-field>
                     <!-- Tipo de pregunta -->
                     <!-- Tipo de respuestas -->
-                    <select name="" id="" [(ngModel)]="pregunta.tipoRespuestas">
-                        <option value=""></option>
-                        <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
-                    </select>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Recurso</mat-label>
+                        <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
+                            <option value=""></option>
+                            <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
+                        </select>
+                    </mat-form-field>
                     <!-- Tipo de respuestas -->
                     <!-- Eliminar pregunta -->
                     <button (click)="deleteQuestion(questionIndex);">Eliminar pregunta</button>
@@ -59,10 +87,13 @@
                     <!-- Respuesta -->
                     <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;">
                         <!-- Correcta -->
-                        <input type="checkBox" [(ngModel)]="respuesta.correcta">
+                        <mat-checkbox [(ngModel)]="respuesta.correcta">Correcta</mat-checkbox>
                         <!-- Correcta -->
                         <!-- Respuesta -->
-                        <input type="text" [(ngModel)]="respuesta.respuesta" *ngIf="pregunta.tipoRespuestas === 'Texto'">
+                        <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput [(ngModel)]="respuesta.respuesta">
+                        </mat-form-field>
                         <!-- Respuesta -->
                         <!-- Respuesta/URL de recurso -->
                         <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
