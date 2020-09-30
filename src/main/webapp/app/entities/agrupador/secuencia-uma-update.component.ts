@@ -163,16 +163,7 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   // drag drop tira de umas
   drop(event: CdkDragDrop<any[]>): void {
-    /*
-    const objExiste = event.container.data.find((au: IAgrupadorUma) => {
-      return au.modulo!.id === event.previousContainer.data[event.previousIndex].id;
-    });
-    
-    if (objExiste) {
-      return;
-    } else */ if (
-      event.previousContainer === event.container
-    ) {
+    if (event.previousContainer === event.container) {
       this.isReorder = true;
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updateUmasOrder();
@@ -182,7 +173,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       //  transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       this.addUmaToSequence(event.previousIndex, event.currentIndex);
-      // debo quitar el de arriba y agregar a un array.push({ idUma: n, orden: n })
     }
   }
 
@@ -235,11 +225,8 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   deleteUmaFromSequence(item: IAgrupadorUma): void {
     this.tiraUmas.splice(this.tiraUmas.indexOf(item), 1);
-
-    this.subscription = this.agrupadorUmaService.delete(item.id!).subscribe(() => {
-      this.updateUmasOrder();
-      this.updateSequenceUmaOrder();
-    });
+    this.updateUmasOrder();
+    this.agrupadorConfigService.setUmasAddedEvent(this.tiraUmas);
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupadorUma>>): void {

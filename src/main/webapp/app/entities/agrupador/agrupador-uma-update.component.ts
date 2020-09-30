@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { ErrorStateMatcherUtil } from 'app/home-uma-groups/error-state-matcher';
@@ -58,10 +58,10 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       Validators.required
       // Validators.email,
     ]),
-    desciptionSequenceUmas: new FormControl(''), //  [Validators.required, Validators.maxLength(50)]
+    desciptionSequenceUmas: new FormControl(''),
     durationSequence: new FormControl([]),
-    searchTagsSequenceUmas: [], //  this.formbuilder.array(this.tagsBusquedaAgrupador, this.validateArrayNotEmpty)
-    sendRegisterForm: new FormControl('') // , [Validators.required]
+    searchTagsSequenceUmas: [],
+    sendRegisterForm: new FormControl('')
   });
   // TERMINA FORMULARIO
 
@@ -74,7 +74,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     private formbuilder: FormBuilder,
     private eventManager: JhiEventManager,
-    protected agrupadorService: AgrupadorService
+    protected agrupadorService: AgrupadorService,
+    private router: Router
   ) {
     this.tagsBusquedaAgrupador = [];
     // console.error('#### agrupador-uma-update Agrupador recibido con ID: ', this.groupId);
@@ -133,8 +134,6 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       .find(this.groupId)
       .pipe(takeUntil(this.ngUnsubscribeSubject))
       .subscribe(res => {
-        // console.error('#### Datos consultados del Agrupador:');
-        // console.error(res);
         this.mapDataToForm(res.body as IAgrupador);
       });
   }
@@ -146,7 +145,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     this.groupUmaForm.patchValue({
       titleSequenceUmas: data.titulo,
       desciptionSequenceUmas: data.descripcion,
-      searchTagsSequenceUmas: [], // data.etiquetas//  !.map((t: ITagAgrupador) => t.descripcion)
+      searchTagsSequenceUmas: [],
       durationSequence: data.duracion,
       sendRegisterForm: true
     });
@@ -241,7 +240,9 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       duracion: this.groupUmaForm.get('durationSequence')!.value,
       fechaFin: '',
       fechaInicio: '',
-      modulos: this.umasListGroup // []
+      modulos: this.umasListGroup.map((uma: IAgrupadorUma) => {
+        return { modulo: { id: uma.modulo!.id }, orden: uma.orden };
+      }) // []
       // tiposModulos: this.tiposModuloComponent.getModuleTypes()
     };
   }
@@ -270,16 +271,9 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   }
 
   protected onSaveSuccess(res: any): void {
-    // this.router.navigate(['/uma-groups-home', res.body.modulo.id, 'module']);
-    // console.error('####         POST AGRUPADOR DONE');
-    // console.error(res);
-    this.createdGroupSequence = res.body.agrupador;
-    this.groupId = res.body.agrupador.id;
-    this.makeValid('sendRegisterForm');
-    // this.createdGroupEventEmit.emit(res.body.agrupador);
-    this.createdGroupEventEmit.emit({ param1: false, param2: res.body.agrupador });
+    console.error(res.body);
     this.isSaving = false;
-    // this.router.navigate(['/uma-groups-home']);
+    this.router.navigate(['/uma-groups-home']);
   }
 
   protected onSaveError(): void {
@@ -300,7 +294,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.tagsBusquedaAgrupador.push({ id: 0, descripcion: value.trim() });
+      // this.tagsBusquedaAgrupador.push({ id: 0, descripcion: value.trim() });
+      this.tagsBusquedaAgrupador.push({ id: undefined, descripcion: value.trim() });
     }
 
     // Reset the input value

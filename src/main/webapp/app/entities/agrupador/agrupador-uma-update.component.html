@@ -23,13 +23,6 @@
               <mat-label>Descripción</mat-label>
               <input matInput formControlName="desciptionSequenceUmas"
                 placeholder="Agrupador que contiene N umas para...">
-              <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-              <!-- <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('required')">
-                La descripción del Grupo de UMAS es requerido.
-              </mat-error> -->
-              <!-- <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('maxlength')">
-                La descripción del Grupo no debe superar los 50 caracteres.
-              </mat-error> -->
             </mat-form-field>
           </div>
           <div>
@@ -57,9 +50,6 @@
                   formControlName="searchTagsSequenceUmas" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTag($event)">
               </mat-chip-list>
-              <!-- <mat-error *ngIf="groupUmaForm!.get('searchTagsSequenceUmas')!.hasError('required')">
-                Debe registrar al menos un Tag para la búsqueda.
-              </mat-error> -->
             </mat-form-field>
           </div>
           <div>
@@ -68,13 +58,6 @@
         </div>
 
       </div>
-      <!--
-      <div class="row-btn-register-group">
-        <button class="main-btn" (click)="saveSequenceGroup()" mat-button matStepperNext>
-          Crear Grupo
-        </button>
-      </div>
-      -->
 
 
     </div>
