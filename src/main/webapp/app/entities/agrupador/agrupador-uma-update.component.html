@@ -9,9 +9,9 @@
         <div class="row-form-group">
           <div>
             <mat-form-field>
-              <mat-label>Título del Grupo</mat-label>
+              <mat-label>Título del Grupo *</mat-label>
               <input matInput formControlName="titleSequenceUmas" [errorStateMatcher]="matcher"
-                placeholder="Título del Grupo">
+                placeholder="Título del Agrupador">
               <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
               <mat-error *ngIf="groupUmaForm!.get('titleSequenceUmas')!.hasError('required')">
                 El título del Grupo de UMAS es requerido.
@@ -21,19 +21,15 @@
           <div>
             <mat-form-field>
               <mat-label>Descripción</mat-label>
-              <input matInput formControlName="desciptionSequenceUmas" [errorStateMatcher]="matcher"
-                placeholder="título de la sesión">
-              <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-              <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('required')">
-                La descripción del Grupo de UMAS es requerido.
-              </mat-error>
-              <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('maxlength')">
+              <input matInput formControlName="desciptionSequenceUmas"
+                placeholder="Agrupador que contiene N umas para...">
+                <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('maxlength')">
                 La descripción del Grupo no debe superar los 50 caracteres.
               </mat-error>
             </mat-form-field>
           </div>
           <div>
-            <mat-form-field appearance="fill" class="testG">
+            <mat-form-field>
               <mat-label>Duración</mat-label>
               <mat-select formControlName="durationSequence" name="durationSequence">
                 <mat-option *ngFor="let d of durationValuesList" [value]="d">{{d}} minutos</mat-option>
@@ -46,19 +42,17 @@
         <div class="row-form-group-tag">
           <div>
             <mat-form-field class="example-chip-list">
-              <mat-chip-list #chipList aria-label="Fruit selection">
+              <mat-label>Tags de búsqueda para el agrupador</mat-label>
+              <mat-chip-list #chipList aria-label="Tags para la búsqueda">
                 <mat-chip *ngFor="let fruit of tagsBusquedaAgrupador!" [selectable]="selectable" [removable]="removable"
                   (removed)="removeTag(fruit)">
                   {{fruit.descripcion}}
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Tags de búsqueda" [matChipInputFor]="chipList"
+                <input placeholder="capture indicios de búsqueda para el agrupador" [matChipInputFor]="chipList"
                   formControlName="searchTagsSequenceUmas" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTag($event)">
               </mat-chip-list>
-              <mat-error *ngIf="groupUmaForm!.get('searchTagsSequenceUmas')!.hasError('required')">
-                Debe registrar al menos un Tag para la búsqueda.
-              </mat-error>
             </mat-form-field>
           </div>
           <div>
@@ -67,13 +61,6 @@
         </div>
 
       </div>
-      <!--
-      <div class="row-btn-register-group">
-        <button class="main-btn" (click)="saveSequenceGroup()" mat-button matStepperNext>
-          Crear Grupo
-        </button>
-      </div>
-      -->
 
 
     </div>
