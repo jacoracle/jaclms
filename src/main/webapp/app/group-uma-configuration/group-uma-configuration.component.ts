@@ -80,10 +80,6 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     return this.accountService.isAuthenticated();
   }
 
-  private onQueryError(): void {
-    console.error('#### ERROR AL REALIZAR LA CONSULTA');
-  }
-
   setAgrupador(event: any): void {
     if (event) {
       this.eventManager.broadcast(
@@ -130,9 +126,9 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   }
 
   revertData(): void {
-    console.error('#### group-uma-configuration - 1');
+    // console.error('#### group-uma-configuration - 1');
     this.umaUpdateComponent.revertSequenceGroup(this.createdGroupSequence.id!);
-    console.error('#### group-uma-configuration - Last, terminó revert, viene redirect');
+    // console.error('#### group-uma-configuration - Last, terminó revert, viene redirect');
     /*
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.agrupador.revert' })

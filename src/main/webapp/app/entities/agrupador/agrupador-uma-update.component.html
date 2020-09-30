@@ -23,6 +23,9 @@
               <mat-label>Descripción</mat-label>
               <input matInput formControlName="desciptionSequenceUmas"
                 placeholder="Agrupador que contiene N umas para...">
+                <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('maxlength')">
+                La descripción del Grupo no debe superar los 50 caracteres.
+              </mat-error>
             </mat-form-field>
           </div>
           <div>

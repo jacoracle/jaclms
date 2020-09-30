@@ -19,6 +19,9 @@
       "detail": {
         "title": "Agrupador"
       },
+      "umas": {
+        "updateOrder": "Las umas del agrupador han sido actualizadas."
+      },
       "validations": {
         "formError": "Por favor revisa la información y vuelve a intentarlo.",
         "formErrorTitle": "Se requiere el título del agrupador, por favor, verifica el formulario.",
@@ -28,7 +31,8 @@
         "dates": "La fecha de creación no puede ser posterior a la fecha de publicación.",
         "requiredField": "Este campo es requerido.",
         "save": "Debera ejecutar busqueda con los filtros, pendiente...",
-        "saveError": "No fue posible Guardar el Agrupador, contacte al Administrador o intente más tarde."
+        "saveError": "No fue posible Guardar el Agrupador, contacte al Administrador o intente más tarde.",
+        "error": "No fue posible realizar la acción, intente más tarde o contacte al Admistrador."
       }
     }
   }

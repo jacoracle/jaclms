@@ -58,7 +58,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       Validators.required
       // Validators.email,
     ]),
-    desciptionSequenceUmas: new FormControl(''),
+    desciptionSequenceUmas: new FormControl('', [Validators.maxLength(50)]),
     durationSequence: new FormControl([]),
     searchTagsSequenceUmas: [],
     sendRegisterForm: new FormControl('')
@@ -111,7 +111,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       .getUmasAddedEvent()
       .pipe(takeUntil(this.ngUnsubscribeSubject))
       .subscribe(res => {
-        console.error('Add UMA to Agrupador: ', res);
+        // console.error('Add UMA to Agrupador: ', res);
         this.umasListGroup = [...res];
       });
 
@@ -193,10 +193,10 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     if (this.groupUmaForm.valid) {
       // this.firstClick = true;
       if (agrupador.id) {
-        console.error('##########   Deberá actualizar: ', agrupador);
+        // console.error('##########   Deberá actualizar: ', agrupador);
         this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
       } else {
-        console.error('##########   Deberá guardar: ', agrupador);
+        // console.error('##########   Deberá guardar: ', agrupador);
         this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
       }
     }
@@ -215,11 +215,11 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
         .delete(groupId)
         .pipe(takeUntil(this.ngUnsubscribeSubject))
         .subscribe(() => {
-          console.error('#### agrupador-uma-update - 2');
+          // console.error('#### agrupador-uma-update - 2');
           console.error('#### Agrupador eliminado con ID: ', groupId);
         });
     }
-    console.error('#### Termina eliminación, regresa a group-uma-configuration');
+    // console.error('#### Termina eliminación, regresa a group-uma-configuration');
   }
 
   makeInvalid(controlName: string): void {
@@ -253,7 +253,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupador>>): void {
     result.subscribe(
-      res => this.onSaveSuccess(res),
+      () => this.onSaveSuccess(),
       () => this.onSaveError()
     );
   }
@@ -270,8 +270,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     );
   }
 
-  protected onSaveSuccess(res: any): void {
-    console.error(res.body);
+  protected onSaveSuccess(): void {
+    // console.error(res.body);
     this.isSaving = false;
     this.router.navigate(['/uma-groups-home']);
   }

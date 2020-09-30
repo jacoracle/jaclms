@@ -158,7 +158,12 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   }
 
   protected onQueryError(): void {
-    console.error('ERROR AL CARGAR LAS UMAS');
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.agrupador.validations.error',
+        type: 'success'
+      })
+    );
   }
 
   // drag drop tira de umas
@@ -183,12 +188,21 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     this.subscription = this.agrupadorUmaService.update(this.tiraUmas).subscribe(
       res => {
         if (res.body) {
-          this.tiraUmas = res.body.agrupador!.modulos!;
+          this.tiraUmas = [...res.body[0].modulos!];
         }
-        this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
+        // this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
+        this.agrupadorConfigService.setUmasAddedEvent(this.tiraUmas);
+
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.agrupador.umas.updateOrder',
+            type: 'success'
+          })
+        );
       },
       () => {
-        this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
+        this.agrupadorConfigService.setUmasAddedEvent(this.tiraUmas);
+        // this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
         this.eventManager.broadcast(
           new JhiEventWithContent('constructorApp.tiraUpdate', {
             message: 'constructorApp.tiraUpdate.error',
@@ -210,7 +224,11 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     const objToSave: IAgrupadorUma = this.dataToAgrupadorUma(objUmaToAdd, orden);
     this.tiraUmas.push(objToSave);
     this.agrupadorConfigService.setUmasAddedEvent(this.tiraUmas);
-    // this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
+    if (this.idSequenceToLoad) {
+      this.updateUmasOrder();
+      // this.updateSequenceUmaOrder();
+      this.subscribeToSaveResponse(this.agrupadorUmaService.create(objToSave));
+    }
   }
 
   private dataToAgrupadorUma(objUmaToAdd: IModulo, ordenn: number): IAgrupadorUma {
@@ -225,30 +243,46 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
 
   deleteUmaFromSequence(item: IAgrupadorUma): void {
     this.tiraUmas.splice(this.tiraUmas.indexOf(item), 1);
-    this.updateUmasOrder();
-    this.agrupadorConfigService.setUmasAddedEvent(this.tiraUmas);
+    if (this.idSequenceToLoad) {
+      this.subscription = this.agrupadorUmaService.delete(item.id!).subscribe(() => {
+        this.updateUmasOrder();
+        this.updateSequenceUmaOrder();
+      });
+    } else {
+      this.updateUmasOrder();
+      this.agrupadorConfigService.setUmasAddedEvent(this.tiraUmas);
+    }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupadorUma>>): void {
     this.subscription = result.subscribe(
-      res => this.onSaveSuccess(res.body),
+      () => this.onSaveSuccess(), // res
       () => this.onSaveError()
     );
   }
 
-  protected onSaveSuccess(res: any): void {
+  protected onSaveSuccess(): void {
     // this.router.navigate(['/uma-groups-home', res.body.modulo.id, 'module']);
     this.isSaving = false;
-    if (!this.isReorder) {
-      this.tiraUmas.push(res);
-    }
     this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.agrupador.updated',
+        type: 'success'
+      })
+    );
     // this.router.navigate(['/uma-groups-home']);
   }
 
   protected onSaveError(): void {
     this.agrupadorConfigService.setValidationUmaGroups(this.tiraUmas.length > 0);
     this.isSaving = false;
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.agrupador.validations.error',
+        type: 'danger'
+      })
+    );
   }
 
   openPreview(secuence: any): void {
@@ -266,8 +300,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       .search(this.mapFormToSearchParams())
       .pipe(takeUntil(this.ngUnsubscribeSubject))
       .subscribe(res => {
-        console.error('#### Response búsqueda: ');
-        console.error(res);
         this.umasList = [...res.body!];
 
         if (this.umasList.length === 0) {
