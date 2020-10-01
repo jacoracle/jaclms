@@ -15,13 +15,15 @@ img.block-img {
 // Bloque 12
 img.block-header {
   position: relative;
-  width: 100%;
-  height: auto;
-  border: 1px dashed $blue-nimbus-light;
-  transition: 0.3s;
-  &:hover {
-    border: 1px solid $blue-nimbus-dark;
-  }
+  // width: 100%;
+  // height: auto;
+  width: auto;
+  height: 360px;
+  // border: 1px dashed $blue-nimbus-light;
+  // transition: 0.3s;
+  // &:hover {
+  //   border: 1px solid $blue-nimbus-dark;
+  // }
 }
 
 // Loader
