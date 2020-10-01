@@ -59,7 +59,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       // Validators.email,
     ]),
     desciptionSequenceUmas: new FormControl('', [Validators.maxLength(50)]),
-    durationSequence: new FormControl([]),
+    durationSequence: new FormControl(0),
     searchTagsSequenceUmas: [],
     sendRegisterForm: new FormControl('')
   });
