@@ -31,7 +31,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   defaultSoundUrl = './../../../content/images/audio_thumb.png';
   loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
   defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
-  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
+  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad.png';
   defaultQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15.png';
   loadedQuestionsTextUrl = './../../../content/images/actividad_up.png';
   loadedQuestionsMediaUrl = './../../../content/images/ab11_up.png';

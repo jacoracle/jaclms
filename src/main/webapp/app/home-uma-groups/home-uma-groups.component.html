@@ -76,8 +76,10 @@
                </div>
 
                <div class="course-desc-br-row">
-                 <span class="title-course-br">
-                     {{sec.titulo}}</span>
+
+                 <span class="title-course-br"
+                       *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}</span>
+
                  <span class="desc-course-br"
                      *ngIf="sec.descripcion">{{sec.descripcion!.length > 28 ? sec.descripcion!.substring(0, 28) + "..." : sec.descripcion!}}</span>
                </div>

@@ -40,8 +40,11 @@
                             </div>
 
                             <div class="course-desc-br-row">
-                                <span class="title-course-br">
-                                    {{sec.titulo}}</span>
+                                <!-- <span class="title-course-br">
+                                    {{sec.titulo}}</span> -->
+                                <span class="title-course-br"
+                                  *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}</span>
+
                                 <span class="desc-course-br"
                                     *ngIf="sec.descripcion">{{sec.descripcion.length > 30 ? sec.descripcion.substring(0, 30) + "..." : sec.descripcion}}</span>
                             </div>
@@ -98,9 +101,13 @@
                   <div class="module-cover-br-image"><span></span></div>
 
                   <div class="course-desc-br-row">
-                      <span class="title-course-br">
+                      <!-- <span class="title-course-br">
                           {{item.modulo.titulo}}
-                      </span>
+                      </span> -->
+
+                      <span class="title-course-br"
+                        *ngIf="item.modulo.titulo">{{item.modulo.titulo.length > 40 ? item.modulo.titulo.substring(0, 40) + "..." : item.modulo.titulo}}</span>
+
                       <!-- <span class="desc-course-br"
                     *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span> -->
                   </div>
