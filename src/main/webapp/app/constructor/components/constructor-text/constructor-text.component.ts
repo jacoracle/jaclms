@@ -53,13 +53,16 @@ export class ConstructorTextComponent {
           editableElements[0].innerHTML = this.lastInnerHtml;
         }
       } else {
-        // this.cdr.detectChanges();
         this._htmlContent = text;
         if (this.isTitle && this.headingSelect === undefined && this.textWithoutHtml(this._htmlContent).length === 1) {
-          this.cdr.detectChanges();
+          setTimeout(() => {
+            if (this.cdr && !(this.cdr as ViewRef).destroyed) {
+              this.cdr.detectChanges();
+            }
+          });
           setTimeout(() => {
             this.editor.setSelection(this.textWithoutHtml(this._htmlContent).length + 1, 0);
-          }, 0);
+          }, 500);
         }
       }
     });
