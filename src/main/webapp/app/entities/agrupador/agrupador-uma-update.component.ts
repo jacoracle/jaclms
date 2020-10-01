@@ -150,6 +150,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       sendRegisterForm: true
     });
     this.tagsBusquedaAgrupador = [...data.etiquetas!];
+    this.umasListGroup = [...data.modulos!];
   }
 
   saveSequenceGroup(): void {
