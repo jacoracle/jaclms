@@ -252,8 +252,9 @@
 .box-card {
   position: relative;
   width: 210px;
-  height: auto;
-  min-height: 100px;
+  // height: auto;
+  // min-height: 100px;
+  height: 120px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -270,18 +271,11 @@
 }
 .cursor-drag {
   cursor: grab !important;
+  &:active {
+    animation: shake 2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    transform: translate3d(0, 0, 0);
+  }
 }
-// .group-cover-br-image {
-//   position: relative;
-//   width: 50px;
-//   height: 50px;
-//   cursor: pointer;
-//   background-image: url('../images/group_cover.png');
-//   background-position: center;
-//   background-size: 100%;
-//   background-repeat: no-repeat;
-//   margin-top: 10px;
-// }
 .module-cover-br-image {
   position: relative;
   width: 50px;
@@ -335,7 +329,7 @@
   flex-direction: column;
   align-items: center;
   z-index: 1;
-  margin-top: 5px;
+  margin-top: 8px;
 
   .title-course-br {
     position: relative;
@@ -354,8 +348,8 @@
     font-size: 12px;
     text-align: center;
     color: lightslategrey;
-    line-height: 13px;
-    margin-top: 6px;
+    line-height: 12px;
+    margin-top: 4px;
   }
 }
 
@@ -533,6 +527,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  animation: showMessage 1s;
+  animation-delay: 0.4s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
 
   .br-message {
     position: relative;
@@ -581,7 +580,14 @@
     }
   }
 }
-
+@keyframes showMessage {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 @keyframes handshake {
   0% {
     transform: rotate(0);
@@ -612,4 +618,23 @@
   }
 }
 
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(1px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(1px, 0, 0);
+  }
+}
 // End Search Form
