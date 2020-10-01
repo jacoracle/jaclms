@@ -1,6 +1,7 @@
 <style>
     .fondo {
         background-color: white;
+        margin: 10px;
     }
     .temp {
         display: none;
@@ -20,28 +21,26 @@
             <div class="nimbus-imagotype"></div>
             <h2 id="jhi-curso-heading">Actividad interactiva</h2>
 
-            <div class="fondo">
+            <div>
                 <!-- Nombre -->
 
 <!-- No eliminar -->
 <input type="text" [(ngModel)]="activity.nombre" class="temp">
 <!-- No eliminar -->
 
-                <mat-form-field appearance="fill">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput [(ngModel)]="activity.nombre">
-                </mat-form-field>
-                <!-- Nombre -->
-                <!-- Evaluable -->
-                <input type="checkbox" [(ngModel)]="activity.contenido.evaluable">
-                <span>Evaluable</span>
+                <div class="fondo">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput [(ngModel)]="activity.nombre">
+                    </mat-form-field>
+                    <!-- Nombre -->
+                    <!-- Evaluable -->
+                    <mat-checkbox [(ngModel)]="activity.contenido.evaluable">Evaluable</mat-checkbox>
+                    <!-- Evaluable -->
+                </div>
 
-                <mat-checkbox [(ngModel)]="activity.contenido.evaluable">Evaluable</mat-checkbox>
-
-                
-                <!-- Evaluable -->
                 <!-- Pregunta -->
-                <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;">
+                <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;" class="fondo">
                     <!-- Indicación/Pregunta -->
                     <mat-form-field appearance="fill">
                         <mat-label>Pregunta</mat-label>
@@ -51,7 +50,7 @@
                     <!-- Recurso -->
                     <mat-form-field appearance="fill">
                         <mat-label>Recurso</mat-label>
-                        <select matNativeControl required [(ngModel)]="pregunta.tipoRecurso">
+                        <select matNativeControl [(ngModel)]="pregunta.tipoRecurso">
                             <option value=""></option>
                             <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
                         </select>
@@ -65,16 +64,16 @@
                     <!-- Recurso -->
                     <!-- Tipo de pregunta -->
                     <mat-form-field appearance="fill">
-                        <mat-label>Recurso</mat-label>
-                        <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta">
+                        <mat-label>Tipo de pregunta</mat-label>
+                        <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta" (change)="changeQuestionType(pregunta, $event.target.value)">
                             <option value=""></option>
                             <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
                         </select>
                     </mat-form-field>
                     <!-- Tipo de pregunta -->
                     <!-- Tipo de respuestas -->
-                    <mat-form-field appearance="fill">
-                        <mat-label>Recurso</mat-label>
+                    <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'">
+                        <mat-label>Tipo de respuesta</mat-label>
                         <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
                             <option value=""></option>
                             <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
@@ -91,7 +90,7 @@
                         <!-- Correcta -->
                         <!-- Respuesta -->
                         <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
-                            <mat-label>Nombre</mat-label>
+                            <mat-label>Respuesta</mat-label>
                             <input matInput [(ngModel)]="respuesta.respuesta">
                         </mat-form-field>
                         <!-- Respuesta -->

@@ -45,6 +45,21 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  changeQuestionType(pregunta: Preguntas, questionType: string): any {
+    if (questionType === 'Verdadero Falso') {
+      pregunta.tipoRespuestas = 'Texto';
+      this.addTrueFalse(pregunta);
+    }
+  }
+
+  addTrueFalse(pregunta: Preguntas): void {
+    const respuestas = ['Verdadero', 'Falso'];
+    pregunta.respuestas = [];
+    for (let i = 0; i < respuestas.length; i++) {
+      this.addAnswer(pregunta, respuestas[i]);
+    }
+  }
+
   createQuestion(): Preguntas {
     return {
       ...new Preguntas(),
@@ -59,10 +74,10 @@ export class QuestionComponent implements OnInit {
     };
   }
 
-  createAnswer(): Respuestas {
+  createAnswer(answer?: string): Respuestas {
     return {
       ...new Respuestas(),
-      respuesta: '',
+      respuesta: answer ? answer : '',
       correcta: false,
       seleccionada: false,
       path: '',
@@ -95,11 +110,15 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  addAnswer(question: Preguntas): void {
+  addAnswer(question: Preguntas, answer?: string): void {
     if (!question.respuestas) {
       question.respuestas = [];
     }
-    question.respuestas.push(this.createAnswer());
+    if (answer) {
+      question.respuestas.push(this.createAnswer(answer));
+    } else {
+      question.respuestas.push(this.createAnswer());
+    }
   }
 
   validateQuestion(): void {}
@@ -135,14 +154,16 @@ export class QuestionComponent implements OnInit {
   }
 
   updateResources(): void {
-    for (let i = 0; i < this.activity.contenido.preguntas.length; i++) {
-      if (this.activity.contenido.preguntas[i].path && this.activity.contenido.preguntas[i].path !== '') {
-        this.getSafeUrl(this.activity.contenido.preguntas[i]);
-      }
-      if (this.activity.contenido.preguntas[i].tipoRespuestas !== 'Texto') {
-        for (let j = 0; j < this.activity.contenido.preguntas[i].respuestas.length; j++) {
-          if (this.activity.contenido.preguntas[i].respuestas[j].path && this.activity.contenido.preguntas[i].respuestas[j].path !== '') {
-            this.getSafeUrl(this.activity.contenido.preguntas[i].respuestas[j]);
+    if (this.activity && this.activity.contenido && this.activity.contenido.preguntas) {
+      for (let i = 0; i < this.activity.contenido.preguntas.length; i++) {
+        if (this.activity.contenido.preguntas[i].path && this.activity.contenido.preguntas[i].path !== '') {
+          this.getSafeUrl(this.activity.contenido.preguntas[i]);
+        }
+        if (this.activity.contenido.preguntas[i].tipoRespuestas !== 'Texto') {
+          for (let j = 0; j < this.activity.contenido.preguntas[i].respuestas.length; j++) {
+            if (this.activity.contenido.preguntas[i].respuestas[j].path && this.activity.contenido.preguntas[i].respuestas[j].path !== '') {
+              this.getSafeUrl(this.activity.contenido.preguntas[i].respuestas[j]);
+            }
           }
         }
       }
