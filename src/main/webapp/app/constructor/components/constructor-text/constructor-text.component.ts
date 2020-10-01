@@ -55,14 +55,12 @@ export class ConstructorTextComponent {
       } else {
         this._htmlContent = text;
         if (this.isTitle && this.headingSelect === undefined && this.textWithoutHtml(this._htmlContent).length === 1) {
-          setTimeout(() => {
-            if (this.cdr && !(this.cdr as ViewRef).destroyed) {
-              this.cdr.detectChanges();
-            }
-          });
+          if (this.cdr && !(this.cdr as ViewRef).destroyed) {
+            this.cdr.detectChanges();
+          }
           setTimeout(() => {
             this.editor.setSelection(this.textWithoutHtml(this._htmlContent).length + 1, 0);
-          }, 500);
+          }, 0);
         }
       }
     });
