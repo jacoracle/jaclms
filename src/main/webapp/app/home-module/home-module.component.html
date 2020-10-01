@@ -70,7 +70,7 @@
     </div>
 
     <!-- Window Empty -->
-    <div class="window-br-body" *ngIf="!modulos.length && !isSearching">
+    <div class="emty-e" *ngIf="!modulos.length">
       <div class="container-br-message">
         <div class="br-message">
           <div class="brm-1">
@@ -83,6 +83,7 @@
         </div>
       </div>
     </div>
+
     <!-- Window content Module -->
     <div class="window-br-body" *ngIf="modulos.length || isSearching">
 
