@@ -90,4 +90,8 @@ export class TopBarComponent {
     this.selectedColorMode = colorMode;
     this.colorModeService.setColorMode(colorMode.class);
   }
+
+  returnHomeUma(): void {
+    this.router.navigate(['/uma-home']);
+  }
 }
