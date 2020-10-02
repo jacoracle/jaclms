@@ -99,10 +99,15 @@
               <!-- Respuesta/URL de recurso -->
               <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
               <audio src="" *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.path !== ''"></audio>
-              <button type="button" class="main-btn" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()">
-                  <span>Subir</span>
+
+              <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()">
+                  <i class="icon ni-picture"></i>
                   <input #fileInput type="file" (change)="selectFile($event, respuesta)" style="display:none;"/>
               </button>
+
+
+
+
 
               <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1" class="btn-delete-question">
                 <i class="icon ni-delete"></i>
