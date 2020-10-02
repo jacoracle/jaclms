@@ -52,7 +52,7 @@
           <mat-form-field appearance="fill">
               <mat-label>Recurso</mat-label>
               <select matNativeControl [(ngModel)]="pregunta.tipoRecurso">
-                  <option value=""></option>
+                  <option value="">Ninguno</option>
                   <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
               </select>
           </mat-form-field>
@@ -60,6 +60,7 @@
               <span>Subir</span>
               <input #resourceInput type="file" (change)="selectFile($event, pregunta)" style="display:none;"/>
           </button>
+          <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''">Eliminar recurso</button>
           <img [src]="pregunta.safeUrl" *ngIf="(pregunta.tipoRecurso === 'Imagen' || pregunta.tipoRecurso === 'Video') && pregunta.safeUrl && pregunta.safeUrl !== ''">
           <audio src="" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.path !== ''"></audio>
           <!-- Recurso -->
@@ -67,7 +68,6 @@
           <mat-form-field appearance="fill">
               <mat-label>Tipo de pregunta</mat-label>
               <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta" (change)="changeQuestionType(pregunta, $event.target.value)">
-                  <option value=""></option>
                   <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
               </select>
           </mat-form-field>
@@ -77,7 +77,6 @@
           <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)">
               <mat-label>Tipo de respuesta</mat-label>
               <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
-                  <option value=""></option>
                   <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
               </select>
           </mat-form-field>
@@ -104,14 +103,14 @@
                   <input #fileInput type="file" (change)="selectFile($event, respuesta)" style="display:none;"/>
               </button>
 
-              <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1" class="btn-delete-question">
+              <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1 && pregunta.tipoPregunta !== 'Verdadero Falso'" class="btn-delete-question">
                 <i class="icon ni-delete"></i>
               </button>
 
               <!-- <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1">Eliminar respuesta</button> -->
               <!-- Respuesta/URL de recurso -->
           </div>
-          <button class="secondary-btn btn-add-answer-am" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4">Agregar respuesta</button>
+          <button class="secondary-btn btn-add-answer-am" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4 && pregunta.tipoPregunta !== 'Verdadero Falso'">Agregar respuesta</button>
           <!-- Respuesta -->
       </div>
 

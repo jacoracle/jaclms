@@ -21,6 +21,7 @@ export class Preguntas {
   public tipoRespuestas?: string;
   public path?: string;
   public tipoRecurso?: string;
+  public safeUrl?: string;
 }
 
 export class Respuestas {
