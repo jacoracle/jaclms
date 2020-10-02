@@ -528,6 +528,10 @@ jhi-login-modal {
   &:active {
     outline: none;
   }
+  i {
+    color: white;
+    margin-right: 8px;
+  }
 }
 .main-btn.btn-color-1 {
   background-image: linear-gradient(to right, #00ceff, #00b1ff, #00b1ff, #0083c5);

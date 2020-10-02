@@ -1,8 +1,4 @@
 @import '../../../../content/scss/variables.scss';
-.fondo {
-  background-color: teal;
-  margin: 10px;
-}
 .temp {
   display: none;
 }
@@ -70,13 +66,13 @@ img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 .title-activity-amh {
   position: relative;
   width: auto;
   height: auto;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 .btn-close-maker {
   position: absolute;
@@ -119,11 +115,35 @@ img {
   justify-content: center;
   overflow: auto;
   background-color: $footer-bg-color;
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 .row-amb {
   position: relative;
   width: 80%;
   height: auto;
+}
+.row-amb-answer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 12px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.row-add-question-btn {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed $background-workspace;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 // Footer
 .activity-maker-footer {
@@ -132,6 +152,9 @@ img {
   height: 80px;
   background-color: white;
   border-top: 1px solid $window-divider-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .row-amf {
   position: relative;

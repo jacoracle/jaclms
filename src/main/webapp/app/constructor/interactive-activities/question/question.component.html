@@ -34,7 +34,7 @@
       <input type="text" [(ngModel)]="activity.nombre" class="temp">
 
       <!-- Pregunta -->
-      <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;" class="fondo">
+      <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;" class="row-amb-answer">
           <!-- Indicación/Pregunta -->
           <mat-form-field appearance="fill">
               <mat-label>Pregunta</mat-label>
@@ -84,7 +84,7 @@
               <!-- Correcta -->
               <!-- Respuesta -->
               <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
-                  <mat-label>Respuesta</mat-label>
+                  <mat-label>Respuestax</mat-label>
                   <input matInput [(ngModel)]="respuesta.respuesta">
               </mat-form-field>
               <!-- Respuesta -->
@@ -101,7 +101,10 @@
           <button (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4">Agregar respuesta</button>
           <!-- Respuesta -->
       </div>
-      <button (click)="addQuestion()">Agregar pregunta</button>
+
+      <div class="row-add-question-btn">
+        <button class="main-btn" (click)="addQuestion()"><i class="icon ni-add"></i> Agregar pregunta</button>
+      </div>
       <!-- Pregunta -->
 
     </div>
