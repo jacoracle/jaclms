@@ -72,7 +72,7 @@
                     </mat-form-field>
                     <!-- Tipo de pregunta -->
                     <!-- Tipo de respuestas -->
-                    <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'">
+                    <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)">
                         <mat-label>Tipo de respuesta</mat-label>
                         <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
                             <option value=""></option>
@@ -86,7 +86,7 @@
                     <!-- Respuesta -->
                     <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;">
                         <!-- Correcta -->
-                        <mat-checkbox [(ngModel)]="respuesta.correcta">Correcta</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="respuesta.correcta" [disabled]="pregunta.respuestas.length < 2 || blockOnlyAnswer(pregunta, respuesta)" (change)="checkCorrectAnswers(pregunta, answerIndex)">Correcta</mat-checkbox>
                         <!-- Correcta -->
                         <!-- Respuesta -->
                         <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">

@@ -45,6 +45,12 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  emptyAnswers(pregunta: Preguntas): void {
+    if (pregunta.respuestas) {
+      pregunta.respuestas = [];
+    }
+  }
+
   changeQuestionType(pregunta: Preguntas, questionType: string): any {
     if (questionType === 'Verdadero Falso') {
       pregunta.tipoRespuestas = 'Texto';
@@ -52,12 +58,45 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  addTrueFalse(pregunta: Preguntas): void {
-    const respuestas = ['Verdadero', 'Falso'];
-    pregunta.respuestas = [];
-    for (let i = 0; i < respuestas.length; i++) {
-      this.addAnswer(pregunta, respuestas[i]);
+  changeAnswerType(pregunta: Preguntas): void {
+    this.emptyAnswers(pregunta);
+    this.addAnswer(pregunta, true);
+  }
+
+  checkCorrectAnswers(pregunta: Preguntas, answerIndex: number): void {
+    if (pregunta.tipoPregunta === 'Respuesta única' && pregunta.respuestas) {
+      for (let i = 0; i < pregunta.respuestas.length; i++) {
+        if (i !== answerIndex) {
+          pregunta.respuestas[i].correcta = false;
+        }
+      }
     }
+  }
+
+  blockOnlyAnswer(pregunta: Preguntas, respuesta: Respuestas): boolean {
+    let onlyAnswer = false;
+    if (respuesta.correcta && respuesta.correcta === true) {
+      let correctAnswers = 0;
+      if (pregunta.respuestas) {
+        for (let i = 0; i < pregunta.respuestas.length; i++) {
+          if (pregunta.respuestas[i].correcta === true) {
+            correctAnswers++;
+          }
+        }
+        if (correctAnswers === 1) {
+          onlyAnswer = true;
+        } else {
+          onlyAnswer = false;
+        }
+      }
+    }
+    return onlyAnswer;
+  }
+
+  addTrueFalse(pregunta: Preguntas): void {
+    this.emptyAnswers(pregunta);
+    this.addAnswer(pregunta, true, 'Verdadero');
+    this.addAnswer(pregunta, false, 'Falso');
   }
 
   createQuestion(): Preguntas {
@@ -74,11 +113,11 @@ export class QuestionComponent implements OnInit {
     };
   }
 
-  createAnswer(answer?: string): Respuestas {
+  createAnswer(correct?: boolean, answer?: string): Respuestas {
     return {
       ...new Respuestas(),
       respuesta: answer ? answer : '',
-      correcta: false,
+      correcta: correct ? correct : false,
       seleccionada: false,
       path: '',
       safeUrl: ''
@@ -105,20 +144,16 @@ export class QuestionComponent implements OnInit {
         this._activity.contenido.preguntas = [];
       }
       const question = this.createQuestion();
-      this.addAnswer(question);
+      this.addAnswer(question, true);
       this._activity.contenido.preguntas.push(question);
     }
   }
 
-  addAnswer(question: Preguntas, answer?: string): void {
+  addAnswer(question: Preguntas, correct?: boolean, answer?: string): void {
     if (!question.respuestas) {
       question.respuestas = [];
     }
-    if (answer) {
-      question.respuestas.push(this.createAnswer(answer));
-    } else {
-      question.respuestas.push(this.createAnswer());
-    }
+    question.respuestas.push(this.createAnswer(correct, answer));
   }
 
   validateQuestion(): void {}
@@ -203,9 +238,16 @@ export class QuestionComponent implements OnInit {
     this.activity.contenido.preguntas.splice(index, 1);
   }
 
-  deleteAnswer(question: Preguntas, index: number): void {
-    if (question.respuestas) {
-      question.respuestas.splice(index, 1);
+  deleteAnswer(pregunta: Preguntas, index: number): void {
+    if (pregunta.respuestas) {
+      pregunta.respuestas.splice(index, 1);
+      this.checkOnlyAnswer(pregunta);
+    }
+  }
+
+  checkOnlyAnswer(pregunta: Preguntas): void {
+    if (pregunta.respuestas && pregunta.respuestas.length === 1) {
+      pregunta.respuestas[0].correcta = true;
     }
   }
 }
