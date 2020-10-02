@@ -40,6 +40,10 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url('../../../../content/images/bg_pdf.svg');
+    background-position: 100% 0%;
+    background-repeat: no-repeat;
+    background-size: 400px;
   }
 }
 .col-amh-navbar {
@@ -128,11 +132,40 @@ img {
   width: 100%;
   height: auto;
   background-color: white;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 4px 30px 20px 30px;
   border-radius: 12px;
   margin-top: 25px;
   margin-bottom: 25px;
+  border: 1px solid $window-divider-color;
+  .row-amb-header {
+    position: relative;
+    width: 100%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px solid $window-divider-color;
+  }
+}
+.btn-delete-question {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  background-color: $footer-bg-color;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: $window-divider-color;
+  }
+  i {
+    font-size: 24px;
+  }
 }
 .row-add-question-btn {
   position: relative;
@@ -167,4 +200,26 @@ img {
     margin-left: 15px;
     margin-right: 15px;
   }
+}
+.row-answer-am {
+  position: relative;
+  width: 90%;
+  height: 70px;
+  margin-left: 3%;
+  // background-color: pink;
+  border-radius: 12px;
+  border: 1px solid $window-divider-color;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding-left: 20px;
+  padding-right: 10px;
+  .btn-delete-question {
+    position: absolute;
+    right: 15px;
+  }
+}
+.btn-add-answer-am {
+  margin-left: 3%;
+  margin-top: 12px;
 }

@@ -30,11 +30,18 @@
   <!-- Body -->
   <div class="activity-maker-body">
     <div class="row-amb">
+
       <!-- No eliminar -->
       <input type="text" [(ngModel)]="activity.nombre" class="temp">
 
       <!-- Pregunta -->
       <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;" class="row-amb-answer">
+        <div class="row-amb-header">
+          <!-- Eliminar pregunta -->
+          <button (click)="deleteQuestion(questionIndex);" class="btn-delete-question">
+            <i class="icon ni-delete"></i>
+          </button>
+        </div>
           <!-- Indicación/Pregunta -->
           <mat-form-field appearance="fill">
               <mat-label>Pregunta</mat-label>
@@ -65,6 +72,7 @@
               </select>
           </mat-form-field>
           <!-- Tipo de pregunta -->
+
           <!-- Tipo de respuestas -->
           <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)">
               <mat-label>Tipo de respuesta</mat-label>
@@ -74,19 +82,19 @@
               </select>
           </mat-form-field>
           <!-- Tipo de respuestas -->
-          <!-- Eliminar pregunta -->
-          <button (click)="deleteQuestion(questionIndex);">Eliminar pregunta</button>
-          <!-- Eliminar pregunta -->
+
           <!-- Respuesta -->
-          <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;">
+          <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;" class="row-answer-am">
               <!-- Correcta -->
               <mat-checkbox [(ngModel)]="respuesta.correcta" [disabled]="pregunta.respuestas.length < 2 || blockOnlyAnswer(pregunta, respuesta)" (change)="checkCorrectAnswers(pregunta, answerIndex)">Correcta</mat-checkbox>
               <!-- Correcta -->
               <!-- Respuesta -->
+
               <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
-                  <mat-label>Respuestax</mat-label>
+                  <mat-label>Respuesta</mat-label>
                   <input matInput [(ngModel)]="respuesta.respuesta">
               </mat-form-field>
+
               <!-- Respuesta -->
               <!-- Respuesta/URL de recurso -->
               <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
@@ -95,10 +103,15 @@
                   <span>Subir</span>
                   <input #fileInput type="file" (change)="selectFile($event, respuesta)" style="display:none;"/>
               </button>
-              <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1">Eliminar respuesta</button>
+
+              <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1" class="btn-delete-question">
+                <i class="icon ni-delete"></i>
+              </button>
+
+              <!-- <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1">Eliminar respuesta</button> -->
               <!-- Respuesta/URL de recurso -->
           </div>
-          <button (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4">Agregar respuesta</button>
+          <button class="secondary-btn btn-add-answer-am" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4">Agregar respuesta</button>
           <!-- Respuesta -->
       </div>
 
@@ -114,7 +127,7 @@
   <!-- Footer -->
   <div class="activity-maker-footer">
     <div class="row-amf">
-      <button (click)="close()" class="secondary-btn">Cancelar</button>
+      <button (click)="close()" class="secondary-btn">Cerrar</button>
       <button type="button" (click)="save()" class="main-btn">Guardar</button>
     </div>
   </div>
