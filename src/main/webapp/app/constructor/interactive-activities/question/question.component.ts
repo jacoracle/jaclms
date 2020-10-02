@@ -83,8 +83,6 @@ export class QuestionComponent implements OnInit {
   }
 
   checkCorrectAnswers(pregunta: Preguntas, answerIndex: number): void {
-    console.error(pregunta.tipoPregunta);
-    console.error(pregunta.tipoPregunta !== 'Respuesta múltiple');
     if (pregunta.tipoPregunta !== 'Respuesta múltiple' && pregunta.respuestas) {
       for (let i = 0; i < pregunta.respuestas.length; i++) {
         if (i !== answerIndex) {

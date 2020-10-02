@@ -12,7 +12,6 @@ export class ActivityModalService {
   constructor(private modalService: NgbModal) {}
 
   open(activity: IActividadInteractiva, id: number): void {
-    console.error(activity);
     let modalRef;
     if (!this.isOpen) {
       this.isOpen = true;

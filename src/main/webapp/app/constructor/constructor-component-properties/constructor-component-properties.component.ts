@@ -312,12 +312,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
   questionSubscription(): Subscription {
     const subscription = this.activityService.getActivity().subscribe(activity => {
-      console.error('Se recibe actividad en Propiedades.');
       this.activity = activity;
       if (activity.tipoActividadInteractiva && activity.tipoActividadInteractiva.tipoActividad) {
         this.fileFormat = activity.tipoActividadInteractiva.tipoActividad;
       }
-      console.error(activity);
     });
     return subscription;
   }
@@ -469,7 +467,6 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   openActivityModal(): void {
-    console.error(this.activity);
     if (this.activity) {
       this.interactiveActivityModal.open(this.activity, this.id);
     }
