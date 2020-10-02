@@ -28,6 +28,8 @@ export class ConstructorTextComponent {
   lastInnerHtml = '';
   lastInnerText = '';
 
+  tagsHtmlNoCerrar: any = ['P', 'H1', 'UL', 'OL', 'LI', 'SPAN', 'EM', 'U', 'STRONG', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+
   constructor(
     private textService: TextService,
     private contentBlocksService: ContentBlocksService,
@@ -51,10 +53,11 @@ export class ConstructorTextComponent {
           editableElements[0].innerHTML = this.lastInnerHtml;
         }
       } else {
-        // this.cdr.detectChanges();
         this._htmlContent = text;
         if (this.isTitle && this.headingSelect === undefined && this.textWithoutHtml(this._htmlContent).length === 1) {
-          this.cdr.detectChanges();
+          if (this.cdr && !(this.cdr as ViewRef).destroyed) {
+            this.cdr.detectChanges();
+          }
           setTimeout(() => {
             this.editor.setSelection(this.textWithoutHtml(this._htmlContent).length + 1, 0);
           }, 0);
@@ -64,6 +67,14 @@ export class ConstructorTextComponent {
 
     this.textService.getTemplateType().subscribe(templateTypeId => {
       const componentVisor = templateTypeId.nombre;
+      if (componentVisor === 'tip' || componentVisor === 'colapsable') {
+        this.placeholder =
+          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. This alarm has only been evacuated";
+      } else {
+        this.placeholder =
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+      }
+
       switch (componentVisor) {
         case 'titulo':
         case 'activity_question_text':
@@ -118,12 +129,7 @@ export class ConstructorTextComponent {
       }
     });
     if (
-      e.path[0].tagName === 'P' ||
-      e.path[0].tagName === 'H1' ||
-      e.path[0].tagName === 'UL' ||
-      e.path[0].tagName === 'OL' ||
-      e.path[0].tagName === 'LI' ||
-      e.path[0].tagName === 'span' ||
+      this.tagsHtmlNoCerrar.includes(e.path[0].tagName) ||
       e.path[0].outerHTML.indexOf('<div quill-editor-toolbar="" class="ql-toolbar') !== -1 ||
       e.path[0].outerHTML.indexOf('<div class="ql-editor ql-blank" data-gramm="false" contenteditable="true"') !== -1 ||
       e.path[0].outerHTML.indexOf('<div quill-editor-element="" class="ql-container ql-snow"></div>') !== -1 ||

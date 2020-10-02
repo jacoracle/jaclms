@@ -31,20 +31,12 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {}
 
   setImgSrc(imgPath: string): void {
-    console.error(imgPath);
+    // console.error(imgPath);
     this.imageService.setImgSrc(imgPath);
     // return this.imgSrc;
   }
 
   transform(pathImg: string): SafeResourceUrl {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(pathImg);
-  }
-
-  getOutput(evt: any): void {
-    console.error(evt);
-  }
-
-  getNothing(evt: any): void {
-    console.error(evt);
   }
 }

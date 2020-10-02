@@ -11,6 +11,7 @@ import org.constructor.domain.agrupador.Agrupador;
 import org.constructor.service.dto.agrupador.AgrupadorDTO;
 import org.constructor.service.dto.agrupador.AgrupadorFiltroDTO;
 import org.constructor.service.dto.agrupador.AgrupadorUpdateDTO;
+import org.constructor.service.dto.agrupador.DTOAgrupador;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -37,7 +38,7 @@ public interface AgrupadorService {
 	 * @param moduloDTO
 	 * @return
 	 */
-	AgrupadorDTO save(Authentication authentication, Agrupador agrupadorDTO);
+	AgrupadorDTO save(Authentication authentication, DTOAgrupador agrupadorDTO);
 
     /**
      * service for the last 10

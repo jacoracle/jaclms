@@ -12,13 +12,18 @@ import java.util.Set;
 
 import org.constructor.domain.User;
 import org.constructor.domain.agrupador.Agrupador;
+import org.constructor.domain.agrupador.AgrupadorModulo;
 import org.constructor.domain.agrupador.Etiqueta;
+import org.constructor.domain.module.Modulo;
+import org.constructor.repository.agrupador.AgrupadorModuloRepository;
 import org.constructor.repository.agrupador.AgrupadorRepository;
+import org.constructor.repository.module.ModuloRepository;
 import org.constructor.service.UserService;
 import org.constructor.service.agrupador.AgrupadorService;
 import org.constructor.service.dto.agrupador.AgrupadorDTO;
 import org.constructor.service.dto.agrupador.AgrupadorFiltroDTO;
 import org.constructor.service.dto.agrupador.AgrupadorUpdateDTO;
+import org.constructor.service.dto.agrupador.DTOAgrupador;
 import org.constructor.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +53,12 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 	 * Repository
 	 */
 	private final AgrupadorRepository agrupadorRepository;
+	
+	@Autowired
+	private ModuloRepository moduloRepository;
+	
+	@Autowired
+	private AgrupadorModuloRepository agrupadorModuloRepository;
 
 	/**
 	 * Service UserService
@@ -130,23 +141,47 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 	 */
 	@Override
 	@Transactional
-	public AgrupadorDTO save(Authentication authentication, Agrupador agrupador) {
-		log.debug("Request to save agrupador : {}", agrupador);
+	public AgrupadorDTO save(Authentication authentication, DTOAgrupador agrupadorDTO) {
+		log.debug("Request to save agrupador : {}", agrupadorDTO);
 		AgrupadorDTO agrup = new AgrupadorDTO();
-
+		Agrupador agrupador = new Agrupador();
+		agrupador.setTitulo(agrupadorDTO.getTitulo());
+		agrupador.setDescripcion(agrupadorDTO.getDescripcion());
+		agrupador.setDuracion(agrupadorDTO.getDuracion());
+		agrupador.setFechaInicio(agrupadorDTO.getFechaInicio());
+		agrupador.setFechaFin(agrupadorDTO.getFechaFin());
+		agrupador.setEtiquetas(agrupadorDTO.getEtiquetas());
+		
+		
 		String usuarioNombre = authentication.getName();
 		Set<User> user = userService.findUserByLogin(usuarioNombre);
 
 		agrupador.setUser(user);
-		agrupador = agrupadorRepository.save(agrupador);
+		agrupadorRepository.save(agrupador);
+		
+		agrupadorDTO.getModulos().forEach(moduloDTO -> {
+			Optional<Modulo> modulo  = moduloRepository.findById(moduloDTO.getModulo().getId());
+			AgrupadorModulo agrupadorModulo = new AgrupadorModulo();
+			
+			agrupadorModulo.setModulo(modulo.get());
+			agrupadorModulo.setOrden(moduloDTO.getOrden());
+			agrupadorModulo.setAgrupador(agrupador);
+			
+			agrupadorModuloRepository.save(agrupadorModulo);
+			
+		});
+		
+		
 		log.debug("agrupador id {}", agrupador.getId());
 		agrup.setAgrupador(agrupador);
+		
+		
 
 		return agrup;
 	}
 
 	/**
-	 * Get service for the last 10
+	 * Get service for the last 20
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -166,7 +201,6 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 			}
 
 		}
-		log.debug("agrupador userrrrrr {}", a);
 		user = userService.findUserByLogin(usuarioNombre);
 
 		for (User usuario : user) {
@@ -270,10 +304,9 @@ public class AgrupadorServiceImpl implements AgrupadorService {
 	public Optional<Agrupador> updateAgrupador(AgrupadorUpdateDTO dto) throws Exception {
 		return Optional.of(agrupadorRepository.findById(dto.getId())).filter(Optional::isPresent).map(Optional::get)
 				.map(agrupador -> {
-					agrupador.setId(dto.getId());
 					agrupador.setTitulo(dto.getTitulo());
 					agrupador.setDescripcion(dto.getDescripcion());
-
+					agrupador.setDuracion(dto.getDuracion());
 					agrupador.getEtiquetas().clear();
 
 					Set<Etiqueta> listEtiquetas = new HashSet<>();

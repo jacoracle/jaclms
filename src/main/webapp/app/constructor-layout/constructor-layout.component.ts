@@ -22,6 +22,7 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
   modulo: any;
   type: string;
   colorMode = '';
+  tagsHtmlNoCerrar: any = ['P', 'H1', 'UL', 'OL', 'LI', 'SPAN', 'EM', 'U', 'STRONG', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
 
   constructor(
     private textEditorBehaviosService: TextEditorBehaviorService,
@@ -36,12 +37,7 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
     this.renderer.listen('window', 'click', (e: any) => {
       if (
         !(
-          e.path[0].tagName === 'P' ||
-          e.path[0].tagName === 'H1' ||
-          e.path[0].tagName === 'span' ||
-          e.path[0].tagName === 'UL' ||
-          e.path[0].tagName === 'OL' ||
-          e.path[0].tagName === 'LI' ||
+          this.tagsHtmlNoCerrar.includes(e.path[0].tagName) ||
           e.path[0].outerHTML.indexOf('<div class="ql-editor ql-blank" data-gramm="false" contenteditable="true"') !== -1 ||
           e.path[0].outerHTML.indexOf('<div quill-editor-toolbar="" class="ql-toolbar') !== -1 ||
           e.path[0].outerHTML.indexOf('<div quill-editor-element="" class="ql-container ql-snow"></div>') !== -1 ||

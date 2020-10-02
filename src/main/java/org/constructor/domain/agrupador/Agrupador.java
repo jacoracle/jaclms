@@ -30,9 +30,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Edukai
+ * The Class Agrupador.
  *
+ * @author Edukai
  */
 
 @Entity
@@ -40,58 +42,42 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Agrupador  implements Serializable{
 
-	/**
-	 * Serializable
-	 */
+	/** Serializable. */
 	private static final long serialVersionUID = 5990216025368454112L;
 
-	/**
-	 * Long id
-	 */
+	/** Long id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	 /**
-     * String titulo
-     */
+	 /** String titulo. */
     @Column(name = "titulo")
     private String titulo;
     
-    /**
-     * String descripcion
-     */
+    /** String descripcion. */
     @Column(name = "descripcion")
     private String descripcion;
     
-
+    /** The duracion. */
+    @Column(name = "duracion")
+    private int duracion;
     
-    /**
-     * LocalDate fechaInicio
-     */
+    /** LocalDate fechaInicio. */
     @Column(name = "fecha_inicio")
-	@OrderBy ("orden ASC")
     private LocalDateTime fechaInicio;
     
-    /**
-     * LocalDate fechaFin
-     */
+    /** LocalDate fechaFin. */
     @Column(name = "fecha_fin")
-	@OrderBy ("orden ASC")
     private LocalDateTime fechaFin;
      
-    /**
-     * Etiqueta
-     */
+    /** Etiqueta. */
     @OneToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "agrupador_id")
     @OrderBy
     private Set<Etiqueta> etiquetas = new HashSet<>();
  
 
-    /**
-     * modulos
-     */
+    /** modulos. */
     @OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @Column(nullable = true)
     @JsonManagedReference
@@ -99,9 +85,7 @@ public class Agrupador  implements Serializable{
     private Set<AgrupadorModulo> modulos = new HashSet<>();
     
     
-    /**
-     * user
-     */
+    /** user. */
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -111,7 +95,8 @@ public class Agrupador  implements Serializable{
     private Set<User> user = new HashSet<>();
 
 	/**
-	 * Get
+	 * Get.
+	 *
 	 * @return the id
 	 */
 	public Long getId() {
@@ -119,7 +104,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
-	 * Set
+	 * Set.
+	 *
 	 * @param id the id to set
 	 */
 	public void setId(Long id) {
@@ -127,7 +113,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
-	 * Get
+	 * Get.
+	 *
 	 * @return the titulo
 	 */
 	public String getTitulo() {
@@ -135,7 +122,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
-	 * Set
+	 * Set.
+	 *
 	 * @param titulo the titulo to set
 	 */
 	public void setTitulo(String titulo) {
@@ -143,7 +131,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
-	 * Get
+	 * Get.
+	 *
 	 * @return the descripcion
 	 */
 	public String getDescripcion() {
@@ -151,7 +140,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
-	 * Set
+	 * Set.
+	 *
 	 * @param descripcion the descripcion to set
 	 */
 	public void setDescripcion(String descripcion) {
@@ -159,6 +149,26 @@ public class Agrupador  implements Serializable{
 	}
 
 	 /**
+ 	 * Gets the duracion.
+ 	 *
+ 	 * @return the duracion
+ 	 */
+ 	public int getDuracion() {
+		return duracion;
+	}
+
+	/**
+	 * Sets the duracion.
+	 *
+	 * @param duracion the new duracion
+	 */
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
+	}
+
+	/**
+	 * Gets the fecha inicio.
+	 *
 	 * @return the fechaInicio
 	 */
 	public LocalDateTime getFechaInicio() {
@@ -166,6 +176,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
+	 * Sets the fecha inicio.
+	 *
 	 * @param fechaInicio the fechaInicio to set
 	 */
 	public void setFechaInicio(LocalDateTime fechaInicio) {
@@ -173,10 +185,11 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
-    * Agrupador
-    * @param fechaInicio
-    * @return
-    */
+	 * Agrupador.
+	 *
+	 * @param fechaInicio the fecha inicio
+	 * @return the agrupador
+	 */
    public Agrupador fechaInicio(LocalDateTime fechaInicio) {
        this.fechaInicio = LocalDateTime.now();;
        return this;
@@ -184,6 +197,8 @@ public class Agrupador  implements Serializable{
 
 
 	/**
+	 * Gets the fecha fin.
+	 *
 	 * @return the fechaFin
 	 */
 	public LocalDateTime getFechaFin() {
@@ -191,6 +206,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
+	 * Sets the fecha fin.
+	 *
 	 * @param fechaFin the fechaFin to set
 	 */
 	public void setFechaFin(LocalDateTime fechaFin) {
@@ -198,10 +215,11 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
-    * Agrupador
-    * @param fechaFin
-    * @return
-    */
+	 * Agrupador.
+	 *
+	 * @param fechaFin the fecha fin
+	 * @return the agrupador
+	 */
    public Agrupador fechaFin(LocalDateTime fechaFin) {
        this.fechaFin = LocalDateTime.now();;
        return this;
@@ -209,6 +227,8 @@ public class Agrupador  implements Serializable{
 	
 
 	/**
+	 * Gets the modulos.
+	 *
 	 * @return the modulos
 	 */
 	public Set<AgrupadorModulo> getModulos() {
@@ -216,6 +236,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
+	 * Sets the modulos.
+	 *
 	 * @param modulos the modulos to set
 	 */
 	public void setModulos(Set<AgrupadorModulo> modulos) {
@@ -225,6 +247,8 @@ public class Agrupador  implements Serializable{
 	
 
 	/**
+	 * Gets the etiquetas.
+	 *
 	 * @return the etiquetas
 	 */
 	public Set<Etiqueta> getEtiquetas() {
@@ -232,6 +256,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
+	 * Sets the etiquetas.
+	 *
 	 * @param etiquetas the etiquetas to set
 	 */
 	public void setEtiquetas(Set<Etiqueta> etiquetas) {
@@ -240,6 +266,8 @@ public class Agrupador  implements Serializable{
 	
 
 	/**
+	 * Gets the user.
+	 *
 	 * @return the user
 	 */
 	public Set<User> getUser() {
@@ -247,6 +275,8 @@ public class Agrupador  implements Serializable{
 	}
 
 	/**
+	 * Sets the user.
+	 *
 	 * @param user the user to set
 	 */
 	public void setUser(Set<User> user) {
@@ -254,7 +284,10 @@ public class Agrupador  implements Serializable{
 	}
 	
 	/**
-	 * equals
+	 * equals.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
 	 */
 	@Override
 	   public boolean equals(Object obj) {
@@ -269,18 +302,23 @@ public class Agrupador  implements Serializable{
     }
 
 	/**
-	 * hashCode
+	 * hashCode.
+	 *
+	 * @return the int
 	 */
 	@Override
-
+ 
 	   public int hashCode() {
 	        return id.hashCode();
 	    }
-	
+
+	/**
+	 * ToString 
+	 */
 	@Override
 	public String toString() {
-		return "Agrupador [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fechaInicio="
-				+ fechaInicio + ", fechaFin=" + fechaFin + ", etiquetas=" + etiquetas + "]";
+		return "Agrupador [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", duracion=" + duracion
+				+ ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", etiquetas="  + "]";
 	}
 
     

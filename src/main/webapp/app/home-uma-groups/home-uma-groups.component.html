@@ -1,160 +1,102 @@
 <!-- delete class css main-groups-uma-container -->
 <div class="main-container-br">
     <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
-        <!-- Window Header -->
-        <div class="window-br-header">
-            <div class="alert-sequence-configuration">
-                <jhi-alert-error></jhi-alert-error>
-            </div>
-            <div class="r1">
-                <div class="logo-create"></div>
-            </div>
-            <div class="r2">
-                <div class="windowHeader-title"><i class="icon whGroupUma"></i>
-                    <h4>Agrupador de UMAs</h4>
-                </div>
-                <div class="c1">
-                    <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
-                    <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
-                </div>
-            </div>
+
+      <!-- Window Header -->
+      <div class="window-br-header">
+        <div class="alert-sequence-configuration">
+            <jhi-alert-error></jhi-alert-error>
+        </div>
+        <div class="r1">
+          <div class="logo-home-mini"></div>
         </div>
 
-        <div class="window-br-body-topbar">
-            <div class="line-gradient"></div>
-            <div class="row-wbr-bt">
-                <p>Tus grupos recientes ({{secuenciasUma!.length}})</p>
-            </div>
+        <div class="r2">
+          <div class="windowHeader-title">
+            <!-- <div class="icon-step-header"></div> -->
+            <h4>Agrupador de UMA</h4>
+          </div>
+          <div class="c1">
+          </div>
         </div>
+      </div>
 
-        <!-- Window Empty -->
-        <div class="window-br-body">
-            <div class="search-main-container">
-                <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm">
-                    <div class="container-search-form-uma">
-                        <div class="row-search-gral">
-                            <mat-form-field>
-                                <input type="text" placeholder="Buscar" matInput formControlName="tituloAgrupador"
-                                    [matAutocomplete]="autoInputTituloAgrupador">
-                                <mat-autocomplete autoActiveFirstOption #autoInputTituloAgrupador="matAutocomplete"
-                                    [displayWith]="displayFn">
-                                    <mat-option *ngFor="let option of filteredSequencesUmas! | async" [value]="option">
-                                        {{option.titulo}}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                        </div>
+      <div class="window-br-body-topbar">
+          <div class="line-gradient lg-step2"></div>
+          <div class="row-wbr-bt">
+            <p>Tus Agrupadores ({{secuenciasUma!.length}})</p>
 
-                        <div class="container-field-filter">
-                            <p>Filtrar Agrupadores por:</p>
+            <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off" class="form-uma-search">
+              <mat-form-field appearance="outline">
+                <mat-label>Buscar</mat-label>
+                <input type="text" placeholder="" matInput formControlName="tituloAgrupador"
+                  [matAutocomplete]="autoInputTituloAgrupador">
+                <mat-autocomplete autoActiveFirstOption #autoInputTituloAgrupador="matAutocomplete"
+                  [displayWith]="displayFn">
+                  <!-- <mat-option *ngFor="let option of filteredSequencesUmas! | async" [value]="option">
+                      {{option.titulo}}
+                  </mat-option> -->
+                </mat-autocomplete>
+              </mat-form-field>
+            </form>
 
-                            <div class="row-filter-uma">
-                                <mat-form-field>
-                                    <mat-label>Título del Grupo</mat-label>
-                                    <input matInput formControlName="sequenceTitleFormCtrl"
-                                        [errorStateMatcher]="matcher" placeholder="Filtrar por título del grupo">
-                                    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                                    <mat-error *ngIf="groupUmaForm!.get('sequenceTitleFormCtrl')!.hasError('maxlength')">
-                                        Captura el título del UMA para filtrar.
-                                    </mat-error>
-                                </mat-form-field>
+          </div>
+      </div>
 
-                                <mat-form-field>
-                                    <mat-label>Descripción</mat-label>
-                                    <input matInput formControlName="sequenceDescriptionFormCtrl"
-                                        [errorStateMatcher]="matcher" placeholder="filtrar por parte de la descripción">
-                                    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
-                                    <mat-error
-                                        *ngIf="groupUmaForm!.get('sequenceDescriptionFormCtrl')!.hasError('maxlength')">
-                                        La descripción del UMA a filtrar no debe superar los 50 caracteres.
-                                    </mat-error>
-                                </mat-form-field>
+      <!-- Window Empty -->
+      <div class="emty-e" *ngIf="!secuenciasUma.length">
+        <div class="container-br-message">
+          <div class="br-message">
+            <div class="brm-1">
+              <div class="br-message-icon"></div>
+            </div>
+            <div class="brm-2">
+              <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
+              <p>Para comenzar da click en el botón "Crear Agrupador".</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                                <mat-form-field>
-                                    <mat-label>Área de Conocimiento</mat-label>
-                                    <input matInput formControlName="sequenceAreaKnowledgeFormCtrl"
-                                        placeholder="Filtrar por área de conocimiento">
-                                </mat-form-field>
 
-                            </div>
-                            <div class="row-filter-uma">
-                                <mat-form-field>
-                                    <mat-label>Nivel Académico</mat-label>
-                                    <input matInput formControlName="sequenceAcademicGradeFormCtrl"
-                                        placeholder="Filtrar por nivel académico">
-                                </mat-form-field>
+      <div class="window-br-body">
+        <div class="result-search-container">
 
-                                <mat-form-field>
-                                    <mat-label>Tema del Grupo</mat-label>
-                                    <input type="text" placeholder="Filtrar por tema del grupo" matInput
-                                        formControlName="sequenceTopicFormCtrl">
-                                </mat-form-field>
-                            </div>
-                        </div>
+          <!-- <p>Resultados de la búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p> -->
+          <div class="grid-cards">
+            <div class="box-card" *ngFor="let sec of secuenciasUma"
+               [routerLink]="['/sequence-configuration', sec.id]">
+               <!-- <div *ngFor="let sec of filteredSequencesUmas! | async"> NO BORRAR ESTA LINEA -->
+                   <!-- <mat-nav-list> -->
 
-                    </div>
+               <div class="group-cover-br-image"><span></span></div>
 
-                    <div class="btn-search-group">
-                        <button (click)="resetSequences()" class="secondary-btn mr-3">
-                            Limpiar búsqueda
-                        </button>
-                        <button (click)="searchAgrupadores()" class="main-btn" type="button">
-                            Buscar
-                        </button>
-                    </div>
-                </form>
+               <div (click)="deleteGroup(sec, $event)" class="delete-course-br">
+                 <i class="icon ni-delete icon-negative"></i>
+               </div>
+
+               <div class="course-desc-br-row">
+
+                 <span class="title-course-br"
+                       *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}</span>
+
+                 <span class="desc-course-br"
+                     *ngIf="sec.descripcion">{{sec.descripcion!.length > 28 ? sec.descripcion!.substring(0, 28) + "..." : sec.descripcion!}}</span>
+               </div>
 
             </div>
-            <!-- close search-main-container -->
-
-            <div class="result-search-container">
-
-                <!-- expansion panel cool -->
-                <div *ngIf="secuenciasUma!.length">
-                    <!-- <p>Resultados de la búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p> -->
-                    <div class="grid-cards">
-                        <div *ngFor="let sec of secuenciasUma">
-                        <!-- <div *ngFor="let sec of filteredSequencesUmas! | async"> NO BORRAR ESTA LINEA -->
-                            <!-- <mat-nav-list> -->
-                            <div class="box-card" [routerLink]="['/sequence-configuration', sec.id]">
-                                <div class="group-cover-br-image"></div>
-
-                                <div (click)="deleteGroup(sec, $event)" class="delete-course-br">
-                                    <i class="icon ni-delete icon-negative"></i>
-                                </div>
-                                <!-- Preview -->
-                                <!-- <div class="preview-course-br">
-                                    <i class="icon ni-view icon-negative"></i>
-                                </div> -->
-
-                                <div class="course-desc-br-row">
-                                    <span class="title-course-br">
-                                        {{sec.titulo}}</span>
-                                    <span class="desc-course-br"
-                                        *ngIf="sec.descripcion">{{sec.descripcion!.length > 28 ? sec.descripcion!.substring(0, 28) + "..." : sec.descripcion!}}</span>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
+          </div>
 
         </div>
-        <!-- close window-br-body div -->
+      </div>
+      <!-- close window-br-body div -->
 
-        <!-- Window footer -->
-        <div class="window-br-footer">
-            <button routerLink="/" class="secondary-btn">Regresar</button>
-            <button routerLink="/group-configuration" class="main-btn">Crear Grupo</button>
-        </div>
+      <!-- Window footer -->
+      <div class="window-br-footer">
+          <button routerLink="/" class="secondary-btn">Regresar</button>
+          <button routerLink="/group-configuration" class="main-btn">Nuevo Agrupador</button>
+      </div>
 
     </div>
     <!-- close div isAuthenticated -->
-
 </div>

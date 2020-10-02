@@ -76,7 +76,9 @@
         <!-- Footer -->
         <div class="modal-act-footer">
             <button (click)="close()" class="secondary-btn">Cancelar</button>
-            <button type="button" (click)="onSubmit()" class="main-btn">Crear Actividad</button>
+            <button type="button" (click)="onSubmit()" class="main-btn">
+                <span *ngIf="!jsonFormIn">Crear&nbsp;</span> <span *ngIf="jsonFormIn">Editar&nbsp;</span>Actividad
+            </button>
         </div>
         <!-- End Footer -->
     </form>

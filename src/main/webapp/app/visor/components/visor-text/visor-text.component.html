@@ -1,4 +1,5 @@
 <div class="final-block-row" (click)="editText()">
   <div class="ql-editor" [innerHtml]="htmlContent | safeHtml" *ngIf="htmlContent !== ''" (click)="selectText()"></div>
-  <div class="ql-editor" [innerHtml]="exampleContent" *ngIf="htmlContent === ''" (click)="selectText()"></div>
+  <div class="ql-editor" [innerHtml]="exampleContent" (click)="selectText()" *ngIf="htmlContent === '' && !isShortExample()" ></div>
+  <div class="ql-editor" [innerHtml]="shortExampleContent" (click)="selectText()" *ngIf="htmlContent === '' && isShortExample()"></div>
 </div>
