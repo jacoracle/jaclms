@@ -10,8 +10,8 @@ import { ActivityService } from 'app/services/activity.service';
   styleUrls: ['./constructor-question.component.scss']
 })
 export class ConstructorQuestionComponent implements OnInit, OnDestroy {
-  emptyActivityImg: SafeUrl = './../../../../content/images/img_layout3.png';
-  activityImg: SafeUrl = './../../../../content/images/img_layout3.png';
+  emptyActivityImg: SafeUrl = './../../../../content/images/actividad.png';
+  activityImg: SafeUrl = './../../../../content/images/actividad.png';
   subscription: Subscription;
   editing = false;
 

@@ -1,0 +1,147 @@
+@import '../../../../content/scss/variables.scss';
+.fondo {
+  background-color: teal;
+  margin: 10px;
+}
+.temp {
+  display: none;
+}
+img {
+  width: 100px;
+  height: 100px;
+}
+.row-activity-maker-19 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  z-index: 100;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+// Header
+.activity-maker-header {
+  position: relative;
+  width: 100%;
+  height: 135px;
+  display: flex;
+  flex-direction: column;
+  .row-amh-navbar {
+    position: relative;
+    width: 100%;
+    height: 45px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .row-amh-topbar {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    background-color: $background-workspace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.col-amh-navbar {
+  position: relative;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.logo-nimbus-amh {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background-image: url('../../../../content/images/logo-jhipster.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.logo-activity-amh {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background-image: url('../../../../content/images/ab11.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin-left: 20px;
+}
+.title-activity-amh {
+  position: relative;
+  width: auto;
+  height: auto;
+  margin-left: 20px;
+}
+.btn-close-maker {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  right: 0px;
+  top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  background-color: $footer-bg-color;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: $window-divider-color;
+  }
+  i {
+    font-size: 24px;
+  }
+}
+.col-amh-topbar {
+  position: relative;
+  width: 80%;
+  height: 60px;
+}
+.mat-amht-title {
+}
+.mat-amht-checkbox {
+  margin-left: 40px;
+}
+// Body
+.activity-maker-body {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 215px);
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  background-color: $footer-bg-color;
+}
+.row-amb {
+  position: relative;
+  width: 80%;
+  height: auto;
+}
+// Footer
+.activity-maker-footer {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  border-top: 1px solid $window-divider-color;
+}
+.row-amf {
+  position: relative;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}

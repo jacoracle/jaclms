@@ -1,11 +1,11 @@
 <div *ngIf="component && component.actividadesInteractivas && component.actividadesInteractivas[0]">
-    Nombre: {{component.actividadesInteractivas[0].nombre}}
+    <!-- Nombre: {{component.actividadesInteractivas[0].nombre}} -->
 </div>
 <div (click)="selectActivity()">
-    <div *ngIf="this._component.actividadesInteractivas![0].tipoActividadInteractiva.contenido === ''"> 
+    <div *ngIf="this._component.actividadesInteractivas![0].tipoActividadInteractiva.contenido === ''">
         <img [src]="emptyActivityImg" alt="">
     </div>
     <div *ngIf="this._component.actividadesInteractivas![0].tipoActividadInteractiva.contenido !== ''">
-        <img [src]="activityImg" alt="">
+        <img [src]="activityImg" alt="" class="img-activity-19">
     </div>
 </div>
