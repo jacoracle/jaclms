@@ -35,43 +35,43 @@
                         <span class="play-icon-test" (click)="loadVideo()" *ngIf="thumbSrc !== ''">
                             <i class="icon ni-play"></i>
                         </span>
-                        <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
+                        <img [src]="thumbSrc" alt="" class="cover-upload-video-test" *ngIf="multimediaFileProperties && multimediaFileProperties.contenido !== 'unknown'">
                     </div>
                     <div *ngIf="fileFormat === 'pdf'" class="test-pdf">
                         <!-- Pdf -->
-                        <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
-                        <span class="play-icon-test" (click)="pdfPreview()" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
+                        <img [src]="defaultPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties && multimediaFileProperties.contenido === 'unknown'">
+                        <span class="play-icon-test" (click)="pdfPreview()" *ngIf="multimediaFileProperties && multimediaFileProperties.contenido !== 'unknown'">
                             <i class="icon ni-view"></i>
                         </span>
-                        <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
+                        <img [src]="loadedPdfUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties && multimediaFileProperties.contenido !== 'unknown'">
                     </div>
                     <div *ngIf="fileFormat === 'sound'" class="test-audio">
                         <!-- Audio -->
-                        <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido === 'unknown'">
-                        <span class="play-icon-test" (click)="loadSound()" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
+                        <img [src]="defaultSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties && multimediaFileProperties.contenido === 'unknown'">
+                        <span class="play-icon-test" (click)="loadSound()" *ngIf="multimediaFileProperties && multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
                             <i class="icon ni-play"></i>
                         </span>
-                        <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
+                        <img [src]="loadedSoundUrl" alt="" class="cover-upload-img" *ngIf="multimediaFileProperties && multimediaFileProperties.contenido !== 'unknown' && !listenAudio">
                         <audio [src]="soundSrc" controls controlsList="nodownload" #sPlayer *ngIf="soundSrc !== '' && listenAudio" class="audioPlayer"></audio>
                     </div>
                     <div *ngIf="fileFormat  === 'activity_question_text' || fileFormat === 'activity_question_media'"
                          class="test-pdf">
                         <!-- Activity -->
-                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido === 'unknown' && (fileFormat  === 'activity_question_text')">
-                        <img [src]="defaultQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido === 'unknown' && fileFormat  === 'activity_question_media'">
-                        <span class="play-icon-test" (click)="createUpdateActivity()" *ngIf=" actividadProperties.contenido !== 'unknown'">
+                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties && actividadProperties.contenido === 'unknown' && (fileFormat  === 'activity_question_text')">
+                        <img [src]="defaultQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties && actividadProperties.contenido === 'unknown' && fileFormat  === 'activity_question_media'">
+                        <span class="play-icon-test" (click)="createUpdateActivity()" *ngIf=" actividadProperties && actividadProperties.contenido !== 'unknown'">
                             <i class="icon ni-view"></i>
                         </span>
-                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && (fileFormat  === 'activity_question_text')">
-                        <img [src]="loadedQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && fileFormat  === 'activity_question_media'">
+                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties && actividadProperties.contenido !== 'unknown' && (fileFormat  === 'activity_question_text')">
+                        <img [src]="loadedQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties && actividadProperties.contenido !== 'unknown' && fileFormat  === 'activity_question_media'">
                     </div>
                     <div *ngIf="fileFormat  === 'pregunta_texto'" class="test-pdf">
                         <!-- Activity (temp) -->
-                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity.contenido === {}">
+                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity && activity.contenido === {}">
                         <span class="play-icon-test" (click)="openActivityModal()">
                             <i class="icon ni-view"></i>
                         </span>
-                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity.contenido !== {}">
+                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity && activity.contenido !== {}">
                     </div>
                     <div [hidden]="!showLoader" class="loader-cp">
                         <!-- Doing something -->
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="row-sidebar-up-image-btn" *ngIf="fileFormat !== 'pregunta_texto'">
-                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="(multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown') && fileFormat !== 'text' && (fileFormat !== 'activity_question_text' || fileFormat === 'pregunta_texto')">
+                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="multimediaFileProperties && this.actividadProperties && (multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown') && fileFormat !== 'text' && (fileFormat !== 'activity_question_text' && fileFormat === 'pregunta_texto')">
                         Eliminar
                     </button>
                     <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="isNotTextActivity()">

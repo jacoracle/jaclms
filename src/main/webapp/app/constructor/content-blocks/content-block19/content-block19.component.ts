@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { BloquesCurso } from 'app/shared/model/bloques-curso.model';
 
 @Component({
   selector: 'jhi-content-block19',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./content-block19.component.scss']
 })
 export class ContentBlock19Component implements OnInit {
+  @Input() contentBlock?: BloquesCurso;
+
   constructor() {}
 
   ngOnInit(): void {}

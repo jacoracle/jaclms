@@ -2,7 +2,7 @@
 <!-- Bloque 19 -->
 <div class="row-activity-19" *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
     <div *ngFor="let component of contentBlock.bloqueComponentes.componentes; let index = index;">
-        <div *ngIf="component.tipoComponente.nombre === 'activity'">
+        <div *ngIf="component && component.tipoComponente && component.tipoComponente.nombre === 'activity'">
             <jhi-constructor-question [component]="component"></jhi-constructor-question>
         </div>
     </div>
