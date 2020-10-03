@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 import { Preguntas, Respuestas } from './../../../shared/model/actividad-pregunta.model';
 import { ActivityService } from 'app/services/activity.service';
@@ -34,6 +34,7 @@ export class QuestionComponent implements OnInit {
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   selectedFiles = [];
   @Input() id?: number;
+  @ViewChild('resourceInput', { static: false }) fileInput: any;
 
   constructor(
     private activitiService: ActivityService,
@@ -184,6 +185,8 @@ export class QuestionComponent implements OnInit {
   deleteResource(pregunta: Preguntas): void {
     pregunta.path = '';
     pregunta.safeUrl = '';
+    this.selectedFiles = [];
+    this.fileInput.nativeElement.value = '';
   }
 
   selectFile(event: any, objeto: any): void {
