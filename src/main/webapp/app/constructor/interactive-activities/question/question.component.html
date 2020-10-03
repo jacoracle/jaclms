@@ -69,7 +69,10 @@
         <div class="row-tipo-mat">
           <img [src]="pregunta.safeUrl" *ngIf="(pregunta.tipoRecurso === 'Imagen' || pregunta.tipoRecurso === 'Video') && pregunta.safeUrl && pregunta.safeUrl !== ''">
           <audio src="" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.path !== ''"></audio>
-          <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''">Eliminar recurso</button>
+
+          <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''" class="btn-delete-question">
+            <i class="icon ni-delete"></i>
+          </button>
           <!-- Recurso -->
         </div>
 
