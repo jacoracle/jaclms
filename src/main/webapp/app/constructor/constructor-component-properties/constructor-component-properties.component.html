@@ -57,12 +57,12 @@
                     <div *ngIf="fileFormat  === 'activity_question_text' || fileFormat === 'activity_question_media'"
                          class="test-pdf">
                         <!-- Activity -->
-                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido === 'unknown' && fileFormat  === 'activity_question_text'">
+                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido === 'unknown' && (fileFormat  === 'activity_question_text')">
                         <img [src]="defaultQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido === 'unknown' && fileFormat  === 'activity_question_media'">
                         <span class="play-icon-test" (click)="createUpdateActivity()" *ngIf=" actividadProperties.contenido !== 'unknown'">
                             <i class="icon ni-view"></i>
                         </span>
-                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && fileFormat  === 'activity_question_text'">
+                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && (fileFormat  === 'activity_question_text')">
                         <img [src]="loadedQuestionsMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && fileFormat  === 'activity_question_media'">
                     </div>
                     <div *ngIf="fileFormat  === 'pregunta_texto'" class="test-pdf">
@@ -78,8 +78,8 @@
                         <span class="loader"></span>
                     </div>
                 </div>
-                <div class="row-sidebar-up-image-btn">
-                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="(multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown') && fileFormat !== 'text'">
+                <div class="row-sidebar-up-image-btn" *ngIf="fileFormat !== 'pregunta_texto'">
+                    <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="(multimediaFileProperties.contenido !== 'unknown' && this.actividadProperties.contenido !== 'unknown') && fileFormat !== 'text' && (fileFormat !== 'activity_question_text' || fileFormat === 'pregunta_texto')">
                         Eliminar
                     </button>
                     <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="isNotTextActivity()">
@@ -92,7 +92,7 @@
                     </button>
                 </div>
 
-                <div class="properties-file" *ngIf="isNotTextActivity()">
+                <div class="properties-file" *ngIf="isNotTextActivity() && fileFormat !== 'pregunta_texto'">
                     <h6>Información</h6>
                     <div class="pf-item">
                         <label for="filename">Nombre:</label>
