@@ -24,7 +24,6 @@ export class ConstructorQuestionComponent implements OnInit, OnDestroy {
       subtipo: 'texto',
       tipoActividad: 'pregunta_texto'
     };
-    console.error(val);
   }
   get component(): Componente {
     return this._component!;
@@ -32,8 +31,6 @@ export class ConstructorQuestionComponent implements OnInit, OnDestroy {
   constructor(private activitiService: ActivityService) {
     this.subscription = this.activitiService.getEditing().subscribe(editing => (this.editing = editing));
     this.subscription = this.activitiService.getActivity().subscribe(activity => {
-      console.error('Se recibe actividad en constructor-question');
-      console.error(activity);
       if (this.editing) {
         this.component.actividadesInteractivas![0] = activity;
       }

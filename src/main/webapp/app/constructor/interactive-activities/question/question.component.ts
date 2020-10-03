@@ -24,9 +24,11 @@ export class QuestionComponent implements OnInit {
   get activity(): ActividadInteractiva {
     return this._activity!;
   }
-  questionTypes = ['Respuesta única', 'Respuesta multipe', 'Verdadero Falso'];
-  answerTypes = ['Texto', 'Imagen', 'Audio', 'Video'];
-  resourceTypes = ['Imagen', 'Audio', 'Video'];
+  questionTypes = ['Respuesta única', 'Respuesta múltiple', 'Verdadero Falso'];
+  // answerTypes = ['Texto', 'Imagen', 'Audio', 'Video'];
+  answerTypes = ['Texto', 'Imagen'];
+  // resourceTypes = ['Imagen', 'Audio', 'Video'];
+  resourceTypes = ['Imagen'];
   showLoader = false;
   maxImageSize = 5120000;
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
@@ -81,7 +83,7 @@ export class QuestionComponent implements OnInit {
   }
 
   checkCorrectAnswers(pregunta: Preguntas, answerIndex: number): void {
-    if (pregunta.tipoPregunta === 'Respuesta única' && pregunta.respuestas) {
+    if (pregunta.tipoPregunta !== 'Respuesta múltiple' && pregunta.respuestas) {
       for (let i = 0; i < pregunta.respuestas.length; i++) {
         if (i !== answerIndex) {
           pregunta.respuestas[i].correcta = false;
@@ -179,7 +181,10 @@ export class QuestionComponent implements OnInit {
 
   deleteResources(): void {}
 
-  deleteResource(): void {}
+  deleteResource(pregunta: Preguntas): void {
+    pregunta.path = '';
+    pregunta.safeUrl = '';
+  }
 
   selectFile(event: any, objeto: any): void {
     if (event.target.files.length) {
@@ -222,13 +227,13 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  getSafeUrl(answer: Respuestas): void {
+  getSafeUrl(object: any): void {
     let safeUrl: SafeUrl = '';
-    if (answer.path) {
-      this.fileUploadService.getImageFile(answer.path).subscribe(data => {
+    if (object.path) {
+      this.fileUploadService.getImageFile(object.path).subscribe(data => {
         const imagePath = URL.createObjectURL(data.body);
         safeUrl = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
-        answer.safeUrl = safeUrl;
+        object.safeUrl = safeUrl;
       });
     }
   }
