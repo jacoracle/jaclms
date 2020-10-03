@@ -42,45 +42,57 @@
             <i class="icon ni-delete"></i>
           </button>
         </div>
+
+        <div class="row-tipo-mat">
+
           <!-- Indicación/Pregunta -->
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="mat-pregunta">
               <mat-label>Pregunta</mat-label>
               <input matInput [(ngModel)]="pregunta.pregunta">
           </mat-form-field>
           <!-- Indicación/Pregunta -->
           <!-- Recurso -->
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="mat-recurso">
               <mat-label>Recurso</mat-label>
               <select matNativeControl [(ngModel)]="pregunta.tipoRecurso">
                   <option value="">Ninguno</option>
                   <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
               </select>
           </mat-form-field>
-          <button type="button" class="main-btn" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()">
-              <span>Subir</span>
+          <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()">
+              <!-- <span>Subir</span> -->
+              <i class="icon ni-picture"></i>
               <input #resourceInput type="file" (change)="selectFile($event, pregunta)" style="display:none;"/>
           </button>
-          <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''">Eliminar recurso</button>
+        </div>
+
+        <div class="row-tipo-mat">
           <img [src]="pregunta.safeUrl" *ngIf="(pregunta.tipoRecurso === 'Imagen' || pregunta.tipoRecurso === 'Video') && pregunta.safeUrl && pregunta.safeUrl !== ''">
           <audio src="" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.path !== ''"></audio>
+          <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''">Eliminar recurso</button>
           <!-- Recurso -->
-          <!-- Tipo de pregunta -->
-          <mat-form-field appearance="fill">
-              <mat-label>Tipo de pregunta</mat-label>
-              <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta" (change)="changeQuestionType(pregunta, $event.target.value)">
-                  <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
-              </select>
-          </mat-form-field>
-          <!-- Tipo de pregunta -->
+        </div>
 
-          <!-- Tipo de respuestas -->
-          <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)">
-              <mat-label>Tipo de respuesta</mat-label>
-              <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
-                  <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
-              </select>
-          </mat-form-field>
-          <!-- Tipo de respuestas -->
+
+          <div class="row-tipo-mat">
+            <!-- Tipo de pregunta -->
+            <mat-form-field appearance="fill" class="mat-tipo-pregunta">
+                <mat-label>Tipo de pregunta</mat-label>
+                <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta" (change)="changeQuestionType(pregunta, $event.target.value)">
+                    <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
+                </select>
+            </mat-form-field>
+            <!-- Tipo de pregunta -->
+
+            <!-- Tipo de respuestas -->
+            <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)" class="mat-tipo-respuesta">
+                <mat-label>Tipo de respuesta</mat-label>
+                <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
+                    <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
+                </select>
+            </mat-form-field>
+            <!-- Tipo de respuestas -->
+          </div>
 
           <!-- Respuesta -->
           <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;" class="row-answer-am">
@@ -104,8 +116,8 @@
                   <input #fileInput type="file" (change)="selectFile($event, respuesta)" style="display:none;"/>
               </button>
 
-              <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1 && pregunta.tipoPregunta !== 'Verdadero Falso'" class="btn-delete-question">
 
+              <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1 && pregunta.tipoPregunta !== 'Verdadero Falso'" class="btn-delete-question">
                 <i class="icon ni-delete"></i>
               </button>
 
