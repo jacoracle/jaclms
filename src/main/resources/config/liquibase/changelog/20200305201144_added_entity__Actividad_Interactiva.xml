@@ -17,7 +17,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="nombre" type="varchar(100)">
-                <constraints  nullable="false"/>
+                <constraints  nullable="true"/>
             </column>
   			<column name="contenido" type="json">
                 <constraints  nullable="true"/>
