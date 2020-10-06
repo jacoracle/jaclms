@@ -36,6 +36,7 @@ import { ContentBlock17Component } from '../content-blocks/content-block17/conte
 import { ContentBlock18Component } from '../content-blocks/content-block18/content-block18.component';
 import { ContentBlock15Component } from 'app/constructor/content-blocks/content-block15/content-block15.component';
 import { ContentBlock16Component } from 'app/constructor/content-blocks/content-block16/content-block16.component';
+import { ContentBlock19Component } from '../content-blocks/content-block19/content-block19.component';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -74,7 +75,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     { nombre: 'indicador', componente: ContentBlock17Component },
     { nombre: 'numeracion_actividad', componente: ContentBlock18Component },
     { nombre: 'activity_question_audio_text', componente: ContentBlock15Component },
-    { nombre: 'activity_question_audio_media', componente: ContentBlock16Component }
+    { nombre: 'activity_question_audio_media', componente: ContentBlock16Component },
+    { nombre: 'pregunta', componente: ContentBlock19Component }
   ];
 
   @Input()
@@ -367,7 +369,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
         contenido: this.createContenidoActividad(),
         evaluable: null,
         intentos: null,
-        gamificacion: null
+        gamificacion: null,
+        nombre: ''
       });
       return actividad;
     } else {

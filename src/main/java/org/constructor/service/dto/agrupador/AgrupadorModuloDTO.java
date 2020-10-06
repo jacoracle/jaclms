@@ -95,6 +95,12 @@ public class AgrupadorModuloDTO {
 	public void setAgrupador(Agrupador agrupador) {
 		this.agrupador = agrupador;
 	}
+
+	@Override
+	public String toString() {
+		return "AgrupadorModuloDTO [id=" + id + ", orden=" + orden + ", modulo=" + modulo + 
+				 "]";
+	}
     
     
     

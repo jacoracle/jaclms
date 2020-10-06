@@ -4,13 +4,19 @@
     <ng-container *ngFor="let component of contentBlock.bloqueComponentes.componentes; let index = index;">
 
         <div *ngIf="component.tipoComponente.nombre === 'image'" class="block-img-tip">
+          <div class="row-title-tip">
+            <h3>TIP</h3>
+          </div>
+          <div class="row-tip-image">
             <jhi-constructor-image [component]="component"
                 [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
                 (updateComponent)="onUpdateComponent($event, index)">
             </jhi-constructor-image>
+          </div>
         </div>
         <ng-container *ngIf="component.tipoComponente.nombre === 'text'">
             <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes" class="block-txt-tip">
+              <div class="btn-close-tip"> <i class="icon ni-close"></i> </div>
                 <jhi-visor-text [component]="component"
                     [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
                     (updateComponent)="onUpdateComponent($event, index)">

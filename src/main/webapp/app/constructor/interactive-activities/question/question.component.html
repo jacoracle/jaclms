@@ -1,0 +1,154 @@
+<div class="row-activity-maker-19">
+
+  <!-- Header -->
+  <div class="activity-maker-header">
+    <div class="row-amh-navbar">
+      <div class="col-amh-navbar">
+        <div class="logo-nimbus-amh"></div>
+        <div class="logo-activity-amh"></div>
+        <h4 class="title-activity-amh">Actividad interactiva Pregunta</h4>
+        <button type="button" (click)="close()" class="btn-close-maker">
+          <i class="icon ni-close"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row-amh-topbar">
+      <div class="col-amh-topbar">
+          <mat-form-field appearance="fill" class="mat-amht-title">
+              <mat-label>Nombre de actividad</mat-label>
+              <input matInput [(ngModel)]="activity.nombre">
+          </mat-form-field>
+          <!-- Nombre -->
+          <!-- Evaluable -->
+          <mat-checkbox [(ngModel)]="activity.contenido.evaluable" class="mat-amht-checkbox">Evaluable</mat-checkbox>
+          <!-- Evaluable -->
+      </div>
+    </div>
+    <!-- <h2 id="jhi-curso-heading">Actividad interactiva</h2> -->
+  </div>
+
+  <!-- Body -->
+  <div class="activity-maker-body">
+    <div class="row-amb">
+
+      <!-- No eliminar -->
+      <input type="text" [(ngModel)]="activity.nombre" class="temp">
+
+      <!-- Pregunta -->
+      <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;" class="row-amb-answer">
+        <div class="row-amb-header">
+          <!-- Eliminar pregunta -->
+          <button (click)="deleteQuestion(questionIndex);" class="btn-delete-question">
+            <i class="icon ni-delete"></i>
+          </button>
+        </div>
+
+        <div class="row-tipo-mat">
+
+          <!-- Indicación/Pregunta -->
+          <mat-form-field appearance="fill" class="mat-pregunta">
+              <mat-label>Pregunta</mat-label>
+              <input matInput [(ngModel)]="pregunta.pregunta">
+          </mat-form-field>
+          <!-- Indicación/Pregunta -->
+          <!-- Recurso -->
+          <mat-form-field appearance="fill" class="mat-recurso">
+              <mat-label>Recurso</mat-label>
+              <select matNativeControl [(ngModel)]="pregunta.tipoRecurso">
+                  <option value="">Ninguno</option>
+                  <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
+              </select>
+          </mat-form-field>
+          <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()">
+              <!-- <span>Subir</span> -->
+              <i class="icon ni-picture"></i>
+              <input #resourceInput type="file" (change)="selectFile($event, pregunta)" style="display:none;"/>
+          </button>
+        </div>
+
+        <div class="row-tipo-mat">
+          <img [src]="pregunta.safeUrl" *ngIf="(pregunta.tipoRecurso === 'Imagen' || pregunta.tipoRecurso === 'Video') && pregunta.safeUrl && pregunta.safeUrl !== ''">
+          <audio src="" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.path !== ''"></audio>
+
+          <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''" class="btn-delete-question">
+            <i class="icon ni-delete"></i>
+          </button>
+          <!-- Recurso -->
+        </div>
+
+
+          <div class="row-tipo-mat">
+            <!-- Tipo de pregunta -->
+            <mat-form-field appearance="fill" class="mat-tipo-pregunta">
+                <mat-label>Tipo de pregunta</mat-label>
+                <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta" (change)="changeQuestionType(pregunta, $event.target.value)">
+                    <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
+                </select>
+            </mat-form-field>
+            <!-- Tipo de pregunta -->
+
+            <!-- Tipo de respuestas -->
+            <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)" class="mat-tipo-respuesta">
+                <mat-label>Tipo de respuesta</mat-label>
+                <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
+                    <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
+                </select>
+            </mat-form-field>
+            <!-- Tipo de respuestas -->
+          </div>
+
+          <!-- Respuesta -->
+          <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;" class="row-answer-am">
+              <!-- Correcta -->
+              <mat-checkbox [(ngModel)]="respuesta.correcta" [disabled]="pregunta.respuestas.length < 2 || blockOnlyAnswer(pregunta, respuesta)" (change)="checkCorrectAnswers(pregunta, answerIndex)">Correcta</mat-checkbox>
+              <!-- Correcta -->
+              <!-- Respuesta -->
+
+              <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
+                  <mat-label>Respuesta</mat-label>
+                  <input matInput [(ngModel)]="respuesta.respuesta">
+              </mat-form-field>
+
+              <!-- Respuesta -->
+              <!-- Respuesta/URL de recurso -->
+              <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
+              <audio src="" *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.path !== ''"></audio>
+
+              <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()">
+                  <i class="icon ni-picture"></i>
+                  <input #fileInput type="file" (change)="selectFile($event, respuesta)" style="display:none;"/>
+              </button>
+
+
+              <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1 && pregunta.tipoPregunta !== 'Verdadero Falso'" class="btn-delete-question">
+                <i class="icon ni-delete"></i>
+              </button>
+
+              <!-- <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1">Eliminar respuesta</button> -->
+              <!-- Respuesta/URL de recurso -->
+          </div>
+          <button class="secondary-btn btn-add-answer-am" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4 && pregunta.tipoPregunta !== 'Verdadero Falso'">Agregar respuesta</button>
+          <!-- Respuesta -->
+      </div>
+
+      <div class="row-add-question-btn">
+        <button class="main-btn" (click)="addQuestion()"><i class="icon ni-add"></i> Agregar pregunta</button>
+      </div>
+      <!-- Pregunta -->
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="activity-maker-footer">
+    <div class="row-amf">
+      <button (click)="close()" class="secondary-btn">Cerrar</button>
+      <button type="button" (click)="save()" class="main-btn">Guardar</button>
+    </div>
+  </div>
+    <!-- <div *ngIf="showLoader">
+        CARGANDO...
+    </div> -->
+
+</div>

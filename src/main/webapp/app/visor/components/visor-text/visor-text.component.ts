@@ -44,7 +44,7 @@ export class VisorTextComponent implements OnInit {
           if (textFinish === this.text && textFinish !== '') {
             const contenido = this.createUpdatedContent(this.component!.contenido!, this.htmlContent);
             if (contenido.contenido) {
-              if (contenido.contenido.length <= 2000) {
+              if (this.textWithoutHtml(contenido.contenido).length <= 2000) {
                 this.subscription = this.contenidoService.update(contenido).subscribe(
                   data => {
                     this.component!.contenido = data.body!;
@@ -78,6 +78,10 @@ export class VisorTextComponent implements OnInit {
         this.htmlContent = text ? text : '';
       }
     });
+  }
+
+  textWithoutHtml(text: string): string {
+    return text.replace(/<[^>]*>/g, '');
   }
 
   createUpdatedContent(content: IContenido, newContent: string): IContenido {

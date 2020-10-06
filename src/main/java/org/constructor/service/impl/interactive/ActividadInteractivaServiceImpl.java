@@ -104,7 +104,7 @@ public class ActividadInteractivaServiceImpl implements ActividadInteractivaServ
 	        		tipoActividadInteractiva = 	actividadInteractivaRepository.getTipoActividadId(dto.getTipoActividadInteractiva().getTipoActividad(), 
 	        				dto.getTipoActividadInteractiva().getSubtipo(), 
 	        				dto.getTipoActividadInteractiva().getOpcion());
-	        	
+	        		actividadInteractiva.setNombre(dto.getNombre());
 	            	actividadInteractiva.setContenido(dto.getContenido());
 	            	actividadInteractiva.setEvaluable(dto.getEvaluable());
 	            	actividadInteractiva.setIntentos(dto.getIntentos());

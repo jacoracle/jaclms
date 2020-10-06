@@ -1,0 +1,294 @@
+@import '../../../../content/scss/variables.scss';
+.temp {
+  display: none;
+}
+img {
+  width: 100px;
+  height: 100px;
+}
+.row-activity-maker-19 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  z-index: 100;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+// Header
+.activity-maker-header {
+  position: relative;
+  width: 100%;
+  height: 135px;
+  display: flex;
+  flex-direction: column;
+  .row-amh-navbar {
+    position: relative;
+    width: 100%;
+    height: 45px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .row-amh-topbar {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    // background-color: $background-workspace;
+    // background-color: #101233;
+    background-color: $background-workspace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../../../content/images/bg_pdf.svg');
+    background-position: 100% 0%;
+    background-repeat: no-repeat;
+    background-size: 400px;
+  }
+}
+.col-amh-navbar {
+  position: relative;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.logo-nimbus-amh {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background-image: url('../../../../content/images/logo-jhipster.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.logo-activity-amh {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background-image: url('../../../../content/images/ab11.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin-left: 30px;
+}
+.title-activity-amh {
+  position: relative;
+  width: auto;
+  height: auto;
+  margin-left: 10px;
+}
+.btn-close-maker {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  right: 0px;
+  top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  background-color: $footer-bg-color;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: $window-divider-color;
+  }
+  i {
+    font-size: 24px;
+  }
+}
+.col-amh-topbar {
+  position: relative;
+  width: 80%;
+  height: 60px;
+}
+.mat-amht-title {
+}
+.mat-amht-checkbox {
+  margin-left: 40px;
+}
+// Body
+.activity-maker-body {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 215px);
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  background-color: $footer-bg-color;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+.row-amb {
+  position: relative;
+  width: 80%;
+  height: auto;
+}
+.row-amb-answer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: white;
+  padding: 4px 30px 30px 30px;
+  border-radius: 12px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  // border: 1px solid $window-divider-color;
+  border-top: 4px solid $secondary-btn-color;
+  // border-top: 5px solid deepskyblue;
+  .row-amb-header {
+    position: relative;
+    width: 100%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px solid $window-divider-color;
+  }
+}
+.btn-delete-question {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  background-color: $footer-bg-color;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: $window-divider-color;
+  }
+  i {
+    font-size: 24px;
+  }
+}
+.row-add-question-btn {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed $background-workspace;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+// Footer
+.activity-maker-footer {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  border-top: 1px solid $window-divider-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.row-amf {
+  position: relative;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+.row-answer-am {
+  position: relative;
+  width: 90%;
+  height: auto;
+  min-height: 70px;
+  margin-left: 4%;
+  border-radius: 12px;
+  border: 1px solid $input-border-hover;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 10px;
+  .btn-delete-question {
+    position: absolute;
+    right: 15px;
+  }
+}
+.btn-add-answer-am {
+  margin-left: 3%;
+  margin-top: 12px;
+}
+
+.btn-upload-answer-image {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  background-color: $blue-nimbus-dark;
+  transition: all 0.3s ease;
+  margin-left: 30px;
+  &:hover {
+    background-color: $a-color-nd-hover;
+  }
+  i {
+    font-size: 24px;
+    color: white;
+  }
+}
+.mat-pregunta {
+  position: relative;
+  width: 50%;
+  height: auto;
+}
+.mat-recurso {
+  position: relative;
+  width: auto;
+  height: auto;
+  margin-left: 2%;
+}
+.mat-tipo-pregunta {
+  position: relative;
+  width: auto;
+  height: auto;
+  margin-left: 2%;
+}
+.mat-tipo-respuesta {
+  position: relative;
+  width: auto;
+  height: auto;
+  margin-left: 2%;
+}
+.row-tipo-mat {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  .btn-upload-answer-image {
+  }
+  .btn-delete-question {
+    margin-left: 20px;
+  }
+  img {
+    position: relative;
+    width: 300px;
+    height: auto;
+    margin-left: 3%;
+    margin-bottom: 20px;
+  }
+}

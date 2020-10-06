@@ -33,6 +33,11 @@
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
+        .nb-icon-tool {
+          .icon {
+            transform: rotate(90deg);
+          }
+        }
       }
       .nbm-i2-set-2 {
         position: relative;

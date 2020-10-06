@@ -17,8 +17,8 @@ import { ContenidoActividadService } from 'app/entities/contenido/contenido-acti
 export class ConstructorActivityComponent implements OnInit, OnDestroy {
   defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
   loadedQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad_up.png';
-  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
-  loadedQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11_up.png';
+  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad.png';
+  loadedQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad_up.png';
   defaultQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15.png';
   loadedQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15_up.png';
   defaultQuestionsAudioMediaUrl: SafeUrl = './../../../../content/images/ab16.png';

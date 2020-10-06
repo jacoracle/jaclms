@@ -145,6 +145,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 				for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
 				ActividadInteractiva actv = new ActividadInteractiva();
 				actv.setComponente(componente);
+				actv.setNombre(actividadInteractiva.getNombre());
 				actv.setContenido(actividadInteractiva.getContenido());
 				actv.setEvaluable(actividadInteractiva.getEvaluable());
 				actv.setGamificacion(actividadInteractiva.getGamificacion());
@@ -236,6 +237,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 								            for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
 								            ActividadInteractiva actv = new ActividadInteractiva();
 								            actv.setComponente(componente);
+								            actv.setNombre(actividadInteractiva.getNombre());
 								            actv.setContenido(actividadInteractiva.getContenido());
 								            actv.setEvaluable(actividadInteractiva.getEvaluable());
 								            actv.setGamificacion(actividadInteractiva.getGamificacion());
@@ -355,6 +357,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 				for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
 				ActividadInteractiva actv = new ActividadInteractiva();
 				actv.setComponente(componente);
+				actv.setNombre(actividadInteractiva.getNombre());
 				actv.setContenido( actividadInteractiva.getContenido());
 				actv.setEvaluable(actividadInteractiva.getEvaluable());
 				actv.setGamificacion(actividadInteractiva.getGamificacion());
@@ -463,6 +466,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 							            for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
 							            ActividadInteractiva actv = new ActividadInteractiva();
 							            actv.setComponente(componente);
+							            actv.setNombre(actividadInteractiva.getNombre());
 							            actv.setContenido( actividadInteractiva.getContenido());
 							            actv.setEvaluable(actividadInteractiva.getEvaluable());
 							            actv.setGamificacion(actividadInteractiva.getGamificacion());

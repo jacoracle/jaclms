@@ -66,11 +66,24 @@ $window-footer-color: white;
 $window-divider-color: #e7e8ed;
 $footer-bg-color: #f4f5f7;
 $border-component: gainsboro;
+// $color-step-1: #fd788e;
+// $color-step-2: #7ca3f7;
+// $color-step-3: #fab763;
+
+// $color-step-1: #5e4bfd;
+// $color-step-2: #ff6f58;
+// $color-step-3: #2ebfd8;
+
+$color-step-1: linear-gradient(90deg, #62aaf1 0%, #5e4bfd 100%);
+$color-step-2: linear-gradient(90deg, #2ede9a 0%, #2ebfd8 100%);
+$color-step-3: linear-gradient(90deg, #ffbf58 0%, #ff6f58 100%);
 
 // Light
 $border-light: #e1e4e8;
 $input-light: #f6f8fa;
+$hover-light: #f9fafb;
 
+$border-radius-6: 6px;
 $border-radius-8: 8px;
 $border-radius-10: 10px;
 $border-radius-14: 14px;

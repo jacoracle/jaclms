@@ -13,11 +13,12 @@ import { VideoModalService } from 'app/services/video-modal.service';
 import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { CurrentModuleService } from 'app/services/current-module.service';
 import { ActivityQuestionsModalService } from 'app/services/activity-questions-modal.service';
-import { ActividadInteractiva, ContenidoActividad } from 'app/shared/model/actividad-interactiva.model';
+import { ActividadInteractiva, ContenidoActividad, IActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 import { cantidadAtributos } from 'app/shared/util/util';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { ActivityService } from 'app/services/activity.service';
 import { TextService } from 'app/services/text.service';
+import { ActivityModalService as InteractiveActivityModal } from 'app/services/activity-modal.service';
 
 @Component({
   selector: 'jhi-constructor-component-properties',
@@ -32,11 +33,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   defaultSoundUrl = './../../../content/images/audio_thumb.png';
   loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
   defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
-  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
+  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad.png';
   defaultQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15.png';
   defaultQuestionsAudioMediaUrl: SafeUrl = './../../../../content/images/ab16.png';
   loadedQuestionsTextUrl = './../../../content/images/actividad_up.png';
-  loadedQuestionsMediaUrl = './../../../content/images/ab11_up.png';
+  loadedQuestionsMediaUrl = './../../../content/images/actividad_up.png';
   loadedQuestionsAudioTextUrl = './../../../content/images/ab15_up.png';
   loadedQuestionsAudioMediaUrl = './../../../content/images/ab16_up.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
@@ -81,6 +82,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   private _MIL24 = 1024000;
   private _KIL24 = 1024;
 
+  activity?: IActividadInteractiva;
+
   constructor(
     public imageService: ImageService,
     public videoService: VideoService,
@@ -94,6 +97,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     private pdfModalService: PdfModalService,
     private videoModalService: VideoModalService,
     private activityModalService: ActivityQuestionsModalService,
+    private interactiveActivityModal: InteractiveActivityModal,
     private textService: TextService
   ) {
     // Recibe el texto cuando dejo de escribir
@@ -116,6 +120,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     // Formulario de la actividad de preguntas a mostrar como preview
     this.subscription = this.subscriptionActivityQuestions();
+
+    this.subscription = this.questionSubscription();
 
     this.type = this.currentCourseService.getType() !== '' ? this.currentCourseService.getType() : this.currentModuleService.getType();
     if (this.type === 'course') {
@@ -254,7 +260,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       } else {
         if (this.multimediaFileProperties.contenido !== undefined && this.viewPdf) {
           this.showLoader = true;
-          this.pdfModalService.open(this.pdfSrc);
+          this.pdfModalService.open(this.pdfSrc, this.id);
           this.viewPdf = false;
           this.showLoader = false;
         }
@@ -302,6 +308,16 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.showLoader = false;
       });
     }, 500);
+    return subscription;
+  }
+
+  questionSubscription(): Subscription {
+    const subscription = this.activityService.getActivity().subscribe(activity => {
+      this.activity = activity;
+      if (activity.tipoActividadInteractiva && activity.tipoActividadInteractiva.tipoActividad) {
+        this.fileFormat = activity.tipoActividadInteractiva.tipoActividad;
+      }
+    });
     return subscription;
   }
 
@@ -448,6 +464,12 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         }
         this.showLoader = false;
       });
+    }
+  }
+
+  openActivityModal(): void {
+    if (this.activity) {
+      this.interactiveActivityModal.open(this.activity, this.id);
     }
   }
 

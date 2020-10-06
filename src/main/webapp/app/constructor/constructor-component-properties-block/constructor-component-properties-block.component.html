@@ -26,11 +26,14 @@
                 [(ngModel)]="dataBlock.visible">
                 {{dataBlock.visible ? 'Profesor' : 'Alumno'}}</mat-slide-toggle>
         </div> -->
-        <h6 class="mt-20">Modo Alumno / Profesor</h6>
-        <div class="row-switch-p">
-          <mat-slide-toggle id="asignBlockType" name="asignBlockType" (change)="updateBlockVisibilty()"
-              [(ngModel)]="dataBlock.visible">
-              {{dataBlock.visible ? 'Profesor' : 'Alumno'}}</mat-slide-toggle>
+        <div class="row-p-switch">
+          <h6>Modo Profesor:</h6>
+          <div class="row-switch-p">
+            <mat-slide-toggle id="asignBlockType" name="asignBlockType" (change)="updateBlockVisibilty()"
+                [(ngModel)]="dataBlock.visible">
+                {{dataBlock.visible ? 'Activado' : 'Desactivado'}}</mat-slide-toggle>
+          </div>
         </div>
+
     </div>
 </div>

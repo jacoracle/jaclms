@@ -1,7 +1,8 @@
 <!-- Bloque de contenido: indicador, imagen y texto-->
 <div class="constructor-container-indicator"
     *ngIf="contentBlock && contentBlock.bloqueComponentes && contentBlock.bloqueComponentes.componentes">
-    
+    <div class="line-indicator"></div>
+
     <ng-container *ngFor="let component of contentBlock.bloqueComponentes.componentes; let index = index;">
 
         <div *ngIf="component.tipoComponente.nombre === 'image'" class="block-indicator-img">
@@ -13,6 +14,7 @@
         <ng-container *ngIf="component.tipoComponente.nombre === 'text'">
             <div *ngIf="contentBlock && contentBlock.bloqueComponentes.tipoBloqueComponentes"
                 class="block-indicator-txt">
+                <div class="underline-indicator"></div>
                 <jhi-visor-text [component]="component"
                     [templateType]="contentBlock.bloqueComponentes.tipoBloqueComponentes"
                     (updateComponent)="onUpdateComponent($event, index)">

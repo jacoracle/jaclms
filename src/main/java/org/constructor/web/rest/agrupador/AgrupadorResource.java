@@ -15,6 +15,7 @@ import org.constructor.service.agrupador.AgrupadorService;
 import org.constructor.service.dto.agrupador.AgrupadorDTO;
 import org.constructor.service.dto.agrupador.AgrupadorFiltroDTO;
 import org.constructor.service.dto.agrupador.AgrupadorUpdateDTO;
+import org.constructor.service.dto.agrupador.DTOAgrupador;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -92,17 +93,20 @@ public class AgrupadorResource {
 	 * @throws URISyntaxException
 	 */
 	@PostMapping(path = RestConstants.PATH_AGRUPADOR)
-	public ResponseEntity<AgrupadorDTO> createAgrupador(Authentication authentication, @RequestBody Agrupador agrupador)
+	public ResponseEntity<Agrupador> createAgrupador(Authentication authentication, @RequestBody DTOAgrupador agrupadorDTO)
 			throws IOException {
-		log.debug("REST request to save Agrupador : {}", agrupador);
-		if (agrupador == null) {
+		log.debug("REST request to save Agrupador : {}", agrupadorDTO);
+		if (agrupadorDTO == null) {
 			throw new BadRequestAlertException("A new agrupador cannot is empty", ENTITY_NAME, "");
 		}
-		log.debug("REST request to mo : {}", agrupador);
-		AgrupadorDTO result = agrupadorService.save(authentication, agrupador);
+		log.debug("REST request to agru: {}", agrupadorDTO);
+		
+		AgrupadorDTO result = agrupadorService.save(authentication, agrupadorDTO);
+		  Optional<Agrupador> agrupador  = agrupadorService.findOne(result.getAgrupador().getId());
+		
 		log.debug("result : {}", result);
 
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<>(agrupador.get(), HttpStatus.OK);
 	}
 
 	/**

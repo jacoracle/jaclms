@@ -7,10 +7,12 @@ import { SafeUrl } from '@angular/platform-browser';
 @Injectable({ providedIn: 'root' })
 export class PdfModalService {
   private isOpen = false;
+  id?: number;
 
   constructor(private modalService: NgbModal) {}
 
-  open(pdfSrc: SafeUrl): void {
+  open(pdfSrc: SafeUrl, id: number): void {
+    this.id = id;
     if (this.isOpen) {
       return;
     }

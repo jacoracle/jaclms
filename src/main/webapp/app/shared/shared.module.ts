@@ -29,7 +29,7 @@ import { ActivityFormMediaModalComponent } from 'app/shared/activity-questions-p
 import { SafeUrlModule } from 'app/shared/safe-url/safe-url.module';
 import { ActivityFormAudioTextModalComponent } from 'app/shared/activity-questions-preview/form-audio-text/activity-form-audio-text-modal.component';
 import { ActivityFormAudioMediaModalComponent } from 'app/shared/activity-questions-preview/form-audio-media/activity-form-audio-media-modal.component';
-
+import { InteractiveActivitiesModule } from 'app/constructor/interactive-activities/interactive-activities.module';
 @NgModule({
   imports: [
     ConstructorSharedLibsModule,
@@ -46,7 +46,8 @@ import { ActivityFormAudioMediaModalComponent } from 'app/shared/activity-questi
     SafeHtmlModule,
     UmaPreviewModule,
     MatGridListModule,
-    SafeUrlModule
+    SafeUrlModule,
+    InteractiveActivitiesModule
   ],
   declarations: [
     FindLanguageFromKeyPipe,

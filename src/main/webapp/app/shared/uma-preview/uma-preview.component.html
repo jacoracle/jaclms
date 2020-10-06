@@ -86,9 +86,26 @@
                             </div>
                         </ng-container>
 
+                    <!--    
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'actividad'">
+                            <div class="container-componentes" #targetActivityQuestion>
+                                <jhi-constructor-activity [component]="c" [typeQuestion]="'activity_question_text'">
+                                </jhi-constructor-activity>
+                            </div>
+                        </ng-container>
+                    
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'activity_question_media'">
+                            <div class="container-componentes" #targetVideoEnv>
+                                <jhi-constructor-activity [component]="c" [typeQuestion]="'activity_question_text'">
+                                </jhi-constructor-activity>
+                            </div>
+                        </ng-container>
+
+                    -->
+
                         <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'cabecera'">
-                            <div class="container-componentes" #targetImagen>
-                                <jhi-content-block12 [contentBlock]="obj" [index]="idx" [target]="targetImagen">
+                            <div class="container-componentes" #targetHeader>
+                                <jhi-content-block12 [contentBlock]="obj" [index]="idx" [target]="targetHeader">
                                 </jhi-content-block12>
                             </div>
                         </ng-container>
@@ -104,6 +121,20 @@
                             <div class="container-componentes" #targetImagen>
                                 <jhi-content-block14 [contentBlock]="obj" [index]="idx" [target]="targetImagen">
                                 </jhi-content-block14>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'indicador'">
+                            <div class="container-componentes" #targetIndicador>
+                                <jhi-content-block17 [contentBlock]="obj" [index]="idx" [target]="targetIndicador">
+                                </jhi-content-block17>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="obj.bloqueComponentes!.tipoBloqueComponentes.nombre === 'numeracion_actividad'">
+                            <div class="container-componentes" #targetNumeracion>
+                                <jhi-content-block18 ><!--[contentBlock]="obj" [index]="idx" [target]="targetNumeracion"-->
+                                </jhi-content-block18>
                             </div>
                         </ng-container>
 

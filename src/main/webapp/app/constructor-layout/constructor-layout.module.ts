@@ -40,6 +40,7 @@ import { ContentBlock17Component } from 'app/constructor/content-blocks/content-
 import { ContentBlock18Component } from 'app/constructor/content-blocks/content-block18/content-block18.component';
 import { ContentBlock15Component } from 'app/constructor/content-blocks/content-block15/content-block15.component';
 import { ContentBlock16Component } from 'app/constructor/content-blocks/content-block16/content-block16.component';
+import { ContentBlock19Component } from 'app/constructor/content-blocks/content-block19/content-block19.component';
 
 @NgModule({
   imports: [
@@ -64,11 +65,11 @@ import { ContentBlock16Component } from 'app/constructor/content-blocks/content-
       ContentBlock12Component,
       ContentBlock13Component,
       ContentBlock14Component,
+      ContentBlock15Component,
+      ContentBlock16Component,
       ContentBlock17Component,
       ContentBlock18Component,
-      ContentBlock11Component,
-      ContentBlock15Component,
-      ContentBlock16Component
+      ContentBlock19Component
     ])
   ],
   declarations: [
@@ -90,6 +91,7 @@ import { ContentBlock16Component } from 'app/constructor/content-blocks/content-
     ContentBlock15Component,
     ContentBlock16Component,
     ConstructorTextComponent,
+    ContentBlock19Component,
     // VisorTextComponent,
     // ConstructorImageComponent,
     // ConstructorVideoComponent,

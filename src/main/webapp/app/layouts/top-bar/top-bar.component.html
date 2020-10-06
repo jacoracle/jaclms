@@ -4,24 +4,9 @@
       <div class="row-ltm">
         <div class="nbm-i2-set-1">
           <!-- Tools left -->
-          <!-- Dropown tool -->
-          <div class="nav-tool-dd nav-tool" ngbDropdown display="dynamic" routerLinkActive="active">
-              <a class="dd-a" ngbDropdownToggle id="nav-tool-file">
-                <i class="icon ni-file"></i>
-                <div class="nb-text">Archivo</div>
-              </a>
-              <!-- Dropdown Menu -->
-              <div class="dropdown-menu dd-tool" ngbDropdownMenu aria-labelledby="nav-tool-file">
-                  <a class="dropdown-item a-dd-tool" routerLinkActive="active" (click)="collapseNavbar();redirectHome();">
-                    <i class="icon ni-close"></i>
-                    <p>Cerrar</p>
-                  </a>
-              </div>
-          </div>
-          <!-- End Dropown tool -->
-          <div class="nb-icon-tool nb-disabled">
-            <i class="icon ni-settings"></i>
-            <div class="nb-text">Configurar</div>
+          <div class="nb-icon-tool" (click)="returnHomeUma()">
+            <i class="icon ni-save"></i>
+            <div class="nb-text">Regresar</div>
           </div>
         </div>
 

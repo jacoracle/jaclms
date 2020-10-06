@@ -1,4 +1,5 @@
 import { TipoActividad } from 'app/shared/model/actividad-interactiva.model';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface IActividadPregunta {
   tipoActividad: TipoActividad;
@@ -18,6 +19,8 @@ export class Preguntas {
   public marcada?: boolean;
   public correcta?: boolean;
   public path?: string;
+  public tipoRespuestas?: string;
+  public tipoRecurso?: string;
   public safeUrl?: string;
 }
 
@@ -26,5 +29,5 @@ export class Respuestas {
   public correcta?: boolean;
   public seleccionada?: boolean;
   public path?: string;
-  public safeUrl?: string;
+  public safeUrl?: SafeUrl;
 }
