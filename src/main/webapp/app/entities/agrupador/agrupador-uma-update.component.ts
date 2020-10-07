@@ -154,31 +154,27 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   }
 
   saveSequenceGroup(): void {
-    // if (this.groupUmaForm.valid) {
-    // this.isCompleted = true;
     this.isSaving = true;
     const agrupador: IAgrupador = this.mapFormDataToAgrupador();
-    // console.error('Deberá guardar');
-    // console.error(agrupador);
 
     if (!agrupador.titulo) {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
       );
-      this.makeInvalid('titulo');
+      this.makeInvalid('titleSequenceUmas');
     }
     if (agrupador.titulo && agrupador.titulo.length > 50) {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
       );
-      this.makeInvalid('titulo');
+      this.makeInvalid('titleSequenceUmas');
     }
 
     if (agrupador.descripcion && agrupador.descripcion.length > 50) {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
       );
-      this.makeInvalid('descripcion');
+      this.makeInvalid('desciptionSequenceUmas');
     }
 
     if (!this.umasListGroup.length) {
@@ -192,7 +188,6 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     }
 
     if (this.groupUmaForm.valid) {
-      // this.firstClick = true;
       if (agrupador.id) {
         // console.error('##########   Deberá actualizar: ', agrupador);
         this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
@@ -201,13 +196,6 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
         this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
       }
     }
-    /*
-    } else {
-      this.eventManager.broadcast(
-        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.uma.validations.formError' })
-      );
-    }
-    */
   }
 
   revertSequenceGroup(groupId: number): void {
@@ -224,7 +212,8 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   }
 
   makeInvalid(controlName: string): void {
-    this.groupUmaForm.controls[controlName].setErrors(new Error());
+    this.groupUmaForm.controls[controlName].markAsDirty(); //  setErrors(new Error());
+    this.groupUmaForm.controls[controlName].markAsTouched();
   }
 
   makeValid(controlName: string): void {

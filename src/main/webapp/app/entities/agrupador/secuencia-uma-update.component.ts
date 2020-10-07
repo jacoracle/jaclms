@@ -326,4 +326,19 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   getSizeSecuenciaUmas(): number {
     return this.tiraUmas.length;
   }
+
+  // drag drop umas
+  dropOrder(event: CdkDragDrop<any[]>): void {
+    if (event.previousContainer === event.container) {
+      this.isReorder = true;
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updateUmasOrder();
+      if (this.idSequenceToLoad) {
+        this.updateSequenceUmaOrder();
+      }
+    } else {
+      this.isReorder = false;
+      this.addUmaToSequence(event.previousIndex, event.currentIndex);
+    }
+  }
 }

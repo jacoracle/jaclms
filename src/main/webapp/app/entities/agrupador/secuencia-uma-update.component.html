@@ -1,35 +1,33 @@
-<div class="main-secuence-group-container" cdkDropListGroup>
+<div class="main-secuence-group-container">
 
     <div class="sequence-uma-body">
 
         <div class="secuence-uma-topbar">
-          <p class="p-result">Tus UMA ( {{umasList.length}} )</p>
-          <!-- Insertar tooltip -->
-          <div class="temporal-instruction">
-            <i class="icon ni-info"></i>
-            <span>Arrastra las UMA al panel de la derecha para crear secuencias.</span>
-          </div>
-          <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off" class="form-uma-search">
+            <p class="p-result">Tus UMA ( {{umasList.length}} )</p>
+            <!-- Insertar tooltip -->
+            <div class="temporal-instruction">
+                <i class="icon ni-info"></i>
+                <span>Arrastra las UMA al panel de la derecha para crear secuencias.</span>
+            </div>
+            <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off" class="form-uma-search">
                 <mat-form-field appearance="outline">
-                  <mat-label>Buscar</mat-label>
-                  <input type="text" placeholder="" matInput formControlName="umaGral"
-                    [matAutocomplete]="umaGral">
-                  <mat-autocomplete autoActiveFirstOption #umaGral="matAutocomplete"
-                    [displayWith]="displayFn">
-                    <!-- <mat-option *ngFor="let option of umasList" [value]="option">
+                    <mat-label>Buscar</mat-label>
+                    <input type="text" placeholder="" matInput formControlName="umaGral" [matAutocomplete]="umaGral">
+                    <mat-autocomplete autoActiveFirstOption #umaGral="matAutocomplete" [displayWith]="displayFn">
+                        <!-- <mat-option *ngFor="let option of umasList" [value]="option">
                         {{option.descripcion}}
                     </mat-option> -->
-                  </mat-autocomplete>
+                    </mat-autocomplete>
                 </mat-form-field>
-          </form>
+            </form>
         </div>
 
         <div class="result-search-container">
             <div *ngIf="umasList.length">
 
-                <div class="grid-cards" cdkDropList [cdkDropListData]="umasList" (cdkDropListDropped)="drop($event)">
-                    <div class="drag-item-uma" *ngFor="let sec of umasList" cdkDrag>
-                        <!-- <mat-nav-list> -->
+                <div class="grid-cards" cdkDropList [cdkDropListData]="umasList" cdkDropListSortingDisabled
+                    [cdkDropListConnectedTo]="[sequenceUma]">
+                    <div class="drag-item-uma" *ngFor="let sec of umasList" cdkDrag [cdkDragData]="sec">
 
                         <div class="box-card cursor-drag">
                             <div class="module-cover-br-image"><span></span></div>
@@ -40,46 +38,15 @@
                             </div>
 
                             <div class="course-desc-br-row">
-                                <!-- <span class="title-course-br">
-                                    {{sec.titulo}}</span> -->
+
                                 <span class="title-course-br"
-                                  *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}</span>
+                                    *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}</span>
 
                                 <span class="desc-course-br"
                                     *ngIf="sec.descripcion">{{sec.descripcion.length > 30 ? sec.descripcion.substring(0, 30) + "..." : sec.descripcion}}</span>
                             </div>
 
                         </div>
-
-
-                        <!-- <mat-expansion-panel class="" matTooltip="Despliegue para ver más detalles">
-                            <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'200px'">
-                                <span class="title-panel">
-                                    {{sec.titulo}}
-                                </span>
-                            </mat-expansion-panel-header>
-
-                            <div class="panel-body-group">
-
-                                <div (click)="deleteModule(sec.id, $event)" class="delete-group">
-                                    <i class="icon ni-delete icon-negative"></i>
-                                </div>
-
-                                <div class="">
-
-                                    <span class="desc-group-panel"
-                                        [routerLink]="['/constructor-layout', sec.id, 'module']"
-                                        *ngIf="sec.descripcion">{{sec.descripcion.length > 30 ? sec.descripcion.substring(0, 30) + "..." : sec.descripcion}}</span>
-
-                                    <p>Aquí podría ir un contenido cool o algo interesante.</p>
-
-                                </div>
-
-                            </div>
-
-
-                        </mat-expansion-panel> -->
-                        <!-- </mat-nav-list> -->
 
                     </div>
                 </div>
@@ -93,35 +60,32 @@
 
     <div class="sequence-uma-bar">
         <div class="title-sequence-uma">Secuencia de UMA</div>
+
         <div class="uma-item-sequence">
-          <div class="row-item-uma-secuence" cdkDropList [cdkDropListData]="tiraUmas" (cdkDropListDropped)="drop($event)">
+            <div class="row-item-uma-secuence" cdkDropList #sequenceUma="cdkDropList" [cdkDropListData]="tiraUmas"
+                (cdkDropListDropped)="dropOrder($event)">
 
-            <div cdkDrag *ngFor="let item of tiraUmas">
-                <div class="item-uma">
-                  <div class="module-cover-br-image"><span></span></div>
+                <div cdkDragBoundary=".uma-item-sequence" cdkDrag *ngFor="let item of tiraUmas" [cdkDragData]="item">
+                    <div class="item-uma">
+                        <div class="module-cover-br-image"><span></span></div>
 
-                  <div class="course-desc-br-row">
-                      <!-- <span class="title-course-br">
-                          {{item.modulo.titulo}}
-                      </span> -->
+                        <div class="course-desc-br-row">
 
-                      <span class="title-course-br"
-                        *ngIf="item.modulo.titulo">{{item.modulo.titulo.length > 40 ? item.modulo.titulo.substring(0, 40) + "..." : item.modulo.titulo}}</span>
+                            <span class="title-course-br"
+                                *ngIf="item.modulo.titulo">{{item.modulo.titulo.length > 30 ? item.modulo.titulo.substring(0, 30) + "..." : item.modulo.titulo}}</span>
+                        </div>
 
-                      <!-- <span class="desc-course-br"
-                    *ngIf="sec.descripcion">{{sec.descripcion.length > 48 ? sec.descripcion.substring(0, 48) + "..." : sec.descripcion}}</span> -->
-                  </div>
+                        <div (click)="deleteUmaFromSequence(item)" class="delete-course-br">
+                            <i class="icon ni-delete icon-negative"></i>
+                        </div>
 
-                  <div (click)="deleteUmaFromSequence(item)" class="delete-course-br">
-                      <i class="icon ni-delete icon-negative"></i>
-                      <!-- delete_forever -->
-                  </div>
-
+                    </div>
                 </div>
-            </div>
 
-          </div>
+            </div>
         </div>
+
     </div>
+    <!--sequence-uma-bar-->
 
 </div>
