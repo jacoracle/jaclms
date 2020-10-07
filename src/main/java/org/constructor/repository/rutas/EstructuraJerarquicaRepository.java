@@ -1,7 +1,12 @@
-package org.constructor.repository;
+package org.constructor.repository.rutas;
+
+import java.util.Set;
 
 import org.constructor.domain.EstructuraJerarquica;
+import org.constructor.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,6 +15,12 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface EstructuraJerarquicaRepository extends JpaRepository<EstructuraJerarquica, Long>{
+	
+	
+	 @Query("SELECT est FROM EstructuraJerarquica est where est.nivel = :id")
+	    Set<EstructuraJerarquica> findByEstructura(@Param("id")Long id);
+		
+	
 	
 
 }

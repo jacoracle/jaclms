@@ -43,6 +43,8 @@
     <include file="config/liquibase/changelog/20200305201143_added_entity_Etiqueta.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201144_added_entity__Actividad_Interactiva.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201145_added_entity__Tipo_Actividad_Interactiva.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200305201146_added_entity_Nivel_Jerarquico.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200305201147_added_entity_Rutas_Aprendizaje.xml" relativeToChangelogFile="false"/>
      
      
      
@@ -64,6 +66,8 @@
 	<include file="config/liquibase/changelog/20200305201142_added_entity_constrainst_Agrupador.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201143_added_entity_constrainst_Etiqueta.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200305201144_added_entity_constrainst_Actividad_Interactiva.xml" relativeToChangelogFile="false"/>     
-     
+    <include file="config/liquibase/changelog/20200305201146_added_entity_constrainst_Nivel_Jerarquico.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200305201147_added_entity_constrainst_Rutas_Aprendizaje.xml" relativeToChangelogFile="false"/> 
+          
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
