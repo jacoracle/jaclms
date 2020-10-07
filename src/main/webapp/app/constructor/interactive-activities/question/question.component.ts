@@ -5,7 +5,7 @@ import { ActivityService } from 'app/services/activity.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContenidoActividadService } from 'app/entities/contenido/contenido-actividad.service';
 import { FileUploadInteractivasService } from 'app/services/file-upload-interactivas.service';
-import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent, JhiAlert } from 'ng-jhipster';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileUploadService } from 'app/services/file-upload.service';
 
@@ -35,6 +35,7 @@ export class QuestionComponent implements OnInit {
   selectedFiles = [];
   @Input() id?: number;
   @ViewChild('resourceInput', { static: false }) fileInput: any;
+  alerts: JhiAlert[] = [];
 
   constructor(
     private activitiService: ActivityService,
@@ -62,6 +63,7 @@ export class QuestionComponent implements OnInit {
     if (questionType === 'Respuesta única') {
       this.oneCorrectOnly(pregunta);
     }
+    this.save();
   }
 
   oneCorrectOnly(pregunta: Preguntas): void {
@@ -91,6 +93,7 @@ export class QuestionComponent implements OnInit {
         }
       }
     }
+    this.save();
   }
 
   blockOnlyAnswer(pregunta: Preguntas, respuesta: Respuestas): boolean {
@@ -147,11 +150,33 @@ export class QuestionComponent implements OnInit {
   save(): void {
     this.showLoader = true;
     if (this._activity) {
-      this.contenidoActividadService.update(this._activity).subscribe(() => {
-        this.activitiService.setActivity(this.activity);
-        this.showLoader = false;
+      this.contenidoActividadService.update(this._activity).subscribe(
+        res => this.onSaveSuccess(res.body),
+        () => this.onSaveError()
+      );
+    }
+  }
+
+  onSaveSuccess(actividad: ActividadInteractiva | null): void {
+    if (actividad) {
+      if (this.isActivityDifferent(this._activity!, actividad)) {
+        this._activity = actividad;
+        this.updateResources();
+      }
+      this.activitiService.setActivity(this.activity);
+      this.showLoader = false;
+      this.eventManager.broadcast({
+        name: 'constructorApp.validationError',
+        content: {
+          message: 'constructorApp.curso.nivelJerarquico.created',
+          type: 'success'
+        }
       });
     }
+  }
+
+  onSaveError(): void {
+    this.showLoader = false;
   }
 
   close(): any {
@@ -167,6 +192,7 @@ export class QuestionComponent implements OnInit {
       this.addAnswer(question, true);
       this._activity.contenido.preguntas.push(question);
     }
+    this.save();
   }
 
   addAnswer(question: Preguntas, correct?: boolean, answer?: string): void {
@@ -174,11 +200,8 @@ export class QuestionComponent implements OnInit {
       question.respuestas = [];
     }
     question.respuestas.push(this.createAnswer(correct, answer));
+    this.save();
   }
-
-  validateQuestion(): void {}
-
-  validateAnswer(): void {}
 
   deleteResources(): void {}
 
@@ -187,6 +210,7 @@ export class QuestionComponent implements OnInit {
     pregunta.safeUrl = '';
     this.selectedFiles = [];
     this.fileInput.nativeElement.value = '';
+    this.save();
   }
 
   selectFile(event: any, objeto: any): void {
@@ -205,7 +229,8 @@ export class QuestionComponent implements OnInit {
         if (event.target.files[0] && this.id) {
           this.fileUploadInteractivasService.pushFileStorage(event.target.files[0], this.id).subscribe(data => {
             objeto.path = data.path;
-            this.updateResources();
+            this.updateResource(objeto);
+            this.save();
             this.showLoader = false;
           });
         }
@@ -213,7 +238,12 @@ export class QuestionComponent implements OnInit {
     }
   }
 
+  updateResource(objeto: any): void {
+    this.getSafeUrl(objeto);
+  }
+
   updateResources(): void {
+    this.showLoader = true;
     if (this.activity && this.activity.contenido && this.activity.contenido.preguntas) {
       for (let i = 0; i < this.activity.contenido.preguntas.length; i++) {
         if (this.activity.contenido.preguntas[i].path && this.activity.contenido.preguntas[i].path !== '') {
@@ -228,15 +258,18 @@ export class QuestionComponent implements OnInit {
         }
       }
     }
+    this.showLoader = false;
   }
 
   getSafeUrl(object: any): void {
+    this.showLoader = true;
     let safeUrl: SafeUrl = '';
     if (object.path) {
       this.fileUploadService.getImageFile(object.path).subscribe(data => {
         const imagePath = URL.createObjectURL(data.body);
         safeUrl = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
         object.safeUrl = safeUrl;
+        this.showLoader = false;
       });
     }
   }
@@ -261,6 +294,7 @@ export class QuestionComponent implements OnInit {
 
   deleteQuestion(index: number): void {
     this.activity.contenido.preguntas.splice(index, 1);
+    this.save();
   }
 
   deleteAnswer(pregunta: Preguntas, index: number): void {
@@ -268,11 +302,16 @@ export class QuestionComponent implements OnInit {
       pregunta.respuestas.splice(index, 1);
       this.checkOnlyAnswer(pregunta);
     }
+    this.save();
   }
 
   checkOnlyAnswer(pregunta: Preguntas): void {
     if (pregunta.respuestas && pregunta.respuestas.length === 1) {
       pregunta.respuestas[0].correcta = true;
     }
+  }
+
+  isActivityDifferent(localActivity: ActividadInteractiva, remoteActivity: ActividadInteractiva): boolean {
+    return JSON.stringify(localActivity) === JSON.stringify(remoteActivity);
   }
 }

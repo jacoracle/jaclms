@@ -1,4 +1,10 @@
+<div class="loader" *ngIf="showLoader">
+  Cargando
+</div>
 <div class="row-activity-maker-19">
+  <div class="alert-course-configuration">
+    <jhi-alert-error></jhi-alert-error>
+  </div>
 
   <!-- Header -->
   <div class="activity-maker-header">
@@ -6,7 +12,7 @@
       <div class="col-amh-navbar">
         <div class="logo-nimbus-amh"></div>
         <div class="logo-activity-amh"></div>
-        <h4 class="title-activity-amh">Actividad interactiva Pregunta</h4>
+        <h4 class="title-activity-amh" jhiTranslate="constructorApp.question.title">Actividad interactiva Pregunta</h4>
         <button type="button" (click)="close()" class="btn-close-maker">
           <i class="icon ni-close"></i>
         </button>
@@ -15,12 +21,12 @@
     <div class="row-amh-topbar">
       <div class="col-amh-topbar">
           <mat-form-field appearance="fill" class="mat-amht-title">
-              <mat-label>Nombre de actividad</mat-label>
-              <input matInput [(ngModel)]="activity.nombre">
+              <mat-label jhiTranslate="constructorApp.question.activity.name">Nombre de actividad</mat-label>
+              <input matInput [(ngModel)]="activity.nombre" (focusout)="save()">
           </mat-form-field>
           <!-- Nombre -->
           <!-- Evaluable -->
-          <mat-checkbox [(ngModel)]="activity.contenido.evaluable" class="mat-amht-checkbox">Evaluable</mat-checkbox>
+          <mat-checkbox [(ngModel)]="activity.contenido.evaluable" class="mat-amht-checkbox" (change)="this.save()" jhiTranslate="constructorApp.question.activity.evaluable">Evaluable</mat-checkbox>
           <!-- Evaluable -->
       </div>
     </div>
@@ -32,7 +38,7 @@
     <div class="row-amb">
 
       <!-- No eliminar -->
-      <input type="text" [(ngModel)]="activity.nombre" class="temp">
+      <input type="text" [(ngModel)]="activity.nombre" class="temp" >
 
       <!-- Pregunta -->
       <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;" class="row-amb-answer">
@@ -47,14 +53,14 @@
 
           <!-- Indicación/Pregunta -->
           <mat-form-field appearance="fill" class="mat-pregunta">
-              <mat-label>Pregunta</mat-label>
-              <input matInput [(ngModel)]="pregunta.pregunta">
+              <mat-label jhiTranslate="constructorApp.question.question.question">Pregunta</mat-label>
+              <input matInput [(ngModel)]="pregunta.pregunta" (focusout)="save()">
           </mat-form-field>
           <!-- Indicación/Pregunta -->
           <!-- Recurso -->
           <mat-form-field appearance="fill" class="mat-recurso">
-              <mat-label>Recurso</mat-label>
-              <select matNativeControl [(ngModel)]="pregunta.tipoRecurso">
+              <mat-label jhiTranslate="constructorApp.question.question.resource">Recurso</mat-label>
+              <select matNativeControl [(ngModel)]="pregunta.tipoRecurso" (change)="save()">
                   <option value="">Ninguno</option>
                   <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
               </select>
@@ -80,7 +86,7 @@
           <div class="row-tipo-mat">
             <!-- Tipo de pregunta -->
             <mat-form-field appearance="fill" class="mat-tipo-pregunta">
-                <mat-label>Tipo de pregunta</mat-label>
+                <mat-label jhiTranslate="constructorApp.question.question.questionType">Tipo de pregunta</mat-label>
                 <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta" (change)="changeQuestionType(pregunta, $event.target.value)">
                     <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
                 </select>
@@ -89,7 +95,7 @@
 
             <!-- Tipo de respuestas -->
             <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)" class="mat-tipo-respuesta">
-                <mat-label>Tipo de respuesta</mat-label>
+                <mat-label jhiTranslate="constructorApp.question.question.answerType">Tipo de respuesta</mat-label>
                 <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
                     <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
                 </select>
@@ -100,13 +106,17 @@
           <!-- Respuesta -->
           <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;" class="row-answer-am">
               <!-- Correcta -->
-              <mat-checkbox [(ngModel)]="respuesta.correcta" [disabled]="pregunta.respuestas.length < 2 || blockOnlyAnswer(pregunta, respuesta)" (change)="checkCorrectAnswers(pregunta, answerIndex)">Correcta</mat-checkbox>
+              <mat-checkbox [(ngModel)]="respuesta.correcta" [disabled]="pregunta.respuestas.length < 2 || blockOnlyAnswer(pregunta, respuesta)" (change)="checkCorrectAnswers(pregunta, answerIndex)">
+                <span jhiTranslate="constructorApp.question.answer.correct">
+                  Correcta
+                </span>
+              </mat-checkbox>
               <!-- Correcta -->
               <!-- Respuesta -->
 
               <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
-                  <mat-label>Respuesta</mat-label>
-                  <input matInput [(ngModel)]="respuesta.respuesta">
+                  <mat-label jhiTranslate="constructorApp.question.answer.answer">Respuesta</mat-label>
+                  <input matInput [(ngModel)]="respuesta.respuesta" (focusout)="save()">
               </mat-form-field>
 
               <!-- Respuesta -->
@@ -127,12 +137,12 @@
               <!-- <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1">Eliminar respuesta</button> -->
               <!-- Respuesta/URL de recurso -->
           </div>
-          <button class="secondary-btn btn-add-answer-am" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4 && pregunta.tipoPregunta !== 'Verdadero Falso'">Agregar respuesta</button>
+          <button class="secondary-btn btn-add-answer-am" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4 && pregunta.tipoPregunta !== 'Verdadero Falso'" jhiTranslate="constructorApp.question.question.addAnswer">Agregar respuesta</button>
           <!-- Respuesta -->
       </div>
 
       <div class="row-add-question-btn">
-        <button class="main-btn" (click)="addQuestion()"><i class="icon ni-add"></i> Agregar pregunta</button>
+        <button class="main-btn" (click)="addQuestion()" jhiTranslate="constructorApp.question.addQuestion"><i class="icon ni-add"></i> Agregar pregunta</button>
       </div>
       <!-- Pregunta -->
 
@@ -141,14 +151,13 @@
   </div>
 
   <!-- Footer -->
+  <!--
   <div class="activity-maker-footer">
     <div class="row-amf">
       <button (click)="close()" class="secondary-btn">Cerrar</button>
       <button type="button" (click)="save()" class="main-btn">Guardar</button>
     </div>
   </div>
-    <!-- <div *ngIf="showLoader">
-        CARGANDO...
-    </div> -->
+  -->
 
 </div>
