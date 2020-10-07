@@ -39,6 +39,7 @@ import { ContentBlock11Component } from 'app/constructor/content-blocks/content-
 import { ContentBlock17Component } from 'app/constructor/content-blocks/content-block17/content-block17.component';
 import { ContentBlock18Component } from 'app/constructor/content-blocks/content-block18/content-block18.component';
 import { ContentBlock19Component } from 'app/constructor/content-blocks/content-block19/content-block19.component';
+import { InteractiveActivitiesModule } from 'app/constructor/interactive-activities/interactive-activities.module';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { ContentBlock19Component } from 'app/constructor/content-blocks/content-
       ContentBlock18Component,
       ContentBlock11Component,
       ContentBlock19Component
-    ])
+    ]),
+    InteractiveActivitiesModule
   ],
   declarations: [
     ConstructorLayoutComponent,
