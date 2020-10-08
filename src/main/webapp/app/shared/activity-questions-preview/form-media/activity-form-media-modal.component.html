@@ -25,37 +25,43 @@
                 <div class="header-mdc">
                     <div class="type-q">
                         <label>Selecciona el tipo de respuesta:</label>
-                        <div class="col-type-question" formGroupName="tipoActividad">
+                        <div class="col-type-question" formGroupName="tipoActividad"
+                             [ngClass]="{'ng-untouched ng-pristine ng-invalid alert-input': !isValidOpcion()}">
                             <mat-radio-group aria-label="Select an option" formControlName="opcion"
                                              name="opcion">
 
                                 <mat-radio-button value="imagen_unica" id="type_question4"
                                                   class="question-radio mat-radio-no-margin"
                                                   (change)="onOpcionChange($event)"
-                                                  [disabled]="opcionIn!='' && opcionIn!='imagen_unica'">
-                                    Imagen Unica
+                                                  [hidden]="opcionIn!='' && opcionIn!='imagen_unica'">
+                                    Imagen Única
                                 </mat-radio-button>
 
                                 <mat-radio-button value="imagen_multiple" id="type_question5" class="question-radio"
                                                   (change)="onOpcionChange($event)"
-                                                  [disabled]="opcionIn!='' && opcionIn!='imagen_multiple'">
-                                    Imagen Multiple
+                                                  [hidden]="opcionIn!='' && opcionIn!='imagen_multiple'">
+                                    Imagen Múltiple
                                 </mat-radio-button>
 
                                 <mat-radio-button value="audio_unica" id="type_question6"
                                                   class="question-radio mat-radio-no-margin"
                                                   (change)="onOpcionChange($event)"
-                                                  [disabled]="opcionIn!='' && opcionIn!='audio_unica'">
-                                    Audio Unica&nbsp;&nbsp;&nbsp;
+                                                  [hidden]="opcionIn!='' && opcionIn!='audio_unica'">
+                                    Audio Única&nbsp;&nbsp;&nbsp;
                                 </mat-radio-button>
 
                                 <mat-radio-button value="audio_multiple" id="type_question7" class="question-radio"
                                                   (change)="onOpcionChange($event)"
-                                                  [disabled]="opcionIn!='' && opcionIn!='audio_multiple'">
-                                    Audio Multiple
+                                                  [hidden]="opcionIn!='' && opcionIn!='audio_multiple'">
+                                    Audio Múltiple
                                 </mat-radio-button>
 
                             </mat-radio-group>
+                        </div>
+                        <div class="form-nimbus">
+                            <div *ngIf="!isValidOpcion()" class="form-alert">
+                                <p>Es obligatorio seleccionar una opción</p>
+                            </div>
                         </div>
                     </div>
                     <div class="type-q-evaluable">
@@ -82,7 +88,9 @@
         <!-- Footer -->
         <div class="modal-act-footer">
             <button (click)="close()" class="secondary-btn">Cancelar</button>
-            <button type="button" (click)="onSubmit()" class="main-btn">Crear Actividad</button>
+            <button type="button" (click)="onSubmit()" class="main-btn">
+                <span *ngIf="!jsonFormIn">Crear&nbsp;</span> <span *ngIf="jsonFormIn">Editar&nbsp;</span>Actividad
+            </button>
         </div>
         <!-- End Footer -->
     </form>

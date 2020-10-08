@@ -1,5 +1,6 @@
 export const enum TipoActividad {
-  pregunta = 'pregunta'
+  preguntaTexto = 'pregunta_texto',
+  preguntaAudio = 'pregunta_audio'
 }
 
 export const enum SubTipoActividad {

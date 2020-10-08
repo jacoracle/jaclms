@@ -164,6 +164,7 @@ public class BloquesCursoServiceImpl implements BloquesCursoService {
 					if(componenteDTO.getActividadesInteractivas() != null)   {
 						for (ActividadInteractivaDTO actividadInteractiva : componenteDTO.getActividadesInteractivas()) {
 							ActividadInteractiva actv = new ActividadInteractiva();
+							actv.setNombre(actividadInteractiva.getNombre());
 							actv.setComponente(componente);
 							actv.setContenido(actividadInteractiva.getContenido());
 							actv.setEvaluable(actividadInteractiva.getEvaluable());

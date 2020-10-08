@@ -1,0 +1,23 @@
+{
+  "constructorApp": {
+    "question": {
+      "title": "Actividad interactiva Pregunta",
+      "activity": {
+        "evaluable": "Evaluable",
+        "name": "Nombre"
+      },
+      "question": {
+        "question": "Pregunta",
+        "resource": "Recurso",
+        "questionType": "Tipo de pregunta",
+        "answerType": "Tipo de respuesta",
+        "addAnswer": "Agregar respuesta"
+      },
+      "answer": {
+        "answer": "Respuesta",
+        "correct": "Correcta"
+      },
+      "addQuestion": "Agregar pregunta"
+    }
+  }
+}

@@ -24,9 +24,11 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Edukai
+ * The Class ActividadInteractiva.
  *
+ * @author Edukai
  */
 @Entity
 @Table(name = "actividad_interactiva")
@@ -36,55 +38,50 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 	)
 public class ActividadInteractiva implements Serializable{
 
-	/**
-	 * Serializable
-	 */
+	/** Serializable. */
 	private static final long serialVersionUID = 1578677852309450903L;
 	
-	/**
-	 * Long Id
-	 */
+	/** Long Id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	/** The nombre. */
+	@Column(name = "nombre")
+	private String nombre;
 
-	/**
-	 * 	Json contenido
-	 */
+	/** 	Json contenido. */
 	@Type( type = "json" )
 	@Column( columnDefinition = "contenido" )
 	private Object contenido;
 	
-	/**
-	 * Boolean evaluable
-	 */
+	/** Boolean evaluable. */
 	@Column(name = "evaluable") 
 	private Boolean evaluable;
 	
-	/**
-	 * Long intentos
-	 */
+	/** Long intentos. */
 	@Column(name = "intentos")
 	private Long intentos;
 	
-	/**
-	 * Long gamificacion
-	 */
+	/** Long gamificacion. */
 	@Column(name = "gamificacion")
 	private Long gamificacion;
 	
 	
+	/** The tipo actividad interactiva. */
 	@ManyToOne
     @JoinColumn(name = "tipo_actividad_interactiva_id")
     private TipoActividadInteractiva tipoActividadInteractiva; 
 	
+	/** The componente. */
 	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "componente_id", nullable=false)
     private Componente componente; 
 
 	/**
-	 * Get
+	 * Get.
+	 *
 	 * @return the id
 	 */
 	public Long getId() {
@@ -92,7 +89,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
-	 * Set
+	 * Set.
+	 *
 	 * @param id the id to set
 	 */
 	public void setId(final Long id) {
@@ -100,9 +98,27 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 
-
+	/**
+	 * Gets the nombre.
+	 *
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
 
 	/**
+	 * Sets the nombre.
+	 *
+	 * @param nombre the new nombre
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * Gets the contenido.
+	 *
 	 * @return the contenido
 	 */
 	public Object getContenido() {
@@ -110,6 +126,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
+	 * Sets the contenido.
+	 *
 	 * @param contenido the contenido to set
 	 */
 	public void setContenido(Object contenido) {
@@ -117,7 +135,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
-	 * Get
+	 * Get.
+	 *
 	 * @return the evaluable
 	 */
 	public Boolean getEvaluable() {
@@ -125,7 +144,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
-	 * Set
+	 * Set.
+	 *
 	 * @param evaluable the evaluable to set
 	 */
 	public void setEvaluable(final Boolean evaluable) {
@@ -133,7 +153,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
-	 * Get
+	 * Get.
+	 *
 	 * @return the intentos
 	 */
 	public Long getIntentos() {
@@ -141,7 +162,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
-	 * Set
+	 * Set.
+	 *
 	 * @param intentos the intentos to set
 	 */
 	public void setIntentos(final Long intentos) {
@@ -149,7 +171,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
-	 * Get
+	 * Get.
+	 *
 	 * @return the gamificacion
 	 */
 	public Long getGamificacion() {
@@ -157,7 +180,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
-	 * Set
+	 * Set.
+	 *
 	 * @param gamificacion the gamificacion to set
 	 */
 	public void setGamificacion(final Long gamificacion) {
@@ -165,6 +189,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
+	 * Gets the tipo actividad interactiva.
+	 *
 	 * @return the tipoActividadInteractiva
 	 */
 	public TipoActividadInteractiva getTipoActividadInteractiva() {
@@ -172,6 +198,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
+	 * Sets the tipo actividad interactiva.
+	 *
 	 * @param tipoActividadInteractiva the tipoActividadInteractiva to set
 	 */
 	public void setTipoActividadInteractiva(TipoActividadInteractiva tipoActividadInteractiva) {
@@ -181,6 +209,8 @@ public class ActividadInteractiva implements Serializable{
 	
 
 	/**
+	 * Gets the componente.
+	 *
 	 * @return the componente
 	 */
 	public Componente getComponente() {
@@ -188,6 +218,8 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
+	 * Sets the componente.
+	 *
 	 * @param componente the componente to set
 	 */
 	public void setComponente(final Componente componente) {
@@ -195,14 +227,15 @@ public class ActividadInteractiva implements Serializable{
 	}
 
 	/**
-	 * ToString
+	 * To string.
+	 *
+	 * @return the string
 	 */
 	@Override
 	public String toString() {
-		return "ActividadInteractiva [id=" + id + ", contenido=" + contenido + ", evaluable=" + evaluable
-				+ ", intentos=" + intentos + ", gamificacion=" + gamificacion + ", tipoActividadInteractiva="
-				+ tipoActividadInteractiva + "]";
+		return "ActividadInteractiva [id=" + id + ", nombre=" + nombre + ", contenido=" + contenido + ", evaluable="
+				+ evaluable + ", intentos=" + intentos + ", gamificacion=" + gamificacion
+				+ ", tipoActividadInteractiva=" + tipoActividadInteractiva + ", componente=" + componente + "]";
 	}
-
 
 }

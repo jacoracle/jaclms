@@ -17,8 +17,8 @@ import { ContenidoActividadService } from 'app/entities/contenido/contenido-acti
 export class ConstructorActivityComponent implements OnInit, OnDestroy {
   defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
   loadedQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad_up.png';
-  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
-  loadedQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11_up.png';
+  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad.png';
+  loadedQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad_up.png';
   contenidoActividad?: ContenidoActividad;
   editing = false;
   subscription: Subscription;
@@ -55,6 +55,7 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
             this.subscription = this.contenidoActividadService.update(contenidoActividad).subscribe(
               data => {
                 this.component!.actividadesInteractivas![indexActividad] = data.body!;
+                this.contenidoActividad = this.component!.actividadesInteractivas![indexActividad].contenido;
               },
               () => {
                 this.eventManager.broadcast(

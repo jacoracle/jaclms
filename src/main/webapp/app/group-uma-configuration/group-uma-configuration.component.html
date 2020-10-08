@@ -1,30 +1,49 @@
 <div class="main-container-br">
-  <div class="alert-sequence-configuration">
-    <jhi-alert-error></jhi-alert-error>
-  </div>
   <div class="window-br">
-    <!-- Header -->
+
+    <!-- Window Header -->
     <div class="window-br-header">
-      <h4>Configurar Grupo de UMAs</h4>
-    </div>
-    <div class="window-br-body-topbar-hide">
-      <div class="line-gradient"></div>
+      <div class="alert-sequence-configuration">
+        <jhi-alert-error></jhi-alert-error>
+      </div>
+      <div class="r1">
+        <div class="logo-home-mini"></div>
+      </div>
+      <div class="r2">
+        <div class="windowHeader-title disbled-t-header">
+          <!-- <div class="icon-step-header"></div> -->
+          <h4>Agrupador de UMA / </h4>
+        </div>
+        <div class="windowHeader-title">
+          <h4>Configurar Agrupador</h4>
+        </div>
+        <div class="c1">
+        </div>
+      </div>
     </div>
 
+    <!-- <div class="window-br-body-topbar-hide">
+      <div class="line-gradient"></div>
+    </div> -->
+
+    <div class="window-br-body-topbar-group">
+      <div class="line-gradient lg-step2"></div>
+    </div>
+
+
     <!-- Body -->
-    <div class="window-br-body-full">
+    <div class="window-br-body-group">
 
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
         <div class="container-stepper-group">
 
-
           <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="Configuración general Agrupador">
+            <mat-tab label="Configuración general">
               <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
                 (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
             </mat-tab>
-            <mat-tab label="Secuencia de UMAS Agrupador">
+            <mat-tab label="Secuencia de UMA">
               <jhi-secuencia-uma-update [createdGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
             </mat-tab>
             <!-- <mat-tab label="Third">Content 3</mat-tab> -->
@@ -32,7 +51,6 @@
 
         </div>
       </div>
-
 
     </div>
 
@@ -45,8 +63,7 @@
       <!-- <button *ngIf="isCreation()" class="secondary-btn" (click)="revertData()"
         matTooltip="Deshace el Agrupador creado.">Cancelar</button> -->
       <button (click)="executeSave($event)" class="main-btn"
-        matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">Guardar</button>
-  
+        matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">Guardar Agrupador</button>
     </div>
 
   </div>

@@ -13,11 +13,12 @@ import { VideoModalService } from 'app/services/video-modal.service';
 import { Contenido, IContenido } from 'app/shared/model/contenido.model';
 import { CurrentModuleService } from 'app/services/current-module.service';
 import { ActivityQuestionsModalService } from 'app/services/activity-questions-modal.service';
-import { ActividadInteractiva, ContenidoActividad } from 'app/shared/model/actividad-interactiva.model';
+import { ActividadInteractiva, ContenidoActividad, IActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 import { cantidadAtributos } from 'app/shared/util/util';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { ActivityService } from 'app/services/activity.service';
 import { TextService } from 'app/services/text.service';
+import { ActivityModalService as InteractiveActivityModal } from 'app/services/activity-modal.service';
 @Component({
   selector: 'jhi-constructor-component-properties',
   templateUrl: './constructor-component-properties.component.html',
@@ -31,9 +32,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   defaultSoundUrl = './../../../content/images/audio_thumb.png';
   loadedSoundUrl = './../../../content/images/audio_up_thumb.png';
   defaultQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad.png';
-  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/ab11.png';
-  loadedQuestionsTextUrl = './../../../content/images/activity_up_thumb.png';
-  loadedQuestionsMediaUrl = './../../../content/images/ab11.png';
+  defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad.png';
+  defaultQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15.png';
+  loadedQuestionsTextUrl = './../../../content/images/actividad_up.png';
+  loadedQuestionsMediaUrl = './../../../content/images/actividad_up.png';
+  loadedQuestionsAudioTextUrl = './../../../content/images/ab15.png';
   allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
 
@@ -76,6 +79,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   private _MIL24 = 1024000;
   private _KIL24 = 1024;
 
+  activity?: IActividadInteractiva;
+
   constructor(
     public imageService: ImageService,
     public videoService: VideoService,
@@ -89,6 +94,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     private pdfModalService: PdfModalService,
     private videoModalService: VideoModalService,
     private activityModalService: ActivityQuestionsModalService,
+    private interactiveActivityModal: InteractiveActivityModal,
     private textService: TextService
   ) {
     // Recibe el texto cuando dejo de escribir
@@ -111,6 +117,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
 
     // Formulario de la actividad de preguntas a mostrar como preview
     this.subscription = this.subscriptionActivityQuestions();
+
+    this.subscription = this.questionSubscription();
 
     this.type = this.currentCourseService.getType() !== '' ? this.currentCourseService.getType() : this.currentModuleService.getType();
     if (this.type === 'course') {
@@ -177,6 +185,8 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.actividadProperties.contenido =
           cantidadAtributos(actividadInteractiva.contenido) > 0 ? actividadInteractiva.contenido : 'unknown';
         this.actividadProperties.id = actividadInteractiva.id ? actividadInteractiva.id : 0;
+        // eslint-disable-next-line no-console
+        console.log(this.actividadProperties);
       }
     });
   }
@@ -249,7 +259,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       } else {
         if (this.multimediaFileProperties.contenido !== undefined && this.viewPdf) {
           this.showLoader = true;
-          this.pdfModalService.open(this.pdfSrc);
+          this.pdfModalService.open(this.pdfSrc, this.id);
           this.viewPdf = false;
           this.showLoader = false;
         }
@@ -297,6 +307,16 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.showLoader = false;
       });
     }, 500);
+    return subscription;
+  }
+
+  questionSubscription(): Subscription {
+    const subscription = this.activityService.getActivity().subscribe(activity => {
+      this.activity = activity;
+      if (activity.tipoActividadInteractiva && activity.tipoActividadInteractiva.tipoActividad) {
+        this.fileFormat = activity.tipoActividadInteractiva.tipoActividad;
+      }
+    });
     return subscription;
   }
 
@@ -431,7 +451,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   createUpdateActivity(): void {
-    if (this.fileFormat === 'activity_question_text' || this.fileFormat === 'activity_question_media') {
+    if (this.isActivity()) {
       const indexActividad = this.actividadesInteractivas.length - 1;
       const actividadInteractiva = this.actividadesInteractivas[indexActividad];
       const jsonFormIn = this.jsonFormEntrada(actividadInteractiva);
@@ -443,6 +463,12 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         }
         this.showLoader = false;
       });
+    }
+  }
+
+  openActivityModal(): void {
+    if (this.activity) {
+      this.interactiveActivityModal.open(this.activity, this.id);
     }
   }
 
@@ -473,6 +499,18 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         ) {
           jsonFormIn.tipoActividad.subtipo = 'imagen';
           jsonFormIn.tipoActividad.opcion = 'imagen_multiple';
+        } else if (
+          actividadInteractiva.tipoActividadInteractiva.opcion === 'unica' &&
+          actividadInteractiva.tipoActividadInteractiva.subtipo === 'audio'
+        ) {
+          jsonFormIn.tipoActividad.subtipo = 'audio';
+          jsonFormIn.tipoActividad.opcion = 'audio_unica';
+        } else if (
+          actividadInteractiva.tipoActividadInteractiva.opcion === 'multiple' &&
+          actividadInteractiva.tipoActividadInteractiva.subtipo === 'audio'
+        ) {
+          jsonFormIn.tipoActividad.subtipo = 'audio';
+          jsonFormIn.tipoActividad.opcion = 'audio_multiple';
         }
       }
     }
@@ -502,6 +540,14 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         case 'imagen_multiple':
           jsonFormOut.tipoActividad.opcion = 'multiple';
           jsonFormOut.tipoActividad.subtipo = 'imagen';
+          break;
+        case 'audio_unica':
+          jsonFormOut.tipoActividad.opcion = 'unica';
+          jsonFormOut.tipoActividad.subtipo = 'audio';
+          break;
+        case 'audio_multiple':
+          jsonFormOut.tipoActividad.opcion = 'multiple';
+          jsonFormOut.tipoActividad.subtipo = 'audio';
           break;
       }
 
@@ -546,10 +592,19 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   isNotTextActivity(): boolean {
-    return this.fileFormat !== 'activity_question_text' && this.fileFormat !== 'activity_question_media' && this.fileFormat !== 'text';
+    return (
+      this.fileFormat !== 'activity_question_text' &&
+      this.fileFormat !== 'activity_question_media' &&
+      this.fileFormat !== 'activity_question_audio_text' &&
+      this.fileFormat !== 'text'
+    );
   }
 
   isActivity(): boolean {
-    return this.fileFormat === 'activity_question_text' || this.fileFormat === 'activity_question_media';
+    return (
+      this.fileFormat === 'activity_question_text' ||
+      this.fileFormat === 'activity_question_media' ||
+      this.fileFormat === 'activity_question_audio_text'
+    );
   }
 }
