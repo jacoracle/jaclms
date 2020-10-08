@@ -206,11 +206,18 @@ export class QuestionComponent implements OnInit {
   deleteResources(): void {}
 
   deleteResource(pregunta: Preguntas): void {
-    pregunta.path = '';
-    pregunta.safeUrl = '';
-    this.selectedFiles = [];
-    this.fileInput.nativeElement.value = '';
-    this.save();
+    if (pregunta.path) {
+      this.removeFromServer(pregunta.path);
+      pregunta.path = '';
+      pregunta.safeUrl = '';
+      this.selectedFiles = [];
+      this.fileInput.nativeElement.value = '';
+      this.save();
+    }
+  }
+
+  removeFromServer(path: string): void {
+    this.fileUploadService.deleteFile(path).subscribe(() => {});
   }
 
   selectFile(event: any, objeto: any): void {
@@ -228,6 +235,7 @@ export class QuestionComponent implements OnInit {
         this.showLoader = true;
         if (event.target.files[0] && this.id) {
           this.fileUploadInteractivasService.pushFileStorage(event.target.files[0], this.id).subscribe(data => {
+            this.removeFromServer(objeto.path);
             objeto.path = data.path;
             this.updateResource(objeto);
             this.save();
@@ -293,12 +301,26 @@ export class QuestionComponent implements OnInit {
   }
 
   deleteQuestion(index: number): void {
+    if (this.activity.contenido.preguntas[index].path && this.activity.contenido.preguntas[index].path !== '') {
+      this.removeFromServer(this.activity.contenido.preguntas[index].path);
+    }
+    for (let i = 0; i < this.activity.contenido.preguntas[index].respuestas.length; i++) {
+      if (
+        this.activity.contenido.preguntas[index].respuestas[i].path &&
+        this.activity.contenido.preguntas[index].respuestas[i].path !== ''
+      ) {
+        this.removeFromServer(this.activity.contenido.preguntas[index].respuestas[i].path);
+      }
+    }
     this.activity.contenido.preguntas.splice(index, 1);
     this.save();
   }
 
   deleteAnswer(pregunta: Preguntas, index: number): void {
     if (pregunta.respuestas) {
+      if (pregunta.respuestas[index] && pregunta.respuestas[index].path && pregunta.respuestas[index].path !== '') {
+        this.removeFromServer(pregunta.respuestas[index].path!);
+      }
       pregunta.respuestas.splice(index, 1);
       this.checkOnlyAnswer(pregunta);
     }
