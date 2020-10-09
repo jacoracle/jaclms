@@ -25,13 +25,15 @@ export class QuestionComponent implements OnInit {
     return this._activity!;
   }
   questionTypes = ['Respuesta única', 'Respuesta múltiple', 'Verdadero Falso'];
-  // answerTypes = ['Texto', 'Imagen', 'Audio', 'Video'];
-  answerTypes = ['Texto', 'Imagen'];
-  // resourceTypes = ['Imagen', 'Audio', 'Video'];
-  resourceTypes = ['Imagen'];
+  answerTypes = ['Texto', 'Imagen', 'Audio'];
+  // answerTypes = ['Texto', 'Imagen'];
+  resourceTypes = ['Imagen', 'Audio', 'Video'];
+  // resourceTypes = ['Imagen'];
   showLoader = false;
   maxImageSize = 5120000;
-  allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'video/mp4', 'application/pdf', 'audio/mpeg'];
+  allowedAudioTypes: any = ['audio/mpeg'];
+  allowedImageTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
+  allowedVideoTypes: any = ['video/mp4'];
   selectedFiles = [];
   @Input() id?: number;
   @ViewChild('resourceInput', { static: false }) fileInput: any;
@@ -51,6 +53,11 @@ export class QuestionComponent implements OnInit {
 
   emptyAnswers(pregunta: Preguntas): void {
     if (pregunta.respuestas) {
+      for (let i = 0; i < pregunta.respuestas.length; i++) {
+        if (pregunta.respuestas[i].path && pregunta.respuestas[i].path !== '') {
+          this.removeFromServer(pregunta.respuestas[i].path!);
+        }
+      }
       pregunta.respuestas = [];
     }
   }
@@ -83,6 +90,12 @@ export class QuestionComponent implements OnInit {
   changeAnswerType(pregunta: Preguntas): void {
     this.emptyAnswers(pregunta);
     this.addAnswer(pregunta, true);
+  }
+
+  changeResourceType(pregunta: Preguntas): void {
+    if (pregunta.path && pregunta.path !== '') {
+      this.deleteResource(pregunta);
+    }
   }
 
   checkCorrectAnswers(pregunta: Preguntas, answerIndex: number): void {
@@ -203,8 +216,6 @@ export class QuestionComponent implements OnInit {
     this.save();
   }
 
-  deleteResources(): void {}
-
   deleteResource(pregunta: Preguntas): void {
     if (pregunta.path) {
       this.removeFromServer(pregunta.path);
@@ -220,15 +231,33 @@ export class QuestionComponent implements OnInit {
     this.fileUploadService.deleteFile(path).subscribe(() => {});
   }
 
-  selectFile(event: any, objeto: any): void {
+  selectFile(event: any, objeto: any, tipoRecurso: string): void {
     if (event.target.files.length) {
-      // Validar tamaño máximo
+      switch (tipoRecurso) {
+        case 'Audio': {
+          if (!this.allowedAudioTypes.includes(event.target.files[0].type)) {
+            this.showErrorFileType(event);
+            return;
+          }
+          break;
+        }
+        case 'Image': {
+          if (!this.allowedImageTypes.includes(event.target.files[0].type)) {
+            this.showErrorFileType(event);
+            return;
+          }
+          break;
+        }
+        case 'Video': {
+          if (!this.allowedVideoTypes.includes(event.target.files[0].type)) {
+            this.showErrorFileType(event);
+            return;
+          }
+          break;
+        }
+      }
       if (event.target.files[0].size > this.maxImageSize) {
         this.showErrorFileSize(event);
-        return;
-        // Validar tipo de archivo
-      } else if (!this.allowedFileTypes.includes(event.target.files[0].type)) {
-        this.showErrorFileType(event);
         return;
       } else {
         this.selectedFiles = event.target.files;
@@ -237,7 +266,7 @@ export class QuestionComponent implements OnInit {
           this.fileUploadInteractivasService.pushFileStorage(event.target.files[0], this.id).subscribe(data => {
             this.removeFromServer(objeto.path);
             objeto.path = data.path;
-            this.updateResource(objeto);
+            this.updateResource(objeto, tipoRecurso);
             this.save();
             this.showLoader = false;
           });
@@ -246,8 +275,8 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  updateResource(objeto: any): void {
-    this.getSafeUrl(objeto);
+  updateResource(objeto: any, fileType: string): void {
+    this.getSafeUrl(objeto, fileType);
   }
 
   updateResources(): void {
@@ -255,12 +284,12 @@ export class QuestionComponent implements OnInit {
     if (this.activity && this.activity.contenido && this.activity.contenido.preguntas) {
       for (let i = 0; i < this.activity.contenido.preguntas.length; i++) {
         if (this.activity.contenido.preguntas[i].path && this.activity.contenido.preguntas[i].path !== '') {
-          this.getSafeUrl(this.activity.contenido.preguntas[i]);
+          this.getSafeUrl(this.activity.contenido.preguntas[i], this.activity.contenido.preguntas[i].tipoRecurso);
         }
         if (this.activity.contenido.preguntas[i].tipoRespuestas !== 'Texto') {
           for (let j = 0; j < this.activity.contenido.preguntas[i].respuestas.length; j++) {
             if (this.activity.contenido.preguntas[i].respuestas[j].path && this.activity.contenido.preguntas[i].respuestas[j].path !== '') {
-              this.getSafeUrl(this.activity.contenido.preguntas[i].respuestas[j]);
+              this.getSafeUrl(this.activity.contenido.preguntas[i].respuestas[j], this.activity.contenido.preguntas[i].tipoRespuestas);
             }
           }
         }
@@ -269,16 +298,39 @@ export class QuestionComponent implements OnInit {
     this.showLoader = false;
   }
 
-  getSafeUrl(object: any): void {
+  getSafeUrl(object: any, fileType: string): void {
     this.showLoader = true;
     let safeUrl: SafeUrl = '';
     if (object.path) {
-      this.fileUploadService.getImageFile(object.path).subscribe(data => {
-        const imagePath = URL.createObjectURL(data.body);
-        safeUrl = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
-        object.safeUrl = safeUrl;
-        this.showLoader = false;
-      });
+      switch (fileType) {
+        case 'Audio': {
+          this.fileUploadService.getSoundFile(object.path).subscribe(data => {
+            const audioPath = URL.createObjectURL(data.body);
+            safeUrl = this.domSanitizer.bypassSecurityTrustUrl(audioPath);
+            object.safeUrl = safeUrl;
+            this.showLoader = false;
+          });
+          break;
+        }
+        case 'Imagen': {
+          this.fileUploadService.getImageFile(object.path).subscribe(data => {
+            const imagePath = URL.createObjectURL(data.body);
+            safeUrl = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
+            object.safeUrl = safeUrl;
+            this.showLoader = false;
+          });
+          break;
+        }
+        case 'Video': {
+          this.fileUploadService.getVideoThumbnailFile(object.path).subscribe(data => {
+            const videoPath = URL.createObjectURL(data.body);
+            safeUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
+            object.safeUrl = safeUrl;
+            this.showLoader = false;
+          });
+          break;
+        }
+      }
     }
   }
 
@@ -335,5 +387,19 @@ export class QuestionComponent implements OnInit {
 
   isActivityDifferent(localActivity: ActividadInteractiva, remoteActivity: ActividadInteractiva): boolean {
     return JSON.stringify(localActivity) === JSON.stringify(remoteActivity);
+  }
+
+  getVideo(pregunta: Preguntas): void {
+    this.showLoader = true;
+    let safeUrl: SafeUrl = '';
+    if (pregunta.path && pregunta.path !== '') {
+      this.fileUploadService.getVideoFile(pregunta.path).subscribe(data => {
+        const videoPath = URL.createObjectURL(data.body);
+        safeUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
+        pregunta.safeUrl = safeUrl;
+        pregunta.loadedVideo = true;
+        this.showLoader = false;
+      });
+    }
   }
 }

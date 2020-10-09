@@ -60,7 +60,7 @@
           <!-- Recurso -->
           <mat-form-field appearance="fill" class="mat-recurso">
               <mat-label jhiTranslate="constructorApp.question.question.resource">Recurso</mat-label>
-              <select matNativeControl [(ngModel)]="pregunta.tipoRecurso" (change)="save()">
+              <select matNativeControl [(ngModel)]="pregunta.tipoRecurso" (change)="changeResourceType(pregunta); save();">
                   <option value="">Ninguno</option>
                   <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
               </select>
@@ -68,14 +68,16 @@
           <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()">
               <!-- <span>Subir</span> -->
               <i class="icon ni-picture"></i>
-              <input #resourceInput type="file" (change)="selectFile($event, pregunta)" style="display:none;"/>
+              <input #resourceInput type="file" (change)="selectFile($event, pregunta, pregunta.tipoRecurso)" style="display:none;"/>
           </button>
         </div>
 
         <div class="row-tipo-mat">
-          <img [src]="pregunta.safeUrl" *ngIf="(pregunta.tipoRecurso === 'Imagen' || pregunta.tipoRecurso === 'Video') && pregunta.safeUrl && pregunta.safeUrl !== ''">
-          <audio src="" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.path !== ''"></audio>
-
+          Video cargado: {{pregunta.loadedVideo}}
+          <img [src]="pregunta.safeUrl" *ngIf="pregunta.tipoRecurso === 'Imagen' && pregunta.safeUrl && pregunta.safeUrl !== ''">
+          <img [src]="pregunta.safeUrl" *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && !pregunta.loadedVideo" (click)="getVideo(pregunta)">
+          <video [src]="pregunta.safeUrl" controls *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && pregunta.loadedVideo"></video>
+          <audio controls [src]="pregunta.safeUrl" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.safeUrl && pregunta.safeUrl !== ''"></audio>
           <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''" class="btn-delete-question">
             <i class="icon ni-delete"></i>
           </button>
@@ -122,11 +124,11 @@
               <!-- Respuesta -->
               <!-- Respuesta/URL de recurso -->
               <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
-              <audio src="" *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.path !== ''"></audio>
+              <audio controls [src]="respuesta.safeUrl" *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.safeUrl && respuesta.safeUrl !== ''"></audio>
 
               <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()">
                   <i class="icon ni-picture"></i>
-                  <input #fileInput type="file" (change)="selectFile($event, respuesta)" style="display:none;"/>
+                  <input #fileInput type="file" (change)="selectFile($event, respuesta, pregunta.tipoRespuestas)" style="display:none;"/>
               </button>
 
 

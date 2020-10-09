@@ -21,7 +21,8 @@ export class Preguntas {
   public tipoRespuestas?: string;
   public path?: string;
   public tipoRecurso?: string;
-  public safeUrl?: string;
+  public safeUrl?: SafeUrl;
+  public loadedVideo?: boolean;
 }
 
 export class Respuestas {
