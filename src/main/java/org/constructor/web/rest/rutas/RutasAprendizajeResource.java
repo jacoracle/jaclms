@@ -3,12 +3,12 @@
  */
 package org.constructor.web.rest.rutas;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
 import org.constructor.domain.rutas.RutasAprendizaje;
+import org.constructor.service.dto.rutas.RutasAprendizajeDTO;
 import org.constructor.service.rutas.RutasAprendizajeService;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
@@ -19,7 +19,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +37,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.jsonwebtoken.io.IOException;
 
 /**
  * @author Edukai
@@ -81,18 +84,20 @@ public class RutasAprendizajeResource {
 	  * RutasAprendizaje Post
 	  * @param rutasAprendizaje
 	  * @return
-	  * @throws URISyntaxException
+	  * @throws IOException
 	  */
 	    @PostMapping(path = RestConstants.PATH_RUTAS)
-	    public ResponseEntity<RutasAprendizaje> createRutasAprendizaje(@RequestBody RutasAprendizaje rutasAprendizaje) throws URISyntaxException {
-	        log.debug("REST request to save RutasAprendizaje : {}", rutasAprendizaje);
-	        if (rutasAprendizaje.getId() != null) {
-	            throw new BadRequestAlertException("A new temas cannot already have an ID", ENTITY_NAME, "idexists");
-	        }
-	        RutasAprendizaje result = rutasAprendizajeService.save(rutasAprendizaje);
-	        return ResponseEntity.created(new URI("/api/rutas/" + result.getId()))
-	            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-	            .body(result);
+	    public ResponseEntity<RutasAprendizajeDTO> createRutasAprendizaje(Authentication authentication ,
+	    		@RequestBody RutasAprendizaje rutasAprendizaje) throws IOException {
+			log.debug("REST request to save rutasAprendizaje : {}", rutasAprendizaje);
+			if (rutasAprendizaje == null) {
+				throw new BadRequestAlertException("A new rutasAprendizaje cannot is empty", ENTITY_NAME, "");
+			}
+			log.debug("REST request to ruta : {}", rutasAprendizaje);
+			RutasAprendizajeDTO result = rutasAprendizajeService.save(authentication, rutasAprendizaje);
+			log.debug("result : {}",result);
+
+			return new ResponseEntity<>(result, HttpStatus.OK);
 	    }
 	   
 	    /**
@@ -119,7 +124,7 @@ public class RutasAprendizajeResource {
 	     * @param pageable
 	     * @return
 	     */
-	    @GetMapping(path = RestConstants.PATH_RUTAS)
+	    @GetMapping(path = RestConstants.PATH_RUTAS_ALL)
 	    public ResponseEntity<List<RutasAprendizaje>> getAllRutasAprendizaje(Pageable pageable) {
 	        log.debug("REST request to get a page of RutasAprendizaje");
 	        Page<RutasAprendizaje> page = rutasAprendizajeService.findAll(pageable);
@@ -139,6 +144,18 @@ public class RutasAprendizajeResource {
 	        log.debug("REST request to get RutasAprendizaje : {}", id);
 	        Optional<RutasAprendizaje> rutas = rutasAprendizajeService.findOne(id);
 	        return ResponseUtil.wrapOrNotFound(rutas);
+	    }
+	    
+	    /**
+	     * 
+	     * @param authentication
+	     * @return
+	     */
+	    @GetMapping(path = RestConstants.PATH_RUTAS)
+	    public ResponseEntity<List<RutasAprendizaje>> getAllrUTAeUser(Authentication authentication ) {
+	        log.debug("REST request to get a page of Module by User");
+	        List<RutasAprendizaje> page = rutasAprendizajeService.findAllRutaUserId(authentication);
+	        return ResponseEntity.ok().body(page);
 	    }
 	    
 	    

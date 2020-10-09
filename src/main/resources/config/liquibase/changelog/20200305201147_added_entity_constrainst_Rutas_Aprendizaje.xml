@@ -20,7 +20,56 @@
                                  constraintName="fk_nivel_ruta_ruta_id"
                                  referencedColumnNames="id"
                                  referencedTableName="rutas_aprendizaje"/>
+                                 
+    <addForeignKeyConstraint baseColumnNames="numero_grado_id"
+                                 baseTableName="numero_grado_ruta"
+                                 constraintName="fk_numero_grado_id_ruta_ruta_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="numero_grado"/>
+    
+       <addForeignKeyConstraint baseColumnNames="ruta_id"
+                                 baseTableName="numero_grado_ruta"
+                                 constraintName="fk_numero_grado_ruta_ruta_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rutas_aprendizaje"/>
+                                 
+      <addForeignKeyConstraint baseColumnNames="temas_id"
+                                 baseTableName="temas_ruta"
+                                 constraintName="fk_temas_ruta_id_temas_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="temas"/>
+                                 
+      <addForeignKeyConstraint baseColumnNames="ruta_id"
+                                 baseTableName="temas_ruta"
+                                 constraintName="fk_temas_ruta_ruta_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rutas_aprendizaje"/>
 
+      <addForeignKeyConstraint baseColumnNames="roles_colaboradores_id"
+                                 baseTableName="colaboradores_ruta"
+                                 constraintName="fk_colaboradores_ruta_roles_colaboradores_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="roles_colaboradores"/>
+                                 
+          <addForeignKeyConstraint baseColumnNames="ruta_id"
+                                 baseTableName="colaboradores_ruta"
+                                 constraintName="fk_colaboradores_ruta_ruta_ruta_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rutas_aprendizaje"/> 
+                                     
+		 <addForeignKeyConstraint baseColumnNames="usuario_id"
+                                 baseTableName="ruta_usuario"
+                                 constraintName="fk_ruta_usuario_usuario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    
+    
+    
+     <addForeignKeyConstraint baseColumnNames="ruta_id"
+                                 baseTableName="ruta_usuario"
+                                 constraintName="fk_ruta_usuario_ruta_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rutas_aprendizaje"/>   
       </changeSet>
 </databaseChangeLog>
     
