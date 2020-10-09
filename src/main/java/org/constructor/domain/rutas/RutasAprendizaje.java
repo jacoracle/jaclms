@@ -71,7 +71,7 @@ public class RutasAprendizaje implements Serializable {
 	 */
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "numero_grado_ruta", joinColumns = @JoinColumn(name = "ruta_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "numero_grado_id", referencedColumnName = "id", nullable = false))
-	private Set<NumeroGrado> areaDeConocimiento;
+	private Set<NumeroGrado> nivelAcademico;
 
 	/**
 	 * temas
@@ -171,18 +171,18 @@ public class RutasAprendizaje implements Serializable {
 
 	/**
 	 * Get
-	 * @return the areaDeConocimiento
+	 * @return the nivelAcademico
 	 */
-	public Set<NumeroGrado> getAreaDeConocimiento() {
-		return areaDeConocimiento;
+	public Set<NumeroGrado> getNivelAcademico() {
+		return nivelAcademico;
 	}
 
 	/**
 	 * Set
-	 * @param areaDeConocimiento the areaDeConocimiento to set
+	 * @param nivelAcademico the nivelAcademico to set
 	 */
-	public void setAreaDeConocimiento(final Set<NumeroGrado> areaDeConocimiento) {
-		this.areaDeConocimiento = areaDeConocimiento;
+	public void setNivelAcademico(final Set<NumeroGrado> nivelAcademico) {
+		this.nivelAcademico = nivelAcademico;
 	}
 
 	/**
@@ -251,14 +251,11 @@ public class RutasAprendizaje implements Serializable {
 		this.nivelRutas = nivelRutas;
 	}
 
-	/**
-	 * ToString
-	 */
 	@Override
 	public String toString() {
 		return "RutasAprendizaje [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", portadaUrl="
-				+ portadaUrl + ", areaDeConocimiento=" + areaDeConocimiento + ", temas=" + temas
-				+ ", rolesColaboradores=" + rolesColaboradores + ", nivelRutas=" + nivelRutas + ", user=" + user + "]";
+				+ portadaUrl + ", nivelAcademico=" + nivelAcademico + ", temas=" + temas + ", rolesColaboradores="
+				+ rolesColaboradores + ", nivelRutas=" + nivelRutas + ", user=" + user + "]";
 	}
 
 	
