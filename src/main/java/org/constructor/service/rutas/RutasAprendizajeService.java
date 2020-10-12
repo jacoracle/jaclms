@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.constructor.domain.rutas.RutasAprendizaje;
-import org.constructor.service.dto.rutas.RutasAprendizajeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Edukai
@@ -28,13 +28,13 @@ public interface RutasAprendizajeService {
     RutasAprendizaje save(RutasAprendizaje rutasAprendizaje);
     
     /**
-     * RutasAprendizajeDTO
+     * RutasAprendizaje
      * @param authentication
      * @param rutasDTO
      * @param file
      * @return
      */
-    RutasAprendizajeDTO save(Authentication authentication, RutasAprendizaje rutasDTO);
+    RutasAprendizaje save(Authentication authentication, RutasAprendizaje rutasDTO, MultipartFile file);
 
     /**
      * findAllRutaUserId

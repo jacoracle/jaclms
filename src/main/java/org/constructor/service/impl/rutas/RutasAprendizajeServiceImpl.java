@@ -28,6 +28,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Edukai
@@ -108,10 +109,10 @@ public class RutasAprendizajeServiceImpl  implements RutasAprendizajeService{
 	 * Save to user
 	 */
 	@Override
-	public RutasAprendizajeDTO save(Authentication authentication, RutasAprendizaje rutasDTO) {
+	public RutasAprendizaje save(Authentication authentication, RutasAprendizaje rutasDTO, MultipartFile file) {
 		log.debug("Request to save Ruta : {}", rutasDTO);
 		RutasAprendizajeDTO ruta = new RutasAprendizajeDTO();
-
+		
 		String usuarioNombre = authentication.getName();
 		Set<User> user = userService.findUserByLogin(usuarioNombre);
 
@@ -119,16 +120,21 @@ public class RutasAprendizajeServiceImpl  implements RutasAprendizajeService{
 		rutasDTO.setUser(user);
 		rutasDTO = rutasAprendizajeRepository.save(rutasDTO);
 		
+		if (file != null) {
 			// Save PortadaUrl
 			MultimediaDTO multimediaDTO = new MultimediaDTO();
+			String identificador = "Ruta-" + rutasDTO.getId();
+			multimediaDTO.setFile(file);
+			multimediaDTO.setId(identificador);
 			VideoResponse<?> respuesta = multimediaService.saveFile(multimediaDTO);
-			respuesta.getPath();
+			rutasDTO.setPortadaUrl(respuesta.getPath());
+		}
 		
 
 		log.debug("ruta id {}", rutasDTO.getId());
 		ruta.setRutasAprendizaje(rutasDTO);
 
-		return ruta;
+		return rutasDTO;
 	}
 
 
