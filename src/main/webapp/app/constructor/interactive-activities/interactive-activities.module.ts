@@ -8,10 +8,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ConstructorSharedModule } from 'app/shared/shared.module';
+import { ResourceAudioComponent } from './resources/resource-audio/resource-audio.component';
+import { ResourceVideoComponent } from './resources/resource-video/resource-video.component';
 
 @NgModule({
   imports: [FormsModule, MatIconModule, MatInputModule, MatSelectModule, MatCheckboxModule, ConstructorSharedModule],
-  declarations: [QuestionComponent],
+  declarations: [QuestionComponent, ResourceAudioComponent, ResourceVideoComponent],
   entryComponents: [QuestionComponent],
   exports: [QuestionComponent]
 })

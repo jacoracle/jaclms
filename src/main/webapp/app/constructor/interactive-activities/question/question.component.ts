@@ -145,7 +145,8 @@ export class QuestionComponent implements OnInit {
       marcada: false,
       correcta: false,
       tipoRespuestas: 'Texto',
-      tipoRecurso: ''
+      tipoRecurso: '',
+      loadedVideo: false
     };
   }
 
@@ -221,6 +222,7 @@ export class QuestionComponent implements OnInit {
       this.removeFromServer(pregunta.path);
       pregunta.path = '';
       pregunta.safeUrl = '';
+      pregunta.loadedVideo = false;
       this.selectedFiles = [];
       this.fileInput.nativeElement.value = '';
       this.save();
@@ -283,6 +285,7 @@ export class QuestionComponent implements OnInit {
     this.showLoader = true;
     if (this.activity && this.activity.contenido && this.activity.contenido.preguntas) {
       for (let i = 0; i < this.activity.contenido.preguntas.length; i++) {
+        this.activity.contenido.preguntas[i].loadedVideo = false;
         if (this.activity.contenido.preguntas[i].path && this.activity.contenido.preguntas[i].path !== '') {
           this.getSafeUrl(this.activity.contenido.preguntas[i], this.activity.contenido.preguntas[i].tipoRecurso);
         }
