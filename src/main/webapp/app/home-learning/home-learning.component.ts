@@ -4,15 +4,9 @@ import { Subscription } from 'rxjs';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { ModuloService } from 'app/entities/modulo/modulo.service';
-import { IModulo } from 'app/shared/model/modulo.model';
-
-import { HttpResponse } from '@angular/common/http';
-import { SafeUrl } from '@angular/platform-browser';
 import { Validators, FormControl, FormBuilder } from '@angular/forms';
-import { ErrorStateMatcherLearning } from './error-state-matcher-learning';
-
-import { map, startWith } from 'rxjs/operators';
+import { IRutaModel } from '../shared/model/ruta-aprendizaje.model';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-learning-module',
@@ -21,87 +15,32 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
-  authSubscription?: Subscription;
-  modulos: any = [];
-  defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
+  subscription?: Subscription;
 
-  filteredTopicOpts: any; // : Observable<IModulo[]>;
-  filteredTypeOpts: any;
-  filteredSubjectOpts: any;
-  filteredRoleOpts: any;
-
-  matcher = new ErrorStateMatcherLearning();
+  // paths list
+  pathsList: IRutaModel[] = new Array<IRutaModel>();
 
   learningForm = this.formbuilder.group({
-    sessionTopic: [],
-    sessionSubject: [],
-    sessionType: [],
-    sessionDescriptionFormCtrl: [],
-    sessionTitleFormCtrl: new FormControl('', [
-      Validators.required
-      // Validators.email,
-    ])
+    titlePath: new FormControl('', [Validators.maxLength(20)]),
+    other: new FormControl('', [Validators.required])
   });
 
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,
     private formbuilder: FormBuilder,
-    private moduleService: ModuloService
-  ) {}
+    private eventManager: JhiEventManager
+  ) {
+    this.fillListDummy();
+  }
 
   ngOnInit(): void {
-    this.filteredTopicOpts = this.learningForm.get('sessionTopic')!.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter(name) : this.modulos.slice()))
-    );
-
-    this.filteredTypeOpts = this.learningForm.get('sessionType')!.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter(name) : this.modulos.slice()))
-    );
-
-    this.filteredSubjectOpts = this.learningForm.get('sessionSubject')!.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.descripcion)),
-      map(name => (name ? this._filter_(name) : this.modulos.slice()))
-    );
-
-    /*
-    this.filteredRoleOpts = this.learningForm.get('sessionTopic')!.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.descripcion),
-      map(name => name ? this._filter(name) : this.modulos.slice())
-    );
-    */
-
-    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
+    this.subscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
-        this.moduleService.query().subscribe(
-          (res: HttpResponse<IModulo[]>) => {
-            this.modulos = res.body;
-          },
-          () => this.onQueryError()
-        );
+        //
       }
     });
-  }
-
-  private _filter(value: string): IModulo[] {
-    const filterValue = value.toLowerCase();
-    return this.modulos.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
-  }
-
-  private _filter_(value: string): IModulo[] {
-    const filterValue = value.toLowerCase();
-    return this.modulos.filter((option: IModulo) => option.descripcion!.toLowerCase().includes(filterValue));
-  }
-
-  displayFn(mod: IModulo): string {
-    return mod && mod.descripcion ? mod.descripcion : '';
   }
 
   isAuthenticated(): boolean {
@@ -113,20 +52,15 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   ngOnDestroy(): void {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 
   ngAfterContentInit(): void {}
 
-  protected onQueryError(): void {
-    console.error('Error');
-  }
-
-  previewModule(id: number, $event: any): void {
-    $event.stopPropagation();
-    console.error('####     Debería mostrar el Preview del Módulo');
+  displayFn(path: IRutaModel): string {
+    return path && path.titulo ? path.titulo : '';
   }
 
   findElementById(objectArray: any, id: number): number {
@@ -137,5 +71,25 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
       }
     });
     return foundIndex;
+  }
+
+  fillListDummy(): void {
+    this.pathsList.push({ id: 1, titulo: 'Ruta Uno', descripcion: 'Prueba ruta uno' });
+    this.pathsList.push({ id: 2, titulo: 'Ruta Dos', descripcion: 'Prueba ruta dos' });
+    this.pathsList.push({ id: 3, titulo: 'Ruta Tres', descripcion: 'Prueba ruta tres' });
+    this.pathsList.push({ id: 4, titulo: 'Ruta Cuatro', descripcion: 'Prueba ruta cuatro' });
+    this.pathsList.push({ id: 5, titulo: 'Ruta Cinco', descripcion: 'Prueba ruta cinco' });
+    this.pathsList.push({ id: 6, titulo: 'Ruta Seís', descripcion: 'Prueba ruta seís' });
+  }
+
+  deletePath(path: IRutaModel, evt: any): void {
+    evt.stopPropagation();
+    console.error('Intentando borrar: ', path);
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.path.deleted',
+        type: 'success'
+      })
+    );
   }
 }

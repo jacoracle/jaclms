@@ -30,7 +30,7 @@ export class FileUploadService {
   pushFileStorage(file: File, id: number, type: string): Observable<any> {
     const data: FormData = new FormData();
     data.append('file', file);
-    data.append('id', type === 'course' ? 'Curso-' + id.toString() : 'Modulo-' + id.toString());
+    data.append('id', type === 'course' ? 'Curso-' + id.toString() : type === 'path' ? 'Ruta-' + id.toString() : 'Modulo-' + id.toString());
     return this.http.post(SERVER_API_URL + '/api/fileUpload', data);
   }
 

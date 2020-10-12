@@ -34,6 +34,9 @@ import { AgrupadorUmaUpdateComponent } from './entities/agrupador/agrupador-uma-
 import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
 import { SecuenciaAgrupadorUpdateComponent } from './entities/agrupador/secuencia-uma-update.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RutasAprendizajeConfigurationComponent } from './entities/rutas-aprendizaje/rutas-aprendizaje-configuration.component';
+import { RutasAprendizajeJerarquiaComponent } from './entities/rutas-aprendizaje/rutas-aprendizaje-jerarquia/rutas-aprendizaje-jerarquia.component';
+import { LearningPathConfigurationComponent } from './learning-path-configuration/learning-path-configuration.component';
 
 @NgModule({
   imports: [
@@ -72,7 +75,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ColaboradoresModuleComponent,
     TopicModuleComponent,
     TypeModuleComponent,
-    ConstructorHomeComponent
+    ConstructorHomeComponent,
+    LearningPathConfigurationComponent,
+    RutasAprendizajeConfigurationComponent,
+    RutasAprendizajeJerarquiaComponent
   ],
   bootstrap: [MainComponent]
 })

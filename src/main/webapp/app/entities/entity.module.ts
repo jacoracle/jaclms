@@ -12,11 +12,18 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
+    CommonModule,
     MatChipsModule,
     MatSelectModule,
+    MatTreeModule,
+    MatIconModule,
+    MatRadioModule,
     RouterModule.forChild([
       {
         path: 'asignatura',
@@ -74,7 +81,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatExpansionModule,
     MatStepperModule,
     MatTabsModule,
-    DragDropModule
+    DragDropModule,
+    MatTreeModule,
+    MatRadioModule
   ],
   declarations: [PhoneNumberComponent, CountryComponent]
 })

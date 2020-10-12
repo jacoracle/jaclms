@@ -1,0 +1,43 @@
+.main-container-path-config {
+  border: 2px dotted grey;
+  margin: 0 auto;
+  padding: 1em 1.5em;
+  // width  : 80%;
+
+  .mat-form-field {
+    display: block !important;
+  }
+
+  .window-path-config-body {
+    border: 1px dotted red;
+    display: flex;
+
+    .config-path-form {
+      border: 1px solid yellow;
+      width: 75%;
+    }
+
+    .portada-path {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid green;
+      width: 25%;
+
+      .conver-path img {
+        width: 300px;
+      }
+
+      .path-cover-btns {
+        padding-top: 1em;
+      }
+    }
+  }
+
+  .path-btns {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+  }
+}
