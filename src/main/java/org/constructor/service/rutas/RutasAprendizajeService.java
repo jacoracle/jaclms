@@ -3,11 +3,14 @@
  */
 package org.constructor.service.rutas;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.constructor.domain.rutas.RutasAprendizaje;
+import org.constructor.service.dto.rutas.RutasAprendizajeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 
 /**
  * @author Edukai
@@ -23,7 +26,22 @@ public interface RutasAprendizajeService {
      * @return the persisted entity.
      */
     RutasAprendizaje save(RutasAprendizaje rutasAprendizaje);
+    
+    /**
+     * RutasAprendizajeDTO
+     * @param authentication
+     * @param rutasDTO
+     * @param file
+     * @return
+     */
+    RutasAprendizajeDTO save(Authentication authentication, RutasAprendizaje rutasDTO);
 
+    /**
+     * findAllRutaUserId
+     * @param authentication
+     * @return
+     */
+    List<RutasAprendizaje> findAllRutaUserId(Authentication authentication);
     /**
      * Get all the versions.
      *
