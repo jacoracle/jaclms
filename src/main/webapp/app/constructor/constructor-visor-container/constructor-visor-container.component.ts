@@ -35,6 +35,7 @@ import { ContentBlock11Component } from 'app/constructor/content-blocks/content-
 import { ContentBlock17Component } from '../content-blocks/content-block17/content-block17.component';
 import { ContentBlock18Component } from '../content-blocks/content-block18/content-block18.component';
 import { ContentBlock19Component } from '../content-blocks/content-block19/content-block19.component';
+import { FileUploadService } from 'app/services/file-upload.service';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -130,7 +131,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     private textEditorBehaviosService: TextEditorBehaviorService,
     private eventEmitterService: EventEmitterService,
     private navigationControlsService: NavigationControlsService,
-    private bloquesCursoService: BloquesCursoService
+    private bloquesCursoService: BloquesCursoService,
+    private fileUploadService: FileUploadService
   ) {
     this.showLoader = true;
     this.contentBlocks = [];
@@ -404,6 +406,9 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
                   if (res.body) {
                     this.contentBlocks = res.body;
                     this.contentBlocksService.setContentBlocks(this.contentBlocks);
+                    if (backup[index] && backup[index].bloqueComponentes) {
+                      this.deleteActivityBlockResources(backup[index].bloqueComponentes!);
+                    }
                   }
                 },
                 () => {
@@ -458,5 +463,40 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  deleteActivityBlockResources(block: IBloqueComponentes): void {
+    if (block.tipoBloqueComponentes && block.tipoBloqueComponentes.nombre === 'pregunta') {
+      if (block.componentes) {
+        for (let i = 0; i < block.componentes.length; i++) {
+          if (
+            block.componentes[i].tipoComponente &&
+            block.componentes[i].tipoComponente!.nombre &&
+            block.componentes[i].tipoComponente!.nombre === 'activity'
+          ) {
+            if (block.componentes[i].actividadesInteractivas && block.componentes[i].actividadesInteractivas![0].contenido) {
+              const contenido = block.componentes[i].actividadesInteractivas![0].contenido;
+              for (let j = 0; j < contenido.preguntas.length; j++) {
+                if (contenido.preguntas[j].path && contenido.preguntas[j].path !== '') {
+                  const pregunta = contenido.preguntas[j];
+                  this.deleteResource(pregunta.path);
+                  if (pregunta.respuestas) {
+                    for (let k = 0; k < pregunta.respuestas.length; k++) {
+                      if (pregunta.respuestas[k].path && pregunta.respuestas[k].path !== '') {
+                        this.deleteResource(pregunta.respuestas[k].path);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  deleteResource(path: string): void {
+    this.fileUploadService.deleteFile(path).subscribe(() => {});
   }
 }
