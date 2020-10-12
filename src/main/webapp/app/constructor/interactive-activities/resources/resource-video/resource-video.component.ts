@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./resource-video.component.scss']
 })
 export class ResourceVideoComponent implements OnInit {
-  @Input() safeUrl?: SafeUrl;
+  @Input() safeUrl?: SafeUrl | string;
   active = false;
   @ViewChild('video', { static: false }) video?: ElementRef;
   subscription?: Subscription;

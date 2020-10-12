@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./resource-audio.component.scss']
 })
 export class ResourceAudioComponent implements OnInit {
-  @Input() safeUrl?: SafeUrl;
+  @Input() safeUrl?: SafeUrl | string;
   active = false;
   @ViewChild('audio', { static: false }) audio?: ElementRef;
   subscription?: Subscription;
