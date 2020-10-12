@@ -242,11 +242,16 @@ public class RestConstants {
 	 * Path para peticiones ruta 
 	 */
 	public static final String PATH_RUTAS = "rutas";
+	
+	/**
+	 * Path para peticiones ruta 
+	 */
+	public static final String PATH_RUTAS_ALL = "rutas-all";
 		
 	/**
 	 * Path para peticiones rutas por id
 	 */
-	public static final String PATH_RUTA_ID = "ruta/{id}";
+	public static final String PATH_RUTA_ID = "rutas/{id}";
 		
 	/**
 	 * Path para peticiones nivel-jerarquico 
