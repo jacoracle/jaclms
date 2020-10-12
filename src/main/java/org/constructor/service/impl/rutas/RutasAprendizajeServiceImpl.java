@@ -3,6 +3,7 @@
  */
 package org.constructor.service.impl.rutas;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -123,14 +124,14 @@ public class RutasAprendizajeServiceImpl  implements RutasAprendizajeService{
 		if (file != null) {
 			// Save PortadaUrl
 			MultimediaDTO multimediaDTO = new MultimediaDTO();
-			String identificador = "Ruta-" + rutasDTO.getId();
+			String identificador = "Rutas" + File.separator+ "Ruta-" + rutasDTO.getId();
 			multimediaDTO.setFile(file);
 			multimediaDTO.setId(identificador);
 			VideoResponse<?> respuesta = multimediaService.saveFile(multimediaDTO);
 			rutasDTO.setPortadaUrl(respuesta.getPath());
 		}
 		
-
+		
 		log.debug("ruta id {}", rutasDTO.getId());
 		ruta.setRutasAprendizaje(rutasDTO);
 
