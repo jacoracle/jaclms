@@ -29,31 +29,20 @@
                              [ngClass]="{'ng-untouched ng-pristine ng-invalid alert-input': !isValidOpcion()}">
                             <mat-radio-group aria-label="Select an option" formControlName="opcionConcatenada"
                                              name="opcionConcatenada">
-
-                                <mat-radio-button value="{{PREG_TEXTO_RESP_UNICA_IMAGEN}}" id="type_question4"
-                                                  class="question-radio mat-radio-no-margin"
-                                                  (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn!='' && opcionIn!=PREG_TEXTO_RESP_UNICA_IMAGEN">
-                                    Imagen Única
-                                </mat-radio-button>
-
-                                <mat-radio-button value="{{PREG_TEXTO_RESP_MULTIPLE_IMAGEN}}" id="type_question5"
+                                <mat-radio-button value="{{PREG_AUDIO_RESP_UNICA_TEXTO}}" id="type_question8"
                                                   class="question-radio" (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn!='' && opcionIn!=PREG_TEXTO_RESP_MULTIPLE_IMAGEN">
-                                    Imagen Múltiple
+                                                  [hidden]="opcionIn != '' && opcionIn!=PREG_AUDIO_RESP_UNICA_TEXTO">
+                                    Audio Única
                                 </mat-radio-button>
-
-                                <mat-radio-button value="{{PREG_TEXTO_RESP_UNICA_AUDIO}}" id="type_question6"
-                                                  class="question-radio mat-radio-no-margin"
-                                                  (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn!='' && opcionIn!=PREG_TEXTO_RESP_UNICA_AUDIO">
-                                    Audio Única&nbsp;&nbsp;&nbsp;
-                                </mat-radio-button>
-
-                                <mat-radio-button value="{{PREG_TEXTO_RESP_MULTIPLE_AUDIO}}" id="type_question7"
+                                <mat-radio-button value="{{PREG_AUDIO_RESP_MULTIPLE_TEXTO}}" id="type_question9"
                                                   class="question-radio" (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn!='' && opcionIn!=PREG_TEXTO_RESP_MULTIPLE_AUDIO">
+                                                  [hidden]="opcionIn != '' && opcionIn!=PREG_AUDIO_RESP_MULTIPLE_TEXTO">
                                     Audio Múltiple
+                                </mat-radio-button>
+                                <mat-radio-button value="{{PREG_AUDIO_RESP_BOOLEAN_TEXTO}}" id="type_question10"
+                                                  class="question-radio" (change)="onOpcionChange($event)"
+                                                  [hidden]="opcionIn != '' && opcionIn!=PREG_AUDIO_RESP_BOOLEAN_TEXTO">
+                                    Audio Verdadero Falso
                                 </mat-radio-button>
 
                             </mat-radio-group>
@@ -73,8 +62,7 @@
                 </div>
 
                 <jhi-activity-questions [activityForm]="activityForm" [submitted]="submitted"
-                                        [typeQuestion]="typeQuestion()" [id]="id"
-                                        [filesAnswersDelete]="filesAnswersDelete">
+                                        [typeQuestion]="typeQuestion()" [id]="id">
                 </jhi-activity-questions>
 
             </mat-drawer-content>

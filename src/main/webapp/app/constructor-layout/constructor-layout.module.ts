@@ -38,6 +38,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ContentBlock11Component } from 'app/constructor/content-blocks/content-block11/content-block11.component';
 import { ContentBlock17Component } from 'app/constructor/content-blocks/content-block17/content-block17.component';
 import { ContentBlock18Component } from 'app/constructor/content-blocks/content-block18/content-block18.component';
+import { ContentBlock15Component } from 'app/constructor/content-blocks/content-block15/content-block15.component';
+import { ContentBlock16Component } from 'app/constructor/content-blocks/content-block16/content-block16.component';
 import { ContentBlock19Component } from 'app/constructor/content-blocks/content-block19/content-block19.component';
 import { InteractiveActivitiesModule } from 'app/constructor/interactive-activities/interactive-activities.module';
 
@@ -60,13 +62,14 @@ import { InteractiveActivitiesModule } from 'app/constructor/interactive-activit
       ContentBlock8Component,
       ContentBlock9Component,
       ContentBlock10Component,
-      // ContentBlock11Component,
+      ContentBlock11Component,
       ContentBlock12Component,
       ContentBlock13Component,
       ContentBlock14Component,
+      ContentBlock15Component,
+      ContentBlock16Component,
       ContentBlock17Component,
       ContentBlock18Component,
-      ContentBlock11Component,
       ContentBlock19Component
     ]),
     InteractiveActivitiesModule
@@ -87,6 +90,8 @@ import { InteractiveActivitiesModule } from 'app/constructor/interactive-activit
     ContentBlock9Component,
     ContentBlock10Component,
     ContentBlock11Component,
+    ContentBlock15Component,
+    ContentBlock16Component,
     ConstructorTextComponent,
     ContentBlock19Component,
     // VisorTextComponent,

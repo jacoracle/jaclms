@@ -34,6 +34,8 @@ import { ContentBlock14Component } from '../content-blocks/content-block14/conte
 import { ContentBlock11Component } from 'app/constructor/content-blocks/content-block11/content-block11.component';
 import { ContentBlock17Component } from '../content-blocks/content-block17/content-block17.component';
 import { ContentBlock18Component } from '../content-blocks/content-block18/content-block18.component';
+import { ContentBlock15Component } from 'app/constructor/content-blocks/content-block15/content-block15.component';
+import { ContentBlock16Component } from 'app/constructor/content-blocks/content-block16/content-block16.component';
 import { ContentBlock19Component } from '../content-blocks/content-block19/content-block19.component';
 import { FileUploadService } from 'app/services/file-upload.service';
 
@@ -73,6 +75,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     { nombre: 'activity_question_media', componente: ContentBlock11Component },
     { nombre: 'indicador', componente: ContentBlock17Component },
     { nombre: 'numeracion_actividad', componente: ContentBlock18Component },
+    { nombre: 'activity_question_audio_text', componente: ContentBlock15Component },
+    { nombre: 'activity_question_audio_media', componente: ContentBlock16Component },
     { nombre: 'pregunta', componente: ContentBlock19Component }
   ];
 

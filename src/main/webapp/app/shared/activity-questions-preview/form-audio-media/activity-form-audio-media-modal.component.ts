@@ -10,12 +10,12 @@ import { FileUploadInteractivasService } from 'app/services/file-upload-interact
 
 @Component({
   selector: 'jhi-activity-form-media-modal',
-  templateUrl: './activity-form-media-modal.component.html',
-  styleUrls: ['./activity-form-media-modal.component.scss'],
+  templateUrl: './activity-form-audio-media-modal.component.html',
+  styleUrls: ['./activity-form-audio-media-modal.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ActivityFormMediaModalComponent implements OnInit {
+export class ActivityFormAudioMediaModalComponent implements OnInit {
   submitted = false;
   id = 0;
   jsonFormIn: IActividadPregunta | undefined;
@@ -25,10 +25,10 @@ export class ActivityFormMediaModalComponent implements OnInit {
   filesAnswersDelete = [];
   opcionIn = '';
 
-  PREG_TEXTO_RESP_UNICA_IMAGEN = OpcionConcatenada.PREG_TEXTO_RESP_UNICA_IMAGEN;
-  PREG_TEXTO_RESP_MULTIPLE_IMAGEN = OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_IMAGEN;
-  PREG_TEXTO_RESP_UNICA_AUDIO = OpcionConcatenada.PREG_TEXTO_RESP_UNICA_AUDIO;
-  PREG_TEXTO_RESP_MULTIPLE_AUDIO = OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_AUDIO;
+  PREG_AUDIO_RESP_UNICA_IMAGEN = OpcionConcatenada.PREG_AUDIO_RESP_UNICA_IMAGEN;
+  PREG_AUDIO_RESP_MULTIPLE_IMAGEN = OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_IMAGEN;
+  PREG_AUDIO_RESP_UNICA_AUDIO = OpcionConcatenada.PREG_AUDIO_RESP_UNICA_AUDIO;
+  PREG_AUDIO_RESP_MULTIPLE_AUDIO = OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_AUDIO;
 
   constructor(
     public activeModal: NgbActiveModal,

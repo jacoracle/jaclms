@@ -19,6 +19,10 @@ export class ConstructorActivityComponent implements OnInit, OnDestroy {
   loadedQuestionsTextUrl: SafeUrl = './../../../../content/images/actividad_up.png';
   defaultQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad.png';
   loadedQuestionsMediaUrl: SafeUrl = './../../../../content/images/actividad_up.png';
+  defaultQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15.png';
+  loadedQuestionsAudioTextUrl: SafeUrl = './../../../../content/images/ab15_up.png';
+  defaultQuestionsAudioMediaUrl: SafeUrl = './../../../../content/images/ab16.png';
+  loadedQuestionsAudioMediaUrl: SafeUrl = './../../../../content/images/ab16_up.png';
   contenidoActividad?: ContenidoActividad;
   editing = false;
   subscription: Subscription;

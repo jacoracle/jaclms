@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SubTipoActividad, TipoActividad } from 'app/shared/model/enumerations/tipo-actividad.model';
+import { SubTipoActividad, OpcionConcatenada, TipoActividad } from 'app/shared/model/enumerations/tipo-actividad.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { cantidadAtributos } from 'app/shared/util/util';
@@ -22,6 +22,9 @@ export class ActivityFormTextModalComponent implements OnInit {
   activityForm = this.formGroupActivity(this.jsonFormIn);
   ultimaOpcion = '';
   opcionIn = '';
+  PREG_TEXTO_RESP_UNICA_TEXTO = OpcionConcatenada.PREG_TEXTO_RESP_UNICA_TEXTO;
+  PREG_TEXTO_RESP_MULTIPLE_TEXTO = OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_TEXTO;
+  PREG_TEXTO_RESP_BOOLEAN_TEXTO = OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO;
 
   constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder, private eventManager: JhiEventManager) {}
 
@@ -37,7 +40,7 @@ export class ActivityFormTextModalComponent implements OnInit {
     const controlTipoActividad = this.activityForm.controls['tipoActividad'];
     if (this.submitted) {
       if (controlTipoActividad) {
-        campoOpcion = controlTipoActividad.get('opcion');
+        campoOpcion = controlTipoActividad.get('opcionConcatenada');
         if (campoOpcion) {
           return campoOpcion.status === 'VALID';
         }
@@ -51,15 +54,16 @@ export class ActivityFormTextModalComponent implements OnInit {
 
   formGroupActivity(jsonForm: IActividadPregunta | undefined): FormGroup {
     if (jsonForm && cantidadAtributos(jsonForm) > 0) {
-      if (jsonForm.tipoActividad.opcion != null) {
-        this.ultimaOpcion = jsonForm.tipoActividad.opcion;
-        this.opcionIn = jsonForm.tipoActividad.opcion;
+      if (jsonForm.tipoActividad.opcionConcatenada != null) {
+        this.ultimaOpcion = jsonForm.tipoActividad.opcionConcatenada;
+        this.opcionIn = jsonForm.tipoActividad.opcionConcatenada;
       }
       return this.formBuilder.group({
         tipoActividad: this.formBuilder.group({
           tipoActividad: new FormControl(jsonForm.tipoActividad.tipoActividad, [Validators.required]),
           subtipo: new FormControl(jsonForm.tipoActividad.subtipo, [Validators.required]),
-          opcion: new FormControl(jsonForm.tipoActividad.opcion, [Validators.required])
+          opcion: new FormControl(jsonForm.tipoActividad.opcion, [Validators.required]),
+          opcionConcatenada: new FormControl(jsonForm.tipoActividad.opcionConcatenada, [Validators.required])
         }),
         evaluable: new FormControl(jsonForm.evaluable, [Validators.required]),
         preguntas: UtilActivityQuestions.arrayFormGroupPreguntas(jsonForm, this.formBuilder)
@@ -67,9 +71,10 @@ export class ActivityFormTextModalComponent implements OnInit {
     } else {
       return this.formBuilder.group({
         tipoActividad: this.formBuilder.group({
-          tipoActividad: new FormControl(TipoActividad.preguntaTexto, [Validators.required]),
-          subtipo: new FormControl(SubTipoActividad.texto, [Validators.required]),
-          opcion: new FormControl('', [Validators.required])
+          tipoActividad: new FormControl(TipoActividad.PREGUNTA_TEXTO, [Validators.required]),
+          subtipo: new FormControl(SubTipoActividad.TEXTO, [Validators.required]),
+          opcion: new FormControl('', [Validators.required]),
+          opcionConcatenada: new FormControl('', [Validators.required])
         }),
         evaluable: new FormControl(false, [Validators.required]),
         preguntas: UtilActivityQuestions.arrayFormGroupPreguntas(jsonForm, this.formBuilder)
