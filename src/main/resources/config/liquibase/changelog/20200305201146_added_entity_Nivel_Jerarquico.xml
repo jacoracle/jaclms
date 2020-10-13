@@ -52,7 +52,7 @@
 
 	<changeSet id="20200305201146-1-relations" author="jhipster">
         
-        <createTable tableName="niveles_jerarquicos">
+        <createTable tableName="niveles_agrupadores">
             <column name="agrupador_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -61,7 +61,7 @@
             </column>
         </createTable>
         
-        <addPrimaryKey columnNames="agrupador_id, nivel_jerarquico_id" tableName="niveles_jerarquicos"/>
+        <addPrimaryKey columnNames="agrupador_id, nivel_jerarquico_id" tableName="niveles_agrupadores"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
