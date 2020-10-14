@@ -14,14 +14,14 @@ import { IModulo } from 'app/shared/model/modulo.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IAgrupador } from '../../../shared/model/agrupador.model';
+import { IAgrupador } from 'app/shared/model/agrupador.model';
 
 @Component({
-  selector: 'jhi-rutas-aprendizaje-jerarquia',
-  templateUrl: './rutas-aprendizaje-jerarquia.component.html',
-  styleUrls: ['./rutas-aprendizaje-jerarquia.component.scss']
+  selector: 'jhi-learning-path-hierarchical-level',
+  templateUrl: './learning-path-hierarchical-level.component.html',
+  styleUrls: ['./learning-path-hierarchical-level.component.scss']
 })
-export class RutasAprendizajeJerarquiaComponent implements OnInit {
+export class LearningPathHierarchicalLevelComponent implements OnInit {
   private idPath = -1;
   sequenceList: IAgrupador[] = new Array<IAgrupador>();
 
@@ -146,53 +146,6 @@ export class RutasAprendizajeJerarquiaComponent implements OnInit {
         },
         () => this.onQueryError()
       );
-
-    /*
-  this.sequenceList.push({
-    id: 1,
-    titulo: 'Agrupaor 1',
-    descripcion: 'You think water moves fast? You should see ice.',
-    duracion: 0,
-    modulos: []
-  });
-  this.sequenceList.push({ id: 2, titulo: 'Agrupaor 2', descripcion: 'It moves like it has a mind.', duracion: 0, modulos: [] });
-  this.sequenceList.push({
-    id: 3,
-    titulo: 'Agrupaor 3',
-    descripcion: 'Like it knows it killed the world once and got a taste for murder.',
-    duracion: 0,
-    modulos: []
-  });
-  this.sequenceList.push({
-    id: 4,
-    titulo: 'Agrupaor 4',
-    descripcion: "Now we took an oath, that I'm breaking now.",
-    duracion: 0,
-    modulos: []
-  });
-  this.sequenceList.push({
-    id: 5,
-    titulo: 'Agrupaor 5',
-    descripcion: "We said we'd say it was the snow that killed the other two, but it wasn't.",
-    duracion: 0,
-    modulos: []
-  });
-  this.sequenceList.push({
-    id: 6,
-    titulo: 'Agrupaor 6',
-    descripcion: 'This gun is advertised as the most popular gun in American crime.',
-    duracion: 0,
-    modulos: []
-  });
-  this.sequenceList.push({
-    id: 7,
-    titulo: 'Agrupaor 7',
-    descripcion: "Like they're actually proud of that shit.",
-    duracion: 0,
-    modulos: []
-  });
-  this.sequenceList.push({ id: 8, titulo: 'Agrupaor 8', descripcion: 'She gonna tell me too.', duracion: 0, modulos: [] });
-  */
   }
 
   protected onQueryError(): void {

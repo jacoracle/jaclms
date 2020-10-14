@@ -75,6 +75,10 @@ export class TopicModuleComponent implements OnInit {
     return this.listThemes; //  this.selectedTopics;
   }
 
+  public setTopics(topicsList: ITema[]): void {
+    this.listThemes = [...topicsList];
+  }
+
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
   addTopic(event: MatChipInputEvent): void {

@@ -14,10 +14,8 @@ import { ModuleConfigurationComponent } from './module-configuration/module-conf
 import { HomeLearningComponent } from './home-learning/home-learning.component';
 import { HomeUmaGroupsComponent } from './home-uma-groups/home-uma-groups.component';
 import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
-// import { RutasAprendizajeConfigurationComponent } from './entities/rutas-aprendizaje/rutas-aprendizaje-configuration.component';
-import { RutasAprendizajeJerarquiaComponent } from './entities/rutas-aprendizaje/rutas-aprendizaje-jerarquia/rutas-aprendizaje-jerarquia.component';
 import { LearningPathConfigurationComponent } from './learning-path-configuration/learning-path-configuration.component';
-// import { SecuenciaAgrupadorUpdateComponent } from './entities/agrupador/secuencia-uma-update.component';
+import { LearningPathHierarchicalLevelComponent } from './entities/nivel-jerarquico/learning-path-hierarchical-level.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -87,15 +85,15 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'path-configuration/:id',
-          component: LearningPathConfigurationComponent // RutasAprendizajeConfigurationComponent
+          component: LearningPathConfigurationComponent // LearningPathUpdateComponent
         },
         {
           path: 'path-hierarchical',
-          component: RutasAprendizajeJerarquiaComponent
+          component: LearningPathHierarchicalLevelComponent // RutasAprendizajeJerarquiaComponent
         },
         {
           path: 'path-hierarchical/:id',
-          component: RutasAprendizajeJerarquiaComponent
+          component: LearningPathHierarchicalLevelComponent // RutasAprendizajeJerarquiaComponent
         },
         ...LAYOUT_ROUTES
       ],

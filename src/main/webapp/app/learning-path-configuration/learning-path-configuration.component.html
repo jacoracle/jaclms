@@ -3,7 +3,7 @@
 
         <!-- Window Header -->
         <div class="window-br-header">
-            <div class="alert-sequence-configuration">
+            <div class="alert-path-configuration">
                 <jhi-alert-error></jhi-alert-error>
             </div>
             <div class="r1">
@@ -34,7 +34,7 @@
 
                 <div class="container-stepper-group">
 
-                    <jhi-rutas-aprendizaje-configuration></jhi-rutas-aprendizaje-configuration>
+                    <jhi-learing-path-update></jhi-learing-path-update>
 
                 </div>
             </div>
@@ -43,8 +43,7 @@
 
         <!-- Footer -->
         <div class="window-br-footer">
-            <button routerLink="/learning-home" matTooltip="Regresar al Home."
-                class="secondary-btn">Cancelar</button>
+            <button routerLink="/learning-home" matTooltip="Regresar al Home." class="secondary-btn">Cancelar</button>
             <button (click)="configLearningPath($event)" class="main-btn" matTooltip="Guardar y/o actualizar Ruta."
                 [disabled]="false">Configurar Ruta</button>
         </div>

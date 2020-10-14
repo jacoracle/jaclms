@@ -5,11 +5,10 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { ErrorStateMatcherLearning } from 'app/home-learning/error-state-matcher-learning';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { Observable, Subscription } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators'; //  startWith
 import { Account } from 'app/core/user/account.model';
 import { HttpResponse } from '@angular/common/http';
-import { IModulo } from 'app/shared/model/modulo.model';
 import { INumeroGrado } from 'app/shared/model/numero-grado.model';
 import { IGradoAcademico } from 'app/shared/model/grado-academico.model';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
@@ -17,25 +16,28 @@ import { IRutaModel, RutaModel } from '../../shared/model/ruta-aprendizaje.model
 import { ColaboradoresModuleComponent } from '../colaborador/colaboradores-modulo.component';
 import { TopicModuleComponent } from '../tema/temas-modulo.component';
 import { FileUploadService } from 'app/services/file-upload.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RutaAprendizajeService } from './ruta-aprendizaje.service';
 
 @Component({
-  selector: 'jhi-rutas-aprendizaje-configuration',
-  templateUrl: './rutas-aprendizaje-configuration.component.html',
-  styleUrls: ['./rutas-aprendizaje-configuration.component.scss']
+  selector: 'jhi-learing-path-update',
+  templateUrl: './learning-path-update.component.html',
+  styleUrls: ['./learning-path-update.component.scss']
 })
-export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy {
+export class LearningPathUpdateComponent implements OnInit, OnDestroy {
   @ViewChild(ColaboradoresModuleComponent, { static: false }) colaboradoresComponent!: ColaboradoresModuleComponent;
   @ViewChild(TopicModuleComponent, { static: false }) temasModuloComponent!: TopicModuleComponent;
 
+  idPath!: number;
+  learningPathObj!: IRutaModel;
   account: Account | null = null;
   subscription?: Subscription;
+  private ngUnsubscribeSubject = new Subject();
 
   gradosCtrl = new FormControl();
   learningForm = this.formbuilder.group({
     titlePath: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    descriptionPath: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    descriptionPath: new FormControl('', [Validators.maxLength(50)]),
     managePartners: ['add'],
     gradoAcademico: []
   });
@@ -73,14 +75,23 @@ export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy
     private router: Router,
     private sanitizer: DomSanitizer,
     private formbuilder: FormBuilder,
-    private eventManager: JhiEventManager
-  ) {}
+    private eventManager: JhiEventManager,
+    private aroute: ActivatedRoute,
+    private domSanitizer: DomSanitizer
+  ) {
+    aroute.params.subscribe(val => {
+      this.idPath = val.id; // console.error('Recibido: ', val.id);
+    });
+  }
 
   ngOnInit(): void {
     this.subscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
         this.loadAcademicGrades();
+        if (this.idPath) {
+          this.getLearningPathData();
+        }
       }
     });
   }
@@ -96,6 +107,17 @@ export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy
       .subscribe((resBody: INumeroGrado[]) => (this.gradoAcademicos = resBody));
   }
 
+  getLearningPathData(): void {
+    this.subscription = this.rutaService
+      .find(this.idPath)
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(response => {
+        console.error('Response query: ', response);
+        this.learningPathObj = response.body as IRutaModel;
+        this.mapDataToForm();
+      });
+  }
+
   isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
   }
@@ -108,14 +130,6 @@ export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  displayFn(mod: IModulo): string {
-    return mod && mod.descripcion ? mod.descripcion : '';
-  }
-
-  protected onQueryError(): void {
-    console.error('Error');
   }
 
   // ACADEMIC GRADE
@@ -207,7 +221,7 @@ export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy
   // portada
 
   /*
-   * Función para mantener en memoria la imagen de portada seleccionada.
+   * mantener en memoria la imagen de portada seleccionada.
    */
   selectFile(event: any): void {
     if (event.target.files.length) {
@@ -230,21 +244,25 @@ export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy
       } else {
         this.selectedFiles = event.target.files;
         this.showUploadButton = true;
-        /* Pruebas */
         const reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
         reader.onload = (e: any): void => {
           // called once readAsDataURL is completed
           this.pathCover = e.target!['result'];
-          // this.url = event.target.result;
         };
-        // this.upload(event);
       }
     }
   }
 
+  deletePathCover(): void {
+    this.pathCover = '';
+    this.portadaUrl = '';
+    this.selectedFiles = FileList;
+    // this.fileInputPathCover.nativeElement.value = '';
+  }
+
   /*
-   * Función que sube la imagen seleccionada como portada.
+   * subir la imagen seleccionada como portada.
    */
   upload(id: number): void {
     this.currentFileUpload = this.selectedFiles[0];
@@ -265,14 +283,31 @@ export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy
   }
 
   saveLearningPathToConfigure(): void {
-    console.error('Learning Path Data to Request: ');
     const request: IRutaModel = this.createRequestFromForm();
     console.error(request);
 
+    if (!request.titulo!.trim()) {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.formError' })
+      );
+      this.makeInvalid('titlePath');
+      return;
+    }
+
+    if (!this.selectedFiles[0]) {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.formError' })
+      );
+      // hacer algo aquí para la portada
+      return;
+    }
+
     if (request.id) {
+      // console.error('##### update');
       this.subscribeToSaveResponse(this.rutaService.update(request));
     } else {
-      this.subscribeToSaveResponse(this.rutaService.create(request)); // , this.selectedFiles[0]));
+      // console.error('##### save');
+      this.subscribeToSaveResponse(this.rutaService.create(request, this.selectedFiles[0]));
     }
   }
 
@@ -287,6 +322,39 @@ export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy
       rolesColaboradores: this.colaboradoresComponent.getColaboradores(),
       nivelAcademico: this.selectedGradesModule
     };
+  }
+
+  private mapDataToForm(): void {
+    if (this.learningPathObj) {
+      this.selectedGradesModule = [...this.learningPathObj.nivelAcademico!];
+      this.numerogrados = [...this.learningPathObj.nivelAcademico!];
+      this.updatingGradesSelected(null, false);
+      this.colaboradoresComponent.setColaboradores(this.learningPathObj.rolesColaboradores!);
+      this.temasModuloComponent.setTopics(this.learningPathObj.temas!);
+      // this.pathCover = this.getSafeUrl(this.learningPathObj.portadaUrl);
+      this.subscription = this.fileUploadService.getImageFile(this.learningPathObj.portadaUrl!).subscribe(data => {
+        const imagePath = URL.createObjectURL(data.body);
+        this.pathCover = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
+      });
+
+      this.learningForm.patchValue({
+        titlePath: this.learningPathObj.titulo,
+        descriptionPath: this.learningPathObj.descripcion,
+        managePartners: this.learningPathObj.rolesColaboradores,
+        gradoAcademico: this.learningPathObj.nivelAcademico!.length ? this.learningPathObj.nivelAcademico![0].gradoAcademico : []
+      });
+    }
+  }
+
+  getSafeUrl(path: any): SafeUrl {
+    let safeUrl: SafeUrl = '';
+    if (path) {
+      this.fileUploadService.getImageFile(path).subscribe(data => {
+        const imagePath = URL.createObjectURL(data.body);
+        safeUrl = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
+      });
+    }
+    return safeUrl;
   }
 
   /*
@@ -334,9 +402,8 @@ export class RutasAprendizajeConfigurationComponent implements OnInit, OnDestroy
   }
 
   protected onSaveSuccess(res: any): void {
-    this.upload(res.body.path.id);
-    this.router.navigate(['/path-hierarchical', res.body.path.id]);
-    // this.isSaving = false;
+    // this.upload(res.body.id);
+    this.router.navigate(['/path-hierarchical', res.body.id]);
   }
 
   protected onSaveError(): void {

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { RutasAprendizajeConfigurationComponent } from 'app/entities/rutas-aprendizaje/rutas-aprendizaje-configuration.component';
+import { LearningPathUpdateComponent } from 'app/entities/rutas-aprendizaje/learning-path-update.component';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./learning-path-configuration.component.scss']
 })
 export class LearningPathConfigurationComponent implements OnInit {
-  @ViewChild(RutasAprendizajeConfigurationComponent, { static: false })
-  learningPathConfigComponent!: RutasAprendizajeConfigurationComponent;
+  @ViewChild(LearningPathUpdateComponent, { static: false })
+  learningPathConfigComponent!: LearningPathUpdateComponent;
 
   account: Account | null = null;
   subscription?: Subscription;

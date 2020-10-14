@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import * as moment from 'moment';
+import { createRequestOption } from 'app/shared/util/request-util';
 
 type EntityResponseType = HttpResponse<IRutaModel>;
 type EntityArrayResponseType = HttpResponse<IRutaModel[]>;
@@ -18,12 +19,17 @@ export class RutaAprendizajeService {
 
   constructor(protected http: HttpClient) {}
 
-  create(learningPath: IRutaModel): Observable<EntityResponseType> {
-    // const copy = this.convertDateFromClient(learningPath);
-    // const form = new FormData();
-    // form.append('path', JSON.stringify(copy));
+  create(learningPath: IRutaModel, cover?: File): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(learningPath);
+    const form = new FormData();
+    form.append('ruta', JSON.stringify(copy));
+
+    if (cover) {
+      form.append('file', cover);
+    }
+
     return this.http
-      .post<IRutaModel>(this.resourceUrl, learningPath /*form*/, { observe: 'response' })
+      .post<IRutaModel>(this.resourceUrl, form, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
@@ -36,6 +42,19 @@ export class RutaAprendizajeService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  find(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IRutaModel>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  query(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IRutaModel[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   protected convertDateFromClient(curso: IRutaModel): IRutaModel {

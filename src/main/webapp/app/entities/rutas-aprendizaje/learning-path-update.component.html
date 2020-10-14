@@ -39,7 +39,7 @@
                         <mat-radio-group formControlName="managePartners"
                             aria-label="Añadir o reemplazar colaboradores en la ruta">
                             <mat-radio-button value="add">Añadir colaboradores</mat-radio-button>
-                            <mat-radio-button value="replace">Reemplazar colaboradores</mat-radio-button>
+                            <mat-radio-button value="replace">Colaboradores Mandatorios</mat-radio-button>
                         </mat-radio-group>
                     </div>
                     <div class="row-wg margintop-25 border-grade">
@@ -103,12 +103,15 @@
                     <img *ngIf="pathCover !== ''" [src]="pathCover" alt="Portada de la Ruta">
                 </div>
                 <div class="path-cover-btns">
-                    <button class="secondary-btn text-transform-none" *ngIf="pathCover">Eliminar</button>
+                    <button class="secondary-btn text-transform-none" (click)="deletePathCover()" *ngIf="pathCover">Eliminar</button>
                     <button type="button" class="main-btn" (click)="fileInputPathCover.click()" *ngIf="!pathCover">
                         <span>Subir</span>
                         <input #fileInputPathCover type="file" (change)="selectFile($event)" style="display:none;" />
                     </button>
                 </div>
+                <p class="mat-error ng-star-inserted" role="alert" *ngIf="!selectedFiles[0] && !idPath">
+                    La portada es requerida.
+                </p>
             </div>
 
         </div>

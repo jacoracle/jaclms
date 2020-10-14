@@ -1,12 +1,14 @@
 import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-
+import { Subject, Subscription } from 'rxjs';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { Validators, FormControl, FormBuilder } from '@angular/forms';
 import { IRutaModel } from '../shared/model/ruta-aprendizaje.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { RutaAprendizajeService } from '../entities/rutas-aprendizaje/ruta-aprendizaje.service';
+import { HttpResponse } from '@angular/common/http';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-learning-module',
@@ -16,9 +18,11 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentInit {
   account: Account | null = null;
   subscription?: Subscription;
+  private ngUnsubscribeSubject = new Subject();
 
   // paths list
   pathsList: IRutaModel[] = new Array<IRutaModel>();
+  pathsOriginList: IRutaModel[] = new Array<IRutaModel>();
 
   learningForm = this.formbuilder.group({
     titlePath: new FormControl('', [Validators.maxLength(20)]),
@@ -28,19 +32,37 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,
+    private pathService: RutaAprendizajeService,
     private formbuilder: FormBuilder,
     private eventManager: JhiEventManager
   ) {
-    this.fillListDummy();
+    // this.fillListDummy();
   }
 
   ngOnInit(): void {
     this.subscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account) {
-        //
+        this.subscription = this.pathService.query().subscribe(
+          (res: HttpResponse<IRutaModel[]>) => {
+            this.pathsList = res.body!;
+            this.pathsOriginList = this.pathsList;
+          },
+          () => this.onQueryError()
+        );
       }
     });
+
+    this.learningForm
+      .get('titlePath')!
+      .valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value.descripcion)),
+        map(title => (title ? this._filterPathsByTitle(title) : this.pathsList.slice()))
+      )
+      .subscribe((seqs: IRutaModel[]) => {
+        this.pathsList = [...this.checkListSequences(seqs)];
+      });
   }
 
   isAuthenticated(): boolean {
@@ -59,8 +81,27 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
 
   ngAfterContentInit(): void {}
 
+  private _filterPathsByTitle(value: string): IRutaModel[] {
+    const filterValue = value.toLowerCase();
+    return this.pathsList.filter((option: IRutaModel) => option.titulo!.toLowerCase().includes(filterValue));
+  }
+
   displayFn(path: IRutaModel): string {
     return path && path.titulo ? path.titulo : '';
+  }
+
+  private checkListSequences(paths: IRutaModel[]): IRutaModel[] {
+    if (this.learningForm.get('titlePath')!.value !== '' && paths.length > 0) {
+      return paths;
+    } /*  else if (this.learningForm.get('titlePath')!.value !== '' && paths.length === 0) {
+      return [];
+    }*/ else if (
+      this.learningForm.get('titlePath')!.value === ''
+    ) {
+      return this.pathsOriginList;
+    } else {
+      return [];
+    }
   }
 
   findElementById(objectArray: any, id: number): number {
@@ -84,11 +125,25 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
 
   deletePath(path: IRutaModel, evt: any): void {
     evt.stopPropagation();
-    console.error('Intentando borrar: ', path);
+    this.pathsList.splice(this.pathsList.indexOf(path), 1);
+    this.subscription = this.pathService
+      .delete(path.id!)
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(() => {
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.path.deleted',
+            type: 'success'
+          })
+        );
+      });
+  }
+
+  protected onQueryError(): void {
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', {
-        message: 'constructorApp.path.deleted',
-        type: 'success'
+        message: 'constructorApp.path.validations.error',
+        type: 'danger'
       })
     );
   }

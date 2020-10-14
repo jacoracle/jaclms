@@ -28,7 +28,7 @@
                     class="form-uma-search">
                     <mat-form-field appearance="outline">
                         <mat-label>Buscar</mat-label>
-                        <input type="text" placeholder="" matInput formControlName="titlePath"
+                        <input type="text" placeholder="indicio de búsqueda" matInput formControlName="titlePath"
                             [matAutocomplete]="autoInputTitlePath">
                         <mat-autocomplete autoActiveFirstOption #autoInputTitlePath="matAutocomplete"
                             [displayWith]="displayFn">
@@ -62,8 +62,8 @@
             <div class="result-search-container">
 
                 <div class="grid-cards">
-                    <div class="box-card" *ngFor="let sec of pathsList"
-                        [routerLink]="['/path-configuration', sec.id]">
+                    <div class="box-card" *ngFor="let sec of pathsList" [routerLink]="['/path-hierarchical', sec.id]">
+                        <!-- [routerLink]="['/path-configuration', sec.id]"> -->
 
                         <div class="group-cover-br-image"><span></span></div>
 
