@@ -65,7 +65,7 @@ public class NivelJerarquico implements Serializable{
      */
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "niveles_jerarquicos", 
+            name = "niveles_agrupadores", 
             joinColumns = @JoinColumn(name = "agrupador_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="nivel_jerarquico_id", referencedColumnName = "id", nullable = false))
 	private Set<Agrupador> agrupadores   = new HashSet<>();
