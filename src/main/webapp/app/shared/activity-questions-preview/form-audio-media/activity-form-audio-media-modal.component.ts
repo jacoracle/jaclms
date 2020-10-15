@@ -80,7 +80,7 @@ export class ActivityFormAudioMediaModalComponent implements OnInit {
     } else {
       return this.formBuilder.group({
         tipoActividad: this.formBuilder.group({
-          tipoActividad: new FormControl(TipoActividad.PREGUNTA_TEXTO, [Validators.required]),
+          tipoActividad: new FormControl(TipoActividad.PREGUNTA_AUDIO, [Validators.required]),
           subtipo: new FormControl(SubTipoActividad.IMAGEN, [Validators.required]),
           opcion: new FormControl('', [Validators.required]),
           opcionConcatenada: new FormControl('', [Validators.required])

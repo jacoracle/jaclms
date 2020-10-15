@@ -395,7 +395,9 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
           this.fileInput.nativeElement.value = '';
           break;
         case 'activity_question_text':
-        case 'activity_question_multimedia':
+        case 'activity_question_media':
+        case 'activity_question_audio_text':
+        case 'activity_question_audio_media':
           this.deleteActivity();
           break;
         default:
