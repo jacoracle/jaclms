@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import org.constructor.domain.rutas.NivelJerarquico;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A EstructuraJerarquica.
@@ -31,7 +30,6 @@ public class EstructuraJerarquica implements Serializable{
 	/**
 	 * Long id 
 	 */
-	@JsonIgnore
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

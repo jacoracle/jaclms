@@ -6,6 +6,7 @@ package org.constructor.service.rutas;
 import java.util.Optional;
 
 import org.constructor.domain.rutas.NivelJerarquico;
+import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,6 +26,13 @@ public interface NivelJerarquicoService {
     NivelJerarquico save(NivelJerarquico nivelJerarquico);
     
  
+    /**
+     * NivelJerarquicoDTO
+     * @param authentication
+     * @param nivelDto
+     * @return
+     */
+    NivelJerarquico save (NivelJerarquicoDTO nivelDto);
 
     /**
      * Get all the versions.

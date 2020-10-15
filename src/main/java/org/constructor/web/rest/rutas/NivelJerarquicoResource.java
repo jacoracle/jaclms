@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.constructor.domain.rutas.NivelJerarquico;
+import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.constructor.service.rutas.NivelJerarquicoService;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
@@ -83,12 +84,15 @@ public class NivelJerarquicoResource {
 	  * @throws URISyntaxException
 	  */
 	    @PostMapping(path = RestConstants.PATH_NIVEL_JERARQUICO)
-	    public ResponseEntity<NivelJerarquico> createNivelJerarquico(@RequestBody NivelJerarquico nivelJerarquico) throws URISyntaxException {
+	    public ResponseEntity<NivelJerarquico> createNivelJerarquico(@RequestBody NivelJerarquicoDTO nivelJerarquico) throws URISyntaxException {
+	        log.debug("REST request to save entro al servicio : {}", nivelJerarquico);
+
 	        log.debug("REST request to save nivelJerarquico : {}", nivelJerarquico);
 	        if (nivelJerarquico.getId() != null) {
 	            throw new BadRequestAlertException("A new nivel Jerarquico cannot already have an ID", ENTITY_NAME, "idexists");
 	        }
 	        NivelJerarquico result = nivelJerarquicoService.save(nivelJerarquico);
+	        log.debug("REST request to save result : {}", result);
 	        return ResponseEntity.created(new URI("/api/nivel-jerarquico/" + result.getId()))
 	            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
 	            .body(result);
