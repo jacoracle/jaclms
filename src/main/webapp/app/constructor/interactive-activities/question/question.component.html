@@ -80,6 +80,17 @@
           <div *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && pregunta.loadedVideo">
             <jhi-resource-video [safeUrl]="pregunta.safeUrl"></jhi-resource-video>
           </div>
+
+          <div class="col-record" *ngIf="pregunta.tipoRecurso === 'Audio'">
+            <input type="button" (click)="record(pregunta, questionIndex)" class="btn-circle" id="mixBut"
+              [ngClass]="{
+                'btn-start': !isOn,
+                'btn-stop': isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1,
+                'btn-disabled': isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)
+              }"
+              [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)" />
+          </div>
+
           <div *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.safeUrl && pregunta.safeUrl !== ''">
             <jhi-resource-audio [safeUrl]="pregunta.safeUrl"></jhi-resource-audio>
           </div>
@@ -130,6 +141,15 @@
               <!-- Respuesta -->
               <!-- Respuesta/URL de recurso -->
               <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
+              <div class="col-record" *ngIf="pregunta.tipoRespuestas === 'Audio'">
+                <input type="button" (click)="record(respuesta, questionIndex, answerIndex)" class="btn-circle" id="mixBut"
+                       [ngClass]="{
+                         'btn-start': !isOn,
+                         'btn-stop': isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex,
+                         'btn-disabled': isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== answerIndex)
+                        }"
+                       [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== answerIndex)" />
+              </div>
               <div *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.safeUrl && respuesta.safeUrl !== ''">
                 <jhi-resource-audio [safeUrl]="respuesta.safeUrl"></jhi-resource-audio>
               </div>

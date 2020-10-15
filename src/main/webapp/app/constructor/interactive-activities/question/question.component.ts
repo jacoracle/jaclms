@@ -8,6 +8,9 @@ import { FileUploadInteractivasService } from 'app/services/file-upload-interact
 import { JhiEventManager, JhiEventWithContent, JhiAlert } from 'ng-jhipster';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileUploadService } from 'app/services/file-upload.service';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import MicRecorder from 'mic-recorder-to-mp3';
 
 @Component({
   selector: 'jhi-question',
@@ -38,6 +41,12 @@ export class QuestionComponent implements OnInit {
   @Input() id?: number;
   @ViewChild('resourceInput', { static: false }) fileInput: any;
   alerts: JhiAlert[] = [];
+  isOn = false;
+  recorder = new MicRecorder({
+    bitRate: 128
+  });
+  recordingQuestionIndex = -1;
+  recordingAnswerIndex = -1;
 
   constructor(
     private activitiService: ActivityService,
@@ -403,6 +412,64 @@ export class QuestionComponent implements OnInit {
         pregunta.loadedVideo = true;
         this.showLoader = false;
       });
+    }
+  }
+
+  record(objeto: any, questionIndex: number, answerIndex?: number): void {
+    this.deleteResource(objeto);
+    if (!this.isOn) {
+      this.recordingQuestionIndex = questionIndex;
+      if (answerIndex !== undefined) {
+        this.recordingAnswerIndex = answerIndex;
+      }
+      this.start();
+    } else {
+      this.stop(objeto);
+    }
+  }
+
+  start(): void {
+    this.isOn = true;
+    this.recorder.start().catch((e: any) => {
+      this.eventManager.broadcast(new JhiEventWithContent('constructorApp.blockUpdateError', e));
+    });
+  }
+
+  stop(objeto: any): void {
+    this.recordingQuestionIndex = -1;
+    this.recordingAnswerIndex = -1;
+    this.isOn = false;
+    this.recorder
+      .stop()
+      .getMp3()
+      .then(([buffer, blob]: any) => {
+        const file = new File(buffer, 'pregunta grabada ' + '.mp3', {
+          type: blob.type,
+          lastModified: Date.now()
+        });
+        this.correctFile(file, objeto);
+      })
+      .catch((e: any) => {
+        this.eventManager.broadcast(new JhiEventWithContent('constructorApp.blockUpdateError', e));
+      });
+  }
+
+  correctFile(file: File, objeto: any): void {
+    this.showLoader = true;
+    if (this.id) {
+      this.fileUploadInteractivasService.pushFileStorage(file, this.id).subscribe(
+        (data: any) => {
+          if (objeto) {
+            objeto.path = data.path;
+            this.getSafeUrl(objeto, 'Audio');
+          }
+          this.save();
+          this.showLoader = false;
+        },
+        error => {
+          this.showErrorFileType(error);
+        }
+      );
     }
   }
 }
