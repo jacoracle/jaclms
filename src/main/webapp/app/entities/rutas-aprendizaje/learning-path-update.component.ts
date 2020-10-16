@@ -34,12 +34,12 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
   subscription?: Subscription;
   private ngUnsubscribeSubject = new Subject();
 
-  gradosCtrl = new FormControl();
   learningForm = this.formbuilder.group({
     titlePath: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     descriptionPath: new FormControl('', [Validators.maxLength(50)]),
     managePartners: ['add'],
-    gradoAcademico: []
+    nivelAcademico: [],
+    gradosCtrl: []
   });
 
   matcher = new ErrorStateMatcherLearning();
@@ -47,7 +47,7 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
   // modulos: any = [];
   defaultPathUrl: SafeUrl = './../../../content/images/cover_upload.png';
   pathCover: SafeUrl = '';
-  maxiCoverSize = 5000000;
+  maxCoverSize = 5000000;
   allowedFileTypes: string[] = ['image/jpg', 'image/png', 'image/jpeg'];
   changeImage = false;
   selectedFiles = FileList;
@@ -55,8 +55,8 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
   portadaUrl = '';
   showUploadButton = false;
 
-  gradoAcademicos: IGradoAcademico[] = [];
-  numerogrados: INumeroGrado[] = [];
+  nivelAcademicoList: IGradoAcademico[] = [];
+  numerosGradoList: INumeroGrado[] = [];
   selectedGradeModule: any;
   selectedGradesModule: INumeroGrado[] = [];
   actualSelectedGradesModule: number[] = [];
@@ -104,7 +104,7 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
           return res.body ? res.body : [];
         })
       )
-      .subscribe((resBody: INumeroGrado[]) => (this.gradoAcademicos = resBody));
+      .subscribe((resBody: INumeroGrado[]) => (this.nivelAcademicoList = [...resBody]));
   }
 
   getLearningPathData(): void {
@@ -112,7 +112,6 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
       .find(this.idPath)
       .pipe(takeUntil(this.ngUnsubscribeSubject))
       .subscribe(response => {
-        console.error('Response query: ', response);
         this.learningPathObj = response.body as IRutaModel;
         this.mapDataToForm();
       });
@@ -136,9 +135,13 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
 
   // when academic grade selection change, must be loaded grades number
   changeGradoAcademico(e: any): void {
-    this.gradoAcademicoService.find(e.target.selectedIndex + 1).subscribe(res => {
+    this.loadAcademicGradesByAcademicLevel(e.target.selectedIndex + 1);
+  }
+
+  loadAcademicGradesByAcademicLevel(level: number): void {
+    this.gradoAcademicoService.find(level).subscribe(res => {
       if (res.body && res.body.numeroGrados) {
-        this.numerogrados = res.body.numeroGrados;
+        this.numerosGradoList = res.body.numeroGrados;
         this.updatingGradesSelected(null, false);
       }
     });
@@ -172,14 +175,14 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
     let idAcademicGradeToAdd = -1;
     if (isChangeAcademicGrade) {
       //  get objects from selected ids using event value and
-      objectsGradesSelectedIds = this.numerogrados.filter(el => {
+      objectsGradesSelectedIds = this.numerosGradoList.filter(el => {
         return evt.value.some((f: number) => {
           return f === el.id;
         });
       });
     } else {
       //  get objects from selected ids using general array to grade numbers selected globally
-      objectsGradesSelectedIds = this.numerogrados.filter(el => {
+      objectsGradesSelectedIds = this.numerosGradoList.filter(el => {
         return this.selectedGradesModule.some((f: INumeroGrado) => {
           return f.id === el.id && f.descripcion === el.descripcion;
         });
@@ -199,10 +202,10 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
     if (idAcademicGradeToAdd > 0) {
       const selectedGrades = this.verifyList(idAcademicGradeToAdd, objectsGradesSelectedIds);
       this.selectedGradesModule = [...selectedGrades];
-      this.learningForm.get('gradoAcademico')!.disable();
+      this.learningForm.get('nivelAcademico')!.disable();
     } else {
       this.selectedGradesModule = [];
-      this.learningForm.get('gradoAcademico')!.enable();
+      this.learningForm.get('nivelAcademico')!.enable();
     }
   }
 
@@ -226,10 +229,10 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
   selectFile(event: any): void {
     if (event.target.files.length) {
       // Validar tamaño máximo
-      if (event.target.files[0].size > this.maxiCoverSize) {
+      if (event.target.files[0].size > this.maxCoverSize) {
         this.eventManager.broadcast(
           new JhiEventWithContent('constructorApp.validationError', {
-            message: 'constructorApp.curso.validations.fileSize'
+            message: 'constructorApp.ruta.validations.fileSize'
           })
         );
         return;
@@ -237,7 +240,7 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
       } else if (!this.allowedFileTypes.includes(event.target.files[0].type)) {
         this.eventManager.broadcast(
           new JhiEventWithContent('constructorApp.validationError', {
-            message: 'constructorApp.curso.validations.fileType'
+            message: 'constructorApp.ruta.validations.fileType'
           })
         );
         return;
@@ -284,8 +287,6 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
 
   saveLearningPathToConfigure(): void {
     const request: IRutaModel = this.createRequestFromForm();
-    console.error(request);
-
     if (!request.titulo!.trim()) {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.formError' })
@@ -327,24 +328,27 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
   private mapDataToForm(): void {
     if (this.learningPathObj) {
       this.selectedGradesModule = [...this.learningPathObj.nivelAcademico!];
-      this.numerogrados = [...this.learningPathObj.nivelAcademico!];
-      this.updatingGradesSelected(null, false);
-      this.colaboradoresComponent.setColaboradores(this.learningPathObj.rolesColaboradores!);
-      this.temasModuloComponent.setTopics(this.learningPathObj.temas!);
-      // this.pathCover = this.getSafeUrl(this.learningPathObj.portadaUrl);
-      this.subscription = this.fileUploadService.getImageFile(this.learningPathObj.portadaUrl!).subscribe(data => {
-        const imagePath = URL.createObjectURL(data.body);
-        this.pathCover = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
-      });
-
-      this.learningForm.patchValue({
-        titlePath: this.learningPathObj.titulo,
-        descriptionPath: this.learningPathObj.descripcion,
-        managePartners: this.learningPathObj.rolesColaboradores,
-        gradoAcademico: this.learningPathObj.nivelAcademico!.length ? this.learningPathObj.nivelAcademico![0].gradoAcademico : []
-      });
+      this.loadLevelsAndFormData(this.learningPathObj.nivelAcademico![0].gradoAcademico!.id!);
     }
   }
+
+  private loadLevelsAndFormData = async (level: number): Promise<void> => {
+    const response = await this.gradoAcademicoService.find(level).toPromise();
+    this.numerosGradoList = [...response.body!.numeroGrados!];
+    this.learningForm.get('gradosCtrl')!.setValue(this.selectedGradesModule.map(s => s.id));
+    this.colaboradoresComponent.setColaboradores(this.learningPathObj.rolesColaboradores!);
+    this.temasModuloComponent.setTopics(this.learningPathObj.temas!);
+    this.subscription = this.fileUploadService.getImageFile(this.learningPathObj.portadaUrl!).subscribe(data => {
+      const imagePath = URL.createObjectURL(data.body);
+      this.pathCover = this.domSanitizer.bypassSecurityTrustUrl(imagePath);
+    });
+    this.learningForm.patchValue({
+      titlePath: this.learningPathObj.titulo,
+      descriptionPath: this.learningPathObj.descripcion,
+      managePartners: this.learningPathObj.rolesColaboradores,
+      nivelAcademico: this.learningPathObj.nivelAcademico!.length ? this.learningPathObj.nivelAcademico![0].gradoAcademico : []
+    });
+  };
 
   getSafeUrl(path: any): SafeUrl {
     let safeUrl: SafeUrl = '';
@@ -356,43 +360,6 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
     }
     return safeUrl;
   }
-
-  /*
-  save(): void {
-    const pathObj: IRutaModel = this.createRequestFromForm();
-    // const curso = this.createFromForm();
-    
-    if (pathObj.titulo) {
-      this.eventManager.broadcast(
-        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.formError' })
-      );
-      this.makeInvalid('title');
-    }
-    if (pathObj.titulo && pathObj.titulo.length > 50) {
-      this.eventManager.broadcast(
-        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.formError' })
-      );
-      this.makeInvalid('descripcion');
-    }
-
-    if (pathObj.descripcion && pathObj.descripcion.length > 50) {
-      this.eventManager.broadcast(
-        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.formError' })
-      );
-      this.makeInvalid('descripcion');
-    }
-    
-    pathObj.portadaUrl = this.portadaUrl;
-
-    if (this.learningForm.valid) {
-      if (pathObj.id !== undefined && pathObj.id !== null) {
-        this.subscribeToSaveResponse(this.rutaService.update(pathObj));
-      } else {
-        this.subscribeToSaveResponse(this.rutaService.create(pathObj, this.selectedFiles[0]));
-      }
-    }
-  }
-  */
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IRutaModel>>): void {
     result.subscribe(
@@ -407,7 +374,12 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
   }
 
   protected onSaveError(): void {
-    // this.isSaving = false;
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.path.validations.saveError',
+        type: 'danger'
+      })
+    );
   }
 
   makeInvalid(controlName: string): void {

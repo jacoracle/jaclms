@@ -46,14 +46,14 @@
                         <div class="col-window-g">
 
                             <div class="form-nimbus">
-                                <label for="field_gradoAcademico">Nivel
+                                <label for="field_nivelAcademico">Nivel
                                     Académico</label>
                                 <div class="selectWrap">
-                                    <select id="field_gradoAcademico" name="gradoAcademico"
-                                        formControlName="gradoAcademico" (change)="changeGradoAcademico($event)">
+                                    <select id="field_nivelAcademico" name="nivelAcademico"
+                                        formControlName="nivelAcademico" (change)="changeGradoAcademico($event)">
                                         <option
-                                            [ngValue]="gradoAcademicoOption.id === learningForm.get('gradoAcademico')!.value?.id ? learningForm.get('gradoAcademico')!.value : gradoAcademicoOption"
-                                            *ngFor="let gradoAcademicoOption of gradoAcademicos;">
+                                            [ngValue]="gradoAcademicoOption.id === learningForm.get('nivelAcademico')!.value?.id ? learningForm.get('nivelAcademico')!.value : gradoAcademicoOption"
+                                            *ngFor="let gradoAcademicoOption of nivelAcademicoList;">
                                             {{gradoAcademicoOption.descripcion}}</option>
                                     </select>
                                 </div>
@@ -64,11 +64,11 @@
                         <div class="col-window-g">
                             <div class="row-module-grade">
                                 <mat-form-field appearance="fill">
-                                    <mat-label>Grado Académico</mat-label>
-                                    <mat-select [formControl]="gradosCtrl" multiple
-                                        (selectionChange)="setSelectedGrades($event)"
-                                        [(ngModel)]="actualSelectedGradesModule" name="actualSelectedGradesModule">
-                                        <mat-option *ngFor="let g of numerogrados" [value]="g.id">{{g.descripcion}}
+                                    <mat-label>Grado Académico</mat-label><!-- [formControl]="gradosCtrl" -->
+                                    <mat-select formControlName="gradosCtrl" multiple
+                                        (selectionChange)="setSelectedGrades($event)" name="actualSelectedGradesModule"></mat-select>
+                                        <!--[(ngModel)]="actualSelectedGradesModule"-->
+                                        <mat-option *ngFor="let g of numerosGradoList" [value]="g.id">{{g.descripcion}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -103,7 +103,8 @@
                     <img *ngIf="pathCover !== ''" [src]="pathCover" alt="Portada de la Ruta">
                 </div>
                 <div class="path-cover-btns">
-                    <button class="secondary-btn text-transform-none" (click)="deletePathCover()" *ngIf="pathCover">Eliminar</button>
+                    <button class="secondary-btn text-transform-none" (click)="deletePathCover()"
+                        *ngIf="pathCover">Eliminar</button>
                     <button type="button" class="main-btn" (click)="fileInputPathCover.click()" *ngIf="!pathCover">
                         <span>Subir</span>
                         <input #fileInputPathCover type="file" (change)="selectFile($event)" style="display:none;" />

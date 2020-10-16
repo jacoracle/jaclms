@@ -22,9 +22,6 @@ export class LearningPathConfigurationComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
-      if (this.account) {
-        console.error('Usuario con sesión');
-      }
     });
   }
 
