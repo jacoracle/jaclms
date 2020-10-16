@@ -23,6 +23,8 @@ import javax.persistence.Table;
 import org.constructor.domain.EstructuraJerarquica;
 import org.constructor.domain.agrupador.Agrupador;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * @author Edukai
@@ -64,7 +66,7 @@ public class NivelJerarquico implements Serializable{
      */
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "nivel_agrupadores", 
+            name = "niveles_agrupadores", 
             joinColumns = @JoinColumn(name = "agrupador_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="nivel_jerarquico_id", referencedColumnName = "id", nullable = false))
 	private Set<Agrupador> agrupadores ;
@@ -82,6 +84,7 @@ public class NivelJerarquico implements Serializable{
      */
 	
     @OneToMany(mappedBy = "nivelJerarquico", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private Set<NivelRuta> nivelRuta = new HashSet<>();
 	
 

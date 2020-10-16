@@ -12,8 +12,12 @@ import java.util.Set;
 
 
 import org.constructor.domain.User;
+import org.constructor.domain.rutas.NivelJerarquico;
+import org.constructor.domain.rutas.NivelRuta;
 import org.constructor.domain.rutas.RutasAprendizaje;
 import org.constructor.multimedia.response.VideoResponse;
+import org.constructor.repository.rutas.NivelJerarquicoRepository;
+import org.constructor.repository.rutas.NivelRutaRepository;
 import org.constructor.repository.rutas.RutasAprendizajeRepository;
 import org.constructor.service.UserService;
 import org.constructor.service.dto.MultimediaDTO;
@@ -62,6 +66,12 @@ public class RutasAprendizajeServiceImpl  implements RutasAprendizajeService{
 	 */
 	@Autowired
 	private MultimediaService multimediaService;
+	
+	@Autowired
+	private NivelRutaRepository nivelRutasRepository;
+	
+	@Autowired
+	private NivelJerarquicoRepository nivelJerarquicoRepository;
 	
 	/**
 	 * RutasAprendizajeServiceImpl.
@@ -130,7 +140,17 @@ public class RutasAprendizajeServiceImpl  implements RutasAprendizajeService{
 			VideoResponse<?> respuesta = multimediaService.saveFile(multimediaDTO);
 			rutasDTO.setPortadaUrl(respuesta.getPath());
 		}
+		NivelJerarquico nivelJerarquico = new NivelJerarquico();
+		nivelJerarquico.setNombre("Nivel_1"); 
+		nivelJerarquico.setImagenUrl("");
+		nivelJerarquicoRepository.save(nivelJerarquico);
 		
+		NivelRuta nivelRuta = new NivelRuta();
+		nivelRuta.setNivelJerarquico(nivelJerarquico);
+		nivelRuta.setRutasAprendizaje(rutasDTO);
+		nivelRuta.setOrden(0l);
+		
+		nivelRutasRepository.save(nivelRuta);
 		
 		log.debug("ruta id {}", rutasDTO.getId());
 		ruta.setRutasAprendizaje(rutasDTO);

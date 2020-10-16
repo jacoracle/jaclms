@@ -140,8 +140,8 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 		}
 
 		nivelJerarquicoRepository.save(jerarquico);
-		
-		if (nivelDto.getEstructuraJerarquica() != null) {
+		log.debug("Request vacioooooooooo  : {}", !nivelDto.getEstructuraJerarquica().isEmpty());
+		if (!nivelDto.getEstructuraJerarquica().isEmpty()) {
 			log.debug("Request if estructura  : {}", nivelDto.getEstructuraJerarquica());
 			EstructuraJerarquica estructuraJerarquica = new EstructuraJerarquica();
 			nivelDto.getEstructuraJerarquica().forEach(estructuraDTO -> {
@@ -170,7 +170,7 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 
 		}
 
-		if (nivelDto.getNivelRuta() != null) {
+		if (!nivelDto.getNivelRuta().isEmpty()) {
 			log.debug("Request if nivelRuta  : {}", nivelDto.getNivelRuta());
 			NivelRuta nivelRuta = new NivelRuta();
 			nivelDto.getNivelRuta().forEach(rutasDTO -> {
