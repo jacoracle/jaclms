@@ -25,6 +25,7 @@ import org.constructor.domain.agrupador.Agrupador;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 /**
  * @author Edukai
  *
@@ -68,23 +69,25 @@ public class NivelJerarquico implements Serializable{
             name = "niveles_agrupadores", 
             joinColumns = @JoinColumn(name = "agrupador_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="nivel_jerarquico_id", referencedColumnName = "id", nullable = false))
-	private Set<Agrupador> agrupadores   = new HashSet<>();
+	private Set<Agrupador> agrupadores ;
     
 	
 	/**
 	 * estructuraJerarquica
 	 */
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "nivel", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private Set<EstructuraJerarquica> estructuraJerarquica = new HashSet<>();
 	
 	 /**
      * nivelRutas
      */
-	@JsonIgnore
+	
     @OneToMany(mappedBy = "nivelJerarquico", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private Set<NivelRuta> nivelRuta = new HashSet<>();
 	
+
 
 	/**
 	 * Get
@@ -179,12 +182,12 @@ public class NivelJerarquico implements Serializable{
 
 	/**
 	 * Set
-	 * @param nivelRutas the nivelRutas to set
+	 * @param nivelRuta the nivelRuta to set
 	 */
-	public void setNivelRutas(final Set<NivelRuta> nivelRuta) {
+	public void setNivelRuta(final Set<NivelRuta> nivelRuta) {
 		this.nivelRuta = nivelRuta;
 	}
-	
+
 	/**
 	 * equals
 	 */
@@ -212,7 +215,7 @@ public class NivelJerarquico implements Serializable{
 	@Override
 	public String toString() {
 		return "NivelJerarquico [id=" + id + ", nombre=" + nombre + ", imagenUrl=" + imagenUrl + ", agrupadores="
-				+ agrupadores + ", estructuraJerarquica=" + estructuraJerarquica + ", nivelRutas=" + nivelRuta + "]";
+				+ agrupadores + ", estructuraJerarquica=" + estructuraJerarquica + ", nivelRuta=" + nivelRuta + "]";
 	}
 	
 	
