@@ -90,8 +90,19 @@
               }"
               [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)" />
           </div>
+          <div class="audio-progress" *ngIf="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1">
+            <mat-progress-bar
+              class="example-margin"
+              [color]="color"
+              [mode]="mode"
+              [value]="value"
+              [bufferValue]="bufferValue">
+            </mat-progress-bar>
+            Tiempo: 
+            <span>{{timeToShow}}</span>
+          </div>
 
-          <div *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.safeUrl && pregunta.safeUrl !== ''">
+          <div *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.safeUrl && pregunta.safeUrl !== ''" [hidden]="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1">
             <jhi-resource-audio [safeUrl]="pregunta.safeUrl"></jhi-resource-audio>
           </div>
           
@@ -143,14 +154,25 @@
               <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
               <div class="col-record" *ngIf="pregunta.tipoRespuestas === 'Audio'">
                 <input type="button" (click)="record(respuesta, questionIndex, answerIndex)" class="btn-circle" id="mixBut"
-                       [ngClass]="{
-                         'btn-start': !isOn,
-                         'btn-stop': isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex,
-                         'btn-disabled': isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== answerIndex)
-                        }"
-                       [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== answerIndex)" />
+                  [ngClass]="{
+                    'btn-start': !isOn,
+                    'btn-stop': isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex,
+                    'btn-disabled': isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== answerIndex)
+                  }"
+                  [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== answerIndex)" />
               </div>
-              <div *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.safeUrl && respuesta.safeUrl !== ''">
+              <div class="audio-progress" *ngIf="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex">
+                <mat-progress-bar
+                  class="example-margin"
+                  [color]="color"
+                  [mode]="mode"
+                  [value]="value"
+                  [bufferValue]="bufferValue">
+                </mat-progress-bar>
+                Tiempo: 
+                <span>{{timeToShow}}</span>
+             </div>
+              <div *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.safeUrl && respuesta.safeUrl !== ''" [hidden]="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex">
                 <jhi-resource-audio [safeUrl]="respuesta.safeUrl"></jhi-resource-audio>
               </div>
 

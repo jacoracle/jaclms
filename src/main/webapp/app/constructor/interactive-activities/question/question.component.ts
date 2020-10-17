@@ -47,6 +47,14 @@ export class QuestionComponent implements OnInit {
   });
   recordingQuestionIndex = -1;
   recordingAnswerIndex = -1;
+  maxAudioDuration = 150000; // Miliseconds
+
+  color = 'primary';
+  mode = 'determinate';
+  value = 0;
+  bufferValue = 100;
+  recordedTime = 0;
+  timeToShow = '0:00';
 
   constructor(
     private activitiService: ActivityService,
@@ -416,26 +424,49 @@ export class QuestionComponent implements OnInit {
   }
 
   record(objeto: any, questionIndex: number, answerIndex?: number): void {
-    this.deleteResource(objeto);
     if (!this.isOn) {
       this.recordingQuestionIndex = questionIndex;
       if (answerIndex !== undefined) {
         this.recordingAnswerIndex = answerIndex;
       }
-      this.start();
+      this.start(objeto);
     } else {
       this.stop(objeto);
     }
   }
 
-  start(): void {
+  controlAudioDuration(timeLeft: number, objeto: any): void {
+    if (!this.isOn) {
+      return;
+    }
+    if (timeLeft >= 0) {
+      setTimeout(() => {
+        this.recordedTime = this.recordedTime + 1;
+        this.timeToShow = this.getTimeFormat(this.recordedTime);
+        timeLeft = timeLeft - 1000;
+        this.value = Math.floor(((this.maxAudioDuration - timeLeft) * 100) / this.maxAudioDuration);
+        this.controlAudioDuration(timeLeft, objeto);
+      }, 1000);
+    } else {
+      this.stop(objeto);
+      this.recordedTime = 0;
+    }
+  }
+
+  start(objeto: any): void {
     this.isOn = true;
-    this.recorder.start().catch((e: any) => {
-      this.eventManager.broadcast(new JhiEventWithContent('constructorApp.blockUpdateError', e));
-    });
+    this.recorder
+      .start()
+      .catch((e: any) => {
+        this.eventManager.broadcast(new JhiEventWithContent('constructorApp.blockUpdateError', e));
+      })
+      .then(() => {
+        this.controlAudioDuration(this.maxAudioDuration, objeto);
+      });
   }
 
   stop(objeto: any): void {
+    this.deleteResource(objeto);
     this.recordingQuestionIndex = -1;
     this.recordingAnswerIndex = -1;
     this.isOn = false;
@@ -463,6 +494,7 @@ export class QuestionComponent implements OnInit {
             objeto.path = data.path;
             this.getSafeUrl(objeto, 'Audio');
           }
+          this.value = 0;
           this.save();
           this.showLoader = false;
         },
@@ -471,5 +503,26 @@ export class QuestionComponent implements OnInit {
         }
       );
     }
+  }
+
+  getTimeFormat(seconds: number): string {
+    let time = '';
+    if (seconds >= 3600) {
+      const h = Math.floor(seconds / 3600);
+      time = time + h + ':';
+      seconds = seconds - h * 3600;
+    }
+    if (seconds >= 60) {
+      const m = Math.floor(seconds / 60);
+      time = time + m + ':';
+      seconds = seconds - m * 60;
+    } else {
+      time = time + '0:';
+    }
+    if (seconds < 10) {
+      time = time + '0';
+    }
+    time = time + seconds;
+    return time;
   }
 }
