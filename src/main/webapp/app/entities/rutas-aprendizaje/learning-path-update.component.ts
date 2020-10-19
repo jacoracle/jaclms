@@ -141,7 +141,7 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
   loadAcademicGradesByAcademicLevel(level: number): void {
     this.gradoAcademicoService.find(level).subscribe(res => {
       if (res.body && res.body.numeroGrados) {
-        this.numerosGradoList = res.body.numeroGrados;
+        this.numerosGradoList = [...res.body.numeroGrados];
         this.updatingGradesSelected(null, false);
       }
     });

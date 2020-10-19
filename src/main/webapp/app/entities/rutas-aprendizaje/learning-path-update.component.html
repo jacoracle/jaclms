@@ -66,7 +66,7 @@
                                 <mat-form-field appearance="fill">
                                     <mat-label>Grado Académico</mat-label><!-- [formControl]="gradosCtrl" -->
                                     <mat-select formControlName="gradosCtrl" multiple
-                                        (selectionChange)="setSelectedGrades($event)" name="actualSelectedGradesModule"></mat-select>
+                                        (selectionChange)="setSelectedGrades($event)" name="actualSelectedGradesModule">
                                         <!--[(ngModel)]="actualSelectedGradesModule"-->
                                         <mat-option *ngFor="let g of numerosGradoList" [value]="g.id">{{g.descripcion}}
                                         </mat-option>
