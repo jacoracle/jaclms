@@ -69,14 +69,16 @@
                         <img [src]="loadedQuestionsAudioTextUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && fileFormat  === 'activity_question_audio_text'">
                         <img [src]="loadedQuestionsAudioMediaUrl" alt="" class="cover-upload-img" *ngIf="actividadProperties.contenido !== 'unknown' && fileFormat  === 'activity_question_audio_media'">
                     </div>
+                    <!-- Pregunta -->
                     <div *ngIf="fileFormat  === 'pregunta_texto'" class="test-pdf">
                         <!-- Activity (temp) -->
-                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity && activity.contenido === {}">
-                        <span class="play-icon-test" (click)="openActivityModal()">
+                        <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity && isQuestionEmpty()">
+                        <span class="play-icon-test" (click)="openActivityModal()" *ngIf="activity && !isQuestionEmpty()">
                             <i class="icon ni-view"></i>
                         </span>
-                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity && activity.contenido !== {}">
+                        <img [src]="loadedQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity && !isQuestionEmpty()">
                     </div>
+                    <!-- Pregunta termina -->
                     <div [hidden]="!showLoader" class="loader-cp">
                         <!-- Doing something -->
                         <span class="loader"></span>
@@ -90,11 +92,18 @@
                         <span>Subir</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
-                    <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="isActivity()">
+                    <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="isQuestionEmpty()">
                         <span>Actividad</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
                 </div>
+                <!-- Pregunta -->
+                <div class="row-sidebar-up-image-btn" *ngIf="activity && isQuestionEmpty() && fileFormat  === 'pregunta_texto'">
+                    <button type="button" class="main-btn" (click)="openActivityModal()">
+                        <span>Actividad</span>
+                    </button>
+                </div>
+                <!-- Pregunta termina -->
 
                 <div class="properties-file" *ngIf="isNotTextActivity() && fileFormat !== 'pregunta_texto'">
                     <h6>Información</h6>
