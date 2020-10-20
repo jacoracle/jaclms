@@ -96,19 +96,21 @@ public class NivelesModulo  implements Serializable{
 		this.modulo = modulo;
 	}
 
+	
+
 	/**
 	 * Get
-	 * @return the nivelModulo
+	 * @return
 	 */
-	public NivelModulo getNivelJerarquico() {
+	public NivelModulo getNivelModulo() {
 		return nivelModulo;
 	}
 
 	/**
 	 * Set
-	 * @param nivelModulo the nivelModulo to set
+	 * @param nivelModulo
 	 */
-	public void setNivelJerarquico(final NivelModulo nivelModulo) {
+	public void setNivelModulo(NivelModulo nivelModulo) {
 		this.nivelModulo = nivelModulo;
 	}
 
@@ -130,7 +132,7 @@ public class NivelesModulo  implements Serializable{
 
 	@Override
 	public String toString() {
-		return "NivelesModulo [id=" + id + ", id_nivel_jerarquico=" + nivelModulo + ", ordenNivel=" + ordenNivel + "]";
+		return "NivelesModulo [id=" + id + ", id_nivel_modulo=" + nivelModulo + ", ordenNivel=" + ordenNivel + "]";
 	}
 
 

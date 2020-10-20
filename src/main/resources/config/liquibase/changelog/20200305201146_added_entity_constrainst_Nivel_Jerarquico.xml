@@ -9,18 +9,19 @@
     <changeSet id="20200305201146-2" author="jhipster">
     
    
+       <addForeignKeyConstraint baseColumnNames="nivel_jerarquico_id"
+                                 baseTableName="niveles_agrupadores"
+                                 constraintName="fk_niveles_agrupadores_nivel_jerarquico_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nivel_jerarquico"/>
     
-    <addForeignKeyConstraint baseColumnNames="agrupador_id"
+      <addForeignKeyConstraint baseColumnNames="agrupador_id"
                                  baseTableName="niveles_agrupadores"
                                  constraintName="fk_niveles_agrupadores_agrupador_id"
                                  referencedColumnNames="id"
                                  referencedTableName="agrupador"/>
                                  
-      <addForeignKeyConstraint baseColumnNames="nivel_jerarquico_id"
-                                 baseTableName="niveles_agrupadores"
-                                 constraintName="fk_niveles_agrupadores_nivel_jerarquico_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="nivel_jerarquico"/>
+  
                                  
       <addForeignKeyConstraint baseColumnNames="subnivel_jerarquico_id"
                                  baseTableName="estructura_jerarquica"

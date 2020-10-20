@@ -120,7 +120,6 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	@Override
 	public NivelJerarquico save(NivelJerarquicoDTO nivelDto) {
 		log.debug("Request to save Nivel-Jerarquico : {}", nivelDto);
-
 		Set<Agrupador> listAgrupador = new HashSet<>();
 		Set<NivelJerarquico> listNivel = new HashSet<>();
 		Set<RutasAprendizaje> listRuta = new HashSet<>();
@@ -133,26 +132,25 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 			nivelDto.getAgrupadores().forEach(agrupadorDTO -> {
 				Optional<Agrupador> agrupador = agrupadorRepository.findById(agrupadorDTO.getId());
 
+				
 				listAgrupador.add(agrupador.get());
 
+				
+				agrupadorRepository.save(agrupador.get());
+				
 			});
-			jerarquico.setAgrupadores(listAgrupador);
+		
 		}
+		jerarquico.setAgrupadores(listAgrupador);
 
+		
 		nivelJerarquicoRepository.save(jerarquico);
-		log.debug("Request vacioooooooooo  : {}", !nivelDto.getEstructuraJerarquica().isEmpty());
 		if (!nivelDto.getEstructuraJerarquica().isEmpty()) {
-			log.debug("Request if estructura  : {}", nivelDto.getEstructuraJerarquica());
 			EstructuraJerarquica estructuraJerarquica = new EstructuraJerarquica();
 			nivelDto.getEstructuraJerarquica().forEach(estructuraDTO -> {
 				Optional<NivelJerarquico> nivelJerarquico = nivelJerarquicoRepository.findById(estructuraDTO.getId());
-				log.debug("Request  idEstructuraDTO  : {}", estructuraDTO.getId());
-				log.debug("Request lista ListNivel  : {}", nivelJerarquico);
-				log.debug("Request lista Antes  : {}", listNivel);
-				log.debug("Request Estructura  : {}", estructuraJerarquica);
 
 				listNivel.add(nivelJerarquico.get());
-				log.debug("Request lista Despues  : {}", listNivel);
 				
 				estructuraJerarquica.setOrdenNivel(estructuraDTO.getOrdenNivel());
 
@@ -164,22 +162,15 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 				estructuraJerarquica.setSubNivelJerarquico(jerarquico);
 				
 			});
-			jerarquico.setEstructuraJerarquica(listEstructuta);
 			estructuraJerarquicaRepository.save(estructuraJerarquica);
-			log.debug("Request lista Save  : {}", estructuraJerarquica);
 
 		}
 
 		if (!nivelDto.getNivelRuta().isEmpty()) {
-			log.debug("Request if nivelRuta  : {}", nivelDto.getNivelRuta());
 			NivelRuta nivelRuta = new NivelRuta();
 			nivelDto.getNivelRuta().forEach(rutasDTO -> {
 				Optional<RutasAprendizaje> ruta = rutasAprendizajeRepository.findById(rutasDTO.getId());
-				log.debug("Request lista ruta  : {}", ruta);
-
 				listRuta.add(ruta.get());
-				log.debug("Request lista ruta Despues  : {}", ruta);
-
 				nivelRuta.setOrden(rutasDTO.getOrden());
 				nivelRuta.setNivelJerarquico(jerarquico);
 				nivelRuta.setRutasAprendizaje(ruta.get());
@@ -189,12 +180,12 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 
 		
 			nivelRutaRepository.save(nivelRuta);
-			log.debug("Request lista ruta save  : {}", nivelRuta);
 
 			
 		}
+		
 
-		log.debug("Request jerarquico  : {}", jerarquico);
+		jerarquico.setEstructuraJerarquica(listEstructuta);
 		return jerarquico;
 		
 
