@@ -22,7 +22,7 @@
       <div class="col-amh-topbar">
           <mat-form-field appearance="fill" class="mat-amht-title">
               <mat-label jhiTranslate="constructorApp.question.activity.name">Nombre de actividad</mat-label>
-              <input matInput [(ngModel)]="activity.nombre" (focusout)="save()">
+              <input matInput [(ngModel)]="activity.nombre" (focusout)="save()" jhiSpecialCharacters>
           </mat-form-field>
           <!-- Nombre -->
           <!-- Evaluable -->
@@ -56,7 +56,7 @@
           <!-- Indicación/Pregunta -->
           <mat-form-field appearance="fill" class="mat-pregunta">
               <mat-label jhiTranslate="constructorApp.question.question.question">Pregunta</mat-label>
-              <input matInput [(ngModel)]="pregunta.pregunta" (focusout)="save()">
+              <input matInput [(ngModel)]="pregunta.pregunta" (focusout)="save()" jhiSpecialCharacters>
           </mat-form-field>
           <!-- Indicación/Pregunta -->
           <!-- Recurso -->
@@ -146,7 +146,7 @@
 
               <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
                   <mat-label jhiTranslate="constructorApp.question.answer.answer">Respuesta</mat-label>
-                  <input matInput [(ngModel)]="respuesta.respuesta" (focusout)="save()">
+                  <input matInput [(ngModel)]="respuesta.respuesta" (focusout)="save()" jhiSpecialCharacters>
               </mat-form-field>
 
               <!-- Respuesta -->
