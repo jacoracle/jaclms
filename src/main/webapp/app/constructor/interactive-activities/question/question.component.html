@@ -146,7 +146,7 @@
 
               <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
                   <mat-label jhiTranslate="constructorApp.question.answer.answer">Respuesta</mat-label>
-                  <input matInput [(ngModel)]="respuesta.respuesta" (focusout)="save()" jhiSpecialCharacters>
+                  <input matInput [(ngModel)]="respuesta.respuesta" (focusout)="save()" jhiSpecialCharacters [disabled]="pregunta.tipoPregunta && pregunta.tipoPregunta === 'Verdadero Falso'">
               </mat-form-field>
 
               <!-- Respuesta -->
