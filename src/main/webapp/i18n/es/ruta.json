@@ -27,7 +27,8 @@
         "requiredField": "Este campo es requerido.",
         "save": "La Ruta de Aprendizaje está lista para ser configurada",
         "saveError": "No fue posible generar la Ruta, contacte al Administrador o intente más tarde.",
-        "error": "No fue posible realizar la acción, intente más tarde o contacte al Admistrador."
+        "error": "No fue posible realizar la acción, intente más tarde o contacte al Admistrador.",
+        "session": "No cuenta con sesión activa o no se encuentran los parámetros requeridos para cargar los datos."
       }
     }
   }

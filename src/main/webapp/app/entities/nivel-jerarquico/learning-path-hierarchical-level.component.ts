@@ -9,12 +9,14 @@ import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { NivelJerarquicoService } from 'app/entities/nivel-jerarquico/nivel-jerarquico.service';
 import { CurrentModuleService } from 'app/services/current-module.service';
 import { FlatNode } from 'app/shared/model/interface/flat-node.model';
-import { HierarchicalLevel } from 'app/shared/model/interface/hierarchical-level.model';
+import { HierarchicalLevel, HierarchicalLevelModel } from 'app/shared/model/interface/hierarchical-level.model';
 import { IModulo } from 'app/shared/model/modulo.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
+import { RutaAprendizajeService } from '../rutas-aprendizaje/ruta-aprendizaje.service';
+import { IRutaModel } from 'app/shared/model/ruta-aprendizaje.model';
 
 @Component({
   selector: 'jhi-learning-path-hierarchical-level',
@@ -23,6 +25,8 @@ import { IAgrupador } from 'app/shared/model/agrupador.model';
 })
 export class LearningPathHierarchicalLevelComponent implements OnInit {
   private idPath = -1;
+  learningPathObj!: IRutaModel;
+  hierarchicalLevels: HierarchicalLevel[] = new Array<HierarchicalLevel>();
   sequenceList: IAgrupador[] = new Array<IAgrupador>();
 
   subscription?: Subscription;
@@ -43,32 +47,34 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
 
   TREE_DATA: HierarchicalLevel[] = [
     {
-      name: 'Nivel 1',
-      children: [{ name: 'Session/Curso 1' }, { name: 'Session/Curso 2' }, { name: 'Session/Curso 3' }]
+      nombre: 'Nivel 1',
+      estructuraJerarquica: [{ nombre: 'Session/Curso 1' }, { nombre: 'Session/Curso 2' }, { nombre: 'Session/Curso 3' }]
     },
     {
-      name: 'Nivel 2',
-      children: [
+      nombre: 'Nivel 2',
+      estructuraJerarquica: [
         {
-          name: 'Session/Curso 1',
-          children: [{ name: 'Leccion/Bloque 1' }, { name: 'Leccion/Bloque 2' }]
+          nombre: 'Session/Curso 1',
+          estructuraJerarquica: [{ nombre: 'Leccion/Bloque 1' }, { nombre: 'Leccion/Bloque 2' }]
         },
         {
-          name: 'Session/Curso 2',
-          children: [{ name: 'Leccion/Bloque 1' }, { name: 'Leccion/Bloque 2' }]
+          nombre: 'Session/Curso 2',
+          estructuraJerarquica: [{ nombre: 'Leccion/Bloque 1' }, { nombre: 'Leccion/Bloque 2' }]
         }
       ]
     },
     {
-      name: 'Nivel 3',
-      children: [{ name: 'Session/Curso 1' }, { name: 'Session/Curso 2' }, { name: 'Session/Curso 3' }]
+      nombre: 'Nivel 3',
+      estructuraJerarquica: [{ nombre: 'Session/Curso 1' }, { nombre: 'Session/Curso 2' }, { nombre: 'Session/Curso 3' }]
     }
   ];
+
   // TERMINA TREE
 
   constructor(
     private aroute: ActivatedRoute,
     private accountService: AccountService,
+    private rutaService: RutaAprendizajeService,
     private agrupadorService: AgrupadorService,
     private currentModuleService: CurrentModuleService,
     private nivelJerarquicoService: NivelJerarquicoService,
@@ -86,11 +92,16 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       });
     }
 
+    // TREE CON AJUSTE
+
+    // FINAL TREE AJUSTE
+
     // INICIA TREE
+
     this._transformer = (node: HierarchicalLevel, level: number): any => {
-      const expandable: boolean = !!node.children && node.children.length > 0;
-      const name = node.name;
-      return { expandable, name, level };
+      const expandable: boolean = !!node.estructuraJerarquica && node.estructuraJerarquica.length > 0;
+      const nombre = node.nombre;
+      return { expandable, nombre, level };
     };
     this.treeControl = new FlatTreeControl<FlatNode>(
       node => node.level,
@@ -100,7 +111,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       this._transformer,
       (node: any) => node.level,
       (node: any) => node.expandable,
-      (node: any) => node.children
+      (node: any) => node.estructuraJerarquica
     );
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
@@ -110,19 +121,28 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       console.error('##### Niveles: ', niveles);
     });
     */
-    this.dataSource.data = this.TREE_DATA;
+    // this.dataSource.data = this.TREE_DATA;
   }
 
+  hasChild = (_: number, node: FlatNode) => node.expandable;
+
   ngOnInit(): void {
-    this.loadSequencesUma();
+    if (this.idPath) {
+      this.loadSequencesUma();
+      this.getLearningPathData();
+    } else {
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', {
+          message: 'constructorApp.path.validations.session',
+          type: 'danger'
+        })
+      );
+    }
   }
 
   isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
   }
-
-  // PARA TREE
-  hasChild = (_: number, node: FlatNode) => node.expandable;
 
   getType<T>(obj: T): T {
     return obj;
@@ -146,6 +166,47 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
         },
         () => this.onQueryError()
       );
+  }
+
+  getLearningPathData(): void {
+    this.subscription = this.rutaService
+      .find(this.idPath)
+      .pipe(takeUntil(this.ngUnsubscribeSubject))
+      .subscribe(response => {
+        this.learningPathObj = response.body as IRutaModel;
+        // this.dataSource.data = this.learningPathObj.nivelRutas;
+        this.hierarchicalLevels = this.mapDataToHierarchicalLevels(this.learningPathObj.nivelRutas);
+        this.dataSource.data = this.hierarchicalLevels;
+      });
+  }
+
+  private mapDataToHierarchicalLevels(responseBack: any): HierarchicalLevelModel[] {
+    responseBack.push({
+      id: 3,
+      nivelJerarquico: {
+        id: 2,
+        nombre: 'Nivel 2',
+        imagenUrl: '',
+        agrupadores: [],
+        estructuraJerarquica: []
+      },
+      orden: 0
+    });
+
+    const treeOrigin: HierarchicalLevelModel[] = [];
+
+    for (const o of responseBack) {
+      treeOrigin.push({
+        ...new HierarchicalLevelModel(),
+        id: o.nivelJerarquico.id,
+        nombre: o.nivelJerarquico.nombre,
+        agrupadores: o.nivelJerarquico.agrupadores,
+        imagenUrl: o.nivelJerarquico.imagenUrl,
+        estructuraJerarquica: o.nivelJerarquico.estructuraJerarquica
+      });
+    }
+
+    return treeOrigin; // new Array<HierarchicalFlatNode>();
   }
 
   protected onQueryError(): void {
