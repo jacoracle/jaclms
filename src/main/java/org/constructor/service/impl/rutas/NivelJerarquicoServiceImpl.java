@@ -133,12 +133,18 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 			nivelDto.getAgrupadores().forEach(agrupadorDTO -> {
 				Optional<Agrupador> agrupador = agrupadorRepository.findById(agrupadorDTO.getId());
 
+				
 				listAgrupador.add(agrupador.get());
 
+				
+				agrupadorRepository.save(agrupador.get());
+				
 			});
-			jerarquico.setAgrupadores(listAgrupador);
+		
 		}
+		jerarquico.setAgrupadores(listAgrupador);
 
+		
 		nivelJerarquicoRepository.save(jerarquico);
 		log.debug("Request vacioooooooooo  : {}", !nivelDto.getEstructuraJerarquica().isEmpty());
 		if (!nivelDto.getEstructuraJerarquica().isEmpty()) {
@@ -164,7 +170,6 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 				estructuraJerarquica.setSubNivelJerarquico(jerarquico);
 				
 			});
-			jerarquico.setEstructuraJerarquica(listEstructuta);
 			estructuraJerarquicaRepository.save(estructuraJerarquica);
 			log.debug("Request lista Save  : {}", estructuraJerarquica);
 
@@ -193,7 +198,10 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 
 			
 		}
+		
 
+		jerarquico.setEstructuraJerarquica(listEstructuta);
+		log.debug("Request listEstructuta  : {}", listEstructuta);
 		log.debug("Request jerarquico  : {}", jerarquico);
 		return jerarquico;
 		
