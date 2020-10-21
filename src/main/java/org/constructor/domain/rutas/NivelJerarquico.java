@@ -64,7 +64,7 @@ public class NivelJerarquico implements Serializable{
     /**
      * agrupadores
      */
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "niveles_agrupadores", 
             joinColumns = @JoinColumn(name = "agrupador_id", referencedColumnName = "id", nullable = false),
@@ -75,7 +75,7 @@ public class NivelJerarquico implements Serializable{
 	/**
 	 * estructuraJerarquica
 	 */
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "nivel", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private Set<EstructuraJerarquica> estructuraJerarquica = new HashSet<>();
 	

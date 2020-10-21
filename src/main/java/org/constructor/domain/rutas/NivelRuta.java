@@ -149,11 +149,6 @@ public class NivelRuta implements Serializable {
 	        return id.hashCode();
 	    }
 
-	@Override
-	public String toString() {
-		return "NivelRuta [id=" + id + ", nivelJerarquico=" + nivelJerarquico + ", rutasAprendizaje=" + rutasAprendizaje
-				+ ", orden=" + orden + "]";
-	}
 	
 	
 	
