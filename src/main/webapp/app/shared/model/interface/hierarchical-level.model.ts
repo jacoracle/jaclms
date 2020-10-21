@@ -7,6 +7,8 @@ export interface HierarchicalLevel {
   agrupadores?: any[];
   imagenUrl?: string;
   estructuraJerarquica?: HierarchicalLevel[];
+  nivelJerarquico?: HierarchicalLevel;
+  subNivelJerarquico?: HierarchicalLevel[];
 }
 
 export class HierarchicalLevelModel implements HierarchicalLevel {
@@ -15,6 +17,8 @@ export class HierarchicalLevelModel implements HierarchicalLevel {
     public nombre?: string,
     public agrupadores?: any[],
     public imagenUrl?: string,
-    public estructuraJerarquica?: HierarchicalLevel[]
+    public estructuraJerarquica?: HierarchicalLevel[],
+    public nivelJerarquico?: HierarchicalLevel,
+    public subnivelJerarquico?: HierarchicalLevel[]
   ) {}
 }

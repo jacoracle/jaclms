@@ -48,7 +48,20 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   TREE_DATA: HierarchicalLevel[] = [
     {
       nombre: 'Nivel 1',
-      estructuraJerarquica: [{ nombre: 'Session/Curso 1' }, { nombre: 'Session/Curso 2' }, { nombre: 'Session/Curso 3' }]
+      estructuraJerarquica: [
+        {
+          nombre: 'Session/Curso 1',
+          estructuraJerarquica: [
+            {
+              nombre: 'Nivel 2, Bloque 1',
+              estructuraJerarquica: [{ nombre: 'Leccion 1' }, { nombre: 'Leccion 2' }]
+            },
+            { nombre: 'Nivel 2, Bloque 2', estructuraJerarquica: [{ nombre: 'Leccion 3' }, { nombre: 'Leccion 4' }] }
+          ]
+        },
+        { nombre: 'Session/Curso 2', estructuraJerarquica: [{ nombre: 'Leccion 1' }] },
+        { nombre: 'Session/Curso 3' }
+      ]
     },
     {
       nombre: 'Nivel 2',
@@ -149,12 +162,27 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   }
 
   dropOrder(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.dataSource.data, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.dataSource.data, event.previousIndex, event.currentIndex);
+    } else {
+      this.addLevelTree(event.previousIndex, event.currentIndex);
+    }
   }
 
-  alert(str: string): void {
-    alert(str);
+  addLevelTree(previousIndex: number, currentIndex: number): void {
+    console.error(`Index previo: ${previousIndex} actual: ${currentIndex}`);
+
+    this.hierarchicalLevels.push({
+      ...new HierarchicalLevelModel(),
+      id: undefined,
+      nombre: 'Nuevo',
+      agrupadores: [],
+      imagenUrl: undefined,
+      estructuraJerarquica: []
+    });
   }
+
+  addHightLevel(): void {}
 
   loadSequencesUma(): void {
     this.subscription = this.agrupadorService
@@ -175,12 +203,15 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       .subscribe(response => {
         this.learningPathObj = response.body as IRutaModel;
         // this.dataSource.data = this.learningPathObj.nivelRutas;
-        this.hierarchicalLevels = this.mapDataToHierarchicalLevels(this.learningPathObj.nivelRutas);
-        this.dataSource.data = this.hierarchicalLevels;
+        console.error('#####  Response Ruta nivelRutas: ');
+        console.error(JSON.stringify(this.learningPathObj.nivelRutas));
+        this.hierarchicalLevels = this.mapDataToHierarchicalLevels(this.learningPathObj.nivelRutas as HierarchicalLevelModel[]);
+        this.dataSource.data = this.hierarchicalLevels; // this.TREE_DATA;
       });
   }
 
-  private mapDataToHierarchicalLevels(responseBack: any): HierarchicalLevelModel[] {
+  private mapDataToHierarchicalLevels(responseBack: HierarchicalLevelModel[]): HierarchicalLevelModel[] {
+    /*
     responseBack.push({
       id: 3,
       nivelJerarquico: {
@@ -189,24 +220,67 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
         imagenUrl: '',
         agrupadores: [],
         estructuraJerarquica: []
+        
       },
       orden: 0
     });
+    */
 
     const treeOrigin: HierarchicalLevelModel[] = [];
+    let nivelJ: HierarchicalLevel;
 
-    for (const o of responseBack) {
+    for (const l of responseBack) {
+      nivelJ = l.nivelJerarquico!;
+
+      if (nivelJ) {
+        // for (const o of l.nivelJerarquico) {
+
+        treeOrigin.push({
+          ...new HierarchicalLevelModel(),
+          id: nivelJ.id,
+          nombre: nivelJ.nombre,
+          agrupadores: nivelJ.agrupadores,
+          imagenUrl: nivelJ.imagenUrl,
+          estructuraJerarquica: this.generateStructureTree(nivelJ.estructuraJerarquica!)
+        });
+
+        // }
+      }
+
+      /*
       treeOrigin.push({
         ...new HierarchicalLevelModel(),
-        id: o.nivelJerarquico.id,
-        nombre: o.nivelJerarquico.nombre,
-        agrupadores: o.nivelJerarquico.agrupadores,
-        imagenUrl: o.nivelJerarquico.imagenUrl,
-        estructuraJerarquica: o.nivelJerarquico.estructuraJerarquica
+        id: l.nivelJerarquico.id,
+        nombre: l.nivelJerarquico.nombre,
+        agrupadores: l.nivelJerarquico.agrupadores,
+        imagenUrl: l.nivelJerarquico.imagenUrl,
+        estructuraJerarquica: l.nivelJerarquico.estructuraJerarquica
       });
+      */
     }
 
     return treeOrigin; // new Array<HierarchicalFlatNode>();
+  }
+
+  private generateStructureTree(estructuraJerarquica: any[]): HierarchicalLevelModel[] {
+    const branchTree: HierarchicalLevelModel[] = [];
+
+    for (const ej of estructuraJerarquica) {
+      const sj = ej.subNivelJerarquico;
+
+      if (sj) {
+        branchTree.push({
+          ...new HierarchicalLevelModel(),
+          id: sj.id,
+          nombre: sj.nombre,
+          agrupadores: sj.agrupadores,
+          imagenUrl: sj.imagenUrl,
+          estructuraJerarquica: this.generateStructureTree(sj.estructuraJerarquica!)
+        });
+      }
+    }
+
+    return branchTree;
   }
 
   protected onQueryError(): void {

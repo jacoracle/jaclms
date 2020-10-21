@@ -4,11 +4,11 @@
 
         <div class="hierarchical-bar">
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList #treePath="cdkDropList"
-            (cdkDropListDropped)="dropOrder($event)">
+                (cdkDropListDropped)="dropOrder($event)">
                 <!-- This is the tree node template for leaf nodes -->
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag>
                     <!-- use a disabled button to provide padding for tree leaf -->
-                    <!-- <button mat-icon-button (click)="alert('test1')"><mat-icon>add</mat-icon></button> -->
+                    <mat-icon (click)="addHightLevel()">add</mat-icon>
                     <span (click)="alert('test1')">{{node.nombre}}</span>
                 </mat-tree-node>
                 <!-- This is the tree node template for expandable nodes -->
