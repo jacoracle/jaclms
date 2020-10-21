@@ -450,7 +450,6 @@ export class QuestionComponent implements OnInit {
       }, 1000);
     } else {
       this.stop(objeto);
-      this.recordedTime = 0;
     }
   }
 
@@ -467,6 +466,7 @@ export class QuestionComponent implements OnInit {
   }
 
   stop(objeto: any): void {
+    this.recordedTime = 0;
     this.deleteResource(objeto);
     this.recordingQuestionIndex = -1;
     this.recordingAnswerIndex = -1;
