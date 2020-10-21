@@ -67,7 +67,7 @@
                   <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
               </select>
           </mat-form-field>
-          <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()">
+          <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()" [disabled]="isOn">
               <!-- <span>Subir</span> -->
               <i class="icon ni-picture"></i>
               <input #resourceInput type="file" (change)="selectFile($event, pregunta, pregunta.tipoRecurso)" style="display:none;"/>
@@ -176,7 +176,7 @@
                 <jhi-resource-audio [safeUrl]="respuesta.safeUrl"></jhi-resource-audio>
               </div>
 
-              <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()">
+              <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()" [disabled]="isOn">
                   <i class="icon ni-picture"></i>
                   <input #fileInput type="file" (change)="selectFile($event, respuesta, pregunta.tipoRespuestas)" style="display:none;"/>
               </button>
