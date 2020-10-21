@@ -251,31 +251,32 @@ export class QuestionComponent implements OnInit {
   }
 
   selectFile(event: any, objeto: any, tipoRecurso: string): void {
+    let allowedFileType = true;
     if (event.target.files.length) {
       switch (tipoRecurso) {
         case 'Audio': {
           if (!this.allowedAudioTypes.includes(event.target.files[0].type)) {
-            this.showErrorFileType(event);
-            return;
+            allowedFileType = false;
           }
           break;
         }
-        case 'Image': {
+        case 'Imagen': {
           if (!this.allowedImageTypes.includes(event.target.files[0].type)) {
-            this.showErrorFileType(event);
-            return;
+            allowedFileType = false;
           }
           break;
         }
         case 'Video': {
           if (!this.allowedVideoTypes.includes(event.target.files[0].type)) {
-            this.showErrorFileType(event);
-            return;
+            allowedFileType = false;
           }
           break;
         }
       }
-      if (event.target.files[0].size > this.maxImageSize) {
+      if (!allowedFileType) {
+        this.showErrorFileType(event);
+        return;
+      } else if (event.target.files[0].size > this.maxImageSize) {
         this.showErrorFileSize(event);
         return;
       } else {
