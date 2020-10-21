@@ -83,6 +83,9 @@ export class QuestionComponent implements OnInit {
     if (questionType === 'Verdadero Falso') {
       pregunta.tipoRespuestas = 'Texto';
       this.addTrueFalse(pregunta);
+    } else {
+      pregunta.respuestas = [];
+      this.addAnswer(pregunta, true);
     }
     if (questionType === 'Respuesta única') {
       this.oneCorrectOnly(pregunta);
