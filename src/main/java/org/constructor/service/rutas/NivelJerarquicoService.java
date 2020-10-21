@@ -50,6 +50,14 @@ public interface NivelJerarquicoService {
      * @return the entity.
      */
     Optional<NivelJerarquico> findOne(Long id);
+    
+    /**
+	 * Update
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
+	Optional<NivelJerarquico> updateNivelJerarquico(NivelJerarquicoDTO dto) throws Exception;
 
     /**
      * Delete the "id" NivelJerarquico.

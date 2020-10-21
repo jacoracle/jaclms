@@ -97,6 +97,31 @@ public class NivelJerarquicoResource {
 	            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
 	            .body(result);
 	    }
+	    
+	    /**
+	     * Update NivelJerarquicos
+	     * @param nivelJerarquicoDTO
+	     * @return
+	     * @throws Exception
+	     */
+	    @PutMapping(path = RestConstants.PATH_NIVEL_JERARQUICO)
+	    public ResponseEntity<Optional<NivelJerarquico>> updateNivelJerarquicos(@RequestBody NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception {
+	        log.debug("REST request to update NivelJerarquico : {}", nivelJerarquicoDTO);
+
+	        if (nivelJerarquicoDTO.getId() == null) {
+	            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+	        }
+	        if (nivelJerarquicoDTO.getAgrupadores() == null) {
+	        	 throw new BadRequestAlertException("Invalid agrupadores", ENTITY_NAME, "null content");
+	        }
+			
+	        Optional<NivelJerarquico> result = nivelJerarquicoService.updateNivelJerarquico(nivelJerarquicoDTO);
+	        Optional<NivelJerarquico> nivel = nivelJerarquicoService.findOne(result.get().getId());
+	        log.debug("Update nivel  : {}", nivel);
+	        return ResponseEntity.ok()
+	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.get().getId().toString()))
+	            .body(nivel);
+	    }
 	   
 	    /**
 	     * Put NivelJerarquico
@@ -104,7 +129,7 @@ public class NivelJerarquicoResource {
 	     * @return
 	     * @throws URISyntaxException
 	     */
-	    @PutMapping(path = RestConstants.PATH_NIVEL_JERARQUICO)
+	    @PutMapping(path = RestConstants.PATH_NIVEL_JERARQUICOS)
 	    public ResponseEntity<NivelJerarquico> updateNivelJerarquico(@RequestBody NivelJerarquico nivelJerarquico) throws URISyntaxException {
 	        log.debug("REST request to update nivelJerarquico : {}", nivelJerarquico);
 	        if (nivelJerarquico.getId() == null) {

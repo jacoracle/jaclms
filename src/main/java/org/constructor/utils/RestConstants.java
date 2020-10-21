@@ -257,6 +257,11 @@ public class RestConstants {
 	 * Path para peticiones nivel-jerarquico 
 	 */
 	public static final String PATH_NIVEL_JERARQUICO = "nivel-jerarquico";
+	
+	/**
+	 * Path para peticiones nivel-jerarquicos 
+	 */
+	public static final String PATH_NIVEL_JERARQUICOS = "nivel-jerarquicos";
 		
 	/**
 	 * Path para peticiones  nivel-jerarquico  por id
