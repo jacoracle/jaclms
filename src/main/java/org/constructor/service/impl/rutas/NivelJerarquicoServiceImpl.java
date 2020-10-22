@@ -134,7 +134,6 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 
 				listAgrupador.add(agrupador.get());
 
-				agrupadorRepository.save(agrupador.get());
 
 			});
 
