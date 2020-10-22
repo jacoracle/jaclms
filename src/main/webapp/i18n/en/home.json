@@ -1,0 +1,19 @@
+{
+  "home": {
+    "title": "Nimbus Constructor",
+    "subtitle": "This is your home page",
+    "logged": {
+      "message": "You are logged in as \",{{username}}\",."
+    },
+    "question": "If you have questions about JHipster:",
+    "link": {
+      "homepage": "JHipster homepage",
+      "stackoverflow": "JHipster on Stack Overflow",
+      "bugtracker": "JHipster bug tracking",
+      "chat": "JHipster public chat room",
+      "follow": "contact @jhipster on Twitter"
+    },
+    "like": "If you like JHipster, give us a star on",
+    "github": "GitHub"
+  }
+}

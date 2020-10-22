@@ -3,6 +3,7 @@
     "title": "Registro",
     "form": {
       "button": "Crear la cuenta",
+      "cancel": "Cancelar",
       "firstName": "Nombre (s)",
       "lastName1": "Primer apellido",
       "lastName2": "Segundo apellido",
@@ -25,6 +26,9 @@
         "userexists": "<strong>¡El nombre de usuario ya está registrado!</strong> Por favor, escoja otro usuario.",
         "emailexists": "<strong>¡El correo electrónico ya está en uso!</strong> Por favor, escoja otro email."
       }
+    },
+    "politics": {
+      "terms": "Al registrarme, declaro que acepto los Términos y condiciones y las Políticas de privacidad de Nimbus GED."
     }
   }
 }

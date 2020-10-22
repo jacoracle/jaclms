@@ -1,0 +1,39 @@
+{
+  "constructorApp": {
+    "grouper": {
+      "home": {
+        "title": "Grouper",
+        "createLabel": "Create Grouper",
+        "createOrEditLabel": "Create or edit Grouper",
+        "titleGeneralConfg": "General configuration",
+        "titleAdvancelConfg": "Advanced configuration",
+        "notFound": "No Grouper could be found"
+      },
+      "created": "The Grouper has been created.",
+      "updated": "The Grouper has been updated.",
+      "deleted": "The Grouper has been deleted.",
+      "revert": "The Grouper and the changes made have been reverted, Grouper removed.",
+      "delete": {
+        "question": "Are you sure you want to remove the Grouper {{id}}?"
+      },
+      "detail": {
+        "title": "Grouper"
+      },
+      "umas": {
+        "updateOrder": "The grouper units have been updated."
+      },
+      "validations": {
+        "formError": "Please review the information and try again.",
+        "formErrorTitle": "The stitcher title is required, please check the form.",
+        "formErrorSequence": "At least one UMA is required for the stitcher.",
+        "fileSize": "The file must be less than 5MB.",
+        "fileType": "File type not allowed.",
+        "dates": "The creation date cannot be later than the publication date.",
+        "requiredField": "This field is required.",
+        "save": "You should run search with filters, pending ...",
+        "saveError": "It was not possible to Save the Grouper, contact the Administrator or try again later.",
+        "error": "It was not possible to perform the action, try again later or contact the Administrator."
+      }
+    }
+  }
+}

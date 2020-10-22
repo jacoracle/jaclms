@@ -1,0 +1,23 @@
+{
+  "constructorApp": {
+    "subject": {
+      "home": {
+        "title": "Subjects",
+        "createLabel": "Create new Assignment",
+        "createOrEditLabel": "Create or edit Assignment",
+        "notFound": "No Subjects found"
+      },
+      "created": "A new Subject has been created with the identifier {{param}}",
+      "updated": "A Subject has been updated with the identifier {{param}}",
+      "deleted": "A Subject has been deleted with the identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to delete Asignatura {{id}}?"
+      },
+      "detail": {
+        "title": "Subject"
+      },
+      "description": "Description",
+      "course": "Course"
+    }
+  }
+}

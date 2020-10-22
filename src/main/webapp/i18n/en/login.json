@@ -1,0 +1,23 @@
+{
+  "login": {
+    "title": "Start the session",
+    "form": {
+      "password": "Password",
+      "password.placeholder": "Your password",
+      "rememberme": "Remember me",
+      "button": "Login"
+    },
+    "messages": {
+      "error": {
+        "authentication": "<strong> Login failed! </strong> Please check your credentials and try again."
+      }
+    },
+    "password": {
+      "forgot": "\nCreate Account"
+    },
+    "create": {
+      "have": "Don't have an account yet?",
+      "account": "Create Account"
+    }
+  }
+}

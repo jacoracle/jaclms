@@ -1,0 +1,26 @@
+{
+  "constructorApp": {
+    "file": {
+      "home": {
+        "title": "Tabs",
+        "createLabel": "Create new Tab",
+        "createOrEditLabel": "Create or edit Tab",
+        "notFound": "No Tokens found"
+      },
+      "created": "A new Record has been created with the identifier {{param}}",
+      "updated": "A Record has been updated with the identifier {{param}}",
+      "deleted": "A Record has been deleted with the identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to delete File {{id}}?"
+      },
+      "detail": {
+        "title": "File"
+      },
+      "description": "Description",
+      "Creation Date": "Creation Date",
+      "course": "Course",
+      "collaborator": "collaborators",
+      "editorial": "Editorial"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "register": {
+    "title": "Registration",
+    "form": {
+      "button": "Create account",
+      "cancel": "Cancel",
+      "firstName": "Name (s)",
+      "lastName1": "Last name",
+      "lastName2": "Second surname",
+      "phoneNumber": "Phone number"
+    },
+    "formError": "Please check the information and try again.",
+    "messages": {
+      "validate": {
+        "login": {
+          "required": "Your username is required.",
+          "minlength": "Your username must be at least 1 character.",
+          "maxlength": "Your username cannot be more than 50 characters.",
+          "pattern": "Your username can only contain lowercase letters and digits.",
+          "countryPhoneCode": "Select the phone code for your country."
+        }
+      },
+      "success": "<strong> Registration saved! </strong> Please check your email to confirm.",
+      "error": {
+        "fail": "<strong> Registration failed! </strong> Please try again later.",
+        "userexists": "<strong> The username is already registered! </strong> Please choose another user.",
+        "emailexists": "<strong> Email is already in use! </strong> Please choose another email."
+      }
+    },
+    "politics": {
+      "terms": "By registering, I declare that I accept the Terms and Conditions and Privacy Policies of Nimbus GED."
+    }
+  }
+}

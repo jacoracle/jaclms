@@ -1,0 +1,35 @@
+{
+  "userManagement": {
+    "home": {
+      "title": "User administration",
+      "createLabel": "Create user",
+      "totalUsers": "Total users",
+      "createOrEditLabel": "Create or edit user"
+    },
+    "created": "A new user with identifier {{param}} was created",
+    "updated": "User with identifier {{param}} was updated",
+    "deleted": "The user with identifier {{param}} was deleted",
+    "deleteQuestion": "Are you sure you want to delete the user {{login}}?",
+    "detail": {
+      "title": "View user"
+    },
+    "login": "User",
+    "firstName": "Name (s)",
+    "lastName1": "First surname",
+    "lastName2": "Second surname",
+    "email": "Email",
+    "userNameDes": "Username",
+    "status": "Status",
+    "activated": "Activated",
+    "deactivated": "Deactivated",
+    "profiles": "Profiles",
+    "langKey": "Language",
+    "createdBy": "Created by",
+    "createdDate": "Creation",
+    "lastModifiedBy": "Modified by",
+    "lastModifiedDate": "Modification",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete"
+  }
+}
