@@ -3,6 +3,7 @@ import { IRolColaborador } from './rol-colaborador.model';
 import { INumeroGrado } from './numero-grado.model';
 // import { SafeUrl } from '@angular/platform-browser';
 import { Moment } from 'moment';
+import { NivelRutas } from './interface/hierarchical-level.model';
 
 export interface IRutaModel {
   id?: number;
@@ -13,7 +14,7 @@ export interface IRutaModel {
   temas?: ITema[];
   rolesColaboradores?: IRolColaborador[];
   nivelAcademico?: INumeroGrado[];
-  nivelRutas?: any[];
+  nivelRutas?: NivelRutas[];
   fechaCreacion?: Moment;
   fechaPublicacion?: Moment;
 }

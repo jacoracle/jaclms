@@ -9,7 +9,7 @@
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag>
                     <!-- use a disabled button to provide padding for tree leaf -->
                     <mat-icon (click)="addHightLevel()">add</mat-icon>
-                    <span (click)="alert('test1')">{{node.nombre}}</span>
+                    <span (click)="loadChildren(node)">{{node.nombre}}</span>
                 </mat-tree-node>
                 <!-- This is the tree node template for expandable nodes -->
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag>
