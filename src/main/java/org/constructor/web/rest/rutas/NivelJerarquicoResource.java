@@ -123,23 +123,7 @@ public class NivelJerarquicoResource {
 	            .body(nivel);
 	    }
 	   
-	    /**
-	     * Put NivelJerarquico
-	     * @param nivelJerarquico
-	     * @return
-	     * @throws URISyntaxException
-	     */
-	    @PutMapping(path = RestConstants.PATH_NIVEL_JERARQUICOS)
-	    public ResponseEntity<NivelJerarquico> updateNivelJerarquico(@RequestBody NivelJerarquico nivelJerarquico) throws URISyntaxException {
-	        log.debug("REST request to update nivelJerarquico : {}", nivelJerarquico);
-	        if (nivelJerarquico.getId() == null) {
-	            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-	        }
-	        NivelJerarquico result = nivelJerarquicoService.save(nivelJerarquico);
-	        return ResponseEntity.ok()
-	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-	            .body(result);
-	    }
+	   
 	    
 	   
 	    /**
