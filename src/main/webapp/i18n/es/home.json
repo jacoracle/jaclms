@@ -14,6 +14,31 @@
       "follow": "contacto @jhipster en Twitter"
     },
     "like": "Si te gusta JHipster, danos una estrella en",
-    "github": "GitHub"
+    "github": "GitHub",
+    "support": "Soporte",
+    "help": "Ayuda",
+    "select": "Selecciona una opción",
+    "menu": {
+      "uma": {
+        "name": "Constructor de UMA",
+        "description": "Crea y edita UMA (Unidad Mínima de Aprendizaje).",
+        "select": "Seleccionar"
+      },
+      "group": {
+        "name": "Agrupador de UMA",
+        "description": "Crea y edita Agrupadores de UMA.",
+        "select": "Seleccionar"
+      },
+      "learning": {
+        "name": "Rutas de aprendizaje",
+        "description": "Agrega agrupadores de UMA para crear rutas de aprendizaje.",
+        "select": "Seleccionar"
+      },
+      "calendar": {
+        "name": "Calendario",
+        "description": "Tareas programadas en Google Calender.",
+        "select": "Seleccionar"
+      }
+    }
   }
 }
