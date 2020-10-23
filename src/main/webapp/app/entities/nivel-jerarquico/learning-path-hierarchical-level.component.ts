@@ -191,7 +191,9 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     });
   }
 
-  addHightLevel(): void {}
+  addLevel(node: any): void {
+    console.error('Intentando agregar nuevo nivel: ', node);
+  }
 
   loadSequencesUma(): void {
     this.subscription = this.agrupadorService
@@ -299,6 +301,18 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
           nivelJerarquico: this.generateStructureTree(sj.nivelJerarquico!)
           // estructuraJerarquica: this.generateStructureTree(sj.estructuraJerarquica!)
         });
+      } else {
+        // agrupadores
+        branchTree.push({
+          ...new HierarchicalLevelModel(),
+          id: ej.id,
+          nombre: ej.titulo,
+          // agrupadores: sj.agrupadores,
+          // agrupadores: this.generateStructureTree(sj.agrupadores!),
+          imagenUrl: '',
+          nivelJerarquico: []
+          // estructuraJerarquica: this.generateStructureTree(sj.estructuraJerarquica!)
+        });
       }
     }
 
@@ -367,7 +381,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
               // agrupadores: this.generateStructureTree(sj.agrupadores!),
               imagenUrl: son.subNivelJerarquico!.imagenUrl,
               nivelJerarquico: this.generateStructureTree(
-                son.subNivelJerarquico!.nivelJerarquico ? son.subNivelJerarquico!.nivelJerarquico : []
+                son.subNivelJerarquico!.nivelJerarquico ? son.subNivelJerarquico!.nivelJerarquico : son.subNivelJerarquico!.agrupadores!
               ) //  agrupadores!),
               // estructuraJerarquica: this.generateStructureTree(sj.estructuraJerarquica!)
             });

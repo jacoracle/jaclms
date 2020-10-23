@@ -8,8 +8,9 @@
                 <!-- This is the tree node template for leaf nodes -->
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag>
                     <!-- use a disabled button to provide padding for tree leaf -->
-                    <mat-icon (click)="addHightLevel()">add</mat-icon>
-                    <span (click)="loadChildren(node)">{{node.nombre}}</span>
+                    <!-- <mat-icon>library_books</mat-icon> -->
+                    <mat-icon>menu_book</mat-icon>&nbsp;
+                    <span (click)="loadChildren(node)">{{ node.nombre }}</span>
                 </mat-tree-node>
                 <!-- This is the tree node template for expandable nodes -->
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag>
@@ -18,6 +19,8 @@
                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>
                     {{node.nombre}}
+                    <!-- <mat-icon (click)="addHightLevel()">add</mat-icon> -->
+                    <mat-icon (click)="addLevel(node)">add</mat-icon>
                 </mat-tree-node>
             </mat-tree>
         </div>
