@@ -12,7 +12,7 @@
       <div class="r2">
         <div class="windowHeader-title">
           <!-- <div class="icon-step-header"></div> -->
-          <h4>Constructor de UMA</h4>
+          <h4 jhiTranslate="homemodule.title">Constructor de UMA</h4>
         </div>
         <div class="c1">
         </div>
@@ -26,7 +26,7 @@
     <div class="window-br-body-topbar recent-modules">
       <div class="line-gradient lg-step1"></div>
       <div class="row-wbr-bt" *ngIf="modulos.length || isSearching">
-        <p>Tus UMA ( {{modulos.length}} )</p>
+          <p><label jhiTranslate="homemodule.your">Tus UMA </label> ( {{modulos.length}} )</p>
 
         <form name="umaForm" role="form" [formGroup]="umaForm" autocomplete="off" class="form-uma-search">
 
@@ -45,7 +45,7 @@
             </div> -->
 
               <mat-form-field appearance="outline">
-                <mat-label>Buscar</mat-label>
+                <mat-label jhiTranslate="homemodule.search">Buscar</mat-label>
                 <input type="text" placeholder="" matInput formControlName="titleSearchGral"
                   [matAutocomplete]="autoInputTitleSearch">
                 <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
@@ -77,8 +77,12 @@
             <div class="br-message-icon"></div>
           </div>
           <div class="brm-2">
-            <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
-            <p>Para comenzar da click en el botón "Crear UMA".</p>
+            <p>
+                <label jhiTranslate="homemodule.greet">¡Hola!</label><br>
+                <label jhiTranslate="homemodule.welcome">Bienvenido a </label>
+                <span>Nimbus Constructor</span>.
+            </p>
+            <p jhiTranslate="homemodule.start">Para comenzar da click en el botón "Crear UMA".</p>
           </div>
         </div>
       </div>
@@ -118,8 +122,8 @@
     </div>
 
     <div class="window-br-footer">
-      <button routerLink="/" class="secondary-btn">Regresar</button>
-      <button routerLink="/uma-configuration" class="main-btn">Nueva UMA</button>
+      <button routerLink="/" class="secondary-btn" jhiTranslate="homemodule.back">Regresar</button>
+      <button routerLink="/uma-configuration" class="main-btn" jhiTranslate="homemodule.new">Nueva UMA</button>
     </div>
 
   </div>
