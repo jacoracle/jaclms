@@ -1,44 +1,12 @@
 {
-  "home": {
-    "title": "Nimbus Constructor",
-    "subtitle": "This is your home page",
-    "logged": {
-      "message": "You are logged in as \",{{username}}\",."
-    },
-    "question": "If you have questions about JHipster:",
-    "link": {
-      "homepage": "JHipster homepage",
-      "stackoverflow": "JHipster on Stack Overflow",
-      "bugtracker": "JHipster bug tracking",
-      "chat": "JHipster public chat room",
-      "follow": "contact @jhipster on Twitter"
-    },
-    "like": "If you like JHipster, give us a star on",
-    "github": "GitHub",
-    "support": "Support",
-    "help": "Help",
-    "select": "Select an option",
-    "menu": {
-      "uma": {
-        "name": "Constructor UMA",
-        "description": "Create and edit UMA (Minimum Learning Unit).",
-        "select": "Select"
-      },
-      "group": {
-        "name": "Grouper UMA",
-        "description": "Create manages and edit UMA grouper.",
-        "select": "Select"
-      },
-      "learning": {
-        "name": "Learning routes",
-        "description": "Add UMA groupers to create learning paths.",
-        "select": "Select"
-      },
-      "calendar": {
-        "name": "Calendar",
-        "description": "Tasks scheduled in Google Calender.",
-        "select": "Select"
-      }
-    }
+  "homemodule": {
+    "title": "Constructor UMA",
+    "your": "Your UMAs",
+    "search": "search",
+    "greet": "Hello",
+    "welcome": "Welcome to",
+    "start": "To start, click on the \"Create UMA\" button.",
+    "back": "Go back",
+    "new": "Create UMA"
   }
 }

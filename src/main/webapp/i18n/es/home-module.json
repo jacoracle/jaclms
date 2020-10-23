@@ -1,44 +1,12 @@
 {
-  "home": {
-    "title": "Nimbus Constructor",
-    "subtitle": "Esta es su página de inicio",
-    "logged": {
-      "message": "Está conectado como \"{{username}}\"."
-    },
-    "question": "Si tiene preguntas sobre JHipster:",
-    "link": {
-      "homepage": "Página de inicio de JHipster",
-      "stackoverflow": "JHipster en Stack Overflow",
-      "bugtracker": "JHipster seguimiento de errores",
-      "chat": "Sala de chat pública de JHipster",
-      "follow": "contacto @jhipster en Twitter"
-    },
-    "like": "Si te gusta JHipster, danos una estrella en",
-    "github": "GitHub",
-    "support": "Soporte",
-    "help": "Ayuda",
-    "select": "Selecciona una opción",
-    "menu": {
-      "uma": {
-        "name": "Constructor de UMA",
-        "description": "Crea y edita UMA (Unidad Mínima de Aprendizaje).",
-        "select": "Seleccionar"
-      },
-      "group": {
-        "name": "Agrupador de UMA",
-        "description": "Crea y edita Agrupadores de UMA.",
-        "select": "Seleccionar"
-      },
-      "learning": {
-        "name": "Rutas de aprendizaje",
-        "description": "Agrega agrupadores de UMA para crear rutas de aprendizaje.",
-        "select": "Seleccionar"
-      },
-      "calendar": {
-        "name": "Calendario",
-        "description": "Tareas programadas en Google Calender.",
-        "select": "Seleccionar"
-      }
-    }
+  "homemodule": {
+    "title": "Constructor de UMA",
+    "your": "Tus UMAs",
+    "search": "buscar",
+    "greet": "Hola",
+    "welcome": "Bienvenido a",
+    "start": "Para comenzar da click en el botón \"Crear UMA\".",
+    "back": "Regresar",
+    "new": "Crear UMA"
   }
 }
