@@ -5,7 +5,8 @@ import { IBloquesCurso } from 'app/shared/model/bloques-curso.model';
 import { Componente } from 'app/shared/model/componente.model';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BloquesCurso } from '../../shared/model/bloques-curso.model';
+import { BloquesCurso } from 'app/shared/model/bloques-curso.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'jhi-constructor-component-properties-block',
@@ -21,7 +22,11 @@ export class ConstructorComponentPropertiesBlockComponent implements OnInit, OnD
   nameSelectedBlock = '';
   componentes: Componente[] = [];
 
-  constructor(private contentBlocksService: ContentBlocksService, private bloquesService: BloquesCursoService) {
+  constructor(
+    private contentBlocksService: ContentBlocksService,
+    private bloquesService: BloquesCursoService,
+    private translate: TranslateService
+  ) {
     // .b-title-text .final-block-row div pedo con alineado de título en header, este funciona en título normal
 
     this.subscription = this.contentBlocksService

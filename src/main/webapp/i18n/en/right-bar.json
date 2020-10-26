@@ -3,6 +3,25 @@
     "blocks": "Blocks",
     "all": "All",
     "text": "Text",
-    "multimedia": "Multimedia"
+    "multimedia": "Multimedia",
+
+    "properties": {
+      "properties": "Properties",
+      "uploadfile": "Upload file",
+      "management": "Activity Management",
+      "upload": "Upload",
+      "activity": "Activity",
+      "information": "Information",
+      "name": "Name",
+      "weight": "Weight",
+      "extension": "Extension"
+    },
+    "blockcontent": {
+      "content": "Content block",
+      "name": "Name",
+      "teachermode": "Teacher Mode:",
+      "activate": "Activate",
+      "desactivate": "Desactivate"
+    }
   }
 }

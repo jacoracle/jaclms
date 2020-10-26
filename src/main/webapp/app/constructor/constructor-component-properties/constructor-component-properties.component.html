@@ -3,7 +3,7 @@
     <div class="c-component-title">
         <div class="cct-link">
             <i class="icon ni-arrow"></i>
-            <p>Propiedades</p>
+            <p jhiTranslate="rightbar.properties.properties">Propiedades</p>
         </div>
         <i class="icon ni-menudots"></i>
     </div>
@@ -20,8 +20,8 @@
 
             <!-- Subir archivo -->
             <div class="cover-upload-c">
-                <h6 *ngIf="isNotTextActivity()">Subir archivo</h6>
-                <h6 *ngIf="isActivity()">Gestión Actividad</h6>
+                <h6 *ngIf="isNotTextActivity()" jhiTranslate="rightbar.properties.uploadfile">Subir archivo</h6>
+                <h6 *ngIf="isActivity()" jhiTranslate="rightbar.properties.management">Gestión Actividad</h6>
 
                 <div class="row-up-image-area">
                     <div *ngIf="fileFormat === 'image'">
@@ -87,29 +87,29 @@
                         Eliminar
                     </button>
                     <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="isNotTextActivity()">
-                        <span>Subir</span>
+                        <span jhiTranslate="rightbar.properties.upload">Subir</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
                     <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="isActivity()">
-                        <span>Actividad</span>
+                        <span jhiTranslate="rightbar.properties.activity">Actividad</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
                 </div>
 
                 <div class="properties-file" *ngIf="isNotTextActivity() && fileFormat !== 'pregunta_texto'">
-                    <h6>Información</h6>
+                    <h6 jhiTranslate="rightbar.properties.information">Información</h6>
                     <div class="pf-item">
-                        <label for="filename">Nombre:</label>
+                        <label for="filename" jhiTranslate="rightbar.properties.name">Nombre:</label>
                         <input type="text" class="" [(ngModel)]="multimediaFileProperties.nombre" name="filename"
                                id="filename" disabled>
                     </div>
                     <div class="pf-item">
-                        <label for="filesize">Peso:</label>
+                        <label for="filesize" jhiTranslate="rightbar.properties.weight">Peso:</label>
                         <input type="text" class="" [(ngModel)]="multimediaFileProperties.pesoPrint" name="filesize"
                                id="filesize" disabled>
                     </div>
                     <div class="pf-item">
-                        <label for="filext">Extensión:</label>
+                        <label for="filext" jhiTranslate="rightbar.properties.extension">Extensión:</label>
                         <input type="text" class="" [(ngModel)]="multimediaFileProperties.extension" name="filext"
                                id="filext" disabled>
                     </div>
