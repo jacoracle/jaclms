@@ -17,6 +17,8 @@ import { takeUntil } from 'rxjs/operators';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
 import { RutaAprendizajeService } from '../rutas-aprendizaje/ruta-aprendizaje.service';
 import { IRutaModel } from 'app/shared/model/ruta-aprendizaje.model';
+import { LearningPathHierarchicalAddLevelComponent } from './dialog-add-level/learning-path-hierarchical-add-level.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'jhi-learning-path-hierarchical-level',
@@ -33,6 +35,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   private ngUnsubscribeSubject = new Subject();
 
   // tree
+
+  nameNewLevel!: string;
 
   objectType = '';
   _transformer: any;
@@ -102,6 +106,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     private agrupadorService: AgrupadorService,
     private currentModuleService: CurrentModuleService,
     private nivelJerarquicoService: NivelJerarquicoService,
+    public dialog: MatDialog,
     private eventManager: JhiEventManager
   ) {
     aroute.params.subscribe(val => {
@@ -126,20 +131,21 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       const existingNode = this.nestedNodeMap.get(node);
 
       const flatNode = existingNode && existingNode.nombre === node.nombre ? existingNode : new FlatNodeModel();
-
+      flatNode.nombre = node.nombre;
+      flatNode.level = level;
+      flatNode.expandable = !!node.nivelJerarquico && node.nivelJerarquico.length > 0;
+      flatNode.node = node;
       // console.error('FlatNode Transformer: ');
       // console.error(flatNode);
-
       // const expandable: boolean = !!node.estructuraJerarquica && node.estructuraJerarquica.length > 0;
-      const expandable: boolean = !!node.nivelJerarquico && node.nivelJerarquico.length > 0;
-      const nombre = node.nombre;
-
-      const objNode = { expandable, nombre, level, node };
-      this.flatNodeMap.set(objNode, node);
-      this.nestedNodeMap.set(node, objNode);
+      // const expandable: boolean = !!node.nivelJerarquico && node.nivelJerarquico.length > 0;
+      // const nombre = node.nombre;
+      // const objNode = { expandable, nombre, level, node };
+      this.flatNodeMap.set(flatNode, node); // objNode, node);
+      this.nestedNodeMap.set(node, flatNode); // objNode);
 
       // return { expandable, nombre, level, node };
-      return objNode;
+      return flatNode; // objNode;
     };
     this.treeControl = new FlatTreeControl<FlatNode>(
       node => node.level!,
@@ -204,29 +210,39 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   }
 
   addLevelTree(previousIndex: number, currentIndex: number): void {
-    console.error(`Index previo: ${previousIndex} actual: ${currentIndex}`);
+    // console.error(`Index previo: ${previousIndex} actual: ${currentIndex}`);
+    console.error(currentIndex);
+    // this.treeControl.dataNodes
 
     this.hierarchicalLevels.push({
       ...new HierarchicalLevelModel(),
       id: undefined,
-      nombre: 'Nuevo',
+      nombre: this.sequenceList[previousIndex].titulo,
       // agrupadores: [],
       imagenUrl: undefined,
       nivelJerarquico: []
       // estructuraJerarquica: []
     });
+    this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
   }
 
-  addLevel(node: any): void {
-    console.error('Intentando agregar nuevo nivel: ', node);
+  addLevel(node: HierarchicalLevel): void {
+    // console.error('Intentando agregar nuevo nivel: ', node);
     this.saveExpandedNodes();
+
+    this.openDialog(node);
+    // this.addNewLevelToTree(node);
+  }
+
+  addNewLevelToTree(node: HierarchicalLevel): void {
     const parentNode = this.flatNodeMap.get(node);
     // this.insertItem(parentNode!, 'Nuevo elemento');
     this.treeControl.expand(node);
     // this.saveExpandedNodes();
-    this.nivelJerarquicoService.insertItem(parentNode as HierarchicalLevel, 'Nuevo elemento');
+    this.nivelJerarquicoService.insertItem(parentNode as HierarchicalLevel, this.nameNewLevel); //  '');
     // this.treeControl.expand(node);
     // this.restoreExpandedNodes();
+    this.treeControl.expand(node);
   }
 
   insertItem(parent: HierarchicalLevel, name: string): void {
@@ -241,6 +257,20 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     this.treeControl.dataNodes.forEach((node: any) => {
       if (node.expandable && this.treeControl.isExpanded(node)) {
         this.expandedNodes.push(node);
+      }
+    });
+  }
+  openDialog(node: HierarchicalLevel): void {
+    const dialogRef = this.dialog.open(LearningPathHierarchicalAddLevelComponent, {
+      width: '350px',
+      data: { newLevelName: this.nameNewLevel }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.error('The dialog was closed');
+      if (result) {
+        this.nameNewLevel = result;
+        this.addNewLevelToTree(node);
       }
     });
   }
@@ -270,8 +300,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       .subscribe(response => {
         this.learningPathObj = response.body as IRutaModel;
         // this.dataSource.data = this.learningPathObj.nivelRutas;
-        console.error('#####  Response Ruta nivelRutas: ');
-        console.error(JSON.stringify(this.learningPathObj.nivelRutas));
+        // console.error('#####  Response Ruta nivelRutas: ');
+        // console.error(JSON.stringify(this.learningPathObj.nivelRutas));
         this.hierarchicalLevels = [...this.mapDataToHierarchicalLevels(this.learningPathObj.nivelRutas as NivelRutas[])]; //  HierarchicalLevelModel[]);
         // this.dataSource.data = this.hierarchicalLevels; //  this.TREE_DATA;
         this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
@@ -310,17 +340,6 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
 
         // }
       }
-
-      /*
-      treeOrigin.push({
-        ...new HierarchicalLevelModel(),
-        id: l.nivelJerarquico.id,
-        nombre: l.nivelJerarquico.nombre,
-        agrupadores: l.nivelJerarquico.agrupadores,
-        imagenUrl: l.nivelJerarquico.imagenUrl,
-        estructuraJerarquica: l.nivelJerarquico.estructuraJerarquica
-      });
-      */
     }
 
     return treeOrigin; // new Array<HierarchicalFlatNode>();
@@ -371,8 +390,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   }
 
   loadChildren(node: any): void {
-    console.error('#####  Node level Click: ');
-    console.error(node);
+    // console.error('#####  Node level Click: ');
+    // console.error(node);
 
     const selectedLevel: HierarchicalLevel = node.node;
 
@@ -403,7 +422,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
           // console.error('Busqueda bx: ', bx);
           // console.error('Padre: ', father);
           const idx = father ? this.hierarchicalLevels.indexOf(father) : this.hierarchicalLevels.findIndex(lvl => lvl.id === bx!.id);
-          console.error('#####  idx: ', idx);
+          // console.error('#####  idx: ', idx);
           const newChildrens = new Array<HierarchicalLevel>();
 
           for (const son of childrens) {
@@ -421,8 +440,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
             });
           }
           // console.error('#####  Nivel Afectado original: ', this.hierarchicalLevels[idx]);
-          console.error('#####  Nuevos Hijos mapeados: ');
-          console.error(newChildrens);
+          // console.error('#####  Nuevos Hijos mapeados: ');
+          // console.error(newChildrens);
           // this.hierarchicalLevels.splice(idx, 1, ...newChildrens);
           // console.error('levels antes de setear nuevos');
           // console.error(JSON.stringify(this.hierarchicalLevels));
@@ -433,13 +452,13 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
             const idxSon = this.hierarchicalLevels[idx].nivelJerarquico!.findIndex(lvl => lvl.id === childrens[0].nivel);
             this.hierarchicalLevels[idx].nivelJerarquico![idxSon].nivelJerarquico = [...newChildrens];
           }
-          console.error('#####  Nivel afectado nuevo: ', this.hierarchicalLevels[idx]);
+          // console.error('#####  Nivel afectado nuevo: ', this.hierarchicalLevels[idx]);
 
           // console.error('#####  Response Children: ', childrens);
 
           // console.error('#####  Response Children: ');
-          console.error('#####  lista niveles final: ');
-          console.error(JSON.stringify(this.hierarchicalLevels));
+          // console.error('#####  lista niveles final: ');
+          // console.error(JSON.stringify(this.hierarchicalLevels));
           this.treeControl.expand(node);
           this.saveExpandedNodes();
           // this.dataSource.data = this.hierarchicalLevels;

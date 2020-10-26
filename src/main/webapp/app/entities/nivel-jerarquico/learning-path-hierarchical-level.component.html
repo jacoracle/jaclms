@@ -11,6 +11,7 @@
                     <!-- <mat-icon>library_books</mat-icon> -->
                     <mat-icon>menu_book</mat-icon>&nbsp;
                     <span (click)="loadChildren(node)">{{ node.nombre }}</span>
+                    <mat-icon (click)="addLevel(node)">add</mat-icon>
                 </mat-tree-node>
 
                 <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
@@ -30,7 +31,7 @@
                     </mat-icon>
                     {{node.nombre}}
                     <!-- <mat-icon (click)="addHightLevel()">add</mat-icon> -->
-                    <mat-icon (click)="addLevel(node)">add</mat-icon>
+                    <!-- <mat-icon (click)="addLevel(node)">add</mat-icon> -->
                 </mat-tree-node>
             </mat-tree>
         </div>
