@@ -93,8 +93,8 @@ export class RutasAprendizajeJerarquiaComponent implements OnInit {
       return { expandable, name, level };
     };
     this.treeControl = new FlatTreeControl<FlatNode>(
-      node => node.level,
-      node => node.expandable
+      node => node.level!,
+      node => node.expandable!
     );
     this.treeFlattener = new MatTreeFlattener(
       this._transformer,

@@ -12,6 +12,16 @@
                     <mat-icon>menu_book</mat-icon>&nbsp;
                     <span (click)="loadChildren(node)">{{ node.nombre }}</span>
                 </mat-tree-node>
+
+                <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                    <button mat-icon-button disabled></button>
+                    <mat-form-field>
+                        <mat-label>Nuevo elemento...</mat-label>
+                        <input matInput #itemValue placeholder="Nivel X...">
+                    </mat-form-field>
+                    <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+                </mat-tree-node>
+
                 <!-- This is the tree node template for expandable nodes -->
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag>
                     <mat-icon class="mat-icon-rtl-mirror" mat-icon-button matTreeNodeToggle
@@ -36,6 +46,9 @@
                 </div>
             </div>
             <!-- </ng-container> -->
+            <p>
+                {{ dataSource.data | json }}
+            </p>
         </div>
 
     </div>
