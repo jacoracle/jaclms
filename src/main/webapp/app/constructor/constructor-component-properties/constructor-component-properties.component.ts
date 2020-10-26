@@ -547,4 +547,10 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
       this.fileFormat === 'activity_question_audio_media'
     );
   }
+
+  isQuestionEmpty(): boolean {
+    return (
+      this.activity && this.activity.contenido && (this.activity.contenido === null || Object.keys(this.activity.contenido).length === 0)
+    );
+  }
 }
