@@ -211,10 +211,11 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
 
   addLevelTree(previousIndex: number, currentIndex: number): void {
     // console.error(`Index previo: ${previousIndex} actual: ${currentIndex}`);
-    console.error(currentIndex);
     // this.treeControl.dataNodes
+    const padre: HierarchicalLevel = this.treeControl.dataNodes[currentIndex - 1].node;
+    // console.error('Padre del agrupador que se agregará: ', padre);
 
-    this.hierarchicalLevels.push({
+    padre.nivelJerarquico!.push({
       ...new HierarchicalLevelModel(),
       id: undefined,
       nombre: this.sequenceList[previousIndex].titulo,
@@ -223,6 +224,15 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       nivelJerarquico: []
       // estructuraJerarquica: []
     });
+    /*
+    this.hierarchicalLevels.push({
+      ...new HierarchicalLevelModel(),
+      id: undefined,
+      nombre: this.sequenceList[previousIndex].titulo,
+      imagenUrl: undefined,
+      nivelJerarquico: []
+    });
+    */
     this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
   }
 
