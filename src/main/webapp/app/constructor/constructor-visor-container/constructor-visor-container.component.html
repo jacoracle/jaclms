@@ -12,7 +12,7 @@
             </div>
 
             <div *ngIf="!contentBlocks.length" class="row-add-content">
-                <button class="main-btn" (click)="addNewBlock()" [disabled]="">
+                <button class="main-btn" (click)="addNewBlock()" [disabled]="" jhiTranslate="maincontent.addblocks">
                     <i class="icon ni-add"></i>
                     Agregar bloque de contenido
                 </button>
@@ -32,7 +32,7 @@
                 </div>
 
                 <div *ngIf="selectedBlock === index" class="row-add-content">
-                    <button class="main-btn" (click)="addNewBlock()" [disabled]="">
+                    <button class="main-btn" (click)="addNewBlock()" [disabled]="" jhiTranslate="maincontent.addblocks">
                         <i class="icon ni-add"></i>
                         Agregar bloque de contenido
                     </button>
