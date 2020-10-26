@@ -14,14 +14,14 @@
                     <mat-icon (click)="addLevel(node)">add</mat-icon>
                 </mat-tree-node>
 
-                <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                <!-- <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
                     <button mat-icon-button disabled></button>
                     <mat-form-field>
                         <mat-label>Nuevo elemento...</mat-label>
                         <input matInput #itemValue placeholder="Nivel X...">
                     </mat-form-field>
                     <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
-                </mat-tree-node>
+                </mat-tree-node> -->
 
                 <!-- This is the tree node template for expandable nodes -->
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag>

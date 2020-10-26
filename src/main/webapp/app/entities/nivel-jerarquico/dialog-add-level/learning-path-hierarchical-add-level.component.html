@@ -3,10 +3,10 @@
     <p>Capture el nombre del nuevo nivel:</p>
     <mat-form-field>
         <mat-label>Nuevo nivel</mat-label>
-        <input matInput autocomplete="off" [(ngModel)]="data.nameNewLevel">
+        <input matInput autocomplete="off" [(ngModel)]="data.newLevelName">
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data.nameNewLevel" cdkFocusInitial>Agregar</button>
+    <button mat-button [mat-dialog-close]="data.newLevelName" cdkFocusInitial>Agregar</button>
 </div>

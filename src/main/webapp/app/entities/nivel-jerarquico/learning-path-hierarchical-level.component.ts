@@ -36,7 +36,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
 
   // tree
 
-  nameNewLevel!: string;
+  newLevelName!: string;
 
   objectType = '';
   _transformer: any;
@@ -239,7 +239,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     // this.insertItem(parentNode!, 'Nuevo elemento');
     this.treeControl.expand(node);
     // this.saveExpandedNodes();
-    this.nivelJerarquicoService.insertItem(parentNode as HierarchicalLevel, this.nameNewLevel); //  '');
+    this.nivelJerarquicoService.insertItem(parentNode as HierarchicalLevel, this.newLevelName); //  '');
     // this.treeControl.expand(node);
     // this.restoreExpandedNodes();
     this.treeControl.expand(node);
@@ -263,13 +263,13 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   openDialog(node: HierarchicalLevel): void {
     const dialogRef = this.dialog.open(LearningPathHierarchicalAddLevelComponent, {
       width: '350px',
-      data: { newLevelName: this.nameNewLevel }
+      data: { newLevelName: this.newLevelName }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       // console.error('The dialog was closed');
       if (result) {
-        this.nameNewLevel = result;
+        this.newLevelName = result;
         this.addNewLevelToTree(node);
       }
     });
