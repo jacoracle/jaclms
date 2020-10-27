@@ -25,7 +25,7 @@ export class ConstructorComponentPropertiesBlockComponent implements OnInit, OnD
   constructor(
     private contentBlocksService: ContentBlocksService,
     private bloquesService: BloquesCursoService,
-    private translate: TranslateService
+    public translate: TranslateService
   ) {
     // .b-title-text .final-block-row div pedo con alineado de título en header, este funciona en título normal
 
