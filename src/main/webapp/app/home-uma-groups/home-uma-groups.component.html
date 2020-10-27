@@ -14,7 +14,7 @@
         <div class="r2">
           <div class="windowHeader-title">
             <!-- <div class="icon-step-header"></div> -->
-            <h4>Agrupador de UMA</h4>
+            <h4 jhiTranslate="homegroup.title">Agrupador de UMA</h4>
           </div>
           <div class="c1">
           </div>
@@ -24,11 +24,11 @@
       <div class="window-br-body-topbar">
           <div class="line-gradient lg-step2"></div>
           <div class="row-wbr-bt">
-            <p>Tus Agrupadores ({{secuenciasUma!.length}})</p>
+            <p jhiTranslate="homegroup.your">Tus Agrupadores ({{secuenciasUma!.length}})</p>
 
             <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off" class="form-uma-search">
               <mat-form-field appearance="outline">
-                <mat-label>Buscar</mat-label>
+                <mat-label jhiTranslate="homegroup.search">Buscar</mat-label>
                 <input type="text" placeholder="" matInput formControlName="tituloAgrupador"
                   [matAutocomplete]="autoInputTituloAgrupador">
                 <mat-autocomplete autoActiveFirstOption #autoInputTituloAgrupador="matAutocomplete"
@@ -51,8 +51,12 @@
               <div class="br-message-icon"></div>
             </div>
             <div class="brm-2">
-              <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
-              <p>Para comenzar da click en el botón "Crear Agrupador".</p>
+              <p>
+                  <label jhiTranslate="homegroup.greet">¡Hola!</label><br>
+                  <label jhiTranslate="homegroup.welcome">Bienvenido a </label>
+                  <span>Nimbus Constructor</span>.
+              </p>
+              <p jhiTranslate="homegroup.start">Para comenzar da click en el botón "Crear Agrupador".</p>
             </div>
           </div>
         </div>
@@ -93,8 +97,8 @@
 
       <!-- Window footer -->
       <div class="window-br-footer">
-          <button routerLink="/" class="secondary-btn">Regresar</button>
-          <button routerLink="/group-configuration" class="main-btn">Nuevo Agrupador</button>
+          <button routerLink="/" class="secondary-btn" jhiTranslate="homegroup.back">Regresar</button>
+          <button routerLink="/group-configuration" class="main-btn" jhiTranslate="homegroup.new">Nuevo Agrupador</button>
       </div>
 
     </div>
