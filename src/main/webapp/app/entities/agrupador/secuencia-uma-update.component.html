@@ -3,15 +3,15 @@
     <div class="sequence-uma-body">
 
         <div class="secuence-uma-topbar">
-            <p class="p-result">Tus UMA ( {{umasList.length}} )</p>
+            <p class="p-result"><span jhiTranslate="group.sequence.yourumas">Tus UMA</span>( {{umasList.length}} )</p>
             <!-- Insertar tooltip -->
             <div class="temporal-instruction">
                 <i class="icon ni-info"></i>
-                <span>Arrastra las UMA al panel de la derecha para crear secuencias.</span>
+                <span jhiTranslate="group.sequence.drag">Arrastra las UMA al panel de la derecha para crear secuencias.</span>
             </div>
             <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off" class="form-uma-search">
                 <mat-form-field appearance="outline">
-                    <mat-label>Buscar</mat-label>
+                    <mat-label jhiTranslate="group.sequence.search">Buscar</mat-label>
                     <input type="text" placeholder="" matInput formControlName="umaGral" [matAutocomplete]="umaGral">
                     <mat-autocomplete autoActiveFirstOption #umaGral="matAutocomplete" [displayWith]="displayFn">
                         <!-- <mat-option *ngFor="let option of umasList" [value]="option">
@@ -59,7 +59,7 @@
     <!--termina sequence-uma-body-->
 
     <div class="sequence-uma-bar">
-        <div class="title-sequence-uma">Secuencia de UMA</div>
+        <div class="title-sequence-uma" jhiTranslate="group.sequence.sequenceuma">Secuencia de UMA</div>
 
         <div class="uma-item-sequence">
             <div class="row-item-uma-secuence" cdkDropList #sequenceUma="cdkDropList" [cdkDropListData]="tiraUmas"

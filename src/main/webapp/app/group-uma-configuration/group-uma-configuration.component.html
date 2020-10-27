@@ -12,10 +12,10 @@
       <div class="r2">
         <div class="windowHeader-title disbled-t-header">
           <!-- <div class="icon-step-header"></div> -->
-          <h4>Agrupador de UMA / </h4>
+          <h4 jhiTranslate="group.page">Agrupador de UMA / </h4>
         </div>
         <div class="windowHeader-title">
-          <h4>Configurar Agrupador</h4>
+          <h4 jhiTranslate="group.title">Configurar Agrupador</h4>
         </div>
         <div class="c1">
         </div>
@@ -39,11 +39,11 @@
         <div class="container-stepper-group">
 
           <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="Configuración general">
+            <mat-tab label="{{'group.generalconfig' | translate}}">
               <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
                 (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
             </mat-tab>
-            <mat-tab label="Secuencia de UMA">
+            <mat-tab label="{{'group.tagsequence' | translate}}">
               <jhi-secuencia-uma-update [createdGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
             </mat-tab>
             <!-- <mat-tab label="Third">Content 3</mat-tab> -->
@@ -58,12 +58,12 @@
     <div class="window-br-footer">
       <!-- this cancel is for (back home)-->
       <button *ngIf="!isCreation()" routerLink="/uma-groups-home" matTooltip="Regresar al Home."
-        class="secondary-btn">Cancelar</button>
+        class="secondary-btn" jhiTranslate="group.cancel">Cancelar</button>
       <!-- this cancel is for (delete created group)-->
       <!-- <button *ngIf="isCreation()" class="secondary-btn" (click)="revertData()"
         matTooltip="Deshace el Agrupador creado.">Cancelar</button> -->
       <button (click)="executeSave($event)" class="main-btn"
-        matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">Guardar Agrupador</button>
+        matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false" jhiTranslate="group.save">Guardar Agrupador</button>
     </div>
 
   </div>

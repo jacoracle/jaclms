@@ -1,0 +1,29 @@
+{
+  "group": {
+    "page": "Agrupador de UMA / ",
+    "title": "Configurar Agrupador",
+    "generalconfig": "Configuración general",
+    "tagsequence": "Secuencia de UMA",
+    "form": {
+      "title": "Datos Agrupador:",
+      "noteobligatory": "*Campo requerido",
+      "name": "Título de Agrupador*",
+      "obligatory": "Campo requerido",
+      "description": "Descripción",
+      "limitDesc": "La descripción del Grupo no debe superar los 50 caracteres.",
+      "duration": "Duración",
+      "minutes": "Minutos",
+      "tags": "Tags de búsqueda para el agrupador",
+      "cancel": "cancel",
+      "notetags": "Escribe etiquetas de búsqueda o tags para el agrupador"
+    },
+    "sequence": {
+      "yourumas": "Tus UMA",
+      "drag": "Arrastra las UMA al panel de la derecha para crear secuencias.",
+      "search": "Buscar",
+      "sequenceuma": "Secuencia de UMA"
+    },
+    "cancel": "Cancelar",
+    "save": "Guardar Agrupador"
+  }
+}
