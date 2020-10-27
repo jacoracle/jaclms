@@ -59,6 +59,14 @@ public interface NivelJerarquicoService {
 	 */
 	Optional<NivelJerarquico> updateNivelJerarquico(NivelJerarquicoDTO dto) throws Exception;
 
+	/**
+	 * Update
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
+	Optional<NivelJerarquico> updateOrder(NivelJerarquicoDTO dto) throws Exception;
+	
     /**
      * Delete the "id" NivelJerarquico.
      *
