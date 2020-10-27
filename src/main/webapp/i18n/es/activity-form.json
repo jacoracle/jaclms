@@ -1,0 +1,34 @@
+{
+  "activityquestion": {
+    "title": "Actividad interactiva",
+    "select": "Selecciona el tipo de respuesta:",
+    "unic": "Única",
+    "multiple": "Múltiple",
+    "truefalse": "Verdadero Falso",
+    "audiounic": "Audio Única",
+    "audiomultiple": "Audio Múltiple",
+    "audiotruefalse": "Audio Verdadero Falso",
+    "obligatory": "Es obligatorio seleccionar una opción",
+    "evaluable": "Evaluable:",
+    "unicimage": "Imagen Única",
+    "multipleimage": "Imagen Múltiple",
+    "unicaudio": "Audio Única",
+    "multipleaudio": "Audio Múltiple",
+    "cancel": "Cancelar",
+    "create": "Crear Actividad",
+    "edit": "Editar Actividad",
+    "question": {
+      "question": "Pregunta ",
+      "makequestion": "Haz una pregunta ...",
+      "lenght": "Longitud entre 1 y 100 caracteres, validar sus respuestas",
+      "add": "Agregar Pregunta"
+    },
+    "answer": {
+      "makeanswer": "Respuesta ...",
+      "lenght": "Longitud entre 1 y 50 caracteres",
+      "add": "Agregar respuesta",
+      "errorfilesize": "El archivo debe tener menos de 5 MB.",
+      "errorfiletype": "Tipo de archivo no permitido."
+    }
+  }
+}

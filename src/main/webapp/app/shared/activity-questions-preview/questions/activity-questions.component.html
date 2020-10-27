@@ -6,15 +6,18 @@
         <div class="row-wg row-apc">
             <div class="col-question" [formGroupName]="indQuestion">
                 <mat-form-field>
-                    <mat-label><label for="id_question{{indQuestion}}">Pregunta {{indQuestion + 1}}
-                        *</label></mat-label>
+                    <mat-label>
+                        <label for="id_question{{indQuestion}}">
+                            <span jhiTranslate="activityquestion.question.question">Pregunta </span>{{indQuestion + 1}} *
+                        </label>
+                    </mat-label>
                     <input matInput [ngClass]="{'alert-input': !isValidQuestion(indQuestion), 'disabled-input':isQuestionAudio()}"
                            class="form-control height24 no-border-right" formControlName="pregunta"
-                           placeholder="Haz una pregunta ..." name="pregunta{{indQuestion}}"
+                           placeholder="{{'activityquestion.question.makequestion' | translate}}" name="pregunta{{indQuestion}}"
                            id="id_question{{indQuestion}}" (keypress)="noWriteMedia()">
                     <div class="form-nimbus">
                         <div *ngIf="!isValidQuestion(indQuestion)" class="form-alert">
-                            <p>Longitud entre 1 y 100 caracteres, validar sus respuestas</p>
+                            <p jhiTranslate="activityquestion.question.lenght">Longitud entre 1 y 100 caracteres, validar sus respuestas</p>
                         </div>
                     </div>
                 </mat-form-field>
@@ -51,7 +54,7 @@
     <div class="row-add-question">
         <button class="main-btn" (click)="addQuestion()" [disabled]="controlesPreguntas().length >= 10">
             <i class="icon ni-add icon-negative"></i>
-            <span>Agregar Pregunta</span>
+            <span jhiTranslate="activityquestion.question.add">Agregar Pregunta</span>
         </button>
     </div>
 </form>
