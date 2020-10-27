@@ -1,19 +1,17 @@
 <form [formGroup]="activityForm" (keydown)="onKeyDown($event)">
-    <div formArrayName="preguntas"
-         *ngFor="let pregunta of controlesPreguntas(); let indQuestion = index;" class="content-preguntas">
+    <div formArrayName="preguntas" *ngFor="let pregunta of controlesPreguntas(); let indQuestion = index;"
+         class="content-preguntas">
         <!-- <mat-divider></mat-divider> -->
         <!-- Ingresar pregunta -->
         <div class="row-wg row-apc">
             <div class="col-question" [formGroupName]="indQuestion">
                 <mat-form-field>
-                    <mat-label><label
-                        for="id_question{{indQuestion}}">Pregunta {{indQuestion + 1}}
+                    <mat-label><label for="id_question{{indQuestion}}">Pregunta {{indQuestion + 1}}
                         *</label></mat-label>
-                    <input matInput [ngClass]="{'alert-input': !isValidQuestion(indQuestion)}"
-                           class="form-control height24"
-                           formControlName="pregunta" placeholder="Haz una pregunta ..."
-                           name="pregunta{{indQuestion}}"
-                           id="id_question{{indQuestion}}">
+                    <input matInput [ngClass]="{'alert-input': !isValidQuestion(indQuestion), 'disabled-input':isQuestionAudio()}"
+                           class="form-control height24 no-border-right" formControlName="pregunta"
+                           placeholder="Haz una pregunta ..." name="pregunta{{indQuestion}}"
+                           id="id_question{{indQuestion}}" (keypress)="noWriteMedia()">
                     <div class="form-nimbus">
                         <div *ngIf="!isValidQuestion(indQuestion)" class="form-alert">
                             <p>Longitud entre 1 y 100 caracteres, validar sus respuestas</p>
@@ -21,23 +19,37 @@
                     </div>
                 </mat-form-field>
             </div>
+
+            <div class="col-record" *ngIf="isQuestionAudio()">
+                <input type="button" (click)="record($event, indQuestion)" class="btn-circle" id="mixBut"
+                       [ngClass]="{'btn-start': !isOn, 'btn-stop': isOn}" (keydown.enter)="start()"/>
+            </div>
+
+            <div class="col-audio-load" *ngIf="isQuestionAudio()">
+                <label for="loadQuestion{{indQuestion}}"></label>
+                <input type="button" name="loadImage" id="loadQuestion{{indQuestion}}" class="btn-circle"
+                       (click)="fileInput.click()" (keydown.enter)="selectFile($event, indQuestion)"/>
+                <input #fileInput type="file" (change)="selectFile($event, indQuestion)" style="display:none;"/>
+            </div>
+
             <div class="col-delete-question">
-                <input type="button" (click)="removeQuestion(indQuestion)" class="btn-circle bs-danger"  [ngClass]="{'btn-circle-disabled': controlesPreguntas().length <= 1}"
+                <input type="button" (click)="removeQuestion(indQuestion)" class="btn-circle bs-danger"
+                       [ngClass]="{'btn-circle-disabled': controlesPreguntas().length <= 1}"
                        (keydown.enter)="removeQuestion(indQuestion)" [disabled]="controlesPreguntas().length <= 1"/>
-                    <!--<i class="icon ni-delete icon-negative"></i>-->
+                <!--<i class="icon ni-delete icon-negative"></i>-->
             </div>
         </div><!-- Ingresar pregunta -->
 
         <jhi-activity-answers [activityForm]="activityForm" [submitted]="submitted" [indQuestion]="indQuestion"
-                              [groupQuestion]="pregunta" [typeQuestion]="typeQuestion" [id]="id" [filesAnswersDelete]="filesAnswersDelete">
+                              [groupQuestion]="pregunta" [typeQuestion]="typeQuestion" [id]="id"
+                              [filesAnswersDelete]="filesAnswersDelete">
         </jhi-activity-answers>
 
 
     </div><!-- Preguntas -->
 
     <div class="row-add-question">
-        <button class="main-btn" (click)="addQuestion()"
-                [disabled]="controlesPreguntas().length >= 10">
+        <button class="main-btn" (click)="addQuestion()" [disabled]="controlesPreguntas().length >= 10">
             <i class="icon ni-add icon-negative"></i>
             <span>Agregar Pregunta</span>
         </button>

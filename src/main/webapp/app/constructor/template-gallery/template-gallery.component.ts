@@ -6,6 +6,7 @@ import { ITipoBloqueComponentes } from 'app/shared/model/tipo-bloque-componentes
 import { map } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'jhi-template-gallery',
@@ -14,23 +15,7 @@ import { TextEditorBehaviorService } from 'app/services/text-editor-behavior.ser
 })
 export class TemplateGalleryComponent implements OnInit {
   selectedContentBlockIndex = -1;
-  filters = [
-    {
-      text: 'Todos',
-      filter: 'all',
-      selected: true
-    },
-    {
-      text: 'Texto',
-      filter: 'text',
-      selected: false
-    },
-    {
-      text: 'Multimedia',
-      filter: 'media',
-      selected: false
-    }
-  ];
+  filters: any;
   private _templates: ITipoBloqueComponentes[] = [];
   get templates(): ITipoBloqueComponentes[] {
     return this._templates;
@@ -46,8 +31,26 @@ export class TemplateGalleryComponent implements OnInit {
     private contentBlocksService: ContentBlocksService,
     private navigationControlsService: NavigationControlsService,
     private tipoComponenteService: TipoComponenteService,
-    private textEditorBehaviosService: TextEditorBehaviorService
+    private textEditorBehaviosService: TextEditorBehaviorService,
+    private translate: TranslateService
   ) {
+    this.filters = [
+      {
+        text: translate.instant('rightbar.all'),
+        filter: 'all',
+        selected: true
+      },
+      {
+        text: translate.instant('rightbar.text'),
+        filter: 'text',
+        selected: false
+      },
+      {
+        text: translate.instant('rightbar.multimedia'),
+        filter: 'media',
+        selected: false
+      }
+    ];
     // Obtener las plantillas del llamdo de los tipos de bloques de contenido
     this.tipoComponenteService
       .query()

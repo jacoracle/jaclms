@@ -5,6 +5,9 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { FileUploadInteractivasService } from 'app/services/file-upload-interactivas.service';
 import { IContenido } from 'app/shared/model/contenido.model';
 import { DomSanitizer } from '@angular/platform-browser';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import MicRecorder from 'mic-recorder-to-mp3';
 
 @Component({
   selector: 'jhi-activity-answers',
@@ -36,10 +39,17 @@ export class ActivityAnswersComponent {
 
   @ViewChild('fileInput', { static: false }) fileInput: any;
   maxImageSize = 5120000;
-  allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'audio/mpeg'];
+  allowedFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg', 'audio/mpeg', 'audio/mp3'];
   selectedFiles = [];
   showLoader = false;
   imageFileTypes: any = ['image/jpg', 'image/png', 'image/jpeg'];
+  audioFileTypes: any = ['audio/mpeg', 'audio/mp3'];
+
+  recorder = new MicRecorder({
+    bitRate: 128
+  });
+  isOn = false;
+  indAnswerRecord = -1;
 
   constructor(
     public eventManager: JhiEventManager,
@@ -150,25 +160,29 @@ export class ActivityAnswersComponent {
         return;
       } else {
         this.selectedFiles = event.target.files;
-        this.showLoader = true;
-        this.fileUploadInteractivas.pushFileStorage(this.selectedFiles[0], this.id).subscribe(
-          (data: any) => {
-            this.validateCalledToService(this.castObjectAsContenido(data), event.target.files[0].type, event, indQuestion, indAnswer);
-          },
-          error => {
-            this.showErrorFileType(error);
-          }
-        );
-        setTimeout(() => {
-          const inputQuestion = document.getElementById('id_question' + indQuestion);
-          if (inputQuestion) {
-            inputQuestion.focus();
-            this.showLoader = false;
-            this.refreshQuestion(indQuestion);
-          }
-        }, 1500);
+        this.correctFile(this.selectedFiles[0], event.target.files[0].type, indQuestion, indAnswer, event);
       }
     }
+  }
+
+  correctFile(file: File, type: string, indQuestion: number, indAnswer: number, event: any): void {
+    this.showLoader = true;
+    this.fileUploadInteractivas.pushFileStorage(file, this.id).subscribe(
+      (data: any) => {
+        this.validateCalledToService(this.castObjectAsContenido(data), type, event, indQuestion, indAnswer);
+      },
+      error => {
+        this.showErrorFileType(error);
+      }
+    );
+    setTimeout(() => {
+      const inputQuestion = document.getElementById('id_question' + indQuestion);
+      if (inputQuestion) {
+        inputQuestion.focus();
+        this.showLoader = false;
+        this.refreshQuestion(indQuestion);
+      }
+    }, 1500);
   }
 
   /**
@@ -188,7 +202,8 @@ export class ActivityAnswersComponent {
     const campoSafeUrl = UtilActivityQuestions.campoRespuesta(this.activityForm, indQuestion, indAnswer, 'safeUrl');
     const loadedSafeUrl = UtilActivityQuestions.campoRespuesta(this.activityForm, indQuestion, indAnswer, 'loadedSafeUrl');
     if (
-      ((this.isMediaImage() && this.imageFileTypes.includes(fileType)) || (this.isMediaAudio() && fileType === 'audio/mpeg')) &&
+      ((this.isMediaImage() && this.imageFileTypes.includes(fileType)) ||
+        (this.isMediaAudio() && this.audioFileTypes.includes(fileType))) &&
       campoSafeUrl &&
       loadedSafeUrl
     ) {
@@ -250,5 +265,43 @@ export class ActivityAnswersComponent {
 
   isMediaImage(): boolean {
     return UtilActivityQuestions.isMediaImage(this.typeQuestion);
+  }
+
+  isVerdaderoFalso(): boolean {
+    return UtilActivityQuestions.isVerdaderoFalso(this.typeQuestion);
+  }
+
+  record(event: any, indQuestion: number, indAnswer: number): void {
+    if (!this.isOn) {
+      this.start(indAnswer);
+    } else {
+      this.stop(event, indQuestion, indAnswer);
+    }
+  }
+
+  start(indAnswer: number): void {
+    this.indAnswerRecord = indAnswer;
+    this.isOn = true;
+    this.recorder.start().catch((e: any) => {
+      this.eventManager.broadcast(new JhiEventWithContent('constructorApp.blockUpdateError', e));
+    });
+  }
+
+  stop(event: any, indQuestion: number, indAnswer: number): void {
+    this.isOn = false;
+    this.recorder
+      .stop()
+      .getMp3()
+      .then(([buffer, blob]: any) => {
+        const indiceUser = indAnswer + 1;
+        const file = new File(buffer, 'respuesta grabada ' + indiceUser + '.mp3', {
+          type: blob.type,
+          lastModified: Date.now()
+        });
+        this.correctFile(file, file.type, indQuestion, indAnswer, event);
+      })
+      .catch((e: any) => {
+        this.eventManager.broadcast(new JhiEventWithContent('constructorApp.blockUpdateError', e));
+      });
   }
 }

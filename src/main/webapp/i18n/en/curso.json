@@ -1,0 +1,59 @@
+{
+  "constructorApp": {
+    "course": {
+      "home": {
+        "title": "Courses",
+        "createLabel": "Create new Course",
+        "createOrEditLabel": "Create or edit Course",
+        "titleGeneralConfg": "General configuration",
+        "titleAdvancelConfg": "Advanced configuration",
+        "notFound": "No Courses found"
+      },
+      "created": "A new Course has been created with the identifier {{param}}",
+      "updated": "A Course has been updated with the identifier {{param}}",
+      "deleted": "A Course has been deleted with the identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to delete Course {{id}}?"
+      },
+      "detail": {
+        "title": "Course"
+      },
+      "validations": {
+        "formError": "Please review the information and try again.",
+        "fileSize": "The file must be less than 5MB.",
+        "fileType": "File type not allowed.",
+        "dates": "The creation date cannot be later than the publication date.",
+        "requiredField": "This field is required."
+      },
+      "title": "Title",
+      "description": "Description",
+      "ModoDistribucion": "Mode of distribution",
+      "Stage Editorial": "Stage Editorial",
+      "Creation Date": "Creation Date",
+      "dateCreacionSys ": " Date Creation Sys ",
+      "Publication Date": "Publication Date",
+      "Publication Date Sys": "Publication Date Sys",
+      "numberEdicion": "Number of edition",
+      "versionStr": "Version",
+      "Keyword": "Keywords",
+      "Content summary": "Content summary",
+      "key": "key",
+      "status": "Status",
+      "portadaUrl": "Portada Url",
+      "modality": "modality",
+      "version": "Version",
+      "category": "Category",
+      "subject": "Subject",
+      "GradoAcademico": "Academic degree",
+      "numberGrade": "Grade",
+      "hierarchical level": {
+        "created": "The project was saved successfully.",
+        "updated": "The information has been updated successfully.",
+        "error": "The information could not be saved, please try again later."
+      },
+      "blockUpdate": {
+        "error": "Could not save update information, please try again later."
+      }
+    }
+  }
+}

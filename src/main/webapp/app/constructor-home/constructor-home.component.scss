@@ -117,6 +117,12 @@
       background-image: url('../../content/images/bg_step3.png');
     }
   }
+  .heimg4 {
+    background: $color-step-4;
+    .home-image-step {
+      background-image: url('../../content/images/bg_step4.png');
+    }
+  }
   button {
     margin-top: 15px;
   }

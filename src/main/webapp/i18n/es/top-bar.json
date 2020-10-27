@@ -1,0 +1,15 @@
+{
+  "topbar": {
+    "back": "Regresar",
+    "preview": "Visualizar",
+    "color": {
+      "ni-light": "Light mode",
+      "ni-dark": "Dark mode"
+    },
+    "size": {
+      "desktop": "Desktop",
+      "tablet": "Tablet",
+      "smartphone": "Smartphone"
+    }
+  }
+}

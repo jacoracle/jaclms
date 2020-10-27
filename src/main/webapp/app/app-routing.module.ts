@@ -16,6 +16,7 @@ import { HomeUmaGroupsComponent } from './home-uma-groups/home-uma-groups.compon
 import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
 import { LearningPathConfigurationComponent } from './learning-path-configuration/learning-path-configuration.component';
 import { LearningPathHierarchicalLevelComponent } from './entities/nivel-jerarquico/learning-path-hierarchical-level.component';
+import { HomeCalendarComponent } from 'app/home-calendar/home-calendar.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -58,6 +59,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'uma-home',
           component: HomeModuleComponent
+        },
+        {
+          path: 'calendar-home',
+          component: HomeCalendarComponent
         },
         {
           path: 'uma-groups-home',

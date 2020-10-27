@@ -1,0 +1,12 @@
+{
+  "constructorApp": {
+    "activityForm": {
+      "closeModal": {
+        "success": "The form is correct and was saved successfully"
+      },
+      "invalidForm": {
+        "error": "The form is incorrect, please validate all the fields"
+      }
+    }
+  }
+}

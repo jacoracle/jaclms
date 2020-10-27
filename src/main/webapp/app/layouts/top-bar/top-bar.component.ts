@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { EventEmitterService } from 'app/services/event-emitter.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { ColorModeService } from 'app/services/color-mode.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'jhi-top-bar',
@@ -14,42 +15,10 @@ import { ColorModeService } from 'app/services/color-mode.service';
 export class TopBarComponent {
   openMenu = false;
   isNavbarCollapsed = true;
-  colorModes = [
-    {
-      class: 'ni-light',
-      text: 'Light mode'
-    },
-    {
-      class: 'ni-dark',
-      text: 'Dark mode'
-    }
-  ];
-  selectedColorMode = {
-    class: 'ni-light',
-    text: 'Light mode'
-  };
-  sizeMenus = [
-    {
-      class: 'ni-desktop',
-      value: 'desktop',
-      text: 'Desktop'
-    },
-    {
-      class: 'ni-tablet',
-      value: 'tablet',
-      text: 'Tablet'
-    },
-    {
-      class: 'ni-smartphone',
-      value: 'smartphone',
-      text: 'Smartphone'
-    }
-  ];
-  selectedSizeMenu = {
-    class: 'ni-desktop',
-    value: 'desktop',
-    text: 'Desktop'
-  };
+  colorModes: any;
+  selectedColorMode: any;
+  sizeMenus: any;
+  selectedSizeMenu: any;
 
   constructor(
     private loginService: LoginService,
@@ -57,8 +26,47 @@ export class TopBarComponent {
     private router: Router,
     private eventEmitterService: EventEmitterService,
     private navigationControlsService: NavigationControlsService,
-    private colorModeService: ColorModeService
-  ) {}
+    private colorModeService: ColorModeService,
+    private translate: TranslateService
+  ) {
+    this.colorModes = [
+      {
+        class: 'ni-light',
+        text: translate.instant('topbar.color.ni-light')
+      },
+      {
+        class: 'ni-dark',
+        text: translate.instant('topbar.color.ni-dark')
+      }
+    ];
+    this.selectedColorMode = {
+      class: 'ni-light',
+      text: translate.instant('topbar.color.ni-light')
+    };
+
+    this.sizeMenus = [
+      {
+        class: 'ni-desktop',
+        value: 'desktop',
+        text: translate.instant('topbar.size.desktop')
+      },
+      {
+        class: 'ni-tablet',
+        value: 'tablet',
+        text: translate.instant('topbar.size.tablet')
+      },
+      {
+        class: 'ni-smartphone',
+        value: 'smartphone',
+        text: translate.instant('topbar.size.smartphone')
+      }
+    ];
+    this.selectedSizeMenu = {
+      class: 'ni-desktop',
+      value: 'desktop',
+      text: translate.instant('topbar.size.desktop')
+    };
+  }
 
   collapseNavbar(): void {
     this.isNavbarCollapsed = true;

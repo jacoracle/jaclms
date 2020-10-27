@@ -1,0 +1,32 @@
+{
+  "constructorApp": {
+    "sequence": {
+      "home": {
+        "title": "Grouper",
+        "createLabel": "Create Grouper",
+        "createOrEditLabel": "Create or edit Grouper",
+        "titleGeneralConfg": "General configuration",
+        "titleAdvancelConfg": "Advanced configuration",
+        "notFound": "No Grouper could be found"
+      },
+      "created": "The sequence has been created.",
+      "updated": "The sequence has been updated.",
+      "deleted": "The sequence has been deleted.",
+      "delete": {
+        "question": "Are you sure you want to delete Sequence {{id}}?"
+      },
+      "detail": {
+        "title": "Grouper"
+      },
+      "validations": {
+        "formError": "Please review the information and try again.",
+        "fileSize": "The file must be less than 5MB.",
+        "fileType": "File type not allowed.",
+        "dates": "The creation date cannot be later than the publication date.",
+        "requiredField": "This field is required.",
+        "save": "You should run search with filters, pending ...",
+        "saveError": "Could not Save Grouper, contact Administrator or try later."
+      }
+    }
+  }
+}

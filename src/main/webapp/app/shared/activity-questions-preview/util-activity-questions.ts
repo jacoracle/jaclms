@@ -1,5 +1,5 @@
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { OpcionPreguntas, SubTipoActividad } from 'app/shared/model/enumerations/tipo-actividad.model';
+import { OpcionPreguntas, OpcionConcatenada } from 'app/shared/model/enumerations/tipo-actividad.model';
 import { IActividadPregunta } from 'app/shared/model/actividad-pregunta.model';
 import { cantidadAtributos } from 'app/shared/util/util';
 import { FileUploadInteractivasService } from 'app/services/file-upload-interactivas.service';
@@ -17,7 +17,10 @@ export default class UtilActivityQuestions {
             respuestas: UtilActivityQuestions.arrayFormGroupRespuestas(jsonForm, i, formBuilder),
             calificada: new FormControl(jsonForm.preguntas[i].calificada, [Validators.required]),
             marcada: new FormControl(jsonForm.preguntas[i].marcada, [Validators.required]),
-            correcta: new FormControl(jsonForm.preguntas[i].correcta, [Validators.required])
+            correcta: new FormControl(jsonForm.preguntas[i].correcta, [Validators.required]),
+            path: new FormControl(jsonForm.preguntas[i].path),
+            safeUrl: new FormControl(),
+            loadedSafeUrl: new FormControl(false)
           })
         );
       }
@@ -30,11 +33,14 @@ export default class UtilActivityQuestions {
   static formGroupVacioPregunta(formBuilder: FormBuilder): FormGroup {
     return new FormGroup({
       pregunta: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      tipoPregunta: new FormControl(OpcionPreguntas.unica, [Validators.required]),
+      tipoPregunta: new FormControl(OpcionPreguntas.UNICA, [Validators.required]),
       respuestas: UtilActivityQuestions.arrayFormGroupRespuestas(undefined, 0, formBuilder),
       calificada: new FormControl(false, [Validators.required]),
       marcada: new FormControl(false, [Validators.required]),
-      correcta: new FormControl(false, [Validators.required])
+      correcta: new FormControl(false, [Validators.required]),
+      path: new FormControl(''),
+      safeUrl: new FormControl(''),
+      loadedSafeUrl: new FormControl(false)
     });
   }
 
@@ -51,9 +57,10 @@ export default class UtilActivityQuestions {
                 {
                   value: respuestasJson[i].respuesta,
                   disabled:
-                    jsonForm.tipoActividad.opcion === 'verdaderoFalso' ||
-                    jsonForm.tipoActividad.opcion === SubTipoActividad.imagen + '_' + OpcionPreguntas.unica ||
-                    jsonForm.tipoActividad.opcion === SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple
+                    jsonForm.tipoActividad.opcionConcatenada === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO ||
+                    jsonForm.tipoActividad.opcionConcatenada === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_VERDADEROFALSO ||
+                    jsonForm.tipoActividad.opcionConcatenada === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_IMAGEN ||
+                    jsonForm.tipoActividad.opcionConcatenada === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_IMAGEN
                 },
                 [Validators.required, Validators.maxLength(50)]
               ),
@@ -84,15 +91,27 @@ export default class UtilActivityQuestions {
   }
 
   static typeQuestion(activityForm: FormGroup): string {
+    let campoOpcionConcatenada;
     let campoOpcion;
+    let campoSubtipo;
     let tipoPregunta;
     let controlTipoActividad;
+    let opcion;
+    let subtipo;
     if (activityForm) {
       controlTipoActividad = activityForm.controls['tipoActividad'];
       if (controlTipoActividad) {
+        campoOpcionConcatenada = controlTipoActividad.get('opcionConcatenada');
         campoOpcion = controlTipoActividad.get('opcion');
-        if (campoOpcion) {
-          tipoPregunta = campoOpcion.value;
+        campoSubtipo = controlTipoActividad.get('subtipo');
+        if (campoOpcionConcatenada && campoOpcion && campoSubtipo) {
+          tipoPregunta = campoOpcionConcatenada.value;
+          if (tipoPregunta && tipoPregunta !== '') {
+            opcion = tipoPregunta.split('_')[3];
+            campoOpcion.setValue(opcion);
+            subtipo = tipoPregunta.split('_')[4];
+            campoSubtipo.setValue(subtipo);
+          }
         }
       }
     }
@@ -108,7 +127,10 @@ export default class UtilActivityQuestions {
         campoPregunta.setValue(event.value);
       }
 
-      if (event.value === 'verdaderoFalso') {
+      if (
+        event.value === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO ||
+        event.value === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_VERDADEROFALSO
+      ) {
         UtilActivityQuestions.verdaderoFalso(activityForm, i);
       } else {
         if (this.isMediaImage(event.value)) {
@@ -120,10 +142,13 @@ export default class UtilActivityQuestions {
         }
       }
 
-      if (ultimaOpcion === 'verdaderoFalso') {
-        UtilActivityQuestions.vaciaActivaInputsBoolean(activityForm, i, this.isTextWithOutTrueFalse(event.value));
+      if (
+        ultimaOpcion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO ||
+        ultimaOpcion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_VERDADEROFALSO
+      ) {
+        UtilActivityQuestions.vaciaActivaInputsBoolean(activityForm, i, this.isTextWithTrueFalse(event.value));
       } else {
-        if (this.isMutimedia(ultimaOpcion) && this.isTextWithOutTrueFalse(event.value)) {
+        if (this.isMutimedia(ultimaOpcion) && this.isTextWithTrueFalse(event.value)) {
           UtilActivityQuestions.vaciaActivaInputs(activityForm, i);
         }
       }
@@ -259,6 +284,15 @@ export default class UtilActivityQuestions {
     } else {
       return undefined;
     }
+  }
+
+  static campoPregunta(activityForm: FormGroup, indQuestion: number, nombreCampo: string): AbstractControl | null | undefined {
+    const controlPregunta = UtilActivityQuestions.controlPregunta(activityForm, indQuestion);
+    let campo;
+    if (controlPregunta) {
+      campo = controlPregunta.get(nombreCampo);
+    }
+    return campo;
   }
 
   static campoRespuesta(
@@ -414,6 +448,26 @@ export default class UtilActivityQuestions {
     }
   }
 
+  static getAudioQuestion(
+    activityForm: FormGroup,
+    path: string,
+    indQuestion: number,
+    fileUploadInteractivas: FileUploadInteractivasService,
+    domSanitizer: DomSanitizer
+  ): void {
+    const campoSafeUrl = UtilActivityQuestions.campoPregunta(activityForm, indQuestion, 'safeUrl');
+    const loadedSafeUrl = UtilActivityQuestions.campoPregunta(activityForm, indQuestion, 'loadedSafeUrl');
+    if (campoSafeUrl && loadedSafeUrl && path !== '' && (campoSafeUrl.value == null || campoSafeUrl.value === '') && !loadedSafeUrl.value) {
+      loadedSafeUrl.setValue(true);
+      fileUploadInteractivas
+        .getSound(path)
+        .pipe()
+        .subscribe((value: string) => {
+          this.setCampoSafeUrl(campoSafeUrl, domSanitizer, value, indQuestion, activityForm);
+        });
+    }
+  }
+
   static setCampoSafeUrl(
     campoSafeUrl: AbstractControl,
     domSanitizer: DomSanitizer,
@@ -435,69 +489,127 @@ export default class UtilActivityQuestions {
 
   static isUnic(typeQuestion: string): boolean {
     return (
-      typeQuestion === 'unica' ||
-      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.unica ||
-      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.unica ||
-      typeQuestion === 'verdaderoFalso'
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_VERDADEROFALSO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_AUDIO
     );
   }
 
   static isMultiple(typeQuestion: string): boolean {
     return (
-      typeQuestion === 'multiple' ||
-      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple ||
-      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_AUDIO
+    );
+  }
+
+  static isVerdaderoFalso(typeQuestion: string): boolean {
+    return (
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_VERDADEROFALSO
     );
   }
 
   static isMutimedia(typeQuestion: string): boolean {
     return (
-      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.unica ||
-      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple ||
-      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.unica ||
-      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_AUDIO
     );
   }
 
   static isMediaAudio(typeQuestion: string): boolean {
     return (
-      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.unica ||
-      typeQuestion === SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_AUDIO
     );
   }
 
   static isNotMediaAudio(typeQuestion: string): boolean {
     return (
-      typeQuestion !== SubTipoActividad.audio + '_' + OpcionPreguntas.unica &&
-      typeQuestion !== SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_UNICA_AUDIO &&
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_AUDIO &&
+      typeQuestion !== OpcionConcatenada.PREG_AUDIO_RESP_UNICA_AUDIO &&
+      typeQuestion !== OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_AUDIO
     );
   }
 
   static isMediaImage(typeQuestion: string): boolean {
     return (
-      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.unica ||
-      typeQuestion === SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_IMAGEN
     );
   }
 
   static isNotMediaImage(typeQuestion: string): boolean {
     return (
-      typeQuestion !== SubTipoActividad.imagen + '_' + OpcionPreguntas.unica &&
-      typeQuestion !== SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_UNICA_IMAGEN &&
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_IMAGEN &&
+      typeQuestion !== OpcionConcatenada.PREG_AUDIO_RESP_UNICA_IMAGEN &&
+      typeQuestion !== OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_IMAGEN
     );
   }
 
-  static isText(typeQuestion: string): boolean {
-    return typeQuestion === 'unica' || typeQuestion === 'multiple' || typeQuestion === 'verdaderoFalso';
+  static isQuestionText(typeQuestion: string): boolean {
+    return (
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_AUDIO
+    );
   }
 
-  static isTextWithOutTrueFalse(typeQuestion: string): boolean {
+  static isTextWithTrueFalse(typeQuestion: string): boolean {
     return (
-      typeQuestion !== SubTipoActividad.imagen + '_' + OpcionPreguntas.unica &&
-      typeQuestion !== SubTipoActividad.imagen + '_' + OpcionPreguntas.multiple &&
-      typeQuestion !== 'verdaderoFalso' &&
-      typeQuestion !== SubTipoActividad.audio + '_' + OpcionPreguntas.unica &&
-      typeQuestion !== SubTipoActividad.audio + '_' + OpcionPreguntas.multiple
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_UNICA_IMAGEN &&
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_IMAGEN &&
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO &&
+      typeQuestion !== OpcionConcatenada.PREG_AUDIO_RESP_UNICA_VERDADEROFALSO &&
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_UNICA_AUDIO &&
+      typeQuestion !== OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_AUDIO
+    );
+  }
+
+  static isQuestionAudio(typeQuestion: string): boolean {
+    return (
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_VERDADEROFALSO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_IMAGEN ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_AUDIO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_AUDIO
+    );
+  }
+
+  static isAnswersText(typeQuestion: string): boolean {
+    return (
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_MULTIPLE_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_TEXTO_RESP_UNICA_VERDADEROFALSO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_MULTIPLE_TEXTO ||
+      typeQuestion === OpcionConcatenada.PREG_AUDIO_RESP_UNICA_VERDADEROFALSO
     );
   }
 }

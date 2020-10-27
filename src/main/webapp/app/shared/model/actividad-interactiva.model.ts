@@ -26,4 +26,5 @@ export class TipoActividad {
   public tipoActividad?: string;
   public subtipo?: string;
   public opcion?: string;
+  public opcionConcatenada?: string;
 }
