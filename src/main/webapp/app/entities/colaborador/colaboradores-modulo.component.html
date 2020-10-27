@@ -4,9 +4,11 @@
             <mat-chip *ngFor="let rc of listRolesColaboradores" [selectable]="selectable" [removable]="removable"
                 (removed)="removeColaborador(rc)">
                 {{ (rc.colaborador.nombres + ' ' + rc.colaborador.apellido1 + ' - ' + rc.rolColaborador.descripcion).substring(0, 25) }}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                <mat-icon matChipRemove *ngIf="removable">
+                    <span jhiTranslate="uma.form.cancel">cancel</span>
+                </mat-icon>
             </mat-chip>
-            <input placeholder="Colaboradores y Roles" #colaboradorInput [formControl]="colaboradorCtrl"
+            <input placeholder="{{'uma.form.collaborators' | translate}}" #colaboradorInput [formControl]="colaboradorCtrl"
                 [matAutocomplete]="auto" [matChipInputFor]="chipList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addColaborador($event)">
         </mat-chip-list>
