@@ -1,8 +1,8 @@
 <div class="container-path-hierarchical" [ngSwitch]="isAuthenticated()">
 
     <div class="window-path-hierarchical-body">
-
         <div class="hierarchical-bar">
+            <button class="main-btn" (click)="addLevel()">Nuevo Nivel <mat-icon>add</mat-icon></button>
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList #treePath="cdkDropList"
                 (cdkDropListDropped)="dropOrder($event)">
                 <!-- This is the tree node template for leaf nodes -->
@@ -11,7 +11,7 @@
                     <!-- <mat-icon>library_books</mat-icon> -->
                     <mat-icon>menu_book</mat-icon>&nbsp;
                     <span (click)="loadChildren(node)">{{ node.nombre }}</span>
-                    <mat-icon (click)="addLevel(node)">add</mat-icon>
+                    <mat-icon *ngIf="allowAdd(node.level)" (click)="addSubLevel(node)">add</mat-icon>
                 </mat-tree-node>
 
                 <!-- <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
@@ -31,7 +31,7 @@
                     </mat-icon>
                     {{node.nombre}}
                     <!-- <mat-icon (click)="addHightLevel()">add</mat-icon> -->
-                    <!-- <mat-icon (click)="addLevel(node)">add</mat-icon> -->
+                    <!-- <mat-icon (click)="addSubLevel(node)">add</mat-icon> -->
                 </mat-tree-node>
             </mat-tree>
         </div>

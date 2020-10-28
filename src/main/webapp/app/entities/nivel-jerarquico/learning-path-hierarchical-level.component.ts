@@ -12,7 +12,7 @@ import { FlatNode, FlatNodeModel } from 'app/shared/model/interface/flat-node.mo
 import { HierarchicalLevel, HierarchicalLevelModel, NivelRutas, SubNivelRutas } from 'app/shared/model/interface/hierarchical-level.model';
 import { IModulo } from 'app/shared/model/modulo.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
 import { RutaAprendizajeService } from '../rutas-aprendizaje/ruta-aprendizaje.service';
@@ -205,72 +205,173 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(this.dataSource.data, event.previousIndex, event.currentIndex);
     } else {
-      this.addLevelTree(event.previousIndex, event.currentIndex);
+      this.addGroupAsLessonToTree(event.previousIndex, event.currentIndex);
     }
   }
 
-  addLevelTree(previousIndex: number, currentIndex: number): void {
+  addGroupAsLessonToTree(previousIndex: number, currentIndex: number): void {
     // console.error(`Index previo: ${previousIndex} actual: ${currentIndex}`);
     // this.treeControl.dataNodes
     const padre: HierarchicalLevel = this.treeControl.dataNodes[currentIndex - 1].node;
     // console.error('Padre del agrupador que se agregará: ', padre);
+    // db
 
-    padre.nivelJerarquico!.push({
-      ...new HierarchicalLevelModel(),
-      id: undefined,
-      nombre: this.sequenceList[previousIndex].titulo,
-      // agrupadores: [],
-      imagenUrl: undefined,
-      nivelJerarquico: []
-      // estructuraJerarquica: []
-    });
-    /*
-    this.hierarchicalLevels.push({
-      ...new HierarchicalLevelModel(),
-      id: undefined,
-      nombre: this.sequenceList[previousIndex].titulo,
-      imagenUrl: undefined,
-      nivelJerarquico: []
-    });
-    */
-    this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
+    const newLesson: HierarchicalLevel = {
+      id: padre.id,
+      nombre: padre.nombre,
+      imagenUrl: '',
+      agrupadores: [
+        {
+          id: this.sequenceList[previousIndex].id
+        }
+      ]
+    };
+
+    console.error('Request PUT: ', newLesson);
+    this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
+
+    // this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
   }
 
-  addLevel(node: HierarchicalLevel): void {
-    // console.error('Intentando agregar nuevo nivel: ', node);
-    this.saveExpandedNodes();
+  protected subscribeResponseAddLesson(result: Observable<HttpResponse<HierarchicalLevel>>): void {
+    result.subscribe(
+      res => {
+        if (res.body) {
+          console.error('Response New Level', res.body);
+          // this.hierarchicalLevels.push({ id: res.body.id, nombre: res.body.nombre, imagenUrl: res.body.imagenUrl } as HierarchicalLevel);
+          // this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
+        }
+      },
+      err => console.error(err)
+    );
+  }
 
-    this.openDialog(node);
+  addLevel(): void {
+    // node: HierarchicalLevel): void {
+    // console.error('Intentando agregar nuevo nivel: ', node);
+    // this.saveExpandedNodes();
+
+    this.openDialog(); //  node);
     // this.addNewLevelToTree(node);
   }
 
-  addNewLevelToTree(node: HierarchicalLevel): void {
-    const parentNode = this.flatNodeMap.get(node);
-    // this.insertItem(parentNode!, 'Nuevo elemento');
-    this.treeControl.expand(node);
-    // this.saveExpandedNodes();
-    this.nivelJerarquicoService.insertItem(parentNode as HierarchicalLevel, this.newLevelName); //  '');
-    // this.treeControl.expand(node);
-    // this.restoreExpandedNodes();
-    this.treeControl.expand(node);
+  addSubLevel(node: HierarchicalLevel): void {
+    console.error('Intentando agregar Sub nivel a un Padre: ', node);
+    this.saveExpandedNodes();
+    this.openDialog(node);
   }
 
-  insertItem(parent: HierarchicalLevel, name: string): void {
-    if (parent.nivelJerarquico) {
-      parent.nivelJerarquico.push({ item: name } as HierarchicalLevel);
-      this.dataSource.data = this.hierarchicalLevels;
+  addNewLevelToTree(): void {
+    const newLevel: HierarchicalLevel = {
+      nombre: this.newLevelName,
+      imagenUrl: '',
+      nivelRuta: [
+        {
+          id: this.idPath,
+          orden: this.hierarchicalLevels.length + 1
+        }
+      ]
+    };
+
+    this.subscribeResponseAddLevel(this.nivelJerarquicoService.createLevel(newLevel));
+    console.error(newLevel);
+  }
+
+  protected subscribeResponseAddLevel(result: Observable<HttpResponse<HierarchicalLevel>>): void {
+    result.subscribe(
+      res => {
+        if (res.body) {
+          console.error('Response New Level', res.body);
+          this.hierarchicalLevels.push({ id: res.body.id, nombre: res.body.nombre, imagenUrl: res.body.imagenUrl } as HierarchicalLevel);
+          this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
+        }
+      },
+      err => console.error(err)
+    );
+  }
+
+  addNewSubLevelToTree(node: HierarchicalLevel): void {
+    const parentNode = this.flatNodeMap.get(node);
+
+    if (parentNode) {
+      parentNode.level = node.level;
+      // this.treeControl.expand(node);
+      // save in db
+      const padre = this.hierarchicalLevels.find(l => l.id === parentNode.id) || null;
+
+      // if (padre) {
+      // const idx = this.hierarchicalLevels.indexOf(padre);//  revisar esto porque debería agregar una prop a HierarchicalLevel
+      // console.error('Index Padre: ', idx);
+
+      // agregando hijo a nivel 1 orden 0
+      const newSubLevel: HierarchicalLevel = {
+        nombre: this.newLevelName,
+        imagenUrl: padre ? padre.imagenUrl : '', // revisar esto para ver su origen
+        agrupadores: [],
+        estructuraJerarquica: [
+          {
+            id: padre ? padre.id! : parentNode.id!,
+            ordenNivel: this.getOrderNewNode(padre ? padre : parentNode)
+          }
+        ],
+        nivelRuta: []
+      };
+
+      this.subscribeResponseAddSubLevel(this.nivelJerarquicoService.createSubLevel(newSubLevel), parentNode);
+      console.error(newSubLevel);
+      // }
     }
   }
 
-  saveExpandedNodes(): void {
-    this.expandedNodes = new Array<HierarchicalLevel>();
-    this.treeControl.dataNodes.forEach((node: any) => {
-      if (node.expandable && this.treeControl.isExpanded(node)) {
-        this.expandedNodes.push(node);
-      }
-    });
+  getOrderNewNode(baseNose: HierarchicalLevel): number {
+    // easy to read
+    if (baseNose.nivelJerarquico) {
+      return baseNose.nivelJerarquico.length;
+    } else {
+      return 0;
+    }
   }
-  openDialog(node: HierarchicalLevel): void {
+
+  protected subscribeResponseAddSubLevel(result: Observable<HttpResponse<HierarchicalLevel>>, parentNode: HierarchicalLevel): void {
+    result.subscribe(
+      res => {
+        if (res.body) {
+          console.error('Response New SubLevel', res.body);
+          console.error('Parent edit: ', parentNode);
+
+          const nodeEdit = this.hierarchicalLevels.find((lvl: HierarchicalLevel): any => {
+            if (lvl.id === parentNode.id) {
+              return lvl;
+            } else if (lvl.nivelJerarquico) {
+              return lvl.nivelJerarquico.some((sbl: HierarchicalLevel): any => {
+                return sbl.id === parentNode.id;
+              });
+            } else {
+              return false;
+            }
+          });
+
+          console.error('Node edit: ', nodeEdit);
+          const index = this.hierarchicalLevels.indexOf(nodeEdit as HierarchicalLevel);
+          console.error('index del padre: ', index);
+          console.error('elemento de lista por afectar: ', this.hierarchicalLevels[index]);
+          this.hierarchicalLevels[index].nivelJerarquico!.push({
+            id: res.body.id,
+            nombre: res.body.nombre,
+            imagenUrl: res.body.imagenUrl
+          } as HierarchicalLevel);
+          console.error('elemento de lista afectado: ', this.hierarchicalLevels[index]);
+          // this.hierarchicalLevels.push();
+          this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
+          // this.loadChildren(parentNode);
+        }
+      },
+      err => console.error(err)
+    );
+  }
+
+  openDialog(node?: HierarchicalLevel): void {
+    this.newLevelName = '';
     const dialogRef = this.dialog.open(LearningPathHierarchicalAddLevelComponent, {
       width: '350px',
       data: { newLevelName: this.newLevelName }
@@ -280,7 +381,20 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       // console.error('The dialog was closed');
       if (result) {
         this.newLevelName = result;
-        this.addNewLevelToTree(node);
+        if (node) {
+          this.addNewSubLevelToTree(node);
+        } else {
+          this.addNewLevelToTree();
+        }
+      }
+    });
+  }
+
+  saveExpandedNodes(): void {
+    this.expandedNodes = new Array<HierarchicalLevel>();
+    this.treeControl.dataNodes.forEach((node: any) => {
+      if (node.expandable && this.treeControl.isExpanded(node)) {
+        this.expandedNodes.push(node);
       }
     });
   }
@@ -403,7 +517,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     // console.error('#####  Node level Click: ');
     // console.error(node);
 
-    const selectedLevel: HierarchicalLevel = node.node;
+    const selectedLevel: HierarchicalLevel = node.node ? node.node : node; //  just node cause not comes from html
 
     if (selectedLevel.id) {
       this.nivelJerarquicoService
@@ -419,6 +533,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
             }) || null;
           // const ax = this.getObject(this.hierarchicalLevels, selectedLevel.id!);
           // console.error('Busqueda: ', ax);
+
+          /*
           const bx = this.hierarchicalLevels.find((lvl: HierarchicalLevel) => {
             if (lvl.nivelJerarquico) {
               return lvl.nivelJerarquico.some((sbl: HierarchicalLevel) => {
@@ -426,6 +542,27 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
               });
             } else {
               return false;
+            }
+          });
+          */
+
+          const bx = this.hierarchicalLevels.find((lvl: HierarchicalLevel): any => {
+            if (lvl.id === selectedLevel.id) {
+              return lvl;
+            } else if (lvl.nivelJerarquico) {
+              return lvl.nivelJerarquico.some((sbl: HierarchicalLevel): any => {
+                // return sbl.id === selectedLevel.id;
+                if (sbl.id === selectedLevel.id) {
+                  return sbl;
+                } else if (sbl.nivelJerarquico) {
+                  return sbl.nivelJerarquico.some((n: HierarchicalLevel): any => {
+                    return n.id === selectedLevel.id;
+                  });
+                }
+                // return null
+              });
+            } else {
+              return null;
             }
           });
 
@@ -458,7 +595,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
 
           if (father) {
             this.hierarchicalLevels[idx].nivelJerarquico = [...newChildrens];
-          } else {
+          } else if (childrens.length) {
             const idxSon = this.hierarchicalLevels[idx].nivelJerarquico!.findIndex(lvl => lvl.id === childrens[0].nivel);
             this.hierarchicalLevels[idx].nivelJerarquico![idxSon].nivelJerarquico = [...newChildrens];
           }
@@ -504,6 +641,10 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       }
     }
     return result;
+  }
+
+  allowAdd(level: number): boolean {
+    return level < 2;
   }
 
   functionOne(): void {
