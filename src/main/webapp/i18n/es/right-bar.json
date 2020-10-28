@@ -1,0 +1,26 @@
+{
+  "rightbar": {
+    "blocks": "Bloques",
+    "all": "Todos",
+    "text": "Texto",
+    "multimedia": "Multimedia",
+    "properties": {
+      "properties": "Propiedades",
+      "uploadfile": "Subir archivo",
+      "management": "Gestión Actividad",
+      "upload": "Subir",
+      "activity": "Actividad",
+      "information": "Información",
+      "name": "Nombre",
+      "weight": "Peso",
+      "extension": "Extension"
+    },
+    "blockcontent": {
+      "content": "Bloque de contenido",
+      "name": "Nombre",
+      "teachermode": "Modo Profesor:",
+      "activate": "Activado",
+      "desactivate": "Desactivado"
+    }
+  }
+}

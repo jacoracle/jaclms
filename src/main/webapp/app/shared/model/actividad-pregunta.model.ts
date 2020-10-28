@@ -18,10 +18,11 @@ export class Preguntas {
   public calificada?: boolean;
   public marcada?: boolean;
   public correcta?: boolean;
-  public tipoRespuestas?: string;
   public path?: string;
+  public tipoRespuestas?: string;
   public tipoRecurso?: string;
-  public safeUrl?: string;
+  public safeUrl?: SafeUrl;
+  public loadedVideo?: boolean;
 }
 
 export class Respuestas {

@@ -1,0 +1,15 @@
+@import '../../../../content/scss/variables.scss';
+
+.col-cb-audio {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .b-audio {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+}

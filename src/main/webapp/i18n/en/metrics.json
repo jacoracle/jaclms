@@ -1,0 +1,93 @@
+{
+  "metrics": {
+    "title": "Application metrics",
+    "refresh.button": "Refresh",
+    "updating": "Updating ...",
+    "jvm": {
+      "title": "JVM metrics",
+      "memory": {
+        "title": "Memory",
+        "total": "total memory",
+        "heap": "Heap memory",
+        "nonheap": "Memory not Heap"
+      },
+      "threads": {
+        "title": "Threads",
+        "all": "All",
+        "runnable": "Executables",
+        "timedwaiting": "Time waiting",
+        "waiting": "Waiting",
+        "blocked": "Blocked",
+        "dump": {
+          "title": "Thread dump",
+          "id": "Id: ",
+          "blockedtime": "Blocked time",
+          "blockedcount": "Blocked counter",
+          "waitedtime": "Waitedtime",
+          "waitedcount": "Counter on hold",
+          "lockname": "Lock name",
+          "stacktrace": "Stacktrace",
+          "show": "Show",
+          "hide": "Hide"
+        }
+      },
+      "gc": {
+        "title": "Garbage collections",
+        "marksweepcount": "Mark Sweep count",
+        "marksweeptime": "Mark Sweep time",
+        "scavengecount": "Scavenge count",
+        "scavengetime": "Scavenge time"
+      },
+      "http": {
+        "title": "HTTP requests (events per second)",
+        "active": "Active requests:",
+        "total": "Total requests:",
+        "table": {
+          "code": "Code",
+          "count": "Count",
+          "mean": "Average",
+          "average": "Average"
+        },
+        "code": {
+          "ok": "ok",
+          "notfound": "Not found",
+          "servererror": "Server error"
+        }
+      }
+    },
+    "servicesstats": {
+      "title": "Service statistics (time in milliseconds)",
+      "table": {
+        "name": "Name of the service",
+        "count": "Counter",
+        "mean": "Average",
+        "min": "Min",
+        "max": "Max",
+        "p50": "p50",
+        "p75": "p75",
+        "p95": "p95",
+        "p99": "p99"
+      }
+    },
+    "cache": {
+      "title": "Cache statistics",
+      "cachename": "Cache name",
+      "hits": "Hits",
+      "misses": "Failures",
+      "evictions": "Eviction counter"
+    },
+    "datasource": {
+      "usage": "usage",
+      "title": "Statistics of the data source (time in milliseconds)",
+      "name": "Use of the pool",
+      "count": "Count",
+      "mean": "Average",
+      "min": "Min",
+      "max": "Max",
+      "p50": "p50",
+      "p75": "p75",
+      "p95": "p95",
+      "p99": "p99"
+    }
+  }
+}

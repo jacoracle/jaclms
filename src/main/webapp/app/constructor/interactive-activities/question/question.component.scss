@@ -300,3 +300,31 @@ img {
   height: 100%;
   z-index: 101;
 }
+
+.col-record {
+  position: relative;
+  width: 80px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .btn-start {
+    background-image: url('../../../../content/images/icn_record_play.png');
+    background-position: center;
+    background-size: 22px;
+    background-repeat: no-repeat;
+  }
+  .btn-stop {
+    background-image: url('../../../../content/images/icn_record_stop.png');
+    background-position: center;
+    background-size: 22px;
+    background-repeat: no-repeat;
+  }
+  .btn-disabled {
+    background-color: gray;
+  }
+}
+
+.audio-progress {
+  width: 300px;
+}

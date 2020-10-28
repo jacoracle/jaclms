@@ -1,0 +1,34 @@
+{
+  "constructorApp": {
+    "uma": {
+      "home": {
+        "title": "Courses",
+        "createLabel": "Create UMA",
+        "createOrEditLabel": "Create or edit UMA",
+        "titleGeneralConfg": "General configuration",
+        "titleAdvancelConfg": "Advanced configuration",
+        "notFound": "No UMA could be found"
+      },
+      "created": "A new Course has been created with the identifier {{param}}",
+      "updated": "A Course has been updated with the identifier {{param}}",
+      "deleted": "A Course has been deleted with the identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to delete Course {{id}}?"
+      },
+      "detail": {
+        "title": "UMA"
+      },
+      "validations": {
+        "formError": "Please review the information and try again.",
+        "fileSize": "The file must be less than 5MB.",
+        "fileType": "File type not allowed.",
+        "dates": "The creation date cannot be later than the publication date.",
+        "requiredField": "This field is required.",
+        "save": "You should run search with filters, pending ..."
+      }
+    },
+    "tiraUpdate": {
+      "error": "Could not update the order of the UMAs, please try again."
+    }
+  }
+}

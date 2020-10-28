@@ -1,0 +1,26 @@
+{
+  "constructorApp": {
+    "editorial": {
+      "home": {
+        "title": "Editorials",
+        "createLabel": "Create new Editorial",
+        "createOrEditLabel": "Create or edit Editorial",
+        "notFound": "No Editorials found"
+      },
+      "created": "A new Editorial has been created with the identifier {{param}}",
+      "updated": "An Editorial has been updated with the identifier {{param}}",
+      "deleted": "An Editorial has been deleted with the identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to delete Editorial {{id}}?"
+      },
+      "detail": {
+        "title": "Editorial"
+      },
+      "name": "name",
+      "description": "Description",
+      "Direction": "Direction",
+      "telefono": "Telephone",
+      "tab": "tab"
+    }
+  }
+}

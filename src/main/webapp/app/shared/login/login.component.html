@@ -40,12 +40,12 @@
                       <label class="form-check-label" for="rememberMe">
                           <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe">
                           <!-- <span jhiTranslate="login.form.rememberme">Remember me</span> -->
-                          <span>Recuérdame</span>
+                          <span jhiTranslate="login.form.rememberme"> Recuérdame</span>
                       </label>
                     </div>
                     <div class="rmlc-2">
                       <!-- <a class="alert-link" (click)="requestResetPassword()" jhiTranslate="login.password.forgot">Did you forget your password?</a> -->
-                      <a (click)="requestResetPassword()">Olvidé mi contraseña</a>
+                      <a (click)="requestResetPassword()" jhiTranslate="login.password.forgot">Olvidé mi contraseña</a>
                     </div>
                   </div>
 
@@ -56,8 +56,8 @@
               </form>
 
             <div class="row-cfl-register">
-              <p>¿Aún no tienes cuenta?</p>
-              <a class="" (click)="register()" >Crear cuenta</a>
+              <p jhiTranslate="login.create.have">¿Aún no tienes cuenta?</p>
+              <a class="" (click)="register()" jhiTranslate="login.create.account">Crear cuenta</a>
             </div>
 
           </div>

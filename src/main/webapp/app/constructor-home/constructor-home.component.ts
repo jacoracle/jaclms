@@ -24,4 +24,8 @@ export class ConstructorHomeComponent {
   redirectUMAs(): void {
     this.router.navigate(['/uma-home']);
   }
+
+  redirectCalendar(): void {
+    this.router.navigate(['/calendar-home']);
+  }
 }

@@ -203,4 +203,30 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 				});
 	}
 
+	@Override
+	public Optional<NivelJerarquico> updateOrder(NivelJerarquicoDTO dto) throws Exception {
+		
+		
+		
+		return  Optional.of(nivelJerarquicoRepository.findById(dto.getId())).filter(Optional::isPresent)
+				.map(Optional::get).map(nivelJerarquico -> {
+					
+					if(!dto.getEstructuraJerarquica().isEmpty()) {
+						dto.getEstructuraJerarquica().forEach(estructuradDTO -> {
+						Optional.of(estructuraJerarquicaRepository.findBySubNivel(nivelJerarquico)).filter(Optional::isPresent)
+							.map(Optional::get).map(estructura -> {
+								estructura.setOrdenNivel(estructuradDTO.getOrdenNivel());
+								estructura.setNivel(estructuradDTO.getId());
+								estructura.setSubNivelJerarquico(nivelJerarquico);
+								return estructura; 
+							});
+							
+							
+						});
+						
+					}
+					return nivelJerarquico;
+				});
+	}
+	
 }

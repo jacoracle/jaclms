@@ -1,0 +1,12 @@
+{
+  "homemodule": {
+    "title": "Constructor UMA",
+    "your": "Your UMAs",
+    "search": "search",
+    "greet": "Hello",
+    "welcome": "Welcome to",
+    "start": "To start, click on the \"Create UMA\" button.",
+    "back": "Go back",
+    "new": "Create UMA"
+  }
+}

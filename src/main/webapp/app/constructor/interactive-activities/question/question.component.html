@@ -22,11 +22,13 @@
       <div class="col-amh-topbar">
           <mat-form-field appearance="fill" class="mat-amht-title">
               <mat-label jhiTranslate="constructorApp.question.activity.name">Nombre de actividad</mat-label>
-              <input matInput [(ngModel)]="activity.nombre" (focusout)="save()">
+              <input matInput [(ngModel)]="activity.nombre" (focusout)="save()" jhiSpecialCharacters>
           </mat-form-field>
           <!-- Nombre -->
           <!-- Evaluable -->
-          <mat-checkbox [(ngModel)]="activity.contenido.evaluable" class="mat-amht-checkbox" (change)="this.save()" jhiTranslate="constructorApp.question.activity.evaluable">Evaluable</mat-checkbox>
+          <mat-checkbox [(ngModel)]="activity.contenido.evaluable" class="mat-amht-checkbox" (change)="this.save()">
+            <span jhiTranslate="constructorApp.question.activity.evaluable">Evaluable</span>
+          </mat-checkbox>
           <!-- Evaluable -->
       </div>
     </div>
@@ -54,28 +56,56 @@
           <!-- Indicación/Pregunta -->
           <mat-form-field appearance="fill" class="mat-pregunta">
               <mat-label jhiTranslate="constructorApp.question.question.question">Pregunta</mat-label>
-              <input matInput [(ngModel)]="pregunta.pregunta" (focusout)="save()">
+              <input matInput [(ngModel)]="pregunta.pregunta" (focusout)="save()" jhiSpecialCharacters>
           </mat-form-field>
           <!-- Indicación/Pregunta -->
           <!-- Recurso -->
           <mat-form-field appearance="fill" class="mat-recurso">
               <mat-label jhiTranslate="constructorApp.question.question.resource">Recurso</mat-label>
-              <select matNativeControl [(ngModel)]="pregunta.tipoRecurso" (change)="save()">
+              <select matNativeControl [(ngModel)]="pregunta.tipoRecurso" (change)="changeResourceType(pregunta); save();">
                   <option value="">Ninguno</option>
                   <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
               </select>
           </mat-form-field>
-          <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()">
+          <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()" [disabled]="isOn">
               <!-- <span>Subir</span> -->
               <i class="icon ni-picture"></i>
-              <input #resourceInput type="file" (change)="selectFile($event, pregunta)" style="display:none;"/>
+              <input #resourceInput type="file" (change)="selectFile($event, pregunta, pregunta.tipoRecurso)" style="display:none;"/>
           </button>
         </div>
 
         <div class="row-tipo-mat">
-          <img [src]="pregunta.safeUrl" *ngIf="(pregunta.tipoRecurso === 'Imagen' || pregunta.tipoRecurso === 'Video') && pregunta.safeUrl && pregunta.safeUrl !== ''">
-          <audio src="" *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.path !== ''"></audio>
+          <img [src]="pregunta.safeUrl" *ngIf="pregunta.tipoRecurso === 'Imagen' && pregunta.safeUrl && pregunta.safeUrl !== ''">
+          <img [src]="pregunta.safeUrl" *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && !pregunta.loadedVideo" (click)="getVideo(pregunta)">
+          <div *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && pregunta.loadedVideo">
+            <jhi-resource-video [safeUrl]="pregunta.safeUrl"></jhi-resource-video>
+          </div>
 
+          <div class="col-record" *ngIf="pregunta.tipoRecurso === 'Audio'">
+            <input type="button" (click)="record(pregunta, questionIndex)" class="btn-circle" id="mixBut"
+              [ngClass]="{
+                'btn-start': !isOn,
+                'btn-stop': isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1,
+                'btn-disabled': isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)
+              }"
+              [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)" />
+          </div>
+          <div class="audio-progress" *ngIf="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1">
+            <mat-progress-bar
+              class="example-margin"
+              [color]="color"
+              [mode]="mode"
+              [value]="value"
+              [bufferValue]="bufferValue">
+            </mat-progress-bar>
+            Tiempo: 
+            <span>{{timeToShow}}</span>
+          </div>
+
+          <div *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.safeUrl && pregunta.safeUrl !== ''" [hidden]="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1">
+            <jhi-resource-audio [safeUrl]="pregunta.safeUrl"></jhi-resource-audio>
+          </div>
+          
           <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''" class="btn-delete-question">
             <i class="icon ni-delete"></i>
           </button>
@@ -116,17 +146,39 @@
 
               <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
                   <mat-label jhiTranslate="constructorApp.question.answer.answer">Respuesta</mat-label>
-                  <input matInput [(ngModel)]="respuesta.respuesta" (focusout)="save()">
+                  <input matInput [(ngModel)]="respuesta.respuesta" (focusout)="save()" jhiSpecialCharacters [disabled]="pregunta.tipoPregunta && pregunta.tipoPregunta === 'Verdadero Falso'">
               </mat-form-field>
 
               <!-- Respuesta -->
               <!-- Respuesta/URL de recurso -->
               <img [src]="respuesta.safeUrl" *ngIf="(pregunta.tipoRespuestas === 'Imagen' || pregunta.tipoRespuestas === 'Video') && respuesta.safeUrl && respuesta.safeUrl !== ''">
-              <audio src="" *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.path !== ''"></audio>
+              <div class="col-record" *ngIf="pregunta.tipoRespuestas === 'Audio'">
+                <input type="button" (click)="record(respuesta, questionIndex, answerIndex)" class="btn-circle" id="mixBut"
+                  [ngClass]="{
+                    'btn-start': !isOn,
+                    'btn-stop': isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex,
+                    'btn-disabled': isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== answerIndex)
+                  }"
+                  [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== answerIndex)" />
+              </div>
+              <div class="audio-progress" *ngIf="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex">
+                <mat-progress-bar
+                  class="example-margin"
+                  [color]="color"
+                  [mode]="mode"
+                  [value]="value"
+                  [bufferValue]="bufferValue">
+                </mat-progress-bar>
+                Tiempo: 
+                <span>{{timeToShow}}</span>
+             </div>
+              <div *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.safeUrl && respuesta.safeUrl !== ''" [hidden]="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex">
+                <jhi-resource-audio [safeUrl]="respuesta.safeUrl"></jhi-resource-audio>
+              </div>
 
-              <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()">
+              <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()" [disabled]="isOn">
                   <i class="icon ni-picture"></i>
-                  <input #fileInput type="file" (change)="selectFile($event, respuesta)" style="display:none;"/>
+                  <input #fileInput type="file" (change)="selectFile($event, respuesta, pregunta.tipoRespuestas)" style="display:none;"/>
               </button>
 
 

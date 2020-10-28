@@ -1,0 +1,24 @@
+{
+  "constructorApp": {
+    "NumeroGrado": {
+      "home": {
+        "title": "Number of Degrees",
+        "createLabel": "Create new Grade Number",
+        "createOrEditLabel": "Create or edit Grade Number",
+        "notFound": "No Number of Degrees found"
+      },
+      "created": "A new Grade Number has been created with the identifier {{param}}",
+      "updated": "A Grade Number has been updated with the identifier {{param}}",
+      "deleted": "A Grade Number has been deleted with the identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to remove Grade Number {{id}}?"
+      },
+      "detail": {
+        "title": "Grade Number"
+      },
+      "description": "Description",
+      "course": "Course",
+      "GradoAcademico": "Academic Degree"
+    }
+  }
+}

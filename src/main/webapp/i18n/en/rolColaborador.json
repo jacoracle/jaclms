@@ -1,0 +1,23 @@
+{
+  "constructorApp": {
+    "rolColaborador": {
+      "home": {
+        "title": "Collaborators role",
+        "createLabel": "Create new Contributor Role",
+        "createOrEditLabel": "Create or edit Contributor Role",
+        "notFound": "No Contributing Roles found"
+      },
+      "created": "A new Contributor Role has been created with the identifier {{param}}",
+      "updated": "A Contributor Role has been updated with the identifier {{param}}",
+      "deleted": "A Collaborator Role has been deleted with the identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to delete Contributor Role {{id}}?"
+      },
+      "detail": {
+        "title": "Collaborator role"
+      },
+      "description": "Description",
+      "collaborator": "collaborator"
+    }
+  }
+}

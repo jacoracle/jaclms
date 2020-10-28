@@ -1,0 +1,11 @@
+{
+  "logs": {
+    "title": "Logs",
+    "nbloggers": "There are {{total}} records.",
+    "filter": "Filter",
+    "table": {
+      "name": "Name",
+      "level": "Level"
+    }
+  }
+}

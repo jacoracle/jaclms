@@ -52,7 +52,29 @@
             height: 25px !important;
             // background-color: silver;
             border: none !important;
-            background-image: url('../../../../../content/images/sound_upload.png');
+            background-image: url('../../../../../content/images/ab9.png');
+            background-position: center;
+            background-size: 23px;
+            background-repeat: no-repeat;
+          }
+          .record-audio-start {
+            position: relative;
+            width: 30px !important;
+            height: 25px !important;
+            // background-color: silver;
+            border: none !important;
+            background-image: url('../../../../../content/images/icn_record_play.png');
+            background-position: center;
+            background-size: 23px;
+            background-repeat: no-repeat;
+          }
+          .record-audio-stop {
+            position: relative;
+            width: 30px !important;
+            height: 25px !important;
+            // background-color: silver;
+            border: none !important;
+            background-image: url('../../../../../content/images/icn_record_stop.png');
             background-position: center;
             background-size: 23px;
             background-repeat: no-repeat;

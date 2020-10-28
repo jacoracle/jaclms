@@ -1,0 +1,28 @@
+{
+  "health": {
+    "title": "Health check",
+    "refresh.button": "Refresh",
+    "stacktrace": "Stacktrace",
+    "details": {
+      "details": "Details",
+      "properties": "Properties",
+      "name": "Name",
+      "value": "Value",
+      "error": "Error"
+    },
+    "indicator": {
+      "diskSpace": "Disk space",
+      "mail": "Email",
+      "db": "Database"
+    },
+    "table": {
+      "service": "Name of the service",
+      "status": "Status"
+    },
+    "status": {
+      "UNKNOWN": "UNKNOWN",
+      "UP": "LIFTED",
+      "DOWN": "DROPPED"
+    }
+  }
+}

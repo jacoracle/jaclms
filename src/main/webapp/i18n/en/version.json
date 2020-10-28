@@ -1,0 +1,26 @@
+{
+  "constructorApp": {
+    "version": {
+      "home": {
+        "title": "Versions",
+        "createLabel": "Create new Version",
+        "createOrEditLabel": "Create or edit Version",
+        "notFound": "No Versions Found"
+      },
+      "created": "A new Version has been created with the identifier {{param}}",
+      "updated": "A Version has been updated with identifier {{param}}",
+      "deleted": "A Version has been deleted with identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to remove Version {{id}}?"
+      },
+      "detail": {
+        "title": "Version"
+      },
+      "version": "Version",
+      "comment": "comment",
+      "dateVersion": "Date Version",
+      "course": "Course"
+    }
+  },
+  "inherit": true
+}

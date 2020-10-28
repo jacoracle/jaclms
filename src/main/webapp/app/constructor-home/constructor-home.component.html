@@ -8,8 +8,12 @@
       </div>
       <div class="r2">
         <div class="c1">
-          <div class="button-hc"><i class="icon ni-support"></i>Soporte</div>
-          <div class="button-hc"><i class="icon ni-help"></i>Ayuda</div>
+          <div class="button-hc">
+              <i class="icon ni-support"></i><label jhiTranslate="home.support">Soporte</label>
+          </div>
+          <div class="button-hc">
+              <i class="icon ni-help"></i><label jhiTranslate="home.help">Ayuda</label>
+          </div>
         </div>
       </div>
     </div>
@@ -17,7 +21,7 @@
     <div class="window-br-body-topbar">
       <div class="line-gradient"></div>
       <div class="row-wbr-bt">
-        <p>Selecciona una opción</p>
+        <p jhiTranslate="home.select">Selecciona una opción</p>
       </div>
     </div>
 
@@ -28,11 +32,13 @@
             <div class="home-image-step"></div>
           </div>
           <div class="he-text">
-            <h4> <div class="he-i he-icon-1"></div> Constructor de UMA</h4>
+            <h4> <div class="he-i he-icon-1"></div>
+                <label jhiTranslate="home.menu.uma.name">Constructor de UMA</label>
+            </h4>
             <div class="divider-he"></div>
-            <p>Crea y edita UMA (Unidad Mínima de Aprendizaje).</p>
+            <p jhiTranslate="home.menu.uma.description">Crea y edita UMA (Unidad Mínima de Aprendizaje).</p>
           </div>
-          <button (click)="redirectUMAs();" class="main-btn">Seleccionar</button>
+          <button (click)="redirectUMAs();" class="main-btn" jhiTranslate="home.menu.uma.select">Seleccionar</button>
         </div>
 
         <div class="home-element" (click)="redirectGroupUMA();">
@@ -41,23 +47,41 @@
             <div class="home-image-step"></div>
           </div>
           <div class="he-text">
-            <h4> <div class="he-i he-icon-1"></div> Agrupador de UMA</h4>
+            <h4> <div class="he-i he-icon-1"></div>
+                <label jhiTranslate="home.menu.group.name">Agrupador de UMA</label>
+            </h4>
             <div class="divider-he"></div>
-            <p>Crea y edita Agrupadores de UMA.</p>
+            <p jhiTranslate="home.menu.group.description">Crea y edita Agrupadores de UMA.</p>
           </div>
-          <button (click)="redirectGroupUMA();" class="main-btn">Seleccionar</button>
+          <button (click)="redirectGroupUMA();" class="main-btn" jhiTranslate="home.menu.group.select">Seleccionar</button>
         </div>
         <div class="home-element" (click)="redirectLearningPath();">
           <div class="he-img heimg3">
             <div class="home-image-step"></div>
           </div>
           <div class="he-text">
-            <h4> <div class="he-i he-icon-1"></div> Rutas de aprendizaje</h4>
+            <h4> <div class="he-i he-icon-1"></div>
+                <label jhiTranslate="home.menu.learning.name">Rutas de aprendizaje</label>
+            </h4>
             <div class="divider-he"></div>
-            <p>Agrega agrupadores de UMA para crear rutas de aprendizaje.</p>
+            <p jhiTranslate="home.menu.learning.description">Agrega agrupadores de UMA para crear rutas de aprendizaje.</p>
           </div>
-          <button (click)="redirectLearningPath();" class="main-btn">Seleccionar</button>
+          <button (click)="redirectLearningPath();" class="main-btn" jhiTranslate="home.menu.learning.select">Seleccionar</button>
         </div>
+
+        <!--<div class="home-element" (click)="redirectCalendar();">
+              <div class="he-img heimg4">
+                  <div class="home-image-step"></div>
+              </div>
+              <div class="he-text">
+                  <h4> <div class="he-i he-icon-1"></div>
+                      <label jhiTranslate="home.menu.calendar.name">Calendario</label>
+                  </h4>
+                  <div class="divider-he"></div>
+                  <p jhiTranslate="home.menu.calendar.description">Tareas programadas en Google Calender</p>
+              </div>
+              <button (click)="redirectCalendar();" class="main-btn" jhiTranslate="home.menu.calendar.select">Seleccionar</button>
+          </div>-->
       </div>
 
     </div>

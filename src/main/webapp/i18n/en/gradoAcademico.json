@@ -1,0 +1,23 @@
+{
+  "constructorApp": {
+    "academic degree": {
+      "home": {
+        "title": "Academic Degree",
+        "createLabel": "Create new Academic Degree",
+        "createOrEditLabel": "Create or edit Academic Degree",
+        "notFound": "No Academic Degree found"
+      },
+      "created": "A new Academic Degree has been created with the identifier {{param}}",
+      "updated": "An Academic Degree has been updated with the identifier {{param}}",
+      "deleted": "An Academic Degree has been deleted with the identifier {{param}}",
+      "delete": {
+        "question": "Are you sure you want to delete Academic Degree {{id}}?"
+      },
+      "detail": {
+        "title": "Academic Degree"
+      },
+      "description": "Description",
+      "NumberGrade": "Number Grade"
+    }
+  }
+}

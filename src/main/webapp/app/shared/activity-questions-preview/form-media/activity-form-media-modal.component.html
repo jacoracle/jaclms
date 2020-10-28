@@ -27,32 +27,32 @@
                         <label>Selecciona el tipo de respuesta:</label>
                         <div class="col-type-question" formGroupName="tipoActividad"
                              [ngClass]="{'ng-untouched ng-pristine ng-invalid alert-input': !isValidOpcion()}">
-                            <mat-radio-group aria-label="Select an option" formControlName="opcion"
-                                             name="opcion">
+                            <mat-radio-group aria-label="Select an option" formControlName="opcionConcatenada"
+                                             name="opcionConcatenada">
 
-                                <mat-radio-button value="imagen_unica" id="type_question4"
+                                <mat-radio-button value="{{PREG_TEXTO_RESP_UNICA_IMAGEN}}" id="type_question4"
                                                   class="question-radio mat-radio-no-margin"
                                                   (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn!='' && opcionIn!='imagen_unica'">
+                                                  [hidden]="opcionIn!='' && opcionIn!=PREG_TEXTO_RESP_UNICA_IMAGEN">
                                     Imagen Única
                                 </mat-radio-button>
 
-                                <mat-radio-button value="imagen_multiple" id="type_question5" class="question-radio"
-                                                  (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn!='' && opcionIn!='imagen_multiple'">
+                                <mat-radio-button value="{{PREG_TEXTO_RESP_MULTIPLE_IMAGEN}}" id="type_question5"
+                                                  class="question-radio" (change)="onOpcionChange($event)"
+                                                  [hidden]="opcionIn!='' && opcionIn!=PREG_TEXTO_RESP_MULTIPLE_IMAGEN">
                                     Imagen Múltiple
                                 </mat-radio-button>
 
-                                <mat-radio-button value="audio_unica" id="type_question6"
+                                <mat-radio-button value="{{PREG_TEXTO_RESP_UNICA_AUDIO}}" id="type_question6"
                                                   class="question-radio mat-radio-no-margin"
                                                   (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn!='' && opcionIn!='audio_unica'">
+                                                  [hidden]="opcionIn!='' && opcionIn!=PREG_TEXTO_RESP_UNICA_AUDIO">
                                     Audio Única&nbsp;&nbsp;&nbsp;
                                 </mat-radio-button>
 
-                                <mat-radio-button value="audio_multiple" id="type_question7" class="question-radio"
-                                                  (change)="onOpcionChange($event)"
-                                                  [hidden]="opcionIn!='' && opcionIn!='audio_multiple'">
+                                <mat-radio-button value="{{PREG_TEXTO_RESP_MULTIPLE_AUDIO}}" id="type_question7"
+                                                  class="question-radio" (change)="onOpcionChange($event)"
+                                                  [hidden]="opcionIn!='' && opcionIn!=PREG_TEXTO_RESP_MULTIPLE_AUDIO">
                                     Audio Múltiple
                                 </mat-radio-button>
 

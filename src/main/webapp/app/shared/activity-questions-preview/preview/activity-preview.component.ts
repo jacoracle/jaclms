@@ -56,6 +56,10 @@ export class ActivityPreviewComponent {
     UtilActivityQuestions.refreshQuestion(this.activityForm, indQuestion);
   }
 
+  isAnswersText(): boolean {
+    return UtilActivityQuestions.isAnswersText(this.typeQuestion);
+  }
+
   isMediaAudio(): boolean {
     return UtilActivityQuestions.isMediaAudio(this.typeQuestion);
   }
@@ -64,7 +68,15 @@ export class ActivityPreviewComponent {
     return UtilActivityQuestions.isMediaImage(this.typeQuestion);
   }
 
-  isText(): boolean {
-    return UtilActivityQuestions.isText(this.typeQuestion);
+  isQuestionText(): boolean {
+    return UtilActivityQuestions.isQuestionText(this.typeQuestion);
+  }
+
+  isQuestionAudio(): boolean {
+    return UtilActivityQuestions.isQuestionAudio(this.typeQuestion);
+  }
+
+  getAudioQuestion(path: string, indQuestion: number): void {
+    UtilActivityQuestions.getAudioQuestion(this.activityForm, path, indQuestion, this.fileUploadInteractivas, this.domSanitizer);
   }
 }
