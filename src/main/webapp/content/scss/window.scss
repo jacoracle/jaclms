@@ -638,3 +638,8 @@
   }
 }
 // End Search Form
+
+// Form style Angular material
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: $input-border-hover !important;
+}

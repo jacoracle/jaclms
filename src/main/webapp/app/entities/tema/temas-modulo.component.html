@@ -1,5 +1,5 @@
 <div>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-chip-list #chipList aria-label="Temas del UMA">
             <mat-chip *ngFor="let th of listThemes" [selectable]="selectable" [removable]="removable"
                 (removed)="removeTopic(th)">
