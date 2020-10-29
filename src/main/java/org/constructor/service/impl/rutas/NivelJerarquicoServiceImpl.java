@@ -16,6 +16,7 @@ import org.constructor.repository.rutas.EstructuraJerarquicaRepository;
 import org.constructor.repository.rutas.NivelJerarquicoRepository;
 import org.constructor.repository.rutas.NivelRutaRepository;
 import org.constructor.repository.rutas.RutasAprendizajeRepository;
+import org.constructor.response.OrdenamientoResponse;
 import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.constructor.service.rutas.NivelJerarquicoService;
 import org.slf4j.Logger;
@@ -204,28 +205,59 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	}
 
 	@Override
-	public Optional<NivelJerarquico> updateOrder(NivelJerarquicoDTO dto) throws Exception {
+	public Optional<OrdenamientoResponse> updateOrder(NivelJerarquicoDTO dto) throws Exception {
 		
 		
 		
 		return  Optional.of(nivelJerarquicoRepository.findById(dto.getId())).filter(Optional::isPresent)
 				.map(Optional::get).map(nivelJerarquico -> {
 					
+
+					OrdenamientoResponse ordenamientoResponse = new OrdenamientoResponse();
+					
 					if(!dto.getEstructuraJerarquica().isEmpty()) {
+						log.debug("entro a estructura jerarquica");
 						dto.getEstructuraJerarquica().forEach(estructuradDTO -> {
 						Optional.of(estructuraJerarquicaRepository.findBySubNivel(nivelJerarquico)).filter(Optional::isPresent)
 							.map(Optional::get).map(estructura -> {
 								estructura.setOrdenNivel(estructuradDTO.getOrdenNivel());
 								estructura.setNivel(estructuradDTO.getId());
 								estructura.setSubNivelJerarquico(nivelJerarquico);
+								ordenamientoResponse.setOrden(estructuradDTO.getOrdenNivel());
 								return estructura; 
 							});
 							
 							
 						});
 						
+						
+						
+						
 					}
-					return nivelJerarquico;
+					
+					if(!dto.getNivelRuta().isEmpty()) {
+						log.debug("entro a niveles ruta");
+						dto.getNivelRuta().forEach(rutasNivelesDTO -> {
+							Optional<RutasAprendizaje> rutasOptional = rutasAprendizajeRepository.findById(rutasNivelesDTO.getId());
+							Optional.of(nivelRutaRepository.findByRutas(nivelJerarquico)).filter(Optional::isPresent)
+							.map(Optional::get).map(nivelesRutas -> {
+								nivelesRutas.setOrden(rutasNivelesDTO.getOrden());
+								nivelesRutas.setRutasAprendizaje(rutasOptional.get());
+								nivelesRutas.setNivelJerarquico(nivelJerarquico);
+								
+								ordenamientoResponse.setRuta(rutasOptional.get());
+								ordenamientoResponse.setOrden(rutasNivelesDTO.getOrden());
+								
+								return nivelesRutas; 
+							});
+							
+							
+						});
+						
+					}
+					
+					ordenamientoResponse.setNivelJerarquico(nivelJerarquico);
+					return ordenamientoResponse;
 				});
 	}
 	

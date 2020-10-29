@@ -8,8 +8,12 @@ export interface HierarchicalLevel {
   agrupadores?: any[];
   imagenUrl?: string;
   // estructuraJerarquica?: HierarchicalLevel[];
+  estructuraJerarquica?: [{ id: number; ordenNivel: number }];
   nivelJerarquico?: HierarchicalLevel[];
   subNivelJerarquico?: HierarchicalLevel[];
+  nivelRuta?: HierarchicalLevel[]; // necesaria para no generar otro modelo y reutilizar este, esta prop solo se ocupa en los post/put
+  orden?: number; // orden de los niveles en el arbol, lo ocupa la prop nivelRuta, mismo caso, reutilizar para evitar otro modelo
+  level?: number; // prop para identificar que nivel tiene el nodo en el tree
 }
 
 export class HierarchicalLevelModel implements HierarchicalLevel {
@@ -19,8 +23,12 @@ export class HierarchicalLevelModel implements HierarchicalLevel {
     public agrupadores?: any[],
     public imagenUrl?: string,
     // public estructuraJerarquica?: HierarchicalLevel[],
+    public estructuraJerarquica?: [{ id: number; ordenNivel: number }],
     public nivelJerarquico?: HierarchicalLevel[],
-    public subnivelJerarquico?: HierarchicalLevel[]
+    public subnivelJerarquico?: HierarchicalLevel[],
+    public nivelRuta?: HierarchicalLevel[],
+    public orden?: number,
+    public level?: number
   ) {}
 }
 

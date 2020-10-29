@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.constructor.domain.EstructuraJerarquica;
 import org.constructor.domain.rutas.NivelJerarquico;
 import org.constructor.repository.rutas.EstructuraJerarquicaRepository;
+import org.constructor.response.OrdenamientoResponse;
 import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.constructor.service.rutas.NivelJerarquicoService;
 import org.constructor.utils.RestConstants;
@@ -136,7 +137,7 @@ public class NivelJerarquicoResource {
 	     * @throws Exception
 	     */
 	    @PutMapping(path = "orderUpdate")
-	    public ResponseEntity<Optional<EstructuraJerarquica>> updateOrderNivelJerarquico(@RequestBody NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception {
+	    public ResponseEntity<Optional<OrdenamientoResponse>> updateOrderNivelJerarquico(@RequestBody NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception {
 	        log.debug("REST request to update NivelJerarquico : {}", nivelJerarquicoDTO);
 
 	        if (nivelJerarquicoDTO.getId() == null) {
@@ -146,12 +147,10 @@ public class NivelJerarquicoResource {
 	        	 throw new BadRequestAlertException("Invalid agrupadores", ENTITY_NAME, "null content");
 	        }
 			
-	        Optional<NivelJerarquico> result = nivelJerarquicoService.updateOrder(nivelJerarquicoDTO);
-	        Optional<EstructuraJerarquica> nivel = estructuraJerarquicaRepository.findBySubNivel(result.get());
-	        log.debug("Update nivel  : {}", nivel);
+	        Optional<OrdenamientoResponse> result = nivelJerarquicoService.updateOrder(nivelJerarquicoDTO);
+	        log.debug("Update nivel  : {}", result);
 	        return ResponseEntity.ok()
-	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, nivel.get().getId().toString()))
-	            .body(nivel);
+	            .body(result);
 	    }
 	   
 	    

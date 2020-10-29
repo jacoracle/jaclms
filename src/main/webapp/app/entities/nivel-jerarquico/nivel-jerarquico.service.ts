@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-
 import { SERVER_API_URL } from 'app/app.constants';
 import { INivelJerarquico } from 'app/shared/model/nivel-jerarquico.model';
 import { INivel, Nivel } from 'app/shared/model/nivel.model';
@@ -18,6 +17,7 @@ export class NivelJerarquicoService {
   public resourceUrlModule = SERVER_API_URL + 'api/modulo/nivel-modulo';
   public resourceNivelesUrl = 'http://localhost:8081/api/niveles';
   public resourceEstructuraJerarquica = SERVER_API_URL + 'api/estructura-jerarquica';
+  public resourceHierarchicalLevel = SERVER_API_URL + 'api/nivel-jerarquico';
 
   dataChange = new BehaviorSubject<HierarchicalLevel[]>([]);
 
@@ -27,11 +27,28 @@ export class NivelJerarquicoService {
     return this.dataChange.value;
   }
 
+  createLevel(level: HierarchicalLevel): Observable<EntityResponseType> {
+    const url = this.resourceHierarchicalLevel;
+    return this.http.post<HierarchicalLevel>(url, level, { observe: 'response' });
+  }
+
+  createSubLevel(sublevel: HierarchicalLevel): Observable<EntityResponseType> {
+    const url = this.resourceHierarchicalLevel;
+    return this.http.post<HierarchicalLevel>(url, sublevel, { observe: 'response' });
+  }
+
+  updateNode(nivelJerarquico: HierarchicalLevel): Observable<EntityResponseType> {
+    const url = this.resourceHierarchicalLevel;
+    return this.http.put<HierarchicalLevel>(url, nivelJerarquico, { observe: 'response' });
+  }
+
   insertItem(parent: HierarchicalLevel, name: string): void {
     if (parent.nivelJerarquico) {
       parent.nivelJerarquico.push({ id: undefined, nombre: name, nivelJerarquico: [], imagenUrl: '' } as HierarchicalLevel);
-      this.dataChange.next(this.data);
+    } else {
+      this.data.push({ id: undefined, nombre: name } as HierarchicalLevel);
     }
+    this.dataChange.next(this.data);
   }
 
   updateItem(node: HierarchicalLevel, name: string): void {
