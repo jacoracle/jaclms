@@ -6,6 +6,7 @@ package org.constructor.service.rutas;
 import java.util.Optional;
 
 import org.constructor.domain.rutas.NivelJerarquico;
+import org.constructor.response.OrdenamientoResponse;
 import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -65,7 +66,7 @@ public interface NivelJerarquicoService {
 	 * @return
 	 * @throws Exception
 	 */
-	Optional<NivelJerarquico> updateOrder(NivelJerarquicoDTO dto) throws Exception;
+	Optional<OrdenamientoResponse> updateOrder(NivelJerarquicoDTO dto) throws Exception;
 	
     /**
      * Delete the "id" NivelJerarquico.
