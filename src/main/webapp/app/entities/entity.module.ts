@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material';
 import { LearningPathHierarchicalAddLevelComponent } from './nivel-jerarquico/dialog-add-level/learning-path-hierarchical-add-level.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { LearningPathHierarchicalAddLevelComponent } from './nivel-jerarquico/di
     MatDialogModule,
     MatIconModule,
     MatRadioModule,
+    MatMenuModule,
     RouterModule.forChild([
       {
         path: 'asignatura',
@@ -87,7 +89,8 @@ import { LearningPathHierarchicalAddLevelComponent } from './nivel-jerarquico/di
     DragDropModule,
     MatTreeModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatMenuModule
   ],
   declarations: [PhoneNumberComponent, CountryComponent],
   entryComponents: [LearningPathHierarchicalAddLevelComponent]

@@ -7,11 +7,25 @@
                 (cdkDropListDropped)="dropOrder($event)">
                 <!-- This is the tree node template for leaf nodes -->
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag>
+                    <!--(contextmenu)="onContextMenu($event, node)"-->
                     <!-- use a disabled button to provide padding for tree leaf -->
                     <!-- <mat-icon>library_books</mat-icon> -->
-                    <mat-icon>menu_book</mat-icon>&nbsp;
-                    <span (click)="loadChildren(node)">{{ node.nombre }}</span>
+                    <!-- <mat-icon>menu_book</mat-icon>&nbsp; -->
+                    <mat-icon *ngIf="allowAdd(node.level)">chevron_right</mat-icon>
+                    <mat-icon *ngIf="isLesson(node.level)">menu_book</mat-icon>
+                    <span (click)="loadChildren(node)"> {{ node.nombre }}</span>
                     <mat-icon *ngIf="allowAdd(node.level)" (click)="addSubLevel(node)">add</mat-icon>
+
+
+                    <!-- tres puntos para menu contextual -->
+
+                    <!-- <button mat-icon-button [matMenuTriggerFor]="contextMenu" aria-label="Menú Nivel Jerárquico"> -->
+                    <mat-icon *ngIf="allowAdd(node.level)" (contextmenu)="onContextMenu($event, node)"
+                        [matMenuTriggerFor]="contextMenu" aria-label="Menú Nivel Jerárquico">more_vert</mat-icon>
+                    <!-- </button> -->
+
+                    <!-- terminan tres puntos para mene contextual -->
+
                 </mat-tree-node>
 
                 <!-- <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
@@ -24,7 +38,8 @@
                 </mat-tree-node> -->
 
                 <!-- This is the tree node template for expandable nodes -->
-                <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag>
+                <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag
+                    (contextmenu)="onContextMenu($event, node)">
                     <mat-icon class="mat-icon-rtl-mirror" mat-icon-button matTreeNodeToggle
                         [attr.aria-label]="'toggle ' + node.nombre">
                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
@@ -65,3 +80,24 @@
     </div>
 
 </div>
+<div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+    <mat-menu #contextMenu="matMenu">
+        <ng-template matMenuContent let-item="node">
+            <button mat-menu-item ><!--(click)="onContextMenuAction1(node)"-->
+                <!-- <mat-icon>source</mat-icon> -->
+                <mat-icon>filter_1</mat-icon>
+                <span>Agregar Abuelo</span>
+            </button>
+            <button mat-menu-item ><!--(click)="onContextMenuAction2(node)"-->
+                <!-- <mat-icon>note</mat-icon> -->
+                <mat-icon>filter_2</mat-icon>
+                <span>Agregar Hijo</span>
+            </button>
+            <button mat-menu-item ><!--(click)="onContextMenuAction3(node)"-->
+                <!-- <mat-icon>folder_open</mat-icon> -->
+                <mat-icon>filter_3</mat-icon>
+                <span>Agregar Nieto</span>
+            </button>
+        </ng-template>
+    </mat-menu>

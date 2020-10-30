@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
@@ -19,6 +19,7 @@ import { RutaAprendizajeService } from '../rutas-aprendizaje/ruta-aprendizaje.se
 import { IRutaModel } from 'app/shared/model/ruta-aprendizaje.model';
 import { LearningPathHierarchicalAddLevelComponent } from './dialog-add-level/learning-path-hierarchical-add-level.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatMenuTrigger } from '@angular/material';
 
 @Component({
   selector: 'jhi-learning-path-hierarchical-level',
@@ -26,6 +27,12 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./learning-path-hierarchical-level.component.scss']
 })
 export class LearningPathHierarchicalLevelComponent implements OnInit {
+  // menu
+  @ViewChild(MatMenuTrigger, { static: false })
+  contextMenu!: MatMenuTrigger;
+
+  // termina menu
+
   private idPath = -1;
   learningPathObj!: IRutaModel;
   hierarchicalLevels: HierarchicalLevel[] = new Array<HierarchicalLevel>();
@@ -35,6 +42,10 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   private ngUnsubscribeSubject = new Subject();
 
   // tree
+
+  // menu tree
+
+  contextMenuPosition = { x: '0px', y: '0px' };
 
   newLevelName!: string;
 
@@ -268,6 +279,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     //   return node.level === currentIndex - 1
     // }).map((fnode: FlatNode) => { return { id: fnode.node.id } });
 
+    const newGroup: HierarchicalLevel[] = [];
     const nodeGroups = dataNodes
       .filter(node => {
         return node.level === currentIndex - 1;
@@ -276,11 +288,13 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
         return fnode.node.nivelJerarquico;
       })
       .map(a => {
-        let obj: { id?: number } = {};
+        // let obj!: { id?: number };
         a.forEach((e: HierarchicalLevel) => {
-          obj = { id: e.id! };
+          // obj = { id: e.id! };
+          return { id: e.id! };
         });
-        return obj;
+        // return obj;
+        return a;
       });
 
     console.error(nodeGroups);
@@ -304,7 +318,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     });
 
     console.error(fullBaseNode);
-    nodeGroups.push({ id: this.sequenceList[previousIndex].id });
+    // nodeGroups.push({ id: this.sequenceList[previousIndex].id });
+    newGroup.push({ id: this.sequenceList[previousIndex].id });
 
     const baseNode = this.findNode(padre, padre.id!);
     console.error(baseNode);
@@ -316,7 +331,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       id: baseNode.id,
       nombre: padre.nombre,
       imagenUrl: '',
-      agrupadores: nodeGroups /* [
+      agrupadores: newGroup // nodeGroups
+      /* [
         {
           id: this.sequenceList[previousIndex].id
         }
@@ -324,7 +340,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     };
 
     console.error('Request PUT: ', newLesson);
-    this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
+    // this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
     this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
   }
 
@@ -789,6 +805,32 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
 
   allowAdd(level: number): boolean {
     return level < 2;
+  }
+
+  isLesson(level: number): boolean {
+    return level > 2;
+  }
+
+  onContextMenu(event: MouseEvent, item: HierarchicalLevel): void {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { item };
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
+  }
+
+  onContextMenuAction1(node: any): void {
+    this.contextMenu.menuData = { node };
+    alert(`Click on Action 1 for ${node.nombre}`);
+  }
+
+  onContextMenuAction2(item: HierarchicalLevel): void {
+    alert(`Click on Action 2 for ${item.nombre}`);
+  }
+
+  onContextMenuAction3(item: HierarchicalLevel): void {
+    alert(`Click on Action 3 for ${item.nombre}`);
   }
 
   functionOne(): void {
