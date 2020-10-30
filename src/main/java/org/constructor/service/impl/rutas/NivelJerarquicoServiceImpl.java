@@ -29,6 +29,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 /**
  * @author Edukai
  *
@@ -135,7 +136,6 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 
 				listAgrupador.add(agrupador.get());
 
-
 			});
 
 		}
@@ -191,74 +191,111 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	public Optional<NivelJerarquico> updateNivelJerarquico(NivelJerarquicoDTO dto) throws Exception {
 		return Optional.of(nivelJerarquicoRepository.findById(dto.getId())).filter(Optional::isPresent)
 				.map(Optional::get).map(nivelJerarquico -> {
-					nivelJerarquico.setId(dto.getId());
 					nivelJerarquico.setNombre(dto.getNombre());
 					nivelJerarquico.setImagenUrl(dto.getImagenUrl());
 
 					if (!dto.getAgrupadores().isEmpty()) {
-						nivelJerarquico.setAgrupadores(dto.getAgrupadores());
+						Set<Agrupador> listAgrupadorNivel = new HashSet<>();
 
+						dto.getAgrupadores().forEach(agrupadoresDTO -> {
+
+							Optional<Agrupador> agrupadorNivel = agrupadorRepository.findById(agrupadoresDTO.getId());
+							listAgrupadorNivel.add(agrupadorNivel.get());
+
+							nivelJerarquico.getAgrupadores().addAll(listAgrupadorNivel);
+
+						});
 					}
 
 					return nivelJerarquico;
 				});
 	}
+	
+	
 
+	/**
+	 * Update  To Order
+	 */
 	@Override
 	public Optional<OrdenamientoResponse> updateOrder(NivelJerarquicoDTO dto) throws Exception {
-		
-		
-		
-		return  Optional.of(nivelJerarquicoRepository.findById(dto.getId())).filter(Optional::isPresent)
+
+		return Optional.of(nivelJerarquicoRepository.findById(dto.getId())).filter(Optional::isPresent)
 				.map(Optional::get).map(nivelJerarquico -> {
-					
 
 					OrdenamientoResponse ordenamientoResponse = new OrdenamientoResponse();
 					
-					if(!dto.getEstructuraJerarquica().isEmpty()) {
+					/**
+					 * Update Agrupadores
+					 */
+					if (!dto.getAgrupadores().isEmpty()) {
+						log.debug("entro a agrupadores para ordenar");
+						Set<Agrupador> listAgrupador = new HashSet<>();
+						dto.getAgrupadores().forEach(agrupadoresDTO -> {
+							Optional<Agrupador> agrupador = agrupadorRepository.findById(agrupadoresDTO.getId());
+							listAgrupador.add(agrupador.get());
+							
+							nivelJerarquico.getAgrupadores().addAll(listAgrupador);
+							
+						/**	dto.getEstructuraJerarquica().forEach(delete -> {
+								Optional<NivelJerarquico> nivel1 =  nivelJerarquicoRepository.findById(delete.getId());
+								
+								nivel1.get().getAgrupadores().clear();
+								
+							});*/
+							
+
+						});
+
+					}
+
+					/**
+					 * Update To Estructura Jeararquica
+					 */
+					if (!dto.getEstructuraJerarquica().isEmpty()) {
 						log.debug("entro a estructura jerarquica");
 						dto.getEstructuraJerarquica().forEach(estructuradDTO -> {
-						Optional.of(estructuraJerarquicaRepository.findBySubNivel(nivelJerarquico)).filter(Optional::isPresent)
-							.map(Optional::get).map(estructura -> {
-								estructura.setOrdenNivel(estructuradDTO.getOrdenNivel());
-								estructura.setNivel(estructuradDTO.getId());
-								estructura.setSubNivelJerarquico(nivelJerarquico);
-								ordenamientoResponse.setOrden(estructuradDTO.getOrdenNivel());
-								return estructura; 
-							});
-							
-							
+							Optional.of(estructuraJerarquicaRepository.findBySubNivel(nivelJerarquico))
+									.filter(Optional::isPresent).map(Optional::get).map(estructura -> {
+										estructura.setOrdenNivel(estructuradDTO.getOrdenNivel());
+										estructura.setNivel(estructuradDTO.getId());
+										estructura.setSubNivelJerarquico(nivelJerarquico);
+										ordenamientoResponse.setOrden(estructuradDTO.getOrdenNivel());
+										return estructura;  
+									});
+
 						});
-						
-						
-						
-						
+
 					}
-					
-					if(!dto.getNivelRuta().isEmpty()) {
+
+					/**
+					 * Update to Niveles Rutas
+					 */
+					if (!dto.getNivelRuta().isEmpty()) {
 						log.debug("entro a niveles ruta");
 						dto.getNivelRuta().forEach(rutasNivelesDTO -> {
-							Optional<RutasAprendizaje> rutasOptional = rutasAprendizajeRepository.findById(rutasNivelesDTO.getId());
+							Optional<RutasAprendizaje> rutasOptional = rutasAprendizajeRepository
+									.findById(rutasNivelesDTO.getId());
 							Optional.of(nivelRutaRepository.findByRutas(nivelJerarquico)).filter(Optional::isPresent)
-							.map(Optional::get).map(nivelesRutas -> {
-								nivelesRutas.setOrden(rutasNivelesDTO.getOrden());
-								nivelesRutas.setRutasAprendizaje(rutasOptional.get());
-								nivelesRutas.setNivelJerarquico(nivelJerarquico);
-								
-								ordenamientoResponse.setRuta(rutasOptional.get());
-								ordenamientoResponse.setOrden(rutasNivelesDTO.getOrden());
-								
-								return nivelesRutas; 
-							});
-							
-							
+									.map(Optional::get).map(nivelesRutas -> {
+										nivelesRutas.setOrden(rutasNivelesDTO.getOrden());
+										nivelesRutas.setRutasAprendizaje(rutasOptional.get());
+										nivelesRutas.setNivelJerarquico(nivelJerarquico);
+
+										ordenamientoResponse.setRuta(rutasOptional.get());
+										ordenamientoResponse.setOrden(rutasNivelesDTO.getOrden());
+
+										return nivelesRutas;
+									});
+
 						});
-						
+
 					}
+
 					
+
 					ordenamientoResponse.setNivelJerarquico(nivelJerarquico);
 					return ordenamientoResponse;
 				});
 	}
-	
+
 }

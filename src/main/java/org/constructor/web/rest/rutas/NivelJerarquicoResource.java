@@ -8,9 +8,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import org.constructor.domain.EstructuraJerarquica;
 import org.constructor.domain.rutas.NivelJerarquico;
-import org.constructor.repository.rutas.EstructuraJerarquicaRepository;
 import org.constructor.response.OrdenamientoResponse;
 import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.constructor.service.rutas.NivelJerarquicoService;
@@ -71,8 +69,7 @@ public class NivelJerarquicoResource {
     @Autowired
 	private NivelJerarquicoService nivelJerarquicoService;
     
-    @Autowired
-    private EstructuraJerarquicaRepository estructuraJerarquicaRepository;
+
     
     /**
      * NivelJerarquicoResource
