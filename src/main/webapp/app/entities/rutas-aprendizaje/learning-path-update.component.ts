@@ -135,7 +135,7 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
 
   // when academic grade selection change, must be loaded grades number
   changeGradoAcademico(e: any): void {
-    this.loadAcademicGradesByAcademicLevel(e.target.selectedIndex + 1);
+    this.loadAcademicGradesByAcademicLevel(e.value.id + 1);
   }
 
   loadAcademicGradesByAcademicLevel(level: number): void {
