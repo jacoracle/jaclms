@@ -70,6 +70,12 @@ export class NivelJerarquicoService {
     // .pipe(map((res: EntityResponseTypeHierachical) => this.convertDateFromServer(res)));
   }
 
+  findLevel(id: number): Observable<EntityResponseTypeHierachical> {
+    return this.http.get<any>(`${this.resourceHierarchicalLevel}/${id}`, { observe: 'response' });
+    // this.http.get<SubNivelRutas>(`${this.resourceEstructuraJerarquica}/${id}`, { observe: 'response' })
+    // .pipe(map((res: EntityResponseTypeHierachical) => this.convertDateFromServer(res)));
+  }
+
   create(nivelJerarquico: INivelJerarquico, type: string | undefined): Observable<EntityResponseType> {
     let url;
     if (type && type === 'course') {

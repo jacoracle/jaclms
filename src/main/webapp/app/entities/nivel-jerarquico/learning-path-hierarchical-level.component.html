@@ -3,10 +3,10 @@
     <div class="window-path-hierarchical-body">
         <div class="hierarchical-bar">
             <button class="main-btn" (click)="addLevel()">Nuevo Nivel <mat-icon>add</mat-icon></button>
-            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList #treePath="cdkDropList"
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [cdkDropListData]="dataSource.data" cdkDropList #treePath="cdkDropList"
                 (cdkDropListDropped)="dropOrder($event)">
                 <!-- This is the tree node template for leaf nodes -->
-                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag>
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag [cdkDragData]="node">
                     <!--(contextmenu)="onContextMenu($event, node)"-->
                     <!-- use a disabled button to provide padding for tree leaf -->
                     <!-- <mat-icon>library_books</mat-icon> -->

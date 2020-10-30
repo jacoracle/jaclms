@@ -216,6 +216,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(this.dataSource.data, event.previousIndex, event.currentIndex);
     } else {
+      console.error('drop: ', event.container.data[event.previousIndex]);
       this.addGroupAsLessonToTree(event.previousIndex, event.currentIndex);
     }
   }
@@ -269,55 +270,101 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   addGroupAsLessonToTree(previousIndex: number, currentIndex: number): void {
     // console.error(`Index previo: ${previousIndex} actual: ${currentIndex}`);
     // this.treeControl.dataNodes
-    const padre: HierarchicalLevel = this.treeControl.dataNodes[currentIndex - 1].node;
-    // console.error('Padre del agrupador que se agregará: ', padre);
-    // db
+
+    const actualLevelDropped = this.treeControl.getLevel(this.treeControl.dataNodes[currentIndex - 1]);
+    console.error('Level node: ', actualLevelDropped);
+
+    let padre!: any;
+
+    // este funciona cuando agregas el agrupador justo debajo del nieto y encima de todos los agrupadores existentes, para agregar agrupador debajo de abuelos e hijos
+    padre = this.treeControl.dataNodes[currentIndex - 1].node;
+    console.error('Padre del agrupador que se agregará: ', padre);
+
+    if (actualLevelDropped > 2) {
+      // este funciona cuando agregas agrupador debajo de otro agrupador en un nieto
+      padre = this.treeControl.dataNodes.filter((x: FlatNode) => {
+        return (
+          (x.level === currentIndex && x.node.id === padre.id) ||
+          x.node.nivelJerarquico.find((ab: HierarchicalLevel) => {
+            return ab.id === padre.id;
+          })
+        );
+      });
+    } else {
+      // padre = this.treeControl.dataNodes[currentIndex + 1].node;
+      padre = this.treeControl.dataNodes[currentIndex - 1].node;
+    }
+
+    console.error('P ', padre);
+
+    const padreCool: FlatNode = this.treeControl.dataNodes.filter((a: FlatNode) => {
+      return a.level === currentIndex - 1;
+    });
+
+    console.error('DAM: ', padreCool);
+
+    const nodesFiltered = this.treeControl.dataNodes.filter((x: FlatNode) => {
+      return x.level === actualLevelDropped;
+    });
+    const realFather = nodesFiltered.filter((x: FlatNode) => {
+      return (
+        (x.level === 0 && x.node.id === padre.id) ||
+        x.node.nivelJerarquico.find((ab: HierarchicalLevel) => {
+          return ab.id === padre.id;
+        })
+      );
+    });
+
+    console.error('Padre real: ', realFather);
 
     const dataNodes = [...this.treeControl.dataNodes];
+
+    const dad = dataNodes[currentIndex - 1];
+    console.error('Dad', dad);
 
     // const nodeGroups = dataNodes.filter((node: HierarchicalLevel) => {
     //   return node.level === currentIndex - 1
     // }).map((fnode: FlatNode) => { return { id: fnode.node.id } });
 
     const newGroup: HierarchicalLevel[] = [];
-    const nodeGroups = dataNodes
-      .filter(node => {
-        return node.level === currentIndex - 1;
-      })
-      .map(fnode => {
-        return fnode.node.nivelJerarquico;
-      })
-      .map(a => {
-        // let obj!: { id?: number };
-        a.forEach((e: HierarchicalLevel) => {
-          // obj = { id: e.id! };
-          return { id: e.id! };
-        });
-        // return obj;
-        return a;
-      });
+    // const nodeGroups = dataNodes
+    //   .filter(node => {
+    //     return node.level === currentIndex - 1;
+    //   })
+    //   .map(fnode => {
+    //     return fnode.node.nivelJerarquico;
+    //   })
+    //   .map(a => {
+    //     // let obj!: { id?: number };
+    //     a.forEach((e: HierarchicalLevel) => {
+    //       // obj = { id: e.id! };
+    //       return { id: e.id! };
+    //     });
+    //     // return obj;
+    //     return a;
+    //   });
 
-    console.error(nodeGroups);
+    // console.error(nodeGroups);
 
-    const fullBaseNode = this.hierarchicalLevels.find((lvl: HierarchicalLevel): any => {
-      if (lvl.id === padre.id) {
-        return lvl;
-      } else if (lvl.nivelJerarquico) {
-        return lvl.nivelJerarquico.some((sbl): any => {
-          if (sbl.id === padre.id) {
-            return sbl;
-          } else if (sbl.nivelJerarquico) {
-            return sbl.nivelJerarquico.some((l): any => {
-              return l.id === padre.id;
-            });
-          }
-        });
-      } else {
-        return false;
-      }
-    });
+    // const fullBaseNode = this.hierarchicalLevels.find((lvl: HierarchicalLevel): any => {
+    //   if (lvl.id === padre.id) {
+    //     return lvl;
+    //   } else if (lvl.nivelJerarquico) {
+    //     return lvl.nivelJerarquico.some((sbl): any => {
+    //       if (sbl.id === padre.id) {
+    //         return sbl;
+    //       } else if (sbl.nivelJerarquico) {
+    //         return sbl.nivelJerarquico.some((l): any => {
+    //           return l.id === padre.id;
+    //         });
+    //       }
+    //     });
+    //   } else {
+    //     return false;
+    //   }
+    // });
 
-    console.error(fullBaseNode);
+    // console.error(fullBaseNode);
     // nodeGroups.push({ id: this.sequenceList[previousIndex].id });
     newGroup.push({ id: this.sequenceList[previousIndex].id });
 
@@ -328,8 +375,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     console.error(nieto);
 
     const newLesson: HierarchicalLevel = {
-      id: baseNode.id,
-      nombre: padre.nombre,
+      id: Array.isArray(padre) ? padre[0].node.id : padre.id, //  baseNode.id,
+      nombre: Array.isArray(padre) ? padre[0].node.nombre : padre.nombre,
       imagenUrl: '',
       agrupadores: newGroup // nodeGroups
       /* [
@@ -340,7 +387,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     };
 
     console.error('Request PUT: ', newLesson);
-    // this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
+    this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
     this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
   }
 
