@@ -1,6 +1,7 @@
-<div class="loader" *ngIf="showLoader">
-  Cargando
+<div class="maker-loader" *ngIf="showLoader">
+  <div class="loader2"></div>
 </div>
+
 <div class="row-activity-maker-19">
   <div class="alert-course-configuration">
     <jhi-alert-error></jhi-alert-error>
@@ -20,7 +21,7 @@
     </div>
     <div class="row-amh-topbar">
       <div class="col-amh-topbar">
-          <mat-form-field appearance="fill" class="mat-amht-title">
+          <mat-form-field appearance="outline" class="mat-amht-title">
               <mat-label jhiTranslate="constructorApp.question.activity.name">Nombre de actividad</mat-label>
               <input matInput [(ngModel)]="activity.nombre" (focusout)="save()" jhiSpecialCharacters>
           </mat-form-field>
@@ -30,6 +31,10 @@
             <span jhiTranslate="constructorApp.question.activity.evaluable">Evaluable</span>
           </mat-checkbox>
           <!-- Evaluable -->
+          <div class="numeracion-preguntas">
+            <p>Preguntas</p>
+            <div class="numero-pregunta"> 0 </div>
+          </div>
       </div>
     </div>
     <!-- <h2 id="jhi-curso-heading">Actividad interactiva</h2> -->
@@ -45,6 +50,7 @@
       <!-- Pregunta -->
       <div *ngFor="let pregunta of activity.contenido.preguntas; let questionIndex = index;" class="row-amb-answer">
         <div class="row-amb-header">
+          <h4>Pregunta</h4>
           <!-- Eliminar pregunta -->
           <button (click)="deleteQuestion(questionIndex);" class="btn-delete-question">
             <i class="icon ni-delete"></i>
@@ -54,13 +60,13 @@
         <div class="row-tipo-mat">
 
           <!-- Indicación/Pregunta -->
-          <mat-form-field appearance="fill" class="mat-pregunta">
+          <mat-form-field appearance="outline" class="mat-pregunta">
               <mat-label jhiTranslate="constructorApp.question.question.question">Pregunta</mat-label>
               <input matInput [(ngModel)]="pregunta.pregunta" (focusout)="save()" jhiSpecialCharacters>
           </mat-form-field>
           <!-- Indicación/Pregunta -->
           <!-- Recurso -->
-          <mat-form-field appearance="fill" class="mat-recurso">
+          <mat-form-field appearance="outline" class="mat-recurso">
               <mat-label jhiTranslate="constructorApp.question.question.resource">Recurso</mat-label>
               <select matNativeControl [(ngModel)]="pregunta.tipoRecurso" (change)="changeResourceType(pregunta); save();">
                   <option value="">Ninguno</option>
@@ -69,15 +75,19 @@
           </mat-form-field>
           <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()" [disabled]="isOn">
               <!-- <span>Subir</span> -->
-              <i class="icon ni-picture"></i>
+              <i class="icon ni-upload"></i>
               <input #resourceInput type="file" (change)="selectFile($event, pregunta, pregunta.tipoRecurso)" style="display:none;"/>
           </button>
         </div>
 
-        <div class="row-tipo-mat">
-          <img [src]="pregunta.safeUrl" *ngIf="pregunta.tipoRecurso === 'Imagen' && pregunta.safeUrl && pregunta.safeUrl !== ''">
-          <img [src]="pregunta.safeUrl" *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && !pregunta.loadedVideo" (click)="getVideo(pregunta)">
-          <div *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && pregunta.loadedVideo">
+        <div class="row-tipo-mat row-question-grid">
+          <img [src]="pregunta.safeUrl" *ngIf="pregunta.tipoRecurso === 'Imagen' && pregunta.safeUrl && pregunta.safeUrl !== ''" class="img-preview-image">
+          <div class="img-preview-video" *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && !pregunta.loadedVideo" (click)="getVideo(pregunta)">
+            <div class="overlay"></div>
+            <img [src]="pregunta.safeUrl">
+          </div>
+
+          <div *ngIf="pregunta.tipoRecurso === 'Video' && pregunta.safeUrl && pregunta.safeUrl !== '' && pregunta.loadedVideo" class="video-question-container">
             <jhi-resource-video [safeUrl]="pregunta.safeUrl"></jhi-resource-video>
           </div>
 
@@ -98,40 +108,43 @@
               [value]="value"
               [bufferValue]="bufferValue">
             </mat-progress-bar>
-            Tiempo: 
+            Tiempo:
             <span>{{timeToShow}}</span>
           </div>
 
           <div *ngIf="pregunta.tipoRecurso === 'Audio' && pregunta.safeUrl && pregunta.safeUrl !== ''" [hidden]="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1">
             <jhi-resource-audio [safeUrl]="pregunta.safeUrl"></jhi-resource-audio>
           </div>
-          
+
           <button (click)="deleteResource(pregunta)" *ngIf="pregunta.safeUrl && pregunta.safeUrl !== ''" class="btn-delete-question">
             <i class="icon ni-delete"></i>
           </button>
           <!-- Recurso -->
         </div>
 
+        <div class="row-tipo-mat">
+          <!-- Tipo de pregunta -->
+          <mat-form-field appearance="outline" class="mat-tipo-pregunta">
+              <mat-label jhiTranslate="constructorApp.question.question.questionType">Tipo de pregunta</mat-label>
+              <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta" (change)="changeQuestionType(pregunta, $event.target.value)">
+                  <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
+              </select>
+          </mat-form-field>
+          <!-- Tipo de pregunta -->
 
-          <div class="row-tipo-mat">
-            <!-- Tipo de pregunta -->
-            <mat-form-field appearance="fill" class="mat-tipo-pregunta">
-                <mat-label jhiTranslate="constructorApp.question.question.questionType">Tipo de pregunta</mat-label>
-                <select matNativeControl required [(ngModel)]="pregunta.tipoPregunta" (change)="changeQuestionType(pregunta, $event.target.value)">
-                    <option [value]="questionType" *ngFor="let questionType of questionTypes">{{questionType}}</option>
-                </select>
-            </mat-form-field>
-            <!-- Tipo de pregunta -->
+          <!-- Tipo de respuestas -->
+          <mat-form-field appearance="outline" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)" class="mat-tipo-respuesta">
+              <mat-label jhiTranslate="constructorApp.question.question.answerType">Tipo de respuesta</mat-label>
+              <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
+                  <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
+              </select>
+          </mat-form-field>
+          <!-- Tipo de respuestas -->
+        </div>
 
-            <!-- Tipo de respuestas -->
-            <mat-form-field appearance="fill" *ngIf="pregunta.tipoPregunta !== 'Verdadero Falso'" (change)="changeAnswerType(pregunta)" class="mat-tipo-respuesta">
-                <mat-label jhiTranslate="constructorApp.question.question.answerType">Tipo de respuesta</mat-label>
-                <select matNativeControl required [(ngModel)]="pregunta.tipoRespuestas">
-                    <option [value]="answerType" *ngFor="let answerType of answerTypes">{{answerType}}</option>
-                </select>
-            </mat-form-field>
-            <!-- Tipo de respuestas -->
-          </div>
+        <div class="row-divider-respuesta">
+          <h4>Respuestas</h4>
+        </div>
 
           <!-- Respuesta -->
           <div *ngFor="let respuesta of pregunta.respuestas; let answerIndex = index;" class="row-answer-am">
@@ -144,7 +157,7 @@
               <!-- Correcta -->
               <!-- Respuesta -->
 
-              <mat-form-field appearance="fill" *ngIf="pregunta.tipoRespuestas === 'Texto'">
+              <mat-form-field appearance="outline" *ngIf="pregunta.tipoRespuestas === 'Texto'" class="mat-respuesta-s">
                   <mat-label jhiTranslate="constructorApp.question.answer.answer">Respuesta</mat-label>
                   <input matInput [(ngModel)]="respuesta.respuesta" (focusout)="save()" jhiSpecialCharacters [disabled]="pregunta.tipoPregunta && pregunta.tipoPregunta === 'Verdadero Falso'">
               </mat-form-field>
@@ -169,7 +182,7 @@
                   [value]="value"
                   [bufferValue]="bufferValue">
                 </mat-progress-bar>
-                Tiempo: 
+                Tiempo:
                 <span>{{timeToShow}}</span>
              </div>
               <div *ngIf="pregunta.tipoRespuestas === 'Audio' && respuesta.safeUrl && respuesta.safeUrl !== ''" [hidden]="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === answerIndex">
@@ -177,7 +190,7 @@
               </div>
 
               <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRespuestas !== 'Texto'" (click)="fileInput.click()" [disabled]="isOn">
-                  <i class="icon ni-picture"></i>
+                  <i class="icon ni-upload"></i>
                   <input #fileInput type="file" (change)="selectFile($event, respuesta, pregunta.tipoRespuestas)" style="display:none;"/>
               </button>
 
@@ -189,12 +202,15 @@
               <!-- <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1">Eliminar respuesta</button> -->
               <!-- Respuesta/URL de recurso -->
           </div>
-          <button class="secondary-btn btn-add-answer-am" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4 && pregunta.tipoPregunta !== 'Verdadero Falso'" jhiTranslate="constructorApp.question.question.addAnswer">Agregar respuesta</button>
+          <div class="row-add-question-btn">
+            <!-- <button class="main-btn" (click)="addQuestion()"><i class="icon ni-add"></i> <span jhiTranslate="constructorApp.question.addQuestion">Agregar pregunta</span></button> -->
+            <button class="main-btn" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4 && pregunta.tipoPregunta !== 'Verdadero Falso'"> <i class="icon ni-add"></i> <span jhiTranslate="constructorApp.question.question.addAnswer">Agregar respuesta</span></button>
+          </div>
           <!-- Respuesta -->
       </div>
 
-      <div class="row-add-question-btn">
-        <button class="main-btn" (click)="addQuestion()" jhiTranslate="constructorApp.question.addQuestion"><i class="icon ni-add"></i> Agregar pregunta</button>
+      <div class="row-add-question-btn-2">
+        <button class="main-btn" (click)="addQuestion()"><i class="icon ni-add"></i> <span jhiTranslate="constructorApp.question.addQuestion">Agregar pregunta</span></button>
       </div>
       <!-- Pregunta -->
 
