@@ -121,8 +121,7 @@ public class EstructuraJerarquica implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "EstructuraJerarquica [id=" + id + ", subNivelJerarquico="
-				+ subNivelJerarquico + ", ordenNivel=" + ordenNivel + "]";
+		return "EstructuraJerarquica [id=" + id  + "]";
 	}
 	
 }
