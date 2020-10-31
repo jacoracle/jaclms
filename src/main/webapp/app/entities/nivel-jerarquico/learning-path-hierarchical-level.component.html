@@ -3,39 +3,21 @@
     <div class="window-path-hierarchical-body">
         <div class="hierarchical-bar">
             <button class="main-btn" (click)="addLevel()">Nuevo Nivel <mat-icon>add</mat-icon></button>
-            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [cdkDropListData]="dataSource.data" cdkDropList #treePath="cdkDropList"
-                (cdkDropListDropped)="dropOrder($event)">
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [cdkDropListData]="dataSource.data"
+                cdkDropList #treePath="cdkDropList" (cdkDropListDropped)="dropOrder($event)">
                 <!-- This is the tree node template for leaf nodes -->
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag [cdkDragData]="node">
-                    <!--(contextmenu)="onContextMenu($event, node)"-->
-                    <!-- use a disabled button to provide padding for tree leaf -->
-                    <!-- <mat-icon>library_books</mat-icon> -->
-                    <!-- <mat-icon>menu_book</mat-icon>&nbsp; -->
                     <mat-icon *ngIf="allowAdd(node.level)">chevron_right</mat-icon>
                     <mat-icon *ngIf="isLesson(node.level)">menu_book</mat-icon>
                     <span (click)="loadChildren(node)"> {{ node.nombre }}</span>
                     <mat-icon *ngIf="allowAdd(node.level)" (click)="addSubLevel(node)">add</mat-icon>
 
-
                     <!-- tres puntos para menu contextual -->
-
-                    <!-- <button mat-icon-button [matMenuTriggerFor]="contextMenu" aria-label="Menú Nivel Jerárquico"> -->
                     <mat-icon *ngIf="allowAdd(node.level)" (contextmenu)="onContextMenu($event, node)"
                         [matMenuTriggerFor]="contextMenu" aria-label="Menú Nivel Jerárquico">more_vert</mat-icon>
-                    <!-- </button> -->
-
                     <!-- terminan tres puntos para mene contextual -->
 
                 </mat-tree-node>
-
-                <!-- <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
-                    <button mat-icon-button disabled></button>
-                    <mat-form-field>
-                        <mat-label>Nuevo elemento...</mat-label>
-                        <input matInput #itemValue placeholder="Nivel X...">
-                    </mat-form-field>
-                    <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
-                </mat-tree-node> -->
 
                 <!-- This is the tree node template for expandable nodes -->
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag
@@ -45,26 +27,19 @@
                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>
                     {{node.nombre}}
-                    <!-- <mat-icon (click)="addHightLevel()">add</mat-icon> -->
-                    <!-- <mat-icon (click)="addSubLevel(node)">add</mat-icon> -->
                 </mat-tree-node>
             </mat-tree>
         </div>
 
         <div class="sequences-section" cdkDropList [cdkDropListData]="sequenceList" cdkDropListSortingDisabled
             [cdkDropListConnectedTo]="[treePath]" (cdkDropListDropped)="dropOrder($event)">
-            <!-- <ng-container *ngFor="let groups of sequenceList;"> -->
             <div class="sequence-body" *ngFor="let groups of sequenceList;" cdkDrag [cdkDragData]="groups">
                 <div class="info-sequence">
-                    <!-- {{groups | json}} -->
                     <p><strong>{{ groups.titulo }}</strong></p>
                     <p>{{ groups.descripcion }}</p>
                 </div>
             </div>
-            <!-- </ng-container> -->
-            <p>
-                {{ dataSource.data | json }}
-            </p>
+            <!-- <p>{{ dataSource.data | json }}</p> NO BORRAR -->
         </div>
 
     </div>
@@ -84,18 +59,18 @@
     [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
     <mat-menu #contextMenu="matMenu">
         <ng-template matMenuContent let-item="node">
-            <button mat-menu-item ><!--(click)="onContextMenuAction1(node)"-->
-                <!-- <mat-icon>source</mat-icon> -->
+            <button mat-menu-item>
+                <!--(click)="onContextMenuAction1(node)"-->
                 <mat-icon>filter_1</mat-icon>
                 <span>Agregar Abuelo</span>
             </button>
-            <button mat-menu-item ><!--(click)="onContextMenuAction2(node)"-->
-                <!-- <mat-icon>note</mat-icon> -->
+            <button mat-menu-item>
+                <!--(click)="onContextMenuAction2(node)"-->
                 <mat-icon>filter_2</mat-icon>
                 <span>Agregar Hijo</span>
             </button>
-            <button mat-menu-item ><!--(click)="onContextMenuAction3(node)"-->
-                <!-- <mat-icon>folder_open</mat-icon> -->
+            <button mat-menu-item>
+                <!--(click)="onContextMenuAction3(node)"-->
                 <mat-icon>filter_3</mat-icon>
                 <span>Agregar Nieto</span>
             </button>
