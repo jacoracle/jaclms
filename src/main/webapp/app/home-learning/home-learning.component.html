@@ -20,7 +20,7 @@
         </div>
 
         <div class="window-br-body-topbar">
-            <div class="line-gradient lg-step2"></div>
+            <div class="line-gradient lg-step3"></div>
             <div class="row-wbr-bt">
                 <p>Tus Rutas de Aprendizaje ({{pathsList!.length}})</p>
 
@@ -62,10 +62,10 @@
             <div class="result-search-container">
 
                 <div class="grid-cards">
-                    <div class="box-card" *ngFor="let sec of pathsList" [routerLink]="['/path-hierarchical', sec.id]">
+                    <div class="box-card box-program" *ngFor="let sec of pathsList" [routerLink]="['/path-hierarchical', sec.id]">
                         <!-- [routerLink]="['/path-configuration', sec.id]"> -->
 
-                        <div class="group-cover-br-image"><span></span></div>
+                        <div class="program-cover-br-image"><span></span></div>
 
                         <div (click)="deletePath(sec, $event)" class="del-path delete-course-br">
                             <i class="icon ni-delete icon-negative"></i>
