@@ -93,7 +93,8 @@ h5 {
   position: relative;
   width: 800px;
   height: 550px;
-  background-image: url('../../content/images/img_header_hp.png');
+  // background-image: url('../../content/images/img_header_hp.png');
+  background-image: url('../../content/images/img_header_home.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
@@ -386,6 +387,9 @@ h5 {
     width: 180px;
     min-height: 200px;
   }
+  p {
+    font-size: 15px;
+  }
 
   .circle-cc {
     position: relative;
@@ -406,7 +410,7 @@ h5 {
     width: 100%;
     height: auto;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: 10px;
   }
   p {
@@ -416,7 +420,22 @@ h5 {
     text-align: center;
   }
   .circle-cc1 {
-    background-image: url('../../content/images/hp_icn1.svg');
+    background-image: url('../../content/images/home/h_list1.svg');
+  }
+  .circle-cc2 {
+    background-image: url('../../content/images/home/h_list2.svg');
+  }
+  .circle-cc3 {
+    background-image: url('../../content/images/home/h_list3.svg');
+  }
+  .circle-cc4 {
+    background-image: url('../../content/images/home/h_list4.svg');
+  }
+  .circle-cc5 {
+    background-image: url('../../content/images/home/h_list5.svg');
+  }
+  .circle-cc6 {
+    background-image: url('../../content/images/home/h_list6.svg');
   }
 }
 
@@ -427,7 +446,7 @@ h5 {
   height: auto;
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 40px;
   padding-bottom: 40px;
   z-index: 2;
   @include smartphone {
@@ -476,6 +495,8 @@ h5 {
         position: relative;
         width: 70%;
         height: auto;
+        font-size: 18px;
+        line-height: 26px;
         @include smartphone {
           width: 100%;
         }
@@ -621,53 +642,29 @@ h5 {
   position: relative;
   width: 100%;
   height: auto;
+  min-height: 300px;
   margin-top: 60px;
-  padding-top: 20px;
   background-color: $footer-bg-color;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
 
   .row-footer {
     position: relative;
     width: 92%;
-    max-width: $max-width;
+    max-width: 1300px;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
     @include table {
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
       width: 86%;
-    }
-
-    .footer-logo-small {
-      display: none;
-      @include table {
-        display: flex;
-        position: relative;
-        width: 100%;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        height: auto;
-        justify-content: flex-start;
-        align-items: center;
-      }
-      .logo {
-        position: relative;
-        width: 130px;
-        height: 40px;
-        background-image: url('../../content/images/logo_ged.svg');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 100%;
-      }
     }
     .row-columns {
       position: relative;
@@ -678,9 +675,8 @@ h5 {
       justify-content: space-between;
       align-items: flex-start;
       @include table {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
       .col-footer-logo {
         position: relative;
@@ -693,8 +689,8 @@ h5 {
         .logo-footer {
           position: relative;
           width: 130px;
-          height: 40px;
-          background-image: url('../../content/images/logo_ged.svg');
+          height: 90px;
+          background-image: url('../../content/images/logo_login.svg');
           background-position: center;
           background-repeat: no-repeat;
           background-size: 100%;
@@ -705,62 +701,85 @@ h5 {
       }
       .col-footer {
         position: relative;
-        width: 40%;
+        width: 20%;
         height: auto;
         display: flex;
-        &:nth-child(2) {
-        }
+        flex-direction: column;
         @include table {
-          width: 100%;
-          margin-top: 15px;
+          width: 30%;
         }
-        .cf-1 {
-          position: relative;
-          width: 50%;
-          height: auto;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          p {
-            color: $blue-darkness;
-            &:nth-child(1) {
-              color: $blue-nimbus-dark;
-              font-weight: 700;
-              text-transform: uppercase;
-              padding-bottom: 10px;
-            }
+        p {
+          color: $blue-darkness;
+          &:nth-child(1) {
+            color: $blue-nimbus-dark;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding-bottom: 10px;
           }
         }
-        .cf-2 {
-          position: relative;
-          width: 50%;
-          height: auto;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          p {
-            color: $blue-darkness;
-            &:nth-child(1) {
-              color: $blue-nimbus-dark;
-              font-weight: 700;
-              text-transform: uppercase;
-              padding-bottom: 10px;
-            }
+        a {
+          cursor: pointer !important;
+          line-height: 32px;
+          transition: 0.3s;
+          font-size: 15px;
+          &:hover {
+            color: #285ec5;
           }
+        }
+        .a-disabled {
+          pointer-events: none;
+          cursor: default;
+          opacity: 0.5;
         }
       }
     }
   }
-  .line-footer {
+}
+.footer-logo-small {
+  display: none;
+  @include table {
+    display: flex;
     position: relative;
-    width: 92%;
+    width: 100%;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .logo {
+    position: relative;
+    width: 130px;
+    height: 40px;
+    background-image: url('../../content/images/logo_ged.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+}
+.line-footer {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-top: 1px solid $window-divider-color;
+  .row-line-footer {
+    position: relative;
+    width: 96%;
     max-width: $max-width;
     height: auto;
-    min-height: 50px;
-    border-top: 1px solid $window-divider-color;
     display: flex;
     align-items: center;
     justify-content: center;
+    @include table {
+      width: 90%;
+    }
+    @include smartphone {
+      width: 90%;
+    }
+
     p {
       .icon {
         color: $text-color;
@@ -772,7 +791,7 @@ h5 {
       position: absolute;
       width: 120px;
       height: 30px;
-      top: 10px;
+      top: 0px;
       right: 0;
       display: flex;
       justify-content: space-between;
@@ -781,6 +800,11 @@ h5 {
       .icon {
         position: relative;
         font-size: 24px;
+        transition: 0.3s;
+        font-size: 28px;
+        &:hover {
+          color: #285ec5;
+        }
       }
     }
   }
@@ -957,3 +981,31 @@ h5 {
     margin-bottom: 16px;
   }
 }
+
+.row-image-end {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  min-height: 10px;
+  z-index: 3;
+  .img-f {
+    position: relative;
+    width: 96%;
+    max-width: 1100px;
+    height: 560px;
+    background-image: url('../../content/images/home/img_home_body.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    @include table {
+      height: 400px;
+    }
+  }
+}
+
+// End
