@@ -110,11 +110,11 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       this.nivel.moduloId = this._modulo.id;
       if (this._modulo.nivelesModulo) {
         this.showLoader = false;
-        this.nivel = this._modulo.nivelesModulo.nivelJerarquico;
+        this.nivel = this._modulo.nivelesModulo.nivelModulo;
         this.nivel.moduloId = this._modulo.id;
         this.contentBlocks = [];
         this.contentBlocks = this.nivel.bloquesCurso!;
-        this.nivel.nivelId = this._modulo.nivelesModulo.nivelJerarquico.id;
+        this.nivel.nivelId = this._modulo.nivelesModulo.nivelModulo.id;
         this.contentBlocksService.setContentBlocks(this.contentBlocks);
       }
     }
