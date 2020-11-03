@@ -224,12 +224,12 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     });
   }
 
-  private filterGroups(value: string): IModulo[] {
+  private filterGroups(value: string): IAgrupador[] {
     const filterValue = value.toLowerCase();
-    return this.sequenceList.filter((option: IModulo) => option.titulo!.toLowerCase().includes(filterValue));
+    return this.sequenceList.filter((option: IAgrupador) => option.titulo!.toLowerCase().includes(filterValue));
   }
 
-  private checkListGroups(umas: IModulo[]): IModulo[] {
+  private checkListGroups(umas: IAgrupador[]): IAgrupador[] {
     if (this.learningPathForm.get('searchGroup')!.value !== '' && umas.length > 0) {
       return umas;
     } else if (this.learningPathForm.get('searchGroup')!.value === '') {
@@ -237,6 +237,10 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     } else {
       return [];
     }
+  }
+
+  displayFn(group: IAgrupador): string {
+    return group && group.descripcion ? group.descripcion : '';
   }
 
   dropOrder(event: CdkDragDrop<string[]>): void {
