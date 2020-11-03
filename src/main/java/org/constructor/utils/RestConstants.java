@@ -235,4 +235,37 @@ public class RestConstants {
 	 * Path para peticiones busqueda  agrupador
 	 */
 	public static final String PATH_BUSQUEDA_AGRUPADOR = "agrupador-filtros";
+	
+	// ---------------Rutas--------------------
+	
+	/**
+	 * Path para peticiones ruta 
+	 */
+	public static final String PATH_RUTAS = "rutas";
+	
+	/**
+	 * Path para peticiones ruta 
+	 */
+	public static final String PATH_RUTAS_ALL = "rutas-all";
+		
+	/**
+	 * Path para peticiones rutas por id
+	 */
+	public static final String PATH_RUTA_ID = "rutas/{id}";
+		
+	/**
+	 * Path para peticiones nivel-jerarquico 
+	 */
+	public static final String PATH_NIVEL_JERARQUICO = "nivel-jerarquico";
+	
+	/**
+	 * Path para peticiones nivel-jerarquicos 
+	 */
+	public static final String PATH_NIVEL_JERARQUICOS = "nivel-jerarquicos";
+		
+	/**
+	 * Path para peticiones  nivel-jerarquico  por id
+	 */
+	public static final String PATH_NIVEL_JERARQUICO_ID = "nivel-jerarquico/{id}";
+	
 }

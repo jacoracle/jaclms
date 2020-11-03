@@ -64,9 +64,6 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
-      if (this.account) {
-        console.error('LOGUEADO');
-      }
     });
   }
 

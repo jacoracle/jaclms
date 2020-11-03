@@ -1,0 +1,129 @@
+<div class="main-container-path-config">
+
+    <div [ngSwitch]="isAuthenticated()">
+
+        <!-- Window Empty -->
+        <div class="window-path-config-body">
+
+            <div class="config-path-form">
+                <form name="learningForm" autocomplete="off" role="form" [formGroup]="learningForm">
+                  <div class="row-title-program">
+                    <h4>Ruta</h4>
+                  </div>
+                    <div class="rc-search-flearning">
+                        <div class="cc-search-flearning">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Título</mat-label>
+                                <input matInput formControlName="titlePath" [errorStateMatcher]="matcher"
+                                    placeholder="Ruta de aprendizaje...">
+                                <mat-error *ngIf="learningForm!.get('titlePath')!.hasError('required')">
+                                    El título es <strong>requerido</strong>
+                                </mat-error>
+                                <mat-error *ngIf="learningForm!.get('titlePath')!.hasError('maxlength')">
+                                    El título no debe superar los 50 catacteres.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="cc-search-flearning">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Descripción</mat-label>
+                                <input matInput formControlName="descriptionPath" [errorStateMatcher]="matcher"
+                                    placeholder="ruta de aprendizaje para...">
+                                <mat-error *ngIf="learningForm!.get('descriptionPath')!.hasError('required')">
+                                    La descripción es <strong>requerida</strong>
+                                </mat-error>
+                                <mat-error *ngIf="learningForm!.get('descriptionPath')!.hasError('maxlength')">
+                                    La descripción no debe superar los 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row-form-p2">
+
+                        <div class="col-form-p2">
+                          <mat-form-field appearance="outline">
+                            <mat-label for="field_nivelAcademico">Nivel Académico</mat-label>
+                                <mat-select id="field_nivelAcademico" name="nivelAcademico"
+                                    formControlName="nivelAcademico" (selectionChange)="changeGradoAcademico($event)">
+                                    <mat-option
+                                        [value]="gradoAcademicoOption.id === learningForm.get('nivelAcademico')!.value?.id ? learningForm.get('nivelAcademico')!.value : gradoAcademicoOption"
+                                        *ngFor="let gradoAcademicoOption of nivelAcademicoList;">
+                                        {{gradoAcademicoOption.descripcion}}
+                                      </mat-option>
+                                </mat-select>
+                          </mat-form-field>
+
+                        </div>
+                        <div class="col-form-p3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Grado Académico</mat-label><!-- [formControl]="gradosCtrl" -->
+                                <mat-select formControlName="gradosCtrl" multiple
+                                    (selectionChange)="setSelectedGrades($event)" name="actualSelectedGradesModule">
+                                    <!--[(ngModel)]="actualSelectedGradesModule"-->
+                                    <mat-option *ngFor="let g of numerosGradoList" [value]="g.id">{{g.descripcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+
+                            <div class="chips-grades">
+                                <mat-chip-list aria-label="Selected grades">
+                                    <mat-chip *ngFor="let grades of selectedGradesModule" [selectable]="selectable"
+                                        [removable]="removable" (removed)="remove(grades)">{{grades.descripcion}}
+                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row-form-p1">
+                        <mat-radio-group formControlName="managePartners"
+                            aria-label="Añadir o reemplazar colaboradores en la ruta">
+                            <mat-radio-button value="add">Añadir colaboradores</mat-radio-button>
+                            <mat-radio-button value="replace">Colaboradores Mandatorios</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="row-form-p1">
+                        <jhi-colaboradores-modulo></jhi-colaboradores-modulo>
+                    </div>
+                    <div class="row-form-p1">
+                        <jhi-temas-modulo></jhi-temas-modulo>
+                    </div>
+
+                </form>
+            </div>
+            <div class="portada-path">
+              <h4>Portada</h4>
+              <div class="portada-envolvente">
+                <div class="conver-path">
+                    <img *ngIf="pathCover === ''" [src]="defaultPathUrl" alt="Portada de la Ruta">
+                    <img *ngIf="pathCover !== ''" [src]="pathCover" alt="Portada de la Ruta">
+                </div>
+                <p class="mat-error ng-star-inserted" role="alert" *ngIf="!selectedFiles[0] && !idPath">
+                    La portada es requerida.
+                </p>
+                <div class="path-cover-btns">
+                    <button class="secondary-btn text-transform-none" (click)="deletePathCover()"
+                        *ngIf="pathCover">Eliminar</button>
+                    <button type="button" class="main-btn" (click)="fileInputPathCover.click()" *ngIf="!pathCover">
+                        <span>Subir</span>
+                        <input #fileInputPathCover type="file" (change)="selectFile($event)" style="display:none;" />
+                    </button>
+                </div>
+              </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- close div isAuthenticated -->
+    <!-- <div class="path-btns">
+        <button routerLink="/learning-home" class="secondary-btn">Regresar</button>
+        <button routerLink="/path-hierarchical" class="secondary-btn">Configurar Ruta</button>
+    </div> -->
+</div>

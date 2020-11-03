@@ -30,28 +30,7 @@
         </createTable>
     </changeSet>
     	
-    <!--
-        Added the entity estructura_jerarquica.
-    -->
-
-    <changeSet id="20200305201128-1-relations" author="jhipster">
     
-		 <createTable tableName="estructura_jerarquica">
-		 <column name="id" type="bigint" autoIncrement="${autoIncrement}">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>		 	
-            <column name="nivel_jerarquico_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="subnivel_jerarquico_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="orden" type="bigint">
-                <constraints nullable="true" />
-            </column>
-        </createTable>
-	
-    </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
     <!--

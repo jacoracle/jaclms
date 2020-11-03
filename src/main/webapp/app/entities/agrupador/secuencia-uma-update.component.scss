@@ -11,6 +11,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    order: 2;
 
     .secuence-uma-topbar {
       position: relative;
@@ -48,10 +49,11 @@
     padding: 0px;
     width: 320px;
     height: 100%;
-    border-left: 1px solid $window-divider-color;
+    border-right: 1px solid $window-divider-color;
     background-color: white;
     display: flex;
     flex-direction: column;
+    order: 1;
     .title-sequence-uma {
       position: relative;
       width: 100%;

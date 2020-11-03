@@ -1,20 +1,18 @@
-package org.constructor.web.rest;
+package org.constructor.web.rest.rutas;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.domain.EstructuraJerarquica;
-import org.constructor.service.EstructuraJerarquicaService;
+import org.constructor.service.rutas.EstructuraJerarquicaService;
 import org.constructor.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +22,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing {@link org.constructor.domain.EstructuraJerarquica}.
@@ -61,12 +56,10 @@ public class EstructuraJerarquicaResource {
     @PostMapping("/estructura-jerarquica")
     public ResponseEntity<EstructuraJerarquica> createEstructuraJerarquica(@RequestBody EstructuraJerarquica estructuraJerarquica) throws URISyntaxException {
         log.debug("REST request to save EstructuraJerarquica : {}", estructuraJerarquica);
-        if (estructuraJerarquica.getNivelJerarquico() != null) {
-            throw new BadRequestAlertException("A new Estructura Jerarquica cannot already have an ID", ENTITY_NAME, "idexists");
-        }
+       
         EstructuraJerarquica result = estructuraJerarquicaService.save(estructuraJerarquica);
-        return ResponseEntity.created(new URI("/api/roles-colaboradores/" + result.getNivelJerarquico()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getNivelJerarquico().toString()))
+        return ResponseEntity.created(new URI("/api/roles-colaboradores/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
     
@@ -82,12 +75,12 @@ public class EstructuraJerarquicaResource {
     @PutMapping("/estructura-jerarquica")
     public ResponseEntity<EstructuraJerarquica> updateEstructuraJerarquica(@RequestBody EstructuraJerarquica estructuraJerarquica) throws URISyntaxException {
         log.debug("REST request to update estructuraJerarquica : {}", estructuraJerarquica);
-        if (estructuraJerarquica.getNivelJerarquico() == null) {
+        if (estructuraJerarquica.getSubNivelJerarquico() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         EstructuraJerarquica result = estructuraJerarquicaService.save(estructuraJerarquica);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, estructuraJerarquica.getNivelJerarquico().getNombre()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, estructuraJerarquica.getSubNivelJerarquico().getNombre()))
             .body(result);
     }
     
@@ -100,11 +93,10 @@ public class EstructuraJerarquicaResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of estructuraJerarquica in body.
      */
     @GetMapping("/estructura-jerarquica")
-    public ResponseEntity<List<EstructuraJerarquica>> getAllEstructuraJerarquica(Pageable pageable) {
+    public List<EstructuraJerarquica> getAllEstructuraJerarquica(Pageable pageable) {
         log.debug("REST request to get a page of EstructuraJerarquica");
-        Page<EstructuraJerarquica> page = estructuraJerarquicaService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        List<EstructuraJerarquica> page = estructuraJerarquicaService.findAll(pageable);
+        return page;
     }
     
     /**
@@ -114,10 +106,10 @@ public class EstructuraJerarquicaResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the estructuraJerarquica, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/estructura-jerarquica/{id}")
-    public ResponseEntity<EstructuraJerarquica> getNivelEstructuraJerarquica(@PathVariable Long id) {
+    public Set<EstructuraJerarquica> getNivelEstructuraJerarquica(@PathVariable Long id) {
         log.debug("REST request to get EstructuraJerarquica : {}", id);
-        Optional<EstructuraJerarquica> estructuraJerarquica = estructuraJerarquicaService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(estructuraJerarquica);
+        Set<EstructuraJerarquica> estructuraJerarquica = estructuraJerarquicaService.findByNivel(id);
+        return estructuraJerarquica;
     }
     
     /**

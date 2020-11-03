@@ -31,9 +31,11 @@
             <span jhiTranslate="constructorApp.question.activity.evaluable">Evaluable</span>
           </mat-checkbox>
           <!-- Evaluable -->
+          <!---->
           <div class="numeracion-preguntas">
             <p>Preguntas</p>
-            <div class="numero-pregunta"> 0 </div>
+            <div class="numero-pregunta" *ngIf="activity && activity.contenido && activity.contenido.preguntas"> {{ activity.contenido.preguntas.length }} </div>
+            <div class="numero-pregunta" *ngIf="!activity || !activity.contenido || !activity.contenido.preguntas"> 0 </div>
           </div>
       </div>
     </div>

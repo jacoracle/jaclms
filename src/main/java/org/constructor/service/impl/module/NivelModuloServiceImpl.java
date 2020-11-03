@@ -390,7 +390,7 @@ public class NivelModuloServiceImpl  implements NivelModuloService {
 			log.debug("modulo: {}", modulo.get());
 			NivelesModulo nivelesModulo = new NivelesModulo();
 			nivelesModulo.setModulo(modulo.get());
-			nivelesModulo.setNivelJerarquico(nivelJerarquicoMo);
+			nivelesModulo.setNivelModulo(nivelJerarquicoMo);
 			nivelesModulo.setOrdenNivel(nivelJerarquicoModulo.getOrden());
 			nivelesModuloRepository.save(nivelesModulo);
 			log.debug("Se guardó correctamente nivelesModulo: {}", nivelesModulo);

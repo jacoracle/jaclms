@@ -77,6 +77,10 @@ export class ColaboradoresModuleComponent implements OnInit {
     return this.listRolesColaboradores; //  this.selectedColaboradors;
   }
 
+  public setColaboradores(colaboradoresList: IRolesColaboradores[]): void {
+    this.listRolesColaboradores = [...colaboradoresList];
+  }
+
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
   addColaborador(event: MatChipInputEvent): void {
