@@ -73,11 +73,27 @@
                   <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}</option>
               </select>
           </mat-form-field>
-          <button type="button" class="btn-upload-answer-image" *ngIf="pregunta.tipoRecurso !== ''" (click)="resourceInput.click()" [disabled]="isOn">
-              <!-- <span>Subir</span> -->
-              <i class="icon ni-upload"></i>
-              <input #resourceInput type="file" (change)="selectFile($event, pregunta, pregunta.tipoRecurso)" style="display:none;"/>
-          </button>
+
+          <div class="row-grabar-audio" *ngIf="pregunta.tipoRecurso !== ''">
+            <span>Subir</span>
+            <button type="button" class="btn-upload-answer-image" (click)="resourceInput.click()" [disabled]="isOn">
+                <!-- <span>Subir</span> -->
+                <i class="icon ni-upload"></i>
+                <input #resourceInput type="file" (change)="selectFile($event, pregunta, pregunta.tipoRecurso)" style="display:none;"/>
+            </button>
+          </div>
+
+
+          <div class="row-grabar-audio col-record" *ngIf="pregunta.tipoRecurso === 'Audio'">
+            <span>Grabar audio</span>
+              <input type="button" (click)="record(pregunta, questionIndex)" class="btn-circle" id="mixBut"
+                [ngClass]="{
+                  'btn-start': !isOn,
+                  'btn-stop': isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1,
+                  'btn-disabled': isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)
+                }"
+                [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)" />
+          </div>
         </div>
 
         <div class="row-tipo-mat row-question-grid">
@@ -91,15 +107,7 @@
             <jhi-resource-video [safeUrl]="pregunta.safeUrl"></jhi-resource-video>
           </div>
 
-          <div class="col-record" *ngIf="pregunta.tipoRecurso === 'Audio'">
-            <input type="button" (click)="record(pregunta, questionIndex)" class="btn-circle" id="mixBut"
-              [ngClass]="{
-                'btn-start': !isOn,
-                'btn-stop': isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1,
-                'btn-disabled': isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)
-              }"
-              [disabled]="isOn && (recordingQuestionIndex !== questionIndex || recordingAnswerIndex !== -1)" />
-          </div>
+
           <div class="audio-progress" *ngIf="isOn && recordingQuestionIndex === questionIndex && recordingAnswerIndex === -1">
             <mat-progress-bar
               class="example-margin"

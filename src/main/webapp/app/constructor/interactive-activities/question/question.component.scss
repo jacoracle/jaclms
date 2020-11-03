@@ -133,6 +133,12 @@ img {
   position: relative;
   width: 80%;
   height: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .mat-amht-title {
+    margin-top: 18px !important;
+  }
 }
 .numeracion-preguntas {
   position: absolute;
@@ -166,10 +172,9 @@ img {
     margin-left: 10px;
   }
 }
-.mat-amht-title {
-}
 .mat-amht-checkbox {
   margin-left: 40px;
+  margin-top: 9px;
 }
 // Body
 .activity-maker-body {
@@ -309,7 +314,7 @@ img {
   background-color: #f4f5f7;
   .btn-delete-question {
     position: absolute;
-    right: 15px;
+    right: 20px;
   }
   mat-checkbox {
     margin-left: 20px;
@@ -438,13 +443,53 @@ img {
 .row-question-grid {
   margin-bottom: 20px;
   padding-bottom: 10px;
-  min-height: 80px;
+  // min-height: 80px;
+  min-height: 20px;
   border-bottom: 1px solid $window-divider-color;
 }
 
+.audio-progress {
+  width: 300px;
+}
+.row-divider-respuesta {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border-top: 1px solid $window-divider-color;
+  padding-top: 25px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  h4 {
+    color: $blue-nimbus-dark;
+  }
+}
+.row-grabar-audio {
+  position: relative;
+  width: auto;
+  height: 50px;
+  margin-left: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  span {
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: 14px;
+    font-weight: 400;
+    color: $blue-nimbus-dark;
+  }
+  button {
+    margin-left: 10px;
+  }
+  input {
+    margin-left: 10px;
+  }
+}
 .col-record {
   position: relative;
-  width: 80px;
+  // width: 80px;
+  width: auto;
   height: auto;
   display: flex;
   justify-content: center;
@@ -463,21 +508,5 @@ img {
   }
   .btn-disabled {
     background-color: gray;
-  }
-}
-
-.audio-progress {
-  width: 300px;
-}
-.row-divider-respuesta {
-  position: relative;
-  width: 100%;
-  height: auto;
-  border-top: 1px solid $window-divider-color;
-  padding-top: 25px;
-  padding-bottom: 10px;
-  margin-top: 10px;
-  h4 {
-    color: $blue-nimbus-dark;
   }
 }
