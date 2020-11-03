@@ -135,7 +135,7 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
 
   // when academic grade selection change, must be loaded grades number
   changeGradoAcademico(e: any): void {
-    this.loadAcademicGradesByAcademicLevel(e.value.id + 1);
+    this.loadAcademicGradesByAcademicLevel(e.value.id);
   }
 
   loadAcademicGradesByAcademicLevel(level: number): void {
@@ -232,7 +232,7 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
       if (event.target.files[0].size > this.maxCoverSize) {
         this.eventManager.broadcast(
           new JhiEventWithContent('constructorApp.validationError', {
-            message: 'constructorApp.ruta.validations.fileSize'
+            message: 'constructorApp.path.validations.fileSize'
           })
         );
         return;
@@ -240,7 +240,7 @@ export class LearningPathUpdateComponent implements OnInit, OnDestroy {
       } else if (!this.allowedFileTypes.includes(event.target.files[0].type)) {
         this.eventManager.broadcast(
           new JhiEventWithContent('constructorApp.validationError', {
-            message: 'constructorApp.ruta.validations.fileType'
+            message: 'constructorApp.path.validations.fileType'
           })
         );
         return;

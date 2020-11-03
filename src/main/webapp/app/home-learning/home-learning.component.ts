@@ -83,7 +83,8 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
 
   private _filterPathsByTitle(value: string): IRutaModel[] {
     const filterValue = value.toLowerCase();
-    return this.pathsList.filter((option: IRutaModel) => option.titulo!.toLowerCase().includes(filterValue));
+    // return this.pathsList.filter((option: IRutaModel) => option.titulo!.toLowerCase().includes(filterValue));
+    return this.pathsOriginList.filter((option: IRutaModel) => option.titulo!.toLowerCase().includes(filterValue));
   }
 
   displayFn(path: IRutaModel): string {

@@ -13,13 +13,14 @@ import { HierarchicalLevel, HierarchicalLevelModel, NivelRutas, SubNivelRutas } 
 import { IModulo } from 'app/shared/model/modulo.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
 import { RutaAprendizajeService } from '../rutas-aprendizaje/ruta-aprendizaje.service';
 import { IRutaModel } from 'app/shared/model/ruta-aprendizaje.model';
 import { LearningPathHierarchicalAddLevelComponent } from './dialog-add-level/learning-path-hierarchical-add-level.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'jhi-learning-path-hierarchical-level',
@@ -33,10 +34,14 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
 
   // termina menu
 
+  learningPathForm!: FormGroup;
+  filteredGroups: any;
+
   private idPath = -1;
   learningPathObj!: IRutaModel;
   hierarchicalLevels: HierarchicalLevel[] = new Array<HierarchicalLevel>();
   sequenceList: IAgrupador[] = new Array<IAgrupador>();
+  originalSequenceList: IAgrupador[] = new Array<IAgrupador>();
 
   subscription?: Subscription;
   private ngUnsubscribeSubject = new Subject();
@@ -111,6 +116,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
   // TERMINA TREE
 
   constructor(
+    private formbuilder: FormBuilder,
     private aroute: ActivatedRoute,
     private accountService: AccountService,
     private rutaService: RutaAprendizajeService,
@@ -120,6 +126,8 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     public dialog: MatDialog,
     private eventManager: JhiEventManager
   ) {
+    this.initForm();
+
     aroute.params.subscribe(val => {
       this.idPath = val.id;
     });
@@ -181,6 +189,17 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
     if (this.idPath) {
       this.loadSequencesUma();
       this.getLearningPathData();
+
+      this.filteredGroups = this.learningPathForm
+        .get('searchGroup')!
+        .valueChanges.pipe(
+          startWith(''),
+          map(value => (typeof value === 'string' ? value : value.descripcion)),
+          map(title => (title ? this.filterGroups(title) : this.sequenceList.slice()))
+        )
+        .subscribe((group: IAgrupador[]) => {
+          this.sequenceList = [...this.checkListGroups(group)];
+        });
     } else {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', {
@@ -197,6 +216,27 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
 
   getType<T>(obj: T): T {
     return obj;
+  }
+
+  initForm(): void {
+    this.learningPathForm = this.formbuilder.group({
+      searchGroup: new FormControl('', [Validators.maxLength(30)])
+    });
+  }
+
+  private filterGroups(value: string): IModulo[] {
+    const filterValue = value.toLowerCase();
+    return this.sequenceList.filter((option: IModulo) => option.titulo!.toLowerCase().includes(filterValue));
+  }
+
+  private checkListGroups(umas: IModulo[]): IModulo[] {
+    if (this.learningPathForm.get('searchGroup')!.value !== '' && umas.length > 0) {
+      return umas;
+    } else if (this.learningPathForm.get('searchGroup')!.value === '') {
+      return this.originalSequenceList;
+    } else {
+      return [];
+    }
   }
 
   dropOrder(event: CdkDragDrop<string[]>): void {
@@ -300,8 +340,23 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
         //   // this.hierarchicalLevels.push({ id: res.body.id, nombre: res.body.nombre, imagenUrl: res.body.imagenUrl } as HierarchicalLevel);
         this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
         // }
+
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.path.sequence.addGroup',
+            type: 'success'
+          })
+        );
       },
-      err => console.error(err)
+      err => {
+        console.error('Error al agregar agrupador como lección: ', err);
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.path.validations.error',
+            type: 'danger'
+          })
+        );
+      }
     );
   }
 
@@ -338,6 +393,13 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
         if (res.body) {
           this.hierarchicalLevels.push({ id: res.body.id, nombre: res.body.nombre, imagenUrl: res.body.imagenUrl } as HierarchicalLevel);
           this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
+
+          this.eventManager.broadcast(
+            new JhiEventWithContent('constructorApp.validationError', {
+              message: 'constructorApp.path.sequence.addLevel',
+              type: 'success'
+            })
+          );
         }
       },
       err => console.error(err)
@@ -435,9 +497,24 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
           this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
           this.loadChildren(parentNode);
           this.restoreExpandedNodes();
+
+          this.eventManager.broadcast(
+            new JhiEventWithContent('constructorApp.validationError', {
+              message: 'constructorApp.path.sequence.addLevel',
+              type: 'success'
+            })
+          );
         }
       },
-      err => console.error(err)
+      err => {
+        console.error('Error al agregar subnivel al Tree: ', err);
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.path.validations.error',
+            type: 'danger'
+          })
+        );
+      }
     );
   }
 
@@ -482,6 +559,7 @@ export class LearningPathHierarchicalLevelComponent implements OnInit {
       .subscribe(
         (res: HttpResponse<IAgrupador[]>) => {
           this.sequenceList = [...Array.from(res.body!)];
+          this.originalSequenceList = this.sequenceList;
         },
         () => this.onQueryError()
       );

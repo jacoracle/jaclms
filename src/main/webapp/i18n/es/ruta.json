@@ -18,6 +18,10 @@
       "detail": {
         "title": "Ruta de Aprendizaje"
       },
+      "sequence": {
+        "addGroup": "Cambios guardados, un Agrupador fue agregado.",
+        "addLevel": "Cambios guardados, nivel agregado correctamente."
+      },
       "validations": {
         "formError": "Por favor revisa la información y vuelve a intentarlo.",
         "formErrorTitle": "Se requiere el título de la Ruta, por favor, revisa el formulario.",
