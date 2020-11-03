@@ -572,6 +572,10 @@ jhi-login-modal {
   &:active {
     outline: none;
   }
+  i {
+    color: white;
+    margin-right: 8px;
+  }
 }
 // Status Button
 .btn-status {
@@ -619,7 +623,7 @@ jhi-login-modal {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 20px 30px rgba(26, 61, 130, 0.1), 0 6px 18px rgba(26, 61, 130, 0.12);
+  // box-shadow: 0 20px 30px rgba(26, 61, 130, 0.1), 0 6px 18px rgba(26, 61, 130, 0.12);
   .icon {
     color: white;
   }
@@ -2747,21 +2751,21 @@ input[type='file'] {
 // Alert component
 .bs-succes {
   background-color: $succes-color;
-  box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
+  // box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
   &:hover {
     background-color: #347d37;
   }
 }
 .bs-danger {
   background-color: $alert-color;
-  box-shadow: 0 16px 20px rgba(230, 26, 52, 0.1), 0 6px 13px rgba(230, 26, 52, 0.12);
+  // box-shadow: 0 16px 20px rgba(230, 26, 52, 0.1), 0 6px 13px rgba(230, 26, 52, 0.12);
   &:hover {
     background-color: $alert-hover-color;
   }
 }
 .color-danger {
   background-color: $alert-color;
-  box-shadow: 0 20px 30px rgba(230, 26, 52, 0.1), 0 6px 18px rgba(230, 26, 52, 0.12);
+  // box-shadow: 0 20px 30px rgba(230, 26, 52, 0.1), 0 6px 18px rgba(230, 26, 52, 0.12);
   &:hover {
     background-color: $alert-hover-color;
   }
@@ -2827,7 +2831,7 @@ input[type='file'] {
 
 .danger {
   background-color: $alert-color;
-  box-shadow: 0 20px 30px rgba(230, 26, 52, 0.1), 0 6px 18px rgba(230, 26, 52, 0.12);
+  // box-shadow: 0 20px 30px rgba(230, 26, 52, 0.1), 0 6px 18px rgba(230, 26, 52, 0.12);
   .alert-icon:before {
     content: '\e805';
   }
@@ -2835,21 +2839,21 @@ input[type='file'] {
 
 .info {
   background-color: $succes-color;
-  box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
+  // box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
   .alert-icon:before {
     content: '\e80a';
   }
 }
 .success {
   background-color: $succes-color;
-  box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
+  // box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
   .alert-icon:before {
     content: '\e806';
   }
 }
 .warning {
   background-color: $succes-color;
-  box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
+  // box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
   .alert-icon:before {
     content: '\e805';
   }
