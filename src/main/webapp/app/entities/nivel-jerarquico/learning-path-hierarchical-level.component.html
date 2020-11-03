@@ -83,9 +83,9 @@
                         <div class="group-cover-br-image"><span></span></div>
                         <div class="course-desc-br-row">
                           <span class="title-course-br"
-                                *ngIf="groups.titulo">{{groups.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : groups.titulo}}</span>
+                                *ngIf="groups.titulo">{{groups.titulo.length > 30 ? groups.titulo.substring(0, 30) + "..." : groups.titulo}}</span>
                           <span class="desc-course-br"
-                              *ngIf="groups.descripcion">{{groups.descripcion!.length > 28 ? sec.descripcion!.substring(0, 28) + "..." : groups.descripcion!}}</span>
+                              *ngIf="groups.descripcion">{{groups.descripcion!.length > 28 ? groups.descripcion!.substring(0, 28) + "..." : groups.descripcion!}}</span>
                         </div>
                       </div>
                     </div>
