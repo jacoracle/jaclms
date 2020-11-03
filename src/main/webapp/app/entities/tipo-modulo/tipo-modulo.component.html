@@ -1,5 +1,5 @@
 <div>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-chip-list #chipList aria-label="Tipos de UMA">
             <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
                 (removed)="removeTipo(tipo)">
