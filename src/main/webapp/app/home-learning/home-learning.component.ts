@@ -9,6 +9,8 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { RutaAprendizajeService } from '../entities/rutas-aprendizaje/ruta-aprendizaje.service';
 import { HttpResponse } from '@angular/common/http';
 import { map, startWith, takeUntil } from 'rxjs/operators';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { FileUploadService } from 'app/services/file-upload.service';
 
 @Component({
   selector: 'jhi-learning-module',
@@ -34,7 +36,8 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
     private loginModalService: LoginModalService,
     private pathService: RutaAprendizajeService,
     private formbuilder: FormBuilder,
-    private eventManager: JhiEventManager
+    private eventManager: JhiEventManager,
+    private fileUploadServide: FileUploadService
   ) {
     // this.fillListDummy();
   }
@@ -47,6 +50,7 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
           (res: HttpResponse<IRutaModel[]>) => {
             this.pathsList = res.body!;
             this.pathsOriginList = this.pathsList;
+            this.getCovers();
           },
           () => this.onQueryError()
         );
@@ -147,5 +151,19 @@ export class HomeLearningComponent implements OnInit, OnDestroy, AfterContentIni
         type: 'danger'
       })
     );
+  }
+
+  getCovers(): void {
+    if (this.pathsList && this.pathsList.length) {
+      for (let i = 0; i < this.pathsList.length; i++) {
+        if (this.pathsList[i] && this.pathsList[i].portadaUrl && this.pathsList[i].portadaUrl !== '') {
+          this.fileUploadServide.getImageFile(this.pathsList[i].portadaUrl!).subscribe(data => {
+            if (data.body) {
+              this.pathsList[i].safeUrl = this.fileUploadServide.getSafeResourceUrl(data.body);
+            }
+          });
+        }
+      }
+    }
   }
 }

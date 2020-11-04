@@ -4,6 +4,7 @@ import { INumeroGrado } from './numero-grado.model';
 // import { SafeUrl } from '@angular/platform-browser';
 import { Moment } from 'moment';
 import { NivelRutas } from './interface/hierarchical-level.model';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface IRutaModel {
   id?: number;
@@ -17,6 +18,7 @@ export interface IRutaModel {
   nivelRutas?: NivelRutas[];
   fechaCreacion?: Moment;
   fechaPublicacion?: Moment;
+  safeUrl?: SafeUrl;
 }
 
 export class RutaModel implements IRutaModel {
@@ -31,6 +33,7 @@ export class RutaModel implements IRutaModel {
     public nivelAcademico?: INumeroGrado[],
     public nivelRutas?: any[],
     public fechaCreacion?: Moment,
-    public fechaPublicacion?: Moment
+    public fechaPublicacion?: Moment,
+    public safeUrl?: SafeUrl
   ) {}
 }
