@@ -72,6 +72,15 @@
         border-bottom: 1px solid #e7e8ed;
         display: flex;
         align-items: center;
+        justify-content: flex-start;
+        p {
+          margin-left: 30px;
+          font-size: 15px;
+          color: #1a3d83;
+        }
+        .form-uma-search {
+          margin-left: 20px;
+        }
 
         h5 {
           margin-left: 30px;

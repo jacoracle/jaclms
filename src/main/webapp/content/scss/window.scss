@@ -277,7 +277,7 @@
   }
 }
 .box-program {
-  height: 160px;
+  height: 170px;
 }
 .module-cover-br-image {
   position: relative;
@@ -326,9 +326,9 @@
 .program-cover-br-image {
   position: relative;
   width: 100%;
-  height: 100px;
+  height: 110px;
   cursor: pointer;
-  background: $color-step-3;
+  // background: $color-step-3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -346,7 +346,24 @@
   img {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: auto;
+  }
+}
+.program-cover-br {
+  position: relative;
+  width: 100%;
+  height: 110px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+  border-bottom: 1px solid $window-divider-color;
+  img {
+    position: relative;
+    width: 100%;
+    height: auto;
   }
 }
 .course-desc-br-row {
