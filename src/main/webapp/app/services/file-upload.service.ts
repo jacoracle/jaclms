@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { ImageService } from './image.service';
 import { VideoService } from './video.service';
@@ -145,5 +145,10 @@ export class FileUploadService {
       const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(soundPath);
       this.soundService.setSoundSrc(objectUrl);
     });
+  }
+
+  getSafeResourceUrl(file: Blob): SafeUrl {
+    const path = URL.createObjectURL(file);
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(path);
   }
 }

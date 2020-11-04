@@ -65,7 +65,11 @@
                     <div class="box-card box-program" *ngFor="let sec of pathsList" [routerLink]="['/path-hierarchical', sec.id]">
                         <!-- [routerLink]="['/path-configuration', sec.id]"> -->
 
-                        <div class="program-cover-br-image"><span></span></div>
+                        <div class="program-cover-br-image" *ngIf="!sec.safeUrl || sec.safeUrl === ''"><span></span></div>
+                        <div class="program-cover-br" *ngIf="sec.safeUrl && sec.safeUrl !== ''">
+                          <img [src]="sec.safeUrl">
+                        </div>
+                        
 
                         <div (click)="deletePath(sec, $event)" class="del-path delete-course-br">
                             <i class="icon ni-delete icon-negative"></i>
