@@ -4,9 +4,11 @@
             <mat-chip *ngFor="let th of listThemes" [selectable]="selectable" [removable]="removable"
                 (removed)="removeTopic(th)">
                 {{th.nombre}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                <mat-icon matChipRemove *ngIf="removable">
+                    <span jhiTranslate="uma.form.cancel">cancel</span>
+                </mat-icon>
             </mat-chip>
-            <input placeholder="Temas del UMA" #topicInput [formControl]="topicCtrl" [matAutocomplete]="auto"
+            <input placeholder="{{'uma.form.topic' | translate}}" #topicInput [formControl]="topicCtrl" [matAutocomplete]="auto"
                 [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 (matChipInputTokenEnd)="addTopic($event)">
         </mat-chip-list>

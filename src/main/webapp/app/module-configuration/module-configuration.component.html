@@ -12,10 +12,10 @@
       <div class="r2">
         <div class="windowHeader-title disbled-t-header">
           <!-- <div class="icon-step-header"></div> -->
-          <h4>Constructor de UMA / </h4>
+          <h4 jhiTranslate="uma.page">Constructor de UMA / </h4>
         </div>
         <div class="windowHeader-title">
-          <h4>Registro de UMA</h4>
+          <h4 jhiTranslate="uma.title">Registro de UMA</h4>
         </div>
         <div class="c1">
         </div>
@@ -25,7 +25,7 @@
     <div class="window-br-body-topbar">
       <div class="line-gradient lg-step1"></div>
       <div class="row-wbr-bt">
-        <p>Completa los campos</p>
+        <p jhiTranslate="uma.notefields">Completa los campos</p>
       </div>
     </div>
 
@@ -35,8 +35,8 @@
     </div>
     <!-- Footer -->
     <div class="window-br-footer">
-      <button routerLink="/uma-home" class="secondary-btn">Cancelar</button>
-      <button (click)="saveUMA()" class="main-btn" [disabled]="firstClick">Crear UMA</button>
+      <button routerLink="/uma-home" class="secondary-btn" jhiTranslate="uma.cancel">Cancelar</button>
+      <button (click)="saveUMA()" class="main-btn" [disabled]="firstClick" jhiTranslate="uma.create">Crear UMA</button>
     </div>
 
   </div>

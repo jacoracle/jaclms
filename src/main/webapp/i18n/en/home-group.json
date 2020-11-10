@@ -1,0 +1,12 @@
+{
+  "homegroup": {
+    "title": "Group UMA",
+    "your": "Your Groups",
+    "search": "search",
+    "greet": "Hello",
+    "welcome": "Welcome to",
+    "start": "To start, click on the \"Create Group\" button.",
+    "back": "Go back",
+    "new": "Create Group"
+  }
+}
