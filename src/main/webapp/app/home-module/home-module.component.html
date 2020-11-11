@@ -1,131 +1,135 @@
 <div class="main-container-br">
 
-  <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
-    <!-- Window Header -->
-    <div class="window-br-header">
-      <div class="alert-home-uma">
-        <jhi-alert-error></jhi-alert-error>
-      </div>
-      <div class="r1">
-        <div class="logo-home-mini"></div>
-      </div>
-      <div class="r2">
-        <div class="windowHeader-title">
-          <!-- <div class="icon-step-header"></div> -->
-          <h4 jhiTranslate="homemodule.title">Constructor de UMA</h4>
+    <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
+        <!-- Window Header -->
+        <div class="window-br-header">
+            <div class="alert-home-uma">
+                <jhi-alert-error></jhi-alert-error>
+            </div>
+            <div class="r1">
+                <div class="logo-home-mini"></div>
+            </div>
+            <div class="r2">
+                <div class="windowHeader-title">
+                    <!-- <div class="icon-step-header"></div> -->
+                    <h4 jhiTranslate="homemodule.title">Constructor de UMA</h4>
+                </div>
+                <div class="c1">
+                </div>
+            </div>
         </div>
-        <div class="c1">
+
+        <div [hidden]="!showLoader" class="loader-home">
+            <span class="loader"></span>
         </div>
-      </div>
-    </div>
 
-    <div [hidden]="!showLoader" class="loader-home">
-      <span class="loader"></span>
-    </div>
+        <div class="window-br-body-topbar recent-modules">
+            <div class="line-gradient lg-step1"></div>
+            <div class="row-wbr-bt" *ngIf="modulos.length || isSearching">
+                <p><label jhiTranslate="homemodule.your">Tus UMA </label> ( {{modulos.length}} )</p>
 
-    <div class="window-br-body-topbar recent-modules">
-      <div class="line-gradient lg-step1"></div>
-      <div class="row-wbr-bt" *ngIf="modulos.length || isSearching">
-          <p><label jhiTranslate="homemodule.your">Tus UMA </label> ( {{modulos.length}} )</p>
+                <form name="umaForm" role="form" [formGroup]="umaForm" autocomplete="off" class="form-uma-search">
 
-        <form name="umaForm" role="form" [formGroup]="umaForm" autocomplete="off" class="form-uma-search">
+                    <!-- <div class="row-search-uma">
+                      <mat-form-field>
+                        <mat-label>Búsqueda general por título</mat-label>
+                        <input type="text" placeholder="indicio del posible título" matInput formControlName="titleSearchGral"
+                          [matAutocomplete]="autoInputTitleSearch">
+                        <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
+                          [displayWith]="displayFn">
+                          <mat-option *ngFor="let option of modulos" [value]="option">
+                            {{option.descripcion}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div> -->
 
-            <!-- <div class="row-search-uma">
-              <mat-form-field>
-                <mat-label>Búsqueda general por título</mat-label>
-                <input type="text" placeholder="indicio del posible título" matInput formControlName="titleSearchGral"
-                  [matAutocomplete]="autoInputTitleSearch">
-                <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
-                  [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of modulos" [value]="option">
-                    {{option.descripcion}}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-            </div> -->
+                    <mat-form-field appearance="outline">
+                        <mat-label jhiTranslate="homemodule.search">Buscar</mat-label>
+                        <input type="text" placeholder="" matInput formControlName="titleSearchGral"
+                            [matAutocomplete]="autoInputTitleSearch">
+                        <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
+                            [displayWith]="displayFn">
+                            <!-- <mat-option *ngFor="let option of modulos" [value]="option">
+                              {{option.descripcion}}
+                            </mat-option> -->
+                        </mat-autocomplete>
+                    </mat-form-field>
 
-              <mat-form-field appearance="outline">
-                <mat-label jhiTranslate="homemodule.search">Buscar</mat-label>
-                <input type="text" placeholder="" matInput formControlName="titleSearchGral"
-                  [matAutocomplete]="autoInputTitleSearch">
-                <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
-                  [displayWith]="displayFn">
-                  <!-- <mat-option *ngFor="let option of modulos" [value]="option">
-                    {{option.descripcion}}
-                  </mat-option> -->
-                </mat-autocomplete>
-              </mat-form-field>
+                    <!-- <input type="text"
+                           placeholder="Buscar..."
+                           [formControl]="control"
+                           matInput formControlName="titleSearchGral"
+                           [matAutocomplete]="autoInputTitleSearch">
+                    <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete">
+                    </mat-autocomplete> -->
 
-            <!-- <input type="text"
-                   placeholder="Buscar..."
-                   [formControl]="control"
-                   matInput formControlName="titleSearchGral"
-                   [matAutocomplete]="autoInputTitleSearch">
-            <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete">
-            </mat-autocomplete> -->
+                </form>
 
-        </form>
-
-      </div>
-    </div>
-
-    <!-- Window Empty -->
-    <div class="emty-e" *ngIf="!modulos.length">
-      <div class="container-br-message">
-        <div class="br-message">
-          <div class="brm-1">
-            <div class="br-message-icon"></div>
-          </div>
-          <div class="brm-2">
-            <p>
-                <label jhiTranslate="homemodule.greet">¡Hola!</label><br>
-                <label jhiTranslate="homemodule.welcome">Bienvenido a </label>
-                <span>Nimbus Constructor</span>.
-            </p>
-            <p jhiTranslate="homemodule.start">Para comenzar da click en el botón "Crear UMA".</p>
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Window content Module -->
-    <div class="window-br-body" *ngIf="modulos.length || isSearching">
+        <!-- Window Empty -->
+        <div class="emty-e" *ngIf="!modulos.length">
+            <div class="container-br-message">
+                <div class="br-message">
+                    <div class="brm-1">
+                        <div class="br-message-icon"></div>
+                    </div>
+                    <div class="brm-2">
+                        <p>
+                            <label jhiTranslate="homemodule.greet">¡Hola!</label><br>
+                            <label jhiTranslate="homemodule.welcome">Bienvenido a </label>
+                            <span>Nimbus Constructor</span>.
+                        </p>
+                        <p jhiTranslate="homemodule.start">Para comenzar da click en el botón "Crear UMA".</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      <!-- end search box -->
-      <div class="result-search-container">
-        <div class="grid-cards">
+        <!-- Window content Module -->
+        <div class="window-br-body" *ngIf="modulos.length || isSearching">
 
-          <div class="box-card" *ngFor="let modulo of modulos"
-            [routerLink]="['/constructor-layout', modulo.id, 'module']">
-            <!-- <div class="course-cover-br box-card" *ngFor="let modulo of filteredUmas | async"
-          [routerLink]="['/constructor-layout', modulo.id, 'module']"> -->
+            <!-- end search box -->
+            <div class="result-search-container">
+                <div class="grid-cards">
 
-            <div class="module-cover-br-image"><span></span></div>
+                    <div class="box-card" *ngFor="let modulo of modulos"
+                        [routerLink]="['/constructor-layout', modulo.id, 'module']">
+                        <!-- <div class="course-cover-br box-card" *ngFor="let modulo of filteredUmas | async"
+                      [routerLink]="['/constructor-layout', modulo.id, 'module']"> -->
 
-            <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
-              <i class="icon ni-delete icon-negative"></i>
+                        <div class="module-cover-br-image"><span></span></div>
+
+                        <div class="edit-course-br" (click)="editModule(modulo.id)">
+                            <i class="icon ni-edit icon-negative"></i>
+                        </div>
+
+                        <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
+                            <i class="icon ni-delete icon-negative"></i>
+                        </div>
+
+                        <div class="course-desc-br-row">
+                            <span class="title-course-br"
+                                *ngIf="modulo.titulo">{{modulo.titulo.length > 30 ? modulo.titulo.substring(0, 30) + "..." : modulo.titulo}}</span>
+                            <span class="desc-course-br"
+                                *ngIf="modulo.descripcion">{{modulo.descripcion.length > 30 ? modulo.descripcion.substring(0, 30) + "..." : modulo.descripcion}}</span>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
-            <div class="course-desc-br-row">
-              <span class="title-course-br"
-                *ngIf="modulo.titulo">{{modulo.titulo.length > 30 ? modulo.titulo.substring(0, 30) + "..." : modulo.titulo}}</span>
-              <span class="desc-course-br"
-                *ngIf="modulo.descripcion">{{modulo.descripcion.length > 30 ? modulo.descripcion.substring(0, 30) + "..." : modulo.descripcion}}</span>
-            </div>
-
-          </div>
 
         </div>
-      </div>
 
+        <div class="window-br-footer">
+            <button routerLink="/" class="secondary-btn" jhiTranslate="homemodule.back">Regresar</button>
+            <button routerLink="/uma-configuration" class="main-btn" jhiTranslate="homemodule.new">Nueva UMA</button>
+        </div>
 
     </div>
-
-    <div class="window-br-footer">
-      <button routerLink="/" class="secondary-btn" jhiTranslate="homemodule.back">Regresar</button>
-      <button routerLink="/uma-configuration" class="main-btn" jhiTranslate="homemodule.new">Nueva UMA</button>
-    </div>
-
-  </div>
 
 </div>
