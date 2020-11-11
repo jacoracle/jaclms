@@ -92,9 +92,7 @@
             <mat-chip-list aria-label="Selected grades">
               <mat-chip *ngFor="let grades of selectedGradesModule" [selectable]="selectable" [removable]="removable"
                 (removed)="remove(grades)">{{grades.descripcion}}
-                <mat-icon matChipRemove *ngIf="removable" jhiTranslate="uma.form.cancel">
-                    <span jhiTranslate="uma.form.cancel">cancel</span>
-                </mat-icon>
+                <mat-icon matChipRemove *ngIf="removable" jhiTranslate="uma.form.cancel">cancel</mat-icon>
               </mat-chip>
             </mat-chip-list>
           </div>
@@ -106,16 +104,19 @@
       <!-- Row -->
       <div class="row-conf-module margintop-25">
         <div class="rcm-col">
-          <jhi-tipos-modulo></jhi-tipos-modulo>
+          <jhi-tipos-modulo [listTiposModuloTest] = modulo.tiposModulos *ngIf="modulo && modulo.id"></jhi-tipos-modulo>
+          <jhi-tipos-modulo *ngIf="!modulo"></jhi-tipos-modulo>
         </div>
         <div class="rcm-col">
-          <jhi-colaboradores-modulo></jhi-colaboradores-modulo>
+          <jhi-colaboradores-modulo [listRolesColaboradores] = modulo.rolesColaboradores *ngIf="modulo && modulo.id"></jhi-colaboradores-modulo>
+          <jhi-colaboradores-modulo *ngIf="!modulo"></jhi-colaboradores-modulo>
         </div>
       </div>
 
       <div class="row-conf-module margintop-25">
         <div class="rcm-col">
-          <jhi-temas-modulo></jhi-temas-modulo>
+          <jhi-temas-modulo [listThemes] = modulo.temas *ngIf="modulo && modulo.id"></jhi-temas-modulo>
+          <jhi-temas-modulo *ngIf="!modulo"></jhi-temas-modulo>
         </div>
         <div class="rcm-col">
         </div>

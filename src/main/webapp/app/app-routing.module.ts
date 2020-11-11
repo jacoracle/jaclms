@@ -77,6 +77,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: ModuleConfigurationComponent
         },
         {
+          path: 'uma-configuration/:id',
+          component: ModuleConfigurationComponent
+        },
+        {
           path: 'group-configuration',
           component: GroupUmaConfigurationComponent
         },

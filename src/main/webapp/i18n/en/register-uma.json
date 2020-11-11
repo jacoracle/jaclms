@@ -2,6 +2,7 @@
   "uma": {
     "page": "UMA Builder /",
     "title": "Registration UMA",
+    "titleedit": "Edition UMA",
     "notefields": "Fill the fields",
     "form": {
       "configuration": "General configuration",
@@ -19,6 +20,7 @@
       "topic": "UMA topics"
     },
     "cancel": "Cancel",
-    "create": "Create UMA"
+    "create": "Create UMA",
+    "edit": "Edit UMA"
   }
 }

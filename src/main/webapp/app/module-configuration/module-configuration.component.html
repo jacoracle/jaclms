@@ -1,43 +1,48 @@
 <div class="main-container-br">
-  <div class="window-br">
+    <div class="window-br">
 
-    <!-- Window Header -->
-    <div class="window-br-header">
-      <div class="alert-home-uma">
-        <!-- <jhi-alert-error></jhi-alert-error> -->
-      </div>
-      <div class="r1">
-        <div class="logo-home-mini"></div>
-      </div>
-      <div class="r2">
-        <div class="windowHeader-title disbled-t-header">
-          <!-- <div class="icon-step-header"></div> -->
-          <h4 jhiTranslate="uma.page">Constructor de UMA / </h4>
+        <!-- Window Header -->
+        <div class="window-br-header">
+            <div class="alert-home-uma">
+                <!-- <jhi-alert-error></jhi-alert-error> -->
+            </div>
+            <div class="r1">
+                <div class="logo-home-mini"></div>
+            </div>
+            <div class="r2">
+                <div class="windowHeader-title disbled-t-header">
+                    <!-- <div class="icon-step-header"></div> -->
+                    <h4 jhiTranslate="uma.page">Constructor de UMA / </h4>
+                </div>
+                <div class="windowHeader-title">
+                    <h4 jhiTranslate="uma.title" *ngIf="!id">Registro de UMA</h4>
+                    <h4 jhiTranslate="uma.titleedit" *ngIf="id">Edición de UMA</h4>
+                </div>
+                <div class="c1">
+                </div>
+            </div>
         </div>
-        <div class="windowHeader-title">
-          <h4 jhiTranslate="uma.title">Registro de UMA</h4>
+
+        <div class="window-br-body-topbar">
+            <div class="line-gradient lg-step1"></div>
+            <div class="row-wbr-bt">
+                <p jhiTranslate="uma.notefields">Completa los campos</p>
+            </div>
         </div>
-        <div class="c1">
+
+        <!-- Body -->
+        <div class="window-br-body">
+            <jhi-modulo-update [modulo]="this.modulo" *ngIf="id && this.modulo"></jhi-modulo-update>
+            <jhi-modulo-update *ngIf="!id"></jhi-modulo-update>
         </div>
-      </div>
-    </div>
+        <!-- Footer -->
+        <div class="window-br-footer">
+            <button routerLink="/uma-home" class="secondary-btn" jhiTranslate="uma.cancel">Cancelar</button>
+            <button (click)="saveUMA()" class="main-btn" [disabled]="firstClick">
+                <span jhiTranslate="uma.create" *ngIf="!id">Crear UMA</span>
+                <span jhiTranslate="uma.edit" *ngIf="id">Editar UMA</span>
+            </button>
+        </div>
 
-    <div class="window-br-body-topbar">
-      <div class="line-gradient lg-step1"></div>
-      <div class="row-wbr-bt">
-        <p jhiTranslate="uma.notefields">Completa los campos</p>
-      </div>
     </div>
-
-    <!-- Body -->
-    <div class="window-br-body">
-      <jhi-modulo-update></jhi-modulo-update>
-    </div>
-    <!-- Footer -->
-    <div class="window-br-footer">
-      <button routerLink="/uma-home" class="secondary-btn" jhiTranslate="uma.cancel">Cancelar</button>
-      <button (click)="saveUMA()" class="main-btn" [disabled]="firstClick" jhiTranslate="uma.create">Crear UMA</button>
-    </div>
-
-  </div>
 </div>

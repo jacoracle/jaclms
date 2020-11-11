@@ -4,9 +4,7 @@
             <mat-chip *ngFor="let tipo of listTiposModuloTest" [selectable]="selectable" [removable]="removable"
                 (removed)="removeTipo(tipo)">
                 {{tipo.nombre}}
-                <mat-icon matChipRemove *ngIf="removable">
-                    <span jhiTranslate="uma.form.cancel">cancel</span>
-                </mat-icon>
+                <mat-icon matChipRemove *ngIf="removable" jhiTranslate="uma.form.cancel">cancel</mat-icon>
             </mat-chip>
             <input placeholder="{{'uma.form.type' | translate}}" #moduleTypeInput [formControl]="moduleTypeCtrl"
                 [matAutocomplete]="auto" [matChipInputFor]="chipList"

@@ -6,6 +6,7 @@ import { FileUploadService } from 'app/services/file-upload.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CurrentModuleService } from 'app/services/current-module.service';
 import { IModulo } from 'app/shared/model/modulo.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-constructor-book-information',
@@ -23,6 +24,7 @@ export class ConstructorBookInformationComponent implements OnInit {
     private currentCourseService: CurrentCourseService,
     private currentModuloService: CurrentModuleService,
     private fileUploadService: FileUploadService,
+    private router: Router,
     private sanitizer: DomSanitizer
   ) {
     this.subscription = this.currentCourseService.getCurrentCourse().subscribe(currentCourse => {
@@ -42,6 +44,12 @@ export class ConstructorBookInformationComponent implements OnInit {
 
   validateTypeImage(imgUri: string): boolean {
     return imgUri.slice(imgUri.length - 3).toLowerCase() === 'png';
+  }
+
+  editModule(idModule: number): void {
+    this.router.navigate(['/uma-configuration', idModule]).then(r => {
+      return r;
+    });
   }
 
   private getCover(path: string): void {

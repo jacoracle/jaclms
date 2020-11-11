@@ -2,6 +2,7 @@
   "uma": {
     "page": "Constructor de UMA / ",
     "title": "Registro de UMA",
+    "titleedit": "Edición de UMA",
     "notefields": "Completa los campos",
     "form": {
       "configuration": "Configuración general",
@@ -18,6 +19,7 @@
       "topic": "Temas del UMA"
     },
     "cancel": "Cancelar",
-    "create": "Crear UMA"
+    "create": "Crear UMA",
+    "edit": "Editar UMA"
   }
 }

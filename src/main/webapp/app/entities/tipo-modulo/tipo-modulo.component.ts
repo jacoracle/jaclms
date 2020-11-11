@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ITipoModulo } from 'app/shared/model/tipo-modulo.model';
@@ -28,6 +28,7 @@ export class TypeModuleComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   moduleTypeCtrl = new FormControl();
 
+  @Input()
   listTiposModuloTest: ITipoModulo[] = [];
   listFullTiposModuloTest: ITipoModulo[] = [];
   filteredTiposModulo: Observable<ITipoModulo[]>;
@@ -111,8 +112,12 @@ export class TypeModuleComponent implements OnInit {
   }
 
   selectedTipo(event: MatAutocompleteSelectedEvent): void {
-    if (!this.listTiposModuloTest.includes(event.option.value)) {
-      this.listTiposModuloTest.push(event.option.value as ITipoModulo); //   viewValue
+    if (
+      this.listTiposModuloTest.filter(tipo => {
+        return tipo.id === event.option.value.id;
+      }).length === 0
+    ) {
+      this.listTiposModuloTest.push(event.option.value as ITipoModulo);
     }
     this.moduleTypeInput.nativeElement.value = '';
     this.moduleTypeCtrl.setValue(null);

@@ -94,13 +94,35 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
+      bottom: 20px;
 
       p {
         position: relative;
         width: auto;
         height: auto;
         font-size: $tx-size-s;
-        line-height: 18px;
+        line-height: 16px;
+      }
+    }
+    .edit-ab {
+      position: absolute;
+      width: 90%;
+      height: auto;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      cursor: pointer;
+      top: 34px;
+
+      p {
+        position: relative;
+        width: auto;
+        height: auto;
+        font-size: $tx-size-xs;
+        font-weight: 600;
+        margin-left: 4px;
+        cursor: pointer;
+        color: #212342;
       }
     }
   }
