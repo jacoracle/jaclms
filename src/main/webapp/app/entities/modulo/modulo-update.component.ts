@@ -126,17 +126,20 @@ export class ModuloUpdateComponent implements OnInit {
   }
 
   updateGradoAcademico(modulo: IModulo): IGradoAcademico | undefined {
-    const gradoAcademico = modulo.numeroGrados![0].gradoAcademico;
-    this.gradoAcademicoService.find(gradoAcademico!.id!).subscribe(res => {
-      if (res.body && res.body.numeroGrados) {
-        this.numerogrados = res.body.numeroGrados;
-        this.selectedGradesModule = modulo.numeroGrados!;
-        this.actualSelectedGradesModule = modulo.numeroGrados!.map((numeroGrado): number => {
-          return numeroGrado.id!;
-        });
-      }
-    });
-    return gradoAcademico;
+    if (modulo.numeroGrados && modulo.numeroGrados.length > 0) {
+      const gradoAcademico = modulo.numeroGrados[0].gradoAcademico;
+      this.gradoAcademicoService.find(gradoAcademico!.id!).subscribe(res => {
+        if (res.body && res.body.numeroGrados) {
+          this.numerogrados = res.body.numeroGrados;
+          this.selectedGradesModule = modulo.numeroGrados!;
+          this.actualSelectedGradesModule = modulo.numeroGrados!.map((numeroGrado): number => {
+            return numeroGrado.id!;
+          });
+        }
+      });
+      return gradoAcademico;
+    }
+    return;
   }
 
   save(): void {
