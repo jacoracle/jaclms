@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { SubNivelRutas } from 'app/shared/model/interface/hierarchical-level.model';
+import { HierarchicalLevel, SubNivelRutas } from 'app/shared/model/interface/hierarchical-level.model';
 import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,6 +26,7 @@ export class DynamicFlatNode {
 })
 export class HierarchicalTreeService {
   dataChange: BehaviorSubject<DynamicFlatNode[]> = new BehaviorSubject<DynamicFlatNode[]>([]);
+  // wtf$ = this.dataChange.asObservable();
 
   get data(): DynamicFlatNode[] {
     return this.dataChange.value;
@@ -116,7 +117,7 @@ export class HierarchicalTreeService {
           node.isLoading = false;
         }, 1000);
       } else {
-        this.data.splice(index + 1, hijos.length); //  children.length);
+        this.data.splice(index + 1, hijos.length === 0 ? 1 : hijos.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario
         this.dataChange.next(this.data);
       }
     }); // close then
@@ -144,8 +145,38 @@ export class HierarchicalTreeService {
     // node.nombre = name;
     // this.data.splice(index, 0, ...nodes);
     // this.data[index].nombre = name;
-    nodes.push(new DynamicFlatNode(0, name, node.level + 1, false));
+    nodes.push(new DynamicFlatNode(0, name, node.level, false));
     this.data.splice(index, 1, ...nodes);
     this.dataChange.next(this.data);
   }
+
+  private async addNewLevelToTree(name: string): Promise<HierarchicalLevel | undefined> {
+    const newLevel: HierarchicalLevel = {
+      nombre: name,
+      imagenUrl: '',
+      nivelRuta: [
+        {
+          id: 1,
+          orden: this.data.filter(n => n.level === 0).length
+        }
+      ]
+    };
+
+    // this.subscribeResponseAddLevel(this.nivelJerarquicoService!.createLevel(newLevel));
+    return (await this.nivelJerarquicoService!.createLevel(newLevel).toPromise()).body as HierarchicalLevel;
+  }
+
+  /*
+  protected subscribeResponseAddLevel(result: Observable<HttpResponse<HierarchicalLevel>>): void {
+    result.subscribe(
+      res => {
+        if (res.body) {
+          const x = { id: res.body.id, nombre: res.body.nombre, imagenUrl: res.body.imagenUrl } as HierarchicalLevel;
+
+        }
+      },
+      err => console.error(err)
+    );
+  }
+  */
 }

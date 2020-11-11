@@ -68,6 +68,15 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     );
     */
 
+    /*
+    this.dataSource.wtf$
+      .subscribe(res => {
+        console.error('Damn!!!!!!', res)
+        this.dataSource.data = res;
+      });
+      */
+
+    /*
     this.dataSource.dataChange.subscribe(data => {
       console.error('no pela porque no está inyectado el servicio');
       // this.dataSource.data = data;
@@ -75,6 +84,8 @@ export class TreeHierarchicalLevelComponent implements OnInit {
       this.dataSource.data = [];
       this.dataSource.data = _data;
     });
+
+    */
   }
 
   ngOnInit(): void {
@@ -168,15 +179,15 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     // const idx = this.dataSource.data.indexOf(node);
     // const parentNode = this.dataSource.data[idx];// this.flatNodeMap.get(node);
     // console.error('parentNode: ', parentNode);
-    this.dataSource.insertItem(node, ''); //idx, '');//  this._database.insertItem(parentNode!, '');
+    this.dataSource.insertItem(node, ''); //  idx, '');//  this._database.insertItem(parentNode!, '');
     this.treeControl.expand(node);
   }
 
   /** Save the node to database */
   saveNode(node: DynamicFlatNode, itemValue: string): void {
     // const nestedNode = this.flatNodeMap.get(node);
-    const idx = this.dataSource.data.indexOf(node);
-    const parentNode = this.dataSource.data[idx];
+    // const idx = this.dataSource.data.indexOf(node);
+    // const parentNode = this.dataSource.data[idx];
     // this._database.updateItem(nestedNode!, itemValue);
     this.dataSource.updateItem(node, itemValue);
     // this.treeControl.expand(node);
