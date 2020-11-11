@@ -142,7 +142,7 @@ export class ModuloUpdateComponent implements OnInit {
     return;
   }
 
-  save(): void {
+  save(since: string): void {
     this.isSaving = true;
     const modulo = this.createFromForm();
 
@@ -171,10 +171,10 @@ export class ModuloUpdateComponent implements OnInit {
       this.firstClick = true;
       if (modulo.id) {
         // console.error('##########   Deberá actualizar: ', modulo);
-        this.subscribeToSaveResponse(this.moduloService.update(modulo));
+        this.subscribeToSaveResponse(this.moduloService.update(modulo), since);
       } else {
         // console.error('##########   Deberá guardar: ', modulo);
-        this.subscribeToSaveResponse(this.moduloService.create(modulo));
+        this.subscribeToSaveResponse(this.moduloService.create(modulo), since);
       }
     }
   }
@@ -194,18 +194,30 @@ export class ModuloUpdateComponent implements OnInit {
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IModulo>>): void {
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IModulo>>, since: string): void {
     result.subscribe(
-      res => this.onSaveSuccess(res),
+      res => this.onSaveSuccess(res, since),
       () => this.onSaveError()
     );
   }
 
-  protected onSaveSuccess(res: any): void {
-    const idSuccess = res.body.modulo ? res.body.modulo.id : res.body.id;
-    this.router.navigate(['/constructor-layout', idSuccess, 'module']).then(r => {
-      return r;
-    });
+  protected onSaveSuccess(res: any, since: string): void {
+    if (res.body.modulo) {
+      this.router.navigate(['/constructor-layout', res.body.modulo.id, 'module']).then(r => {
+        return r;
+      });
+    } else {
+      if (since !== '' && since === 'book') {
+        this.router.navigate(['/constructor-layout', res.body.id, 'module']).then(r => {
+          return r;
+        });
+      } else {
+        this.router.navigate(['/uma-home']).then(r => {
+          return r;
+        });
+      }
+    }
+
     this.isSaving = false;
   }
 

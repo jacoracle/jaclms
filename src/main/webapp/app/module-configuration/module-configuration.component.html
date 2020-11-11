@@ -37,7 +37,7 @@
         </div>
         <!-- Footer -->
         <div class="window-br-footer">
-            <button routerLink="/uma-home" class="secondary-btn" jhiTranslate="uma.cancel">Cancelar</button>
+            <button (click)="cancelUMA()" class="secondary-btn" jhiTranslate="uma.cancel">Cancelar</button>
             <button (click)="saveUMA()" class="main-btn" [disabled]="firstClick">
                 <span jhiTranslate="uma.create" *ngIf="!id">Crear UMA</span>
                 <span jhiTranslate="uma.edit" *ngIf="id">Editar UMA</span>

@@ -115,7 +115,7 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   }
 
   editModule(idModule: number): void {
-    this.router.navigate(['/uma-configuration', idModule]).then(r => {
+    this.router.navigate(['/uma-configuration', idModule, 'home']).then(r => {
       return r;
     });
   }

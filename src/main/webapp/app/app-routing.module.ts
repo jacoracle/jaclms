@@ -77,7 +77,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: ModuleConfigurationComponent
         },
         {
-          path: 'uma-configuration/:id',
+          path: 'uma-configuration/:id/:since',
           component: ModuleConfigurationComponent
         },
         {

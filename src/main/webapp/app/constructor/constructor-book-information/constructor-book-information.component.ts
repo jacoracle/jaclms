@@ -47,7 +47,7 @@ export class ConstructorBookInformationComponent implements OnInit {
   }
 
   editModule(idModule: number): void {
-    this.router.navigate(['/uma-configuration', idModule]).then(r => {
+    this.router.navigate(['/uma-configuration', idModule, 'book']).then(r => {
       return r;
     });
   }
