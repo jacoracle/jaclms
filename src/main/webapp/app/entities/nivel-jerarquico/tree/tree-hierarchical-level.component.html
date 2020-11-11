@@ -1,0 +1,80 @@
+<div class="container-path-hierarchical" [ngSwitch]="isAuthenticated()">
+
+    <div style="background-color: #b3b3b3;" class="window-path-hierarchical-body">
+        <div class="hierarchical-bar">
+            <button class="main-btn" (click)="addLevel()">Nuevo Nivel</button>
+
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                    <button mat-icon-button disabled></button>
+                    {{node.nombre}}
+                </mat-tree-node>
+
+                <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                    <button mat-icon-button disabled></button>
+                    <mat-form-field>
+                        <mat-label>Nuevo Nodo</mat-label>
+                        <input matInput #itemValue placeholder="Nivel X ...">
+                    </mat-form-field>
+                    <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+                </mat-tree-node>
+
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                    <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+                        <mat-icon>
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    {{node.nombre}}
+                    <button mat-icon-button (click)="addNewItem(node)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar">
+                    </mat-progress-bar>
+                </mat-tree-node>
+            </mat-tree>
+
+        </div>
+
+        <div class="sequences-section" cdkDropList [cdkDropListData]="sequenceList" cdkDropListSortingDisabled
+            [cdkDropListConnectedTo]="[treePath]" (cdkDropListDropped)="dropOrder($event)">
+
+            <div class="ss-header">
+                <p class="p-result">Agrupadores ( {{sequenceList.length}} )</p>
+                <form name="learningPathForm" role="form" [formGroup]="learningPathForm" autocomplete="off"
+                    class="form-uma-search">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Buscar</mat-label>
+                        <input type="text" placeholder="" matInput formControlName="searchGroup"
+                            [matAutocomplete]="searchGroup">
+                        <mat-autocomplete autoActiveFirstOption #searchGroup="matAutocomplete"
+                            [displayWith]="displayFn">
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="ss-body">
+                <div class="grid-cards">
+                    <div class="box-card" *ngFor="let groups of sequenceList;" cdkDrag [cdkDragData]="groups">
+                        <div class="group-cover-br-image"><span></span></div>
+                        <div class="course-desc-br-row">
+                            <span class="title-course-br"
+                                *ngIf="groups.titulo">{{groups.titulo.length > 30 ? groups.titulo.substring(0, 30) + "..." : groups.titulo}}</span>
+                            <span class="desc-course-br"
+                                *ngIf="groups.descripcion">{{groups.descripcion!.length > 28 ? groups.descripcion!.substring(0, 28) + "..." : groups.descripcion!}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p>{{ dataSource.data | json }}</p>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="window-br-footer">
+        <button routerLink="/learning-home" matTooltip="Regresar al Home." class="secondary-btn mr-2">Regresar</button>
+    </div>
+
+</div>

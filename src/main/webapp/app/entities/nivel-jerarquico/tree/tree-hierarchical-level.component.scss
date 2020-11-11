@@ -1,0 +1,59 @@
+.container-path-hierarchical {
+  .window-path-hierarchical-body {
+    border: 2px dotted grey;
+    display: flex;
+    height: 85vh;
+    margin: 0 auto;
+    padding: 1em;
+    width: 95%;
+
+    .hierarchical-bar {
+      border: 1px dotted red;
+      width: 30%;
+    }
+
+    .sequences-section {
+      border: 1px solid yellow;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      padding: 1em;
+      width: 70%;
+
+      .sequence-body {
+        border: 2px dotted black;
+        height: 20vh;
+        overflow: hidden;
+        width: 10vw;
+      }
+    }
+  }
+
+  .window-br-footer {
+    .publish-btn {
+      background-color: rgb(35, 165, 57);
+      color: whitesmoke;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .container-path-hierarchical {
+    .window-path-hierarchical-body {
+      .sequences-section {
+        border: 1px solid red;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        padding: 0.5em;
+        width: 70%;
+
+        .sequence-body {
+          border: 2px dotted black;
+          height: 25vh;
+          width: 25vw;
+        }
+      }
+    }
+  }
+}

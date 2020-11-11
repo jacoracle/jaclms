@@ -17,6 +17,7 @@ import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-
 import { LearningPathConfigurationComponent } from './learning-path-configuration/learning-path-configuration.component';
 import { LearningPathHierarchicalLevelComponent } from './entities/nivel-jerarquico/learning-path-hierarchical-level.component';
 import { HomeCalendarComponent } from 'app/home-calendar/home-calendar.component';
+import { TreeHierarchicalLevelComponent } from './entities/nivel-jerarquico/tree/tree-hierarchical-level.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -99,6 +100,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'path-hierarchical/:id',
           component: LearningPathHierarchicalLevelComponent // RutasAprendizajeJerarquiaComponent
+        },
+        {
+          path: 'view-tree/:id',
+          component: TreeHierarchicalLevelComponent
         },
         ...LAYOUT_ROUTES
       ],

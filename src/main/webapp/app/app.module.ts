@@ -39,6 +39,7 @@ import { RutasAprendizajeJerarquiaComponent } from './entities/rutas-aprendizaje
 import { LearningPathConfigurationComponent } from './learning-path-configuration/learning-path-configuration.component';
 import { LearningPathHierarchicalLevelComponent } from './entities/nivel-jerarquico/learning-path-hierarchical-level.component';
 import { LearningPathHierarchicalAddLevelComponent } from './entities/nivel-jerarquico/dialog-add-level/learning-path-hierarchical-add-level.component';
+import { TreeHierarchicalLevelComponent } from './entities/nivel-jerarquico/tree/tree-hierarchical-level.component';
 
 @NgModule({
   imports: [
@@ -82,7 +83,8 @@ import { LearningPathHierarchicalAddLevelComponent } from './entities/nivel-jera
     LearningPathUpdateComponent,
     LearningPathHierarchicalLevelComponent,
     LearningPathHierarchicalAddLevelComponent,
-    RutasAprendizajeJerarquiaComponent
+    RutasAprendizajeJerarquiaComponent,
+    TreeHierarchicalLevelComponent
   ],
   bootstrap: [MainComponent]
 })
