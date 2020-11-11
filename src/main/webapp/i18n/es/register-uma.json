@@ -13,6 +13,7 @@
       "descriptionlenght": "La descripción no debe superar más de 50 caracteres.",
       "knowledge": "Área de Conocimiento",
       "level": "Nivel Académico",
+      "grade": "Grado Académico",
       "cancel": "cancelar",
       "type": "Tipos de UMA",
       "collaborators": "Colaboradores y Roles",
