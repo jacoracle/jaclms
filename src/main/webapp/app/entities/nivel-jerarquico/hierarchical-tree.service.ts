@@ -117,7 +117,7 @@ export class HierarchicalTreeService {
           node.isLoading = false;
         }, 1000);
       } else {
-        this.data.splice(index + 1, hijos.length === 0 ? 1 : hijos.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario
+        this.data.splice(index + 1, hijos.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario: , hijos.length === 0 ? 1 : hijos.length
         this.dataChange.next(this.data);
       }
     }); // close then
@@ -130,7 +130,7 @@ export class HierarchicalTreeService {
     // if (index >= 0) {
     const nodes = new Array<DynamicFlatNode>();
     // nodes.push({ idDb: 0, nombre: name, level: parent.level + 1, expandable: true, isLoading: false } as DynamicFlatNode);
-    nodes.push(new DynamicFlatNode(0, name, parent.level + 1, false));
+    nodes.push(new DynamicFlatNode(parent.idDb, name, parent.level + 1, false));
     const index = this.data.indexOf(parent);
     this.data.splice(index + 1, 0, ...nodes);
     this.dataChange.next(this.data);
@@ -145,11 +145,24 @@ export class HierarchicalTreeService {
     // node.nombre = name;
     // this.data.splice(index, 0, ...nodes);
     // this.data[index].nombre = name;
-    nodes.push(new DynamicFlatNode(0, name, node.level, false));
-    this.data.splice(index, 1, ...nodes);
-    this.dataChange.next(this.data);
+
+    this.addNewChildrenToTree(name, this.data[index].idDb).then((n: any) => {
+      if (n) {
+        nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, false));
+        this.data.splice(index, 1, ...nodes);
+        this.dataChange.next(this.data);
+      }
+    });
+
+    // nodes.push(new DynamicFlatNode(0, name, node.level, false));
+    // this.data.splice(index, 1, ...nodes);
+    // this.dataChange.next(this.data);
   }
 
+  /**
+   * Execute request to save a new root node
+   * @param name new node name
+   */
   private async addNewLevelToTree(name: string): Promise<HierarchicalLevel | undefined> {
     const newLevel: HierarchicalLevel = {
       nombre: name,
@@ -164,6 +177,25 @@ export class HierarchicalTreeService {
 
     // this.subscribeResponseAddLevel(this.nivelJerarquicoService!.createLevel(newLevel));
     return (await this.nivelJerarquicoService!.createLevel(newLevel).toPromise()).body as HierarchicalLevel;
+  }
+
+  private async addNewChildrenToTree(name: string, parentId: number): Promise<HierarchicalLevel | undefined> {
+    const children: HierarchicalLevel = {
+      nombre: name,
+      imagenUrl: '',
+      agrupadores: [],
+      estructuraJerarquica: [
+        {
+          id: parentId,
+          ordenNivel: 0
+        }
+      ],
+      nivelRuta: []
+    };
+
+    // this.subscribeResponseAddLevel(this.nivelJerarquicoService!.createLevel(newLevel));
+    // return (await this.nivelJerarquicoService!.createSubLevel(newSubLevel)).body;
+    return (await this.nivelJerarquicoService!.createLevel(children).toPromise()).body as HierarchicalLevel;
   }
 
   /*
