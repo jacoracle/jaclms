@@ -50,7 +50,7 @@
                 <mat-chip *ngFor="let fruit of tagsBusquedaAgrupador!" [selectable]="selectable" [removable]="removable"
                   (removed)="removeTag(fruit)">
                   {{fruit.descripcion}}
-                  <mat-icon matChipRemove *ngIf="removable"><span jhiTranslate="group.form.cancel">cancel</span></mat-icon>
+                  <mat-icon matChipRemove *ngIf="removable" jhiTranslate="group.form.cancel">cancel</mat-icon>
                 </mat-chip>
                 <input placeholder="{{'group.form.notetags' | translate}}" [matChipInputFor]="chipList"
                   formControlName="searchTagsSequenceUmas" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
