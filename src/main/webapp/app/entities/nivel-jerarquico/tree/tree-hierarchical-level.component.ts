@@ -44,48 +44,18 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     private nivelJerarquicoService: NivelJerarquicoService,
     private agrupadorService: AgrupadorService,
     private rutaService: RutaAprendizajeService,
-    private realDatabase: NivelJerarquicoService,
     private eventManager: JhiEventManager
   ) {
-    aroute.params.subscribe(val => {
+    this.aroute.params.subscribe(val => {
       this.idPath = val.id;
 
       this.initForm();
     });
 
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
-    this.dataSource = new HierarchicalTreeService(this.treeControl, nivelJerarquicoService);
+    this.dataSource = new HierarchicalTreeService(this.treeControl, this.nivelJerarquicoService);
 
     // this.dataSource.data = database.initialData();
-
-    /*
-    this.getLearningPathDataAndGenerateTree().then(
-      (data) => {
-        this.dataSource.data = data;
-        console.error('Estructura generada: ');
-        console.error(data);
-      }
-    );
-    */
-
-    /*
-    this.dataSource.wtf$
-      .subscribe(res => {
-        console.error('Damn!!!!!!', res)
-        this.dataSource.data = res;
-      });
-      */
-
-    /*
-    this.dataSource.dataChange.subscribe(data => {
-      console.error('no pela porque no está inyectado el servicio');
-      // this.dataSource.data = data;
-      const _data = data;
-      this.dataSource.data = [];
-      this.dataSource.data = _data;
-    });
-
-    */
   }
 
   ngOnInit(): void {
@@ -150,22 +120,10 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     console.error('generateTree()');
 
     if (pathData) {
-      // response.body.nivelRutas as NivelRutas[];
       console.error(pathData.nivelRutas);
 
-      /*
-      pathData.nivelRutas!.map((n: any) => {
-        return {
-          id: n.id,
-          nombre: n.nivelJerarquico.nombre,
-          orden: n.orden,
-          level: n.orden
-        }
-      });
-      */
-      // let baseNodes = new Array<DynamicFlatNode>();
       return pathData.nivelRutas!.map((n: NivelRutas) => {
-        return new DynamicFlatNode(n.id!, n.nivelJerarquico!.nombre!, 0, true); // n.orden, true)
+        return new DynamicFlatNode(n.id!, n.nivelJerarquico!.nombre!, 0, true);
       });
     }
 
@@ -174,24 +132,31 @@ export class TreeHierarchicalLevelComponent implements OnInit {
 
   // TREE
 
+  addRootLevel(node: DynamicFlatNode): void {
+    this.dataSource.insertRootItem(this.idPath, node, '');
+    this.treeControl.expand(node);
+  }
+
   /** Select the category so we can insert the new item. */
   addNewItem(node: DynamicFlatNode): void {
-    // const idx = this.dataSource.data.indexOf(node);
-    // const parentNode = this.dataSource.data[idx];// this.flatNodeMap.get(node);
-    // console.error('parentNode: ', parentNode);
-    this.dataSource.insertItem(node, ''); //  idx, '');//  this._database.insertItem(parentNode!, '');
+    this.dataSource.insertItem(node, '');
     this.treeControl.expand(node);
   }
 
   /** Save the node to database */
   saveNode(node: DynamicFlatNode, itemValue: string): void {
-    // const nestedNode = this.flatNodeMap.get(node);
-    // const idx = this.dataSource.data.indexOf(node);
-    // const parentNode = this.dataSource.data[idx];
-    // this._database.updateItem(nestedNode!, itemValue);
     this.dataSource.updateItem(node, itemValue);
-    // this.treeControl.expand(node);
     console.error('termino guardado de nodo');
+  }
+
+  removeItem(node: DynamicFlatNode): void {
+    console.error('Eliminará el nodo: ', node);
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.path.tree.remove',
+        type: 'danger'
+      })
+    );
   }
 
   // learning path data and sequences
