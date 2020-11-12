@@ -15,7 +15,7 @@
                 <!-- <img *ngIf="(!portadaCursoUrl || portadaCursoUrl === '') && (!module || module === '')"  class="info-cover info-cover-default"> -->
                 <div *ngIf="module && module !== ''" class="info-cover info-cover-uma"></div>
             </div>
-            <div class="ic-row-text">
+            <div class="ic-row-text" *ngIf="module && module.id">
                 <p *ngIf="course">{{course.titulo}}</p>
                 <p *ngIf="module">{{module.titulo}}</p>
                 <div class="edit-ab" *ngIf="module && module.id" (click)="editModule(module.id)">
