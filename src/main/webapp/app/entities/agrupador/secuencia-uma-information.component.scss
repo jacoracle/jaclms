@@ -1,0 +1,129 @@
+@import '../../../content/scss/variables.scss';
+
+.information-c-component {
+  position: relative;
+  width: 100%;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  border-bottom: 1px solid $border-component;
+}
+.c-component-title {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: $tool-header;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 3px;
+}
+.cct-link {
+  position: relative;
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .icon {
+    margin-left: 4px;
+  }
+  p {
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: $tx-size-title-lc;
+    cursor: default;
+  }
+}
+.ni-menudots {
+  position: absolute;
+  right: 5px;
+  top: 4px;
+}
+.c-component-content {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 30px);
+  top: 30px;
+  left: 0;
+
+  .row-c-component-c {
+    position: relative;
+    width: 88%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 10px;
+
+    .ic-row-cover {
+      position: relative;
+      width: 45%;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .info-cover {
+        position: relative;
+        width: 93px;
+        height: 60px;
+        border-radius: $border-mini;
+        background-position: center;
+        background-size: 90%;
+        background-repeat: no-repeat;
+        border: 1px solid $window-divider-color;
+        background-color: white;
+      }
+      .info-cover-module {
+        background-image: url('../../../content/images/module_cover.png');
+      }
+      .info-cover-uma {
+        background-image: url('../../../content/images/module_cover.png');
+      }
+    }
+    .ic-row-text {
+      position: relative;
+      width: calc(100% - 105px);
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      bottom: 20px;
+
+      p {
+        position: relative;
+        width: auto;
+        height: auto;
+        font-size: $tx-size-s;
+        line-height: 16px;
+      }
+    }
+    .edit-ab {
+      position: absolute;
+      width: 90%;
+      height: auto;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      cursor: pointer;
+      top: 34px;
+
+      p {
+        position: relative;
+        width: auto;
+        height: auto;
+        font-size: $tx-size-xs;
+        font-weight: 600;
+        margin-left: 4px;
+        cursor: pointer;
+        color: #212342;
+      }
+    }
+  }
+}

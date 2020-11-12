@@ -13,12 +13,11 @@
                 <!-- <img [src]="portadaCursoUrl" *ngIf="portadaCursoUrl && portadaCursoUrl !== ''" class="info-cover" [ngClass]="{ 'info-cover-default': !isPngImage }"> -->
                 <!-- <img *ngIf="module && module !== ''" class="info-cover info-cover-module"> -->
                 <!-- <img *ngIf="(!portadaCursoUrl || portadaCursoUrl === '') && (!module || module === '')"  class="info-cover info-cover-default"> -->
-                <div *ngIf="module && module !== ''" class="info-cover info-cover-uma"></div>
+                <div *ngIf="agrupadorObj && agrupadorObj !== ''" class="info-cover info-cover-uma"></div>
             </div>
             <div class="ic-row-text">
-                <p *ngIf="course">{{course.titulo}}</p>
-                <p *ngIf="module">{{module.titulo}}</p>
-                <div class="edit-ab" *ngIf="module && module.id" (click)="editModule(module.id)">
+                <p *ngIf="agrupadorObj">{{agrupadorObj.titulo}}</p>
+                <div class="edit-ab" *ngIf="agrupadorObj" (click)="editarAgrupador()">
                     <i class="icon ni-edit"></i>
                     <p jhiTranslate="leftbar.edit">Editar</p>
                 </div>

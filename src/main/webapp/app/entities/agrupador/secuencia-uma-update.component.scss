@@ -46,7 +46,7 @@
 
   .sequence-uma-bar {
     position: relative;
-    padding: 0px;
+    padding: 0;
     width: 320px;
     height: 100%;
     border-right: 1px solid $window-divider-color;
@@ -57,7 +57,7 @@
     .title-sequence-uma {
       position: relative;
       width: 100%;
-      height: 60px;
+      /* height: 60px;*/
       border-bottom: 1px solid $window-divider-color;
       display: flex;
       justify-content: center;
@@ -104,7 +104,7 @@
   }
 
   .module-cover-br-image {
-    margin-top: 0px !important;
+    margin-top: 0 !important;
     margin-left: 12px;
     margin-right: 10px;
   }
@@ -229,4 +229,186 @@
 
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled='true']) {
   background: transparent;
+}
+
+.information-c-component {
+  position: relative;
+  width: 100%;
+  height: 222px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid $border-component;
+}
+.c-component-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: $tool-header;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 3px;
+}
+.cct-link {
+  position: relative;
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .icon {
+    margin-left: 4px;
+  }
+  p {
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: $tx-size-title-lc;
+    cursor: default;
+  }
+}
+.ni-menudots {
+  position: absolute;
+  right: 5px;
+  top: 4px;
+}
+.c-component-content {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 30px);
+  top: 30px;
+  left: 0;
+  overflow-y: auto;
+
+  .row-c-component-c {
+    position: relative;
+    width: 88%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 10px;
+
+    .ic-row-cover {
+      position: relative;
+      width: 45%;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .info-cover {
+        position: relative;
+        width: 93px;
+        height: 60px;
+        border-radius: $border-mini;
+        background-position: center;
+        background-size: 90%;
+        background-repeat: no-repeat;
+        border: 1px solid $window-divider-color;
+        background-color: white;
+      }
+      .info-cover-module {
+        background-image: url('../../../content/images/module_cover.png');
+      }
+      .info-cover-uma {
+        background-image: url('../../../content/images/module_cover.png');
+      }
+    }
+    .ic-row-text {
+      position: relative;
+      width: calc(100% - 105px);
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      bottom: 20px;
+
+      p {
+        position: relative;
+        width: auto;
+        height: auto;
+        font-size: $tx-size-s;
+        line-height: 16px;
+      }
+    }
+    .edit-ab {
+      position: absolute;
+      width: 90%;
+      height: auto;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      cursor: pointer;
+      top: 34px;
+
+      p {
+        position: relative;
+        width: auto;
+        height: auto;
+        font-size: $tx-size-xs;
+        font-weight: 600;
+        margin-left: 4px;
+        cursor: pointer;
+        color: #212342;
+      }
+    }
+  }
+}
+
+.edit-course-br {
+  position: absolute;
+  left: 8px;
+  top: 78px;
+  width: 30px;
+  height: 30px;
+  background-color: #18bafb;
+  z-index: 2;
+  transition: 0.3s;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .icon {
+    cursor: pointer;
+  }
+  &:hover {
+    background-color: #10a3de;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.delete-course-uma-br {
+  position: absolute;
+  right: 10px;
+  top: 80px;
+  width: 30px;
+  height: 30px;
+  background-color: $main-btn-color;
+  z-index: 2;
+  transition: 0.3s;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .icon {
+    cursor: pointer;
+  }
+  &:hover {
+    background-color: $main-btn-color-hover;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    transform: scale(0.96);
+  }
 }

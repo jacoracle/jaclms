@@ -24,6 +24,8 @@
       "sequenceuma": "Secuencia de UMA"
     },
     "cancel": "Cancelar",
+    "previous": "Anterior",
+    "next": "Siguiente",
     "save": "Guardar Agrupador"
   }
 }

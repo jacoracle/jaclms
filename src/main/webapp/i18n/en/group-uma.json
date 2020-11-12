@@ -24,6 +24,8 @@
       "sequenceuma": "Sequence UMA"
     },
     "cancel": "Cancel",
+    "previous": "Previous",
+    "next": "Next",
     "save": "Save Grouper"
   }
 }

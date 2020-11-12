@@ -1,17 +1,17 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { AccountService } from 'app/core/auth/account.service';
-import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Account } from 'app/core/user/account.model';
-// import { JhiEventManager } from 'ng-jhipster';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
-import { IAgrupador } from 'app/shared/model/agrupador.model';
+import { Agrupador, IAgrupador } from 'app/shared/model/agrupador.model';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgrupadorUmaUpdateComponent } from 'app/entities/agrupador/agrupador-uma-update.component';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { SecuenciaAgrupadorUpdateComponent } from '../entities/agrupador/secuencia-uma-update.component';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'jhi-group-uma-configuration',
@@ -29,9 +29,6 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
 
   formSteps = new FormArray([]);
 
-  // stepper
-  isCompleted = false;
-  isLinear = false;
   isStepEditable!: boolean;
   secondFormGroup!: FormGroup;
   // termina stepper
@@ -40,7 +37,7 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   // received param to load group by id
   idSequenceToLoad!: number;
 
-  btnSaveUpdate = 'Guardar';
+  step = 1;
 
   constructor(
     private eventManager: JhiEventManager,
@@ -85,7 +82,9 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
           type: 'success'
         })
       );
-      this.router.navigate(['/uma-groups-home']);
+      this.router.navigate(['/uma-groups-home']).then(r => {
+        return r;
+      });
     } else {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', {
@@ -99,16 +98,25 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
   setCreateForm(evt: any): void {
     this.formSteps.removeAt(0);
     this.formSteps.push(evt);
-    // this.isCompleted = this.createdGroupSequence ? true : false;
-    this.stepper.selected.completed = this.createdGroupSequence ? true : false;
+    this.createdGroupSequence = this.mapFormDataToAgrupador(evt);
+  }
+
+  mapFormDataToAgrupador(groupUmaForm: FormControl): IAgrupador {
+    return {
+      ...new Agrupador(),
+      id: this.idSequenceToLoad,
+      titulo: groupUmaForm.get(['titleSequenceUmas'])!.value,
+      descripcion: groupUmaForm.get(['desciptionSequenceUmas'])!.value
+    };
   }
 
   /**
    * to verify if it is a exists group
-   */
+
   isViewDetailOrEdit(): boolean {
     return this.idSequenceToLoad > 0;
   }
+   */
 
   /**
    * to indicate if user is creating a new group
@@ -117,27 +125,49 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     return this.isNewGroup;
   }
 
+  previusStep(evt: any): void {
+    if (typeof evt === 'number') {
+      this.step = evt;
+    } else {
+      evt.stopPropagation();
+      this.step = 1;
+    }
+  }
+
+  nextStep(evt: any): void {
+    evt.stopPropagation();
+    this.step = this.umaUpdateComponent.validSequenceGroup(this.step);
+  }
+
   executeSave(evt: any): void {
     evt.stopPropagation();
     this.umaUpdateComponent.saveSequenceGroup();
   }
 
-  revertData(): void {
-    // console.error('#### group-uma-configuration - 1');
-    this.umaUpdateComponent.revertSequenceGroup(this.createdGroupSequence.id!);
-    // console.error('#### group-uma-configuration - Last, terminó revert, viene redirect');
-    /*
-    this.eventManager.broadcast(
-      new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.agrupador.revert' })
-    );
-    
-    this.eventManager.broadcast(
-      new JhiEventWithContent('constructorApp.validationError', {
-        message: 'constructorApp.agrupador.revert',
-        type: 'success'
-      })
-    );
-    */
-    this.router.navigate(['/uma-groups-home']);
+  tabClick($event: MatTabChangeEvent): void {
+    if ($event.index === 0) {
+      this.step = 1;
+    } else {
+      this.step = 2;
+    }
   }
+
+  /*  revertData(): void {
+      // console.error('#### group-uma-configuration - 1');
+      this.umaUpdateComponent.revertSequenceGroup(this.createdGroupSequence.id!);
+      // console.error('#### group-uma-configuration - Last, terminó revert, viene redirect');
+      /!*
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.agrupador.revert' })
+      );
+
+      this.eventManager.broadcast(
+        new JhiEventWithContent('constructorApp.validationError', {
+          message: 'constructorApp.agrupador.revert',
+          type: 'success'
+        })
+      );
+      *!/
+      this.router.navigate(['/uma-groups-home']);
+    }*/
 }

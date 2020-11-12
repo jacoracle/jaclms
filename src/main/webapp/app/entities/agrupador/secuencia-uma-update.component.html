@@ -7,7 +7,8 @@
             <!-- Insertar tooltip -->
             <div class="temporal-instruction">
                 <i class="icon ni-info"></i>
-                <span jhiTranslate="group.sequence.drag">Arrastra las UMA al panel de la derecha para crear secuencias.</span>
+                <span jhiTranslate="group.sequence.drag">Arrastra las UMA al panel de la derecha para crear
+                    secuencias.</span>
             </div>
             <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off" class="form-uma-search">
                 <mat-form-field appearance="outline">
@@ -32,9 +33,18 @@
                         <div class="box-card cursor-drag">
                             <div class="module-cover-br-image"><span></span></div>
 
+
                             <!-- Preview -->
                             <div class="preview-course-br">
                                 <i class="icon ni-view icon-negative" (click)="openPreview(sec)"></i>
+                            </div>
+
+                            <div class="edit-course-br" (click)="editModule(sec.id)">
+                                <i class="icon ni-edit icon-negative"></i>
+                            </div>
+
+                            <div (click)="deleteModule(sec.id, $event)" class="delete-course-br">
+                                <i class="icon ni-delete icon-negative"></i>
                             </div>
 
                             <div class="course-desc-br-row">
@@ -59,29 +69,47 @@
     <!--termina sequence-uma-body-->
 
     <div class="sequence-uma-bar">
-        <div class="title-sequence-uma" jhiTranslate="group.sequence.sequenceuma">Secuencia de UMA</div>
 
-        <div class="uma-item-sequence">
-            <div class="row-item-uma-secuence" cdkDropList #sequenceUma="cdkDropList" [cdkDropListData]="tiraUmas"
-                (cdkDropListDropped)="dropOrder($event)">
+        <jhi-secuencia-uma-information [agrupadorObj]="agrupadorObj" (step)='previusStep($event)'></jhi-secuencia-uma-information>
 
-                <div cdkDragBoundary=".uma-item-sequence" cdkDrag *ngFor="let item of tiraUmas" [cdkDragData]="item">
-                    <div class="item-uma">
-                        <div class="module-cover-br-image"><span></span></div>
-
-                        <div class="course-desc-br-row">
-
-                            <span class="title-course-br"
-                                *ngIf="item.modulo.titulo">{{item.modulo.titulo.length > 30 ? item.modulo.titulo.substring(0, 30) + "..." : item.modulo.titulo}}</span>
-                        </div>
-
-                        <div (click)="deleteUmaFromSequence(item)" class="delete-course-br">
-                            <i class="icon ni-delete icon-negative"></i>
-                        </div>
-
-                    </div>
+        <div class="information-c-component">
+            <div class="c-component-title">
+                <div class="cct-link">
+                    <i class="icon ni-arrow"></i>
+                    <p class="title-sequence-uma" jhiTranslate="group.sequence.sequenceuma">Secuencia de UMA</p>
                 </div>
+                <i class="icon ni-menudots"></i>
+            </div>
+            <div class="c-component-content">
+                <div class="row-c-component-c">
 
+                    <div class="uma-item-sequence">
+                        <div class="row-item-uma-secuence" cdkDropList #sequenceUma="cdkDropList"
+                            [cdkDropListData]="tiraUmas" (cdkDropListDropped)="dropOrder($event)">
+
+                            <div cdkDragBoundary=".uma-item-sequence" cdkDrag *ngFor="let item of tiraUmas"
+                                [cdkDragData]="item">
+                                <div class="item-uma">
+                                    <div class="module-cover-br-image"><span></span></div>
+
+                                    <div class="course-desc-br-row">
+
+                                        <span class="title-course-br"
+                                            *ngIf="item.modulo.titulo">{{item.modulo.titulo.length > 30 ? item.modulo.titulo.substring(0, 30) + "..." : item.modulo.titulo}}</span>
+                                    </div>
+
+                                    <div (click)="deleteUmaFromSequence(item)" class="delete-course-br">
+                                        <i class="icon ni-delete icon-negative"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
         </div>
 

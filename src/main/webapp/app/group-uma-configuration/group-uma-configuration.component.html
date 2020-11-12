@@ -37,14 +37,13 @@
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
         <div class="container-stepper-group">
-
-          <mat-tab-group mat-align-tabs="center">
+          <mat-tab-group mat-align-tabs="center" [selectedIndex]="step-1" (selectedTabChange)="tabClick($event)">
             <mat-tab label="{{'group.generalconfig' | translate}}">
               <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
                 (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
             </mat-tab>
-            <mat-tab label="{{'group.tagsequence' | translate}}">
-              <jhi-secuencia-uma-update [createdGroup]="createdGroupSequence"></jhi-secuencia-uma-update>
+            <mat-tab label="{{'group.tagsequence' | translate}}" [disabled]="step!=2">
+              <jhi-secuencia-uma-update [agrupadorObj]="createdGroupSequence" (step)='previusStep($event)'></jhi-secuencia-uma-update>
             </mat-tab>
             <!-- <mat-tab label="Third">Content 3</mat-tab> -->
           </mat-tab-group>
@@ -62,8 +61,22 @@
       <!-- this cancel is for (delete created group)-->
       <!-- <button *ngIf="isCreation()" class="secondary-btn" (click)="revertData()"
         matTooltip="Deshace el Agrupador creado.">Cancelar</button> -->
-      <button (click)="executeSave($event)" class="main-btn"
-        matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false" jhiTranslate="group.save">Guardar Agrupador</button>
+
+        <button (click)="nextStep($event)" class="main-btn" *ngIf="step == 1"
+                matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
+            <span jhiTranslate="group.next">Siguiente</span>
+        </button>
+
+        <button (click)="previusStep($event)" class="main-btn" *ngIf="step == 2"
+                matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
+            <span jhiTranslate="group.previous">Anterior</span>
+        </button>
+
+
+      <button (click)="executeSave($event)" class="main-btn"  *ngIf="step == 2"
+        matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
+          <span jhiTranslate="group.save">Guardar Agrupador</span>
+      </button>
     </div>
 
   </div>

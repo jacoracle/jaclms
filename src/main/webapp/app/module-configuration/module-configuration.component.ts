@@ -37,8 +37,12 @@ export class ModuleConfigurationComponent {
       this.router.navigate(['/constructor-layout', this.modulo.id, 'module']).then(r => {
         return r;
       });
-    } else {
+    } else if (this.since !== '' && this.since === 'home' && this.modulo) {
       this.router.navigate(['/uma-home']).then(r => {
+        return r;
+      });
+    } else {
+      this.router.navigate(['/uma-groups-home']).then(r => {
         return r;
       });
     }

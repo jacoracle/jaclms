@@ -211,8 +211,12 @@ export class ModuloUpdateComponent implements OnInit {
         this.router.navigate(['/constructor-layout', res.body.id, 'module']).then(r => {
           return r;
         });
-      } else {
+      } else if (since !== '' && since === 'home') {
         this.router.navigate(['/uma-home']).then(r => {
+          return r;
+        });
+      } else {
+        this.router.navigate(['/uma-groups-home']).then(r => {
           return r;
         });
       }

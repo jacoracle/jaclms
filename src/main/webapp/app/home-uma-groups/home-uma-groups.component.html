@@ -75,6 +75,10 @@
 
                <div class="group-cover-br-image"><span></span></div>
 
+                <div class="edit-course-br" [routerLink]="['/sequence-configuration', sec.id]">
+                    <i class="icon ni-edit icon-negative"></i>
+                </div>
+
                <div (click)="deleteGroup(sec, $event)" class="delete-course-br">
                  <i class="icon ni-delete icon-negative"></i>
                </div>

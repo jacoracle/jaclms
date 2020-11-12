@@ -81,7 +81,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     // console.error('#### agrupador-uma-update Agrupador recibido con ID: ', this.groupId);
     this.groupUmaForm.statusChanges.subscribe(() => {
       // console.error('#### Estado del formulario de registro de agrupador: ', val);
-      // this.formCreateEvent.emit(this.groupUmaForm);//  lo comente porque ya no se usa el stepper
+      this.formCreateEvent.emit(this.groupUmaForm); //  lo comente porque ya no se usa el stepper
     });
   }
 
@@ -153,8 +153,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     this.umasListGroup = [...data.modulos!];
   }
 
-  saveSequenceGroup(): void {
-    this.isSaving = true;
+  validSequenceGroup(step: number): number {
     const agrupador: IAgrupador = this.mapFormDataToAgrupador();
 
     if (!agrupador.titulo) {
@@ -177,6 +176,16 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       this.makeInvalid('desciptionSequenceUmas');
     }
 
+    if (this.groupUmaForm.valid) {
+      step = 2;
+    }
+    return step;
+  }
+
+  saveSequenceGroup(): void {
+    this.isSaving = true;
+    const agrupador: IAgrupador = this.mapFormDataToAgrupador();
+
     if (!this.umasListGroup.length) {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', {
@@ -187,14 +196,10 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.groupUmaForm.valid) {
-      if (agrupador.id) {
-        // console.error('##########   Deberá actualizar: ', agrupador);
-        this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
-      } else {
-        // console.error('##########   Deberá guardar: ', agrupador);
-        this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
-      }
+    if (agrupador.id) {
+      this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
+    } else {
+      this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
     }
   }
 
