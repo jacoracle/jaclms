@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.constructor.domain.rutas.RutasAprendizaje;
+import org.constructor.service.dto.rutas.DTORutaAprendizaje;
 import org.constructor.service.rutas.RutasAprendizajeService;
 import org.constructor.utils.RestConstants;
 import org.constructor.web.rest.errors.BadRequestAlertException;
@@ -41,7 +42,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import io.jsonwebtoken.io.IOException;
 
 /**
@@ -153,10 +153,14 @@ public class RutasAprendizajeResource {
 	 * @return
 	 */
 	@GetMapping(path = RestConstants.PATH_RUTA_ID)
-	public ResponseEntity<RutasAprendizaje> getRutasAprendizaje(@PathVariable Long id) {
+	public DTORutaAprendizaje getRutasAprendizaje(@PathVariable Long id) {
 		log.debug("REST request to get RutasAprendizaje : {}", id);
-		Optional<RutasAprendizaje> rutas = rutasAprendizajeService.findOne(id);
-		return ResponseUtil.wrapOrNotFound(rutas);
+		DTORutaAprendizaje rutas = rutasAprendizajeService.findOne(id);
+		
+		
+		return rutas;
+		
+		
 	}
 
 	/**

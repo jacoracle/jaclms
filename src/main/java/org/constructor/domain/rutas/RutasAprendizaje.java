@@ -90,7 +90,7 @@ public class RutasAprendizaje implements Serializable {
 	/**
 	 * NivelRuta
 	 */
-
+	
 	@OneToMany(mappedBy = "rutasAprendizaje", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private Set<NivelRuta> nivelRutas;
 

@@ -10,14 +10,14 @@
     
    
        <addForeignKeyConstraint baseColumnNames="nivel_jerarquico_id"
-                                 baseTableName="niveles_agrupadores"
-                                 constraintName="fk_niveles_agrupadores_nivel_jerarquico_id"
+                                 baseTableName="niveles_agrupador"
+                                 constraintName="fk_niveles_agrupador_nivel_jerarquico_id"
                                  referencedColumnNames="id"
                                  referencedTableName="nivel_jerarquico"/>
     
       <addForeignKeyConstraint baseColumnNames="agrupador_id"
-                                 baseTableName="niveles_agrupadores"
-                                 constraintName="fk_niveles_agrupadores_agrupador_id"
+                                 baseTableName="niveles_agrupador"
+                                 constraintName="fk_niveles_agrupador_agrupador_id"
                                  referencedColumnNames="id"
                                  referencedTableName="agrupador"/>
                                  
