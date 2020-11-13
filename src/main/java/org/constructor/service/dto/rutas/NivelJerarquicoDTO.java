@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.constructor.domain.EstructuraJerarquica;
-import org.constructor.domain.agrupador.Agrupador;
 import org.constructor.domain.rutas.NivelRuta;
+import org.constructor.domain.rutas.NivelesAgrupador;
 
 /**
  * @author Edukai
@@ -32,14 +32,14 @@ public class NivelJerarquicoDTO {
 	private String imagenUrl;
 
 	/**
-	 * estructuraJerarquicas
+	 * estructuraJerarquicase
 	 */
 	private Set<EstructuraJerarquica> estructuraJerarquica = new HashSet<>();
 
 	/**
-	 * agrupadors
+	 * nivelesAgrupador
 	 */
-	private Set<Agrupador> agrupadores;
+	private Set<NivelesAgrupador> agrupadores;
 
 	/**
 	 * nivelRuta
@@ -105,16 +105,18 @@ public class NivelJerarquicoDTO {
 	}
 
 	/**
+	 * Set
 	 * @return the agrupadores
 	 */
-	public Set<Agrupador> getAgrupadores() {
+	public Set<NivelesAgrupador> getAgrupadores() {
 		return agrupadores;
 	}
 
 	/**
+	 * Get
 	 * @param agrupadores the agrupadores to set
 	 */
-	public void setAgrupadores(Set<Agrupador> agrupadores) {
+	public void setAgrupadores(Set<NivelesAgrupador> agrupadores) {
 		this.agrupadores = agrupadores;
 	}
 
@@ -136,7 +138,8 @@ public class NivelJerarquicoDTO {
 	public String toString() {
 		return "NivelJerarquicoDTO [id=" + id + ", nombre=" + nombre + ", imagenUrl=" + imagenUrl
 				+ ", estructuraJerarquica=" + estructuraJerarquica + ", agrupadores=" + agrupadores + ", nivelRuta="
-				+ nivelRuta + "]";
+				+ nivelRuta+ "]";
 	}
+
 
 }

@@ -23,6 +23,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.constructor.domain.User;
+import org.constructor.domain.rutas.NivelesAgrupador;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -93,6 +94,14 @@ public class Agrupador  implements Serializable{
             joinColumns = @JoinColumn(name = "agrupador_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="usuario_id", referencedColumnName = "id", nullable = false))
     private Set<User> user = new HashSet<>();
+    
+	/**
+	 * nivelesAgrupador
+	 */
+    @JsonIgnore
+	@OneToMany(mappedBy = "agrupador", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	private Set<NivelesAgrupador> nivelesAgrupador;
+
 
 	/**
 	 * Get.
@@ -283,6 +292,20 @@ public class Agrupador  implements Serializable{
 		this.user = user;
 	}
 	
+	/**
+	 * @return the nivelesAgrupador
+	 */
+	public Set<NivelesAgrupador> getNivelesAgrupador() {
+		return nivelesAgrupador;
+	}
+
+	/**
+	 * @param nivelesAgrupador the nivelesAgrupador to set
+	 */
+	public void setNivelesAgrupador(Set<NivelesAgrupador> nivelesAgrupador) {
+		this.nivelesAgrupador = nivelesAgrupador;
+	}
+
 	/**
 	 * equals.
 	 *

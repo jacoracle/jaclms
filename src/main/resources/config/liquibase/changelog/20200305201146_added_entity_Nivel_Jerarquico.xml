@@ -52,16 +52,21 @@
 
 	<changeSet id="20200305201146-1-relations" author="jhipster">
         
-        <createTable tableName="niveles_agrupadores">
+        <createTable tableName="niveles_agrupador">
+         <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
             <column name="agrupador_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="nivel_jerarquico_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
+             <column name="orden" type="bigint">
+                <constraints nullable="true" />
+            </column>
         </createTable>
         
-        <addPrimaryKey columnNames="agrupador_id, nivel_jerarquico_id" tableName="niveles_agrupadores"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

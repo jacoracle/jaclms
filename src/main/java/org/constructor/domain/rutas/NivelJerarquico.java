@@ -14,15 +14,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import org.constructor.domain.EstructuraJerarquica;
-import org.constructor.domain.agrupador.Agrupador;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -59,19 +53,7 @@ public class NivelJerarquico implements Serializable{
 	 */
 	@Column(name = "imagen_url ")
 	private String imagenUrl ;
-	
-	
-    /**
-     * agrupadores
-     */
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinTable(
-            name = "niveles_agrupadores", 
-            joinColumns = @JoinColumn(name = "nivel_jerarquico_id", referencedColumnName = "id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="agrupador_id", referencedColumnName = "id", nullable = false))
-	private Set<Agrupador> agrupadores ;
-    
-	
+	    
 	/**
 	 * estructuraJerarquica
 	 */
@@ -82,12 +64,16 @@ public class NivelJerarquico implements Serializable{
 	 /**
      * nivelRutas
      */
-	
+	@JsonIgnore
     @OneToMany(mappedBy = "nivelJerarquico", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JsonIgnore
     private Set<NivelRuta> nivelRuta = new HashSet<>();
 	
-
+    /**
+     * nivelesAgrupador
+     */
+    @JsonIgnore
+    @OneToMany(mappedBy = "nivelJerarquico", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private Set<NivelesAgrupador> agrupadores = new HashSet<>();
 
 	/**
 	 * Get
@@ -139,22 +125,6 @@ public class NivelJerarquico implements Serializable{
 		this.imagenUrl = imagenUrl;
 	}
 
-	/**
-	 * Get
-	 * @return the agrupadores
-	 */
-	public Set<Agrupador> getAgrupadores() {
-		return agrupadores;
-	}
-
-	/**
-	 * Set
-	 * @param agrupadores the agrupadores to set
-	 */
-	public void setAgrupadores(final Set<Agrupador> agrupadores) {
-		this.agrupadores = agrupadores;
-	}
-
 
 	/**
 	 * Get
@@ -172,8 +142,9 @@ public class NivelJerarquico implements Serializable{
 		this.estructuraJerarquica = estructuraJerarquica;
 	}
 
+
+
 	/**
-	 * Get
 	 * @return the nivelRutas
 	 */
 	public Set<NivelRuta> getNivelRuta() {
@@ -181,11 +152,26 @@ public class NivelJerarquico implements Serializable{
 	}
 
 	/**
-	 * Set
-	 * @param nivelRuta the nivelRuta to set
+	 * @param nivelRutas the nivelRutas to set
 	 */
-	public void setNivelRuta(final Set<NivelRuta> nivelRuta) {
+	public void setNivelRuta(Set<NivelRuta> nivelRuta) {
 		this.nivelRuta = nivelRuta;
+	}
+
+	/**
+	 * Get
+	 * @return the agrupadores
+	 */
+	public Set<NivelesAgrupador> getAgrupadores() {
+		return agrupadores;
+	}
+
+	/**
+	 * Set
+	 * @param agrupadores the agrupadores to set
+	 */
+	public void setAgrupadores(final Set<NivelesAgrupador> agrupadores) {
+		this.agrupadores = agrupadores;
 	}
 
 	/**
@@ -214,8 +200,9 @@ public class NivelJerarquico implements Serializable{
 
 	@Override
 	public String toString() {
-		return "NivelJerarquico [id=" + id + ", nombre=" + nombre + ", imagenUrl=" + imagenUrl + ", agrupadores="
-				+ agrupadores + ", estructuraJerarquica=" + estructuraJerarquica + ", nivelRuta=" + nivelRuta + "]";
+		return "NivelJerarquico [id=" + id + ", nombre=" + nombre + ", imagenUrl=" + imagenUrl
+				+ ", estructuraJerarquica=" + estructuraJerarquica + ", agrupadores="
+				+ agrupadores + "]";
 	}
 	
 	

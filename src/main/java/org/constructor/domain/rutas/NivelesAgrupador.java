@@ -14,22 +14,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.constructor.domain.agrupador.Agrupador;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 /**
  * @author Edukai
  *
  */
 @Entity
-@Table(name = "niveles_ruta")
-public class NivelRuta implements Serializable {
+@Table(name = "niveles_agrupador")
+public class NivelesAgrupador  implements Serializable{
 
 	/**
 	 * Serializable
 	 */
-	private static final long serialVersionUID = 3715881563932131973L;
+	private static final long serialVersionUID = -6298239855496444231L;
 
 	
 	/**
@@ -47,17 +47,16 @@ public class NivelRuta implements Serializable {
     private NivelJerarquico nivelJerarquico;
 
 	/**
-	 * rutas_id
+	 * agrupador_id
 	 */
 	@ManyToOne
 	@JsonIgnore
-    @JoinColumn(name = "ruta_id", nullable=false)
-    private RutasAprendizaje rutasAprendizaje;
+    @JoinColumn(name = "agrupador_id", nullable=false)
+    private Agrupador agrupador;
 	
 	/**
 	 * The orden.
 	 */
-	
 	@Column(name = "orden")
 	private Long orden;
 
@@ -95,18 +94,18 @@ public class NivelRuta implements Serializable {
 
 	/**
 	 * Get
-	 * @return the rutasAprendizaje
+	 * @return the agrupador
 	 */
-	public RutasAprendizaje getRutasAprendizaje() {
-		return rutasAprendizaje;
+	public Agrupador getAgrupador() {
+		return agrupador;
 	}
 
 	/**
 	 * Set
-	 * @param rutasAprendizaje the rutasAprendizaje to set
+	 * @param agrupador the agrupador to set
 	 */
-	public void setRutasAprendizaje(final RutasAprendizaje rutasAprendizaje) {
-		this.rutasAprendizaje = rutasAprendizaje;
+	public void setAgrupador(final Agrupador agrupador) {
+		this.agrupador = agrupador;
 	}
 
 	/**
@@ -124,35 +123,6 @@ public class NivelRuta implements Serializable {
 	public void setOrden(final Long orden) {
 		this.orden = orden;
 	}
-
-	/**
-	 * equals
-	 */
-	@Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof NivelRuta)) {
-            return false;
-        }
-        NivelRuta other = (NivelRuta) obj;
-        return this.id.equals(other.id);
-    }
-	
-	/**
-	 * hashCode
-	 */
-	@Override
-	   public int hashCode() {
-	        return id.hashCode();
-	    }
-
-	@Override
-	public String toString() {
-		return "NivelRuta [id=" + id + ", nivelJerarquico=" + nivelJerarquico + ", orden=" + orden + "]";
-	}
-
 	
 	
 	

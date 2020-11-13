@@ -9,15 +9,15 @@
     <changeSet id="20200305201147-2" author="jhipster">
     
       <addForeignKeyConstraint baseColumnNames="nivel_jerarquico_id"
-                                 baseTableName="nivel_ruta"
-                                 constraintName="fk_nivel_ruta_nivel_jerarquico_id"
+                                 baseTableName="niveles_ruta"
+                                 constraintName="fk_niveles_ruta_nivel_jerarquico_id"
                                  referencedColumnNames="id"
                                  referencedTableName="nivel_jerarquico"/>
     
     
       <addForeignKeyConstraint baseColumnNames="ruta_id"
-                                 baseTableName="nivel_ruta"
-                                 constraintName="fk_nivel_ruta_ruta_id"
+                                 baseTableName="niveles_ruta"
+                                 constraintName="fk_niveles_ruta_ruta_id"
                                  referencedColumnNames="id"
                                  referencedTableName="rutas_aprendizaje"/>
                                  
