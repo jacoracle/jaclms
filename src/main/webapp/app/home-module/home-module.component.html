@@ -11,7 +11,6 @@
             </div>
             <div class="r2">
                 <div class="windowHeader-title">
-                    <!-- <div class="icon-step-header"></div> -->
                     <h4 jhiTranslate="homemodule.title">Constructor de UMA</h4>
                 </div>
                 <div class="c1">
@@ -30,19 +29,6 @@
 
                 <form name="umaForm" role="form" [formGroup]="umaForm" autocomplete="off" class="form-uma-search">
 
-                    <!-- <div class="row-search-uma">
-                      <mat-form-field>
-                        <mat-label>Búsqueda general por título</mat-label>
-                        <input type="text" placeholder="indicio del posible título" matInput formControlName="titleSearchGral"
-                          [matAutocomplete]="autoInputTitleSearch">
-                        <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
-                          [displayWith]="displayFn">
-                          <mat-option *ngFor="let option of modulos" [value]="option">
-                            {{option.descripcion}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
-                    </div> -->
 
                     <mat-form-field appearance="outline">
                         <mat-label jhiTranslate="homemodule.search">Buscar</mat-label>
@@ -50,19 +36,8 @@
                             [matAutocomplete]="autoInputTitleSearch">
                         <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
                             [displayWith]="displayFn">
-                            <!-- <mat-option *ngFor="let option of modulos" [value]="option">
-                              {{option.descripcion}}
-                            </mat-option> -->
                         </mat-autocomplete>
                     </mat-form-field>
-
-                    <!-- <input type="text"
-                           placeholder="Buscar..."
-                           [formControl]="control"
-                           matInput formControlName="titleSearchGral"
-                           [matAutocomplete]="autoInputTitleSearch">
-                    <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete">
-                    </mat-autocomplete> -->
 
                 </form>
 
@@ -94,28 +69,30 @@
             <!-- end search box -->
             <div class="result-search-container">
                 <div class="grid-cards">
-
+                    <!-- Start card -->
                     <div class="box-card" *ngFor="let modulo of modulos"
                         [routerLink]="['/constructor-layout', modulo.id, 'module']">
-                        <!-- <div class="course-cover-br box-card" *ngFor="let modulo of filteredUmas | async"
-                      [routerLink]="['/constructor-layout', modulo.id, 'module']"> -->
 
-                        <div class="module-cover-br-image"><span></span></div>
+                        <div class="row-content-card">
+                          <div class="module-cover-br-image"><span></span></div>
 
-                        <div class="edit-course-br" (click)="editModule(modulo.id)">
-                            <i class="icon ni-edit icon-negative"></i>
+                          <div class="course-desc-br-row">
+                              <span class="title-course-br"
+                                  *ngIf="modulo.titulo">{{modulo.titulo.length > 30 ? modulo.titulo.substring(0, 30) + "..." : modulo.titulo}}</span>
+                              <span class="desc-course-br"
+                                  *ngIf="modulo.descripcion">{{modulo.descripcion.length > 30 ? modulo.descripcion.substring(0, 30) + "..." : modulo.descripcion}}</span>
+                          </div>
                         </div>
 
-                        <div (click)="deleteModule(modulo.id, $event)" class="delete-course-br">
-                            <i class="icon ni-delete icon-negative"></i>
+                        <div class="row-buttons-card">
+                          <div class="edit-course-br" (click)="editModule(modulo.id)">
+                              <i class="icon ni-edit icon-negative"></i>
+                          </div>
+                          <div class="delete-course-br" (click)="deleteModule(modulo.id, $event)">
+                              <i class="icon ni-delete icon-negative"></i>
+                          </div>
                         </div>
-
-                        <div class="course-desc-br-row">
-                            <span class="title-course-br"
-                                *ngIf="modulo.titulo">{{modulo.titulo.length > 30 ? modulo.titulo.substring(0, 30) + "..." : modulo.titulo}}</span>
-                            <span class="desc-course-br"
-                                *ngIf="modulo.descripcion">{{modulo.descripcion.length > 30 ? modulo.descripcion.substring(0, 30) + "..." : modulo.descripcion}}</span>
-                        </div>
+                        <!-- End card -->
 
                     </div>
 
