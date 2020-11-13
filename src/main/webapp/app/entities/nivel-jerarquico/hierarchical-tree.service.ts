@@ -151,7 +151,7 @@ export class HierarchicalTreeService {
     if (node.level > 0) {
       this.addNewChildrenToTree(name, this.data[index].idDb).then((n: any) => {
         if (n) {
-          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, false));
+          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, true));
           this.data.splice(index, 1, ...nodes);
           this.dataChange.next(this.data);
         }

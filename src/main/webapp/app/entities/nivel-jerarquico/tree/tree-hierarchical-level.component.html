@@ -34,8 +34,9 @@
 
                 <div style="background-color: #b3b3b3;" class="window-path-hierarchical-body">
                     <div class="hierarchical-bar">
-                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList
+                        [cdkDropListData]="dataSource.data" #treePath="cdkDropList" (cdkDropListDropped)="dropOrder($event)">
+                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag [cdkDragData]="node">
                                 <button mat-icon-button disabled></button>
                                 {{node.nombre}}
                             </mat-tree-node>
@@ -49,16 +50,16 @@
                                 <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
                             </mat-tree-node>
 
-                            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding cdkDrag>
                                 <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
                                     <mat-icon>
                                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                     </mat-icon>
                                 </button>
                                 {{node.nombre}}
-                                <button mat-icon-button (click)="addNewItem(node)">
+                                <!-- <button mat-icon-button (click)="addNewItem(node)">
                                     <mat-icon>add</mat-icon>
-                                </button>
+                                </button> -->
                                 <button mat-icon-button [matMenuTriggerFor]="menu">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
@@ -72,6 +73,10 @@
                                         <mat-icon>topic</mat-icon>
                                         Add Node
                                     </button>
+                                    <button mat-menu-item>
+                                        <!-- <mat-icon>topic</mat-icon> -->
+                                        Edit Node name
+                                    </button>
                                     <button mat-menu-item (click)="removeItem(node)">
                                         <mat-icon>delete_sweep</mat-icon>
                                         Delete Node
@@ -81,6 +86,10 @@
                                         <!-- <mat-icon>add_circle</mat-icon> -->
                                         <mat-icon>snippet_folder</mat-icon>
                                         Add child node
+                                    </button>
+                                    <button mat-menu-item>
+                                        <!-- <mat-icon>topic</mat-icon> -->
+                                        Edit Child node name
                                     </button>
                                     <button mat-menu-item (click)="removeItem(node)">
                                         <mat-icon>delete_sweep</mat-icon>

@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -123,7 +124,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
       // console.error(pathData.nivelRutas);
 
       return pathData.nivelRutas!.map((n: NivelRutas) => {
-        return new DynamicFlatNode(n.id!, n.nivelJerarquico!.nombre!, 0, true);
+        return new DynamicFlatNode(n.nivelJerarquico!.id!, n.nivelJerarquico!.nombre!, 0, true);
       });
     }
 
@@ -202,5 +203,19 @@ export class TreeHierarchicalLevelComponent implements OnInit {
         type: 'danger'
       })
     );
+  }
+
+  // drag and drop
+
+  displayFn(group: IAgrupador): string {
+    return group && group.descripcion ? group.descripcion : '';
+  }
+
+  dropOrder(event: CdkDragDrop<string[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.dataSource.data, event.previousIndex, event.currentIndex);
+    } else {
+      // this.addGroupAsLessonToTree(event.previousIndex, event.currentIndex);
+    }
   }
 }
