@@ -340,27 +340,4 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   previusStep(evt: any): void {
     this.step.emit(evt);
   }
-
-  editModule(idModule: number): void {
-    this.router.navigate(['/uma-configuration', idModule, 'group']).then(r => {
-      return r;
-    });
-  }
-
-  deleteModule(id: number, $event: any): void {
-    $event.stopPropagation();
-    this.moduleService.delete(id).subscribe(() => {
-      this.umasList.splice(this.findElementById(this.umasList, id), 1);
-    });
-  }
-
-  findElementById(objectArray: any, id: number): number {
-    let foundIndex = -1;
-    objectArray.forEach((value: any, index: number) => {
-      if (value.id === id) {
-        foundIndex = index;
-      }
-    });
-    return foundIndex;
-  }
 }
