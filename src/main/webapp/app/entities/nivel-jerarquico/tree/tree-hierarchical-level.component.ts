@@ -64,8 +64,8 @@ export class TreeHierarchicalLevelComponent implements OnInit {
 
       this.getLearningPathDataAndGenerateTree().then(data => {
         this.dataSource.data = data;
-        console.error('Estructura generada: ');
-        console.error(data);
+        // console.error('Estructura generada: ');
+        // console.error(data);
       });
 
       this.filteredGroups = this.learningPathForm
@@ -117,10 +117,10 @@ export class TreeHierarchicalLevelComponent implements OnInit {
   }
 
   private generateTree(pathData: IRutaModel): DynamicFlatNode[] {
-    console.error('generateTree()');
+    // console.error('generateTree()');
 
     if (pathData) {
-      console.error(pathData.nivelRutas);
+      // console.error(pathData.nivelRutas);
 
       return pathData.nivelRutas!.map((n: NivelRutas) => {
         return new DynamicFlatNode(n.id!, n.nivelJerarquico!.nombre!, 0, true);
@@ -146,7 +146,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
   /** Save the node to database */
   saveNode(node: DynamicFlatNode, itemValue: string): void {
     this.dataSource.updateItem(node, itemValue);
-    console.error('termino guardado de nodo');
+    // console.error('termino guardado de nodo');
   }
 
   removeItem(node: DynamicFlatNode): void {
