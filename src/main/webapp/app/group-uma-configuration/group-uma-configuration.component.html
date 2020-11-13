@@ -37,19 +37,14 @@
 
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
-        <div class="container-stepper-group">
-          <mat-tab-group mat-align-tabs="center" [selectedIndex]="step-1" (selectedTabChange)="tabClick($event)">
-            <mat-tab label="{{'group.generalconfig' | translate}}">
-              <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
-                (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
-            </mat-tab>
-            <mat-tab label="{{'group.tagsequence' | translate}}" [disabled]="step!=2">
-              <jhi-secuencia-uma-update [agrupadorObj]="createdGroupSequence" (step)='previusStep($event)'></jhi-secuencia-uma-update>
-            </mat-tab>
-            <!-- <mat-tab label="Third">Content 3</mat-tab> -->
-          </mat-tab-group>
-
+        <div class="container-stepper-group" [hidden]="step!=1">
+            <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
+                                      (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
         </div>
+
+          <div class="container-stepper-group" [hidden]="step!=2">
+              <jhi-secuencia-uma-update [agrupadorObj]="createdGroupSequence" (step)='previusStep($event)'></jhi-secuencia-uma-update>
+          </div>
       </div>
 
     </div>

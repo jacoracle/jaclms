@@ -2,6 +2,7 @@
   "group": {
     "page": "Grouper UMA / ",
     "title": "Config Grouper",
+    "titlesec": "Secuencia de UMA",
     "generalconfig": "General config",
     "tagsequence": "Sequence UMA",
     "form": {
