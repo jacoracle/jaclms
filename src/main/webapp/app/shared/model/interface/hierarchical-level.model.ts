@@ -36,12 +36,13 @@ export class HierarchicalLevelModel implements HierarchicalLevel {
 
 export interface NivelRutas {
   id?: number;
+  nombre?: string;
   nivelJerarquico?: HierarchicalLevel;
   orden?: number;
 }
 
 export class NivelRutasModel implements NivelRutas {
-  constructor(public id?: number, public nivelJerarquico?: HierarchicalFlatNode) {}
+  constructor(public id?: number, public nombre?: string, public nivelJerarquico?: HierarchicalFlatNode) {}
 }
 
 export interface SubNivelRutas {

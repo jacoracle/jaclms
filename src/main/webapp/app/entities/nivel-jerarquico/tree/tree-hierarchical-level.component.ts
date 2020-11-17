@@ -123,8 +123,13 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     if (pathData) {
       // console.error(pathData.nivelRutas);
 
-      return pathData.nivelRutas!.map((n: NivelRutas) => {
-        return new DynamicFlatNode(n.nivelJerarquico!.id!, n.nivelJerarquico!.nombre!, 0, true);
+      // return pathData.nivelRutas!.map((n: NivelRutas) => {
+      //   return new DynamicFlatNode(n.nivelJerarquico!.id!, n.nivelJerarquico!.nombre!, 0, true);
+      // });
+
+      return pathData.niveles!.map((n: NivelRutas) => {
+        return new DynamicFlatNode(n.id!, n.nombre!, 0, true);
+        // return {id: n.id, nombre: n.nombre, level:0, expandable:true};
       });
     }
 

@@ -15,6 +15,7 @@ export interface IRutaModel {
   temas?: ITema[];
   rolesColaboradores?: IRolColaborador[];
   nivelAcademico?: INumeroGrado[];
+  niveles?: INumeroGrado[];
   nivelRutas?: NivelRutas[];
   fechaCreacion?: Moment;
   fechaPublicacion?: Moment;
@@ -31,6 +32,7 @@ export class RutaModel implements IRutaModel {
     public temas?: ITema[],
     public rolesColaboradores?: IRolColaborador[],
     public nivelAcademico?: INumeroGrado[],
+    public niveles?: INumeroGrado[],
     public nivelRutas?: any[],
     public fechaCreacion?: Moment,
     public fechaPublicacion?: Moment,
