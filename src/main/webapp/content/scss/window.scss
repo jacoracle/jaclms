@@ -1,8 +1,10 @@
 // Window Test
 .window-br {
   position: relative;
-  width: 96%;
-  max-width: 1400px;
+  // width: 96%;
+  width: 98%;
+  // max-width: 1400px;
+  max-width: 1900px;
   height: calc(100% - 20px);
   margin-top: 10px;
   border-radius: $border-radius-6;
@@ -283,7 +285,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  border-top: 1px solid $window-divider-color;
+  // border-top: 1px solid $window-divider-color;
 }
 .cursor-drag {
   cursor: grab !important;
@@ -304,7 +306,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // background-color: red;
   border-radius: 50%;
   span {
     position: relative;
