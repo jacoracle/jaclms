@@ -50,10 +50,15 @@
         align-items: center;
         margin-bottom: 2em;
 
-        .mat-tree {
-          padding-bottom: 3em;
-          height: calc(100% - 57px);
-        }
+        // .mat-tree {
+        //   padding-bottom: 3em;
+        //   height: calc(100% - 57px);
+        // }
+      }
+
+      .mat-tree {
+        padding-bottom: 3em;
+        height: calc(100% - 57px);
       }
     }
 

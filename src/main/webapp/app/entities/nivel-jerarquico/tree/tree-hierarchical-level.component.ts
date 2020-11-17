@@ -8,10 +8,10 @@ import { AccountService } from 'app/core/auth/account.service';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { RutaAprendizajeService } from 'app/entities/rutas-aprendizaje/ruta-aprendizaje.service';
 import { IAgrupador } from 'app/shared/model/agrupador.model';
-import { NivelRutas } from 'app/shared/model/interface/hierarchical-level.model';
+import { HierarchicalLevel, NivelRutas } from 'app/shared/model/interface/hierarchical-level.model';
 import { IRutaModel } from 'app/shared/model/ruta-aprendizaje.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 import { DynamicFlatNode, HierarchicalTreeService } from '../hierarchical-tree.service';
 import { NivelJerarquicoService } from '../nivel-jerarquico.service';
@@ -220,7 +220,54 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(this.dataSource.data, event.previousIndex, event.currentIndex);
     } else {
-      // this.addGroupAsLessonToTree(event.previousIndex, event.currentIndex);
+      this.addGroupAsLessonToTree(event.previousIndex, event.currentIndex);
     }
+  }
+
+  addGroupAsLessonToTree(previousIndex: number, currentIndex: number): void {
+    console.error('addGroupAsLessonToTree()');
+    const actualLevelDropped = this.treeControl.getLevel(this.treeControl.dataNodes[currentIndex - 1]);
+    const padre = this.treeControl.dataNodes[currentIndex - 1]; //  .node;
+
+    console.error('actualLevelDropped: ', actualLevelDropped);
+    console.error('padre: ', padre);
+
+    const newGroup: HierarchicalLevel[] = [];
+    newGroup.push({ id: this.sequenceList[previousIndex].id });
+
+    const newLesson: HierarchicalLevel = {
+      id: padre.idDb,
+      nombre: padre.nombre,
+      imagenUrl: '',
+      agrupadores: newGroup // nodeGroups
+    };
+
+    console.error('Request PUT: ', newLesson);
+    this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
+  }
+
+  protected subscribeResponseAddLesson(result: Observable<HttpResponse<HierarchicalLevel>>): void {
+    result.subscribe(
+      (res: any) => {
+        console.error('Response PUT agrupador: ', res);
+        // this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
+
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.path.sequence.addGroup',
+            type: 'success'
+          })
+        );
+      },
+      err => {
+        console.error('Error al agregar agrupador como lección: ', err);
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.path.validations.error',
+            type: 'danger'
+          })
+        );
+      }
+    );
   }
 }
