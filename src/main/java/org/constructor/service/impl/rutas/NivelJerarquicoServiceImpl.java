@@ -180,13 +180,14 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 		jerarquico.setNombre(nivelDto.getNombre());
 		jerarquico.setImagenUrl(nivelDto.getImagenUrl());
 
-		if (nivelDto.getAgrupadores() != null) {
+		if (!nivelDto.getAgrupadores().isEmpty()) {
 			NivelesAgrupador nivelesAgrupador = new NivelesAgrupador();
 			nivelDto.getAgrupadores().forEach(agrupadorDTO -> {
 				Optional<Agrupador> agrupador = agrupadorRepository.findById(agrupadorDTO.getId());
 
 				listAgrupador.add(agrupador.get());
 				nivelesAgrupador.setAgrupador(agrupador.get());
+				nivelesAgrupador.setOrden(agrupadorDTO.getOrden());
 			});
 
 			nivelesAgrupadorRepository.save(nivelesAgrupador);
