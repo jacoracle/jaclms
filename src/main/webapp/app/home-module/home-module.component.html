@@ -3,44 +3,38 @@
     <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
         <!-- Window Header -->
         <div class="window-br-header">
+          <div class="row-br-header">
+            <div class="header-breadcrumbs">
+              <div class="logo-home"><i class="icon ni-nimbus"></i></div>
+              <h4 class="hb-title" jhiTranslate="homemodule.title">/ Constructor de UMA</h4>
+            </div>
             <div class="alert-home-uma">
                 <jhi-alert-error></jhi-alert-error>
             </div>
-            <div class="r1">
-                <div class="logo-home-mini"></div>
-            </div>
-            <div class="r2">
-                <div class="windowHeader-title">
-                    <h4 jhiTranslate="homemodule.title">Constructor de UMA</h4>
-                </div>
-                <div class="c1">
-                </div>
-            </div>
+          </div>
         </div>
 
         <div [hidden]="!showLoader" class="loader-home">
             <span class="loader"></span>
         </div>
 
-        <div class="window-br-body-topbar recent-modules">
-            <div class="line-gradient lg-step1"></div>
+        <div class="window-br-body-topbar">
+          <div class="line-gradient lg-step1"></div>
             <div class="row-wbr-bt" *ngIf="modulos.length || isSearching">
-                <p><label jhiTranslate="homemodule.your">Tus UMA </label> ( {{modulos.length}} )</p>
-
-                <form name="umaForm" role="form" [formGroup]="umaForm" autocomplete="off" class="form-uma-search">
-
-
-                    <mat-form-field appearance="outline">
-                        <mat-label jhiTranslate="homemodule.search">Buscar</mat-label>
-                        <input type="text" placeholder="" matInput formControlName="titleSearchGral"
-                            [matAutocomplete]="autoInputTitleSearch">
-                        <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
-                            [displayWith]="displayFn">
-                        </mat-autocomplete>
-                    </mat-form-field>
-
-                </form>
-
+              <div class="br-tp-subtitle">
+                <h5 jhiTranslate="homemodule.your">Tus UMA</h5>
+                <span>{{modulos.length}}</span>
+              </div>
+              <form name="umaForm" role="form" [formGroup]="umaForm" autocomplete="off" class="form-uma-search">
+                <mat-form-field appearance="outline">
+                    <mat-label jhiTranslate="homemodule.search">Buscar</mat-label>
+                    <input type="text" placeholder="" matInput formControlName="titleSearchGral"
+                        [matAutocomplete]="autoInputTitleSearch">
+                    <mat-autocomplete autoActiveFirstOption #autoInputTitleSearch="matAutocomplete"
+                        [displayWith]="displayFn">
+                    </mat-autocomplete>
+                </mat-form-field>
+              </form>
             </div>
         </div>
 
