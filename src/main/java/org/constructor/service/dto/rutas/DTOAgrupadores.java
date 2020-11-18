@@ -18,6 +18,11 @@ public class DTOAgrupadores {
 	private Long id;
 	
 	/**
+	 * titulo
+	 */
+	String nombre;
+	
+	/**
 	 * Long
 	 */
 	@OrderBy ("orden ASC")
@@ -43,6 +48,22 @@ public class DTOAgrupadores {
 	public Long getOrden() {
 		return orden;
 	}
+	
+	
+
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	/**
 	 * @param orden the orden to set
@@ -53,7 +74,7 @@ public class DTOAgrupadores {
 
 	@Override
 	public String toString() {
-		return "DTOAgrupador [id=" + id + ", orden=" + orden + "]";
+		return "DTOAgrupadores [id=" + id + ", nombre=" + nombre + ", orden=" + orden + "]";
 	}
 	
 	
