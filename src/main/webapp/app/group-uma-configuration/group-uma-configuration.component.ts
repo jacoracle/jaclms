@@ -143,10 +143,13 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     evt.stopPropagation();
     if (!this.flagIdUrl) {
       this.step = this.umaUpdateComponent.validSequenceGroup(this.step);
+      if (this.step === 2) {
+        this.umaUpdateComponent.saveGroup(this.idSequenceToLoad);
+      }
     } else {
       this.umaUpdateComponent.validSequenceGroup(this.step);
+      this.umaUpdateComponent.saveGroup(this.idSequenceToLoad);
     }
-    this.umaUpdateComponent.saveGroup(this.idSequenceToLoad);
   }
 
   executeSaveSequence(evt: any): void {
