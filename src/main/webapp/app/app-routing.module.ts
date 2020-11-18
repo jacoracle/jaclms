@@ -85,7 +85,11 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: GroupUmaConfigurationComponent
         },
         {
-          path: 'sequence-configuration/:id',
+          path: 'group-configuration/:id',
+          component: GroupUmaConfigurationComponent
+        },
+        {
+          path: 'sequence-configuration/:id/:step',
           component: GroupUmaConfigurationComponent
         },
         {

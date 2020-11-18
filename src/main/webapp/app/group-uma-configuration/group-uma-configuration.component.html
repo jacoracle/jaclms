@@ -38,12 +38,12 @@
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
 
         <div class="container-stepper-group" [hidden]="step!=1">
-            <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"
-                                      (formCreateEvent)="setCreateForm($event)"></jhi-agrupador-uma-update>
+            <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"></jhi-agrupador-uma-update>
         </div>
 
           <div class="container-stepper-group" [hidden]="step!=2">
-              <jhi-secuencia-uma-update [agrupadorObj]="createdGroupSequence" (step)='previusStep($event)'></jhi-secuencia-uma-update>
+              <jhi-secuencia-uma-update [agrupadorObj]="createdGroupSequence" [idSequenceToLoad]="idSequenceToLoad"
+                                        (step)='previusStep($event)'></jhi-secuencia-uma-update>
           </div>
       </div>
 
@@ -60,16 +60,17 @@
 
         <button (click)="nextStep($event)" class="main-btn" *ngIf="step == 1"
                 matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
-            <span jhiTranslate="group.next">Siguiente</span>
+            <span jhiTranslate="group.next" *ngIf="!flagIdUrl">Siguiente</span>
+            <span jhiTranslate="group.save" *ngIf="flagIdUrl">Guardar Agrupador</span>
         </button>
 
-        <button (click)="previusStep($event)" class="main-btn" *ngIf="step == 2"
+        <button (click)="previusStep($event)" class="main-btn" *ngIf="step == 2 && !flagIdUrl"
                 matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
             <span jhiTranslate="group.previous">Anterior</span>
         </button>
 
 
-      <button (click)="executeSave($event)" class="main-btn"  *ngIf="step == 2"
+      <button (click)="executeSaveSequence($event)" class="main-btn"  *ngIf="step == 2"
         matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
           <span jhiTranslate="group.save">Guardar Agrupador</span>
       </button>

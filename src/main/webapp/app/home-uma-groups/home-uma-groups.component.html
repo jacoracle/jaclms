@@ -69,13 +69,13 @@
           <!-- <p>Resultados de la búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p> -->
           <div class="grid-cards">
             <div class="box-card" *ngFor="let sec of secuenciasUma"
-               [routerLink]="['/sequence-configuration', sec.id]">
+               [routerLink]="['/sequence-configuration', sec.id, 2]">
                <!-- <div *ngFor="let sec of filteredSequencesUmas! | async"> NO BORRAR ESTA LINEA -->
                    <!-- <mat-nav-list> -->
 
                <div class="group-cover-br-image"><span></span></div>
 
-                <div class="edit-course-br" [routerLink]="['/sequence-configuration', sec.id]">
+                <div class="edit-course-br" [routerLink]="['/group-configuration', sec.id]">
                     <i class="icon ni-edit icon-negative"></i>
                 </div>
 

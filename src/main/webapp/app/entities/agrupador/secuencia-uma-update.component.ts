@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AsignaturaService } from 'app/entities/asignatura/asignatura.service';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
 import { AgrupadorService } from './agrupador.service';
@@ -28,6 +28,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   @Input()
   agrupadorObj!: IAgrupador | null;
 
+  @Input()
+  idSequenceToLoad!: number;
+
   @Output()
   step = new EventEmitter();
 
@@ -43,7 +46,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   filteredUmas: any;
   groupUmaForm!: FormGroup;
   isSaving = false;
-  idSequenceToLoad!: number;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -56,14 +58,14 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     protected gradoAcademicoService: GradoAcademicoService,
     private umaPreviewModal: UmaPreviewModalService,
     protected activatedRoute: ActivatedRoute,
-    private eventManager: JhiEventManager,
-    private router: Router,
-    private moduleService: ModuloService
+    private eventManager: JhiEventManager
   ) {
     this.isSearching = false;
     this.isReorder = false;
     this.initForm();
-    this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
+    if (this.activatedRoute.snapshot.paramMap.get('id') as any) {
+      this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
+    }
   }
 
   ngOnInit(): void {
@@ -215,8 +217,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   addUmaToSequence(idx: number, orden: number): void {
     const objUmaToAdd = this.umasList[idx];
     const objToSave: IAgrupadorUma = this.dataToAgrupadorUma(objUmaToAdd, orden);
-    // eslint-disable-next-line no-console
-    console.log(objToSave);
     this.tiraUmas.push(objToSave);
     this.agrupadorConfigService.setUmasAddedEvent(this.tiraUmas);
     if (this.idSequenceToLoad) {
@@ -266,7 +266,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
         type: 'success'
       })
     );
-    // this.router.navigate(['/uma-groups-home']);
   }
 
   protected onSaveError(): void {

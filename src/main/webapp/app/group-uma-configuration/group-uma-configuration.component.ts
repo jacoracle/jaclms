@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { AccountService } from 'app/core/auth/account.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Account } from 'app/core/user/account.model';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
@@ -11,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AgrupadorUmaUpdateComponent } from 'app/entities/agrupador/agrupador-uma-update.component';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { SecuenciaAgrupadorUpdateComponent } from '../entities/agrupador/secuencia-uma-update.component';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'jhi-group-uma-configuration',
@@ -29,15 +28,15 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
 
   formSteps = new FormArray([]);
 
-  isStepEditable!: boolean;
   secondFormGroup!: FormGroup;
   // termina stepper
 
   isNewGroup!: boolean;
-  // received param to load group by id
-  idSequenceToLoad!: number;
 
-  step = 1;
+  idSequenceToLoad!: number;
+  flagIdUrl!: number;
+
+  step!: number;
 
   constructor(
     private eventManager: JhiEventManager,
@@ -48,9 +47,9 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     // private eventManager: JhiEventManager,
     protected agrupadorService: AgrupadorService
   ) {
+    this.flagIdUrl = this.activatedRoute.snapshot.paramMap.get('id') as any;
     this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
-
-    this.isStepEditable = this.idSequenceToLoad > 0;
+    this.step = (this.activatedRoute.snapshot.paramMap.get('step') as any) ? (this.activatedRoute.snapshot.paramMap.get('step') as any) : 1;
 
     this.secondFormGroup = this.formbuilder.group({
       default: ['', Validators.required]
@@ -82,9 +81,14 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
           type: 'success'
         })
       );
-      this.router.navigate(['/uma-groups-home']).then(r => {
-        return r;
-      });
+      if (this.flagIdUrl) {
+        this.router.navigate(['/uma-groups-home']).then(r => {
+          return r;
+        });
+      } else {
+        this.idSequenceToLoad = event.param2.id;
+        this.createdGroupSequence = this.mapEventDataToAgrupador(event);
+      }
     } else {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', {
@@ -95,18 +99,18 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
     }
   }
 
-  setCreateForm(evt: any): void {
+  /*  setCreateForm(evt: any): void {
     this.formSteps.removeAt(0);
     this.formSteps.push(evt);
     this.createdGroupSequence = this.mapFormDataToAgrupador(evt);
-  }
+  }*/
 
-  mapFormDataToAgrupador(groupUmaForm: FormControl): IAgrupador {
+  mapEventDataToAgrupador(event: any): IAgrupador {
     return {
       ...new Agrupador(),
       id: this.idSequenceToLoad,
-      titulo: groupUmaForm.get(['titleSequenceUmas'])!.value,
-      descripcion: groupUmaForm.get(['desciptionSequenceUmas'])!.value
+      titulo: event.param2.titulo,
+      descripcion: event.param2.descripcion
     };
   }
 
@@ -127,6 +131,7 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
 
   previusStep(evt: any): void {
     if (typeof evt === 'number') {
+      this.flagIdUrl = 0;
       this.step = evt;
     } else {
       evt.stopPropagation();
@@ -136,21 +141,27 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
 
   nextStep(evt: any): void {
     evt.stopPropagation();
-    this.step = this.umaUpdateComponent.validSequenceGroup(this.step);
+    if (!this.flagIdUrl) {
+      this.step = this.umaUpdateComponent.validSequenceGroup(this.step);
+    } else {
+      this.umaUpdateComponent.validSequenceGroup(this.step);
+    }
+    this.umaUpdateComponent.saveGroup(this.idSequenceToLoad);
   }
 
-  executeSave(evt: any): void {
+  executeSaveSequence(evt: any): void {
     evt.stopPropagation();
     this.umaUpdateComponent.saveSequenceGroup();
+    this.flagIdUrl = this.idSequenceToLoad;
   }
 
-  tabClick($event: MatTabChangeEvent): void {
+  /* tabClick($event: MatTabChangeEvent): void {
     if ($event.index === 0) {
       this.step = 1;
     } else {
       this.step = 2;
     }
-  }
+  }*/
 
   /*  revertData(): void {
       // console.error('#### group-uma-configuration - 1');
