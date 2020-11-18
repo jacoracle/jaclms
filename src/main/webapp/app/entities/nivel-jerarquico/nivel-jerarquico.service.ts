@@ -4,12 +4,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { INivelJerarquico } from 'app/shared/model/nivel-jerarquico.model';
 import { INivel, Nivel } from 'app/shared/model/nivel.model';
-import { HierarchicalLevel, SubNivelRutas } from 'app/shared/model/interface/hierarchical-level.model';
+import { HierarchicalLevel, HierarchicalStructure } from 'app/shared/model/interface/hierarchical-level.model';
 // import { map } from 'rxjs/operators';
 
 type EntityResponseType = HttpResponse<INivelJerarquico>;
 type EntityResponseTypeNivel = HttpResponse<INivel>;
-type EntityResponseTypeHierachical = HttpResponse<SubNivelRutas>;
+type EntityResponseTypeHierachical = HttpResponse<HierarchicalStructure>;
 
 @Injectable({ providedIn: 'root' })
 export class NivelJerarquicoService {
@@ -61,11 +61,13 @@ export class NivelJerarquicoService {
   }
 
   query(id: string): Observable<EntityResponseTypeHierachical> {
-    return this.http.get<SubNivelRutas>(`${this.resourceEstructuraJerarquica}/${id}`, { observe: 'response' });
+    return this.http.get<HierarchicalStructure>(`${this.resourceEstructuraJerarquica}/${id}`, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseTypeHierachical> {
-    return this.http.get<SubNivelRutas>(`${this.resourceEstructuraJerarquica}/${id}`, { observe: 'response' });
+    // return this.http.get<SubNivelRutas>(`${this.resourceEstructuraJerarquica}/${id}`, { observe: 'response' });
+    return this.http.get<HierarchicalStructure>(`${this.resourceHierarchicalLevel}/${id}`, { observe: 'response' });
+
     // this.http.get<SubNivelRutas>(`${this.resourceEstructuraJerarquica}/${id}`, { observe: 'response' })
     // .pipe(map((res: EntityResponseTypeHierachical) => this.convertDateFromServer(res)));
   }

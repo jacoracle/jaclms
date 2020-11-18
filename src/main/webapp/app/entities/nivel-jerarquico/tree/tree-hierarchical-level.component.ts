@@ -233,7 +233,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     console.error('padre: ', padre);
 
     const newGroup: HierarchicalLevel[] = [];
-    newGroup.push({ id: this.sequenceList[previousIndex].id });
+    newGroup.push({ id: this.sequenceList[previousIndex].id, orden: 0 });
 
     const newLesson: HierarchicalLevel = {
       id: padre.idDb,

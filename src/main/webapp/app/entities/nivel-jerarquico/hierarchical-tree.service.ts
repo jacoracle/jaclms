@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { HierarchicalLevel, SubNivelRutas } from 'app/shared/model/interface/hierarchical-level.model';
+import { HierarchicalLevel, HierarchicalStructure } from 'app/shared/model/interface/hierarchical-level.model';
 import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -66,12 +66,12 @@ export class HierarchicalTreeService {
    * execute request to load childrens
    * @param idDb id database record from selected node
    */
-  private async getChildrenPath(idDb: number): Promise<SubNivelRutas | undefined> {
+  private async getChildrenPath(idDb: number): Promise<HierarchicalStructure | undefined> {
     // console.error('getChildrenPath()');
     const childrensResponse = await this.nivelJerarquicoService!.find(idDb).toPromise();
 
     // console.error('Termina getchildrenPath()');
-    return childrensResponse.body as SubNivelRutas;
+    return childrensResponse.body as HierarchicalStructure;
   }
 
   /**
@@ -89,12 +89,16 @@ export class HierarchicalTreeService {
       // console.error(res);
       // console.error('found childrens');
 
-      const hijos = res.map((child: SubNivelRutas) => {
-        return { id: child.subNivelJerarquico!.id, nombre: child.subNivelJerarquico!.nombre };
+      const levels = res.niveles.map((child: HierarchicalStructure) => {
+        return { id: child.id, nombre: child.nombre };
+      });
+
+      const groups = res.agrupadores.map((child: HierarchicalStructure) => {
+        return { id: child.id, nombre: child.nombre };
       });
 
       const index = this.data.indexOf(node);
-      if (!hijos || index < 0) {
+      if ((!levels && !groups) || index < 0) {
         // If no children, or cannot find the node, no op
         return;
       }
@@ -105,7 +109,12 @@ export class HierarchicalTreeService {
         // let contador = 1;
 
         setTimeout(() => {
-          const nodes = hijos.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true));
+          let nodes = new Array<DynamicFlatNode>();
+          // const nodes = levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true));
+          nodes = [
+            ...levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true)),
+            ...groups.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true))
+          ];
 
           this.data.splice(index + 1, 0, ...nodes);
           // notify the change
@@ -113,7 +122,7 @@ export class HierarchicalTreeService {
           node.isLoading = false;
         }, 1000);
       } else {
-        this.data.splice(index + 1, hijos.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario: , hijos.length === 0 ? 1 : hijos.length
+        this.data.splice(index + 1, levels.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario: , hijos.length === 0 ? 1 : hijos.length
         this.dataChange.next(this.data);
       }
     }); // close then
@@ -175,6 +184,7 @@ export class HierarchicalTreeService {
     const newLevel: HierarchicalLevel = {
       nombre: name,
       imagenUrl: '',
+      agrupadores: [],
       nivelRuta: [
         {
           id: idPath,

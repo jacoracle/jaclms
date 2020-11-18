@@ -34,6 +34,26 @@ export class HierarchicalLevelModel implements HierarchicalLevel {
 
 // con ajuste back
 
+export interface HierarchicalStructure {
+  id?: number;
+  nombre?: string;
+  imagenUrl?: string;
+  niveles?: HierarchicalStructure[];
+  agrupadores?: HierarchicalStructure[];
+  orden?: number;
+}
+
+export class HierarchicalStructureModel implements HierarchicalStructure {
+  constructor(
+    public id?: number,
+    public nombre?: string,
+    public imagenUrl?: string,
+    public niveles?: HierarchicalStructure[],
+    public agrupadores?: HierarchicalStructure[],
+    public orden?: number
+  ) {}
+}
+
 export interface NivelRutas {
   id?: number;
   nombre?: string;
