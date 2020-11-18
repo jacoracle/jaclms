@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NivelJerarquicoService } from './nivel-jerarquico.service';
 import { RutaAprendizajeService } from '../rutas-aprendizaje/ruta-aprendizaje.service';
+import { HierarchicalLevelModel } from '../../shared/model/interface/hierarchical-level.model';
 
 // #####################################################################      MODEL CLASS TREE
 
@@ -122,10 +123,22 @@ export class HierarchicalTreeService {
           node.isLoading = false;
         }, 1000);
       } else {
-        this.data.splice(index + 1, levels.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario: , hijos.length === 0 ? 1 : hijos.length
+        this.data.splice(index + 1, this.getLengthCollapseTree(levels, groups)); //  levels.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario: , hijos.length === 0 ? 1 : hijos.length
         this.dataChange.next(this.data);
       }
     }); // close then
+  }
+
+  private getLengthCollapseTree(levels: HierarchicalStructure[], groups: HierarchicalStructure[]): number {
+    if (levels.length === 0 && groups.length > 0) {
+      return groups.length;
+    } else if (groups.length === 0 && levels.length > 0) {
+      return levels.length;
+    } else if (levels.length > 0 && groups.length > 0) {
+      return levels.length + groups.length;
+    } else {
+      return 0;
+    }
   }
 
   insertRootItem(idPath: number, parent: DynamicFlatNode, name: string): void {
@@ -161,7 +174,7 @@ export class HierarchicalTreeService {
       this.addNewChildrenToTree(name, this.data[index].idDb).then((n: any) => {
         if (n) {
           nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, true));
-          this.data.splice(index, 1, ...nodes);
+          this.data.splice(index, 1, ...nodes); //  replace node with new elements
           this.dataChange.next(this.data);
         }
       });
@@ -214,5 +227,31 @@ export class HierarchicalTreeService {
     };
 
     return (await this.nivelJerarquicoService!.createLevel(children).toPromise()).body as HierarchicalLevel;
+  }
+
+  insertGroup(parent: DynamicFlatNode, req: HierarchicalLevel): void {
+    parent.isLoading = true;
+    const nodes = new Array<DynamicFlatNode>();
+
+    this.addGroupToTree(req).then((res: any) => {
+      //
+      // console.error('response insert group: ', res);
+
+      if (res.agrupadores) {
+        res.agrupadores.forEach((ag: any) => {
+          nodes.push(new DynamicFlatNode(ag.id, ag.nombre, parent.level + 1, true));
+        });
+
+        const index = this.data.indexOf(parent);
+        this.data.splice(index + 1, 0, ...nodes);
+        this.dataChange.next(this.data);
+        parent.isLoading = false;
+      }
+    });
+  }
+
+  private async addGroupToTree(request: HierarchicalLevelModel): Promise<any | undefined> {
+    // console.error('addGroupToTree()');
+    return (await this.nivelJerarquicoService!.updateNode(request).toPromise()).body;
   }
 }

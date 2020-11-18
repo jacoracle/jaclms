@@ -225,12 +225,14 @@ export class TreeHierarchicalLevelComponent implements OnInit {
   }
 
   addGroupAsLessonToTree(previousIndex: number, currentIndex: number): void {
-    console.error('addGroupAsLessonToTree()');
-    const actualLevelDropped = this.treeControl.getLevel(this.treeControl.dataNodes[currentIndex - 1]);
+    // console.error('addGroupAsLessonToTree()');
+    // const actualLevelDropped = this.treeControl.getLevel(this.treeControl.dataNodes[currentIndex - 1]);
     const padre = this.treeControl.dataNodes[currentIndex - 1]; //  .node;
 
-    console.error('actualLevelDropped: ', actualLevelDropped);
-    console.error('padre: ', padre);
+    this.treeControl.expand(padre);
+
+    // console.error('actualLevelDropped: ', actualLevelDropped);
+    // console.error('padre: ', padre);
 
     const newGroup: HierarchicalLevel[] = [];
     newGroup.push({ id: this.sequenceList[previousIndex].id, orden: 0 });
@@ -242,14 +244,16 @@ export class TreeHierarchicalLevelComponent implements OnInit {
       agrupadores: newGroup // nodeGroups
     };
 
-    console.error('Request PUT: ', newLesson);
-    this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
+    // console.error('Request PUT: ', newLesson);
+    // this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
+    this.dataSource.insertGroup(padre, newLesson);
   }
 
+  // no se utiliza porque ya se hace en el servicio del tree, pero debería hacer algo para poder enviar las alertas por acción en el tree
   protected subscribeResponseAddLesson(result: Observable<HttpResponse<HierarchicalLevel>>): void {
     result.subscribe(
-      (res: any) => {
-        console.error('Response PUT agrupador: ', res);
+      () => {
+        // console.error('Response PUT agrupador: ', res);
         // this.nivelJerarquicoService.dataChange.next(this.hierarchicalLevels);
 
         this.eventManager.broadcast(
