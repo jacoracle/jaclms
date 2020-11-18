@@ -18,6 +18,10 @@ public class DTOAgrupadores {
 	private Long id;
 	
 	/**
+	 * Nivele Agrupador Id
+	 */
+	private Long nivelAgrupadorId;
+	/**
 	 * titulo
 	 */
 	String nombre;
@@ -49,7 +53,19 @@ public class DTOAgrupadores {
 		return orden;
 	}
 	
-	
+	/**
+	 * @return the nivelAgrupadorId
+	 */
+	public Long getNivelAgrupadorId() {
+		return nivelAgrupadorId;
+	}
+
+	/**
+	 * @param nivelAgrupadorId the nivelAgrupadorId to set
+	 */
+	public void setNivelAgrupadorId(Long nivelAgrupadorId) {
+		this.nivelAgrupadorId = nivelAgrupadorId;
+	}
 
 	/**
 	 * @return the nombre
@@ -74,7 +90,8 @@ public class DTOAgrupadores {
 
 	@Override
 	public String toString() {
-		return "DTOAgrupadores [id=" + id + ", nombre=" + nombre + ", orden=" + orden + "]";
+		return "DTOAgrupadores [id=" + id + ", nivelAgrupadorId=" + nivelAgrupadorId + ", nombre=" + nombre + ", orden="
+				+ orden + "]";
 	}
 	
 	
