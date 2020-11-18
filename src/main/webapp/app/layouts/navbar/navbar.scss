@@ -5,13 +5,13 @@
   top: 0px;
   right: 0px;
   width: 100%;
-  height: 44px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: $navbar-light;
   z-index: 99 !important;
-  border-bottom: 1px solid $window-divider-color;
+  // border-bottom: 1px solid $window-divider-color;
 
   .row-nb-nimbus {
     position: relative;
@@ -226,7 +226,8 @@
         font-size: 14px;
         padding: 0;
         margin: 0;
-        background-color: $navbar-light;
+        // background-color: $navbar-light;
+        background-color: white;
         padding-top: 4px;
         padding-bottom: 4px;
         border-radius: 0px 0px 6px 6px;

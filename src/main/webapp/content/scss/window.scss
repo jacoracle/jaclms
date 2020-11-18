@@ -1,11 +1,14 @@
 // Window Test
 .window-br {
   position: relative;
-  width: 96%;
-  max-width: 1400px;
-  height: calc(100% - 20px);
-  margin-top: 10px;
-  border-radius: $border-radius-6;
+  // width: 96%;
+  // max-width: 1400px;
+  // max-width: 1900px;
+  // height: calc(100% - 20px);
+  // margin-top: 10px;
+  // border-radius: $border-radius-6;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,11 +18,20 @@
     position: relative;
     width: 100%;
     height: 55px;
-    background-color: $window-header-color;
-    border-radius: 6px 6px 0 0;
+    // background-color: $window-header-color;
+    // border-radius: 6px 6px 0 0;
+    background-color: $navbar-light;
     display: flex;
     justify-content: center;
     align-items: center;
+    .row-br-header {
+      position: relative;
+      width: 97%;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
     .r1 {
       position: relative;
@@ -30,11 +42,8 @@
       align-items: center;
       .logo-create {
         position: relative;
-        // width: 130px;
-        // height: 45px;
         width: 50px;
         height: 50px;
-        // background-image: url('../../content/images/logo_create.svg');
         background-image: url('../../content/images/logo_register.svg');
         background-position: center;
         background-size: 100%;
@@ -114,24 +123,6 @@
         align-items: flex-end;
         right: 0px;
         bottom: 20px;
-
-        .button-hc {
-          position: relative;
-          width: 100px;
-          height: auto;
-          font-size: 13px;
-          line-height: 18px;
-          font-weight: 600;
-          color: $a-color-nd;
-          cursor: default;
-          opacity: 0.8;
-          margin-right: 8px;
-          .icon {
-            float: left;
-            margin-right: 6px;
-            cursor: default;
-          }
-        }
       }
     }
   }
@@ -140,6 +131,7 @@
     position: relative;
     width: 100%;
     height: 65px;
+    height: 55px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -157,7 +149,7 @@
 
     .row-wbr-bt {
       position: relative;
-      width: 92%;
+      width: 94%;
       height: auto;
       display: flex;
       justify-content: space-between;
@@ -172,6 +164,9 @@
       form {
       }
     }
+  }
+  .topbar-home {
+    background-color: $window-body-color;
   }
   .window-br-body-topbar-group {
     position: relative;
@@ -206,7 +201,8 @@
 .window-br-body {
   position: relative;
   width: 100%;
-  height: calc(100% - 185px);
+  // height: calc(100% - 185px);
+  height: calc(100% - 175px);
   background-color: $window-body-color;
   overflow-y: auto;
   padding-bottom: 30px;
@@ -226,13 +222,13 @@
 .window-br-footer {
   position: relative;
   width: 100%;
-  height: 64px;
+  height: 65px;
   background-color: $window-footer-color;
   border-top: 1px solid $window-divider-color;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0 0 6px 6px;
+  // border-radius: 0 0 6px 6px;
 
   button {
     margin-left: 20px;
@@ -247,18 +243,17 @@
   display: grid;
   -webkit-box-pack: center;
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, 210px);
+  grid-template-columns: repeat(auto-fill, 240px);
   // grid-gap: 20px;
   grid-gap: 25px;
   margin-top: 30px;
 }
 .box-card {
   position: relative;
-  width: 210px;
-  height: 120px;
+  width: 240px;
+  height: 140px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
   background-color: white;
@@ -268,6 +263,23 @@
   &:hover {
     border: 2px solid #18bafb;
   }
+}
+.row-content-card {
+  position: relative;
+  width: 90%;
+  height: 95px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.row-buttons-card {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  // border-top: 1px solid $window-divider-color;
 }
 .cursor-drag {
   cursor: grab !important;
@@ -281,19 +293,18 @@
 }
 .module-cover-br-image {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
   background: $color-step-1;
-  margin-top: 10px;
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
   span {
     position: relative;
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     background: url('../images/uma_cover_mini.png'), #eaedf4;
     background-position: center;
     background-size: 100%;
@@ -368,31 +379,32 @@
 }
 .course-desc-br-row {
   position: relative;
-  width: 100%;
+  width: calc(100% - 65px);
   height: auto;
   min-height: 45px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
   z-index: 1;
-  margin-top: 8px;
+  margin-left: 10px;
 
   .title-course-br {
     position: relative;
-    width: 90%;
+    width: 100%;
     height: auto;
     font-size: 13px;
     color: $blue-nimbus-dark;
     line-height: 16px;
     font-weight: 400;
-    text-align: center;
+    text-align: left;
   }
   .desc-course-br {
     position: relative;
-    width: 90%;
+    width: 100%;
     height: auto;
     font-size: 12px;
-    text-align: center;
+    text-align: left;
     color: lightslategrey;
     line-height: 12px;
     margin-top: 4px;
@@ -400,12 +412,36 @@
 }
 
 .delete-course-br {
-  position: absolute;
-  right: 8px;
-  top: 8px;
+  position: relative;
   width: 30px;
   height: 30px;
   background-color: $main-btn-color;
+  z-index: 2;
+  transition: 0.3s;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+  margin-right: 10px;
+  .icon {
+    cursor: pointer;
+  }
+  &:hover {
+    background-color: $main-btn-color-hover;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    transform: scale(0.96);
+  }
+}
+.edit-course-br {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background-color: $secondary-btn-color;
   z-index: 2;
   transition: 0.3s;
   border-radius: 50%;
@@ -416,7 +452,7 @@
     cursor: pointer;
   }
   &:hover {
-    background-color: $main-btn-color-hover;
+    background-color: $secondary-btn-hover;
   }
   &:focus {
     outline: none;
@@ -507,6 +543,93 @@
     }
   }
 }
+// New header
+.header-breadcrumbs {
+  position: relative;
+  width: auto;
+  display: flex;
+  align-items: center;
+  .logo-home {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      font-size: 26px;
+      transition: 0.3s ease-in;
+      &:hover {
+        color: $main-btn-color-hover;
+      }
+    }
+  }
+}
+.hb-title {
+  position: relative;
+  width: auto;
+  height: auto;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: $a-color-nd;
+}
+.hbt-disabled {
+  font-size: 16px;
+  font-weight: 400;
+  color: $a-color-nd;
+  opacity: 0.8;
+}
+.row-btn-brheader {
+  position: relative;
+  width: auto;
+  height: auto;
+  display: flex;
+}
+.button-hc {
+  position: relative;
+  width: 100px;
+  height: auto;
+  cursor: default;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  span {
+    font-size: 13px;
+    font-weight: 600;
+    color: $a-color-nd;
+  }
+  .icon {
+    margin-right: 6px;
+    cursor: default;
+  }
+}
+.br-tp-subtitle {
+  position: relative;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  h5 {
+    font-size: 16px;
+  }
+  span {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    margin-left: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: $blue-nimbus-dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // background: $color-step-1;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+  }
+}
+
 // Change border color
 .mat-form-field-outline {
   .mat-form-field-outline-start {

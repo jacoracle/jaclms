@@ -15,9 +15,8 @@
 // Home element
 .home-element {
   position: relative;
-  width: 250px;
-  height: 315px;
-  // height: 280px;
+  width: 280px;
+  height: 330px;
   background-color: $light-color-1;
   border-radius: $border-radius-8;
   cursor: pointer;
@@ -29,30 +28,9 @@
   border: 1px solid $border-light;
   margin-left: 2%;
   margin-right: 2%;
+  overflow: hidden;
   &:hover {
     border: 1px solid #18bafb;
-  }
-
-  .indicator-step {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px 0 8px 0px;
-    background: $color-step-2;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .icon-step-w {
-      position: relative;
-      width: 22px;
-      height: 22px;
-      background-image: url('../../content/images/step2.svg');
-      background-position: center;
-      background-size: 100%;
-      background-repeat: no-repeat;
-    }
   }
 
   .he-text {
@@ -65,7 +43,7 @@
     margin-top: 20px;
     h4 {
       position: relative;
-      width: 87%;
+      width: 80%;
       height: auto;
       font-size: 17px;
       font-weight: 600;
@@ -74,89 +52,256 @@
     }
     p {
       position: relative;
-      width: 87%;
+      width: 80%;
       height: auto;
       text-align: left;
       line-height: 23px;
+      min-height: 50px;
     }
   }
 
   .he-img {
     position: relative;
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
     margin-top: 25px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    .home-image-step {
+    .he-letter {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      z-index: 4;
+      top: 50%;
+      margin-top: -14px;
+      left: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.3s ease-in;
+    }
+    .he-circle {
       position: relative;
-      width: 90px;
-      height: 90px;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 100%;
-    }
-  }
-  .heimg1 {
-    background: $color-step-1;
-    .home-image-step {
-      background-image: url('../../content/images/bg_step1.png');
-    }
-  }
-  .heimg2 {
-    background: $color-step-2;
-    .home-image-step {
-      background-image: url('../../content/images/bg_step2.png');
-    }
-  }
-  .heimg3 {
-    background: $color-step-3;
-    .home-image-step {
-      background-image: url('../../content/images/bg_step3.png');
-    }
-  }
-  .heimg4 {
-    background: $color-step-4;
-    .home-image-step {
-      background-image: url('../../content/images/bg_step4.png');
+      width: 108px;
+      height: 108px;
+      background-color: #eaedf4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+
+      .home-image-step {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        z-index: 2;
+      }
     }
   }
   button {
     margin-top: 15px;
   }
 }
+.is1-picture {
+  position: absolute;
+  width: 48px;
+  height: 31px;
+  z-index: 3;
+  top: 26px;
+  right: 10px;
+  transition: 0.3s ease-in;
+  transform: rotate(0deg);
+  border-radius: 4px;
+  box-shadow: $shadow1;
+  background-image: url('../../content/images/picture.svg');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.is1-background {
+  position: absolute;
+  width: 67px;
+  height: 60px;
+  z-index: 1;
+  top: 24px;
+  left: 21px;
+  background-color: white;
+  transition: 0.3s ease-out;
+  box-shadow: $shadow1;
+  border-radius: 4px;
+}
+.is2-background {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 24px;
+  right: 11px;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.5;
+  border: 2px dotted $blue-nimbus-dark;
+  animation: rotatex 10s infinite;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+.is3-background {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 30px;
+  right: 9px;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.5;
+  border: 2px dotted $blue-nimbus-dark;
+  animation: rotatex 10s infinite;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+.is3-background-1 {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 16px;
+  right: 8px;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.5;
+  border: 2px dotted $blue-nimbus-dark;
+  animation: rotatex 10s infinite;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+.is3-background-2 {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 57px;
+  right: 8px;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.5;
+  border: 2px dotted $blue-nimbus-dark;
+  animation: rotatex 10s infinite;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+@keyframes rotatex {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.is2-picture1 {
+  position: absolute;
+  width: 45px;
+  height: 37px;
+  background-image: url('../../content/images/uma.svg');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  z-index: 4;
+  top: 14px;
+  right: 22px;
+  transition: 0.3s ease-out;
+}
+.is2-picture2 {
+  position: absolute;
+  width: 45px;
+  height: 37px;
+  z-index: 4;
+  top: 57px;
+  right: 22px;
+  background-image: url('../../content/images/uma.svg');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  transition: 0.3s ease-in;
+}
+
+.heimg1 {
+  background: $color-step-1;
+  .he-letter {
+    background: $color-step-1;
+  }
+  .he-circle {
+    .home-image-step {
+      background-image: url('../../content/images/bg_step1.svg');
+    }
+  }
+}
+.heimg2 {
+  background: $color-step-2;
+  .he-letter {
+    background: $color-step-2;
+  }
+}
+.heimg3 {
+  background: $color-step-3;
+  .he-letter {
+    background: $color-step-3;
+  }
+  .he-circle {
+    .home-image-step {
+      background-image: url('../../content/images/bg_step3.svg');
+    }
+  }
+}
+.heimg4 {
+  background: $color-step-4;
+  .home-image-step {
+    background-image: url('../../content/images/bg_step4.png');
+  }
+}
 .divider-he {
   position: relative;
-  width: 88%;
+  width: 90%;
   height: 1px;
   background-color: $border-light;
   margin-top: 15px;
   margin-bottom: 10px;
 }
-.he-i {
-  position: relative;
-  width: 22px;
-  height: 22px;
-  top: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  margin-right: 5px;
-  display: none;
-}
-.he-icon-1 {
-  background-image: url('../../content/images/uma_icon.svg');
-}
-.he-icon-2 {
-  background-image: url('../../content/images/module_icon.svg');
-}
-.he-icon-3 {
-  background-image: url('../../content/images/module_icon.svg');
-}
-.e-disabled {
-  cursor: default;
-  pointer-events: none;
-  opacity: 0.5;
+.home-element:hover {
+  .he-img {
+    .he-letter {
+      left: 0px;
+    }
+    .he-circle {
+      .is1-picture {
+        top: 10px;
+        right: -5px;
+        transform: rotate(25deg);
+      }
+      .is1-background {
+        height: 68px;
+        top: 20px;
+      }
+      .is2-background {
+        animation-play-state: running;
+      }
+      .is2-picture1 {
+        transform: translateX(-15px);
+      }
+      .is2-picture2 {
+        transform: translateX(15px);
+      }
+      // Circle 3
+      .is3-background,
+      .is3-background-1,
+      .is3-background-2 {
+        animation-play-state: running;
+      }
+    }
+  }
 }
