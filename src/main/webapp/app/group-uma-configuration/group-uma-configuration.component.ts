@@ -147,8 +147,9 @@ export class GroupUmaConfigurationComponent implements OnInit, OnDestroy {
         this.umaUpdateComponent.saveGroup(this.idSequenceToLoad);
       }
     } else {
-      this.umaUpdateComponent.validSequenceGroup(this.step);
-      this.umaUpdateComponent.saveGroup(this.idSequenceToLoad);
+      if (this.umaUpdateComponent.validSequenceGroup(this.step) === 2) {
+        this.umaUpdateComponent.saveGroup(this.idSequenceToLoad);
+      }
     }
   }
 
