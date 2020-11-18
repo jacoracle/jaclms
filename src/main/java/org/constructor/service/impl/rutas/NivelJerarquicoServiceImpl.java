@@ -124,6 +124,7 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 			DTOAgrupadores dtoAgrupador = new DTOAgrupadores();
 			dtoAgrupador.setId(agrupador.getAgrupador().getId());
 			dtoAgrupador.setOrden(agrupador.getOrden());
+			dtoAgrupador.setNombre(agrupador.getAgrupador().getTitulo());
 
 			listAgrupadores.add(dtoAgrupador);
 
