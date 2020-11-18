@@ -99,7 +99,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'path-hierarchical/:id',
-          component: LearningPathHierarchicalLevelComponent // RutasAprendizajeJerarquiaComponent
+          component: TreeHierarchicalLevelComponent
         },
         {
           path: 'view-tree/:id',
