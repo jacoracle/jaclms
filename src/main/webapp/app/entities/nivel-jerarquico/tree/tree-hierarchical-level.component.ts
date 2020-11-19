@@ -13,8 +13,10 @@ import { IRutaModel } from 'app/shared/model/ruta-aprendizaje.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
+import { LearningPathHierarchicalAddLevelComponent } from '../dialog-add-level/learning-path-hierarchical-add-level.component';
 import { DynamicFlatNode, HierarchicalTreeService } from '../hierarchical-tree.service';
 import { NivelJerarquicoService } from '../nivel-jerarquico.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'jhi-tree-hierarchical-level',
@@ -35,6 +37,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
   filteredGroups: any;
 
   // tree
+  newLevelName!: string;
   treeControl!: FlatTreeControl<DynamicFlatNode>;
   dataSource!: HierarchicalTreeService; // DynamicDataSource;
 
@@ -45,6 +48,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     private nivelJerarquicoService: NivelJerarquicoService,
     private agrupadorService: AgrupadorService,
     private rutaService: RutaAprendizajeService,
+    public dialog: MatDialog,
     private eventManager: JhiEventManager
   ) {
     this.aroute.params.subscribe(val => {
@@ -153,6 +157,15 @@ export class TreeHierarchicalLevelComponent implements OnInit {
   saveNode(node: DynamicFlatNode, itemValue: string): void {
     this.dataSource.updateItem(node, itemValue);
     // console.error('termino guardado de nodo');
+  }
+
+  editNodeName(node: DynamicFlatNode): void {
+    // this.dataSource.updateItem(node, itemValue);
+    // const nodeToEdit = this.treeControl.dataNodes[idx];
+    // if ( nodeToEdit ){
+    // nodeToEdit.
+    this.openDialog(node);
+    // }
   }
 
   removeItem(node: DynamicFlatNode): void {
@@ -273,5 +286,26 @@ export class TreeHierarchicalLevelComponent implements OnInit {
         );
       }
     );
+  }
+
+  openDialog(node: DynamicFlatNode): void {
+    node.isLoading = true;
+    this.newLevelName = '';
+    const dialogRef = this.dialog.open(LearningPathHierarchicalAddLevelComponent, {
+      width: '280px',
+      data: { newLevelName: node.nombre } //  this.newLevelName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.newLevelName = result;
+        if (node) {
+          // this.addNewSubLevelToTree(node);
+          console.error(result);
+          // this.treeControl.dataNodes[idx].nombre = result;
+          this.dataSource.editTreeNode(node, result);
+        }
+      }
+    });
   }
 }

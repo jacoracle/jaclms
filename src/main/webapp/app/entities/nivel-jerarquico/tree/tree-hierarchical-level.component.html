@@ -32,10 +32,11 @@
         <div class="window-br-body-full">
             <div class="container-path-hierarchical" [ngSwitch]="isAuthenticated()">
 
-                <div style="background-color: #b3b3b3;" class="window-path-hierarchical-body">
+                <div class="window-path-hierarchical-body">
                     <div class="hierarchical-bar">
                         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList
-                        [cdkDropListData]="dataSource.data" #treePath="cdkDropList" (cdkDropListDropped)="dropOrder($event)">
+                            [cdkDropListData]="dataSource.data" #treePath="cdkDropList"
+                            (cdkDropListDropped)="dropOrder($event)">
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag [cdkDragData]="node">
                                 <button mat-icon-button disabled></button>
                                 {{node.nombre}}
@@ -73,8 +74,9 @@
                                         <mat-icon>topic</mat-icon>
                                         Add Node
                                     </button>
-                                    <button mat-menu-item>
+                                    <button mat-menu-item (click)="editNodeName(node)">
                                         <!-- <mat-icon>topic</mat-icon> -->
+                                        <mat-icon>edit</mat-icon>
                                         Edit Node name
                                     </button>
                                     <button mat-menu-item (click)="removeItem(node)">
@@ -87,8 +89,9 @@
                                         <mat-icon>snippet_folder</mat-icon>
                                         Add child node
                                     </button>
-                                    <button mat-menu-item>
+                                    <button mat-menu-item (click)="editNodeName(node)">
                                         <!-- <mat-icon>topic</mat-icon> -->
+                                        <mat-icon>topic</mat-icon>
                                         Edit Child node name
                                     </button>
                                     <button mat-menu-item (click)="removeItem(node)">

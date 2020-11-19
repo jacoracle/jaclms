@@ -43,6 +43,14 @@ export interface HierarchicalStructure {
   orden?: number;
 }
 
+/**
+ * interface para response al agregar un agrupador
+ */
+export interface HierarchicalStructureGroup extends HierarchicalStructure {
+  nivelId?: number; // padre
+  nivelAgrupadorId?: number; // tabla intermedia
+}
+
 export class HierarchicalStructureModel implements HierarchicalStructure {
   constructor(
     public id?: number,

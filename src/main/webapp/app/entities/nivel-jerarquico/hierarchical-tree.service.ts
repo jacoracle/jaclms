@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { HierarchicalLevel, HierarchicalStructure } from 'app/shared/model/interface/hierarchical-level.model';
+import { HierarchicalLevel, HierarchicalStructure, HierarchicalStructureGroup } from 'app/shared/model/interface/hierarchical-level.model';
 import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -233,10 +233,7 @@ export class HierarchicalTreeService {
     parent.isLoading = true;
     const nodes = new Array<DynamicFlatNode>();
 
-    this.addGroupToTree(req).then((res: any) => {
-      //
-      // console.error('response insert group: ', res);
-
+    this.executePutRequest(req).then((res: any) => {
       if (res.agrupadores) {
         res.agrupadores.forEach((ag: any) => {
           nodes.push(new DynamicFlatNode(ag.id, ag.nombre, parent.level + 1, true));
@@ -250,8 +247,29 @@ export class HierarchicalTreeService {
     });
   }
 
-  private async addGroupToTree(request: HierarchicalLevelModel): Promise<any | undefined> {
-    // console.error('addGroupToTree()');
-    return (await this.nivelJerarquicoService!.updateNode(request).toPromise()).body;
+  private async executePutRequest(request: HierarchicalLevelModel): Promise<HierarchicalStructureGroup> {
+    return (await this.nivelJerarquicoService!.updateNode(request).toPromise()).body as HierarchicalStructureGroup;
+  }
+
+  editTreeNode(node: DynamicFlatNode, newName: string): void {
+    //
+    const editRequest: HierarchicalLevel = {
+      id: node.idDb,
+      nombre: newName,
+      imagenUrl: '',
+      agrupadores: []
+    };
+
+    this.executePutRequest(editRequest).then((res: HierarchicalStructureGroup) => {
+      console.error('Finish edit response: ', res);
+
+      const index = this.data.indexOf(node);
+      const editNode: DynamicFlatNode = this.data[index];
+      editNode.nombre = newName;
+      // console.error('response insert group: ', res);
+      this.data.splice(index, 1, editNode);
+      this.dataChange.next(this.data);
+      node.isLoading = false;
+    });
   }
 }
