@@ -68,33 +68,33 @@
                                     class="example-tree-progress-bar">
                                 </mat-progress-bar>
                                 <mat-menu #menu="matMenu">
-                                    <button mat-menu-item (click)="addRootLevel(node)">
+                                    <button *ngIf="getLevel(node) === 0" mat-menu-item (click)="addRootLevel(node)">
                                         <!-- <mat-icon>class</mat-icon> -->
                                         <!-- <mat-icon>add_circle</mat-icon> -->
                                         <mat-icon>topic</mat-icon>
                                         Add Node
                                     </button>
-                                    <button mat-menu-item (click)="editNodeName(node)">
+                                    <button *ngIf="getLevel(node) === 0" mat-menu-item (click)="editNodeName(node)">
                                         <!-- <mat-icon>topic</mat-icon> -->
                                         <mat-icon>edit</mat-icon>
                                         Edit Node name
                                     </button>
-                                    <button mat-menu-item (click)="removeItem(node)">
+                                    <button *ngIf="getLevel(node) === 0" mat-menu-item (click)="removeItem(node)">
                                         <mat-icon>delete_sweep</mat-icon>
                                         Delete Node
                                     </button>
-                                    <hr>
-                                    <button mat-menu-item (click)="addNewItem(node)">
+                                    <!-- <hr> -->
+                                    <button *ngIf="getLevel(node) < 2" mat-menu-item (click)="addNewItem(node)">
                                         <!-- <mat-icon>add_circle</mat-icon> -->
                                         <mat-icon>snippet_folder</mat-icon>
                                         Add child node
                                     </button>
-                                    <button mat-menu-item (click)="editNodeName(node)">
+                                    <button *ngIf="getLevel(node) > 0 && getLevel(node) < 3" mat-menu-item (click)="editNodeName(node)">
                                         <!-- <mat-icon>topic</mat-icon> -->
                                         <mat-icon>topic</mat-icon>
                                         Edit Child node name
                                     </button>
-                                    <button mat-menu-item (click)="removeItem(node)">
+                                    <button *ngIf="getLevel(node) > 0 && getLevel(node) <= 3" mat-menu-item (click)="removeItem(node)">
                                         <mat-icon>delete_sweep</mat-icon>
                                         Delete child node
                                     </button>

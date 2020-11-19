@@ -81,52 +81,46 @@ export class HierarchicalTreeService {
    * @param expand if the node is expanded
    */
   toggleNode(node: DynamicFlatNode, expand: boolean): void {
-    // console.error('Nodo seleccioado: ');
-    // console.error(node);
+    if (node.level < 3) {
+      this.getChildrenPath(node.idDb).then((res: any) => {
+        const levels = res.niveles.map((child: HierarchicalStructure) => {
+          return { id: child.id, nombre: child.nombre };
+        });
 
-    // console.error('toggleNodeCool() por ejecutar getChildrenPath()');
-    // let childrenCool;
-    this.getChildrenPath(node.idDb).then((res: any) => {
-      // console.error(res);
-      // console.error('found childrens');
+        const groups = res.agrupadores.map((child: HierarchicalStructure) => {
+          return { id: child.id, nombre: child.nombre };
+        });
 
-      const levels = res.niveles.map((child: HierarchicalStructure) => {
-        return { id: child.id, nombre: child.nombre };
-      });
+        const index = this.data.indexOf(node);
+        if ((!levels && !groups) || index < 0) {
+          // If no children, or cannot find the node, no op
+          return;
+        }
 
-      const groups = res.agrupadores.map((child: HierarchicalStructure) => {
-        return { id: child.id, nombre: child.nombre };
-      });
+        if (expand) {
+          node.isLoading = true;
 
-      const index = this.data.indexOf(node);
-      if ((!levels && !groups) || index < 0) {
-        // If no children, or cannot find the node, no op
-        return;
-      }
+          // let contador = 1;
 
-      if (expand) {
-        node.isLoading = true;
+          setTimeout(() => {
+            let nodes = new Array<DynamicFlatNode>();
+            // const nodes = levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true));
+            nodes = [
+              ...levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true)),
+              ...groups.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true))
+            ];
 
-        // let contador = 1;
-
-        setTimeout(() => {
-          let nodes = new Array<DynamicFlatNode>();
-          // const nodes = levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true));
-          nodes = [
-            ...levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true)),
-            ...groups.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true))
-          ];
-
-          this.data.splice(index + 1, 0, ...nodes);
-          // notify the change
+            this.data.splice(index + 1, 0, ...nodes);
+            // notify the change
+            this.dataChange.next(this.data);
+            node.isLoading = false;
+          }, 1000);
+        } else {
+          this.data.splice(index + 1, this.getLengthCollapseTree(levels, groups)); //  levels.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario: , hijos.length === 0 ? 1 : hijos.length
           this.dataChange.next(this.data);
-          node.isLoading = false;
-        }, 1000);
-      } else {
-        this.data.splice(index + 1, this.getLengthCollapseTree(levels, groups)); //  levels.length); //  children.length); //  cuando ya se guarde el nodo quitar el ternario: , hijos.length === 0 ? 1 : hijos.length
-        this.dataChange.next(this.data);
-      }
-    }); // close then
+        }
+      }); // close then
+    }
   }
 
   private getLengthCollapseTree(levels: HierarchicalStructure[], groups: HierarchicalStructure[]): number {
@@ -236,14 +230,33 @@ export class HierarchicalTreeService {
     this.executePutRequest(req).then((res: any) => {
       if (res.agrupadores) {
         res.agrupadores.forEach((ag: any) => {
-          nodes.push(new DynamicFlatNode(ag.id, ag.nombre, parent.level + 1, true));
+          nodes.push(new DynamicFlatNode(ag.id, ag.nombre, parent.level + 1, false));
         });
-
-        const index = this.data.indexOf(parent);
-        this.data.splice(index + 1, 0, ...nodes);
-        this.dataChange.next(this.data);
-        parent.isLoading = false;
       }
+
+      if (res.niveles) {
+        res.niveles.forEach((ni: any) => {
+          nodes.push(new DynamicFlatNode(ni.id, ni.nombre, parent.level + 1, true));
+        });
+      }
+
+      const index = this.data.indexOf(parent);
+      // this.data.splice(index + 1, 0, ...nodes);
+      this.data.splice(
+        index + 1,
+        this.data.length,
+        ...nodes.sort((a: DynamicFlatNode, b: DynamicFlatNode) => {
+          if (a.idDb > b.idDb) {
+            return 1;
+          }
+          if (a.idDb < b.idDb) {
+            return -1;
+          }
+          return 0;
+        })
+      );
+      this.dataChange.next(this.data);
+      parent.isLoading = false;
     });
   }
 
