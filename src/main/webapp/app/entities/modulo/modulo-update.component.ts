@@ -243,7 +243,7 @@ export class ModuloUpdateComponent implements OnInit {
 
   // when academic grade selection change, must be loaded grades number
   changeGradoAcademico(e: any): void {
-    this.gradoAcademicoService.find(e.target.selectedIndex + 1).subscribe(res => {
+    this.gradoAcademicoService.find(e.value.id).subscribe(res => {
       if (res.body && res.body.numeroGrados) {
         this.numerogrados = res.body.numeroGrados;
         this.updatingGradesSelected(null, false);
