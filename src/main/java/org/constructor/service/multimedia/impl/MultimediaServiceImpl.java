@@ -1,6 +1,7 @@
 package org.constructor.service.multimedia.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -233,6 +234,45 @@ public class MultimediaServiceImpl implements MultimediaService {
 		builder.append(File.separator);
 		return builder;
 }
+    /**
+	 * deleteDirectory For windows and linux by folder
+	 * 
+	 * @param carpeta
+	 * @return
+	 * @throws IOException
+	 */
+	public boolean deleteDirectory(String carpeta) throws IOException {
+		StringBuilder UPLOAD_FOLDER = new StringBuilder();
+		String raiz = null;
+		if (osNameMatch.equals("windows 10") || osNameMatch.equals("windows 8") || osNameMatch.equals("windows 7"))
+
+		{
+			raiz = System.getProperty("user.home");
+			UPLOAD_FOLDER.append(raiz).append(win);
+		} else {
+			UPLOAD_FOLDER.append(lin);
+		}
+		File ruta = new File(UPLOAD_FOLDER + File.separator + nimbus + File.separator + carpeta);
+		log.info("Route exists  : {}" + ruta.exists());
+		log.info("Route  : " + ruta);
+		File[] contents = ruta.listFiles();
+		if (contents != null) {
+			for (File rutaSub : contents) {
+				File[] subDirec = rutaSub.listFiles();
+				if (subDirec != null) {
+					for (File subDir : subDirec) {
+
+						subDir.delete();
+					}
+					rutaSub.delete();
+				}
+			}
+			ruta.delete();
+		}
+
+		return true;
+	}
+
 
 
 	/**

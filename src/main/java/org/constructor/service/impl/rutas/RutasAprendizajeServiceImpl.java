@@ -4,6 +4,7 @@
 package org.constructor.service.impl.rutas;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -26,6 +27,7 @@ import org.constructor.service.dto.rutas.DTONivelJerarquico;
 import org.constructor.service.dto.rutas.DTORutaAprendizaje;
 import org.constructor.service.dto.rutas.RutasAprendizajeDTO;
 import org.constructor.service.multimedia.MultimediaService;
+import org.constructor.service.multimedia.impl.MultimediaServiceImpl;
 import org.constructor.service.rutas.RutasAprendizajeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,10 +69,22 @@ public class RutasAprendizajeServiceImpl implements RutasAprendizajeService {
 	 */
 	@Autowired
 	private MultimediaService multimediaService;
+	  /**
+     * multimediaServiceImpl
+     */
+    @Autowired
+    private MultimediaServiceImpl multimediaServiceImpl;
 
+
+    /**
+     * nivelRutasRepository
+     */
 	@Autowired
 	private NivelRutaRepository nivelRutasRepository;
 
+	/**
+	 * nivelJerarquicoRepository
+	 */
 	@Autowired
 	private NivelJerarquicoRepository nivelJerarquicoRepository;
 
@@ -137,8 +151,14 @@ public class RutasAprendizajeServiceImpl implements RutasAprendizajeService {
 	 * Delete RutasAprendizaje
 	 */
 	@Override
-	public void delete(Long id) {
+	public void delete(Long id) throws IOException {
+	       log.debug("Request Service to delete ruta : {}", id);
 		rutasAprendizajeRepository.deleteById(id);
+		String carpeta = "Rutas" + File.separator + "Ruta-" + id;
+	       boolean bandera = multimediaServiceImpl.deleteDirectory(carpeta);
+	       log.debug("Request Service to delete bandera : {}", bandera);
+
+
 	}
 
 	/**

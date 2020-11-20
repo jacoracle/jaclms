@@ -180,9 +180,10 @@ public class RutasAprendizajeResource {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws java.io.IOException 
 	 */
 	@DeleteMapping(path = RestConstants.PATH_RUTA_ID)
-	public ResponseEntity<Void> deleteRutasAprendizaje(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteRutasAprendizaje(@PathVariable Long id) throws java.io.IOException {
 		log.debug("REST request to delete RutasAprendizaje : {}", id);
 		rutasAprendizajeService.delete(id);
 		return ResponseEntity.noContent()

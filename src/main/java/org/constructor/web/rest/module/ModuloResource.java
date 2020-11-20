@@ -197,9 +197,10 @@ public class ModuloResource {
 	     *
 	     * @param id the id of the modulo to delete.
 	     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+	     * @throws IOException 
 	     */
 	    @DeleteMapping(path = RestConstants.PATH_MODULO_ID)
-	    public ResponseEntity<Void> deleteModulo(@PathVariable Long id) {
+	    public ResponseEntity<Void> deleteModulo(@PathVariable Long id) throws IOException {
 	        log.debug("REST request to delete modulo : {}", id);
 	        moduloService.delete(id);
 	        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();

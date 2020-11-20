@@ -192,6 +192,19 @@ public class NivelJerarquicoResource {
 	        nivelJerarquicoService.delete(id);
 	        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
 	    }
+	    
+	    /**
+	     * NivelAgrupador
+	     * Delete by id
+	     * @param id
+	     * @returnsi solo 
+	     */
+	    @DeleteMapping(path = RestConstants.PATH_NIVEL_AGRUPADOR_ID)
+	    public ResponseEntity<Void> deleteNivelAgrupador(@PathVariable Long id) {
+	        log.debug("REST request to delete NivelJerarquico : {}", id);
+	        nivelJerarquicoService.deleteAgrupador(id);
+	        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+	    }
 }
 
 

@@ -126,6 +126,8 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 			dtoAgrupador.setOrden(agrupador.getOrden());
 			dtoAgrupador.setNombre(agrupador.getAgrupador().getTitulo());
 			dtoAgrupador.setNivelAgrupadorId(agrupador.getId());
+			dtoAgrupador.setNivelId(agrupador.getNivelJerarquico().getId());
+			
 
 			listAgrupadores.add(dtoAgrupador);
 
@@ -164,8 +166,18 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	 */
 	@Override
 	public void delete(Long id) {
-		nivelJerarquicoRepository.deleteById(id);
 
+		nivelJerarquicoRepository.deleteById(id);
+	}
+
+	
+	/**
+	 * Delete nivel Agrupador 
+	 */
+	@Override
+	public void deleteAgrupador(Long id) {
+		nivelesAgrupadorRepository.deleteById(id);
+		
 	}
 
 	/**
@@ -348,5 +360,7 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 					return ordenamientoResponse;
 				});
 	}
+
+
 
 }
