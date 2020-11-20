@@ -20,7 +20,7 @@
     },
     "sequence": {
       "yourumas": "Your UMA",
-      "drag": "Drag UMAs to the right panel to create sequences.",
+      "drag": "Drag UMAs to the left panel to create sequences.",
       "search": "Search",
       "sequenceuma": "Sequence UMA"
     },
