@@ -30,12 +30,13 @@
 }
 
 .border-grade {
-  border: 1px solid $input-border-hover;
+  // border: 1px solid $input-border-hover;
   padding: 8px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 6px;
   min-height: 130px;
+  background-color: #f8f9fb;
 }
 
 .mat-input {

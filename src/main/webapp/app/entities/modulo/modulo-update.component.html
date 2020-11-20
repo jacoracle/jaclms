@@ -8,8 +8,6 @@
     <div class="row-window-general">
       <!-- Header -->
       <div class="rwg-header">
-        <h2 id="jhi-curso-heading" jhiTranslate="uma.form.configuration">Configuración general</h2>
-        <!--jhiTranslate="constructorApp.modulo.home.titleGeneralConfg"-->
         <p jhiTranslate="uma.form.obligatory">*Campo obligatorio</p>
       </div>
 
@@ -44,7 +42,7 @@
         <div class="col-window-g">
           <div class="form-module">
               <div class="row-module-grade">
-            <mat-form-field appearance="fill" class="testG">
+            <mat-form-field appearance="outline" class="testG">
               <mat-label jhiTranslate="uma.form.knowledge">Área de Conocimiento</mat-label>
               <mat-select formControlName="asignatura" id="field_asignatura">
                 <mat-option *ngFor="let asignaturaOption of asignaturas;"
@@ -62,7 +60,7 @@
       <div class="row-wg margintop-25 border-grade">
         <div class="col-window-g">
           <div class="row-module-grade">
-            <mat-form-field appearance="fill" class="testG">
+            <mat-form-field appearance="outline" class="testG">
               <mat-label jhiTranslate="uma.form.level">Nivel Académico</mat-label>
               <mat-select #inputLevel formControlName="gradoAcademico" (selectionChange)="changeGradoAcademico($event)"
                 name="actualSelectedGradesModule">
@@ -76,7 +74,7 @@
         </div>
         <div class="col-window-g">
           <div class="row-module-grade">
-            <mat-form-field appearance="fill" class="testG">
+            <mat-form-field appearance="outline" class="testG">
               <mat-label jhiTranslate="uma.form.grade">Grado Académico</mat-label>
               <mat-select [formControl]="gradosCtrl" #inputGrades multiple (selectionChange)="setSelectedGrades($event)"
                 [(ngModel)]="actualSelectedGradesModule" name="actualSelectedGradesModule">
