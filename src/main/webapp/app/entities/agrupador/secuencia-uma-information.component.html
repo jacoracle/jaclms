@@ -1,27 +1,15 @@
-<div class="information-c-component">
-    <div class="c-component-title">
-        <div class="cct-link">
-            <i class="icon ni-arrow"></i>
-            <p jhiTranslate="leftbar.information">Información</p>
-        </div>
-        <i class="icon ni-menudots"></i>
+<!-- <div *ngIf="agrupadorObj && agrupadorObj !== ''" class="info-cover info-cover-uma"></div> -->
+<div class="row-information-bar">
+  <div class="col-ib">
+    <div class="cover-group-ib">
+      <span></span>
     </div>
-    <div class="c-component-content">
-        <div class="row-c-component-c">
-
-            <div class="ic-row-cover">
-                <!-- <img [src]="portadaCursoUrl" *ngIf="portadaCursoUrl && portadaCursoUrl !== ''" class="info-cover" [ngClass]="{ 'info-cover-default': !isPngImage }"> -->
-                <!-- <img *ngIf="module && module !== ''" class="info-cover info-cover-module"> -->
-                <!-- <img *ngIf="(!portadaCursoUrl || portadaCursoUrl === '') && (!module || module === '')"  class="info-cover info-cover-default"> -->
-                <div *ngIf="agrupadorObj && agrupadorObj !== ''" class="info-cover info-cover-uma"></div>
-            </div>
-            <div class="ic-row-text">
-                <p *ngIf="agrupadorObj">{{agrupadorObj.titulo}}</p>
-                <div class="edit-ab" *ngIf="agrupadorObj" (click)="editarAgrupador()">
-                    <i class="icon ni-edit"></i>
-                    <p jhiTranslate="leftbar.edit">Editar</p>
-                </div>
-            </div>
-        </div>
+    <div class="info-group-ib">
+      <h5 *ngIf="agrupadorObj">{{agrupadorObj.titulo}}</h5>
+      <div class="edit-ib" *ngIf="agrupadorObj" (click)="editarAgrupador()">
+          <i class="icon ni-edit"></i>
+          <span jhiTranslate="leftbar.edit">Editar</span>
+      </div>
     </div>
+  </div>
 </div>

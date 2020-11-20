@@ -1,34 +1,5 @@
-@import '../../content/scss/variables.scss';
-
 .alert-sequence-configuration {
   position: absolute;
   top: 50px;
   z-index: 99999;
-}
-
-.edit-course-br {
-  position: absolute;
-  right: 42px;
-  top: 9px;
-  width: 30px;
-  height: 30px;
-  background-color: #18bafb;
-  z-index: 2;
-  transition: 0.3s;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .icon {
-    cursor: pointer;
-  }
-  &:hover {
-    background-color: #10a3de;
-  }
-  &:focus {
-    outline: none;
-  }
-  &:active {
-    transform: scale(0.96);
-  }
 }

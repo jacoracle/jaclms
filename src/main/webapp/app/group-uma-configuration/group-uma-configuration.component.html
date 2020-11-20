@@ -3,76 +3,61 @@
 
     <!-- Window Header -->
     <div class="window-br-header">
-      <div class="alert-sequence-configuration">
-        <jhi-alert-error></jhi-alert-error>
-      </div>
-      <div class="r1">
-        <div class="logo-home-mini"></div>
-      </div>
-      <div class="r2">
-        <div class="windowHeader-title disbled-t-header">
-          <!-- <div class="icon-step-header"></div> -->
-          <h4 jhiTranslate="group.page">Agrupador de UMA / </h4>
+      <div class="row-br-header">
+        <div class="header-breadcrumbs">
+          <div class="logo-home"><i class="icon ni-nimbus"></i></div>
+          <h4 class="hb-title hbt-disabled" jhiTranslate="group.page">Agrupador de UMA / </h4>
+          <h4 class="hb-title" jhiTranslate="group.title" *ngIf="step == 1">Configurar Agrupador</h4>
+          <h4 class="hb-title" jhiTranslate="group.titlesec" *ngIf="step == 2">Secuencia de UMA</h4>
         </div>
-        <div class="windowHeader-title">
-          <h4 jhiTranslate="group.title" *ngIf="step == 1">Configurar Agrupador</h4>
-          <h4 jhiTranslate="group.titlesec" *ngIf="step == 2">Secuencia de UMA</h4>
-        </div>
-        <div class="c1">
+        <div class="alert-sequence-configuration">
+            <jhi-alert-error></jhi-alert-error>
         </div>
       </div>
     </div>
 
-    <!-- <div class="window-br-body-topbar-hide">
-      <div class="line-gradient"></div>
-    </div> -->
-
-    <div class="window-br-body-topbar-group">
+    <!-- Window Topbar -->
+    <div class="window-br-body-topbar">
       <div class="line-gradient lg-step2"></div>
+      <div class="row-wbr-bt">
+        <div class="br-tp-subtitle">
+          <h5 jhiTranslate="uma.notefields" *ngIf="step == 1">Completa los campos</h5>
+          <h5 jhiTranslate="uma.notefieldssecuence" *ngIf="step == 2">Arrastra las UMA al panel izquierdo para crear secuencias</h5>
+        </div>
+      </div>
     </div>
-
 
     <!-- Body -->
-    <div class="window-br-body-group">
-
+    <div class="window-br-body">
       <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
-
         <div class="container-stepper-group" [hidden]="step!=1">
             <jhi-agrupador-uma-update [groupId]="idSequenceToLoad" (createdGroupEventEmit)="setAgrupador($event)"></jhi-agrupador-uma-update>
         </div>
-
-          <div class="container-stepper-group" [hidden]="step!=2">
-              <jhi-secuencia-uma-update [agrupadorObj]="createdGroupSequence" [idSequenceToLoad]="idSequenceToLoad"
-                                        (step)='previusStep($event)'></jhi-secuencia-uma-update>
-          </div>
+        <div class="container-stepper-group" [hidden]="step!=2">
+            <jhi-secuencia-uma-update [agrupadorObj]="createdGroupSequence" [idSequenceToLoad]="idSequenceToLoad"
+                                      (step)='previusStep($event)'></jhi-secuencia-uma-update>
+        </div>
       </div>
-
     </div>
 
     <!-- Footer -->
     <div class="window-br-footer">
       <!-- this cancel is for (back home)-->
       <button *ngIf="!isCreation()" routerLink="/uma-groups-home" matTooltip="Regresar al Home."
-        class="secondary-btn" jhiTranslate="group.cancel">Cancelar</button>
-      <!-- this cancel is for (delete created group)-->
-      <!-- <button *ngIf="isCreation()" class="secondary-btn" (click)="revertData()"
-        matTooltip="Deshace el Agrupador creado.">Cancelar</button> -->
-
-        <button (click)="nextStep($event)" class="main-btn" *ngIf="step == 1"
-                matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
-            <span jhiTranslate="group.next" *ngIf="!flagIdUrl">Siguiente</span>
-            <span jhiTranslate="group.save" *ngIf="flagIdUrl">Guardar Agrupador</span>
-        </button>
-
-        <button (click)="previusStep($event)" class="main-btn" *ngIf="step == 2 && !flagIdUrl"
-                matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
-            <span jhiTranslate="group.previous">Anterior</span>
-        </button>
-
-
-      <button (click)="executeSaveSequence($event)" class="main-btn"  *ngIf="step == 2"
+        class="secondary-btn" jhiTranslate="group.cancel">Cancelar
+      </button>
+      <button (click)="nextStep($event)" class="main-btn create-btn" *ngIf="step == 1"
+              matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
+          <span jhiTranslate="group.next" *ngIf="!flagIdUrl">Siguiente</span>
+          <span jhiTranslate="group.save" *ngIf="flagIdUrl">Guardar</span>
+      </button>
+      <!-- <button (click)="previusStep($event)" class="main-btn" *ngIf="step == 2 && !flagIdUrl"
+              matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
+          <span jhiTranslate="group.previous">Anterior</span>
+      </button> -->
+      <button (click)="executeSaveSequence($event)" class="main-btn create-btn"  *ngIf="step == 2"
         matTooltip="Guarda y/o actualiza Agrupador." [disabled]="false">
-          <span jhiTranslate="group.save">Guardar Agrupador</span>
+          <span jhiTranslate="group.finish">Terminar</span>
       </button>
     </div>
 

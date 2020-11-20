@@ -4,6 +4,7 @@
     "title": "Registro de UMA",
     "titleedit": "Edición de UMA",
     "notefields": "Completa los campos",
+    "notefieldssecuence": "Arrastra las UMA al panel izquierdo para crear secuencias",
     "form": {
       "configuration": "Configuración general",
       "obligatory": "*Campo obligatorio",
