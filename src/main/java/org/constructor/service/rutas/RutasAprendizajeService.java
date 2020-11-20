@@ -3,6 +3,7 @@
  */
 package org.constructor.service.rutas;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.constructor.domain.rutas.RutasAprendizaje;
@@ -64,5 +65,5 @@ public interface RutasAprendizajeService {
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);
+    void delete(Long id) throws IOException;
 }

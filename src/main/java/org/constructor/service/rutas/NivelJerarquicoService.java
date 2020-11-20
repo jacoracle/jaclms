@@ -77,5 +77,12 @@ public interface NivelJerarquicoService {
     void delete(Long id);
     
     
+    /**
+     * Delete the "id" Nivel Agrupador.
+     *
+     * @param id the id of the entity.
+     */
+    void deleteAgrupador(Long id);
+    
 
 }
