@@ -17,6 +17,7 @@ export class DynamicFlatNode {
     public idDb: number,
     public nombre: string,
     public level: number = 1,
+    public orden: number = 0,
     public expandable: boolean = false,
     public isLoading: boolean = false
   ) {}
@@ -84,11 +85,11 @@ export class HierarchicalTreeService {
     if (node.level < 3) {
       this.getChildrenPath(node.idDb).then((res: any) => {
         const levels = res.niveles.map((child: HierarchicalStructure) => {
-          return { id: child.id, nombre: child.nombre };
+          return { id: child.id, nombre: child.nombre, orden: child.orden };
         });
 
         const groups = res.agrupadores.map((child: HierarchicalStructure) => {
-          return { id: child.id, nombre: child.nombre };
+          return { id: child.id, nombre: child.nombre, orden: child.orden };
         });
 
         const index = this.data.indexOf(node);
@@ -106,8 +107,8 @@ export class HierarchicalTreeService {
             let nodes = new Array<DynamicFlatNode>();
             // const nodes = levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true));
             nodes = [
-              ...levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true)),
-              ...groups.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true))
+              ...levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, c.orden, true)),
+              ...groups.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, c.orden, true))
             ];
 
             this.data.splice(index + 1, 0, ...nodes);
@@ -139,9 +140,9 @@ export class HierarchicalTreeService {
     parent.isLoading = true;
     // if (index >= 0) {
     const nodes = new Array<DynamicFlatNode>();
-    nodes.push(new DynamicFlatNode(idPath, name, 0, false));
-    // const index = this.data.indexOf(parent);
     const totalRootNodes = this.data.length;
+    nodes.push(new DynamicFlatNode(idPath, name, 0, totalRootNodes, false));
+    // const index = this.data.indexOf(parent);
     this.data.splice(totalRootNodes, 0, ...nodes);
     this.dataChange.next(this.data);
     // }
@@ -152,9 +153,11 @@ export class HierarchicalTreeService {
     parent.isLoading = true;
     // if (index >= 0) {
     const nodes = new Array<DynamicFlatNode>();
-    nodes.push(new DynamicFlatNode(parent.idDb, name, parent.level + 1, false));
+    const orderNewNode = this.data.filter(n => n.level === parent.level + 1).length;
+    nodes.push(new DynamicFlatNode(parent.idDb, name, parent.level + 1, orderNewNode, false)); //  check this order zero cause it must be the order that user gives
     const index = this.data.indexOf(parent);
-    this.data.splice(index + 1, 0, ...nodes);
+    // this.data.splice(index + 1, 0, ...nodes);
+    this.data.splice(index + 1 + orderNewNode, 0, ...nodes);
     this.dataChange.next(this.data);
     // }
     parent.isLoading = false;
@@ -165,9 +168,9 @@ export class HierarchicalTreeService {
     const index = this.data.indexOf(node);
 
     if (node.level > 0) {
-      this.addNewChildrenToTree(name, this.data[index].idDb).then((n: any) => {
+      this.addNewChildrenToTree(name, this.data[index].idDb, node).then((n: any) => {
         if (n) {
-          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, true));
+          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, node.orden, true)); //  check this order zero cause it must be the order that user gives
           this.data.splice(index, 1, ...nodes); //  replace node with new elements
           this.dataChange.next(this.data);
         }
@@ -175,7 +178,7 @@ export class HierarchicalTreeService {
     } else {
       this.addNewLevelToTree(name, node.idDb).then((n: any) => {
         if (n) {
-          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, true));
+          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, node.orden, true)); //  check this order zero cause it must be the order that user gives
           this.data.splice(index, 1, ...nodes);
           this.dataChange.next(this.data);
         }
@@ -206,7 +209,7 @@ export class HierarchicalTreeService {
     // });
   }
 
-  private async addNewChildrenToTree(name: string, parentId: number): Promise<HierarchicalLevel | undefined> {
+  private async addNewChildrenToTree(name: string, parentId: number, node: DynamicFlatNode): Promise<HierarchicalLevel | undefined> {
     const children: HierarchicalLevel = {
       nombre: name,
       imagenUrl: '',
@@ -214,7 +217,7 @@ export class HierarchicalTreeService {
       estructuraJerarquica: [
         {
           id: parentId,
-          ordenNivel: 0
+          ordenNivel: node.orden === 0 ? this.data.filter(n => n.level === node.level).length : node.orden
         }
       ],
       nivelRuta: []
@@ -230,18 +233,19 @@ export class HierarchicalTreeService {
     this.executePutRequest(req).then((res: any) => {
       if (res.agrupadores) {
         res.agrupadores.forEach((ag: any) => {
-          nodes.push(new DynamicFlatNode(ag.id, ag.nombre, parent.level + 1, false));
+          nodes.push(new DynamicFlatNode(ag.id, ag.nombre, parent.level + 1, ag.orden, false)); //  check this order zero cause it must be the order that user gives
         });
       }
 
       if (res.niveles) {
         res.niveles.forEach((ni: any) => {
-          nodes.push(new DynamicFlatNode(ni.id, ni.nombre, parent.level + 1, true));
+          nodes.push(new DynamicFlatNode(ni.id, ni.nombre, parent.level + 1, ni.orden, true)); //  check this order zero cause it must be the order that user gives
         });
       }
 
       const index = this.data.indexOf(parent);
       // this.data.splice(index + 1, 0, ...nodes);
+      /*
       this.data.splice(
         index + 1,
         this.data.length,
@@ -250,6 +254,20 @@ export class HierarchicalTreeService {
             return 1;
           }
           if (a.idDb < b.idDb) {
+            return -1;
+          }
+          return 0;
+        })
+      );
+      */
+      this.data.splice(
+        index + 1, //  2,
+        nodes.length > 1 ? nodes.length - 1 : 0, // nodes.length > 1 ? this.data.filter(n=>n.level+1 === parent.level+1).length-1 : 0, // 0,//  this.data.filter(n=>n.level+1 === parent.level+1).length-1,
+        ...nodes.sort((a: DynamicFlatNode, b: DynamicFlatNode) => {
+          if (a.orden > b.orden) {
+            return 1;
+          }
+          if (a.orden < b.orden) {
             return -1;
           }
           return 0;
@@ -274,8 +292,8 @@ export class HierarchicalTreeService {
     };
 
     this.executePutRequest(editRequest).then((res: HierarchicalStructureGroup) => {
-      console.error('Finish edit response: ', res);
-
+      // eslint-disable-next-line no-console
+      console.info('Finish edit response: ', res);
       const index = this.data.indexOf(node);
       const editNode: DynamicFlatNode = this.data[index];
       editNode.nombre = newName;

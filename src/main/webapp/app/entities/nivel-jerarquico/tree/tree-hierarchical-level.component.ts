@@ -132,7 +132,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
       // });
 
       return pathData.niveles!.map((n: NivelRutas) => {
-        return new DynamicFlatNode(n.id!, n.nombre!, 0, true);
+        return new DynamicFlatNode(n.id!, n.nombre!, 0, n.orden, true);
         // return {id: n.id, nombre: n.nombre, level:0, expandable:true};
       });
     }
@@ -169,7 +169,8 @@ export class TreeHierarchicalLevelComponent implements OnInit {
   }
 
   removeItem(node: DynamicFlatNode): void {
-    console.error('Eliminará el nodo: ', node);
+    // eslint-disable-next-line no-console
+    console.info('Eliminará el nodo: ', node);
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', {
         message: 'constructorApp.path.tree.remove',
@@ -277,7 +278,8 @@ export class TreeHierarchicalLevelComponent implements OnInit {
         );
       },
       err => {
-        console.error('Error al agregar agrupador como lección: ', err);
+        // eslint-disable-next-line no-console
+        console.info('Error al agregar agrupador como lección: ', err);
         this.eventManager.broadcast(
           new JhiEventWithContent('constructorApp.validationError', {
             message: 'constructorApp.path.validations.error',
@@ -301,7 +303,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
         this.newLevelName = result;
         if (node) {
           // this.addNewSubLevelToTree(node);
-          console.error(result);
+          // console.error(result);
           // this.treeControl.dataNodes[idx].nombre = result;
           this.dataSource.editTreeNode(node, result);
         }
