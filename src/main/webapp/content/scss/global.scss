@@ -186,18 +186,11 @@ strong {
 }
 
 // Tool bar text
-.angular-editor-toolbar {
-  background-color: $tool-header !important;
-  width: 100% !important;
-  height: 30px !important;
-  position: relative !important;
-  padding: 0 !important;
-  border: 0 !important;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+// Ql editor
+.final-block-row .ql-editor > * {
+  cursor: pointer;
 }
+
 // Modal Login
 .modal-backdrop.show {
   opacity: 0.8;
@@ -2668,28 +2661,26 @@ input[type='file'] {
     position: relative;
     width: 100%;
     z-index: 99999;
-    div {
-      text-align: center;
-      position: relative;
-      width: auto;
-      // max-width: 800px;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 34px;
-      font-weight: 600;
-      font-style: normal;
-      color: $blue-nimbus-dark;
-      h1 {
-        text-align: center;
-        position: relative;
-        width: auto;
-        // max-width: 800px;
-        font-family: 'Open Sans', sans-serif;
-        font-size: 34px;
-        font-weight: 600;
-        font-style: normal;
-        color: $blue-nimbus-dark;
-      }
-    }
+    // div {
+    //   text-align: center;
+    //   position: relative;
+    //   width: auto;
+    //   font-family: 'Open Sans', sans-serif;
+    //   font-size: 34px;
+    //   font-weight: 600;
+    //   font-style: normal;
+    //   color: $blue-nimbus-dark;
+    //   h1 {
+    //     text-align: center;
+    //     position: relative;
+    //     width: auto;
+    //     font-family: 'Open Sans', sans-serif;
+    //     font-size: 34px;
+    //     font-weight: 600;
+    //     font-style: normal;
+    //     color: $blue-nimbus-dark;
+    //   }
+    // }
   }
 }
 .final-block-row {
