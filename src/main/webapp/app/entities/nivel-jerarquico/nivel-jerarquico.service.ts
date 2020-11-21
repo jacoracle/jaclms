@@ -18,6 +18,7 @@ export class NivelJerarquicoService {
   public resourceNivelesUrl = 'http://localhost:8081/api/niveles';
   public resourceEstructuraJerarquica = SERVER_API_URL + 'api/estructura-jerarquica';
   public resourceHierarchicalLevel = SERVER_API_URL + 'api/nivel-jerarquico';
+  public resourceHierarchicalLevelGroup = SERVER_API_URL + 'api/nivel-agrupador';
 
   dataChange = new BehaviorSubject<HierarchicalLevel[]>([]);
 
@@ -96,5 +97,9 @@ export class NivelJerarquicoService {
       url = this.resourceUrlModule;
     }
     return this.http.post<INivelJerarquico>(url, nivelJerarquico, { observe: 'response' });
+  }
+
+  deleteGroup(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceHierarchicalLevelGroup}/${id}`, { observe: 'response' });
   }
 }

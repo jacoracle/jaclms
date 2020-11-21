@@ -18,6 +18,9 @@ export class DynamicFlatNode {
     public nombre: string,
     public level: number = 1,
     public orden: number = 0,
+    public nodeType: string = 'n', //  n -> nodo a -> agroupador
+    public nivelId: number = 0, //  padre
+    public nivelAgrupadorId: number = 0, // para tabla intermedia
     public expandable: boolean = false,
     public isLoading: boolean = false
   ) {}
@@ -72,7 +75,7 @@ export class HierarchicalTreeService {
     // console.error('getChildrenPath()');
     const childrensResponse = await this.nivelJerarquicoService!.find(idDb).toPromise();
 
-    // console.error('Termina getchildrenPath()');
+    // console.error('Termina getchildrenPath() ', childrensResponse.body);
     return childrensResponse.body as HierarchicalStructure;
   }
 
@@ -89,7 +92,13 @@ export class HierarchicalTreeService {
         });
 
         const groups = res.agrupadores.map((child: HierarchicalStructure) => {
-          return { id: child.id, nombre: child.nombre, orden: child.orden };
+          return {
+            id: child.id,
+            nombre: child.nombre,
+            orden: child.orden,
+            nivelId: child.nivelId,
+            nivelAgrupadorId: child.nivelAgrupadorId
+          };
         });
 
         const index = this.data.indexOf(node);
@@ -107,8 +116,10 @@ export class HierarchicalTreeService {
             let nodes = new Array<DynamicFlatNode>();
             // const nodes = levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, true));
             nodes = [
-              ...levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, c.orden, true)),
-              ...groups.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, c.orden, true))
+              ...levels.map((c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, c.orden, 'n', 0, 0, true)),
+              ...groups.map(
+                (c: any) => new DynamicFlatNode(c.id, c.nombre, node.level + 1, c.orden, 'a', c.nivelId, c.nivelAgrupadorId, true)
+              )
             ];
 
             this.data.splice(index + 1, 0, ...nodes);
@@ -141,7 +152,7 @@ export class HierarchicalTreeService {
     // if (index >= 0) {
     const nodes = new Array<DynamicFlatNode>();
     const totalRootNodes = this.data.length;
-    nodes.push(new DynamicFlatNode(idPath, name, 0, totalRootNodes, false));
+    nodes.push(new DynamicFlatNode(idPath, name, 0, totalRootNodes, 'n', 0, 0, false)); //  check the nivelId and nivelAgrupadorId params
     // const index = this.data.indexOf(parent);
     this.data.splice(totalRootNodes, 0, ...nodes);
     this.dataChange.next(this.data);
@@ -154,7 +165,7 @@ export class HierarchicalTreeService {
     // if (index >= 0) {
     const nodes = new Array<DynamicFlatNode>();
     const orderNewNode = this.data.filter(n => n.level === parent.level + 1).length;
-    nodes.push(new DynamicFlatNode(parent.idDb, name, parent.level + 1, orderNewNode, false)); //  check this order zero cause it must be the order that user gives
+    nodes.push(new DynamicFlatNode(parent.idDb, name, parent.level + 1, orderNewNode, 'n', 0, 0, false)); //  check the nivelId and nivelAgrupadorId params and check this order zero cause it must be the order that user gives
     const index = this.data.indexOf(parent);
     // this.data.splice(index + 1, 0, ...nodes);
     this.data.splice(index + 1 + orderNewNode, 0, ...nodes);
@@ -169,16 +180,18 @@ export class HierarchicalTreeService {
 
     if (node.level > 0) {
       this.addNewChildrenToTree(name, this.data[index].idDb, node).then((n: any) => {
+        // console.error('addNewChildrenToTree() ', n);
         if (n) {
-          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, node.orden, true)); //  check this order zero cause it must be the order that user gives
+          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, node.orden, 'n', 0, 0, true)); //  check the nivelId and nivelAgrupadorId params and check this order zero cause it must be the order that user gives
           this.data.splice(index, 1, ...nodes); //  replace node with new elements
           this.dataChange.next(this.data);
         }
       });
     } else {
       this.addNewLevelToTree(name, node.idDb).then((n: any) => {
+        // console.error('addNewLevelToTree() ', n);
         if (n) {
-          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, node.orden, true)); //  check this order zero cause it must be the order that user gives
+          nodes.push(new DynamicFlatNode(n.id, n.nombre, node.level, node.orden, 'n', 0, 0, true)); //  check the nivelId and nivelAgrupadorId params and check this order zero cause it must be the order that user gives
           this.data.splice(index, 1, ...nodes);
           this.dataChange.next(this.data);
         }
@@ -231,15 +244,17 @@ export class HierarchicalTreeService {
     const nodes = new Array<DynamicFlatNode>();
 
     this.executePutRequest(req).then((res: any) => {
+      // console.error('insertGroup() ', res);
+
       if (res.agrupadores) {
         res.agrupadores.forEach((ag: any) => {
-          nodes.push(new DynamicFlatNode(ag.id, ag.nombre, parent.level + 1, ag.orden, false)); //  check this order zero cause it must be the order that user gives
+          nodes.push(new DynamicFlatNode(ag.id, ag.nombre, parent.level + 1, ag.orden, 'a', ag.nivelId, ag.nivelAgrupadorId, false)); //  check this order zero cause it must be the order that user gives
         });
       }
 
       if (res.niveles) {
         res.niveles.forEach((ni: any) => {
-          nodes.push(new DynamicFlatNode(ni.id, ni.nombre, parent.level + 1, ni.orden, true)); //  check this order zero cause it must be the order that user gives
+          nodes.push(new DynamicFlatNode(ni.id, ni.nombre, parent.level + 1, ni.orden, 'n', 0, 0, true)); //  check this order zero cause it must be the order that user gives
         });
       }
 
@@ -302,5 +317,19 @@ export class HierarchicalTreeService {
       this.dataChange.next(this.data);
       node.isLoading = false;
     });
+  }
+
+  deleteGroup(node: DynamicFlatNode): void {
+    const index = this.data.indexOf(node);
+    if (index >= 0) {
+      this.executeDeleteGroupRequest(node.nivelAgrupadorId);
+      this.data.splice(index, 1);
+      this.dataChange.next(this.data);
+      // node.isLoading = false;
+    }
+  }
+
+  private executeDeleteGroupRequest(nivelAgrupadorId: number): void {
+    this.nivelJerarquicoService!.deleteGroup(nivelAgrupadorId).subscribe();
   }
 }

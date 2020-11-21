@@ -40,6 +40,9 @@ export interface HierarchicalStructure {
   imagenUrl?: string;
   niveles?: HierarchicalStructure[];
   agrupadores?: HierarchicalStructure[];
+  // se agregan las sig 2 props para la delete y reorder
+  nivelId?: number;
+  nivelAgrupadorId?: number;
   orden?: number;
 }
 
@@ -58,6 +61,8 @@ export class HierarchicalStructureModel implements HierarchicalStructure {
     public imagenUrl?: string,
     public niveles?: HierarchicalStructure[],
     public agrupadores?: HierarchicalStructure[],
+    public nivelId?: number,
+    public nivelAgrupadorId?: number,
     public orden?: number
   ) {}
 }

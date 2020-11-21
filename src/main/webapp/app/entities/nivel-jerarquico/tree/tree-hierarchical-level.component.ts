@@ -102,6 +102,10 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     return node.level;
   };
 
+  isGroup = (node: DynamicFlatNode) => {
+    return node.nodeType.toUpperCase() === 'A';
+  };
+
   isExpandable = (node: DynamicFlatNode) => {
     return node.expandable;
   };
@@ -132,7 +136,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
       // });
 
       return pathData.niveles!.map((n: NivelRutas) => {
-        return new DynamicFlatNode(n.id!, n.nombre!, 0, n.orden, true);
+        return new DynamicFlatNode(n.id!, n.nombre!, 0, n.orden, 'n', 0, 0, true);
         // return {id: n.id, nombre: n.nombre, level:0, expandable:true};
       });
     }
@@ -171,6 +175,23 @@ export class TreeHierarchicalLevelComponent implements OnInit {
   removeItem(node: DynamicFlatNode): void {
     // eslint-disable-next-line no-console
     console.info('Eliminará el nodo: ', node);
+    this.eventManager.broadcast(
+      new JhiEventWithContent('constructorApp.validationError', {
+        message: 'constructorApp.path.tree.remove',
+        type: 'danger'
+      })
+    );
+  }
+
+  removeGroup(node: DynamicFlatNode): void {
+    // eslint-disable-next-line no-console
+    console.info('Eliminará el nodo de tipo: ', node.nodeType);
+    // eslint-disable-next-line no-console
+    console.info('nodo: ', node);
+
+    this.dataSource.deleteGroup(node);
+    // this.treeControl.collapse(node);
+
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', {
         message: 'constructorApp.path.tree.remove',
