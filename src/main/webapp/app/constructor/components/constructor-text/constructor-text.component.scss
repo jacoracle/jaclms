@@ -64,6 +64,12 @@
   font-family: 'Comic Sans MS', serif;
 }
 
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value='open-sans']::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value='open-sans']::before {
+  content: 'Open Sans';
+  font-family: 'Open Sans', serif;
+}
+
 /****************************************************
 Set the font-family content used for the HTML content.
 *****************************************************/
@@ -81,6 +87,10 @@ Set the font-family content used for the HTML content.
 
 .ql-font-comic-sans-ms {
   font-family: 'Comic Sans MS', serif;
+}
+
+.ql-font-open-sans {
+  font-family: 'Open Sans', serif;
 }
 
 .ql-picker-label {

@@ -1,263 +1,354 @@
 <div class="container-register">
   <div class="bg-container-registrer">
     <!-- <svg xmlns="http://www.w3.org/2000/svg" class="svg-curve-register" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-    	 viewBox="0 0 2000 120" style="enable-background:new 0 0 2000 120;">
-      <path class="wrap-register" d="M0,0v77c551.1,100.3,915.2-2.2,1306-33.8c317.6-25.6,584.7,39,694,71.4V0H0z"/>
-    </svg> -->
+                 viewBox="0 0 2000 120" style="enable-background:new 0 0 2000 120;">
+              <path class="wrap-register" d="M0,0v77c551.1,100.3,915.2-2.2,1306-33.8c317.6-25.6,584.7,39,694,71.4V0H0z"/>
+            </svg> -->
   </div>
 
-    <div class="row-register">
-      <div class="heder-register">
-        <div class="logo-register"></div>
-        <h2 jhiTranslate="register.title">Registration</h2>
+  <div class="row-register">
+    <div class="heder-register">
+      <div class="logo-register"></div>
+      <h2 jhiTranslate="register.title">Registration</h2>
+    </div>
+
+
+    <!-- Alerts -->
+    <div class="row-alert alert-s">
+
+      <div class="alert alert-success alert-success-register" *ngIf="success">
+        <div class="icn-success"></div>
+        <p jhiTranslate="register.messages.success"><strong>Registration saved!</strong>
+            Please check your email for confirmation.
+        </p>
       </div>
 
-
-      <!-- Alerts -->
-      <div class="row-alert alert-s">
-
-        <div class="alert alert-success alert-success-register" *ngIf="success">
-          <div class="icn-success"></div>
-          <p jhiTranslate="register.messages.success"><strong>Registration saved!</strong> Please check your email for confirmation.</p>
-        </div>
-
-                <div class="alert alert-danger alert-danger-register" *ngIf="error">
-                  <div class="icn-danger"></div>
-                  <p jhiTranslate="register.messages.error.fail"><strong>Registration failed!</strong> Please try again later.</p>
-                </div>
-
-        <div class="alert alert-danger alert-danger-register" *ngIf="errorUserExists">
-          <div class="icn-danger"></div>
-          <p jhiTranslate="register.messages.error.userexists"><strong>Login name already registered!</strong> Please choose another one.</p>
-        </div>
-
-                <div class="alert alert-danger alert-danger-register" *ngIf="errorEmailExists">
-                  <div class="icn-danger"></div>
-                  <p jhiTranslate="register.messages.error.emailexists"><strong>Email is already in use!</strong> Please choose another one.</p>
-                </div>
-
-        <div class="alert alert-danger alert-danger-register" *ngIf="doNotMatch">
-          <div class="icn-danger"></div>
-          <p jhiTranslate="global.messages.error.dontmatch">The password and its confirmation do not match!</p>
-        </div>
+      <div class="alert alert-danger alert-danger-register" *ngIf="error">
+        <div class="icn-danger"></div>
+        <p jhiTranslate="register.messages.error.fail"><strong>Registration failed!</strong>
+            Please try again later.
+        </p>
       </div>
 
-      <!-- <div class="row-alert">
-        <div class="alert alert-success alert-success-register" *ngIf="success">
-          <div class="icn-success"></div>
-          <p jhiTranslate="register.messages.success"><strong>Registration saved!</strong> Please check your email for confirmation.</p>
+      <div class="alert alert-danger alert-danger-register" *ngIf="errorUserExists">
+        <div class="icn-danger"></div>
+        <p jhiTranslate="register.messages.error.userexists"><strong>Login name already registered!</strong>
+          Please choose another one.
+        </p>
+      </div>
+
+      <div class="alert alert-danger alert-danger-register" *ngIf="errorEmailExists">
+        <div class="icn-danger"></div>
+        <p jhiTranslate="register.messages.error.emailexists"><strong>Email is already in use!</strong>
+            Please choose another one.
+        </p>
+      </div>
+
+      <div class="alert alert-danger alert-danger-register" *ngIf="doNotMatch">
+        <div class="icn-danger"></div>
+        <p jhiTranslate="global.messages.error.dontmatch">The password and its confirmation do not match!</p>
+      </div>
+    </div>
+
+    <!-- <div class="row-alert">
+                <div class="alert alert-success alert-success-register" *ngIf="success">
+                  <div class="icn-success"></div>
+                  <p jhiTranslate="register.messages.success"><strong>Registration saved!</strong> Please check your email for confirmation.</p>
+                </div>
+              </div> -->
+
+    <form name="form" class="form-register" role="form" (ngSubmit)="register()" [formGroup]="registerForm"
+      *ngIf="!success">
+      <div class="row-form-register">
+        <!-- <jhi-alert-error></jhi-alert-error> -->
+        <!-- Row 1 -->
+        <div class="item-divider-form">
+          <!-- Col 1 -->
+          <div class="col-form-register">
+            <div class="form-register">
+              <mat-form-field class="mat-input">
+                <mat-label jhiTranslate="register.form.firstName">First Name</mat-label>
+                <input matInput [ngClass]="{'alert-input': !isValid('firstName') && !isEmpty('firstName')}"
+                  maxlength="80" class="form-register" id="firstName" name="firstName" formControlName="firstName"
+                  placeholder="{{'register.form.firstName' | translate}}">
+                <div class="alert-register-input"
+                  *ngIf="registerForm.get('firstName')!.invalid && (registerForm.get('firstName')!.dirty || registerForm.get('firstName')!.touched)">
+                  <mat-error *ngIf="registerForm.get('firstName')?.errors?.maxlength">
+                    <span jhiTranslate="entity.validation.maxlength" [translateValues]="{max: 50}">
+                        This field cannot be longer than 50 characters.
+                    </span>
+                  </mat-error>
+                </div>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <!-- Col 4 -->
+          <div class="col-form-register">
+
+            <div class="form-register">
+              <mat-form-field class="mat-input">
+                <mat-label jhiTranslate="register.form.lastName1">Last Name 1</mat-label>
+                <input matInput [ngClass]="{'alert-input': !isValid('lastName1') && !isEmpty('lastName1')}"
+                  maxlength="80" class="form-register" id="lastName1" name="lastName1" formControlName="lastName1"
+                  placeholder="{{'register.form.lastName1' | translate}}">
+                <div class="alert-register-input"
+                  *ngIf="registerForm.get('lastName1')!.invalid && (registerForm.get('lastName1')!.dirty || registerForm.get('lastName1')!.touched)">
+                  <mat-error *ngIf="registerForm.get('lastName1')?.errors?.maxlength">
+                    <span jhiTranslate="entity.validation.maxlength" [translateValues]="{max: 50}">
+                        This field cannot be longer than 50 characters.
+                    </span>
+                  </mat-error>
+                </div>
+              </mat-form-field>
+
+            </div>
+          </div>
+          <!-- Col 5 -->
+          <div class="col-form-register">
+
+            <div class="form-register">
+              <mat-form-field class="mat-input">
+                <mat-label jhiTranslate="register.form.lastName2">Last Name 2</mat-label>
+                <input matInput [ngClass]="{'alert-input': !isValid('lastName2') && !isEmpty('lastName2')}"
+                  maxlength="80" class="form-register" id="lastName2" name="lastName2" formControlName="lastName2"
+                  placeholder="{{'register.form.lastName2' | translate}}">
+                <div class="alert-register-input"
+                  *ngIf="registerForm.get('lastName2')!.invalid && (registerForm.get('lastName2')!.dirty || registerForm.get('lastName2')!.touched)">
+                  <mat-error *ngIf="registerForm.get('lastName2')?.errors?.maxlength">
+                    <span jhiTranslate="entity.validation.maxlength" [translateValues]="{max: 50}">
+                        This field cannot be longer than 50 characters.
+                    </span>
+                  </mat-error>
+                </div>
+              </mat-form-field>
+
+            </div>
+          </div>
+          <!-- Col 6 -->
+
         </div>
-      </div> -->
 
-      <form name="form" class="form-register" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
-        <div class="row-form-register">
-          <!-- <jhi-alert-error></jhi-alert-error> -->
-          <!-- Row 1 -->
-          <div class="item-divider-form">
-            <!-- Col 1 -->
-            <div class="col-form-register">
-              <div class="form-nimbus">
+        <!-- Row 2 -->
+        <div class="item-divider-form mt-20 nomargin-s">
 
-                <label class="form-control-label" for="login" jhiTranslate="global.form.username.label">Username</label>
-                <input [ngClass]="{'alert-input': !isValid('login') && !isEmpty('login')}" type="text" class="form-control" id="login" name="login" placeholder="{{'global.form.username.placeholder' | translate}}" formControlName="login" #login>
-                  <div *ngIf="registerForm.get('login')!.invalid && (registerForm.get('login')!.dirty || registerForm.get('login')!.touched)" class="alert-register-input">
-                    <small *ngIf="registerForm.get('login')?.errors?.required" jhiTranslate="register.messages.validate.login.required">
+          <div class="col-form-register">
+            <div class="form-register">
+              <mat-form-field class="mat-input">
+                <mat-label jhiTranslate="global.form.username.label">Username</mat-label>
+                <input matInput [ngClass]="{'alert-input': !isValid('login') && !isEmpty('login')}" maxlength="80"
+                  class="form-register" id="login" #login name="login" formControlName="login"
+                  placeholder="{{'global.form.username.placeholder' | translate}}">
+                <div
+                  *ngIf="registerForm.get('login')!.invalid && (registerForm.get('login')!.dirty || registerForm.get('login')!.touched)"
+                  class="alert-register-input">
+                  <mat-error *ngIf="registerForm.get('login')?.errors?.required">
+                    <span jhiTranslate="register.messages.validate.login.required">
                       Your username is required.
-                    </small>
-                    <small *ngIf="registerForm.get('login')?.errors?.minlength" jhiTranslate="register.messages.validate.login.minlength">
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('login')?.errors?.minlength">
+                    <span jhiTranslate="register.messages.validate.login.minlength">
                       Your username is required to be at least 1 character.
-                    </small>
-                    <small *ngIf="registerForm.get('login')?.errors?.maxlength" jhiTranslate="register.messages.validate.login.maxlength">
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('login')?.errors?.maxlength">
+                    <span jhiTranslate="register.messages.validate.login.maxlength">
                       Your username cannot be longer than 50 characters.
-                    </small>
-                    <small *ngIf="registerForm.get('login')?.errors?.pattern" jhiTranslate="register.messages.validate.login.pattern">
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('login')?.errors?.pattern">
+                    <span jhiTranslate="register.messages.validate.login.pattern">
                       Your username can only contain letters and digits.
-                    </small>
-                  </div>
-
-              </div>
-            </div>
-            <!-- Col 2 -->
-            <div class="col-form-register">
-              <div class="form-nimbus">
-                <label class="form-control-label" for="email" jhiTranslate="global.form.email.label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}" formControlName="email">
-                  <div *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)" class="alert-register-input">
-                    <small *ngIf="registerForm.get('email')?.errors?.required" jhiTranslate="global.messages.validate.email.required">
-                      Your email is required.
-                    </small>
-                    <small *ngIf="registerForm.get('email')?.errors?.invalid" jhiTranslate="global.messages.validate.email.invalid">
-                      Your email is invalid.
-                    </small>
-                    <small *ngIf="registerForm.get('email')?.errors?.minlength" jhiTranslate="global.messages.validate.email.minlength">
-                      Your email is required to be at least 5 characters.
-                    </small>
-                    <small *ngIf="registerForm.get('email')?.errors?.maxlength" jhiTranslate="global.messages.validate.email.maxlength">
-                      Your email cannot be longer than 100 characters.
-                    </small>
-                  </div>
-              </div>
-            </div>
-            <!-- Col 3 -->
-            <div class="col-form-register">
-              <!-- Nombre -->
-              <div class="form-nimbus">
-                  <label class="form-control-label" jhiTranslate="register.form.firstName">First Name</label>
-                  <input type="text" class="form-control" name="firstName"
-                         formControlName="firstName">
-
-                  <div *ngIf="registerForm.get('firstName')!.invalid && (registerForm.get('firstName')!.dirty || registerForm.get('firstName')!.touched)">
-                      <small class="form-text text-danger"
-                      *ngIf="registerForm.get('firstName')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength"
-                      [translateValues]="{max: 50}">
-                          This field cannot be longer than 50 characters.
-                      </small>
-                  </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 2 -->
-          <div class="item-divider-form mt-20 nomargin-s">
-            <!-- Col 4 -->
-            <div class="col-form-register">
-              <!-- Primer apellido -->
-              <div class="form-nimbus">
-                  <label jhiTranslate="register.form.lastName1">Last Name 1</label>
-                  <input type="text" class="form-control" name="lastName"
-                      formControlName="lastName1">
-
-                  <div *ngIf="registerForm.get('lastName1')!.invalid && (registerForm.get('lastName1')!.dirty || registerForm.get('lastName1')!.touched)">
-                      <small class="form-text text-danger"
-                      *ngIf="registerForm.get('lastName1')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength"
-                      [translateValues]="{max: 50}">
-                          This field cannot be longer than 50 characters.
-                      </small>
-                  </div>
-              </div>
-            </div>
-            <!-- Col 5 -->
-            <div class="col-form-register">
-              <!-- Segundo apellido -->
-              <div class="form-nimbus">
-                  <label jhiTranslate="register.form.lastName2">Last Name 2</label>
-                  <input type="text" class="form-control" name="lastName2"
-                      formControlName="lastName2">
-
-                  <div *ngIf="registerForm.get('lastName2')!.invalid && (registerForm.get('lastName2')!.dirty || registerForm.get('lastName2')!.touched)">
-                      <small class="form-text text-danger"
-                      *ngIf="registerForm.get('lastName2')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength"
-                      [translateValues]="{max: 50}">
-                          This field cannot be longer than 50 characters.
-                      </small>
-                  </div>
-              </div>
-            </div>
-            <!-- Col 6 -->
-            <div class="col-form-register">
-              <!-- Teléfono -->
-              <div class="form-nimbus">
-
-                  <!-- Número telefónico -->
-                  <label jhiTranslate="register.form.phoneNumber">Phone number</label>
-
-                  <!-- Código telefónico de país -->
-                  <div class="selectWrap select-code">
-                    <select id="field_country" name="country" formControlName="country">
-                      <option
-                        [ngValue]="countryOption"
-                        *ngFor="let countryOption of countrys;">
-                          {{countryOption.nombre}}
-                          {{countryOption.codigoTelefonico}}
-                      </option>
-                    </select>
-                    <small class="form-text text-danger"
-                    *ngIf="registerForm.get('country')?.errors" jhiTranslate="register.messages.validate.login.countryPhoneCode">
-                        You must select a country phone code
-                    </small>
-                  </div>
-
-                  <input type="text" class="form-control input-phone-register" name="phone"
-                  formControlName="phoneNumber">
-
-                  <div *ngIf="registerForm.get('phoneNumber')!.invalid && (registerForm.get('phoneNumber')!.dirty || registerForm.get('phoneNumber')!.touched)">
-                      <small class="form-text text-danger"
-                      *ngIf="registerForm.get('phoneNumber')?.errors?.minlength" jhiTranslate="entity.validation.minlength"
-                      [translateValues]="{min: 10}">
-                          This field cannot be longer than 14 characters.
-                      </small>
-                      <small class="form-text text-danger"
-                      *ngIf="registerForm.get('phoneNumber')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength"
-                      [translateValues]="{max: 10}">
-                          This field cannot be longer than 14 characters.
-                      </small>
-                  </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 3 -->
-          <div class="item-divider-form mt-20 nomargin-s">
-            <!-- Col 7 -->
-            <div class="col-form-register ">
-              <div class="form-nimbus">
-                <label class="form-control-label" for="password" jhiTranslate="global.form.newpassword.label">New password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="{{'global.form.newpassword.placeholder' | translate}}" formControlName="password">
-                <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></jhi-password-strength-bar>
-                  <div *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)" class="alert-register-input">
-                    <small *ngIf="registerForm.get('password')?.errors?.required" jhiTranslate="global.messages.validate.newpassword.required">
-                      Your password is required.
-                    </small>
-                    <small *ngIf="registerForm.get('password')?.errors?.minlength" jhiTranslate="global.messages.validate.newpassword.minlength">
-                      Your password is required to be at least 4 characters.
-                    </small>
-                    <small *ngIf="registerForm.get('password')?.errors?.maxlength" jhiTranslate="global.messages.validate.newpassword.maxlength">
-                      Your password cannot be longer than 50 characters.
-                    </small>
-                  </div>
-              </div>
-            </div>
-            <!-- Col 8 -->
-            <div class="col-form-register margin-s">
-              <div class="form-nimbus">
-                <label class="form-control-label" for="confirmPassword" jhiTranslate="global.form.confirmpassword.label">New password confirmation</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="{{'global.form.confirmpassword.placeholder' | translate}}" formControlName="confirmPassword">
-                  <div *ngIf="registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)" class="alert-register-input">
-                    <small *ngIf="registerForm.get('confirmPassword')?.errors?.required" jhiTranslate="global.messages.validate.confirmpassword.required">
-                      Your confirmation password is required.
-                    </small>
-                    <small *ngIf="registerForm.get('confirmPassword')?.errors?.minlength" jhiTranslate="global.messages.validate.confirmpassword.minlength">
-                      Your confirmation password is required to be at least 4 characters.
-                    </small>
-                    <small *ngIf="registerForm.get('confirmPassword')?.errors?.maxlength" jhiTranslate="global.messages.validate.confirmpassword.maxlength">
-                      Your confirmation password cannot be longer than 50 characters.
-                    </small>
-                  </div>
-                <div *ngIf="!(registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)) && passwordDoNotMatch()" class="alert-register-input">
-                  <small jhiTranslate="global.messages.error.dontmatch">
-                    The password and its confirmation do not match!
-                </small>
+                    </span>
+                  </mat-error>
                 </div>
+              </mat-form-field>
             </div>
           </div>
-            <!-- Col 9 -->
-            <div class="col-form-register hide-s">
+          <!-- Col 2 -->
+          <div class="col-form-register">
+
+            <div class="form-register">
+              <mat-form-field class="mat-input">
+                <mat-label jhiTranslate="global.form.email.label">Email</mat-label>
+                <input matInput [ngClass]="{'alert-input': !isValid('email') && !isEmpty('email')}" maxlength="80"
+                  class="form-register" id="email" name="email" formControlName="email"
+                  placeholder="{{'global.form.email.placeholder' | translate}}">
+                <div
+                  *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)"
+                  class="alert-register-input">
+                  <mat-error *ngIf="registerForm.get('email')?.errors?.required">
+                    <span jhiTranslate="global.messages.validate.email.required">
+                        Your email is required.
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('email')!.invalid">
+                    <span jhiTranslate="global.messages.validate.email.invalid">
+                        Your email is invalid.
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('email')?.errors?.minlength">
+                    <span jhiTranslate="global.messages.validate.email.minlength">
+                        Your email is required to be at least 5 characters.
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('email')?.errors?.maxlength">
+                    <span jhiTranslate="global.messages.validate.email.maxlength">
+                        Your email cannot be longer than 100 characters.
+                    </span>
+                  </mat-error>
+                </div>
+              </mat-form-field>
             </div>
+          </div>
+          <!-- Col 3 -->
+          <div class="col-form-register">
+
+            <div class="form-register">
+              <div class="mat-input-country">
+                <mat-form-field class="mat-field">
+                  <mat-select formControlName="country" id="field_country" class="form-register">
+                    <mat-option *ngFor="let countryOption of countrys;" [value]="countryOption">
+                      {{countryOption.nombre}}
+                      {{countryOption.codigoTelefonico}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                  <div class="alert-register-input" *ngIf="registerForm.get('country')?.errors">
+                    <mat-error *ngIf="registerForm.get('country')?.errors">
+                      <span jhiTranslate="register.messages.validate.login.countryPhoneCode">
+                          You must select a country phone code
+                      </span>
+                    </mat-error>
+                  </div>
+              </div>
+              <div class="mat-input-phone">
+                <mat-form-field class="mat-input">
+                  <mat-label jhiTranslate="register.form.phoneNumber">Phone number</mat-label>
+                  <input matInput class="form-register input-phone-register" id="phone" name="phone"
+                    formControlName="phoneNumber">
+                </mat-form-field>
+                <div class="alert-register-input"
+                  *ngIf="registerForm.get('phoneNumber')!.invalid && (registerForm.get('phoneNumber')!.dirty || registerForm.get('phoneNumber')!.touched)">
+                  <mat-error *ngIf="registerForm.get('phoneNumber')?.errors?.minlength">
+                    <span jhiTranslate="entity.validation.minlength" [translateValues]="{min: 10}">
+                        This field cannot be longer than 14 characters.
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('phoneNumber')?.errors?.maxlength">
+                    <span jhiTranslate="entity.validation.maxlength" [translateValues]="{max: 10}">
+                        This field cannot be longer than 14 characters.
+                    </span>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="item-divider-form mt-20 nomargin-s">
+          <!-- Col 7 -->
+          <div class="col-form-register ">
+
+            <div class="form-register">
+              <mat-form-field class="mat-input">
+                <mat-label jhiTranslate="global.form.newpassword.label">New password</mat-label>
+                <input matInput class="form-register" id="password" name="password" formControlName="password"
+                  placeholder="{{'global.form.newpassword.placeholder' | translate}}" type="password">
+                <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value">
+                </jhi-password-strength-bar>
+
+                <div
+                  *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)"
+                  class="alert-register-input">
+                  <mat-error *ngIf="registerForm.get('password')?.errors?.required">
+                    <span jhiTranslate="global.messages.validate.newpassword.required">
+                        Your password is required.
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('password')?.errors?.minlength">
+                    <span jhiTranslate="global.messages.validate.newpassword.minlength">
+                        Your password is required to be at least 4 characters.
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('password')?.errors?.maxlength">
+                    <span jhiTranslate="global.messages.validate.newpassword.maxlength">
+                        Your password cannot be longer than 50 characters.
+                    </span>
+                  </mat-error>
+
+                </div>
+              </mat-form-field>
+
+            </div>
+          </div>
+          <!-- Col 8 -->
+          <div class="col-form-register margin-s">
+
+            <div class="form-register">
+              <mat-form-field class="mat-input">
+                <mat-label jhiTranslate="global.form.confirmpassword.label">New password confirmation
+                </mat-label>
+                <input matInput class="form-register" id="confirmPassword" name="confirmPassword"
+                  formControlName="confirmPassword"
+                  placeholder="{{'global.form.confirmpassword.placeholder' | translate}}" type="password">
+
+                <div
+                  *ngIf="registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)"
+                  class="alert-register-input">
+
+                  <mat-error *ngIf="registerForm.get('confirmPassword')?.errors?.required">
+                    <span jhiTranslate="global.messages.validate.confirmpassword.required">
+                        Your confirmation password is required.
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('confirmPassword')?.errors?.minlength">
+                    <span jhiTranslate="global.messages.validate.confirmpassword.minlength">
+                        Your confirmation password is required to be at least 4 characters.
+                    </span>
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.get('confirmPassword')?.errors?.maxlength">
+                    <span jhiTranslate="global.messages.validate.confirmpassword.maxlength">
+                        Your confirmation password cannot be longer than 50 characters.
+                    </span>
+                  </mat-error>
+                </div>
+              <div *ngIf="!(registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)) && passwordDoNotMatch()" class="alert-register-input">
+                  <mat-error *ngIf="!(registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)) && passwordDoNotMatch()">
+                        <span jhiTranslate="global.messages.error.dontmatch">
+                            The password and its confirmation do not match!
+                        </span>
+                  </mat-error>
+              </div>
+              </mat-form-field>
+
+            </div>
+
+          </div>
+          <!-- Col 9 -->
+          <div class="col-form-register hide-s">
+          </div>
 
         </div>
 
         <div class="row-conditions-register">
-          <p jhiTranslate="register.politics.terms">Al registrarme, declaro que acepto los Términos y condiciones y las Políticas de privacidad de Nimbus GED.</p>
+          <p jhiTranslate="register.politics.terms">
+              Al registrarme, declaro que acepto los Términos y condiciones y las Políticas de privacidad de Nimbus GED.
+          </p>
         </div>
 
-        </div>
+      </div>
 
-        <div class="row-btn-register">
-          <button routerLink="/" class="secondary-btn" jhiTranslate="register.form.cancel">Cancelar</button>
-          <button type="submit" [disabled]="registerForm.invalid" class="main-btn" jhiTranslate="register.form.button">Register</button>
-        </div>
+      <div class="row-btn-register">
+        <button routerLink="/" class="secondary-btn" jhiTranslate="register.form.cancel">Cancelar</button>
+        <button type="submit" [disabled]="registerForm.invalid" class="main-btn"
+          jhiTranslate="register.form.button">Register
+        </button>
+      </div>
 
-      </form>
+    </form>
 
-    </div>
+  </div>
 </div>

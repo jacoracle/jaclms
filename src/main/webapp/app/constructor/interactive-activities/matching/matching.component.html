@@ -1,0 +1,246 @@
+<div class="maker-loader" *ngIf="showLoader">
+    <div class="loader2"></div>
+</div>
+
+<div class="row-activity-maker-19">
+    <div class="alert-course-configuration">
+        <jhi-alert-error></jhi-alert-error>
+    </div>
+
+    <!-- Header -->
+    <div class="activity-maker-header">
+        <div class="row-amh-navbar">
+            <div class="col-amh-navbar">
+                <div class="logo-nimbus-amh"></div>
+                <div class="logo-activity-amh"></div>
+                <h4 class="title-activity-amh" jhiTranslate="constructorApp.matching.title">Actividad interactiva
+                    Relacionar</h4>
+                <button type="button" (click)="close()" class="btn-close-maker">
+                    <i class="icon ni-close"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row-amh-topbar">
+            <div class="col-amh-topbar">
+                <mat-form-field appearance="outline" class="mat-amht-title">
+                    <mat-label jhiTranslate="constructorApp.matching.activity.name">Nombre de actividad</mat-label>
+                    <input matInput [(ngModel)]="activity.nombre" (focusout)="save()" jhiSpecialCharacters>
+                </mat-form-field>
+                <!-- Nombre -->
+                <!-- Evaluable -->
+                <mat-checkbox [(ngModel)]="activity.contenido.evaluable" class="mat-amht-checkbox"
+                    (change)="this.save()">
+                    <span jhiTranslate="constructorApp.matching.activity.evaluable">Evaluable</span>
+                </mat-checkbox>
+                <!-- Evaluable -->
+                <!---->
+                <div class="numeracion-preguntas">
+                    <p>Ejercicios</p>
+                    <div class="numero-pregunta"
+                        *ngIf="activity && activity.contenido && activity.contenido.ejercicios">
+                        {{ activity.contenido.ejercicios.length }} </div>
+                    <div class="numero-pregunta"
+                        *ngIf="!activity || !activity.contenido || !activity.contenido.ejercicios"> 0 </div>
+                </div>
+            </div>
+        </div>
+        <!-- <h2 id="jhi-curso-heading">Actividad interactiva</h2> -->
+    </div>
+
+    <!-- Body -->
+    <div class="activity-maker-body">
+        <div class="row-amb">
+
+            <!-- No eliminar -->
+            <input type="text" [(ngModel)]="activity.nombre" class="temp">
+
+            <!-- Ejercicio -->
+            <div *ngFor="let ejercicio of activity.contenido.ejercicios; let exerciseIndex = index;"
+                class="row-amb-answer">
+                <div class="row-amb-header">
+                    <h4>Ejercicio</h4>
+                    <!-- Eliminar Ejercicio -->
+                    <button (click)="deleteExercise(exerciseIndex);" class="btn-delete-question">
+                        <i class="icon ni-delete"></i>
+                    </button>
+                </div>
+
+                <div class="row-tipo-mat">
+
+                    <!-- Indicación -->
+                    <mat-form-field appearance="outline" class="mat-pregunta">
+                        <mat-label jhiTranslate="constructorApp.matching.exercise.indication">Indicación</mat-label>
+                        <input matInput [(ngModel)]="ejercicio.indicacion" (focusout)="save()" jhiSpecialCharacters>
+                    </mat-form-field>
+                    <!-- Indicación -->
+                    <!-- Recurso -->
+                    <mat-form-field appearance="outline" class="mat-recurso">
+                        <mat-label jhiTranslate="constructorApp.matching.exercise.resource">Recurso</mat-label>
+                        <select matNativeControl [(ngModel)]="ejercicio.tipoRecurso"
+                            (change)="changeResourceType(ejercicio); save();">
+                            <option value="">Ninguno</option>
+                            <option [value]="resourceType" *ngFor="let resourceType of resourceTypes">{{resourceType}}
+                            </option>
+                        </select>
+                    </mat-form-field>
+
+                    <div class="row-grabar-audio" *ngIf="ejercicio.tipoRecurso !== ''">
+                        <span>Subir</span>
+                        <button type="button" class="btn-upload-answer-image" (click)="resourceInput.click()"
+                            [disabled]="isOn">
+                            <!-- <span>Subir</span> -->
+                            <i class="icon ni-upload"></i>
+                            <input #resourceInput type="file"
+                                (change)="selectFile($event, ejercicio, ejercicio.tipoRecurso)" style="display:none;" />
+                        </button>
+                    </div>
+
+
+                    <div class="row-grabar-audio col-record" *ngIf="ejercicio.tipoRecurso === 'Audio'">
+                        <span>Grabar audio</span>
+                        <input type="button" (click)="record(ejercicio, exerciseIndex)" class="btn-circle" id="mixBut"
+                            [ngClass]="{
+                    'btn-start': !isOn,
+                    'btn-stop': isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === -1,
+                    'btn-disabled': isOn && (recordingExerciseIndex !== exerciseIndex || recordingElementIndex !== -1)
+                  }" [disabled]="isOn && (recordingExerciseIndex !== exerciseIndex || recordingElementIndex !== -1)" />
+                    </div>
+                </div>
+
+                <div class="row-tipo-mat row-question-grid">
+                    <img [src]="ejercicio.safeUrl"
+                        *ngIf="ejercicio.tipoRecurso === 'Imagen' && ejercicio.safeUrl && ejercicio.safeUrl !== ''"
+                        class="img-preview-image">
+                    <div class="img-preview-video"
+                        *ngIf="ejercicio.tipoRecurso === 'Video' && ejercicio.safeUrl && ejercicio.safeUrl !== '' && !ejercicio.loadedVideo"
+                        (click)="getVideo(ejercicio)">
+                        <div class="overlay"></div>
+                        <img [src]="ejercicio.safeUrl">
+                    </div>
+
+                    <div *ngIf="ejercicio.tipoRecurso === 'Video' && ejercicio.safeUrl && ejercicio.safeUrl !== '' && ejercicio.loadedVideo"
+                        class="video-question-container">
+                        <jhi-resource-video [safeUrl]="ejercicio.safeUrl"></jhi-resource-video>
+                    </div>
+
+
+                    <div class="audio-progress"
+                        *ngIf="isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === -1">
+                        <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value"
+                            [bufferValue]="bufferValue">
+                        </mat-progress-bar>
+                        Tiempo:
+                        <span>{{timeToShow}}</span>
+                    </div>
+
+                    <div *ngIf="ejercicio.tipoRecurso === 'Audio' && ejercicio.safeUrl && ejercicio.safeUrl !== ''"
+                        [hidden]="isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === -1">
+                        <jhi-resource-audio [safeUrl]="ejercicio.safeUrl"></jhi-resource-audio>
+                    </div>
+
+                    <button (click)="deleteResource(ejercicio)" *ngIf="ejercicio.safeUrl && ejercicio.safeUrl !== ''"
+                        class="btn-delete-question">
+                        <i class="icon ni-delete"></i>
+                    </button>
+                    <!-- Recurso -->
+                </div>
+
+                <!-- Columnas -->
+                <div class="row-tipo-mat row-question-grid" *ngIf="ejercicio.columnas">
+
+                    <!-- Columna -->
+                    <div style="width: 100%; border: 1px solid black; float: left; min-height: 50px;"
+                        *ngFor="let columna of ejercicio.columnas; let columnIndex = index;">
+                        <!-- Tipo de elementos -->
+                        <div class="row-tipo-mat">
+                            <mat-form-field appearance="outline" (change)="changeElementsType(columna, columnIndex, ejercicio)"
+                                class="mat-tipo-respuesta">
+                                <mat-label jhiTranslate="constructorApp.matching.exercise.elementType">Tipo de respuesta
+                                </mat-label>
+                                <select matNativeControl required [(ngModel)]="columna.tipoElementos">
+                                    <option [value]="elementType" *ngFor="let elementType of elementTypes">
+                                        {{elementType}}
+                                    </option>
+                                </select>
+                            </mat-form-field>
+
+                        </div>
+                        <!-- Tipo de elementos termina -->
+
+                        <div *ngIf="columna.elementos">
+
+
+
+                            <div *ngFor="let elemento of columna.elementos; let elementIndex = index;"
+                                class="row-answer-am">
+
+                                <!-- Texto -->
+                                <mat-form-field appearance="outline" *ngIf="columna.tipoElementos === 'Texto'"
+                                    class="mat-respuesta-s">
+                                    <mat-label jhiTranslate="constructorApp.question.answer.answer">Texto
+                                    </mat-label>
+                                    <input matInput [(ngModel)]="elemento.texto" (focusout)="save()" jhiSpecialCharacters>
+                                </mat-form-field>
+                                <!-- Texto -->
+
+                                <!-- Opción/URL de recurso -->
+                                <img [src]="elemento.safeUrl"
+                                    *ngIf="(columna.tipoElementos === 'Imagen') && elemento.safeUrl && elemento.safeUrl !== ''">
+                                <div class="col-record" *ngIf="columna.tipoElementos === 'Audio'">
+                                    <input type="button" (click)="record(elemento, exerciseIndex, columnIndex, elementIndex)"
+                                        class="btn-circle" id="mixBut" [ngClass]="{
+                                            'btn-start': !isOn,
+                                            'btn-stop': isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === elementIndex,
+                                            'btn-disabled': isOn && (recordingExerciseIndex !== exerciseIndex || recordingElementIndex !== elementIndex)
+                                        }" [disabled]="isOn && (recordingExerciseIndex !== exerciseIndex || recordingElementIndex !== elementIndex)" />
+                                </div>
+                                <div class="audio-progress"
+                                    *ngIf="isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === elementIndex">
+                                    <mat-progress-bar class="example-margin" [color]="color" [mode]="mode"
+                                        [value]="value" [bufferValue]="bufferValue">
+                                    </mat-progress-bar>
+                                    Tiempo:
+                                    <span>{{timeToShow}}</span>
+                                </div>
+                                <div *ngIf="columna.tipoElementos === 'Audio' && elemento.safeUrl && elemento.safeUrl !== ''"
+                                    [hidden]="isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === elementIndex">
+                                    <jhi-resource-audio [safeUrl]="elemento.safeUrl"></jhi-resource-audio>
+                                </div>
+
+                                <button type="button" class="btn-upload-answer-image"
+                                    *ngIf="columna.tipoElementos !== 'Texto'" (click)="fileInput.click()"
+                                    [disabled]="isOn">
+                                    <i class="icon ni-upload"></i>
+                                    <input #fileInput type="file"
+                                        (change)="selectFile($event, elemento, columna.tipoElementos)"
+                                        style="display:none;" />
+                                </button>
+
+
+                                <button (click)="deleteRow(ejercicio, elementIndex);"
+                                    *ngIf="columna.elementos.length > 1"
+                                    class="btn-delete-question">
+                                    Eliminar renglón
+                                </button>
+
+                                <!-- Opción/URL de recurso -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Columna termina -->
+                </div>
+                <!-- Columnas termina -->
+                <div>
+                    <button class="main-btn" *ngIf="allowAdding(ejercicio)" (click)="addRow(ejercicio)">Agregar renglón</button>
+                </div>
+            </div>
+            <div class="row-add-question-btn-2">
+                <button class="main-btn" (click)="addExercise()"><i class="icon ni-add"></i> <span
+                        jhiTranslate="constructorApp.matching.addExercise">Agregar ejercicio</span></button>
+            </div>
+            <!-- Ejercicio termina -->
+
+        </div>
+    </div>
+
+</div>

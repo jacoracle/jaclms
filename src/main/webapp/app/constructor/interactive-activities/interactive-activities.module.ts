@@ -12,6 +12,7 @@ import { ConstructorSharedModule } from 'app/shared/shared.module';
 import { ResourceAudioComponent } from './resources/resource-audio/resource-audio.component';
 import { ResourceVideoComponent } from './resources/resource-video/resource-video.component';
 import { SpecialCharactersModule } from 'app/directives/special-characters/special-characters.module';
+import { MatchingComponent } from './matching/matching.component';
 
 @NgModule({
   imports: [
@@ -24,8 +25,8 @@ import { SpecialCharactersModule } from 'app/directives/special-characters/speci
     ConstructorSharedModule,
     SpecialCharactersModule
   ],
-  declarations: [QuestionComponent, ResourceAudioComponent, ResourceVideoComponent],
-  entryComponents: [QuestionComponent],
-  exports: [QuestionComponent]
+  declarations: [QuestionComponent, ResourceAudioComponent, ResourceVideoComponent, MatchingComponent],
+  entryComponents: [QuestionComponent, MatchingComponent],
+  exports: [QuestionComponent, MatchingComponent]
 })
 export class InteractiveActivitiesModule {}
