@@ -3,10 +3,12 @@
     "path": {
       "home": {
         "title": "Creador de programas",
+        "titleBread": "/ Creador de programas",
         "createLabel": "Crear",
         "createOrEditLabel": "Crear o editar Ruta",
         "titleGeneralConfg": "Configuración general",
         "titleAdvancelConfg": "Configuración avanzada",
+        "titleConfgProgram": "/ Configurar Programa",
         "your": "Tus Programas",
         "notFound": "Ninguna Ruta pudo ser encontrada"
       },

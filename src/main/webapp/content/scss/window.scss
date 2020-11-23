@@ -130,7 +130,6 @@
   .window-br-body-topbar {
     position: relative;
     width: 100%;
-    height: 65px;
     height: 55px;
     display: flex;
     justify-content: center;
@@ -178,7 +177,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #eaedf4;
+    background-color: $topbar-ligt;
 
     .line-gradient {
       position: absolute;
@@ -204,7 +203,6 @@
 .window-br-body {
   position: relative;
   width: 100%;
-  // height: calc(100% - 185px);
   height: calc(100% - 175px);
   background-color: $window-body-color;
   overflow-y: auto;
@@ -219,7 +217,7 @@
 .window-br-body-full {
   position: relative;
   width: 100%;
-  height: calc(100% - 123px);
+  height: calc(100% - 122px);
   background-color: $window-body-color;
 }
 .window-br-footer {
@@ -637,6 +635,11 @@
   font-weight: 400;
   color: $a-color-nd;
   opacity: 0.8;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    opacity: 1;
+  }
 }
 .row-btn-brheader {
   position: relative;
