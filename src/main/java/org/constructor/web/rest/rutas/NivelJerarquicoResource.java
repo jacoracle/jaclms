@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.constructor.domain.rutas.NivelJerarquico;
 import org.constructor.response.OrdenamientoResponse;
+import org.constructor.service.dto.rutas.DTONivelJerarquico;
 import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.constructor.service.rutas.NivelJerarquicoService;
 import org.constructor.utils.RestConstants;
@@ -36,7 +37,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * @author Edukai
@@ -108,7 +108,7 @@ public class NivelJerarquicoResource {
 	     * @throws Exception
 	     */
 	    @PutMapping(path = RestConstants.PATH_NIVEL_JERARQUICO)
-	    public ResponseEntity<Optional<NivelJerarquico>> updateNivelJerarquicos(@RequestBody NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception {
+	    public ResponseEntity<DTONivelJerarquico> updateNivelJerarquicos(@RequestBody NivelJerarquicoDTO nivelJerarquicoDTO) throws Exception {
 	        log.debug("REST request to update NivelJerarquico : {}", nivelJerarquicoDTO);
 
 	        if (nivelJerarquicoDTO.getId() == null) {
@@ -119,7 +119,7 @@ public class NivelJerarquicoResource {
 	        }
 			
 	        Optional<NivelJerarquico> result = nivelJerarquicoService.updateNivelJerarquico(nivelJerarquicoDTO);
-	        Optional<NivelJerarquico> nivel = nivelJerarquicoService.findOne(result.get().getId());
+	        DTONivelJerarquico nivel = nivelJerarquicoService.findOne(result.get().getId());
 	        log.debug("Update nivel  : {}", nivel);
 	        return ResponseEntity.ok()
 	            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.get().getId().toString()))
@@ -173,10 +173,10 @@ public class NivelJerarquicoResource {
 	     * @return
 	     */
 	    @GetMapping(path = RestConstants.PATH_NIVEL_JERARQUICO_ID)
-	    public ResponseEntity<NivelJerarquico> getNivelJerarquico(@PathVariable Long id) {
+	    public DTONivelJerarquico getNivelJerarquico(@PathVariable Long id) {
 	        log.debug("REST request to get RutasAprendizaje : {}", id);
-	        Optional<NivelJerarquico> nivel = nivelJerarquicoService.findOne(id);
-	        return ResponseUtil.wrapOrNotFound(nivel);
+	        DTONivelJerarquico nivel = nivelJerarquicoService.findOne(id);
+	        return nivel;
 	    }
 	    
 	    
@@ -190,6 +190,19 @@ public class NivelJerarquicoResource {
 	    public ResponseEntity<Void> deleteNivelJerarquico(@PathVariable Long id) {
 	        log.debug("REST request to delete NivelJerarquico : {}", id);
 	        nivelJerarquicoService.delete(id);
+	        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+	    }
+	    
+	    /**
+	     * NivelAgrupador
+	     * Delete by id
+	     * @param id
+	     * @returnsi solo 
+	     */
+	    @DeleteMapping(path = RestConstants.PATH_NIVEL_AGRUPADOR_ID)
+	    public ResponseEntity<Void> deleteNivelAgrupador(@PathVariable Long id) {
+	        log.debug("REST request to delete NivelJerarquico : {}", id);
+	        nivelJerarquicoService.deleteAgrupador(id);
 	        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
 	    }
 }

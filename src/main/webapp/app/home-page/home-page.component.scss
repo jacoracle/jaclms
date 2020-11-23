@@ -934,34 +934,6 @@ h5 {
   // width: calc(250px * 20);
   width: calc(500px * 6);
 }
-.ca-item {
-  width: 500px;
-  height: 400px;
-  background-position: center;
-  background-size: 500px;
-  background-repeat: no-repeat;
-  transition: all 0.2s ease;
-  &:nth-child(2n + 1) {
-  }
-  &:nth-child(1) {
-    background-image: url('../../content/images/fi1.png');
-  }
-  &:nth-child(2) {
-    background-image: url('../../content/images/fi2.png');
-  }
-  &:nth-child(3) {
-    background-image: url('../../content/images/fi3.png');
-  }
-  &:nth-child(4) {
-    background-image: url('../../content/images/fi4.png');
-  }
-  &:nth-child(5) {
-    background-image: url('../../content/images/fi5.png');
-  }
-  &:nth-child(6) {
-    background-image: url('../../content/images/fi6.png');
-  }
-}
 
 .row-home-icons {
   position: relative;

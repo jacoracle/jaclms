@@ -1,6 +1,6 @@
 {
   "constructorApp": {
-    "course": {
+    "curso": {
       "home": {
         "title": "Courses",
         "createLabel": "Create new Course",
@@ -46,7 +46,7 @@
       "subject": "Subject",
       "GradoAcademico": "Academic degree",
       "numberGrade": "Grade",
-      "hierarchical level": {
+      "nivelJerarquico": {
         "created": "The project was saved successfully.",
         "updated": "The information has been updated successfully.",
         "error": "The information could not be saved, please try again later."

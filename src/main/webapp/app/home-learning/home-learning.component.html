@@ -69,7 +69,7 @@
                         <div class="program-cover-br" *ngIf="sec.safeUrl && sec.safeUrl !== ''">
                           <img [src]="sec.safeUrl">
                         </div>
-                        
+
 
                         <div (click)="deletePath(sec, $event)" class="del-path delete-course-br">
                             <i class="icon ni-delete icon-negative"></i>
@@ -94,7 +94,11 @@
         <!-- Window footer -->
         <div class="window-br-footer">
             <button routerLink="/" class="secondary-btn">Regresar</button>
-            <button routerLink="/path-configuration" class="main-btn">Nueva Ruta</button>
+            <!-- <button routerLink="/path-configuration" class="main-btn">Nueva Ruta</button> -->
+
+            <button routerLink="/view-tree/1" class="main-btn">TREE</button>
+            <button routerLink="/path-configuration" class="main-btn create-btn">Crear</button>
+            <!-- Crear programa -->
         </div>
 
     </div>

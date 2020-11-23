@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.constructor.domain.rutas.NivelJerarquico;
 import org.constructor.response.OrdenamientoResponse;
+import org.constructor.service.dto.rutas.DTONivelJerarquico;
 import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +51,7 @@ public interface NivelJerarquicoService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<NivelJerarquico> findOne(Long id);
+    DTONivelJerarquico findOne(Long id);
     
     /**
 	 * Update
@@ -75,6 +76,13 @@ public interface NivelJerarquicoService {
      */
     void delete(Long id);
     
+    
+    /**
+     * Delete the "id" Nivel Agrupador.
+     *
+     * @param id the id of the entity.
+     */
+    void deleteAgrupador(Long id);
     
 
 }

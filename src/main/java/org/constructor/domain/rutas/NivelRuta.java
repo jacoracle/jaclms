@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 
@@ -24,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 @Entity
-@Table(name = "nivel_ruta")
+@Table(name = "niveles_ruta")
 public class NivelRuta implements Serializable {
 
 	/**
@@ -58,8 +57,8 @@ public class NivelRuta implements Serializable {
 	/**
 	 * The orden.
 	 */
+	
 	@Column(name = "orden")
-	@OrderBy ("orden ASC")
 	private Long orden;
 
 	/**
@@ -148,6 +147,11 @@ public class NivelRuta implements Serializable {
 	   public int hashCode() {
 	        return id.hashCode();
 	    }
+
+	@Override
+	public String toString() {
+		return "NivelRuta [id=" + id + ", nivelJerarquico=" + nivelJerarquico + ", orden=" + orden + "]";
+	}
 
 	
 	

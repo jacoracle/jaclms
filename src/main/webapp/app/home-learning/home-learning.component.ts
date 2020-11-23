@@ -9,7 +9,6 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { RutaAprendizajeService } from '../entities/rutas-aprendizaje/ruta-aprendizaje.service';
 import { HttpResponse } from '@angular/common/http';
 import { map, startWith, takeUntil } from 'rxjs/operators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { FileUploadService } from 'app/services/file-upload.service';
 
 @Component({

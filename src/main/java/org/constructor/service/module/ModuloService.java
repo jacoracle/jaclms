@@ -3,6 +3,7 @@
  */
 package org.constructor.service.module;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -75,7 +76,6 @@ public interface ModuloService {
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);
-    
+    void delete(Long id) throws IOException;    
   
 }

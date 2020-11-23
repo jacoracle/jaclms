@@ -3,7 +3,7 @@
     "path": {
       "home": {
         "title": "Rutas de Aprendizaje",
-        "createLabel": "Nueva Ruta",
+        "createLabel": "Crear",
         "createOrEditLabel": "Crear o editar Ruta",
         "titleGeneralConfg": "Configuración general",
         "titleAdvancelConfg": "Configuración avanzada",
@@ -17,6 +17,11 @@
       },
       "detail": {
         "title": "Ruta de Aprendizaje"
+      },
+      "tree": {
+        "root": "Nodo root agregado.",
+        "add": "SubNodo agregado.",
+        "remove": "Nodo eliminado."
       },
       "sequence": {
         "addGroup": "Cambios guardados, un Agrupador fue agregado.",

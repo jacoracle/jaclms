@@ -34,14 +34,48 @@ export class HierarchicalLevelModel implements HierarchicalLevel {
 
 // con ajuste back
 
+export interface HierarchicalStructure {
+  id?: number;
+  nombre?: string;
+  imagenUrl?: string;
+  niveles?: HierarchicalStructure[];
+  agrupadores?: HierarchicalStructure[];
+  // se agregan las sig 2 props para la delete y reorder
+  nivelId?: number;
+  nivelAgrupadorId?: number;
+  orden?: number;
+}
+
+/**
+ * interface para response al agregar un agrupador
+ */
+export interface HierarchicalStructureGroup extends HierarchicalStructure {
+  nivelId?: number; // padre
+  nivelAgrupadorId?: number; // tabla intermedia
+}
+
+export class HierarchicalStructureModel implements HierarchicalStructure {
+  constructor(
+    public id?: number,
+    public nombre?: string,
+    public imagenUrl?: string,
+    public niveles?: HierarchicalStructure[],
+    public agrupadores?: HierarchicalStructure[],
+    public nivelId?: number,
+    public nivelAgrupadorId?: number,
+    public orden?: number
+  ) {}
+}
+
 export interface NivelRutas {
   id?: number;
+  nombre?: string;
   nivelJerarquico?: HierarchicalLevel;
   orden?: number;
 }
 
 export class NivelRutasModel implements NivelRutas {
-  constructor(public id?: number, public nivelJerarquico?: HierarchicalFlatNode) {}
+  constructor(public id?: number, public nombre?: string, public nivelJerarquico?: HierarchicalFlatNode) {}
 }
 
 export interface SubNivelRutas {

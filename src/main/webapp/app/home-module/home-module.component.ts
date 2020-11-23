@@ -1,5 +1,5 @@
 import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
@@ -8,10 +8,10 @@ import { ModuloService } from 'app/entities/modulo/modulo.service';
 import { IModulo } from 'app/shared/model/modulo.model';
 
 import { HttpResponse } from '@angular/common/http';
-import { SafeUrl } from '@angular/platform-browser';
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
-import { takeUntil, startWith, map } from 'rxjs/operators';
-import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
+import { JhiEventManager } from 'ng-jhipster';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-home-module',
@@ -24,10 +24,8 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
   private ngUnsubscribeSubject = new Subject();
   modulos: IModulo[] = new Array<IModulo>();
   originalUmasList: IModulo[] = new Array<IModulo>();
-  defaultModuleUrl: SafeUrl = './../../../../content/images/module.png';
   showLoader = false;
   isSearching!: boolean;
-  filteredUmas: any;
   umaForm!: FormGroup;
 
   constructor(
@@ -36,7 +34,8 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     private formbuilder: FormBuilder,
     private moduleService: ModuloService,
     private umaSeachService: ModuloService,
-    private eventManager: JhiEventManager
+    private eventManager: JhiEventManager,
+    private router: Router
   ) {
     this.isSearching = false;
     this.initForm();
@@ -115,6 +114,12 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     });
   }
 
+  editModule(idModule: number): void {
+    this.router.navigate(['/uma-configuration', idModule, 'home']).then(r => {
+      return r;
+    });
+  }
+
   deleteModule(id: number, $event: any): void {
     $event.stopPropagation();
     this.moduleService.delete(id).subscribe(() => {
@@ -149,31 +154,31 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     return this.modulos.filter((option: IModulo) => option.titulo!.toLowerCase().includes(filterValue));
   }
 
-  resetUmas(): void {
-    this.modulos = [...this.originalUmasList];
-    this.umaForm.reset();
-    this.initForm();
-  }
+  /* resetUmas(): void {
+     this.modulos = [...this.originalUmasList];
+     this.umaForm.reset();
+     this.initForm();
+   }
 
-  executeSearch(): void {
-    this.isSearching = true;
-    this.subscription = this.umaSeachService
-      .search(this.mapFormToSearchParams())
-      .pipe(takeUntil(this.ngUnsubscribeSubject))
-      .subscribe(res => {
-        console.error('#### Response búsqueda: ');
-        console.error(res.body);
-        this.modulos = [...res.body!];
-        if (this.modulos.length === 0) {
-          this.eventManager.broadcast(
-            new JhiEventWithContent('constructorApp.validationError', {
-              message: 'constructorApp.uma.home.notFound',
-              type: 'success'
-            })
-          );
-        }
-      });
-  }
+   executeSearch(): void {
+     this.isSearching = true;
+     this.subscription = this.umaSeachService
+       .search(this.mapFormToSearchParams())
+       .pipe(takeUntil(this.ngUnsubscribeSubject))
+       .subscribe(res => {
+         console.error('#### Response búsqueda: ');
+         console.error(res.body);
+         this.modulos = [...res.body!];
+         if (this.modulos.length === 0) {
+           this.eventManager.broadcast(
+             new JhiEventWithContent('constructorApp.validationError', {
+               message: 'constructorApp.uma.home.notFound',
+               type: 'success'
+             })
+           );
+         }
+       });
+   }
 
   mapFormToSearchParams(): any {
     return {
@@ -183,5 +188,5 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
       temas: this.umaForm.get('sessionTopicFormCtrl')!.value,
       titulo: this.umaForm.get('umaTitleFormCtrl')!.value
     };
-  }
+  }*/
 }

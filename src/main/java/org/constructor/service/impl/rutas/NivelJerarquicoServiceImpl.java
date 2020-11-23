@@ -3,20 +3,28 @@
  */
 package org.constructor.service.impl.rutas;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.constructor.domain.agrupador.Agrupador;
 import org.constructor.domain.rutas.NivelJerarquico;
 import org.constructor.domain.rutas.NivelRuta;
+import org.constructor.domain.rutas.NivelesAgrupador;
 import org.constructor.domain.rutas.RutasAprendizaje;
 import org.constructor.repository.agrupador.AgrupadorRepository;
 import org.constructor.repository.rutas.EstructuraJerarquicaRepository;
 import org.constructor.repository.rutas.NivelJerarquicoRepository;
 import org.constructor.repository.rutas.NivelRutaRepository;
+import org.constructor.repository.rutas.NivelesAgrupadorRepository;
 import org.constructor.repository.rutas.RutasAprendizajeRepository;
 import org.constructor.response.OrdenamientoResponse;
+import org.constructor.service.dto.rutas.DTOAgrupadores;
+import org.constructor.service.dto.rutas.DTONivelJerarquico;
+import org.constructor.service.dto.rutas.EstructuraJerarquicaDTO;
 import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
 import org.constructor.service.rutas.NivelJerarquicoService;
 import org.slf4j.Logger;
@@ -28,7 +36,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 /**
  * @author Edukai
@@ -67,6 +74,11 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	private NivelRutaRepository nivelRutaRepository;
 
 	/**
+	 * nivelesAgrupadorRepository
+	 */
+	@Autowired
+	private NivelesAgrupadorRepository nivelesAgrupadorRepository;
+	/**
 	 * rutasAprendizajeRepository
 	 */
 	@Autowired
@@ -103,8 +115,50 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	 * finOne NivelJerarquico
 	 */
 	@Override
-	public Optional<NivelJerarquico> findOne(Long id) {
-		return nivelJerarquicoRepository.findById(id);
+	public DTONivelJerarquico findOne(Long id) {
+		Optional<NivelJerarquico> nivelJerarquico = nivelJerarquicoRepository.findById(id);
+		DTONivelJerarquico dtoNivelJerarquico = new DTONivelJerarquico();
+		List<DTOAgrupadores> listAgrupadores = new ArrayList<>();;
+		List<EstructuraJerarquicaDTO> listJerarquicaDTO = new ArrayList<>();;
+		nivelJerarquico.get().getAgrupadores().forEach(agrupador -> {
+			DTOAgrupadores dtoAgrupador = new DTOAgrupadores();
+			dtoAgrupador.setId(agrupador.getAgrupador().getId());
+			dtoAgrupador.setOrden(agrupador.getOrden());
+			dtoAgrupador.setNombre(agrupador.getAgrupador().getTitulo());
+			dtoAgrupador.setNivelAgrupadorId(agrupador.getId());
+			dtoAgrupador.setNivelId(agrupador.getNivelJerarquico().getId());
+			
+
+			listAgrupadores.add(dtoAgrupador);
+
+		});
+		Collections.sort(listAgrupadores,
+                (a, b) -> a.getOrden().compareTo(b.getOrden()));
+		
+		dtoNivelJerarquico.setId(nivelJerarquico.get().getId());
+		dtoNivelJerarquico.setNombre(nivelJerarquico.get().getNombre());
+		dtoNivelJerarquico.setImagenUrl(nivelJerarquico.get().getImagenUrl());
+		dtoNivelJerarquico.setAgrupadores(listAgrupadores);
+		
+		
+		
+		nivelJerarquico.get().getEstructuraJerarquica().forEach(niveles -> {
+			EstructuraJerarquicaDTO estructuraJerarquicaDTO = new EstructuraJerarquicaDTO();
+			estructuraJerarquicaDTO.setId(niveles.getSubNivelJerarquico().getId());
+			estructuraJerarquicaDTO.setNombre(niveles.getSubNivelJerarquico().getNombre());
+			estructuraJerarquicaDTO.setImagenUrl(niveles.getSubNivelJerarquico().getImagenUrl());
+			estructuraJerarquicaDTO.setOrden(niveles.getOrdenNivel());
+			listJerarquicaDTO.add(estructuraJerarquicaDTO);
+			
+			
+		});
+		Collections.sort(listJerarquicaDTO,
+                (a, b) -> a.getOrden().compareTo(b.getOrden()));
+		
+		
+		dtoNivelJerarquico.setNiveles(listJerarquicaDTO);
+
+		return dtoNivelJerarquico;
 	}
 
 	/**
@@ -112,8 +166,18 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	 */
 	@Override
 	public void delete(Long id) {
-		nivelJerarquicoRepository.deleteById(id);
 
+		nivelJerarquicoRepository.deleteById(id);
+	}
+
+	
+	/**
+	 * Delete nivel Agrupador 
+	 */
+	@Override
+	public void deleteAgrupador(Long id) {
+		nivelesAgrupadorRepository.deleteById(id);
+		
 	}
 
 	/**
@@ -130,16 +194,18 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 		jerarquico.setNombre(nivelDto.getNombre());
 		jerarquico.setImagenUrl(nivelDto.getImagenUrl());
 
-		if (nivelDto.getAgrupadores() != null) {
+		if (!nivelDto.getAgrupadores().isEmpty()) {
+			NivelesAgrupador nivelesAgrupador = new NivelesAgrupador();
 			nivelDto.getAgrupadores().forEach(agrupadorDTO -> {
 				Optional<Agrupador> agrupador = agrupadorRepository.findById(agrupadorDTO.getId());
 
 				listAgrupador.add(agrupador.get());
-
+				nivelesAgrupador.setAgrupador(agrupador.get());
 			});
 
+			nivelesAgrupadorRepository.save(nivelesAgrupador);
+
 		}
-		jerarquico.setAgrupadores(listAgrupador);
 
 		nivelJerarquicoRepository.save(jerarquico);
 		if (!nivelDto.getEstructuraJerarquica().isEmpty()) {
@@ -159,6 +225,7 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 				estructuraJerarquica.setSubNivelJerarquico(jerarquico);
 
 			});
+
 			estructuraJerarquicaRepository.save(estructuraJerarquica);
 
 		}
@@ -195,26 +262,24 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 					nivelJerarquico.setImagenUrl(dto.getImagenUrl());
 
 					if (!dto.getAgrupadores().isEmpty()) {
-						Set<Agrupador> listAgrupadorNivel = new HashSet<>();
-
-						dto.getAgrupadores().forEach(agrupadoresDTO -> {
-
-							Optional<Agrupador> agrupadorNivel = agrupadorRepository.findById(agrupadoresDTO.getId());
-							listAgrupadorNivel.add(agrupadorNivel.get());
-
-							nivelJerarquico.getAgrupadores().addAll(listAgrupadorNivel);
-
-						});
+                        Set<Agrupador> listAgrupadorNivel = new HashSet<>();
+                        NivelesAgrupador nivelesAgrupador = new   NivelesAgrupador();
+                        dto.getAgrupadores().forEach(agrupadoresDTO -> {
+                            Optional<Agrupador> agrupadorNivel = agrupadorRepository.findById(agrupadoresDTO.getId());
+                            listAgrupadorNivel.add(agrupadorNivel.get());
+                            nivelesAgrupador.setOrden(agrupadoresDTO.getOrden());
+                            nivelesAgrupador.setAgrupador(agrupadorNivel.get());
+                            nivelesAgrupador.setNivelJerarquico(nivelJerarquico);
+                            });
+                        nivelesAgrupadorRepository.save(nivelesAgrupador);
 					}
 
 					return nivelJerarquico;
 				});
 	}
-	
-	
 
 	/**
-	 * Update  To Order
+	 * Update To Order
 	 */
 	@Override
 	public Optional<OrdenamientoResponse> updateOrder(NivelJerarquicoDTO dto) throws Exception {
@@ -223,7 +288,7 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 				.map(Optional::get).map(nivelJerarquico -> {
 
 					OrdenamientoResponse ordenamientoResponse = new OrdenamientoResponse();
-					
+
 					/**
 					 * Update Agrupadores
 					 */
@@ -231,18 +296,18 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 						log.debug("entro a agrupadores para ordenar");
 						Set<Agrupador> listAgrupador = new HashSet<>();
 						dto.getAgrupadores().forEach(agrupadoresDTO -> {
+
 							Optional<Agrupador> agrupador = agrupadorRepository.findById(agrupadoresDTO.getId());
 							listAgrupador.add(agrupador.get());
-							
-							nivelJerarquico.getAgrupadores().addAll(listAgrupador);
-							
-						/**	dto.getEstructuraJerarquica().forEach(delete -> {
-								Optional<NivelJerarquico> nivel1 =  nivelJerarquicoRepository.findById(delete.getId());
-								
-								nivel1.get().getAgrupadores().clear();
-								
-							});*/
-							
+
+							/**
+							 * dto.getEstructuraJerarquica().forEach(delete -> { Optional<NivelJerarquico>
+							 * nivel1 = nivelJerarquicoRepository.findById(delete.getId());
+							 * 
+							 * nivel1.get().getAgrupadores().clear();
+							 * 
+							 * });
+							 */
 
 						});
 
@@ -260,7 +325,7 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 										estructura.setNivel(estructuradDTO.getId());
 										estructura.setSubNivelJerarquico(nivelJerarquico);
 										ordenamientoResponse.setOrden(estructuradDTO.getOrdenNivel());
-										return estructura;  
+										return estructura;
 									});
 
 						});
@@ -291,11 +356,11 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 
 					}
 
-					
-
 					ordenamientoResponse.setNivelJerarquico(nivelJerarquico);
 					return ordenamientoResponse;
 				});
 	}
+
+
 
 }
