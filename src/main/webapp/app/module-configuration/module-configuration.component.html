@@ -5,8 +5,8 @@
         <div class="window-br-header">
           <div class="row-br-header">
             <div class="header-breadcrumbs">
-              <div class="logo-home"><i class="icon ni-nimbus"></i></div>
-              <h4 class="hb-title hbt-disabled" jhiTranslate="uma.page">/ Constructor de UMA</h4>
+              <div class="logo-home" routerLink="/"><i class="icon ni-nimbus"></i></div>
+              <h4 class="hb-title hbt-disabled" (click)="cancelUMA()" jhiTranslate="uma.page">/ Constructor de UMA</h4>
               <h4 class="hb-title" jhiTranslate="uma.title" *ngIf="!id">Registro de UMA</h4>
               <h4 class="hb-title" jhiTranslate="uma.titleedit" *ngIf="id">Edición de UMA</h4>
 
