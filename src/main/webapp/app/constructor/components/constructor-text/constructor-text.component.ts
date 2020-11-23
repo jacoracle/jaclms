@@ -40,7 +40,7 @@ export class ConstructorTextComponent {
     this.lastInnerText = '';
     this.listenerAllApp();
     const Font = Quill.import('attributors/class/font');
-    Font.whitelist = ['arial', 'times-new-roman', 'calibri', 'comic-sans-ms'];
+    Font.whitelist = ['arial', 'times-new-roman', 'calibri', 'comic-sans-ms', 'open-sans'];
     Quill.register(Font, true);
 
     this.contentBlocksService.getTempaltes().subscribe(templates => {
