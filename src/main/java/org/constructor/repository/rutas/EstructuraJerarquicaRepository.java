@@ -24,8 +24,8 @@ public interface EstructuraJerarquicaRepository extends JpaRepository<Estructura
 	 
 	 @Query("SELECT est FROM EstructuraJerarquica est  where est.subNivelJerarquico = :subNivelJerarquico")
 	   Optional<EstructuraJerarquica> findBySubNivel(@Param("subNivelJerarquico")NivelJerarquico subNivelJerarquico);
-		
-	
-	
+	 
+	 @Query("SELECT est FROM EstructuraJerarquica est where est.nivel = :id")
+	    Set<EstructuraJerarquica> findByNivel(@Param("id")Long id);
 
 }

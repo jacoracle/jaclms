@@ -76,6 +76,7 @@ public interface NivelJerarquicoService {
      */
     void delete(Long id);
     
+    boolean deleteEstructuraNivel(Long id);
     
     /**
      * Delete the "id" Nivel Agrupador.

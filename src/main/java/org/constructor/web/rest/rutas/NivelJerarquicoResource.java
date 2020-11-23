@@ -189,7 +189,7 @@ public class NivelJerarquicoResource {
 	    @DeleteMapping(path = RestConstants.PATH_NIVEL_JERARQUICO_ID)
 	    public ResponseEntity<Void> deleteNivelJerarquico(@PathVariable Long id) {
 	        log.debug("REST request to delete NivelJerarquico : {}", id);
-	        nivelJerarquicoService.delete(id);
+	         nivelJerarquicoService.deleteEstructuraNivel(id);
 	        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
 	    }
 	    

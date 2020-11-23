@@ -160,6 +160,46 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 
 		return dtoNivelJerarquico;
 	}
+	
+	
+	public boolean deleteEstructuraNivel (Long id) {
+		
+		Set<EstructuraJerarquica > listEstructura = new HashSet<>();
+
+	      listEstructura = estructuraJerarquicaRepository.findByNivel(id);
+			log.debug("Request to listEstructura {}", listEstructura);
+
+	      if (!listEstructura.isEmpty()) {
+	    	  log.debug("Request entro a IF {}", listEstructura);
+	    		listEstructura.forEach(estructura -> { 
+	    			log.debug("Request elimiando este id {}", estructura.getId());
+	    			estructuraJerarquicaRepository.delete(estructura);
+
+	    			
+	    		});
+		}
+	      
+			Optional<NivelJerarquico> nivelJerarquico  =	nivelJerarquicoRepository.findById(id);
+			
+			 Optional<NivelRuta> nivelRuta =  nivelRutaRepository.findByRutas(nivelJerarquico.get());
+			 
+			 if(!nivelRuta.isEmpty()){
+				 
+				 nivelRutaRepository.deleteById(nivelRuta.get().getId());
+			 }
+
+			log.debug("Request nivelJerarquico {}", nivelJerarquico);
+
+			   Optional<EstructuraJerarquica> estructura  =  estructuraJerarquicaRepository.findBySubNivel(nivelJerarquico.get());
+			
+			   if(!estructura.isEmpty()) {
+			 estructuraJerarquicaRepository.deleteById(estructura.get().getId());}
+		
+		nivelJerarquicoRepository.deleteById(id);
+		
+		return true;
+		
+	}
 
 	/**
 	 * Delete NivelJerarquico
@@ -177,6 +217,7 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	@Override
 	public void deleteAgrupador(Long id) {
 		nivelesAgrupadorRepository.deleteById(id);
+		
 		
 	}
 
