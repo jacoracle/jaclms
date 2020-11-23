@@ -231,14 +231,14 @@ export class ActivityAnswersComponent {
 
   showErrorFileSize(event: any): void {
     this.eventManager.broadcast(
-      new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.fileSize' })
+      new JhiEventWithContent('constructorApp.validationError', { message: 'activityquestion.answer.errorfilesize' })
     );
     event.target.files = new DataTransfer().files;
   }
 
   showErrorFileType(event: any): void {
     this.eventManager.broadcast(
-      new JhiEventWithContent('constructorApp.validationError', { message: 'constructorApp.curso.validations.fileType' })
+      new JhiEventWithContent('constructorApp.validationError', { message: 'activityquestion.answer.errorfiletype' })
     );
     event.target.files = new DataTransfer().files;
   }

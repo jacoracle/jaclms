@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AsignaturaService } from 'app/entities/asignatura/asignatura.service';
 import { GradoAcademicoService } from '../grado-academico/grado-academico.service';
 import { AgrupadorService } from './agrupador.service';
-import { Subscription, Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { IModulo } from 'app/shared/model/modulo.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
@@ -13,10 +13,10 @@ import { IAgrupador } from 'app/shared/model/agrupador.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AgrupadorUmaService } from './agrupador-uma.service';
 import { ModuloService } from '../modulo/modulo.service';
-import { IAgrupadorUma, AgrupadorUma } from 'app/shared/model/agrupador-uma.model';
+import { AgrupadorUma, IAgrupadorUma } from 'app/shared/model/agrupador-uma.model';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { UmaPreviewModalService } from 'app/services/uma-preview-modal.service';
-import { takeUntil, startWith, map } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { AgrupadorConfigService } from 'app/services/agrupador-config.service';
 
 @Component({
@@ -26,16 +26,13 @@ import { AgrupadorConfigService } from 'app/services/agrupador-config.service';
 })
 export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   @Input()
-  set createdGroup(val: any) {
-    if (val) {
-      this.agrupadorObj = val;
-    }
-  }
-  get createdGroup(): any {
-    return this.agrupadorObj;
-  }
-
   agrupadorObj!: IAgrupador | null;
+
+  @Input()
+  idSequenceToLoad!: number;
+
+  @Output()
+  step = new EventEmitter();
 
   account: Account | null = null;
   subscription!: Subscription;
@@ -46,11 +43,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
   isReorder: boolean;
   isSearching: boolean;
 
-  filteredTypeOpts: any;
   filteredUmas: any;
   groupUmaForm!: FormGroup;
   isSaving = false;
-  idSequenceToLoad!: number;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -63,14 +58,14 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
     protected gradoAcademicoService: GradoAcademicoService,
     private umaPreviewModal: UmaPreviewModalService,
     protected activatedRoute: ActivatedRoute,
-    private eventManager: JhiEventManager,
-    // private route: ActivatedRoute,
-    private router: Router
+    private eventManager: JhiEventManager
   ) {
     this.isSearching = false;
     this.isReorder = false;
     this.initForm();
-    this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
+    if (this.activatedRoute.snapshot.paramMap.get('id') as any) {
+      this.idSequenceToLoad = this.activatedRoute.snapshot.paramMap.get('id') as any;
+    }
   }
 
   ngOnInit(): void {
@@ -271,7 +266,6 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
         type: 'success'
       })
     );
-    // this.router.navigate(['/uma-groups-home']);
   }
 
   protected onSaveError(): void {
@@ -340,5 +334,9 @@ export class SecuenciaAgrupadorUpdateComponent implements OnInit, OnDestroy {
       this.isReorder = false;
       this.addUmaToSequence(event.previousIndex, event.currentIndex);
     }
+  }
+
+  previusStep(evt: any): void {
+    this.step.emit(evt);
   }
 }

@@ -1,0 +1,32 @@
+{
+  "group": {
+    "page": "Grouper UMA / ",
+    "title": "Config Grouper",
+    "titlesec": "Secuencia de UMA",
+    "generalconfig": "General config",
+    "tagsequence": "Sequence UMA",
+    "form": {
+      "title": "Data Grouper:",
+      "noteobligatory": "*Field required",
+      "name": "Title Grouper*",
+      "obligatory": "Field required",
+      "description": "Description",
+      "limitDesc": "The Group description must not exceed 50 characters.",
+      "duration": "Duration",
+      "minutes": "Minutes",
+      "tags": "Search tags for the grouper",
+      "cancel": "cancel",
+      "notetags": "Write search tags or tags for the grouper"
+    },
+    "sequence": {
+      "yourumas": "Your UMA",
+      "drag": "Drag UMAs to the left panel to create sequences.",
+      "search": "Search",
+      "sequenceuma": "Sequence UMA"
+    },
+    "cancel": "Cancel",
+    "previous": "Previous",
+    "next": "Next",
+    "save": "Save Grouper"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "activityquestion": {
+    "title": "Interactive activity",
+    "select": "Select the type of response:",
+    "unic": "Unic",
+    "multiple": "Múltiple",
+    "truefalse": "True False",
+    "audiounic": "Unic Audio",
+    "audiomultiple": "Múltiple Audio",
+    "audiotruefalse": "True False Audio",
+    "obligatory": "It is obligatory to select an option",
+    "evaluable": "Evaluable:",
+    "unicimage": "Unic Image",
+    "multipleimage": "Múltiple Image",
+    "unicaudio": "Unic Audio",
+    "multipleaudio": "Múltiple Audio",
+    "cancel": "Cancel",
+    "create": "Create Activity",
+    "edit": "Edit Activity",
+    "question": {
+      "question": "Question ",
+      "makequestion": "Make a question ...",
+      "lenght": "Length between 1 and 100 characters, please validate your answers",
+      "add": "Add Question"
+    },
+    "answer": {
+      "makeanswer": "Answers ...",
+      "lenght": "Length between 1 and 50 characters",
+      "add": "Add Answer",
+      "errorfilesize": "The file must be less than 5MB.",
+      "errorfiletype": "File type not allowed."
+    }
+  }
+}

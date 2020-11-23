@@ -1,22 +1,22 @@
-import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcherUtil } from 'app/home-uma-groups/error-state-matcher';
 import { Agrupador, IAgrupador } from 'app/shared/model/agrupador.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { TagAgrupador } from 'app/shared/model/tag-agrupador.model';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
-import { Subscription, Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
-import { JhiEventWithContent, JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { AgrupadorService } from 'app/entities/agrupador/agrupador.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { takeUntil } from 'rxjs/operators';
 import { IWrapperModel } from 'app/shared/model/wrapper.model';
-import { AgrupadorConfigService } from '../../services/agrupador-config.service';
-import { IAgrupadorUma } from '../../shared/model/agrupador-uma.model';
+import { AgrupadorConfigService } from 'app/services/agrupador-config.service';
+import { IAgrupadorUma } from 'app/shared/model/agrupador-uma.model';
 
 @Component({
   selector: 'jhi-agrupador-uma-update',
@@ -81,7 +81,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     // console.error('#### agrupador-uma-update Agrupador recibido con ID: ', this.groupId);
     this.groupUmaForm.statusChanges.subscribe(() => {
       // console.error('#### Estado del formulario de registro de agrupador: ', val);
-      // this.formCreateEvent.emit(this.groupUmaForm);//  lo comente porque ya no se usa el stepper
+      this.formCreateEvent.emit(this.groupUmaForm); //  lo comente porque ya no se usa el stepper
     });
   }
 
@@ -153,8 +153,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     this.umasListGroup = [...data.modulos!];
   }
 
-  saveSequenceGroup(): void {
-    this.isSaving = true;
+  validSequenceGroup(step: number): number {
     const agrupador: IAgrupador = this.mapFormDataToAgrupador();
 
     if (!agrupador.titulo) {
@@ -177,6 +176,16 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       this.makeInvalid('desciptionSequenceUmas');
     }
 
+    if (this.groupUmaForm.valid) {
+      step = 2;
+    }
+    return step;
+  }
+
+  saveSequenceGroup(): void {
+    this.isSaving = true;
+    const agrupador: IAgrupador = this.mapFormDataToAgrupador();
+
     if (!this.umasListGroup.length) {
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', {
@@ -186,19 +195,20 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
       );
       return;
     }
+    this.saveGroup(agrupador.id);
+  }
 
-    if (this.groupUmaForm.valid) {
-      if (agrupador.id) {
-        // console.error('##########   Deberá actualizar: ', agrupador);
-        this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
-      } else {
-        // console.error('##########   Deberá guardar: ', agrupador);
-        this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
-      }
+  saveGroup(id: number | undefined): void {
+    this.isSaving = true;
+    const agrupador: IAgrupador = this.mapFormDataToAgrupador();
+    if (id) {
+      this.subscribeToUpdateResponse(this.agrupadorService.update(agrupador));
+    } else {
+      this.subscribeToSaveResponse(this.agrupadorService.create(agrupador));
     }
   }
 
-  revertSequenceGroup(groupId: number): void {
+  /*  revertSequenceGroup(groupId: number): void {
     if (groupId) {
       this.subscription = this.agrupadorService
         .delete(groupId)
@@ -209,7 +219,7 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
         });
     }
     // console.error('#### Termina eliminación, regresa a group-uma-configuration');
-  }
+  }*/
 
   makeInvalid(controlName: string): void {
     this.groupUmaForm.controls[controlName].markAsDirty(); //  setErrors(new Error());
@@ -243,7 +253,11 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAgrupador>>): void {
     result.subscribe(
-      () => this.onSaveSuccess(),
+      res => {
+        this.createdGroupSequence = res.body!;
+        this.makeValid('sendRegisterForm');
+        this.createdGroupEventEmit.emit({ param1: true, param2: res.body! });
+      },
       () => this.onSaveError()
     );
   }
@@ -260,21 +274,15 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
     );
   }
 
-  protected onSaveSuccess(): void {
-    // console.error(res.body);
-    this.isSaving = false;
-    this.router.navigate(['/uma-groups-home']);
-  }
-
   protected onSaveError(): void {
     this.isSaving = false;
     this.makeInvalid('sendRegisterForm');
     this.createdGroupEventEmit.emit(undefined);
   }
 
-  private onQueryError(): void {
+  /*  private onQueryError(): void {
     console.error('#### ERROR AL REALIZAR LA CONSULTA');
-  }
+  }*/
 
   // chips
 
@@ -303,14 +311,14 @@ export class AgrupadorUmaUpdateComponent implements OnInit, OnDestroy {
   }
 
   // no pude hacer que funcionara esta cosa
-  validateArrayNotEmpty(c: FormControl): any {
+  /*  validateArrayNotEmpty(c: FormControl): any {
     if (c.value && c.value.length === 0) {
       return {
         validateArrayNotEmpty: { valid: false }
       };
     }
     return null;
-  }
+  }*/
 
   // termina chips
 }

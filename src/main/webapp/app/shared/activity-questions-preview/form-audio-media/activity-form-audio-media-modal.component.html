@@ -2,7 +2,7 @@
     <div class="modal-act-header">
         <div class="row-mah">
             <div class="nimbus-imagotype"></div>
-            <h2 id="jhi-curso-heading">Actividad interactiva</h2>
+            <h2 id="jhi-curso-heading" jhiTranslate="activityquestion.title">Actividad interactiva</h2>
             <h3>I </h3>
             <div class="alert-course-configuration">
                 <jhi-alert-error></jhi-alert-error>
@@ -24,7 +24,7 @@
             <mat-drawer-content class="mat-drawer-content">
                 <div class="header-mdc">
                     <div class="type-q">
-                        <label>Selecciona el tipo de respuesta:</label>
+                        <label jhiTranslate="activityquestion.select">Selecciona el tipo de respuesta:</label>
                         <div class="col-type-question" formGroupName="tipoActividad"
                              [ngClass]="{'ng-untouched ng-pristine ng-invalid alert-input': !isValidOpcion()}">
                             <mat-radio-group aria-label="Select an option" formControlName="opcionConcatenada"
@@ -34,39 +34,39 @@
                                                   class="question-radio mat-radio-no-margin"
                                                   (change)="onOpcionChange($event)"
                                                   [hidden]="opcionIn!='' && opcionIn!=PREG_AUDIO_RESP_UNICA_IMAGEN">
-                                    Imagen Única
+                                    <span jhiTranslate="activityquestion.unicimage">Imagen Única </span>
                                 </mat-radio-button>
 
                                 <mat-radio-button value="{{PREG_AUDIO_RESP_MULTIPLE_IMAGEN}}" id="type_question12"
                                                   class="question-radio" (change)="onOpcionChange($event)"
                                                   [hidden]="opcionIn!='' && opcionIn!=PREG_AUDIO_RESP_MULTIPLE_IMAGEN">
-                                    Imagen Múltiple
+                                    <span jhiTranslate="activityquestion.multipleimage">Imagen Múltiple</span>
                                 </mat-radio-button>
 
                                 <mat-radio-button value="{{PREG_AUDIO_RESP_UNICA_AUDIO}}" id="type_question13"
                                                   class="question-radio mat-radio-no-margin"
                                                   (change)="onOpcionChange($event)"
                                                   [hidden]="opcionIn!='' && opcionIn!=PREG_AUDIO_RESP_UNICA_AUDIO">
-                                    Audio Única&nbsp;&nbsp;&nbsp;
+                                   <span jhiTranslate="activityquestion.unicaudio">Audio Única&nbsp;&nbsp;&nbsp;</span>
                                 </mat-radio-button>
 
                                 <mat-radio-button value="{{PREG_AUDIO_RESP_MULTIPLE_AUDIO}}" id="type_question14"
                                                   class="question-radio" (change)="onOpcionChange($event)"
                                                   [hidden]="opcionIn!='' && opcionIn!=PREG_AUDIO_RESP_MULTIPLE_AUDIO">
-                                    Audio Múltiple
+                                    <span jhiTranslate="activityquestion.multipleaudio">Audio Múltiple</span>
                                 </mat-radio-button>
 
                             </mat-radio-group>
                         </div>
                         <div class="form-nimbus">
                             <div *ngIf="!isValidOpcion()" class="form-alert">
-                                <p>Es obligatorio seleccionar una opción</p>
+                                <p jhiTranslate="activityquestion.obligatory">Es obligatorio seleccionar una opción</p>
                             </div>
                         </div>
                     </div>
                     <div class="type-q-evaluable">
                         <div class="col-type-question">
-                            <label>Evaluable:</label>
+                            <label jhiTranslate="activityquestion.evaluable">Evaluable:</label>
                             <mat-checkbox mat-raised-button id="evaluable" formControlName="evaluable"></mat-checkbox>
                         </div>
                     </div>
@@ -87,9 +87,10 @@
         <!-- End body -->
         <!-- Footer -->
         <div class="modal-act-footer">
-            <button (click)="close()" class="secondary-btn">Cancelar</button>
+            <button (click)="close()" class="secondary-btn" jhiTranslate="activityquestion.cancel">Cancelar</button>
             <button type="button" (click)="onSubmit()" class="main-btn">
-                <span *ngIf="!jsonFormIn">Crear&nbsp;</span> <span *ngIf="jsonFormIn">Editar&nbsp;</span>Actividad
+                <span *ngIf="!jsonFormIn" jhiTranslate="activityquestion.create">Crear&nbsp;Actividad</span>
+                <span *ngIf="jsonFormIn"  jhiTranslate="activityquestion.edit">Editar&nbsp;Actividad</span>
             </button>
         </div>
         <!-- End Footer -->

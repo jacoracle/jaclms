@@ -30,7 +30,7 @@
                         <input [ngClass]="{'alert-input': !isValidAnswer(indQuestion, indAnswer), 'disabled-input':isMutimedia()}"
                             maxlength="50" type="text" class="form-control answer-question-space no-border-right"
                             name="respuesta{{indAnswer}}" id="id_answer{{indAnswer}}_question{{indQuestion}}"
-                            formControlName="respuesta" placeholder="Respuesta..."
+                            formControlName="respuesta" placeholder="{{'activityquestion.answer.makeanswer' | translate}}"
                             (focusout)="refreshQuestion(indQuestion)" (keypress)="noWriteMedia()"/>
 
                         <div class="input-group-prepend" *ngIf="isMediaAudio()">
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div *ngIf="!isValidAnswer(indQuestion, indAnswer)" class="form-alert">
-                            <p>Longitud entre 1 y 50 caracteres</p>
+                            <p jhiTranslate="activityquestion.answer.lenght">Longitud entre 1 y 50 caracteres</p>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
             <button class="secondary-btn" (click)="addAnswer(indQuestion)"
                     [disabled]="controlesRespuestas(indQuestion).length>=4" *ngIf="!isVerdaderoFalso()">
                 <i class="icon ni-add icon-negative"></i>
-                <span>Agregar respuesta</span>
+                <span jhiTranslate="activityquestion.answer.add">Agregar respuesta</span>
             </button>
         </div>
     </div> <!-- respuestas -->

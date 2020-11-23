@@ -1,0 +1,26 @@
+{
+  "uma": {
+    "page": "UMA Builder /",
+    "title": "Registration UMA",
+    "titleedit": "Edition UMA",
+    "notefields": "Fill the fields",
+    "form": {
+      "configuration": "General configuration",
+      "obligatory": "*Obligatory field",
+      "title": "Title",
+      "message": "Correction message",
+      "description": "Description",
+      "descriptionlenght": "The description must not exceed 50 characters.",
+      "knowledge": "Knowledge Area",
+      "level": "Academic Level",
+      "grade": "Academic Grade",
+      "cancel": "cancel",
+      "type": "UMA type",
+      "collaborators": "Collaborators and Roles",
+      "topic": "UMA topics"
+    },
+    "cancel": "Cancel",
+    "create": "Create UMA",
+    "edit": "Edit UMA"
+  }
+}

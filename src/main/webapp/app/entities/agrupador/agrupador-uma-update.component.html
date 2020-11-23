@@ -4,36 +4,37 @@
     <div class="register-form-group">
 
       <div class="container-field-register">
-        <p>Datos Agrupador:</p>
-        <p class="obligatory_f">*Campo requerido</p>
+        <p class="obligatory_f" jhiTranslate="group.form.noteobligatory">*Campo requerido</p>
 
         <div class="row-form-group">
           <div>
-            <mat-form-field>
-              <mat-label>Título de Agrupador*</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-label jhiTranslate="group.form.name">Título de Agrupador*</mat-label>
               <input matInput formControlName="titleSequenceUmas" [errorStateMatcher]="matcher"
                 placeholder="">
               <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
               <mat-error *ngIf="groupUmaForm!.get('titleSequenceUmas')!.hasError('required')">
-                Campo requerido
+               <span jhiTranslate="group.form.obligatory">Campo requerido</span>
               </mat-error>
             </mat-form-field>
           </div>
           <div>
-            <mat-form-field>
-              <mat-label>Descripción</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-label jhiTranslate="group.form.description">Descripción</mat-label>
               <input matInput formControlName="desciptionSequenceUmas"
                 placeholder="">
                 <mat-error *ngIf="groupUmaForm!.get('desciptionSequenceUmas')!.hasError('maxlength')">
-                La descripción del Grupo no debe superar los 50 caracteres.
+                    <span jhiTranslate="group.form.limitDesc">La descripción del Grupo no debe superar los 50 caracteres.</span>
               </mat-error>
             </mat-form-field>
           </div>
           <div>
-            <mat-form-field>
-              <mat-label>Duración</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-label jhiTranslate="group.form.duration">Duración</mat-label>
               <mat-select formControlName="durationSequence" name="durationSequence">
-                <mat-option *ngFor="let d of durationValuesList" [value]="d">{{d}} minutos</mat-option>
+                <mat-option *ngFor="let d of durationValuesList" [value]="d">{{d}}
+                    <span jhiTranslate="group.form.minutes">minutos</span>
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -41,24 +42,21 @@
         </div>
 
         <div class="row-form-group-tag">
-          <div>
-            <mat-form-field class="example-chip-list">
-              <mat-label>Tags de búsqueda para el agrupador</mat-label>
+            <mat-form-field class="example-chip-list" appearance="outline">
+              <mat-label jhiTranslate="group.form.tags">Tags de búsqueda para el agrupador</mat-label>
               <mat-chip-list #chipList aria-label="Tags para la búsqueda">
                 <mat-chip *ngFor="let fruit of tagsBusquedaAgrupador!" [selectable]="selectable" [removable]="removable"
                   (removed)="removeTag(fruit)">
                   {{fruit.descripcion}}
-                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  <mat-icon matChipRemove *ngIf="removable" jhiTranslate="group.form.cancel">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Escribe etiquetas de búsqueda o tags para el agrupador" [matChipInputFor]="chipList"
+                <input placeholder="{{'group.form.notetags' | translate}}" [matChipInputFor]="chipList"
                   formControlName="searchTagsSequenceUmas" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTag($event)">
               </mat-chip-list>
             </mat-form-field>
           </div>
           <div>
-
-          </div>
         </div>
 
       </div>
