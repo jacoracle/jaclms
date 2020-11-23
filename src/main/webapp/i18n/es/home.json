@@ -30,8 +30,8 @@
         "select": "Seleccionar"
       },
       "learning": {
-        "name": "Rutas de aprendizaje",
-        "description": "Agrega agrupadores de UMA para crear rutas de aprendizaje.",
+        "name": "Creador de programas",
+        "description": "Agrega agrupadores de UMA para crear programas.",
         "select": "Seleccionar"
       },
       "calendar": {
