@@ -164,11 +164,11 @@ export class HierarchicalTreeService {
     parent.isLoading = true;
     // if (index >= 0) {
     const nodes = new Array<DynamicFlatNode>();
-    const orderNewNode = this.data.filter(n => n.level === parent.level + 1).length;
+    const idx = this.data.indexOf(parent);
+    const orderNewNode = this.treeControl.getDescendants(parent).length; // this.data.filter((n, index) => n.level === parent.level+1 && index + 1 === idx).length;// this.data.filter(n => n.level === parent.level + 1).length;
     nodes.push(new DynamicFlatNode(parent.idDb, name, parent.level + 1, orderNewNode, 'n', 0, 0, false)); //  check the nivelId and nivelAgrupadorId params and check this order zero cause it must be the order that user gives
-    const index = this.data.indexOf(parent);
     // this.data.splice(index + 1, 0, ...nodes);
-    this.data.splice(index + 1 + orderNewNode, 0, ...nodes);
+    this.data.splice(idx + 1 + orderNewNode, 0, ...nodes);
     this.dataChange.next(this.data);
     // }
     parent.isLoading = false;
@@ -230,7 +230,7 @@ export class HierarchicalTreeService {
       estructuraJerarquica: [
         {
           id: parentId,
-          ordenNivel: node.orden === 0 ? this.data.filter(n => n.level === node.level).length : node.orden
+          ordenNivel: node.orden //  node.orden === 0 ? this.data.filter(n => n.level === node.level).length : node.orden
         }
       ],
       nivelRuta: []
