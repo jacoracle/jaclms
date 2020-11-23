@@ -101,9 +101,9 @@
                         <input type="button" (click)="record(ejercicio, exerciseIndex)" class="btn-circle" id="mixBut"
                             [ngClass]="{
                     'btn-start': !isOn,
-                    'btn-stop': isOn && recordingexerciseIndex === exerciseIndex && recordingAnswerIndex === -1,
-                    'btn-disabled': isOn && (recordingexerciseIndex !== exerciseIndex || recordingAnswerIndex !== -1)
-                  }" [disabled]="isOn && (recordingexerciseIndex !== exerciseIndex || recordingAnswerIndex !== -1)" />
+                    'btn-stop': isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === -1,
+                    'btn-disabled': isOn && (recordingExerciseIndex !== exerciseIndex || recordingElementIndex !== -1)
+                  }" [disabled]="isOn && (recordingExerciseIndex !== exerciseIndex || recordingElementIndex !== -1)" />
                     </div>
                 </div>
 
@@ -125,7 +125,7 @@
 
 
                     <div class="audio-progress"
-                        *ngIf="isOn && recordingexerciseIndex === exerciseIndex && recordingAnswerIndex === -1">
+                        *ngIf="isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === -1">
                         <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value"
                             [bufferValue]="bufferValue">
                         </mat-progress-bar>
@@ -134,7 +134,7 @@
                     </div>
 
                     <div *ngIf="ejercicio.tipoRecurso === 'Audio' && ejercicio.safeUrl && ejercicio.safeUrl !== ''"
-                        [hidden]="isOn && recordingexerciseIndex === exerciseIndex && recordingAnswerIndex === -1">
+                        [hidden]="isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === -1">
                         <jhi-resource-audio [safeUrl]="ejercicio.safeUrl"></jhi-resource-audio>
                     </div>
 
@@ -190,12 +190,12 @@
                                     <input type="button" (click)="record(elemento, exerciseIndex, columnIndex, elementIndex)"
                                         class="btn-circle" id="mixBut" [ngClass]="{
                                             'btn-start': !isOn,
-                                            'btn-stop': isOn && recordingexerciseIndex === exerciseIndex && recordingelementIndex === elementIndex,
-                                            'btn-disabled': isOn && (recordingexerciseIndex !== exerciseIndex || recordingelementIndex !== elementIndex)
-                                        }" [disabled]="isOn && (recordingexerciseIndex !== exerciseIndex || recordingelementIndex !== elementIndex)" />
+                                            'btn-stop': isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === elementIndex,
+                                            'btn-disabled': isOn && (recordingExerciseIndex !== exerciseIndex || recordingElementIndex !== elementIndex)
+                                        }" [disabled]="isOn && (recordingExerciseIndex !== exerciseIndex || recordingElementIndex !== elementIndex)" />
                                 </div>
                                 <div class="audio-progress"
-                                    *ngIf="isOn && recordingexerciseIndex === exerciseIndex && recordingelementIndex === elementIndex">
+                                    *ngIf="isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === elementIndex">
                                     <mat-progress-bar class="example-margin" [color]="color" [mode]="mode"
                                         [value]="value" [bufferValue]="bufferValue">
                                     </mat-progress-bar>
@@ -203,7 +203,7 @@
                                     <span>{{timeToShow}}</span>
                                 </div>
                                 <div *ngIf="columna.tipoElementos === 'Audio' && elemento.safeUrl && elemento.safeUrl !== ''"
-                                    [hidden]="isOn && recordingexerciseIndex === exerciseIndex && recordingelementIndex === elementIndex">
+                                    [hidden]="isOn && recordingExerciseIndex === exerciseIndex && recordingElementIndex === elementIndex">
                                     <jhi-resource-audio [safeUrl]="elemento.safeUrl"></jhi-resource-audio>
                                 </div>
 
