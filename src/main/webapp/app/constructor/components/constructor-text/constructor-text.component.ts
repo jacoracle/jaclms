@@ -186,20 +186,14 @@ export class ConstructorTextComponent {
   }
 
   restoreTitle(text: string): any {
-    if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1><h1>')) {
+    if ((text.startsWith('<p>') && text.endsWith('</p>')) || text.startsWith('<h1 class="ql-align-center">')) {
       if (this.textWithoutHtml(text).length > 0) {
-        return '<h1>' + this.textWithoutHtml(text) + '</h1>';
-      } else {
-        return '';
-      }
-    } else if (text.startsWith('<h1>')) {
-      if (this.textWithoutHtml(text).length > 0) {
-        return text;
+        return '<h1 class="ql-align-center">' + this.textWithoutHtml(text) + '</h1>';
       } else {
         return '';
       }
     } else {
-      return '<h1>' + text;
+      return '<h1 class="ql-align-center">' + text;
     }
   }
 
