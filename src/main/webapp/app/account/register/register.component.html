@@ -215,11 +215,13 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <mat-error *ngIf="registerForm.get('country')?.errors">
-                  <span jhiTranslate="register.messages.validate.login.countryPhoneCode">
-                      You must select a country phone code
-                  </span>
-                </mat-error>
+                  <div class="alert-register-input" *ngIf="registerForm.get('country')?.errors">
+                    <mat-error *ngIf="registerForm.get('country')?.errors">
+                      <span jhiTranslate="register.messages.validate.login.countryPhoneCode">
+                          You must select a country phone code
+                      </span>
+                    </mat-error>
+                  </div>
               </div>
               <div class="mat-input-phone">
                 <mat-form-field class="mat-input">
