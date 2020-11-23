@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 import { Preguntas, Respuestas } from './../../../shared/model/actividad-pregunta.model';
 import { ActivityService } from 'app/services/activity.service';
@@ -17,7 +17,7 @@ import MicRecorder from 'mic-recorder-to-mp3';
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent {
   _activity?: ActividadInteractiva;
   @Input()
   set activity(activity: ActividadInteractiva) {
@@ -65,8 +65,6 @@ export class QuestionComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     private fileUploadService: FileUploadService
   ) {}
-
-  ngOnInit(): void {}
 
   emptyAnswers(pregunta: Preguntas): void {
     if (pregunta.respuestas) {
