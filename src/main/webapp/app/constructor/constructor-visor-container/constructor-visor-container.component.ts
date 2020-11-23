@@ -38,6 +38,7 @@ import { ContentBlock15Component } from 'app/constructor/content-blocks/content-
 import { ContentBlock16Component } from 'app/constructor/content-blocks/content-block16/content-block16.component';
 import { ContentBlock19Component } from '../content-blocks/content-block19/content-block19.component';
 import { FileUploadService } from 'app/services/file-upload.service';
+import { ContentBlock20Component } from '../content-blocks/content-block20/content-block20.component';
 
 @Component({
   selector: 'jhi-constructor-visor-container',
@@ -77,7 +78,8 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
     { nombre: 'numeracion_actividad', componente: ContentBlock18Component },
     { nombre: 'activity_question_audio_text', componente: ContentBlock15Component },
     { nombre: 'activity_question_audio_media', componente: ContentBlock16Component },
-    { nombre: 'pregunta', componente: ContentBlock19Component }
+    { nombre: 'pregunta', componente: ContentBlock19Component },
+    { nombre: 'relacionar_columnas', componente: ContentBlock20Component }
   ];
 
   @Input()
