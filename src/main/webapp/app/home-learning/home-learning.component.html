@@ -3,58 +3,62 @@
 
         <!-- Window Header -->
         <div class="window-br-header">
-            <div class="alert-path">
+          <div class="row-br-header">
+            <div class="header-breadcrumbs">
+              <div class="logo-home"><i class="icon ni-nimbus"></i></div>
+              <!-- <h4 class="hb-title" jhiTranslate="group.page">Creador de programas / </h4> -->
+              <h4 class="hb-title">Creador de programas</h4>
+            </div>
+            <div class="alert-path alert-nimbus-window">
                 <jhi-alert-error></jhi-alert-error>
             </div>
-            <div class="r1">
-                <div class="logo-home-mini"></div>
-            </div>
-
-            <div class="r2">
-                <div class="windowHeader-title">
-                    <h4>Rutas de Aprendizaje</h4>
-                </div>
-                <div class="c1">
-                </div>
-            </div>
+          </div>
         </div>
 
+        <!-- Window topbar -->
         <div class="window-br-body-topbar">
             <div class="line-gradient lg-step3"></div>
             <div class="row-wbr-bt">
-                <p>Tus Rutas de Aprendizaje ({{pathsList!.length}})</p>
+              <div class="br-tp-subtitle">
+                <!-- <h5 jhiTranslate="homegroup.your">Tus programas</h5> -->
+                <h5>Tus programas</h5>
+                <span>{{pathsList!.length}}</span>
+              </div>
 
-                <form name="learningForm" role="form" [formGroup]="learningForm" autocomplete="off"
-                    class="form-uma-search">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Buscar</mat-label>
-                        <input type="text" placeholder="indicio de búsqueda" matInput formControlName="titlePath"
-                            [matAutocomplete]="autoInputTitlePath">
-                        <mat-autocomplete autoActiveFirstOption #autoInputTitlePath="matAutocomplete"
-                            [displayWith]="displayFn">
-                        </mat-autocomplete>
-                        <mat-error *ngIf="!learningForm!.get('titlePath')!.hasError('maxLength')">
-                            Máximo 20 caracteres para la búsqueda.
-                        </mat-error>
-                    </mat-form-field>
-                </form>
-
+              <form name="learningForm" role="form" [formGroup]="learningForm" autocomplete="off"
+                  class="form-uma-search">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Buscar</mat-label>
+                      <input type="text" matInput formControlName="titlePath"
+                          [matAutocomplete]="autoInputTitlePath">
+                      <mat-autocomplete autoActiveFirstOption #autoInputTitlePath="matAutocomplete"
+                          [displayWith]="displayFn">
+                      </mat-autocomplete>
+                      <mat-error *ngIf="!learningForm!.get('titlePath')!.hasError('maxLength')">
+                          Máximo 20 caracteres para la búsqueda.
+                      </mat-error>
+                  </mat-form-field>
+              </form>
             </div>
         </div>
 
         <!-- Window Empty -->
         <div class="emty-e" *ngIf="!pathsList.length">
-            <div class="container-br-message">
-                <div class="br-message">
-                    <div class="brm-1">
-                        <div class="br-message-icon"></div>
-                    </div>
-                    <div class="brm-2">
-                        <p>¡Hola! <br> Bienvenido a <span>Nimbus Constructor</span>.</p>
-                        <p>Para comenzar da click en el botón "Nueva Ruta".</p>
-                    </div>
-                </div>
+          <div class="container-br-message">
+            <div class="br-message">
+              <div class="brm-1">
+                <div class="br-message-icon"></div>
+              </div>
+              <div class="brm-2">
+                <p>
+                    <label jhiTranslate="homegroup.greet">¡Hola!</label><br>
+                    <label jhiTranslate="homegroup.welcome">Bienvenido a </label>
+                    <span>Nimbus Constructor</span>.
+                </p>
+                <p jhiTranslate="homegroup.start">Para comenzar da click en el botón "Crear Agrupador".</p>
+              </div>
             </div>
+          </div>
         </div>
 
 
@@ -65,28 +69,35 @@
                     <div class="box-card box-program" *ngFor="let sec of pathsList" [routerLink]="['/path-hierarchical', sec.id]">
                         <!-- [routerLink]="['/path-configuration', sec.id]"> -->
 
-                        <div class="program-cover-br-image" *ngIf="!sec.safeUrl || sec.safeUrl === ''"><span></span></div>
                         <div class="program-cover-br" *ngIf="sec.safeUrl && sec.safeUrl !== ''">
                           <img [src]="sec.safeUrl">
                         </div>
 
-
-                        <div (click)="deletePath(sec, $event)" class="del-path delete-course-br">
+                        <!-- <div (click)="deletePath(sec, $event)" class="del-path delete-course-br">
                             <i class="icon ni-delete icon-negative"></i>
-                        </div>
+                        </div> -->
 
-                        <div class="course-desc-br-row">
-
+                        <div class="program-desc-br-row">
+                          <div class="cdb-row">
                             <span class="title-course-br"
-                                *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}</span>
-
-                            <span class="desc-course-br"
-                                *ngIf="sec.descripcion">{{sec.descripcion!.length > 28 ? sec.descripcion!.substring(0, 28) + "..." : sec.descripcion!}}</span>
+                                *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}
+                            </span>
+                            <div class="cdb-buttons">
+                              <div class="edit-course-br btn-circle-disabled">
+                                  <i class="icon ni-edit icon-negative"></i>
+                              </div>
+                              <div (click)="deletePath(sec, $event)" class="del-path delete-course-br">
+                                  <i class="icon ni-delete icon-negative"></i>
+                              </div>
+                            </div>
+                            <!-- <span class="desc-course-br"
+                                *ngIf="sec.descripcion">{{sec.descripcion!.length > 28 ? sec.descripcion!.substring(0, 28) + "..." : sec.descripcion!}}
+                            </span> -->
+                          </div>
                         </div>
 
                     </div>
                 </div>
-
             </div>
         </div>
         <!-- close window-br-body div -->
@@ -94,9 +105,7 @@
         <!-- Window footer -->
         <div class="window-br-footer">
             <button routerLink="/" class="secondary-btn">Regresar</button>
-            <!-- <button routerLink="/path-configuration" class="main-btn">Nueva Ruta</button> -->
-
-            <button routerLink="/view-tree/1" class="main-btn">TREE</button>
+            <!-- <button routerLink="/view-tree/1" class="main-btn">TREE</button> -->
             <button routerLink="/path-configuration" class="main-btn create-btn">Crear</button>
             <!-- Crear programa -->
         </div>
