@@ -13,7 +13,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-register',
-  templateUrl: './register.component.html'
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements AfterViewInit {
   @ViewChild('login', { static: false })
