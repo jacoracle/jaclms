@@ -262,7 +262,25 @@ export class TreeHierarchicalLevelComponent implements OnInit {
   addGroupAsLessonToTree(previousIndex: number, currentIndex: number): void {
     // console.error('addGroupAsLessonToTree()');
     // const actualLevelDropped = this.treeControl.getLevel(this.treeControl.dataNodes[currentIndex - 1]);
-    const padre = this.treeControl.dataNodes[currentIndex - 1]; //  .node;
+    // const padre = this.treeControl.dataNodes[currentIndex - 1]; //  .node;
+    let padre = this.treeControl.dataNodes[currentIndex - 1];
+
+    if (padre.nodeType.toUpperCase() === 'A') {
+      //
+      const idxParent = this.treeControl.dataNodes.findIndex(n => n.idDb === padre.nivelId);
+      if (idxParent >= 0) {
+        padre = this.treeControl.dataNodes[idxParent];
+      } else {
+        this.eventManager.broadcast(
+          new JhiEventWithContent('constructorApp.validationError', {
+            message: 'constructorApp.path.validations.error',
+            type: 'danger'
+          })
+        );
+      }
+    }
+
+    const orderGroup = this.treeControl.getDescendants(padre).filter(n => n.level === padre.level + 1).length; // this.treeControl.getDescendants(padre).length;
 
     this.treeControl.expand(padre);
 
@@ -270,7 +288,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     // console.error('padre: ', padre);
 
     const newGroup: HierarchicalLevel[] = [];
-    newGroup.push({ id: this.sequenceList[previousIndex].id, orden: 0 });
+    newGroup.push({ id: this.sequenceList[previousIndex].id, orden: orderGroup ? orderGroup : 0 });
 
     const newLesson: HierarchicalLevel = {
       id: padre.idDb,
@@ -282,6 +300,7 @@ export class TreeHierarchicalLevelComponent implements OnInit {
     // console.error('Request PUT: ', newLesson);
     // this.subscribeResponseAddLesson(this.nivelJerarquicoService.updateNode(newLesson));
     this.dataSource.insertGroup(padre, newLesson);
+    // this.treeControl.expandDescendants(padre);
   }
 
   // no se utiliza porque ya se hace en el servicio del tree, pero debería hacer algo para poder enviar las alertas por acción en el tree

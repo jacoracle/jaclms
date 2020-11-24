@@ -57,6 +57,9 @@
                                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                     </mat-icon>
                                 </button>
+                                <button *ngIf="isGroup(node)" mat-icon-button>
+                                    <mat-icon style="color: #2ede9a;">book</mat-icon>
+                                </button>
                                 {{node.nombre}}
                                 <!-- <button mat-icon-button (click)="addNewItem(node)">
                                     <mat-icon>add</mat-icon>
