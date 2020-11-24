@@ -174,7 +174,9 @@ export class TreeHierarchicalLevelComponent implements OnInit {
 
   removeItem(node: DynamicFlatNode): void {
     // eslint-disable-next-line no-console
-    console.info('Eliminará el nodo: ', node);
+    // console.info('Eliminará el nodo: ', node);
+    this.dataSource.deleteNode(node);
+
     this.eventManager.broadcast(
       new JhiEventWithContent('constructorApp.validationError', {
         message: 'constructorApp.path.tree.remove',

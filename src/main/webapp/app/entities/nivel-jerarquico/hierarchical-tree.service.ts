@@ -293,7 +293,7 @@ export class HierarchicalTreeService {
 
     this.executePutRequest(editRequest).then((res: HierarchicalStructureGroup) => {
       // eslint-disable-next-line no-console
-      console.info('Finish edit response: ', res);
+      console.info('Finish editing: ', res);
       const index = this.data.indexOf(node);
       const editNode: DynamicFlatNode = this.data[index];
       editNode.nombre = newName;
@@ -316,5 +316,20 @@ export class HierarchicalTreeService {
 
   private executeDeleteGroupRequest(nivelAgrupadorId: number): void {
     this.nivelJerarquicoService!.deleteGroup(nivelAgrupadorId).subscribe();
+  }
+
+  deleteNode(node: DynamicFlatNode): void {
+    const index = this.data.indexOf(node);
+    if (index >= 0) {
+      const hijos = this.treeControl.getDescendants(node);
+      this.executeDeleteNodeRequest(node.idDb);
+      this.data.splice(index, hijos.length + 1);
+      this.dataChange.next(this.data);
+      // node.isLoading = false;
+    }
+  }
+
+  private executeDeleteNodeRequest(nivelAgrupadorId: number): void {
+    this.nivelJerarquicoService!.deleteNode(nivelAgrupadorId).subscribe();
   }
 }

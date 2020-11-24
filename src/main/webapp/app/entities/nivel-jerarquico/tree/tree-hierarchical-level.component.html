@@ -77,7 +77,7 @@
                                         <mat-icon>edit</mat-icon>
                                         Edit Node name
                                     </button>
-                                    <button *ngIf="getLevel(node) === 0 && !isGroup(node)" mat-menu-item (click)="removeItem(node)">
+                                    <button *ngIf="!isGroup(node)" mat-menu-item (click)="removeItem(node)">
                                         <mat-icon>delete_sweep</mat-icon>
                                         Delete Node
                                     </button>
