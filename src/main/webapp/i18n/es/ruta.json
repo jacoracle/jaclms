@@ -2,16 +2,19 @@
   "constructorApp": {
     "path": {
       "home": {
-        "title": "Rutas de Aprendizaje",
+        "title": "Creador de programas",
+        "titleBread": "/ Creador de programas",
         "createLabel": "Crear",
         "createOrEditLabel": "Crear o editar Ruta",
         "titleGeneralConfg": "Configuración general",
         "titleAdvancelConfg": "Configuración avanzada",
+        "titleConfgProgram": "/ Configurar Programa",
+        "your": "Tus Programas",
         "notFound": "Ninguna Ruta pudo ser encontrada"
       },
-      "created": "La Ruta ha sido creada.",
-      "updated": "La Ruta ha sido actualizada.",
-      "deleted": "La Ruta ha sido eliminada.",
+      "created": "El programa ha sido creada.",
+      "updated": "El programa ha sido actualizada.",
+      "deleted": "El programa ha sido eliminada.",
       "delete": {
         "question": "¿Desea eliminar la Ruta con ID: {{ id }}?"
       },

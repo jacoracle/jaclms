@@ -10,7 +10,7 @@ import { IModulo } from 'app/shared/model/modulo.model';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Router } from '@angular/router';
 
 @Component({
@@ -124,14 +124,12 @@ export class HomeModuleComponent implements OnInit, OnDestroy, AfterContentInit 
     $event.stopPropagation();
     this.moduleService.delete(id).subscribe(() => {
       this.modulos.splice(this.findElementById(this.modulos, id), 1);
-      /*
       this.eventManager.broadcast(
         new JhiEventWithContent('constructorApp.validationError', {
-          message: 'constructorApp.agrupador.deleted',
+          message: 'homemodule.deleted',
           type: 'success'
         })
       );
-      */
     });
   }
 

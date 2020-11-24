@@ -217,6 +217,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   subscriptionText(): Subscription {
     return this.textService.getSelectText().subscribe(() => {
       this.fileFormat = 'text';
+      this.activity = undefined;
     });
   }
 
@@ -228,6 +229,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.fileInput.nativeElement.value = '';
       }
       this.showLoader = false;
+      this.activity = undefined;
     });
   }
 
@@ -248,6 +250,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
           this.showLoader = false;
         }
       }
+      this.activity = undefined;
     });
   }
 
@@ -266,6 +269,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         }
       }
       this.showLoader = false;
+      this.activity = undefined;
     });
   }
 
@@ -281,6 +285,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.showLoader = false;
       }
       this.showLoader = false;
+      this.activity = undefined;
     });
   }
 
@@ -292,6 +297,7 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
         this.fileInput.nativeElement.value = '';
       }
       this.showLoader = false;
+      this.activity = undefined;
     });
   }
 
@@ -529,28 +535,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
     }
   }
 
-  isNotTextActivity(): boolean {
-    return (
-      this.fileFormat !== 'activity_question_text' &&
-      this.fileFormat !== 'activity_question_media' &&
-      this.fileFormat !== 'activity_question_audio_text' &&
-      this.fileFormat !== 'activity_question_audio_media' &&
-      this.fileFormat !== 'text'
-    );
-  }
-
   isActivity(): boolean {
-    return (
-      this.fileFormat === 'activity_question_text' ||
-      this.fileFormat === 'activity_question_media' ||
-      this.fileFormat === 'activity_question_audio_text' ||
-      this.fileFormat === 'activity_question_audio_media'
-    );
+    return this.activity !== undefined && this.activity.tipoActividadInteractiva !== undefined;
   }
 
-  isQuestionEmpty(): boolean {
-    return (
-      this.activity && this.activity.contenido && (this.activity.contenido === null || Object.keys(this.activity.contenido).length === 0)
-    );
+  activityHasContent(): boolean {
+    return this.activity && this.activity.contenido && this.activity.contenido !== null && Object.keys(this.activity.contenido).length > 0;
   }
 }

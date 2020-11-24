@@ -5,17 +5,13 @@
         <div class="window-br-header">
           <div class="row-br-header">
             <div class="header-breadcrumbs">
-              <div class="logo-home"><i class="icon ni-nimbus"></i></div>
+              <div class="logo-home" routerLink="/"><i class="icon ni-nimbus"></i></div>
               <h4 class="hb-title" jhiTranslate="homemodule.title">/ Constructor de UMA</h4>
             </div>
-            <div class="alert-home-uma">
+            <div class="alert-home-uma alert-nimbus-window">
                 <jhi-alert-error></jhi-alert-error>
             </div>
           </div>
-        </div>
-
-        <div [hidden]="!showLoader" class="loader-home">
-            <span class="loader"></span>
         </div>
 
         <div class="window-br-body-topbar">
@@ -36,6 +32,10 @@
                 </mat-form-field>
               </form>
             </div>
+        </div>
+
+        <div [hidden]="!showLoader" class="loader-home">
+            <span class="loader"></span>
         </div>
 
         <!-- Window Empty -->

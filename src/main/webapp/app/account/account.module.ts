@@ -11,9 +11,10 @@ import { PasswordResetFinishComponent } from './password-reset/finish/password-r
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
 import { PasswordStrengthBarModule } from './password/password-strength-bar.module';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  imports: [ConstructorSharedModule, RouterModule.forChild(accountState), PasswordStrengthBarModule],
+  imports: [ConstructorSharedModule, RouterModule.forChild(accountState), PasswordStrengthBarModule, MatSelectModule],
   declarations: [
     ActivateComponent,
     RegisterComponent,

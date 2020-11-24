@@ -42,6 +42,7 @@ import { ContentBlock15Component } from 'app/constructor/content-blocks/content-
 import { ContentBlock16Component } from 'app/constructor/content-blocks/content-block16/content-block16.component';
 import { ContentBlock19Component } from 'app/constructor/content-blocks/content-block19/content-block19.component';
 import { InteractiveActivitiesModule } from 'app/constructor/interactive-activities/interactive-activities.module';
+import { ContentBlock20Component } from 'app/constructor/content-blocks/content-block20/content-block20.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { InteractiveActivitiesModule } from 'app/constructor/interactive-activit
       ContentBlock16Component,
       ContentBlock17Component,
       ContentBlock18Component,
-      ContentBlock19Component
+      ContentBlock19Component,
+      ContentBlock20Component
     ]),
     InteractiveActivitiesModule
   ],
@@ -94,6 +96,7 @@ import { InteractiveActivitiesModule } from 'app/constructor/interactive-activit
     ContentBlock16Component,
     ConstructorTextComponent,
     ContentBlock19Component,
+    ContentBlock20Component,
     // VisorTextComponent,
     // ConstructorImageComponent,
     // ConstructorVideoComponent,

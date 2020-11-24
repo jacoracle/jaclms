@@ -1,39 +1,34 @@
 <div class="main-container-br">
     <div class="window-br">
 
-        <!-- Window Header -->
-        <div class="window-br-header">
-            <div class="alert-path">
-                <jhi-alert-error></jhi-alert-error>
-            </div>
-            <div class="r1">
-                <div class="logo-home-mini"></div>
-            </div>
-
-            <div class="r2">
-                <div class="windowHeader-title disbled-t-header">
-                    <h4>Rutas de Aprendizaje / </h4>
-                </div>
-                <div class="windowHeader-title">
-                    <h4>Configurar Ruta de Aprendizaje</h4>
-                </div>
-                <div class="c1">
-                </div>
-            </div>
+      <!-- Window Header -->
+      <div class="window-br-header">
+        <div class="row-br-header">
+          <div class="header-breadcrumbs">
+            <div class="logo-home" routerLink="/"><i class="icon ni-nimbus"></i></div>
+            <h4 routerLink="/learning-home" class="hb-title hbt-disabled" jhiTranslate="constructorApp.path.home.titleBread">/ Creador de Programas </h4>
+            <h4 class="hb-title" jhiTranslate="constructorApp.path.home.titleConfgProgram">/ Configurar Programa </h4>
+          </div>
+          <div class="alert-path alert-nimbus-window">
+              <jhi-alert-error></jhi-alert-error>
+          </div>
         </div>
+      </div>
 
-        <div class="window-br-body-topbar-group">
-            <div class="line-gradient lg-step3"></div>
-            <!-- <div class="row-wbr-bt">
-              <p>Nombre de rutas de aprendizaje</p>
-          </div> -->
-        </div>
+      <!-- Window topbar -->
+      <div class="window-br-body-topbar-group">
+        <div class="line-gradient lg-step3"></div>
+      </div>
 
         <div class="window-br-body-full">
             <div class="container-path-hierarchical" [ngSwitch]="isAuthenticated()">
 
                 <div class="window-path-hierarchical-body">
                     <div class="hierarchical-bar">
+                      <div class="hb-header">
+
+                      </div>
+                      <div class="hb-body">
                         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList
                             [cdkDropListData]="dataSource.data" #treePath="cdkDropList"
                             (cdkDropListDropped)="dropOrder($event)">
@@ -104,7 +99,7 @@
                                 </mat-menu>
                             </mat-tree-node>
                         </mat-tree>
-
+                      </div>
                     </div>
 
                     <div class="sequences-section" cdkDropList [cdkDropListData]="sequenceList"
@@ -112,35 +107,46 @@
                         (cdkDropListDropped)="dropOrder($event)">
 
                         <div class="ss-header">
-                            <p class="p-result">Agrupadores ( {{sequenceList.length}} )</p>
-                            <form name="learningPathForm" role="form" [formGroup]="learningPathForm" autocomplete="off"
-                                class="form-uma-search">
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Buscar</mat-label>
-                                    <input type="text" placeholder="" matInput formControlName="searchGroup"
-                                        [matAutocomplete]="searchGroup">
-                                    <mat-autocomplete autoActiveFirstOption #searchGroup="matAutocomplete"
-                                        [displayWith]="displayFn">
-                                    </mat-autocomplete>
-                                </mat-form-field>
-                            </form>
+                          <div class="br-tp-subtitle">
+                            <h5 jhiTranslate="group.sequence.yourumas">Tus Agrupadores</h5>
+                            <span>{{sequenceList.length}}</span>
+                          </div>
+                          <form name="learningPathForm" role="form" [formGroup]="learningPathForm" autocomplete="off"
+                              class="form-uma-search">
+                              <mat-form-field appearance="outline">
+                                  <mat-label>Buscar</mat-label>
+                                  <input type="text" placeholder="" matInput formControlName="searchGroup"
+                                      [matAutocomplete]="searchGroup">
+                                  <mat-autocomplete autoActiveFirstOption #searchGroup="matAutocomplete"
+                                      [displayWith]="displayFn">
+                                  </mat-autocomplete>
+                              </mat-form-field>
+                          </form>
                         </div>
                         <div class="ss-body">
                             <div class="grid-cards">
                                 <div class="box-card" *ngFor="let groups of sequenceList;" cdkDrag
                                     [cdkDragData]="groups">
-                                    <div class="group-cover-br-image"><span></span></div>
-                                    <div class="course-desc-br-row">
+                                    <div class="row-content-card">
+                                      <div class="group-cover-br-image"><span></span></div>
+                                      <div class="course-desc-br-row">
                                         <span class="title-course-br"
                                             *ngIf="groups.titulo">{{groups.titulo.length > 30 ? groups.titulo.substring(0, 30) + "..." : groups.titulo}}</span>
                                         <span class="desc-course-br"
                                             *ngIf="groups.descripcion">{{groups.descripcion!.length > 28 ? groups.descripcion!.substring(0, 28) + "..." : groups.descripcion!}}</span>
+                                      </div>
                                     </div>
+                                    <div class="row-buttons-card">
+                                      <!-- <div class="edit-course-br" [routerLink]="['/group-configuration', sec.id]">
+                                          <i class="icon ni-edit icon-negative"></i>
+                                      </div> -->
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
 
-                        <p>{{ dataSource.data | json }}</p>
+                        <!-- <p>{{ dataSource.data | json }}</p> -->
                     </div>
 
                 </div>
@@ -152,7 +158,8 @@
         <!-- Footer -->
         <div class="window-br-footer">
             <button routerLink="/learning-home" matTooltip="Regresar al Home."
-                class="secondary-btn mr-2">Regresar</button>
+                class="secondary-btn">Cancelar</button>
+            <button routerLink="/learning-home" class="main-btn create-btn">Terminar</button>
         </div>
 
     </div>

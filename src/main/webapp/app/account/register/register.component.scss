@@ -1,0 +1,74 @@
+.form-register {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+
+  .form-register input {
+    position: relative;
+    width: 100%;
+    height: 38px;
+    /*background-color: white;*/
+    border: 0;
+    border-radius: 10px;
+    // border: 2px solid #e1e4e8;
+    outline: none;
+    padding-left: 12px;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+
+  .form-register mat-select {
+    position: relative;
+    width: 100%;
+    height: 38px;
+    /*background-color: white;*/
+    border: 0;
+    border-radius: 10px;
+    // border: 2px solid #e1e4e8;
+    outline: none;
+    padding-left: 12px;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+}
+
+.mat-field {
+  display: block;
+  position: relative;
+  flex: auto;
+  min-width: 0;
+  width: 78px;
+}
+.mat-input {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.mat-input-country {
+  position: relative;
+  width: 30%;
+  height: auto;
+  right: 114px;
+}
+.mat-input-phone {
+  position: relative;
+  width: 70%;
+  height: auto;
+  left: 46px;
+  top: -88px;
+}
+
+jhi-password-strength-bar {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  top: 84px;
+  left: 0;
+  padding-left: 0;
+}

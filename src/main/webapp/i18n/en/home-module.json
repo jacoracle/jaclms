@@ -7,6 +7,7 @@
     "welcome": "Welcome to",
     "start": "To start, click on the \"Create UMA\" button.",
     "back": "Go back",
-    "new": "Create UMA"
+    "new": "Create UMA",
+    "deleted": "UMA removed successfully."
   }
 }

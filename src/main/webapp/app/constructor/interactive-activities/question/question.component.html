@@ -209,11 +209,9 @@
                 <i class="icon ni-delete"></i>
               </button>
 
-              <!-- <button (click)="deleteAnswer(pregunta, answerIndex);" *ngIf="pregunta.respuestas.length > 1">Eliminar respuesta</button> -->
               <!-- Respuesta/URL de recurso -->
           </div>
           <div class="row-add-question-btn">
-            <!-- <button class="main-btn" (click)="addQuestion()"><i class="icon ni-add"></i> <span jhiTranslate="constructorApp.question.addQuestion">Agregar pregunta</span></button> -->
             <button class="main-btn" (click)="addAnswer(pregunta)" *ngIf="pregunta.tipoPregunta !== '' && pregunta.tipoRespuestas !== '' && pregunta.respuestas.length < 4 && pregunta.tipoPregunta !== 'Verdadero Falso'"> <i class="icon ni-add"></i> <span jhiTranslate="constructorApp.question.question.addAnswer">Agregar respuesta</span></button>
           </div>
           <!-- Respuesta -->
@@ -225,17 +223,6 @@
       <!-- Pregunta -->
 
     </div>
-
   </div>
-
-  <!-- Footer -->
-  <!--
-  <div class="activity-maker-footer">
-    <div class="row-amf">
-      <button (click)="close()" class="secondary-btn">Cerrar</button>
-      <button type="button" (click)="save()" class="main-btn">Guardar</button>
-    </div>
-  </div>
-  -->
 
 </div>
