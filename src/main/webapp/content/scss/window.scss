@@ -876,9 +876,74 @@
   position: absolute;
   width: 50%;
   height: 55px;
-  // border: 1px solid red;
   right: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+// Tree
+.mat-tree-nimbus {
+  .mat-tree-node {
+    .mat-icon-button {
+      .mat-button-wrapper {
+        .mat-icon {
+          color: $blue-nimbus-dark !important;
+        }
+      }
+    }
+    .mat-menu-trigger {
+      position: absolute !important;
+      right: 10px !important;
+    }
+  }
+}
+.mat-menu-content {
+  .mat-menu-item {
+    border: 0 !important;
+    outline: none !important;
+    .mat-icon {
+      color: $blue-nimbus-dark !important;
+    }
+  }
+}
+.mat-menu-panel {
+  box-shadow: 0 0px 14px rgba(180, 180, 180, 0.1), 0 4px 16px rgba(200, 200, 200, 0.1) !important;
+  border: 1px solid #e7e8ed !important;
+}
+.mat-dialog-container {
+  box-shadow: 0 0px 14px rgba(180, 180, 180, 0.1), 0 4px 16px rgba(200, 200, 200, 0.1) !important;
+  border: 1px solid #e7e8ed !important;
+  background-color: white !important;
+  padding: 20px !important;
+}
+// Modal
+.cdk-overlay-pane {
+  min-width: 360px;
+}
+// Progress bar tree
+.mat-tree-node {
+  .mat-progress-bar {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    // background-color:
+    .mat-progress-bar-buffer {
+      background-color: $btn-white-hover;
+    }
+    // progress color
+    .mat-progress-bar-fill::after {
+      background-color: $blue-nimbus-light !important;
+    }
+  }
+}
+// Add new
+.mat-tree-node {
+  .mat-form-field-infix {
+    width: 280px !important;
+  }
+  button {
+    margin-left: 10px;
+  }
 }

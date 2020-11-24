@@ -26,10 +26,13 @@
                 <div class="window-path-hierarchical-body">
                     <div class="hierarchical-bar">
                       <div class="hb-header">
-
+                        <div class="row-hb-header">
+                          <div class="cover-program-header"></div>
+                          <h4 class="title-program-header">Título de Programa</h4>
+                        </div>
                       </div>
                       <div class="hb-body">
-                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList
+                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList class="mat-tree-nimbus"
                             [cdkDropListData]="dataSource.data" #treePath="cdkDropList"
                             (cdkDropListDropped)="dropOrder($event)">
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag [cdkDragData]="node">
@@ -40,10 +43,10 @@
                             <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
                                 <button mat-icon-button disabled></button>
                                 <mat-form-field>
-                                    <mat-label>Nuevo Nodo</mat-label>
+                                    <mat-label>Nombre</mat-label>
                                     <input matInput #itemValue placeholder="Nivel X ...">
                                 </mat-form-field>
-                                <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+                                <button class="secondary-btn" (click)="saveNode(node, itemValue.value)">Guardar</button>
                             </mat-tree-node>
 
                             <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding cdkDrag>
@@ -52,9 +55,8 @@
                                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                     </mat-icon>
                                 </button>
-                                <button *ngIf="isGroup(node)" mat-icon-button>
-                                    <mat-icon style="color: #2ede9a;">book</mat-icon>
-                                </button>
+                                <div *ngIf="isGroup(node)" class="img-group-tree">
+                                </div>
                                 {{node.nombre}}
                                 <!-- <button mat-icon-button (click)="addNewItem(node)">
                                     <mat-icon>add</mat-icon>
@@ -69,32 +71,36 @@
                                     <button *ngIf="getLevel(node) === 0 && !isGroup(node)" mat-menu-item (click)="addRootLevel(node)">
                                         <!-- <mat-icon>class</mat-icon> -->
                                         <!-- <mat-icon>add_circle</mat-icon> -->
-                                        <mat-icon>topic</mat-icon>
-                                        Add Node
+                                        <mat-icon>add</mat-icon>
+                                        Agregar hermano
+                                    </button>
+                                    <button *ngIf="getLevel(node) < 2 && !isGroup(node)" mat-menu-item (click)="addNewItem(node)">
+                                        <!-- <mat-icon>add_circle</mat-icon> -->
+                                        <mat-icon>add</mat-icon>
+                                        Agregar hijo
                                     </button>
                                     <button *ngIf="getLevel(node) === 0 && !isGroup(node)" mat-menu-item (click)="editNodeName(node)">
                                         <!-- <mat-icon>topic</mat-icon> -->
                                         <mat-icon>edit</mat-icon>
-                                        Edit Node name
+                                        <!-- Edit Node name -->
+                                        Editar
                                     </button>
                                     <button *ngIf="!isGroup(node)" mat-menu-item (click)="removeItem(node)">
-                                        <mat-icon>delete_sweep</mat-icon>
-                                        Delete Node
+                                        <mat-icon>delete_outline</mat-icon>
+                                        <!-- Delete Node -->
+                                        Eliminar
                                     </button>
                                     <!-- <hr> -->
-                                    <button *ngIf="getLevel(node) < 2 && !isGroup(node)" mat-menu-item (click)="addNewItem(node)">
-                                        <!-- <mat-icon>add_circle</mat-icon> -->
-                                        <mat-icon>snippet_folder</mat-icon>
-                                        Add child node
-                                    </button>
                                     <button *ngIf="getLevel(node) > 0 && getLevel(node) < 3 && !isGroup(node)" mat-menu-item (click)="editNodeName(node)">
                                         <!-- <mat-icon>topic</mat-icon> -->
-                                        <mat-icon>topic</mat-icon>
-                                        Edit Child node name
+                                        <mat-icon>edit</mat-icon>
+                                        <!-- Edit Child node name -->
+                                        Editar nombre
                                     </button>
                                     <button *ngIf="getLevel(node) > 0 && getLevel(node) <= 3 && isGroup(node)" mat-menu-item (click)="removeGroup(node)">
-                                        <mat-icon>delete_sweep</mat-icon>
-                                        Delete group node
+                                        <mat-icon>delete_outline</mat-icon>
+                                        <!-- Delete group node -->
+                                        Eliminar agrupador
                                     </button>
                                 </mat-menu>
                             </mat-tree-node>

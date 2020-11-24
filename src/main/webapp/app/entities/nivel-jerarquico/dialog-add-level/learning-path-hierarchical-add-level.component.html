@@ -1,12 +1,13 @@
-<h1 mat-dialog-title>Editar nivel</h1>
-<div mat-dialog-content>
-    <!-- <p>Capture el nombre del nuevo nodo:</p> -->
-    <mat-form-field>
-        <mat-label>Capture el nuevo nombre</mat-label>
-        <input matInput autocomplete="off" [(ngModel)]="data.newLevelName">
-    </mat-form-field>
-</div>
-<div mat-dialog-actions>
-    <button mat-button class="secondary-btn m-2" (click)="onNoClick()">Cancelar</button>
-    <button mat-button class="main-btn" [mat-dialog-close]="data.newLevelName" cdkFocusInitial>Agregar</button>
+<div class="row-modal-matDialog">
+  <h1 mat-dialog-title>Editar nivel</h1>
+  <div mat-dialog-content>
+      <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput autocomplete="off" [(ngModel)]="data.newLevelName">
+      </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="row-footer-mmd">
+      <button mat-button class="secondary-btn" (click)="onNoClick()">Cancelar</button>
+      <button mat-button class="main-btn" [mat-dialog-close]="data.newLevelName" cdkFocusInitial>Guardar</button>
+  </div>
 </div>
