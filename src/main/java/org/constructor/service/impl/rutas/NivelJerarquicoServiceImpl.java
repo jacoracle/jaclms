@@ -83,6 +83,8 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	 */
 	@Autowired
 	private RutasAprendizajeRepository rutasAprendizajeRepository;
+	
+	
 
 	/**
 	 * NivelJerarquicoServiceImpl.
@@ -162,43 +164,56 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	}
 	
 	
-	public boolean deleteEstructuraNivel (Long id) {
-		
-		Set<EstructuraJerarquica > listEstructura = new HashSet<>();
+	public boolean deleteEstructuraNivel(Long id) {
 
-	      listEstructura = estructuraJerarquicaRepository.findByNivel(id);
-			log.debug("Request to listEstructura {}", listEstructura);
+		Set<EstructuraJerarquica> listaHijos = new HashSet<>();
 
-	      if (!listEstructura.isEmpty()) {
-	    	  log.debug("Request entro a IF {}", listEstructura);
-	    		listEstructura.forEach(estructura -> { 
-	    			log.debug("Request elimiando este id {}", estructura.getId());
-	    			estructuraJerarquicaRepository.delete(estructura);
+		listaHijos = findChildrenLevels(id);
 
-	    			
-	    		});
+		if (!listaHijos.isEmpty()) {
+
+			listaHijos.forEach(hijo -> {
+				Set<EstructuraJerarquica> listaNietos = new HashSet<>();
+				log.debug("Request elimiando este id hijo {}", hijo.getId());
+				estructuraJerarquicaRepository.delete(hijo);
+				listaNietos = findChildrenLevels(hijo.getSubNivelJerarquico().getId());
+				if (!listaNietos.isEmpty()) {
+					listaNietos.forEach(nieto -> {
+						log.debug("Request elimiando este Nieto hijo {}", hijo.getId());
+						estructuraJerarquicaRepository.delete(nieto);
+						nivelJerarquicoRepository.deleteById(nieto.getSubNivelJerarquico().getId());
+						log.debug("Se limino el id nieto {}", hijo.getId());
+					});
+
+				}
+				log.debug("Se va a eliminar este subnivel  {}", hijo.getSubNivelJerarquico().getId());
+				nivelJerarquicoRepository.deleteById(hijo.getSubNivelJerarquico().getId());
+			});
+
 		}
-	      
-			Optional<NivelJerarquico> nivelJerarquico  =	nivelJerarquicoRepository.findById(id);
-			
-			 Optional<NivelRuta> nivelRuta =  nivelRutaRepository.findByRutas(nivelJerarquico.get());
-			 
-			 if(!nivelRuta.isEmpty()){
-				 
-				 nivelRutaRepository.deleteById(nivelRuta.get().getId());
-			 }
 
-			log.debug("Request nivelJerarquico {}", nivelJerarquico);
+		Optional<NivelJerarquico> nivelJerarquico = nivelJerarquicoRepository.findById(id);
 
-			   Optional<EstructuraJerarquica> estructura  =  estructuraJerarquicaRepository.findBySubNivel(nivelJerarquico.get());
-			
-			   if(!estructura.isEmpty()) {
-			 estructuraJerarquicaRepository.deleteById(estructura.get().getId());}
-		
+		Optional<NivelRuta> nivelRuta = nivelRutaRepository.findByRutas(nivelJerarquico.get());
+
+		if (!nivelRuta.isEmpty()) {
+
+			nivelRutaRepository.deleteById(nivelRuta.get().getId());
+		}
+
+		log.debug("Request nivelJerarquico {}", nivelJerarquico);
+
+		Optional<EstructuraJerarquica> estructura = estructuraJerarquicaRepository
+				.findBySubNivel(nivelJerarquico.get());
+
+		if (!estructura.isEmpty()) {
+			estructuraJerarquicaRepository.deleteById(estructura.get().getId());
+		}
+
 		nivelJerarquicoRepository.deleteById(id);
-		
+
 		return true;
-		
+
 	}
 
 	/**
@@ -402,6 +417,12 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 				});
 	}
 
-
+	public Set<EstructuraJerarquica> findChildrenLevels(Long id) {
+		Set<EstructuraJerarquica> listaEstructura = new HashSet<>();
+		
+		listaEstructura = estructuraJerarquicaRepository.findByNivel(id);
+		
+		return listaEstructura;
+	}
 
 }
