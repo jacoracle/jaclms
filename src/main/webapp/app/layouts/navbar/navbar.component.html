@@ -12,7 +12,7 @@
     </div>
 
     <div class="create-account-navbar li-navbar-home" routerLink="/account/register" *ngSwitchCase="false" jhiTranslate="global.menu.register">Crea tu cuenta</div>
-    <button class="main-btn" (click)="login()" *ngSwitchCase="false" jhiTranslate="global.menu.login">Ingresa</button>
+    <button mat-raised-button class="main-btn" (click)="login()" *ngSwitchCase="false" jhiTranslate="global.menu.login">Ingresa</button>
 
     <!-- Start Admin Navbar -->
     <nav class="navbar-lg">

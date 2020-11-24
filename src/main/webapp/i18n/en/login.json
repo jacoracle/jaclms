@@ -13,7 +13,7 @@
       }
     },
     "password": {
-      "forgot": "\nCreate Account"
+      "forgot": "I forgot my password"
     },
     "create": {
       "have": "Don't have an account yet?",
