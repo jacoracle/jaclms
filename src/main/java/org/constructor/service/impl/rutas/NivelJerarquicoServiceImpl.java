@@ -83,6 +83,8 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	 */
 	@Autowired
 	private RutasAprendizajeRepository rutasAprendizajeRepository;
+	
+	
 
 	/**
 	 * NivelJerarquicoServiceImpl.
@@ -160,6 +162,59 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 
 		return dtoNivelJerarquico;
 	}
+	
+	
+	public boolean deleteEstructuraNivel(Long id) {
+
+		Set<EstructuraJerarquica> listaHijos = new HashSet<>();
+
+		listaHijos = findChildrenLevels(id);
+
+		if (!listaHijos.isEmpty()) {
+
+			listaHijos.forEach(hijo -> {
+				Set<EstructuraJerarquica> listaNietos = new HashSet<>();
+				log.debug("Request elimiando este id hijo {}", hijo.getId());
+				estructuraJerarquicaRepository.delete(hijo);
+				listaNietos = findChildrenLevels(hijo.getSubNivelJerarquico().getId());
+				if (!listaNietos.isEmpty()) {
+					listaNietos.forEach(nieto -> {
+						log.debug("Request elimiando este Nieto hijo {}", hijo.getId());
+						estructuraJerarquicaRepository.delete(nieto);
+						nivelJerarquicoRepository.deleteById(nieto.getSubNivelJerarquico().getId());
+						log.debug("Se limino el id nieto {}", hijo.getId());
+					});
+
+				}
+				log.debug("Se va a eliminar este subnivel  {}", hijo.getSubNivelJerarquico().getId());
+				nivelJerarquicoRepository.deleteById(hijo.getSubNivelJerarquico().getId());
+			});
+
+		}
+
+		Optional<NivelJerarquico> nivelJerarquico = nivelJerarquicoRepository.findById(id);
+
+		Optional<NivelRuta> nivelRuta = nivelRutaRepository.findByRutas(nivelJerarquico.get());
+
+		if (!nivelRuta.isEmpty()) {
+
+			nivelRutaRepository.deleteById(nivelRuta.get().getId());
+		}
+
+		log.debug("Request nivelJerarquico {}", nivelJerarquico);
+
+		Optional<EstructuraJerarquica> estructura = estructuraJerarquicaRepository
+				.findBySubNivel(nivelJerarquico.get());
+
+		if (!estructura.isEmpty()) {
+			estructuraJerarquicaRepository.deleteById(estructura.get().getId());
+		}
+
+		nivelJerarquicoRepository.deleteById(id);
+
+		return true;
+
+	}
 
 	/**
 	 * Delete NivelJerarquico
@@ -177,6 +232,7 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 	@Override
 	public void deleteAgrupador(Long id) {
 		nivelesAgrupadorRepository.deleteById(id);
+		
 		
 	}
 
@@ -361,6 +417,12 @@ public class NivelJerarquicoServiceImpl implements NivelJerarquicoService {
 				});
 	}
 
-
+	public Set<EstructuraJerarquica> findChildrenLevels(Long id) {
+		Set<EstructuraJerarquica> listaEstructura = new HashSet<>();
+		
+		listaEstructura = estructuraJerarquicaRepository.findByNivel(id);
+		
+		return listaEstructura;
+	}
 
 }
