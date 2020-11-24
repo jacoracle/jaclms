@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
-import { Preguntas, Respuestas } from './../../../shared/model/actividad-pregunta.model';
+import { Ejercicio, Columna, Elemento } from './../../../shared/model/actividad-relacionar.model';
 import { ActivityService } from 'app/services/activity.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContenidoActividadService } from 'app/entities/contenido/contenido-actividad.service';
@@ -11,13 +10,14 @@ import { FileUploadService } from 'app/services/file-upload.service';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import MicRecorder from 'mic-recorder-to-mp3';
+import { ActividadInteractiva } from 'app/shared/model/actividad-interactiva.model';
 
 @Component({
-  selector: 'jhi-question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss']
+  selector: 'jhi-matching',
+  templateUrl: './matching.component.html',
+  styleUrls: ['./matching.component.scss']
 })
-export class QuestionComponent {
+export class MatchingComponent {
   _activity?: ActividadInteractiva;
   @Input()
   set activity(activity: ActividadInteractiva) {
@@ -27,11 +27,8 @@ export class QuestionComponent {
   get activity(): ActividadInteractiva {
     return this._activity!;
   }
-  questionTypes = ['Respuesta única', 'Respuesta múltiple', 'Verdadero Falso'];
-  answerTypes = ['Texto', 'Imagen', 'Audio'];
-  // answerTypes = ['Texto', 'Imagen'];
+  elementTypes = ['Texto', 'Imagen', 'Audio'];
   resourceTypes = ['Imagen', 'Audio', 'Video'];
-  // resourceTypes = ['Imagen'];
   showLoader = false;
   maxImageSize = 5120000;
   allowedAudioTypes: any = ['audio/mpeg'];
@@ -45,8 +42,9 @@ export class QuestionComponent {
   recorder = new MicRecorder({
     bitRate: 128
   });
-  recordingQuestionIndex = -1;
-  recordingAnswerIndex = -1;
+  recordingExerciseIndex = -1;
+  recordingColumnIndex = -1;
+  recordingElementIndex = -1;
   maxAudioDuration = 150000; // Miliseconds
 
   color = 'primary';
@@ -66,114 +64,69 @@ export class QuestionComponent {
     private fileUploadService: FileUploadService
   ) {}
 
-  emptyAnswers(pregunta: Preguntas): void {
-    if (pregunta.respuestas) {
-      for (let i = 0; i < pregunta.respuestas.length; i++) {
-        if (pregunta.respuestas[i].path && pregunta.respuestas[i].path !== '') {
-          this.removeFromServer(pregunta.respuestas[i].path!);
+  emptyColumn(column: Columna): void {
+    if (column && column.elementos) {
+      for (let i = 0; i < column.elementos.length; i++) {
+        if (column.elementos[i].path && column.elementos[i].path !== '') {
+          this.removeFromServer(column.elementos[i].path!);
         }
       }
-      pregunta.respuestas = [];
+      column.elementos = [];
     }
   }
 
-  changeQuestionType(pregunta: Preguntas, questionType: string): any {
-    if (questionType === 'Verdadero Falso') {
-      pregunta.tipoRespuestas = 'Texto';
-      this.addTrueFalse(pregunta);
-    } else {
-      pregunta.respuestas = [];
-      this.addAnswer(pregunta, true);
+  changeElementsType(column: Columna, columnIndex: number, exercise: Ejercicio): void {
+    let elementsRequired = 0;
+    if (columnIndex === 0 && exercise && exercise.columnas && exercise && exercise.columnas[1].elementos) {
+      elementsRequired = exercise.columnas[1].elementos.length;
     }
-    if (questionType === 'Respuesta única') {
-      this.oneCorrectOnly(pregunta);
+    if (columnIndex === 1 && exercise && exercise.columnas && exercise && exercise.columnas[0].elementos) {
+      elementsRequired = exercise.columnas[0].elementos.length;
     }
-    this.save();
-  }
-
-  oneCorrectOnly(pregunta: Preguntas): void {
-    let found = false;
-    if (pregunta.respuestas) {
-      for (let i = 0; i < pregunta.respuestas.length; i++) {
-        if (found) {
-          pregunta.respuestas[i].correcta = false;
-        }
-        if (!found && pregunta.respuestas[i].correcta === true) {
-          found = true;
-        }
-      }
+    this.emptyColumn(column);
+    for (let i = 0; i < elementsRequired; i++) {
+      this.addElement(column);
     }
   }
 
-  changeAnswerType(pregunta: Preguntas): void {
-    this.emptyAnswers(pregunta);
-    this.addAnswer(pregunta, true);
-  }
-
-  changeResourceType(pregunta: Preguntas): void {
-    if (pregunta.path && pregunta.path !== '') {
-      this.deleteResource(pregunta);
+  changeResourceType(exercise: Ejercicio): void {
+    if (exercise && exercise.path && exercise.path !== '') {
+      this.deleteResource(exercise);
     }
   }
 
-  checkCorrectAnswers(pregunta: Preguntas, answerIndex: number): void {
-    if (pregunta.tipoPregunta !== 'Respuesta múltiple' && pregunta.respuestas) {
-      for (let i = 0; i < pregunta.respuestas.length; i++) {
-        if (i !== answerIndex) {
-          pregunta.respuestas[i].correcta = false;
-        }
-      }
-    }
-    this.save();
-  }
-
-  blockOnlyAnswer(pregunta: Preguntas, respuesta: Respuestas): boolean {
-    let onlyAnswer = false;
-    if (respuesta.correcta && respuesta.correcta === true) {
-      let correctAnswers = 0;
-      if (pregunta.respuestas) {
-        for (let i = 0; i < pregunta.respuestas.length; i++) {
-          if (pregunta.respuestas[i].correcta === true) {
-            correctAnswers++;
-          }
-        }
-        if (correctAnswers === 1) {
-          onlyAnswer = true;
-        } else {
-          onlyAnswer = false;
-        }
-      }
-    }
-    return onlyAnswer;
-  }
-
-  addTrueFalse(pregunta: Preguntas): void {
-    this.emptyAnswers(pregunta);
-    this.addAnswer(pregunta, true, 'Verdadero');
-    this.addAnswer(pregunta, false, 'Falso');
-  }
-
-  createQuestion(): Preguntas {
+  createExercise(): Ejercicio {
     return {
-      ...new Preguntas(),
-      pregunta: '',
-      tipoPregunta: 'Respuesta única',
-      respuestas: [],
+      ...new Ejercicio(),
+      indicacion: '',
+      columnas: [this.createColumn(), this.createColumn()],
       calificada: false,
       marcada: false,
-      correcta: false,
+      path: '',
       tipoRespuestas: 'Texto',
       tipoRecurso: '',
+      safeUrl: '',
       loadedVideo: false
     };
   }
 
-  createAnswer(correct?: boolean, answer?: string): Respuestas {
+  createColumn(): Columna {
+    const element = this.createElement();
+    const elements = [];
+    elements.push(element);
     return {
-      ...new Respuestas(),
-      respuesta: answer ? answer : '',
-      correcta: correct ? correct : false,
-      seleccionada: false,
+      ...new Columna(),
+      tipoElementos: 'Texto',
+      elementos: elements
+    };
+  }
+
+  createElement(): Elemento {
+    return {
+      ...new Elemento(),
+      texto: '',
+      indice: -1,
+      relacionada: false,
       path: '',
       safeUrl: ''
     };
@@ -215,37 +168,44 @@ export class QuestionComponent {
     this.activeModal.close();
   }
 
-  addQuestion(): void {
+  addExercise(): void {
     if (this._activity && this._activity.contenido) {
-      if (!this._activity.contenido.preguntas) {
-        this._activity.contenido.preguntas = [];
+      if (!this._activity.contenido.ejercicios) {
+        this._activity.contenido.ejercicios = [];
       }
-      const question = this.createQuestion();
-      this.addAnswer(question, true);
-      this._activity.contenido.preguntas.push(question);
+      const exercise = this.createExercise();
+      this._activity.contenido.ejercicios.push(exercise);
     }
     this.save();
   }
 
-  addAnswer(question: Preguntas, correct?: boolean, answer?: string): void {
-    if (!question.respuestas) {
-      question.respuestas = [];
+  addRow(exercise: Ejercicio): void {
+    if (exercise && exercise.columnas) {
+      for (let i = 0; i < exercise.columnas.length; i++) {
+        if (exercise.columnas[i] && exercise.columnas[i].elementos) {
+          exercise.columnas[i].elementos!.push(this.createElement());
+        }
+      }
+      this.save();
     }
-    question.respuestas.push(this.createAnswer(correct, answer));
-    this.save();
   }
 
-  deleteResource(pregunta: Preguntas): void {
-    if (pregunta.path) {
-      this.removeFromServer(pregunta.path);
-      pregunta.path = '';
-      pregunta.safeUrl = '';
-      pregunta.loadedVideo = false;
+  addElement(column: Columna): void {
+    if (column && column.elementos) {
+      column.elementos.push(this.createElement());
+    }
+  }
+
+  deleteResource(exercise: Ejercicio): void {
+    if (exercise.path) {
+      this.removeFromServer(exercise.path);
+      exercise.path = '';
+      exercise.safeUrl = '';
+      exercise.loadedVideo = false;
       this.selectedFiles = [];
       if (this.fileInput && this.fileInput.nativeElement && this.fileInput.nativeElement.value) {
         this.fileInput.nativeElement.value = '';
       }
-
       this.save();
     }
   }
@@ -377,36 +337,46 @@ export class QuestionComponent {
     }
   }
 
-  deleteQuestion(index: number): void {
-    if (this.activity.contenido.preguntas[index].path && this.activity.contenido.preguntas[index].path !== '') {
-      this.removeFromServer(this.activity.contenido.preguntas[index].path);
+  deleteExercise(index: number): void {
+    if (this.activity.contenido.ejercicios[index].path && this.activity.contenido.ejercicios[index].path !== '') {
+      this.removeFromServer(this.activity.contenido.ejercicios[index].path);
     }
-    for (let i = 0; i < this.activity.contenido.preguntas[index].respuestas.length; i++) {
-      if (
-        this.activity.contenido.preguntas[index].respuestas[i].path &&
-        this.activity.contenido.preguntas[index].respuestas[i].path !== ''
-      ) {
-        this.removeFromServer(this.activity.contenido.preguntas[index].respuestas[i].path);
+
+    if (this._activity && this._activity.contenido && this._activity.contenido.ejercicios) {
+      for (let i = 0; i < this._activity.contenido.ejercicios[index].columnas.length; i++) {
+        this.deleteColumn(this._activity.contenido.ejercicios[index].columnas[i]);
+      }
+      this.activity.contenido.ejercicios.splice(index, 1);
+      this.save();
+    }
+  }
+
+  deleteColumn(column: Columna): void {
+    if (column && column.elementos && column.elementos.length && column.tipoElementos !== 'Texto') {
+      for (let i = 0; i < column.elementos.length; i++) {
+        if (column.elementos[i].path && column.elementos[i].path !== '') {
+          this.removeFromServer(column.elementos[i].path!);
+        }
+      }
+      column.elementos = [];
+    }
+  }
+
+  deleteRow(exercise: Ejercicio, index: number): void {
+    if (exercise && exercise.columnas) {
+      for (let i = 0; i < exercise.columnas.length; i++) {
+        this.deleteElement(exercise.columnas[i], index);
       }
     }
-    this.activity.contenido.preguntas.splice(index, 1);
     this.save();
   }
 
-  deleteAnswer(pregunta: Preguntas, index: number): void {
-    if (pregunta.respuestas) {
-      if (pregunta.respuestas[index] && pregunta.respuestas[index].path && pregunta.respuestas[index].path !== '') {
-        this.removeFromServer(pregunta.respuestas[index].path!);
+  deleteElement(column: Columna, index: number): void {
+    if (column && column.elementos && column.elementos[index]) {
+      if (column.elementos[index].path && column.elementos[index].path !== '') {
+        this.removeFromServer(column.elementos[index].path!);
       }
-      pregunta.respuestas.splice(index, 1);
-      this.checkOnlyAnswer(pregunta);
-    }
-    this.save();
-  }
-
-  checkOnlyAnswer(pregunta: Preguntas): void {
-    if (pregunta.respuestas && pregunta.respuestas.length === 1) {
-      pregunta.respuestas[0].correcta = true;
+      column.elementos.splice(index, 1);
     }
   }
 
@@ -414,25 +384,26 @@ export class QuestionComponent {
     return JSON.stringify(localActivity) === JSON.stringify(remoteActivity);
   }
 
-  getVideo(pregunta: Preguntas): void {
+  getVideo(exercise: Ejercicio): void {
     this.showLoader = true;
     let safeUrl: SafeUrl = '';
-    if (pregunta.path && pregunta.path !== '') {
-      this.fileUploadService.getVideoFile(pregunta.path).subscribe(data => {
+    if (exercise.path && exercise.path !== '') {
+      this.fileUploadService.getVideoFile(exercise.path).subscribe(data => {
         const videoPath = URL.createObjectURL(data.body);
         safeUrl = this.domSanitizer.bypassSecurityTrustUrl(videoPath);
-        pregunta.safeUrl = safeUrl;
-        pregunta.loadedVideo = true;
+        exercise.safeUrl = safeUrl;
+        exercise.loadedVideo = true;
         this.showLoader = false;
       });
     }
   }
 
-  record(objeto: any, questionIndex: number, answerIndex?: number): void {
+  record(objeto: any, exerciseIndex: number, columnIndex?: number, elementIndex?: number): void {
     if (!this.isOn) {
-      this.recordingQuestionIndex = questionIndex;
-      if (answerIndex !== undefined) {
-        this.recordingAnswerIndex = answerIndex;
+      this.recordingExerciseIndex = exerciseIndex;
+      if (columnIndex !== undefined && elementIndex !== undefined) {
+        this.recordingColumnIndex = columnIndex;
+        this.recordingElementIndex = elementIndex;
       }
       this.start(objeto);
     } else {
@@ -472,8 +443,9 @@ export class QuestionComponent {
   stop(objeto: any): void {
     this.recordedTime = 0;
     this.deleteResource(objeto);
-    this.recordingQuestionIndex = -1;
-    this.recordingAnswerIndex = -1;
+    this.recordingExerciseIndex = -1;
+    this.recordingColumnIndex = -1;
+    this.recordingElementIndex = -1;
     this.isOn = false;
     this.recorder
       .stop()
@@ -529,5 +501,15 @@ export class QuestionComponent {
     }
     time = time + seconds;
     return time;
+  }
+
+  allowAdding(exercise: Ejercicio): boolean {
+    let allow = true;
+    if (exercise && exercise.columnas && exercise.columnas[0] && exercise.columnas[0].elementos) {
+      if (exercise.columnas[0].elementos.length >= 10) {
+        allow = false;
+      }
+    }
+    return allow;
   }
 }

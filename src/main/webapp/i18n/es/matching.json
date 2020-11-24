@@ -1,0 +1,21 @@
+{
+  "constructorApp": {
+    "matching": {
+      "title": "Actividad interactiva Relacionar",
+      "activity": {
+        "evaluable": "Evaluable",
+        "name": "Nombre"
+      },
+      "exercise": {
+        "indication": "Indicación",
+        "resource": "Recurso",
+        "elementType": "Tipo de elementos",
+        "addElement": "Agregar elemento"
+      },
+      "element": {
+        "element": "Elemento"
+      },
+      "addExercise": "Agregar ejercicio"
+    }
+  }
+}
