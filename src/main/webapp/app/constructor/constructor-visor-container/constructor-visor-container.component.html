@@ -19,7 +19,7 @@
             </div>
 
             <div class="col-jhi-block" *ngFor="let block of contentBlocks; let index = index;">
-                <div (click)="selectBlock(index, block.id)" [ngClass]="{'selected-block': selectedBlock === index}"
+                <div id="content{{index}}" (click)="selectBlock(index, block.id)" [ngClass]="{'selected-block': selectedBlock === index}"
                     class="row-content-block">
                     <div *ngFor="let componente of componentes;">
                         <div *ngIf="block.bloqueComponentes.tipoBloqueComponentes.nombre == componente.nombre" #target>

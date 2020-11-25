@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ContentBlocksService } from 'app/services/content-blocks.service';
 import { NavigationControlsService } from 'app/services/navigation-controls.service';
 import { Subscription } from 'rxjs';
@@ -13,10 +13,12 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
   styleUrls: ['./constructor-filmstrip.component.scss']
 })
 export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterContentInit {
-  selectedContentBlockIndex = -1;
+  selectedContentBlockIndex = 0;
   contentBlocks: any;
   subscription: Subscription;
   templates: ITipoBloqueComponentes[] = [];
+  @Output()
+  selectedContentChange = new EventEmitter();
 
   constructor(
     private contentBlocksService: ContentBlocksService,
@@ -32,9 +34,6 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterCo
     });
     this.contentBlocksService.getTempaltes().subscribe(templates => {
       this.templates = templates;
-    });
-    this.subscription = this.contentBlocksService.getSelectedBlockIndex().subscribe(selectedBlockIndex => {
-      this.selectedContentBlockIndex = selectedBlockIndex;
     });
   }
 
@@ -54,7 +53,7 @@ export class ConstructorFilmstripComponent implements OnInit, OnDestroy, AfterCo
    */
   selectContentBlock(selectedContentBlockIndex: number): void {
     this.selectedContentBlockIndex = selectedContentBlockIndex;
-    this.contentBlocksService.setSelectedBlockIndex(this.selectedContentBlockIndex);
+    this.selectedContentChange.emit(this.selectedContentBlockIndex);
   }
 
   /*

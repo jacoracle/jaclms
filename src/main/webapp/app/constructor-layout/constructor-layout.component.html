@@ -11,7 +11,7 @@
           </button>
 
           <div class="left-sidebar">
-            <jhi-left-sidebar></jhi-left-sidebar>
+            <jhi-left-sidebar (selectedContentChange)='selectedContentMethod($event)'></jhi-left-sidebar>
           </div>
         </div>
 
@@ -23,7 +23,7 @@
         }" id="item-grid-2">
           <!-- Visor container -->
           <div class="grid-visor-container" [ngClass]="{'gvc-collapse': !showTextEditor}">
-            <jhi-constructor-visor-container  [type]="type" [curso]="curso" [modulo]="modulo" ></jhi-constructor-visor-container>
+            <jhi-constructor-visor-container [selectedContentBlockIndex]="selectedContentBlockIndex"  [type]="type" [curso]="curso" [modulo]="modulo" ></jhi-constructor-visor-container>
           </div>
           <!-- Component container -->
           <div class="grid-component-container" [ngClass]="{'gcc-collapse': !showTextEditor}">

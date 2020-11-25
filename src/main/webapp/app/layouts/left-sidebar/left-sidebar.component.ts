@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'jhi-left-sidebar',
@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./left-sidebar.component.scss']
 })
 export class LeftSidebarComponent {
+  selectedContentBlockIndex = 0;
+  @Output()
+  selectedContentChange = new EventEmitter();
+
   constructor() {}
+
+  selectedContentMethod(selectedContentBlockIndex: number): void {
+    this.selectedContentBlockIndex = selectedContentBlockIndex;
+    this.selectedContentChange.emit(this.selectedContentBlockIndex);
+  }
 }

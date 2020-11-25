@@ -14,6 +14,7 @@ import { CurrentModuleService } from 'app/services/current-module.service';
   styleUrls: ['./constructor-layout.component.scss']
 })
 export class ConstructorLayoutComponent implements OnInit, OnDestroy {
+  selectedContentBlockIndex = 0;
   rightIsContracted = false;
   leftIsContracted = false;
   showTextEditor = false;
@@ -81,4 +82,8 @@ export class ConstructorLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {}
+
+  selectedContentMethod(selectedContentBlockIndex: number): void {
+    this.selectedContentBlockIndex = selectedContentBlockIndex;
+  }
 }

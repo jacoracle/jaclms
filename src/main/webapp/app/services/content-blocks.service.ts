@@ -54,14 +54,6 @@ export class ContentBlocksService {
     this.templates.next(templates);
   }
 
-  getSelectedBlockIndex(): Observable<number> {
-    return this.selectedBlockIndex;
-  }
-
-  setSelectedBlockIndex(index: number): void {
-    this.selectedBlockIndex.next(index);
-  }
-
   getContentBlocksComplete(): Observable<boolean> {
     return this.contentBlocksComplete;
   }

@@ -83,6 +83,14 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   ];
 
   @Input()
+  set selectedContentBlockIndex(selectedContentBlockIndex: any) {
+    const block = document.getElementById('content' + selectedContentBlockIndex);
+    if (block != null) {
+      block.scrollIntoView();
+    }
+  }
+
+  @Input()
   set curso(val: any) {
     this.showLoader = false;
     this._curso = val;
@@ -154,7 +162,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
           this.contentBlocks.splice(this.selectedBlock + 1, 0, this.createCourseBlocks(selectedBlock));
           this.updateBlocksOrder();
           this.contentBlocksService.setContentBlocks(this.contentBlocks);
-          this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
           // Guardar nivel nuevo incluyendo primer bloquesCurso creado
           if (this.nivel.nivelId) {
             this.subscription = this.bloquesCursoService
@@ -195,12 +202,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(visorSize => {
         this.visorSize = visorSize;
-      });
-    this.subscription = this.contentBlocksService
-      .getSelectedBlockIndex()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(selectedBlockIndex => {
-        this.selectedBlock = selectedBlockIndex;
       });
 
     // Obtener bloques actualizados de filmStrip
@@ -457,7 +458,6 @@ export class ConstructorVisorContainerComponent implements OnInit, OnDestroy {
   selectBlock(index: number, blockId: number): void {
     this.selectedBlock = index;
     this.contentBlocksService.setSelectedBlockId(blockId);
-    this.contentBlocksService.setSelectedBlockIndex(this.selectedBlock);
     this.navigationControlsService.setOpenProperties(true);
   }
 
