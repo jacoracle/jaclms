@@ -536,7 +536,11 @@ export class ConstructorComponentPropertiesComponent implements OnDestroy {
   }
 
   isActivity(): boolean {
-    return this.activity !== undefined && this.activity.tipoActividadInteractiva !== undefined;
+    if (this.activity !== undefined) {
+      return this.activity.tipoActividadInteractiva !== undefined;
+    } else {
+      return false;
+    }
   }
 
   activityHasContent(): boolean {
