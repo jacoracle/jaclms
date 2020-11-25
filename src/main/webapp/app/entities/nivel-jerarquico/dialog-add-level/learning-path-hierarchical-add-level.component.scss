@@ -1,0 +1,56 @@
+.row-modal-matDialog {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .mat-dialog-title {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0 !important;
+  }
+  .mat-dialog-content {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .row-footer-mmd {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0 !important;
+    .main-btn {
+      position: relative !important;
+      width: auto !important;
+      height: 30px !important;
+      font-size: 13px !important;
+      padding: 0 !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+      line-height: 30px !important;
+      border-radius: 14px !important;
+    }
+    .secondary-btn {
+      position: relative !important;
+      width: auto !important;
+      height: 30px !important;
+      font-size: 13px !important;
+      padding: 0 !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+      line-height: 30px !important;
+      border-radius: 14px !important;
+    }
+  }
+}
