@@ -20,8 +20,8 @@
 
             <!-- Subir archivo -->
             <div class="cover-upload-c">
-                <h6 *ngIf="!isActivity()" jhiTranslate="rightbar.properties.uploadfile">Subir archivo</h6>
-                <h6 *ngIf="isActivity()" jhiTranslate="rightbar.properties.management">Gestión Actividad</h6>
+                <h6 *ngIf="!isActivity() && this.fileFormat !== 'text'" jhiTranslate="rightbar.properties.uploadfile">Subir archivo</h6>
+                <h6 *ngIf="isActivity() && this.fileFormat !== 'text'" jhiTranslate="rightbar.properties.management">Gestión Actividad</h6>
 
                 <div class="row-up-image-area">
                     <div *ngIf="fileFormat === 'image'">
@@ -55,7 +55,7 @@
                         <audio [src]="soundSrc" controls controlsList="nodownload" #sPlayer *ngIf="soundSrc !== '' && listenAudio" class="audioPlayer"></audio>
                     </div>
                     <!-- Actividad -->
-                    <div *ngIf="isActivity()" class="test-pdf">
+                    <div *ngIf="isActivity() && this.fileFormat !== 'text'" class="test-pdf">
                         <img [src]="defaultQuestionsTextUrl" alt="" class="cover-upload-img" *ngIf="activity && activityHasContent()">
                         <span class="play-icon-test" (click)="openActivityModal()" *ngIf="activity && activityHasContent()">
                             <i class="icon ni-view"></i>
@@ -68,28 +68,28 @@
                         <span class="loader"></span>
                     </div>
                 </div>
-                <div class="row-sidebar-up-image-btn" *ngIf="!isActivity()">
+                <div class="row-sidebar-up-image-btn" *ngIf="!isActivity() && this.fileFormat !== 'text'">
                     <button (click)="delete()" class="secondary-btn text-transform-none" *ngIf="multimediaFileProperties.contenido !== 'unknown'">
                         Eliminar
                     </button>
-                    <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="!isActivity()">
+                    <button type="button" class="main-btn" (click)="fileInput.click()" *ngIf="!isActivity() && this.fileFormat !== 'text'">
                         <span jhiTranslate="rightbar.properties.upload">Subir</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
-                    <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="isActivity()">
+                    <button type="button" class="main-btn" (click)="createUpdateActivity()" *ngIf="isActivity() && this.fileFormat !== 'text'">
                         <span jhiTranslate="rightbar.properties.activity">Actividad</span>
                         <input #fileInput type="file" (change)="selectFile($event)" style="display:none;"/>
                     </button>
                 </div>
                 <!-- Pregunta -->
                 <div class="row-sidebar-up-image-btn" *ngIf="activity && !activityHasContent()">
-                    <button type="button" class="main-btn" (click)="openActivityModal()">   
+                    <button type="button" class="main-btn" (click)="openActivityModal()">
                         <span jhiTranslate="rightbar.properties.activity">Actividad</span>
                     </button>
                 </div>
                 <!-- Pregunta termina -->
 
-                <div class="properties-file" *ngIf="!isActivity() && fileFormat !== 'pregunta_texto'">
+                <div class="properties-file" *ngIf="!isActivity() && this.fileFormat !== 'text'">
                     <h6 jhiTranslate="rightbar.properties.information">Información</h6>
                     <div class="pf-item">
                         <label for="filename" jhiTranslate="rightbar.properties.name">Nombre:</label>
