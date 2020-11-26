@@ -146,13 +146,13 @@
                 </div>
 
                 <!-- Columnas -->
-                <div class="row-tipo-mat row-question-grid" *ngIf="ejercicio.columnas">
+                <div class="row-tipo-mat row-question-grid row-grid-a-columns" *ngIf="ejercicio.columnas">
 
                     <!-- Columna -->
-                    <div style="width: 100%; border: 1px solid black; float: left; min-height: 50px;"
+                    <div class="r-answer-column"
                         *ngFor="let columna of ejercicio.columnas; let columnIndex = index;">
                         <!-- Tipo de elementos -->
-                        <div class="row-tipo-mat">
+                        <div class="row-r-element">
                             <mat-form-field appearance="outline" (change)="changeElementsType(columna, columnIndex, ejercicio)"
                                 class="mat-tipo-respuesta">
                                 <mat-label jhiTranslate="constructorApp.matching.exercise.elementType">Tipo de respuesta
@@ -167,7 +167,7 @@
                         </div>
                         <!-- Tipo de elementos termina -->
 
-                        <div *ngIf="columna.elementos">
+                        <div *ngIf="columna.elementos" class="row-r-element-a">
 
 
 
@@ -219,8 +219,9 @@
 
                                 <button (click)="deleteRow(ejercicio, elementIndex);"
                                     *ngIf="columna.elementos.length > 1"
-                                    class="btn-delete-question">
-                                    Eliminar renglón
+                                    class="btn-delete-question btn-circle">
+                                    <i class="ni-delete icon "></i>
+                                    <!-- Eliminar renglón -->
                                 </button>
 
                                 <!-- Opción/URL de recurso -->

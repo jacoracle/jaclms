@@ -21,8 +21,8 @@
 
               <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
                   <div class="form-login">
-                      <mat-form-field class="mat-input" appearance="legacy">
-                          <mat-label><mat-icon>person</mat-icon>  <b> Login</b> </mat-label>
+                      <mat-form-field class="mat-input" appearance="outline">
+                          <mat-label><mat-icon>person</mat-icon> Usuario </mat-label>
                           <input matInput maxlength="80" class="form-login" id="username" name="username"
                                  formControlName="username" username>
                          <!-- <i class="icon ni-user icon-form-login"></i>-->
@@ -31,8 +31,8 @@
 
 
                   <div class="form-login">
-                      <mat-form-field class="mat-input" appearance="legacy">
-                          <mat-label><mat-icon>lock</mat-icon>  <b> Password</b> </mat-label>
+                      <mat-form-field class="mat-input" appearance="outline">
+                          <mat-label><mat-icon>lock</mat-icon> Contraseña </mat-label>
                           <input matInput maxlength="80" class="form-login" id="password" name="password"
                                  formControlName="password" password>
                           <!-- <i class="icon ni-user icon-form-login"></i>-->
@@ -56,7 +56,7 @@
                   </div>
 
                   <div class="row-btn-login-modal">
-                    <button mat-raised-button type="submit" class="main-btn" jhiTranslate="login.form.button">Sign in</button>
+                    <button type="submit" class="main-btn" jhiTranslate="login.form.button">Sign in</button>
                   </div>
 
               </form>

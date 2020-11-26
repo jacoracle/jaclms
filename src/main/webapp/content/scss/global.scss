@@ -453,45 +453,6 @@ jhi-login-modal {
   }
 }
 
-.row-cfl-register {
-  position: relative;
-  width: 100%;
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 25px;
-  p {
-    margin-right: 10px;
-  }
-  a {
-    position: relative;
-    width: auto;
-    height: auto;
-    font-size: 14px;
-    cursor: pointer;
-    color: $a-color-nd;
-    font-weight: 600;
-    transition: 0.3s;
-    &:hover {
-      color: $a-color-nd-hover;
-    }
-    @include smartphone {
-      font-size: 12px;
-    }
-  }
-}
-
-// btn Login
-.row-btn-login-modal {
-  position: relative;
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
 // Buttons
 // Main button style
 .main-btn {

@@ -1,3 +1,4 @@
+@import '../../../content/scss/variables.scss';
 .form-login {
   position: relative;
   width: 100%;
@@ -7,27 +8,11 @@
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   flex-direction: column;
-
-  .form-login input {
+  .mat-input {
     position: relative;
     width: 100%;
-    height: 38px;
-    /*background-color: white;*/
-    border: 0;
-    border-radius: 10px;
-    // border: 2px solid #e1e4e8;
-    outline: none;
-    padding-left: 12px;
-    -webkit-transition: 0.3s;
-    transition: 0.3s;
+    height: auto;
   }
-}
-
-.mat-input {
-  position: relative;
-  width: 80%;
-  height: auto;
-  left: 40px;
 }
 
 .parent {
@@ -42,4 +27,48 @@
   flex: auto;
   min-width: 0;
   width: 250px;
+}
+
+// btn Login
+.row-btn-login-modal {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  .main-btn {
+    width: 120px;
+    height: 36px;
+  }
+}
+.row-cfl-register {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  margin-bottom: 30px;
+  p {
+    margin-right: 10px;
+  }
+  a {
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: 14px;
+    cursor: pointer;
+    color: $a-color-nd;
+    font-weight: 600;
+    transition: 0.3s;
+    &:hover {
+      color: $a-color-nd-hover;
+    }
+    @include smartphone {
+      font-size: 12px;
+    }
+  }
 }
