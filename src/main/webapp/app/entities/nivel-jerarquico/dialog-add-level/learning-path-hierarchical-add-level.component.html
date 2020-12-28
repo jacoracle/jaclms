@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Nuevo elemento</h1>
+<div mat-dialog-content>
+    <!-- <p>Capture el nombre del nuevo nodo:</p> -->
+    <mat-form-field>
+        <mat-label>Capture el nombre del nuevo nodo</mat-label>
+        <input matInput autocomplete="off" [(ngModel)]="data.newLevelName">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button class="secondary-btn m-2" (click)="onNoClick()">Cancelar</button>
+    <button mat-button class="main-btn" [mat-dialog-close]="data.newLevelName" cdkFocusInitial>Agregar</button>
+</div>

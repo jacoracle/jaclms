@@ -1,0 +1,164 @@
+<div class="main-container-br">
+  <div class="window-br">
+
+    <!-- Window Header -->
+    <div class="window-br-header">
+        <div class="alert-path">
+            <jhi-alert-error></jhi-alert-error>
+        </div>
+        <div class="r1">
+            <div class="logo-home-mini"></div>
+        </div>
+
+        <div class="r2">
+            <div class="windowHeader-title disbled-t-header">
+                <h4>Rutas de Aprendizaje / </h4>
+            </div>
+            <div class="windowHeader-title">
+              <h4>Configurar Ruta de Aprendizaje</h4>
+            </div>
+            <div class="c1">
+            </div>
+        </div>
+    </div>
+
+    <div class="window-br-body-topbar-group">
+        <div class="line-gradient lg-step3"></div>
+        <!-- <div class="row-wbr-bt">
+            <p>Nombre de rutas de aprendizaje</p>
+        </div> -->
+    </div>
+
+    <div class="window-br-body-full">
+
+      <div class="container-path-hierarchical" [ngSwitch]="isAuthenticated()">
+
+          <div class="window-path-hierarchical-body">
+              <div class="hierarchical-bar">
+                <div class="hb-header">
+                  <h5>Nombre de ruta de aprendizaje</h5>
+                </div>
+                <div class="hb-body">
+                  <div class="row-add-level-btn">
+                    <button class="main-btn" (click)="addLevel()"><i class="icon ni-add"></i>Nuevo Nivel</button>
+                  </div>
+                  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [cdkDropListData]="dataSource.data" class="row-mat-tree"
+                      cdkDropList #treePath="cdkDropList" (cdkDropListDropped)="dropOrder($event)">
+                      <!-- This is the tree node template for leaf nodes -->
+                      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag [cdkDragData]="node">
+                          <mat-icon *ngIf="allowAdd(node.level)">chevron_right</mat-icon>
+                          <mat-icon *ngIf="isLesson(node.level)">menu_book</mat-icon>
+                          <span (click)="loadChildren(node)"> {{ node.nombre }}</span>
+                          <mat-icon *ngIf="allowAdd(node.level)" (click)="addSubLevel(node)">add</mat-icon>
+
+                          <!-- tres puntos para menu contextual -->
+                          <mat-icon *ngIf="allowAdd(node.level)" (contextmenu)="onContextMenu($event, node)"
+                              [matMenuTriggerFor]="contextMenu" aria-label="Menú Nivel Jerárquico">more_vert</mat-icon>
+                          <!-- terminan tres puntos para mene contextual -->
+
+                      </mat-tree-node>
+
+                      <!-- This is the tree node template for expandable nodes -->
+                      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag
+                          (contextmenu)="onContextMenu($event, node)">
+                          <mat-icon class="mat-icon-rtl-mirror" mat-icon-button matTreeNodeToggle
+                              [attr.aria-label]="'toggle ' + node.nombre">
+                              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                          </mat-icon>
+                          {{node.nombre}}---
+                      </mat-tree-node>
+                  </mat-tree>
+                </div>
+              </div>
+
+              <div class="sequences-section" cdkDropList [cdkDropListData]="sequenceList" cdkDropListSortingDisabled
+                  [cdkDropListConnectedTo]="[treePath]" (cdkDropListDropped)="dropOrder($event)">
+
+                <div class="ss-header">
+                    <!-- <h5>Agrupadores</h5> -->
+                        <p class="p-result">Agrupadores ( {{sequenceList.length}} )</p>
+                        <!-- <div class="temporal-instruction">
+                            <i class="icon ni-info"></i>
+                            <span>Arrastra un Agrupador al panel de la izquierda para generar <strong>Niveles
+                                    Jerárquicos</strong>.</span>
+                        </div> -->
+                        <form name="learningPathForm" role="form" [formGroup]="learningPathForm" autocomplete="off" class="form-uma-search">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Buscar</mat-label>
+                                <input type="text" placeholder="" matInput formControlName="searchGroup" [matAutocomplete]="searchGroup">
+                                <mat-autocomplete autoActiveFirstOption #searchGroup="matAutocomplete" [displayWith]="displayFn">
+                                    <!-- <mat-option *ngFor="let option of umasList" [value]="option">
+                                                    {{option.descripcion}}
+                                                </mat-option> -->
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </form>
+                </div>
+                  <div class="ss-body">
+                    <div class="grid-cards">
+                      <div class="box-card" *ngFor="let groups of sequenceList;" cdkDrag [cdkDragData]="groups">
+                        <div class="group-cover-br-image"><span></span></div>
+                        <div class="course-desc-br-row">
+                          <span class="title-course-br"
+                                *ngIf="groups.titulo">{{groups.titulo.length > 30 ? groups.titulo.substring(0, 30) + "..." : groups.titulo}}</span>
+                          <span class="desc-course-br"
+                              *ngIf="groups.descripcion">{{groups.descripcion!.length > 28 ? groups.descripcion!.substring(0, 28) + "..." : groups.descripcion!}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+
+              <!-- <div class="sequences-section" cdkDropList [cdkDropListData]="sequenceList" cdkDropListSortingDisabled
+                  [cdkDropListConnectedTo]="[treePath]" (cdkDropListDropped)="dropOrder($event)">
+                  <div class="sequence-body" *ngFor="let groups of sequenceList;" cdkDrag [cdkDragData]="groups">
+                      <div class="info-sequence">
+                          <p><strong>{{ groups.titulo }}</strong></p>
+                          <p>{{ groups.descripcion }}</p>
+                      </div>
+                  </div> -->
+                  <!-- <p>{{ dataSource.data | json }}</p> NO BORRAR -->
+              <!-- </div> -->
+
+          </div>
+
+
+      </div>
+      <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+          [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+          <mat-menu #contextMenu="matMenu">
+              <ng-template matMenuContent let-item="node">
+                  <button mat-menu-item>
+                      <!--(click)="onContextMenuAction1(node)"-->
+                      <mat-icon>filter_1</mat-icon>
+                      <span>Agregar Abuelo</span>
+                  </button>
+                  <button mat-menu-item>
+                      <!--(click)="onContextMenuAction2(node)"-->
+                      <mat-icon>filter_2</mat-icon>
+                      <span>Agregar Hijo</span>
+                  </button>
+                  <button mat-menu-item>
+                      <!--(click)="onContextMenuAction3(node)"-->
+                      <mat-icon>filter_3</mat-icon>
+                      <span>Agregar Nieto</span>
+                  </button>
+              </ng-template>
+          </mat-menu>
+      </div>
+
+
+    </div>
+
+    <!-- Footer -->
+    <div class="window-br-footer">
+        <button routerLink="/learning-home" matTooltip="Regresar al Home." class="secondary-btn">Regresar</button>
+        <button (click)="functionOne()" class="main-btn" matTooltip="Alguna funcionalidad de Ruta."
+            [disabled]="false">Terminar</button>
+        <button (click)="functionOne()" class="main-btn publish-btn" matTooltip="Alguna funcionalidad de Ruta."
+            [disabled]="false">Publicar</button>
+    </div>
+
+  </div>
+</div>

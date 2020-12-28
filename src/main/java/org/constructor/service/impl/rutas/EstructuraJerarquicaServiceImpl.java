@@ -1,14 +1,16 @@
-package org.constructor.service.impl;
+package org.constructor.service.impl.rutas;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.domain.EstructuraJerarquica;
-import org.constructor.repository.EstructuraJerarquicaRepository;
-import org.constructor.service.EstructuraJerarquicaService;
+import org.constructor.repository.rutas.EstructuraJerarquicaRepository;
+import org.constructor.service.rutas.EstructuraJerarquicaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,10 +53,13 @@ public class EstructuraJerarquicaServiceImpl implements EstructuraJerarquicaServ
 	 * findAll
 	 */
 	@Override
-	public Page<EstructuraJerarquica> findAll(Pageable pageable) {
-		return estructuraJerarquicaRepository.findAll(pageable) ;
+	public List<EstructuraJerarquica> findAll(Pageable pageable) {
+		estructuraJerarquicaRepository.findAll(pageable) ;
+		return estructuraJerarquicaRepository.findAll(Sort.by("ordenNivel").ascending());
 	}
 
+
+	
 	/**
 	 * findOne
 	 */
@@ -69,6 +74,14 @@ public class EstructuraJerarquicaServiceImpl implements EstructuraJerarquicaServ
 	@Override
 	public void delete(Long id) {
 		estructuraJerarquicaRepository.deleteById(id);
+	}
+
+	/**
+	 * findByEstructura
+	 */
+	@Override
+	public Set<EstructuraJerarquica> findByNivel(Long id) {
+		return estructuraJerarquicaRepository.findByEstructura(id);
 	}
 
 }

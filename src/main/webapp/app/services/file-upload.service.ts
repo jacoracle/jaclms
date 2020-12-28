@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { ImageService } from './image.service';
 import { VideoService } from './video.service';
@@ -30,7 +30,7 @@ export class FileUploadService {
   pushFileStorage(file: File, id: number, type: string): Observable<any> {
     const data: FormData = new FormData();
     data.append('file', file);
-    data.append('id', type === 'course' ? 'Curso-' + id.toString() : 'Modulo-' + id.toString());
+    data.append('id', type === 'course' ? 'Curso-' + id.toString() : type === 'path' ? 'Ruta-' + id.toString() : 'Modulo-' + id.toString());
     return this.http.post(SERVER_API_URL + '/api/fileUpload', data);
   }
 
@@ -145,5 +145,10 @@ export class FileUploadService {
       const objectUrl = this.domSanitizer.bypassSecurityTrustUrl(soundPath);
       this.soundService.setSoundSrc(objectUrl);
     });
+  }
+
+  getSafeResourceUrl(file: Blob): SafeUrl {
+    const path = URL.createObjectURL(file);
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(path);
   }
 }

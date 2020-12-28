@@ -1,0 +1,39 @@
+{
+  "constructorApp": {
+    "path": {
+      "home": {
+        "title": "Rutas de Aprendizaje",
+        "createLabel": "Crear",
+        "createOrEditLabel": "Crear o editar Ruta",
+        "titleGeneralConfg": "Configuración general",
+        "titleAdvancelConfg": "Configuración avanzada",
+        "notFound": "Ninguna Ruta pudo ser encontrada"
+      },
+      "created": "La Ruta ha sido creada.",
+      "updated": "La Ruta ha sido actualizada.",
+      "deleted": "La Ruta ha sido eliminada.",
+      "delete": {
+        "question": "¿Desea eliminar la Ruta con ID: {{ id }}?"
+      },
+      "detail": {
+        "title": "Ruta de Aprendizaje"
+      },
+      "sequence": {
+        "addGroup": "Cambios guardados, un Agrupador fue agregado.",
+        "addLevel": "Cambios guardados, nivel agregado correctamente."
+      },
+      "validations": {
+        "formError": "Por favor revisa la información y vuelve a intentarlo.",
+        "formErrorTitle": "Se requiere el título de la Ruta, por favor, revisa el formulario.",
+        "fileSize": "El archivo debe pesar menos de 5MB.",
+        "fileType": "Tipo de archivo no permitido.",
+        "dates": "La fecha de creación no puede ser posterior a la fecha de publicación.",
+        "requiredField": "Este campo es requerido.",
+        "save": "La Ruta de Aprendizaje está lista para ser configurada",
+        "saveError": "No fue posible generar la Ruta, contacte al Administrador o intente más tarde.",
+        "error": "No fue posible realizar la acción, intente más tarde o contacte al Admistrador.",
+        "session": "No cuenta con sesión activa o no se encuentran los parámetros requeridos para cargar los datos."
+      }
+    }
+  }
+}

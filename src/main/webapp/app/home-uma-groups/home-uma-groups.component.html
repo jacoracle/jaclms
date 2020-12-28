@@ -1,22 +1,15 @@
-<!-- delete class css main-groups-uma-container -->
 <div class="main-container-br">
     <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'" class="window-br">
 
       <!-- Window Header -->
       <div class="window-br-header">
-        <div class="alert-sequence-configuration">
-            <jhi-alert-error></jhi-alert-error>
-        </div>
-        <div class="r1">
-          <div class="logo-home-mini"></div>
-        </div>
-
-        <div class="r2">
-          <div class="windowHeader-title">
-            <!-- <div class="icon-step-header"></div> -->
-            <h4 jhiTranslate="homegroup.title">Agrupador de UMA</h4>
+        <div class="row-br-header">
+          <div class="header-breadcrumbs">
+            <div class="logo-home"><i class="icon ni-nimbus"></i></div>
+            <h4 class="hb-title" jhiTranslate="homegroup.title">Agrupador de UMA</h4>
           </div>
-          <div class="c1">
+          <div class="alert-sequence-configuration">
+              <jhi-alert-error></jhi-alert-error>
           </div>
         </div>
       </div>
@@ -24,7 +17,10 @@
       <div class="window-br-body-topbar">
           <div class="line-gradient lg-step2"></div>
           <div class="row-wbr-bt">
-            <p jhiTranslate="homegroup.your">Tus Agrupadores ({{secuenciasUma!.length}})</p>
+            <div class="br-tp-subtitle">
+              <h5 jhiTranslate="homegroup.your">Tus Agrupadores</h5>
+              <span>{{secuenciasUma!.length}}</span>
+            </div>
 
             <form name="groupUmaForm" role="form" [formGroup]="groupUmaForm" autocomplete="off" class="form-uma-search">
               <mat-form-field appearance="outline">
@@ -33,9 +29,6 @@
                   [matAutocomplete]="autoInputTituloAgrupador">
                 <mat-autocomplete autoActiveFirstOption #autoInputTituloAgrupador="matAutocomplete"
                   [displayWith]="displayFn">
-                  <!-- <mat-option *ngFor="let option of filteredSequencesUmas! | async" [value]="option">
-                      {{option.titulo}}
-                  </mat-option> -->
                 </mat-autocomplete>
               </mat-form-field>
             </form>
@@ -69,25 +62,28 @@
           <!-- <p>Resultados de la búsqueda de secuencias/agrupadores de UMAs... ( {{secuenciasUma.length}} )</p> -->
           <div class="grid-cards">
             <div class="box-card" *ngFor="let sec of secuenciasUma"
-               [routerLink]="['/sequence-configuration', sec.id]">
+               [routerLink]="['/sequence-configuration', sec.id, 2]">
                <!-- <div *ngFor="let sec of filteredSequencesUmas! | async"> NO BORRAR ESTA LINEA -->
-                   <!-- <mat-nav-list> -->
 
-               <div class="group-cover-br-image"><span></span></div>
+              <div class="row-content-card">
+                <div class="group-cover-br-image"><span></span></div>
 
-               <div (click)="deleteGroup(sec, $event)" class="delete-course-br">
+                <div class="course-desc-br-row">
+                  <span class="title-course-br"
+                        *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}</span>
+                  <span class="desc-course-br"
+                      *ngIf="sec.descripcion">{{sec.descripcion!.length > 28 ? sec.descripcion!.substring(0, 28) + "..." : sec.descripcion!}}</span>
+                </div>
+              </div>
+
+              <div class="row-buttons-card">
+                <div class="edit-course-br" [routerLink]="['/group-configuration', sec.id]">
+                    <i class="icon ni-edit icon-negative"></i>
+                </div>
+                <div (click)="deleteGroup(sec, $event)" class="delete-course-br">
                  <i class="icon ni-delete icon-negative"></i>
-               </div>
-
-               <div class="course-desc-br-row">
-
-                 <span class="title-course-br"
-                       *ngIf="sec.titulo">{{sec.titulo.length > 30 ? sec.titulo.substring(0, 30) + "..." : sec.titulo}}</span>
-
-                 <span class="desc-course-br"
-                     *ngIf="sec.descripcion">{{sec.descripcion!.length > 28 ? sec.descripcion!.substring(0, 28) + "..." : sec.descripcion!}}</span>
-               </div>
-
+                </div>
+              </div>
             </div>
           </div>
 
@@ -98,7 +94,7 @@
       <!-- Window footer -->
       <div class="window-br-footer">
           <button routerLink="/" class="secondary-btn" jhiTranslate="homegroup.back">Regresar</button>
-          <button routerLink="/group-configuration" class="main-btn" jhiTranslate="homegroup.new">Nuevo Agrupador</button>
+          <button routerLink="/group-configuration" class="main-btn create-btn" jhiTranslate="homegroup.new">Crear Agrupador</button>
       </div>
 
     </div>

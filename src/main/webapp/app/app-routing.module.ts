@@ -14,8 +14,9 @@ import { ModuleConfigurationComponent } from './module-configuration/module-conf
 import { HomeLearningComponent } from './home-learning/home-learning.component';
 import { HomeUmaGroupsComponent } from './home-uma-groups/home-uma-groups.component';
 import { GroupUmaConfigurationComponent } from './group-uma-configuration/group-uma-configuration.component';
+import { LearningPathConfigurationComponent } from './learning-path-configuration/learning-path-configuration.component';
+import { LearningPathHierarchicalLevelComponent } from './entities/nivel-jerarquico/learning-path-hierarchical-level.component';
 import { HomeCalendarComponent } from 'app/home-calendar/home-calendar.component';
-// import { SecuenciaAgrupadorUpdateComponent } from './entities/agrupador/secuencia-uma-update.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -76,16 +77,36 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: ModuleConfigurationComponent
         },
         {
+          path: 'uma-configuration/:id/:since',
+          component: ModuleConfigurationComponent
+        },
+        {
           path: 'group-configuration',
           component: GroupUmaConfigurationComponent
         },
-        // {
-        //   path: 'sequence-configuration/:id',
-        //   component: SecuenciaAgrupadorUpdateComponent
-        // },
         {
-          path: 'sequence-configuration/:id',
+          path: 'group-configuration/:id',
           component: GroupUmaConfigurationComponent
+        },
+        {
+          path: 'sequence-configuration/:id/:step',
+          component: GroupUmaConfigurationComponent
+        },
+        {
+          path: 'path-configuration',
+          component: LearningPathConfigurationComponent
+        },
+        {
+          path: 'path-configuration/:id',
+          component: LearningPathConfigurationComponent // LearningPathUpdateComponent
+        },
+        {
+          path: 'path-hierarchical',
+          component: LearningPathHierarchicalLevelComponent // RutasAprendizajeJerarquiaComponent
+        },
+        {
+          path: 'path-hierarchical/:id',
+          component: LearningPathHierarchicalLevelComponent // RutasAprendizajeJerarquiaComponent
         },
         ...LAYOUT_ROUTES
       ],

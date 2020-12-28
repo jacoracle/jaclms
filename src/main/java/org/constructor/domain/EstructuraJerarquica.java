@@ -7,11 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import org.constructor.domain.module.NivelModulo;
+import org.constructor.domain.rutas.NivelJerarquico;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A EstructuraJerarquica.
@@ -28,27 +30,30 @@ public class EstructuraJerarquica implements Serializable{
 	/**
 	 * Long id 
 	 */
-	@JsonIgnore
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
 	/**
-	 * NivelModulo nivelModulo
+	 * int nivel_jerarquico_id
 	 */
-    private NivelModulo nivelModulo;
+	@Column(name = "nivel_jerarquico_id", nullable=false)
+	private Long nivel;
 	
 	/**
 	 * int subNivelJerarquico
 	 */
-	@Column(name = "subnivel_jerarquico_id", nullable=false)
-	private int subNivelJerarquico;
+	@ManyToOne
+	@JoinColumn(name = "subnivel_jerarquico_id", nullable=false)
+	private NivelJerarquico subNivelJerarquico;
 	
 	/**
 	 * int ordenNivel
 	 */
+	@OrderBy ("orden ASC")
 	@Column(name = "orden")
-    private int ordenNivel;
+    private Long ordenNivel;
+
 
 	
 	/**
@@ -68,50 +73,46 @@ public class EstructuraJerarquica implements Serializable{
 	}
 
 	/**
-	 * Get 
-	 * @return the nivelModulo 
-	 */
-	public NivelModulo getNivelJerarquico() {
-		return nivelModulo;
-	}
-
-	/**
-	 * Set
-	 * @param nivelModulo
-	 */
-	public void setNivelJerarquico(NivelModulo nivelModulo) {
-		this.nivelModulo = nivelModulo;
-	}
-
-	/**
-	 * Get 
 	 * @return the subNivelJerarquico
 	 */
-	public int getSubNivelJerarquico() {
+	public NivelJerarquico getSubNivelJerarquico() {
 		return subNivelJerarquico;
 	}
 
 	/**
-	 * Set
-	 * @param subNivelJerarquico
+	 * @param subNivelJerarquico the subNivelJerarquico to set
 	 */
-	public void setSubNivelJerarquico(int subNivelJerarquico) {
+	public void setSubNivelJerarquico(NivelJerarquico subNivelJerarquico) {
 		this.subNivelJerarquico = subNivelJerarquico;
 	}
 
+
+
 	/**
-	 * Get 
+	 * @return the nivel
+	 */
+	public Long getNivel() {
+		return nivel;
+	}
+
+	/**
+	 * @param nivel the nivel to set
+	 */
+	public void setNivel(Long nivel) {
+		this.nivel = nivel;
+	}
+
+	/**
 	 * @return the ordenNivel
 	 */
-	public int getOrdenNivel() {
+	public Long getOrdenNivel() {
 		return ordenNivel;
 	}
 
 	/**
-	 * Set
-	 * @param ordenNivel
+	 * @param ordenNivel the ordenNivel to set
 	 */
-	public void setOrdenNivel(int ordenNivel) {
+	public void setOrdenNivel(Long ordenNivel) {
 		this.ordenNivel = ordenNivel;
 	}
 
@@ -120,8 +121,7 @@ public class EstructuraJerarquica implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "EstructuraJerarquica [id=" + id + ", subNivelJerarquico="
-				+ subNivelJerarquico + ", ordenNivel=" + ordenNivel + "]";
+		return "EstructuraJerarquica [id=" + id  + "]";
 	}
 	
 }

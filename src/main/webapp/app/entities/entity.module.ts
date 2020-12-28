@@ -12,11 +12,23 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material';
+import { LearningPathHierarchicalAddLevelComponent } from './nivel-jerarquico/dialog-add-level/learning-path-hierarchical-add-level.component';
 
 @NgModule({
   imports: [
+    CommonModule,
     MatChipsModule,
     MatSelectModule,
+    MatTreeModule,
+    MatDialogModule,
+    MatIconModule,
+    MatRadioModule,
+    MatMenuModule,
     RouterModule.forChild([
       {
         path: 'asignatura',
@@ -74,8 +86,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatExpansionModule,
     MatStepperModule,
     MatTabsModule,
-    DragDropModule
+    DragDropModule,
+    MatTreeModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatMenuModule
   ],
-  declarations: [PhoneNumberComponent, CountryComponent]
+  declarations: [PhoneNumberComponent, CountryComponent],
+  entryComponents: [LearningPathHierarchicalAddLevelComponent]
 })
 export class ConstructorEntityModule {}

@@ -143,6 +143,12 @@ public class TipoActividadInteractiva implements Serializable {
 		this.actividadesInteractivas = actividadesInteractivas;
 	}
 
+	@Override
+	public String toString() {
+		return "TipoActividadInteractiva [id=" + id + ", tipoActividad=" + tipoActividad + ", subtipo=" + subtipo
+				+ ", opcion=" + opcion + ", actividadesInteractivas=" + actividadesInteractivas + "]";
+	}
+
 
 
 

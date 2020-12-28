@@ -1,12 +1,10 @@
 <div>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-chip-list #chipList aria-label="Colaboradores y Roles">
             <mat-chip *ngFor="let rc of listRolesColaboradores" [selectable]="selectable" [removable]="removable"
                 (removed)="removeColaborador(rc)">
                 {{ (rc.colaborador.nombres + ' ' + rc.colaborador.apellido1 + ' - ' + rc.rolColaborador.descripcion).substring(0, 25) }}
-                <mat-icon matChipRemove *ngIf="removable">
-                    <span jhiTranslate="uma.form.cancel">cancel</span>
-                </mat-icon>
+                <mat-icon matChipRemove *ngIf="removable" jhiTranslate="uma.form.cancel">cancel</mat-icon>
             </mat-chip>
             <input placeholder="{{'uma.form.collaborators' | translate}}" #colaboradorInput [formControl]="colaboradorCtrl"
                 [matAutocomplete]="auto" [matChipInputFor]="chipList"

@@ -5,13 +5,13 @@
   top: 0px;
   right: 0px;
   width: 100%;
-  height: 44px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: $navbar-light;
   z-index: 99 !important;
-  border-bottom: 1px solid $window-divider-color;
+  // border-bottom: 1px solid $window-divider-color;
 
   .row-nb-nimbus {
     position: relative;
@@ -226,7 +226,8 @@
         font-size: 14px;
         padding: 0;
         margin: 0;
-        background-color: $navbar-light;
+        // background-color: $navbar-light;
+        background-color: white;
         padding-top: 4px;
         padding-bottom: 4px;
         border-radius: 0px 0px 6px 6px;
@@ -239,42 +240,56 @@
     }
   }
 }
-ul.dropdown-menu {
-  .dropdown-item {
+
+.dropdown-item {
+  position: relative;
+  width: 92%;
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0;
+  transition: 0.3s;
+  margin: 0 auto;
+  margin-top: 4px;
+  color: $a-color-nd !important;
+  background-color: transparent;
+  border-radius: 4px;
+  .icon-submenu {
     position: relative;
-    width: 96%;
-    height: auto;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    transition: 0.4s;
+    background-color: $btn-white-hover;
+  }
+  .circle-di-icon {
+    position: relative;
+    width: 33px;
+    height: 32px;
+    border-radius: 50%;
+    transition: 0.4s;
+    background-color: #e5e9ea;
+    margin-left: 10px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    padding: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    transition: 0.3s;
-    margin: 0 auto;
-    margin-top: 4px;
-    color: $a-color-nd !important;
-    background-color: transparent;
-    border-radius: 4px;
-    .icon-submenu {
-      position: relative;
-      width: 25px;
-      height: 25px;
-      border-radius: 100%;
-      transition: 0.4s;
-      background-color: $btn-white-hover;
-    }
-    p {
-      color: $a-color-nd;
-      font-size: 14px;
-      transition: 0.3s;
-      margin-left: 10px;
-    }
-    &:hover {
-      background-color: $btn-white-hover !important;
+    .ni-save {
+      transform: rotate(90deg);
     }
   }
+  p {
+    color: $a-color-nd;
+    font-size: 15px;
+    transition: 0.3s;
+    margin-left: 10px;
+    font-weight: 600;
+  }
+  &:hover {
+    background-color: $btn-white-hover !important;
+  }
 }
+
 // Active Menu
 .show {
   .nav-link {
@@ -376,5 +391,95 @@ ul.dropdown-menu {
         }
       }
     }
+  }
+}
+
+.dd-profile {
+  // background-color: $navbar-light;
+  background-color: white;
+  // box-shadow: 0 0px 32px rgba(33, 36, 66, 0.10), 0 17px 28px rgba(33, 36, 66, 0.10);
+  box-shadow: 0 0px 14px rgba(180, 180, 180, 0.1), 0 4px 16px rgba(200, 200, 200, 0.1);
+  width: 260px;
+  border: 1px solid $window-divider-color;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 6px;
+  min-height: 230px;
+  // transition: 0.3s;
+  // z-index: 2;
+}
+
+.dd-profile.show {
+  top: 0px !important;
+  left: -0px !important;
+}
+
+.profile-nav-info {
+  position: relative;
+  width: 90%;
+  height: 80px;
+  border-radius: 6px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .profile-picture-nav {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background-color: $background-workspace;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    .icon {
+      font-size: 26px;
+      color: white;
+    }
+  }
+  .profile-desc {
+    position: relative;
+    width: calc(100% - 75px);
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    span {
+      position: relative;
+      width: 100%;
+      height: auto;
+      color: $blue-nimbus-dark;
+      font-weight: 600;
+      font-size: 15px;
+      &:nth-child(2) {
+        font-size: 14px;
+        font-weight: 400;
+        color: $blue-darkness;
+      }
+    }
+  }
+}
+.nav-profile-divider {
+  position: relative;
+  width: 90%;
+  height: 1px;
+  background-color: $window-divider-color;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.nav-version {
+  position: relative;
+  width: 90%;
+  height: 40px;
+  margin: 0 auto;
+  // margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  span {
+    font-size: 12px;
+    color: #71787b;
+    text-align: center;
   }
 }

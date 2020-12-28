@@ -1,24 +1,28 @@
 <div class="information-c-component">
-  <div class="c-component-title">
-    <div class="cct-link">
-      <i class="icon ni-arrow"></i>
-      <p jhiTranslate="leftbar.information">Información</p>
+    <div class="c-component-title">
+        <div class="cct-link">
+            <i class="icon ni-arrow"></i>
+            <p jhiTranslate="leftbar.information">Información</p>
+        </div>
+        <i class="icon ni-menudots"></i>
     </div>
-    <i class="icon ni-menudots"></i>
-  </div>
-  <div class="c-component-content">
-    <div class="row-c-component-c">
+    <div class="c-component-content">
+        <div class="row-c-component-c">
 
-      <div class="ic-row-cover">
-        <!-- <img [src]="portadaCursoUrl" *ngIf="portadaCursoUrl && portadaCursoUrl !== ''" class="info-cover" [ngClass]="{ 'info-cover-default': !isPngImage }"> -->
-        <!-- <img *ngIf="module && module !== ''" class="info-cover info-cover-module"> -->
-        <!-- <img *ngIf="(!portadaCursoUrl || portadaCursoUrl === '') && (!module || module === '')"  class="info-cover info-cover-default"> -->
-        <div *ngIf="module && module !== ''" class="info-cover info-cover-uma"></div>
-      </div>
-      <div class="ic-row-text">
-        <p *ngIf="course">{{course.titulo}}</p>
-        <p *ngIf="module">{{module.titulo}}</p>
-      </div>
+            <div class="ic-row-cover">
+                <!-- <img [src]="portadaCursoUrl" *ngIf="portadaCursoUrl && portadaCursoUrl !== ''" class="info-cover" [ngClass]="{ 'info-cover-default': !isPngImage }"> -->
+                <!-- <img *ngIf="module && module !== ''" class="info-cover info-cover-module"> -->
+                <!-- <img *ngIf="(!portadaCursoUrl || portadaCursoUrl === '') && (!module || module === '')"  class="info-cover info-cover-default"> -->
+                <div *ngIf="module && module !== ''" class="info-cover info-cover-uma"></div>
+            </div>
+            <div class="ic-row-text" *ngIf="module && module.id">
+                <p *ngIf="course">{{course.titulo}}</p>
+                <p *ngIf="module">{{module.titulo}}</p>
+                <div class="edit-ab" *ngIf="module && module.id" (click)="editModule(module.id)">
+                    <i class="icon ni-edit"></i>
+                    <p jhiTranslate="leftbar.edit">Editar</p>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

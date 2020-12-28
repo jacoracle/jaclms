@@ -186,18 +186,11 @@ strong {
 }
 
 // Tool bar text
-.angular-editor-toolbar {
-  background-color: $tool-header !important;
-  width: 100% !important;
-  height: 30px !important;
-  position: relative !important;
-  padding: 0 !important;
-  border: 0 !important;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+// Ql editor
+.final-block-row .ql-editor > * {
+  cursor: pointer;
 }
+
 // Modal Login
 .modal-backdrop.show {
   opacity: 0.8;
@@ -572,6 +565,13 @@ jhi-login-modal {
   &:active {
     outline: none;
   }
+  i {
+    color: white;
+    margin-right: 8px;
+  }
+}
+.create-btn {
+  min-width: 100px;
 }
 // Status Button
 .btn-status {
@@ -619,7 +619,7 @@ jhi-login-modal {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 20px 30px rgba(26, 61, 130, 0.1), 0 6px 18px rgba(26, 61, 130, 0.12);
+  // box-shadow: 0 20px 30px rgba(26, 61, 130, 0.1), 0 6px 18px rgba(26, 61, 130, 0.12);
   .icon {
     color: white;
   }
@@ -721,11 +721,11 @@ jhi-login-modal {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: $background-color-blue;
-  background-image: url('../images/bg2.png');
-  background-position: center;
-  background-size: 2000px;
-  background-repeat: no-repeat;
+  // background-color: $background-color-blue;
+  // background-image: url('../images/bg2.png');
+  // background-position: center;
+  // background-size: 2000px;
+  // background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   overflow-y: auto;
@@ -1405,7 +1405,7 @@ dl {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  // left: 0;
   z-index: 1000;
   display: none;
   float: left;
@@ -2661,28 +2661,26 @@ input[type='file'] {
     position: relative;
     width: 100%;
     z-index: 99999;
-    div {
-      text-align: center;
-      position: relative;
-      width: auto;
-      // max-width: 800px;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 34px;
-      font-weight: 600;
-      font-style: normal;
-      color: $blue-nimbus-dark;
-      h1 {
-        text-align: center;
-        position: relative;
-        width: auto;
-        // max-width: 800px;
-        font-family: 'Open Sans', sans-serif;
-        font-size: 34px;
-        font-weight: 600;
-        font-style: normal;
-        color: $blue-nimbus-dark;
-      }
-    }
+    // div {
+    //   text-align: center;
+    //   position: relative;
+    //   width: auto;
+    //   font-family: 'Open Sans', sans-serif;
+    //   font-size: 34px;
+    //   font-weight: 600;
+    //   font-style: normal;
+    //   color: $blue-nimbus-dark;
+    //   h1 {
+    //     text-align: center;
+    //     position: relative;
+    //     width: auto;
+    //     font-family: 'Open Sans', sans-serif;
+    //     font-size: 34px;
+    //     font-weight: 600;
+    //     font-style: normal;
+    //     color: $blue-nimbus-dark;
+    //   }
+    // }
   }
 }
 .final-block-row {
@@ -2747,21 +2745,21 @@ input[type='file'] {
 // Alert component
 .bs-succes {
   background-color: $succes-color;
-  box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
+  // box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
   &:hover {
     background-color: #347d37;
   }
 }
 .bs-danger {
   background-color: $alert-color;
-  box-shadow: 0 16px 20px rgba(230, 26, 52, 0.1), 0 6px 13px rgba(230, 26, 52, 0.12);
+  // box-shadow: 0 16px 20px rgba(230, 26, 52, 0.1), 0 6px 13px rgba(230, 26, 52, 0.12);
   &:hover {
     background-color: $alert-hover-color;
   }
 }
 .color-danger {
   background-color: $alert-color;
-  box-shadow: 0 20px 30px rgba(230, 26, 52, 0.1), 0 6px 18px rgba(230, 26, 52, 0.12);
+  // box-shadow: 0 20px 30px rgba(230, 26, 52, 0.1), 0 6px 18px rgba(230, 26, 52, 0.12);
   &:hover {
     background-color: $alert-hover-color;
   }
@@ -2827,7 +2825,7 @@ input[type='file'] {
 
 .danger {
   background-color: $alert-color;
-  box-shadow: 0 20px 30px rgba(230, 26, 52, 0.1), 0 6px 18px rgba(230, 26, 52, 0.12);
+  // box-shadow: 0 20px 30px rgba(230, 26, 52, 0.1), 0 6px 18px rgba(230, 26, 52, 0.12);
   .alert-icon:before {
     content: '\e805';
   }
@@ -2835,21 +2833,21 @@ input[type='file'] {
 
 .info {
   background-color: $succes-color;
-  box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
+  // box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
   .alert-icon:before {
     content: '\e80a';
   }
 }
 .success {
   background-color: $succes-color;
-  box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
+  // box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
   .alert-icon:before {
     content: '\e806';
   }
 }
 .warning {
   background-color: $succes-color;
-  box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
+  // box-shadow: 0 20px 30px rgba(76, 175, 80, 0.1), 0 6px 18px rgba(76, 175, 80, 0.12);
   .alert-icon:before {
     content: '\e805';
   }
