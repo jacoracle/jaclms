@@ -1,8 +1,10 @@
 {
   "uma": {
-    "page": "Constructor de UMA / ",
+    "page": "/ Constructor de UMA / ",
     "title": "Registro de UMA",
+    "titleedit": "Edición de UMA",
     "notefields": "Completa los campos",
+    "notefieldssecuence": "Arrastra las UMA al panel izquierdo para crear secuencias",
     "form": {
       "configuration": "Configuración general",
       "obligatory": "*Campo obligatorio",
@@ -12,12 +14,14 @@
       "descriptionlenght": "La descripción no debe superar más de 50 caracteres.",
       "knowledge": "Área de Conocimiento",
       "level": "Nivel Académico",
+      "grade": "Grado Académico",
       "cancel": "cancelar",
       "type": "Tipos de UMA",
       "collaborators": "Colaboradores y Roles",
       "topic": "Temas del UMA"
     },
     "cancel": "Cancelar",
-    "create": "Crear UMA"
+    "create": "Continuar",
+    "edit": "Guardar cambios"
   }
 }

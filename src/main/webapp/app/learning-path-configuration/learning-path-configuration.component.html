@@ -1,0 +1,51 @@
+<div class="main-container-br" *ngIf="isAuthenticated()">
+    <div class="window-br">
+
+        <!-- Window Header -->
+        <div class="window-br-header">
+            <div class="alert-path-configuration">
+                <jhi-alert-error></jhi-alert-error>
+            </div>
+            <div class="r1">
+                <div class="logo-home-mini"></div>
+            </div>
+            <div class="r2">
+                <div class="windowHeader-title disbled-t-header">
+                    <h4>Rutas de Aprendizaje / </h4>
+                </div>
+                <div class="windowHeader-title">
+                    <h4>Configurar Ruta de Aprendizaje</h4>
+                </div>
+                <div class="c1">
+                </div>
+            </div>
+        </div>
+
+        <div class="window-br-body-topbar">
+            <div class="line-gradient lg-step2"></div>
+        </div>
+
+
+        <!-- Body -->
+        <div class="window-br-body">
+
+            <div [ngSwitch]="isAuthenticated()" *jhiHasAnyAuthority="'ROLE_USER'">
+
+                <div class="container-stepper-group">
+
+                    <jhi-learing-path-update></jhi-learing-path-update>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="window-br-footer">
+            <button routerLink="/learning-home" matTooltip="Regresar al Home." class="secondary-btn">Cancelar</button>
+            <button (click)="configLearningPath($event)" class="main-btn" matTooltip="Guardar y/o actualizar Ruta."
+                [disabled]="false">Configurar Ruta</button>
+        </div>
+
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IAsignatura } from 'app/shared/model/asignatura.model';
 import { AsignaturaService } from 'app/entities/asignatura/asignatura.service';
-import { JhiEventManager, JhiAlert, JhiEventWithContent } from 'ng-jhipster';
+import { JhiAlert, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { ModuloService } from './modulo.service';
 import { IModulo, Modulo } from 'app/shared/model/modulo.model';
 import { TopicModuleComponent } from '../tema/temas-modulo.component';
@@ -30,6 +30,9 @@ export class ModuloUpdateComponent implements OnInit {
   selectedGradesModule: INumeroGrado[] = [];
   actualSelectedGradesModule: number[] = [];
 
+  @Input()
+  modulo: IModulo | undefined;
+
   gradosCtrl = new FormControl();
   // actualSelectedGradesModule: INumeroGrado[] = [];
 
@@ -40,7 +43,6 @@ export class ModuloUpdateComponent implements OnInit {
 
   isSaving = false;
   asignaturas: IAsignatura[] = [];
-  fechaCreacionSysDp: any;
   showUploadButton = false;
   alerts: JhiAlert[] = [];
 
@@ -99,6 +101,10 @@ export class ModuloUpdateComponent implements OnInit {
         )
         .subscribe((resBody: INumeroGrado[]) => (this.gradoAcademicos = resBody));
     });
+
+    if (this.modulo) {
+      this.updateForm(this.modulo);
+    }
   }
 
   updateForm(modulo: IModulo): void {
@@ -111,6 +117,7 @@ export class ModuloUpdateComponent implements OnInit {
       descripcion: modulo.descripcion,
       fechaCreacionSys: modulo.fechaCreacionSys,
       asignatura: modulo.asignatura,
+      gradoAcademico: this.updateGradoAcademico(modulo),
       temas: modulo.temas,
       tiposModulos: modulo.tiposModulos,
       rolesColaboradores: modulo.rolesColaboradores,
@@ -118,7 +125,24 @@ export class ModuloUpdateComponent implements OnInit {
     });
   }
 
-  save(): void {
+  updateGradoAcademico(modulo: IModulo): IGradoAcademico | undefined {
+    if (modulo.numeroGrados && modulo.numeroGrados.length > 0) {
+      const gradoAcademico = modulo.numeroGrados[0].gradoAcademico;
+      this.gradoAcademicoService.find(gradoAcademico!.id!).subscribe(res => {
+        if (res.body && res.body.numeroGrados) {
+          this.numerogrados = res.body.numeroGrados;
+          this.selectedGradesModule = modulo.numeroGrados!;
+          this.actualSelectedGradesModule = modulo.numeroGrados!.map((numeroGrado): number => {
+            return numeroGrado.id!;
+          });
+        }
+      });
+      return gradoAcademico;
+    }
+    return;
+  }
+
+  save(since: string): void {
     this.isSaving = true;
     const modulo = this.createFromForm();
 
@@ -147,10 +171,10 @@ export class ModuloUpdateComponent implements OnInit {
       this.firstClick = true;
       if (modulo.id) {
         // console.error('##########   Deberá actualizar: ', modulo);
-        this.subscribeToSaveResponse(this.moduloService.update(modulo));
+        this.subscribeToSaveResponse(this.moduloService.update(modulo), since);
       } else {
         // console.error('##########   Deberá guardar: ', modulo);
-        this.subscribeToSaveResponse(this.moduloService.create(modulo));
+        this.subscribeToSaveResponse(this.moduloService.create(modulo), since);
       }
     }
   }
@@ -170,15 +194,34 @@ export class ModuloUpdateComponent implements OnInit {
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IModulo>>): void {
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IModulo>>, since: string): void {
     result.subscribe(
-      res => this.onSaveSuccess(res),
+      res => this.onSaveSuccess(res, since),
       () => this.onSaveError()
     );
   }
 
-  protected onSaveSuccess(res: any): void {
-    this.router.navigate(['/constructor-layout', res.body.modulo.id, 'module']);
+  protected onSaveSuccess(res: any, since: string): void {
+    if (res.body.modulo) {
+      this.router.navigate(['/constructor-layout', res.body.modulo.id, 'module']).then(r => {
+        return r;
+      });
+    } else {
+      if (since !== '' && since === 'book') {
+        this.router.navigate(['/constructor-layout', res.body.id, 'module']).then(r => {
+          return r;
+        });
+      } else if (since !== '' && since === 'home') {
+        this.router.navigate(['/uma-home']).then(r => {
+          return r;
+        });
+      } else {
+        this.router.navigate(['/uma-groups-home']).then(r => {
+          return r;
+        });
+      }
+    }
+
     this.isSaving = false;
   }
 
@@ -200,7 +243,7 @@ export class ModuloUpdateComponent implements OnInit {
 
   // when academic grade selection change, must be loaded grades number
   changeGradoAcademico(e: any): void {
-    this.gradoAcademicoService.find(e.target.selectedIndex + 1).subscribe(res => {
+    this.gradoAcademicoService.find(e.value.id).subscribe(res => {
       if (res.body && res.body.numeroGrados) {
         this.numerogrados = res.body.numeroGrados;
         this.updatingGradesSelected(null, false);

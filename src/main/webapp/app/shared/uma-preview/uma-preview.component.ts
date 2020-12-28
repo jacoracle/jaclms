@@ -24,7 +24,7 @@ export class UmaPreviewModalComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.bloquesUma = this.umaData.nivelesModulo!.nivelJerarquico!.bloquesCurso;
+    this.bloquesUma = this.umaData.nivelesModulo!.nivelModulo!.bloquesCurso;
     // this.componentesUma = this.bloquesUma.bloqueComponentes
   }
 

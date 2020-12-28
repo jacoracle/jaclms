@@ -244,7 +244,10 @@ export class QuestionComponent implements OnInit {
       pregunta.safeUrl = '';
       pregunta.loadedVideo = false;
       this.selectedFiles = [];
-      this.fileInput.nativeElement.value = '';
+      if (this.fileInput && this.fileInput.nativeElement && this.fileInput.nativeElement.value) {
+        this.fileInput.nativeElement.value = '';
+      }
+
       this.save();
     }
   }

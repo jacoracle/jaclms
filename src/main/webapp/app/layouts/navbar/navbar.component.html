@@ -47,26 +47,42 @@
           </li>
           <!-- End Menu Administration -->
           <!-- Menu Account -->
-          <li ngbDropdown class="nav-item" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngSwitchCase="true">
+          <li ngbDropdown class="nav-item nav-profile" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngSwitchCase="true">
             <a class="nav-link" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
               <div class="circle-menu-account"><i class="icon ni-user icon-negative"></i></div>
               <p *ngSwitchCase="true">{{getUserName() ? getUserName().firstName : ''}}</p>
               <span class="arrow-menu"></span>
             </a>
             <!-- SubMenu Account -->
-            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
-              <li *ngSwitchCase="true">
+            <div class="dd-profile" ngbDropdownMenu aria-labelledby="account-menu">
+              <div class="profile-nav-info">
+                <div class="profile-picture-nav">
+                  <i class="icon ni-user"></i>
+                </div>
+                <div class="profile-desc">
+                  <!-- <span>Nombre</span> -->
+                  <span *ngSwitchCase="true">{{getUserName() ? getUserName().firstName : ''}}</span>
+                  <span>Rol</span>
+                </div>
+              </div>
+              <div class="nav-profile-divider"></div>
+              <div *ngSwitchCase="true">
                 <a class="dropdown-item" routerLink="/" routerLinkActive="active" (click)="collapseNavbar()">
+                  <div class="circle-di-icon"><i class="icon ni-nimbus"></i></div>
                   <p>Home</p>
                 </a>
-              </li>
-              <li *ngSwitchCase="true">
+              </div>
+              <div *ngSwitchCase="true">
                 <a class="dropdown-item" routerLink="account/password" routerLinkActive="active" (click)="logout()" *ngSwitchCase="true" id="logout">
+                  <div class="circle-di-icon"><i class="icon ni-save"></i></div>
                   <p>Cerrar sesión</p>
-
                 </a>
-              </li>
-            </ul>
+              </div>
+              <div class="nav-profile-divider"></div>
+              <div class="nav-version">
+                <span>Nimbus Constructor © 2020 <br> v1.0</span>
+              </div>
+            </div>
           </li>
           <!-- End Menu Account -->
         </ul>
@@ -76,80 +92,3 @@
 
   </div>
 </div>
-
-
-
-
-<!-- Dev Navbar other links -->
-<!-- <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-    <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
-        <span>
-            <fa-icon icon="th-list"></fa-icon>
-            <span jhiTranslate="global.menu.entities.main">
-                Entities
-            </span>
-        </span>
-    </a>
-    <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-    </ul>
-</li> -->
-<!-- <li>
-    <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
-        <fa-icon icon="heart" fixedWidth="true"></fa-icon>
-        <span jhiTranslate="global.menu.admin.health">Health</span>
-    </a>
-</li> -->
-<!-- <li>
-    <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
-        <fa-icon icon="list" fixedWidth="true"></fa-icon>
-        <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
-    </a>
-</li> -->
-<!-- <li>
-    <a class="dropdown-item" routerLink="admin/audits" routerLinkActive="active" (click)="collapseNavbar()">
-        <fa-icon icon="bell" fixedWidth="true"></fa-icon>
-        <span jhiTranslate="global.menu.admin.audits">Audits</span>
-    </a>
-</li> -->
-
-<!-- Admin Logs -->
-<!-- <li>
-    <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
-        <fa-icon icon="tasks" fixedWidth="true"></fa-icon>
-        <span jhiTranslate="global.menu.admin.logs">Logs</span>
-    </a>
-</li> -->
-
-<!-- Admin Metrics -->
-<!-- <li>
-    <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
-        <fa-icon icon="tachometer-alt" fixedWidth="true"></fa-icon>
-        <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
-    </a>
-</li> -->
-<!-- Admin Lenguage -->
-<!-- <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
-    <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
-        <span>
-            <fa-icon icon="flag"></fa-icon>
-            <span jhiTranslate="global.menu.language">Language</span>
-        </span>
-    </a>
-    <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
-        <li *ngFor="let language of languages">
-            <a class="dropdown-item" [jhiActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
-        </li>
-    </ul>
-</li> -->
-
-<!-- Account submenu -->
-<!-- <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
-  <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()">
-    <p jhiTranslate="global.menu.account.settings">Settings</p>
-  </a>
-</li> -->
-<!-- <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
-  <a class="dropdown-item" routerLink="account/password" routerLinkActive="active" (click)="collapseNavbar()">
-    <p jhiTranslate="global.menu.account.password">Password</p>
-  </a>
-</li> -->

@@ -2,6 +2,7 @@
   "group": {
     "page": "Agrupador de UMA / ",
     "title": "Configurar Agrupador",
+    "titlesec": "Secuencia de UMA",
     "generalconfig": "Configuración general",
     "tagsequence": "Secuencia de UMA",
     "form": {
@@ -19,11 +20,14 @@
     },
     "sequence": {
       "yourumas": "Tus UMA",
-      "drag": "Arrastra las UMA al panel de la derecha para crear secuencias.",
+      "drag": "Arrastra las UMA al panel de la izquierda para crear secuencias.",
       "search": "Buscar",
       "sequenceuma": "Secuencia de UMA"
     },
     "cancel": "Cancelar",
-    "save": "Guardar Agrupador"
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "save": "Guardar",
+    "finish": "Terminar"
   }
 }

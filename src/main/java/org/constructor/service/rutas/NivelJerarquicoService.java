@@ -1,0 +1,88 @@
+/**
+ * 
+ */
+package org.constructor.service.rutas;
+
+import java.util.Optional;
+
+import org.constructor.domain.rutas.NivelJerarquico;
+import org.constructor.response.OrdenamientoResponse;
+import org.constructor.service.dto.rutas.DTONivelJerarquico;
+import org.constructor.service.dto.rutas.NivelJerarquicoDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+/**
+ * @author Edukai
+ *
+ */
+public interface NivelJerarquicoService {
+
+	
+	/**
+     * Save a NivelJerarquico.
+     *
+     * @param nivelJerarquico the entity to save.
+     * @return the persisted entity.
+     */
+    NivelJerarquico save(NivelJerarquico nivelJerarquico);
+    
+ 
+    /**
+     * NivelJerarquicoDTO
+     * @param authentication
+     * @param nivelDto
+     * @return
+     */
+    NivelJerarquico save (NivelJerarquicoDTO nivelDto);
+
+    /**
+     * Get all the versions.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<NivelJerarquico> findAll(Pageable pageable);
+
+
+    /**
+     * Get the "id" NivelJerarquico.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    DTONivelJerarquico findOne(Long id);
+    
+    /**
+	 * Update
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
+	Optional<NivelJerarquico> updateNivelJerarquico(NivelJerarquicoDTO dto) throws Exception;
+
+	/**
+	 * Update
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
+	Optional<OrdenamientoResponse> updateOrder(NivelJerarquicoDTO dto) throws Exception;
+	
+    /**
+     * Delete the "id" NivelJerarquico.
+     *
+     * @param id the id of the entity.
+     */
+    void delete(Long id);
+    
+    
+    /**
+     * Delete the "id" Nivel Agrupador.
+     *
+     * @param id the id of the entity.
+     */
+    void deleteAgrupador(Long id);
+    
+
+}

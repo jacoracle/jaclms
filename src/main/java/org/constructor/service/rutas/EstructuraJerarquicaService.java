@@ -1,9 +1,10 @@
-package org.constructor.service;
+package org.constructor.service.rutas;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.constructor.domain.EstructuraJerarquica;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -25,7 +26,7 @@ public interface EstructuraJerarquicaService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<EstructuraJerarquica> findAll(Pageable pageable);
+    List<EstructuraJerarquica> findAll(Pageable pageable);
 
 
     /**
@@ -42,5 +43,12 @@ public interface EstructuraJerarquicaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    
+    /**
+     * findByEstructura
+     * @param id
+     * @return
+     */
+    Set<EstructuraJerarquica> findByNivel(Long id);
 
 }

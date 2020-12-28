@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { IRolesColaboradores } from 'app/shared/model/roles-colaboraderes.model';
@@ -27,6 +27,7 @@ export class ColaboradoresModuleComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   colaboradorCtrl = new FormControl();
 
+  @Input()
   listRolesColaboradores: IRolesColaboradores[] = [];
   listFullRolesColaboradores: IRolesColaboradores[] = [];
   filteredRolesColaboradores: Observable<IRolesColaboradores[]>;
@@ -77,6 +78,10 @@ export class ColaboradoresModuleComponent implements OnInit {
     return this.listRolesColaboradores; //  this.selectedColaboradors;
   }
 
+  public setColaboradores(colaboradoresList: IRolesColaboradores[]): void {
+    this.listRolesColaboradores = [...colaboradoresList];
+  }
+
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
   addColaborador(event: MatChipInputEvent): void {
@@ -110,7 +115,11 @@ export class ColaboradoresModuleComponent implements OnInit {
   }
 
   selectedColaborador(event: MatAutocompleteSelectedEvent): void {
-    if (!this.listRolesColaboradores.includes(event.option.value)) {
+    if (
+      this.listRolesColaboradores.filter(rol => {
+        return rol.id === event.option.value.id;
+      }).length === 0
+    ) {
       this.listRolesColaboradores.push(event.option.value as IRolesColaboradores); //   viewValue
     }
     this.colaboradorInput.nativeElement.value = '';

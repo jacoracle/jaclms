@@ -10,10 +10,20 @@
   .mat-form-field-wrapper {
     .mat-form-field-flex {
       width: 280px;
-      background-color: rgba(255, 255, 255, 0.3);
+      // background-color: rgba(255, 255, 255, 0.3);
     }
   }
 }
+
+/* Border */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #607d8b;
+}
+/* Font color */
+input.mat-input-element {
+  // color: white;
+}
+
 // .mat-checkbox-disabled .mat-checkbox-label {
 //     color: rgba(0,0,0,.54);
 // }
@@ -51,6 +61,23 @@
       .mat-form-field-flex {
         background-color: rgba(255, 255, 255, 0);
       }
+    }
+  }
+  .mat-respuesta-s {
+    width: calc(100% - 200px);
+    margin-left: 0;
+  }
+}
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: $blue-nimbus-dark;
+}
+.video-question-container {
+  jhi-resource-video {
+    video {
+      position: relative;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
     }
   }
 }

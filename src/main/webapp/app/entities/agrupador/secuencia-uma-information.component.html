@@ -1,0 +1,15 @@
+<!-- <div *ngIf="agrupadorObj && agrupadorObj !== ''" class="info-cover info-cover-uma"></div> -->
+<div class="row-information-bar">
+  <div class="col-ib">
+    <div class="cover-group-ib">
+      <span></span>
+    </div>
+    <div class="info-group-ib">
+      <h5 *ngIf="agrupadorObj">{{agrupadorObj.titulo}}</h5>
+      <div class="edit-ib" *ngIf="agrupadorObj" (click)="editarAgrupador()">
+          <i class="icon ni-edit"></i>
+          <span jhiTranslate="leftbar.edit">Editar</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ITema } from 'app/shared/model/tema.model';
@@ -27,6 +27,7 @@ export class TopicModuleComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   topicCtrl = new FormControl();
 
+  @Input()
   listThemes: ITema[] = [];
   listFullThemes: ITema[] = [];
   filteredThemes: Observable<ITema[]>;
@@ -75,6 +76,10 @@ export class TopicModuleComponent implements OnInit {
     return this.listThemes; //  this.selectedTopics;
   }
 
+  public setTopics(topicsList: ITema[]): void {
+    this.listThemes = [...topicsList];
+  }
+
   // COMIENZA CODE DE CHIPS ANGULAR MATERIAL
 
   addTopic(event: MatChipInputEvent): void {
@@ -109,7 +114,11 @@ export class TopicModuleComponent implements OnInit {
   }
 
   selectedTheme(event: MatAutocompleteSelectedEvent): void {
-    if (!this.listThemes.includes(event.option.value)) {
+    if (
+      this.listThemes.filter(tema => {
+        return tema.id === event.option.value.id;
+      }).length === 0
+    ) {
       this.listThemes.push(event.option.value as ITema); //   viewValue
     }
     this.topicInput.nativeElement.value = '';

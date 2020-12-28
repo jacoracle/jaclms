@@ -19,7 +19,7 @@ export class SpecialCharactersDirective {
 
   validateFields(event: any): void {
     setTimeout(() => {
-      this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^A-Za-z ]/g, '').replace(/\s/g, '');
+      this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^a-zA-Z0-9_ ºª!"$%&/()=?¿;:_><,.+'¡@“”≠~-]/g, '');
       event.preventDefault();
     }, 100);
   }

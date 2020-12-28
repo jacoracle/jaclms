@@ -2,6 +2,7 @@
   "leftbar": {
     "information": "Información",
     "strip": "Tira de película",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "edit": "Editar"
   }
 }
